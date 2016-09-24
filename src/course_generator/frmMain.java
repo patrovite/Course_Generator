@@ -36,6 +36,8 @@
  * - Add default font choice in the settings => Save in the configuration
  * - Save the Resume and data grids columns size in the config
  * - click on the data grid change the profil info and the crosshair
+ * - click on map change the profil position and the grid position
+ * - click on the profil change the map position and the grid position
  * 
  * RefresResume Called by (TODO):
  * DoubleClick on a cell of data grid (false)
@@ -382,7 +384,8 @@ public class frmMain extends javax.swing.JFrame {
 		setBounds(r);
 
 		// -- Set the left panel width
-		jPanelLeft.setPreferredSize(new Dimension(Settings.LeftPanelWidth, 100));
+		SplitPaneMain.setDividerLocation(Settings.VertSplitPosition);
+		SplitPaneMainRight.setDividerLocation(Settings.HorizSplitPosition);
 
 		// -- Tests - To Remove...
 
@@ -2766,7 +2769,8 @@ public class frmMain extends javax.swing.JFrame {
 		Settings.MainWindowWidth = r.width;
 		Settings.MainWindowHeight = r.height;
 
-		Settings.LeftPanelWidth = jPanelLeft.getWidth();
+		Settings.VertSplitPosition = SplitPaneMain.getDividerLocation();
+		Settings.HorizSplitPosition = SplitPaneMainRight.getDividerLocation();
 
 		// -- Update the column width in the settings
 		for (int i = 0; i < 16; i++)

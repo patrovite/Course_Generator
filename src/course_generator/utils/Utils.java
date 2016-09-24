@@ -407,6 +407,16 @@ public class Utils {
         }
     }
 
+    public static void WriteDoubleToXML(XMLStreamWriter writer, String Element, double Data) {
+        try {
+            writer.writeStartElement(Element);
+            writer.writeCharacters(Double.toString(Data));
+            writer.writeEndElement();
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public static void WriteBooleanToXML(XMLStreamWriter writer, String Element, boolean Data) {
         try {
             writer.writeStartElement(Element);

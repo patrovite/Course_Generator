@@ -307,8 +307,11 @@ public class SaxConfigHandler extends DefaultHandler{
             else if (qName.equalsIgnoreCase("MAINWINDOWSHEIGHT")) {
                 Settings.MainWindowHeight = ManageInt(0, ERR_READ_INT);
             }
-            else if (qName.equalsIgnoreCase("LEFTPANELSIZE")) {
-                Settings.LeftPanelWidth = ManageInt(0, ERR_READ_INT);
+            else if (qName.equalsIgnoreCase("VERTSPLITPOSITION")) {
+                Settings.VertSplitPosition = ManageInt(0, ERR_READ_INT);
+            }
+            else if (qName.equalsIgnoreCase("HORIZSPLITPOSITION")) {
+                Settings.HorizSplitPosition = ManageInt(50, ERR_READ_INT);
             }
             else if (qName.equalsIgnoreCase("CONFIG")) {
                 level--;

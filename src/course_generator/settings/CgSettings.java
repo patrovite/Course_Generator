@@ -51,7 +51,8 @@ public class CgSettings {
     public String Language;
     public int MainWindowWidth;
     public int MainWindowHeight;
-    public int LeftPanelWidth;
+    public int VertSplitPosition;
+    public int HorizSplitPosition;
     
     public int Unit = cgConstants.UNIT_METER; //Unit for the display 0=meter 1=Miles/feet
     
@@ -69,7 +70,8 @@ public class CgSettings {
         
         MainWindowWidth=800;
         MainWindowHeight=600;
-        LeftPanelWidth=200;
+        VertSplitPosition=200;
+        HorizSplitPosition=50;
         
         MemoFormat = new String[5];
         mruGPX = new String[5];
@@ -166,7 +168,8 @@ public class CgSettings {
                     Utils.WriteStringToXML(writer, "LANGUAGE", Language);
                     Utils.WriteIntToXML(writer, "MAINWINDOWSWIDTH",MainWindowWidth);
                     Utils.WriteIntToXML(writer, "MAINWINDOWSHEIGHT",MainWindowHeight);
-                    Utils.WriteIntToXML(writer, "LEFTPANELSIZE",LeftPanelWidth);
+                    Utils.WriteIntToXML(writer, "VERTSPLITPOSITION",VertSplitPosition);
+                    Utils.WriteIntToXML(writer, "HORIZSPLITPOSITION",HorizSplitPosition);
                     
                 writer.writeEndElement();
             writer.writeEndDocument();
