@@ -35,9 +35,7 @@
  * - Memorize the horizontal split position
  * - Add default font choice in the settings => Save in the configuration
  * - Save the Resume and data grids columns size in the config
- * - click on the data grid change the profil info and the crosshair
- * - click on map change the profil position and the grid position
- * - click on the profil change the map position and the grid position
+ * - Map source selection
  * 
  * RefresResume Called by (TODO):
  * DoubleClick on a cell of data grid (false)
@@ -2093,6 +2091,12 @@ public class frmMain extends javax.swing.JFrame {
 					xCrosshair.setValue(x);
 					yCrosshair.setValue(y);
 					RefreshProfilInfo(i);
+					//Refresh the position on the data grid
+					TableMain.setRowSelectionInterval(i, i);
+					Rectangle rect = TableMain.getCellRect(i, 0, true);
+					TableMain.scrollRectToVisible(rect);
+					//Refresh the marker position on the map
+					RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
 				}
 			}
 
@@ -2947,12 +2951,21 @@ public class frmMain extends javax.swing.JFrame {
 	private void MapViewerMouseClicked(java.awt.event.MouseEvent evt) {
 		if (Track.data.size() <= 0)
 			return;
-
+		
+		//Find the nearest point
 		Coordinate c = MapViewer.getPosition(evt.getX(), evt.getY());
 		int i = Track.FindNearestPoint(c.getLat(), c.getLon());
+		//Selection the position on the data grid
 		TableMain.setRowSelectionInterval(i, i);
 		Rectangle rect = TableMain.getCellRect(i, 0, true);
 		TableMain.scrollRectToVisible(rect);
+
+		//Refresh profil position
+		RefreshProfilInfo(i);
+		xCrosshair.setValue(Track.data.get(i).getTotal(Settings.Unit) / 1000.0);
+		yCrosshair.setValue(Track.data.get(i).getElevation(Settings.Unit));
+
+		//Refresh position marker on the map
 		RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
 	}
 
