@@ -196,11 +196,11 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 public class frmMain extends javax.swing.JFrame {
 	private final String Version = "4.0.0.Alpha1";
 	private FileFilter GPX_Filter;
-	private TrackData Track;
+	public TrackData Track;
 	private ResumeData Resume;
 	private final TrackDataModel ModelTableMain;
 	private final ResumeModel ModelTableResume;
-	private CgSettings Settings;
+	public CgSettings Settings;
 	public String DataDir;
 	private MapMarker CurrentPosMarker = null;
 	private int old_row = -1;
@@ -306,9 +306,9 @@ public class frmMain extends javax.swing.JFrame {
 	private JButton btRefreshRefresh;
 	private ChartPanel jPanelProfilChart;
 
-	private Crosshair xCrosshair;
+	public Crosshair xCrosshair;
 
-	private Crosshair yCrosshair;
+	public Crosshair yCrosshair;
 
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
@@ -1202,10 +1202,9 @@ public class frmMain extends javax.swing.JFrame {
 		btSearch.setFocusable(false);
 		btSearch.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				SearchPointDialog();
 			}
 		});
-		btSearch.setEnabled(false);
 		ToolBarMain.add(btSearch);
 
 		// -- Previous mark
@@ -2459,7 +2458,7 @@ public class frmMain extends javax.swing.JFrame {
 	 *            Index of the line in the track data list
 	 * 
 	 */
-	private void RefreshProfilInfo(int index) {
+	public void RefreshProfilInfo(int index) {
 		if ((index < 0) || (index >= Track.data.size()))
 			return;
 

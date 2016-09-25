@@ -166,8 +166,16 @@ public class frmSearchPoint extends javax.swing.JDialog {
 			main.TableMain.setRowSelectionInterval(result.Point, result.Point);
 			main.TableMain.scrollRectToVisible(new Rectangle(main.TableMain.getCellRect(result.Point, 0, true)));
 
+			//-- Refresh the position of the map marker
 			main.RefreshCurrentPosMarker(track.data.get(result.Point).getLatitude(),
 					track.data.get(result.Point).getLongitude());
+			
+			//-- Refresh the profil cursor position
+			main.RefreshProfilInfo(result.Point);
+			main.xCrosshair.setValue(main.Track.data.get(result.Point).getTotal(main.Settings.Unit) / 1000.0);
+			main.yCrosshair.setValue(main.Track.data.get(result.Point).getElevation(main.Settings.Unit));
+
+			
 
 		}
 	}
