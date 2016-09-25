@@ -551,8 +551,10 @@ public class TrackData {
 		}
 	} // Calcdist
 
-	// -- Calculate Speed ---
-	// !!! A appeler après Calcdist()
+	/**
+	 * Calculate speed
+	 * !!! To call after Calcdist()
+	 */
 	public void CalcSpeed() {
 		boolean b = false;
 		for (cgData r : data) {
@@ -569,7 +571,9 @@ public class TrackData {
 		}
 	} // CalcSpeed
 
-	// -- Calculate slope ---
+	/**
+	 * Calculate slope
+	 */
 	public void CalcSlope() {
 		double delta = 0;
 		double dist = 0;

@@ -919,10 +919,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuFindMinMax.setText(bundle.getString("frmMain.mnuFindMinMax.text"));
 		mnuFindMinMax.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				Track.CalcMinMax();
 			}
 		});
-		mnuFindMinMax.setEnabled(false);
 		mnuTools.add(mnuFindMinMax);
 
 		// -- Invert track
