@@ -1036,10 +1036,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSpeedSlopeCurves.setText(bundle.getString("frmMain.mnuSpeedSlopeCurves.text"));
 		mnuSpeedSlopeCurves.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				EditSSCurves();
 			}
 		});
-		mnuSpeedSlopeCurves.setEnabled(false);
 		mnuSettings.add(mnuSpeedSlopeCurves);
 
 		// -- Separator
@@ -1252,10 +1251,9 @@ public class frmMain extends javax.swing.JFrame {
 		btDisplaySSCurves.setFocusable(false);
 		btDisplaySSCurves.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				EditSSCurves();
 			}
 		});
-		btDisplaySSCurves.setEnabled(false);
 		ToolBarMain.add(btDisplaySSCurves);
 
 		// -- Global tiredness settings
@@ -1342,6 +1340,11 @@ public class frmMain extends javax.swing.JFrame {
 		// }
 		// });
 		// ToolBarMain.add(jBtTest);
+	}
+
+	private void EditSSCurves() {
+		frmEditCurve frm= new frmEditCurve();
+		frm.showDialog(Settings);
 	}
 
 	private void Create_Profil_Toolbar() {
