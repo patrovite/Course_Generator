@@ -1343,8 +1343,8 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 	private void EditSSCurves() {
-		frmEditCurve frm= new frmEditCurve();
-		frm.showDialog(Settings);
+//		frmEditCurve frm= new frmEditCurve();
+//		frm.showDialog(Settings);
 	}
 
 	private void Create_Profil_Toolbar() {
