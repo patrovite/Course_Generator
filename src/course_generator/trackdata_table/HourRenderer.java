@@ -18,7 +18,7 @@
 
 package course_generator.trackdata_table;
 
-import course_generator.cgData;
+import course_generator.CgData;
 import course_generator.TrackData;
 import java.awt.Color;
 import java.awt.Component;

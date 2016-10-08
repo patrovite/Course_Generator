@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import org.joda.time.DateTime;
 
-import course_generator.cgResume;
+import course_generator.CgResume;
 
 /**
 *
@@ -37,7 +37,7 @@ public class ResumeHourRenderer   extends DefaultTableCellRenderer {
    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
        super.getTableCellRendererComponent(table, value, isSelected, hasFocus,	row, column);
 
-       cgResume data = (cgResume) value;
+       CgResume data = (CgResume) value;
 
        DateTime val = data.getHour();
 

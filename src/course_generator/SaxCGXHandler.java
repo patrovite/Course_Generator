@@ -18,12 +18,6 @@
 
 package course_generator;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
@@ -609,7 +603,7 @@ public class SaxCGXHandler extends DefaultHandler{
                 if ((mode == 0) || (mode == 2)) {
                     // Add data at the of the array
                     Cmpt++;
-                    trkdata.data.add(new cgData(
+                    trkdata.data.add(new CgData(
                             Cmpt, //double Num
                             trkpt_lat, //double Latitude
                             trkpt_lon, //double Longitude
@@ -642,7 +636,7 @@ public class SaxCGXHandler extends DefaultHandler{
                     );
                 }
                 else {
-                    trkdata.data.add(Cmpt,new cgData(
+                    trkdata.data.add(Cmpt,new CgData(
                             Cmpt, //double Num
                             trkpt_lat, //double Latitude
                             trkpt_lon, //double Longitude

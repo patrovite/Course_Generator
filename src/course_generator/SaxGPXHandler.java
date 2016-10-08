@@ -293,7 +293,7 @@ public class SaxGPXHandler extends DefaultHandler{
                 if ((mode == 0) || (mode == 2)) {
                     // Add data at the of the array
                     Cmpt++;
-                    trkdata.data.add(new cgData(
+                    trkdata.data.add(new CgData(
                             Cmpt, //double Num
                             trkpt_lat, //double Latitude
                             trkpt_lon, //double Longitude
@@ -326,7 +326,7 @@ public class SaxGPXHandler extends DefaultHandler{
                     );
                 }
                 else {
-                    trkdata.data.add(Cmpt, new cgData(
+                    trkdata.data.add(Cmpt, new CgData(
                             Cmpt, //double Num
                             trkpt_lat, //double Latitude
                             trkpt_lon, //double Longitude

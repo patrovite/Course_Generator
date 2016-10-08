@@ -18,6 +18,7 @@
 
 package course_generator;
 
+import course_generator.param.ParamData;
 /*
 import course_generator.table.CoeffClass;
 import course_generator.table.DiffClass;
@@ -33,7 +34,6 @@ import course_generator.table.TimelimitClass;
 import course_generator.table.TotalClass;
 */
 import course_generator.utils.CgConst;
-import course_generator.utils.ParamData;
 import course_generator.utils.StatData;
 import course_generator.utils.Utils;
 import static course_generator.utils.Utils.CalcDistance;
@@ -68,7 +68,7 @@ public class TrackData {
 	private static TrackData instance;
 
 	public ParamData param = null;
-	public ArrayList<cgData> data;
+	public ArrayList<CgData> data;
 
 	public String Paramfile = "";
 
@@ -148,7 +148,7 @@ public class TrackData {
 
 		Name = "";
 		param = new ParamData();
-		data = new ArrayList<cgData>();
+		data = new ArrayList<CgData>();
 		tInNight = new StatData();
 		tInDay = new StatData();
 		StatSlope = new StatData[13]; // : Array [0..12] of TStat;
@@ -232,9 +232,9 @@ public class TrackData {
 	 */
 	public double getTotalDistance(int unit) {
 		switch (unit) {
-		case cgConstants.UNIT_METER:
+		case CgConstants.UNIT_METER:
 			return TotalDistance;
-		case cgConstants.UNIT_MILES_FEET:
+		case CgConstants.UNIT_MILES_FEET:
 			// meter to miles
 			return Utils.Meter2uMiles(TotalDistance);
 		default:
@@ -261,7 +261,7 @@ public class TrackData {
 
 		int cmpt = 1;
 
-		for (cgData r : data) {
+		for (CgData r : data) {
 			r.setNum(cmpt);
 			cmpt++;
 		}
@@ -364,7 +364,7 @@ public class TrackData {
 			writer.writeStartElement("trkseg");
 
 			for (int i = start; i <= end; i++) {
-				cgData r = data.get(i);
+				CgData r = data.get(i);
 
 				// <trkpt>
 				// <trkpt lat="45.8547528" lon="6.7226378">
@@ -496,7 +496,7 @@ public class TrackData {
 	 *         searched point
 	 */
 	public SearchPointResult SearchPoint(double lat, double lon) {
-		cgData cdata;
+		CgData cdata;
 		double d, best;
 		int p;
 
@@ -530,7 +530,7 @@ public class TrackData {
 		TotalDistance = 0;
 
 		boolean b = false;
-		for (cgData r : data) {
+		for (CgData r : data) {
 			Lat = r.getLatitude();
 			Lon = r.getLongitude();
 			Ele = r.getElevation();
@@ -557,7 +557,7 @@ public class TrackData {
 	 */
 	public void CalcSpeed() {
 		boolean b = false;
-		for (cgData r : data) {
+		for (CgData r : data) {
 			if (b) {
 				if (r.getdTime_f() != 0.0) {
 					r.setSpeed(r.getDist() / r.getdTime_f() * 3.6);
@@ -585,7 +585,7 @@ public class TrackData {
 		double Ele = 0;
 
 		boolean b = false;
-		for (cgData r : data) {
+		for (CgData r : data) {
 
 			r.setSlope(0.0);
 			Lat = (double) r.getLatitude();
@@ -740,7 +740,7 @@ public class TrackData {
 	 */
 	public int CalcHour() {
 		int last = 0;
-		for (cgData r : data) {
+		for (CgData r : data) {
 			r.setHour(StartTime.plusSeconds(r.getTime()));
 			last = r.getTime();
 		} // for i
@@ -750,7 +750,7 @@ public class TrackData {
 	// -- Calculate road distance --
 	public void CalcRoad() {
 		DistRoad = 0.0;
-		for (cgData r : data) {
+		for (CgData r : data) {
 			if (r.getDiff() == 100) {
 				DistRoad = DistRoad + r.getDist();
 			}
@@ -794,7 +794,7 @@ public class TrackData {
 		int i = 0;
 		isBH = false;
 		BH_Line = -1;
-		for (cgData r : data) {
+		for (CgData r : data) {
 			if ((r.getTimeLimit() != 0) && (r.getTime() > r.getTimeLimit())) {
 				isBH = true;
 				BH_Line = i;
@@ -834,15 +834,20 @@ public class TrackData {
 
 		String sParamfile = Utils.GetHomeDir() + "/Course Generator/config/" + Paramfile + ".par";
 
-		param.Load(sParamfile);
-
+		try{
+			param.Load(sParamfile);
+		}
+		catch(Exception e) {
+			return;
+		}
+		
 		// a = 0;
 		// b = 0;
 		ef = 1;
 
 		dt = 0;
-		// -- Boucle de calcul --
-		for (cgData r : data) {
+		// -- Calculation loop --
+		for (CgData r : data) {
 			x = r.getSlope();
 			if (x > CgConst.MAX_CLIMB) {
 				x = CgConst.MAX_CLIMB;
@@ -869,13 +874,13 @@ public class TrackData {
 			} // for j
 
 			if (ok) {
-				// On donne les 2 points (pente/vitesse)et on récupère "a" et
-				// "b" de l'équation de droite.
+				// We give 2 points (slope/speed) and we get "a" and
+				// "b" from the line equation
 				if (x1 != x2) {
 					Utils.CalcLineResult res = new CalcLineResult();
 					res = Utils.CalcLine(x1, y1, x2, y2, res);
-					// On calcule l'équation de la droite. "Y"=vitesse en km/h
-					// et "X"=pente
+					// We calculate the line equation. "Y"=speed in km/h
+					// and "X"=slope
 					y = res.a * x + res.b;
 				} else {
 					y = y1;
@@ -917,15 +922,8 @@ public class TrackData {
 			double station = (double) (r.getStation());
 
 			if (y != 0.0) {
-				ts = (dist / (y / 3.6)) * coeff * diff * night * ef + station; // calcul
-																				// du
-																				// temps
-																				// de
-																				// parcours
-																				// du
-																				// tronçon
-																				// en
-																				// seconde
+				// Calculate the travel time in seconde in a part of the track
+				ts = (dist / (y / 3.6)) * coeff * diff * night * ef + station; 
 			} else {
 				ts = 0.0;
 			}
@@ -942,13 +940,14 @@ public class TrackData {
 				r.setSpeed(0.0);
 			}
 			r.setHour(StartTime.plusSeconds((int) (Math.round(dt))));
-		} // Fin boucle de calcul --
+		} // End of the calculation loop --
 
 		TotalTime = (int) Math.round(dt);
 		isCalculated = true;
 		isModified = true;
 	} // Calculate
 
+	
 	/**
 	 * Calc the min / max of the datas
 	 */
@@ -965,12 +964,12 @@ public class TrackData {
 		boolean maxp = false;
 		boolean findmax = false;
 		boolean findmin = false;
-		cgData r1 = null;
-		cgData r2 = null;
-		cgData r3 = null;
+		CgData r1 = null;
+		CgData r2 = null;
+		CgData r3 = null;
 
 		// Remise à zéro des bits 0 et 1 du champ TAG
-		for (cgData r : data)
+		for (CgData r : data)
 			r.setTag((int) r.getTag() & 0xFC);
 
 		// Boucle principale
@@ -1066,7 +1065,7 @@ public class TrackData {
 
 			// -- Set the line number
 			int n = 1;
-			for (cgData r : data)
+			for (CgData r : data)
 				r.setNum(n++);
 
 			// -- Refresh
@@ -1074,9 +1073,7 @@ public class TrackData {
 			CalcSlope();
 
 			CalcClimbResult resClimb = new CalcClimbResult();
-			CalcClimb(0, data.size() - 1, resClimb); // ref ClimbP, ref ClimbM,
-														// ref AscTime, ref
-														// DescTime);
+			CalcClimb(0, data.size() - 1, resClimb);
 			ClimbP = resClimb.cp;
 			ClimbM = resClimb.cm;
 			AscTime = resClimb.tp;
@@ -1085,10 +1082,7 @@ public class TrackData {
 			CalcHour();
 
 			SearchMinMaxElevationResult resMinMaxElev = new SearchMinMaxElevationResult();
-			resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev); // ref
-																						// MinElev,
-																						// ref
-																						// MaxElev);
+			resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev); 
 			MinElev = resMinMaxElev.min;
 			MaxElev = resMinMaxElev.max;
 
@@ -1107,15 +1101,15 @@ public class TrackData {
 
 		if (data.size() >= 0) {
 
-			ArrayList<cgData> datatmp;
+			ArrayList<CgData> datatmp;
 			// List<cgData> datatmp;
 
-			datatmp = new ArrayList<cgData>();
+			datatmp = new ArrayList<CgData>();
 
 			int n = start;
 			int nb = 0;
 			while (nb < data.size()) {
-				datatmp.add(new cgData((double) (nb + 1), // Num - double
+				datatmp.add(new CgData((double) (nb + 1), // Num - double
 						data.get(n).getLatitude(), // Latitude - double
 						data.get(n).getLongitude(), // Longitude - double
 						data.get(n).getElevation(), // Elevation - double
@@ -1153,7 +1147,7 @@ public class TrackData {
 			}
 
 			n = 0;
-			for (cgData r : data) {
+			for (CgData r : data) {
 				r.setNum(datatmp.get(n).getNum()); // Num
 				r.setLatitude(datatmp.get(n).getLatitude()); // Latitude
 				r.setLongitude(datatmp.get(n).getLongitude()); // Longitude
@@ -1187,11 +1181,7 @@ public class TrackData {
 			CalcSlope();
 
 			CalcClimbResult resClimb = new CalcClimbResult();
-			resClimb = CalcClimb(0, data.size() - 1, resClimb); // ref ClimbP,
-																// ref ClimbM,
-																// ref AscTime,
-																// ref
-																// DescTime);
+			resClimb = CalcClimb(0, data.size() - 1, resClimb);
 			ClimbP = resClimb.cp;
 			ClimbM = resClimb.cm;
 			AscTime = resClimb.tp;
@@ -1200,10 +1190,7 @@ public class TrackData {
 			CalcHour();
 
 			SearchMinMaxElevationResult resMinMaxElev = new SearchMinMaxElevationResult();
-			resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev); // ref
-																						// MinElev,
-																						// ref
-																						// MaxElev);
+			resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev);
 			MinElev = resMinMaxElev.min;
 			MaxElev = resMinMaxElev.max;
 
@@ -1234,7 +1221,7 @@ public class TrackData {
 
 		int cmpt = 1;
 
-		for (cgData r : data) {
+		for (CgData r : data) {
 			r.setNum(cmpt);
 			cmpt++;
 		}
@@ -1248,8 +1235,7 @@ public class TrackData {
 		CalcSlope();
 
 		CalcClimbResult resClimb = new CalcClimbResult();
-		CalcClimb(0, data.size() - 1, resClimb); // ref ClimbP, ref ClimbM, ref
-													// AscTime, ref DescTime);
+		CalcClimb(0, data.size() - 1, resClimb); 
 		ClimbP = resClimb.cp;
 		ClimbM = resClimb.cm;
 		AscTime = resClimb.tp;
@@ -1258,10 +1244,7 @@ public class TrackData {
 		TotalTime = CalcHour();
 
 		SearchMinMaxElevationResult resMinMaxElev = new SearchMinMaxElevationResult();
-		resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev); // ref
-																					// MinElev,
-																					// ref
-																					// MaxElev);
+		resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev);
 		MinElev = resMinMaxElev.min;
 		MaxElev = resMinMaxElev.max;
 
@@ -1334,7 +1317,7 @@ public class TrackData {
 			Utils.WriteIntToXML(writer, "TOPMARGIN", TopMargin);
 		  
 			for (int i = start; i <= end; i++) { 
-				cgData r = data.get(i);
+				CgData r = data.get(i);
 		  
 				writer.writeStartElement("TRACKPOINT");
 			  		Utils.WriteStringToXML(writer, "LATITUDEDEGREES", String.format(Locale.ROOT,"%f", r.getLatitude()));
@@ -1419,7 +1402,7 @@ public class TrackData {
 		tInDay.Init();
 
 		boolean first = true;
-		for (cgData r : data) {
+		for (CgData r : data) {
 			// --Night coeff --
 			/*
 			 * if ( (r.getHour().CompareTo(StartNightTime.Hour)>=0) ||
@@ -1457,7 +1440,7 @@ public class TrackData {
 
 		int j = 0;
 		boolean first = true;
-		for (cgData r : data) {
+		for (CgData r : data) {
 			if (!first) {
 				if (r.getSlope() < -40) {
 					j = 0;
@@ -1563,7 +1546,7 @@ public class TrackData {
 
 		int j = 0;
 		boolean first = true;
-		for (cgData r : data) {
+		for (CgData r : data) {
 			if (!first) {
 				if (r.getElevation() < 1000) {
 					j = 0;
@@ -1716,7 +1699,7 @@ public class TrackData {
 		dLat1InRad = lat * k;
 		dLong1InRad = lon * k;
 
-		for (cgData r : data) {
+		for (CgData r : data) {
 			kEarthRadiusKms = 6378.14; // 6376.5
 
 			dDistance = 0; // Double.MinValue

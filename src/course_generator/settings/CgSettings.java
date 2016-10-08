@@ -20,7 +20,7 @@ package course_generator.settings;
 
 import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
 
-import course_generator.cgConstants;
+import course_generator.CgConstants;
 import course_generator.utils.Utils;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -54,7 +54,7 @@ public class CgSettings {
     public int VertSplitPosition;
     public int HorizSplitPosition;
     
-    public int Unit = cgConstants.UNIT_METER; //Unit for the display 0=meter 1=Miles/feet
+    public int Unit = CgConstants.UNIT_METER; //Unit for the display 0=meter 1=Miles/feet
     
     public int ReadError = 0;
     public int LineError = 0;
@@ -78,7 +78,7 @@ public class CgSettings {
         mruCGX = new String[5];
         TableMainColWidth = new int[16];
     
-        Unit = cgConstants.UNIT_METER;
+        Unit = CgConstants.UNIT_METER;
         		
         ReadError = 0;
         LineError = 0;
@@ -210,9 +210,9 @@ public class CgSettings {
      */
     public String getDistanceUnitString() {
     	switch (Unit) {
-    	case cgConstants.UNIT_METER:
+    	case CgConstants.UNIT_METER:
     		return "Km";
-    	case cgConstants.UNIT_MILES_FEET:
+    	case CgConstants.UNIT_MILES_FEET:
     		return "Miles";
     	default:
     		return "Km";    		
@@ -225,9 +225,9 @@ public class CgSettings {
      */
     public String getElevationUnitString() {
     	switch (Unit) {
-    	case cgConstants.UNIT_METER:
+    	case CgConstants.UNIT_METER:
     		return "m";
-    	case cgConstants.UNIT_MILES_FEET:
+    	case CgConstants.UNIT_MILES_FEET:
     		return "feet";
     	default:
     		return "m";    		

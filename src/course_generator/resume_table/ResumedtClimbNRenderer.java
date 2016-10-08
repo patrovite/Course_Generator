@@ -23,7 +23,7 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import course_generator.cgResume;
+import course_generator.CgResume;
 import course_generator.settings.CgSettings;
 
 /**
@@ -36,7 +36,7 @@ public class ResumedtClimbNRenderer   extends DefaultTableCellRenderer {
    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
        super.getTableCellRendererComponent(table, value, isSelected, hasFocus,	row, column);
 
-       cgResume data = (cgResume) value;
+       CgResume data = (CgResume) value;
        CgSettings settings = ((ResumeModel) table.getModel()).getSettings();
 
        //-- Display the value

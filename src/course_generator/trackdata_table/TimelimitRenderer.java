@@ -18,7 +18,7 @@
 
 package course_generator.trackdata_table;
 
-import course_generator.cgData;
+import course_generator.CgData;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JTable;
@@ -35,7 +35,7 @@ public class TimelimitRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus,	row, column);
 
-        cgData data = (cgData) value;
+        CgData data = (CgData) value;
 
         int timelimit = data.getTimeLimit();
         int time = data.getTime();

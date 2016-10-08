@@ -23,11 +23,11 @@ import java.util.ArrayList;
 public class ResumeData {
     private static ResumeData instance;
     
-    public ArrayList<cgResume> data;
+    public ArrayList<CgResume> data;
 
     //-- Constructeur --
     public ResumeData() {
-        data = new ArrayList<cgResume>();
+        data = new ArrayList<CgResume>();
     }
 
     

@@ -1343,8 +1343,8 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 	private void EditSSCurves() {
-//		frmEditCurve frm= new frmEditCurve();
-//		frm.showDialog(Settings);
+		frmEditCurve frm= new frmEditCurve();
+		frm.showDialog(Settings);
 	}
 
 	private void Create_Profil_Toolbar() {
@@ -2356,7 +2356,7 @@ public class frmMain extends javax.swing.JFrame {
 	private int GotoNextTag() {
 		int p = -1;
 		if (Track.data.size() > 0) {
-			cgData d;
+			CgData d;
 
 			int row = TableMain.getSelectedRow();
 			int col = TableMain.getSelectedColumn();
@@ -2391,7 +2391,7 @@ public class frmMain extends javax.swing.JFrame {
 	private int GotoPrevTag() {
 		int p = -1;
 		if (Track.data.size() > 0) {
-			cgData d;
+			CgData d;
 
 			int row = TableMain.getSelectedRow();
 			int col = TableMain.getSelectedColumn();
@@ -2443,7 +2443,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Populate the serie
 		XYSeries serie1 = new XYSeries("Elevation/Distance");
-		for (cgData r : Track.data) {
+		for (CgData r : Track.data) {
 			serie1.add(r.getTotal() / 1000, r.getElevation()); // TODO miles/km
 		}
 		dataset.addSeries(serie1);
@@ -2467,7 +2467,7 @@ public class frmMain extends javax.swing.JFrame {
 			return;
 
 		// -- Get the data
-		cgData d = Track.data.get(index);
+		CgData d = Track.data.get(index);
 
 		lbProfilDistance.setText(" " + bundle.getString("frmMain.lbProfilDistance.text") + "= "
 				+ d.getTotalString(Settings.Unit, true) + " ");
@@ -2502,7 +2502,7 @@ public class frmMain extends javax.swing.JFrame {
 		int j = -1;
 		int k = 0;
 		int old = 0;
-		cgData OldData;
+		CgData OldData;
 
 		if (Track.data.isEmpty())
 			return;
@@ -2515,11 +2515,11 @@ public class frmMain extends javax.swing.JFrame {
 
 		OldData = Track.data.get(0);
 
-		for (cgData src : Track.data) {
+		for (CgData src : Track.data) {
 			if ((src.getTag() & 32) != 0) {
 				j++;
 				k++;
-				cgResume dst = new cgResume();
+				CgResume dst = new CgResume();
 				// ResGrid.Rows.Add();
 
 				dst.setNum(k);
@@ -2995,7 +2995,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Create the route
 		List<Coordinate> route1 = new ArrayList<Coordinate>();
 		double last_diff = tdata.data.get(0).getDiff();
-		for (cgData r : tdata.data) {
+		for (CgData r : tdata.data) {
 			if (r.getDiff() == last_diff) {
 				route1.add(new Coordinate(r.getLatitude(), r.getLongitude()));
 			} else {
@@ -3084,10 +3084,10 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Unit
 		switch (Settings.Unit) {
-		case cgConstants.UNIT_METER:
+		case CgConstants.UNIT_METER:
 			LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMeter.text"));
 			break;
-		case cgConstants.UNIT_MILES_FEET:
+		case CgConstants.UNIT_MILES_FEET:
 			LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMilesFeet.text"));
 			break;
 		default:

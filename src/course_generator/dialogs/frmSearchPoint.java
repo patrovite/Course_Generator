@@ -46,7 +46,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import course_generator.cgConstants;
+import course_generator.CgConstants;
 import course_generator.frmMain;
 import course_generator.TrackData;
 import course_generator.TrackData.SearchPointResult;
@@ -154,7 +154,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		if (result.Point > -1) {
 			lbPointFoundVal.setText(String.valueOf(result.Point + 1));
 
-			if (settings.Unit == cgConstants.UNIT_MILES_FEET) {
+			if (settings.Unit == CgConstants.UNIT_MILES_FEET) {
 				// meter to miles
 				dist = Utils.Meter2uMiles(result.Distance);
 			} else

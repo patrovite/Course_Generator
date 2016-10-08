@@ -18,7 +18,7 @@
 
 package course_generator.utils;
 
-import course_generator.cgData;
+import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.TrackData.CalcClimbResult;
 
@@ -900,7 +900,7 @@ public class Utils {
         return r;
     }
 
-    public static String GenLabel(String s, cgData r, TrackData cd) {
+    public static String GenLabel(String s, CgData r, TrackData cd) {
         /*
          * %N:Nom
          * %A:Altitude

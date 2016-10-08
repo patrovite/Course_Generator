@@ -18,7 +18,7 @@
 
 package course_generator.trackdata_table;
 
-import course_generator.cgData;
+import course_generator.CgData;
 import course_generator.utils.CgConst;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -40,7 +40,7 @@ public class TagRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus,	row, column);
 
-        cgData data = (cgData) value;
+        CgData data = (CgData) value;
 
         int tag = data.getTag();
 

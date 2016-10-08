@@ -18,8 +18,8 @@
 
 package course_generator.trackdata_table;
 
-import course_generator.cgData;
-import course_generator.cgConstants;
+import course_generator.CgData;
+import course_generator.CgConstants;
 import course_generator.settings.CgSettings;
 
 import java.awt.Color;
@@ -41,7 +41,7 @@ public class ElevationRenderer  extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus,	row, column);
 
-        cgData data = (cgData) value;
+        CgData data = (CgData) value;
 
         CgSettings settings = ((TrackDataModel) table.getModel()).getSettings();
         
@@ -50,10 +50,10 @@ public class ElevationRenderer  extends DefaultTableCellRenderer {
         
         //-- Set the elevation value
         switch (settings.Unit) {
-        case cgConstants.UNIT_METER: 
+        case CgConstants.UNIT_METER: 
         	setText(String.format("%1.0f ",ele));
         	break;
-        case cgConstants.UNIT_MILES_FEET: 
+        case CgConstants.UNIT_MILES_FEET: 
         	setText(String.format("%1.0f ",ele));
         	break;
         default:
