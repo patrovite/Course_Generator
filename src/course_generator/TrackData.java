@@ -42,6 +42,7 @@ import course_generator.utils.Utils.CalcLineResult;
 //import static course_generator.utils.Utils.ReadXMLInt;
 //import static course_generator.utils.Utils.ReadXMLString;
 import java.awt.Color;
+import java.awt.Component;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -1207,12 +1208,12 @@ public class TrackData {
 	 * @param mode
 	 *            reading mode (0=complet 1=partial)
 	 */
-	public void OpenCGX(String name, int mode) {
+	public void OpenCGX(Component parent, String name, int mode) {
 		SaxCGXHandler CGXhandler = new SaxCGXHandler();
 
 		int ret = 0;
 		try {
-			ret = CGXhandler.readDataFromCGX(name, this, mode);
+			ret = CGXhandler.readDataFromCGX(parent, name, this, mode);
 		} catch (Exception e) {
 		}
 

@@ -19,8 +19,11 @@
 package course_generator;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
+
+import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -32,12 +35,16 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import course_generator.utils.Utils;
+
 /**
  *
  * @author pierre.delore
  */
 public class SaxCGXHandler extends DefaultHandler{
-    private double cgx_version=0.0;
+	private java.util.ResourceBundle bundle = null;
+	private Component Parent;
+	private double cgx_version=0.0;
     private double totaldistance=0.0;
     private int totalsecond=0;
     private String coursename="";
@@ -149,8 +156,10 @@ public class SaxCGXHandler extends DefaultHandler{
      * @throws IOException
      * @throws ParserConfigurationException 
      */
-    public int readDataFromCGX(String filename, TrackData TData, int readmode) throws SAXException, IOException, ParserConfigurationException{
-        
+    public int readDataFromCGX(Component parent,String filename, TrackData TData, int readmode) throws SAXException, IOException, ParserConfigurationException{
+    	// -- Initialize the string resource for internationalization
+    	bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+    	Parent=parent;
         mode=readmode;
         trkdata=TData;
         cgx_version=0.0;
@@ -392,13 +401,12 @@ public class SaxCGXHandler extends DefaultHandler{
             else if (qName.equalsIgnoreCase("CURVE")) {
                 curve=ManageString();
                 //TODO traiter la lecture du fichier courbe
-                /*
-                if (System.IO.File.Exists(Utils.GetAppDataDir() + "/Course Generator/config/" + Paramfile + ".par") == false)
-                    {
-                      MessageBox.Show("Le fichier courbe '"+Paramfile+"' n'est pas présent sur votre ordinateur. Le fichier 'Default' va le remplacer.");
-                      Paramfile = "Default";
-                    }       
-                */
+                if (!Utils.FileExist(Utils.GetHomeDir() + "/Course Generator/"+ curve + ".par")) {
+                	 JOptionPane.showMessageDialog(Parent, bundle.getString("loadCGX.CurveFileError"));
+                	trkdata.Paramfile="Default";
+                }
+                else
+                	trkdata.Paramfile=curve;
             }
             else if (qName.equalsIgnoreCase("MRBSIZEW")) {
                 trkdata.MrbSizeW=ManageInt(640,ERR_READ_INT);

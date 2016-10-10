@@ -28,8 +28,11 @@
 
 /*
  * IN PROGRESS:
- * 
+ * Hot:
+ * - Test that the curve is loaded and generate a message if it is missing. The test the calculation with the curve.
+ *  
  * TODO:
+ * - Move the track info on the a bottom line and add the curve name on this line
  * - Application icon
  * - About dialog
  * - Memorize the horizontal split position
@@ -2709,7 +2712,7 @@ public class frmMain extends javax.swing.JFrame {
 	 */
 	private void LoadCGX(String filename) {
 		try {
-			Track.OpenCGX(filename, 0);
+			Track.OpenCGX(this, filename, 0);
 			AddMruCGX(filename);
 		} catch (Exception e) {
 		}
