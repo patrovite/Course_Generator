@@ -59,6 +59,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -80,6 +81,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -199,7 +201,7 @@ import course_generator.utils.Utils;
  */
 public class frmMain extends javax.swing.JFrame {
 	private final String Version = "4.0.0.Alpha1";
-	private FileFilter GPX_Filter;
+//	private FileFilter GPX_Filter;
 	public TrackData Track;
 	private ResumeData Resume;
 	private final TrackDataModel ModelTableMain;
@@ -313,6 +315,8 @@ public class frmMain extends javax.swing.JFrame {
 	public Crosshair xCrosshair;
 
 	public Crosshair yCrosshair;
+	private JPanel StatusBar;
+	private JLabel lbStatusBarSpeed;
 
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
@@ -1126,6 +1130,173 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
+	
+	private void Create_Statusbar() {
+		StatusBar = new javax.swing.JPanel();
+		FlowLayout fl = new FlowLayout(FlowLayout.RIGHT);
+		fl.setVgap(0);
+		StatusBar.setLayout(fl);
+		
+				
+		// -- Total distance
+		// ----------------------------------------------------
+		LbInfoTotalDist = new javax.swing.JLabel();
+//		LbInfoTotalDist.setBackground(Color.DARK_GRAY);
+//		LbInfoTotalDist.setForeground(Color.WHITE);
+		LbInfoTotalDist
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/distance.png")));
+//		LbInfoTotalDist.setText(bundle.getString("frmMain.LbInfoTotalDist.text"));
+//		LbInfoTotalDist.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoTotalDist.setOpaque(true);
+		StatusBar.add(LbInfoTotalDist);
+		
+
+		// -- Total distance - value
+		// ----------------------------------------------------
+		LbInfoTotalDistVal = new javax.swing.JLabel();
+//		LbInfoTotalDistVal.setBackground(Color.WHITE);
+		LbInfoTotalDistVal.setText(bundle.getString("frmMain.LbInfoTotalDistVal.text"));
+//		LbInfoTotalDistVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoTotalDistVal.setOpaque(true);
+		StatusBar.add(LbInfoTotalDistVal);
+		
+		StatusBar.add(new javax.swing.JToolBar.Separator());
+
+		// -- Ascent
+		// ------------------------------------------------------
+		LbInfoDp = new javax.swing.JLabel();
+//		LbInfoDp.setBackground(Color.DARK_GRAY);
+//		LbInfoDp.setForeground(Color.WHITE);
+		LbInfoDp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/dp.png")));
+//		LbInfoDp.setText(bundle.getString("frmMain.LbInfoDp.text"));
+//		LbInfoDp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoDp.setOpaque(true);
+		StatusBar.add(LbInfoDp);
+
+		// -- Ascent value
+		// ------------------------------------------------------
+		LbInfoDpVal = new javax.swing.JLabel();
+//		LbInfoDpVal.setBackground(Color.WHITE);
+		LbInfoDpVal.setText(bundle.getString("frmMain.LbInfoDpVal.text"));
+//		LbInfoDpVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoDpVal.setOpaque(true);
+		StatusBar.add(LbInfoDpVal);
+
+		StatusBar.add(new javax.swing.JToolBar.Separator());
+		
+		// -- Descent
+		// -----------------------------------------------------
+		LbInfoDm = new javax.swing.JLabel();
+//		LbInfoDm.setBackground(Color.DARK_GRAY);
+//		LbInfoDm.setForeground(Color.WHITE);
+		LbInfoDm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/dm.png")));
+//		LbInfoDm.setText(bundle.getString("frmMain.LbInfoDm.text"));
+//		LbInfoDm.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoDm.setOpaque(true);
+		StatusBar.add(LbInfoDm);
+		
+		// -- Descent value
+		// -----------------------------------------------------
+		LbInfoDmVal = new javax.swing.JLabel();
+//		LbInfoDmVal.setBackground(Color.WHITE);
+		LbInfoDmVal.setText(bundle.getString("frmMain.LbInfoDmVal.text"));
+//		LbInfoDmVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoDmVal.setOpaque(true);
+		StatusBar.add(LbInfoDmVal);
+
+		StatusBar.add(new javax.swing.JToolBar.Separator());
+		
+		// -- Total time
+		// --------------------------------------------------------
+		LbInfoTime = new javax.swing.JLabel();
+//		LbInfoTime.setBackground(Color.DARK_GRAY);
+//		LbInfoTime.setForeground(Color.WHITE);
+		LbInfoTime
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chronometer.png")));
+//		LbInfoTime.setText(bundle.getString("frmMain.LbInfoTime.text"));
+//		LbInfoTime.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoTime.setOpaque(true);
+		StatusBar.add(LbInfoTime);
+		
+		// -- Total time value
+		// --------------------------------------------------------
+		LbInfoTimeVal = new javax.swing.JLabel();
+//		LbInfoTimeVal.setBackground(Color.WHITE);
+		LbInfoTimeVal.setText(bundle.getString("frmMain.LbInfoTimeVal.text"));
+//		LbInfoTimeVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoTimeVal.setOpaque(true);
+		StatusBar.add(LbInfoTimeVal);
+		
+		StatusBar.add(new javax.swing.JToolBar.Separator());
+		
+		// -- Calculation needed
+		// ------------------------------------------------
+		LbInfoCalculate = new javax.swing.JLabel();
+//		LbInfoCalculate.setBackground(Color.DARK_GRAY);
+//		LbInfoCalculate.setForeground(Color.WHITE);
+		LbInfoCalculate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/calc.png")));
+		LbInfoCalculate.setText(bundle.getString("frmMain.LbInfoCalculate.text"));
+//		LbInfoCalculate.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoCalculate.setOpaque(true);
+		StatusBar.add(LbInfoCalculate);
+		
+		// -- Calculation needed value
+		// ------------------------------------------------
+		LbInfoCalculateVal = new javax.swing.JLabel();
+//		LbInfoCalculateVal.setBackground(new java.awt.Color(255, 171, 81));
+		LbInfoCalculateVal.setText(bundle.getString("frmMain.LbInfoCalculateOk.text"));
+//		LbInfoCalculateVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoCalculateVal.setOpaque(true);
+		StatusBar.add(LbInfoCalculateVal);
+
+		StatusBar.add(new javax.swing.JToolBar.Separator());
+		
+		// -- Internet connection present
+		// ----------------------------------------
+		LbInfoInternet = new javax.swing.JLabel();
+//		LbInfoInternet.setBackground(Color.DARK_GRAY);
+//		LbInfoInternet.setForeground(Color.WHITE);
+		LbInfoInternet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/earth.png")));
+		LbInfoInternet.setText(bundle.getString("frmMain.LbInfoInternet.text"));
+//		LbInfoInternet.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoInternet.setOpaque(true);
+		StatusBar.add(LbInfoInternet);
+		
+		// -- Internet connection present value
+		// ----------------------------------------
+		LbInfoInternetVal = new javax.swing.JLabel();
+//		LbInfoInternetVal.setBackground(new java.awt.Color(153, 255, 102));
+		LbInfoInternetVal.setText(bundle.getString("frmMain.LbInfoInternetOnline.text"));
+//		LbInfoInternetVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoInternetVal.setOpaque(true);
+
+		StatusBar.add(new javax.swing.JToolBar.Separator());
+		StatusBar.add(LbInfoInternetVal);
+		
+		// -- Unit
+		// ----------------------------------------
+		LbInfoUnit = new javax.swing.JLabel();
+		LbInfoUnit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/unit.png")));
+//		LbInfoUnit.setBackground(Color.DARK_GRAY);
+//		LbInfoUnit.setForeground(Color.WHITE);
+//		LbInfoUnit.setText(bundle.getString("frmMain.LbInfoUnit.text"));
+//		LbInfoUnit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoUnit.setOpaque(true);
+		StatusBar.add(LbInfoUnit);
+		
+		// -- Unit value
+		// ----------------------------------------
+		LbInfoUnitVal = new javax.swing.JLabel();
+//		LbInfoUnitVal.setBackground(Color.WHITE);
+		LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMeter.text"));
+//		LbInfoUnitVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoUnitVal.setOpaque(true);
+		StatusBar.add(LbInfoUnitVal);
+		
+		StatusBar.add(new javax.swing.JToolBar.Separator());
+		
+	}
+	
 	private void Create_MainToolbar() {
 		ToolBarMain = new javax.swing.JToolBar();
 		ToolBarMain.setFloatable(false);
@@ -1732,6 +1903,11 @@ public class frmMain extends javax.swing.JFrame {
 		Create_MainToolbar();
 		paneGlobal.add(ToolBarMain, BorderLayout.NORTH);
 
+		// -- Status bar
+		// ------------------------------------------------------
+		Create_Statusbar();
+		paneGlobal.add(StatusBar, BorderLayout.SOUTH);
+		
 		// -- Main split bar (vertical)
 		// -----------------------------------------
 		SplitPaneMain = new javax.swing.JSplitPane();
@@ -1825,162 +2001,162 @@ public class frmMain extends javax.swing.JFrame {
 		// jPanelInfo.setPreferredSize(new java.awt.Dimension(100, 144));
 		jPanelInfo.setLayout(new GridBagLayout());
 
-		// -- Total distance
-		// ----------------------------------------------------
-		LbInfoTotalDist = new javax.swing.JLabel();
-		LbInfoTotalDist.setBackground(Color.DARK_GRAY);
-		LbInfoTotalDist.setForeground(Color.WHITE);
-		LbInfoTotalDist
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/distance.png")));
-		LbInfoTotalDist.setText(bundle.getString("frmMain.LbInfoTotalDist.text"));
-		LbInfoTotalDist.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoTotalDist.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoTotalDist, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Total distance - value
-		// ----------------------------------------------------
-		LbInfoTotalDistVal = new javax.swing.JLabel();
-		LbInfoTotalDistVal.setBackground(Color.WHITE);
-		LbInfoTotalDistVal.setText(bundle.getString("frmMain.LbInfoTotalDistVal.text"));
-		LbInfoTotalDistVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoTotalDistVal.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoTotalDistVal, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Ascent
-		// ------------------------------------------------------
-		LbInfoDp = new javax.swing.JLabel();
-		LbInfoDp.setBackground(Color.DARK_GRAY);
-		LbInfoDp.setForeground(Color.WHITE);
-		LbInfoDp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/dp.png")));
-		LbInfoDp.setText(bundle.getString("frmMain.LbInfoDp.text"));
-		LbInfoDp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoDp.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoDp, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Ascent value
-		// ------------------------------------------------------
-		LbInfoDpVal = new javax.swing.JLabel();
-		LbInfoDpVal.setBackground(Color.WHITE);
-		LbInfoDpVal.setText(bundle.getString("frmMain.LbInfoDpVal.text"));
-		LbInfoDpVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoDpVal.setOpaque(true);
-		jPanelInfo.add(LbInfoDpVal);
-		Utils.addComponent(jPanelInfo, LbInfoDpVal, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Descent
-		// -----------------------------------------------------
-		LbInfoDm = new javax.swing.JLabel();
-		LbInfoDm.setBackground(Color.DARK_GRAY);
-		LbInfoDm.setForeground(Color.WHITE);
-		LbInfoDm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/dm.png")));
-		LbInfoDm.setText(bundle.getString("frmMain.LbInfoDm.text"));
-		LbInfoDm.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoDm.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoDm, 0, 2, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Descent value
-		// -----------------------------------------------------
-		LbInfoDmVal = new javax.swing.JLabel();
-		LbInfoDmVal.setBackground(Color.WHITE);
-		LbInfoDmVal.setText(bundle.getString("frmMain.LbInfoDmVal.text"));
-		LbInfoDmVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoDmVal.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoDmVal, 1, 2, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Total time
-		// --------------------------------------------------------
-		LbInfoTime = new javax.swing.JLabel();
-		LbInfoTime.setBackground(Color.DARK_GRAY);
-		LbInfoTime.setForeground(Color.WHITE);
-		LbInfoTime
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chronometer.png")));
-		LbInfoTime.setText(bundle.getString("frmMain.LbInfoTime.text"));
-		LbInfoTime.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoTime.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoTime, 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Total time value
-		// --------------------------------------------------------
-		LbInfoTimeVal = new javax.swing.JLabel();
-		LbInfoTimeVal.setBackground(Color.WHITE);
-		LbInfoTimeVal.setText(bundle.getString("frmMain.LbInfoTimeVal.text"));
-		LbInfoTimeVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoTimeVal.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoTimeVal, 1, 3, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Calculation needed
-		// ------------------------------------------------
-		LbInfoCalculate = new javax.swing.JLabel();
-		LbInfoCalculate.setBackground(Color.DARK_GRAY);
-		LbInfoCalculate.setForeground(Color.WHITE);
-		LbInfoCalculate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/calc.png")));
-		LbInfoCalculate.setText(bundle.getString("frmMain.LbInfoCalculate.text"));
-		LbInfoCalculate.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoCalculate.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoCalculate, 0, 4, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Calculation needed value
-		// ------------------------------------------------
-		LbInfoCalculateVal = new javax.swing.JLabel();
-		LbInfoCalculateVal.setBackground(new java.awt.Color(255, 171, 81));
-		LbInfoCalculateVal.setText(bundle.getString("frmMain.LbInfoCalculateOk.text"));
-		LbInfoCalculateVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoCalculateVal.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoCalculateVal, 1, 4, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Internet connection present
-		// ----------------------------------------
-		LbInfoInternet = new javax.swing.JLabel();
-		LbInfoInternet.setBackground(Color.DARK_GRAY);
-		LbInfoInternet.setForeground(Color.WHITE);
-		LbInfoInternet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/earth.png")));
-		LbInfoInternet.setText(bundle.getString("frmMain.LbInfoInternet.text"));
-		LbInfoInternet.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoInternet.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoInternet, 0, 5, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Internet connection present value
-		// ----------------------------------------
-		LbInfoInternetVal = new javax.swing.JLabel();
-		LbInfoInternetVal.setBackground(new java.awt.Color(153, 255, 102));
-		LbInfoInternetVal.setText(bundle.getString("frmMain.LbInfoInternetOnline.text"));
-		LbInfoInternetVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoInternetVal.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoInternetVal, 1, 5, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Unit
-		// ----------------------------------------
-		LbInfoUnit = new javax.swing.JLabel();
-		LbInfoUnit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/unit.png")));
-		LbInfoUnit.setBackground(Color.DARK_GRAY);
-		LbInfoUnit.setForeground(Color.WHITE);
-		LbInfoUnit.setText(bundle.getString("frmMain.LbInfoUnit.text"));
-		LbInfoUnit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoUnit.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoUnit, 0, 6, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Unit value
-		// ----------------------------------------
-		LbInfoUnitVal = new javax.swing.JLabel();
-		LbInfoUnitVal.setBackground(Color.WHITE);
-		LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMeter.text"));
-		LbInfoUnitVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoUnitVal.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoUnitVal, 1, 6, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
+//		// -- Total distance
+//		// ----------------------------------------------------
+////		LbInfoTotalDist = new javax.swing.JLabel();
+////		LbInfoTotalDist.setBackground(Color.DARK_GRAY);
+////		LbInfoTotalDist.setForeground(Color.WHITE);
+////		LbInfoTotalDist
+////				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/distance.png")));
+////		LbInfoTotalDist.setText(bundle.getString("frmMain.LbInfoTotalDist.text"));
+////		LbInfoTotalDist.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+////		LbInfoTotalDist.setOpaque(true);
+////		Utils.addComponent(jPanelInfo, LbInfoTotalDist, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
+////				GridBagConstraints.BOTH);
+//
+//		// -- Total distance - value
+//		// ----------------------------------------------------
+//		LbInfoTotalDistVal = new javax.swing.JLabel();
+//		LbInfoTotalDistVal.setBackground(Color.WHITE);
+//		LbInfoTotalDistVal.setText(bundle.getString("frmMain.LbInfoTotalDistVal.text"));
+//		LbInfoTotalDistVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoTotalDistVal.setOpaque(true);
+//		Utils.addComponent(jPanelInfo, LbInfoTotalDistVal, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
+//				GridBagConstraints.BOTH);
+//
+//		// -- Ascent
+//		// ------------------------------------------------------
+//		LbInfoDp = new javax.swing.JLabel();
+//		LbInfoDp.setBackground(Color.DARK_GRAY);
+//		LbInfoDp.setForeground(Color.WHITE);
+//		LbInfoDp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/dp.png")));
+//		LbInfoDp.setText(bundle.getString("frmMain.LbInfoDp.text"));
+//		LbInfoDp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoDp.setOpaque(true);
+//		Utils.addComponent(jPanelInfo, LbInfoDp, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
+//				GridBagConstraints.BOTH);
+//
+//		// -- Ascent value
+//		// ------------------------------------------------------
+//		LbInfoDpVal = new javax.swing.JLabel();
+//		LbInfoDpVal.setBackground(Color.WHITE);
+//		LbInfoDpVal.setText(bundle.getString("frmMain.LbInfoDpVal.text"));
+//		LbInfoDpVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoDpVal.setOpaque(true);
+//		jPanelInfo.add(LbInfoDpVal);
+//		Utils.addComponent(jPanelInfo, LbInfoDpVal, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
+//				GridBagConstraints.BOTH);
+//
+//		// -- Descent
+//		// -----------------------------------------------------
+//		LbInfoDm = new javax.swing.JLabel();
+//		LbInfoDm.setBackground(Color.DARK_GRAY);
+//		LbInfoDm.setForeground(Color.WHITE);
+//		LbInfoDm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/dm.png")));
+//		LbInfoDm.setText(bundle.getString("frmMain.LbInfoDm.text"));
+//		LbInfoDm.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoDm.setOpaque(true);
+//		Utils.addComponent(jPanelInfo, LbInfoDm, 0, 2, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
+//				GridBagConstraints.BOTH);
+//
+//		// -- Descent value
+//		// -----------------------------------------------------
+//		LbInfoDmVal = new javax.swing.JLabel();
+//		LbInfoDmVal.setBackground(Color.WHITE);
+//		LbInfoDmVal.setText(bundle.getString("frmMain.LbInfoDmVal.text"));
+//		LbInfoDmVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoDmVal.setOpaque(true);
+//		Utils.addComponent(jPanelInfo, LbInfoDmVal, 1, 2, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
+//				GridBagConstraints.BOTH);
+//
+//		// -- Total time
+//		// --------------------------------------------------------
+//		LbInfoTime = new javax.swing.JLabel();
+//		LbInfoTime.setBackground(Color.DARK_GRAY);
+//		LbInfoTime.setForeground(Color.WHITE);
+//		LbInfoTime
+//				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chronometer.png")));
+//		LbInfoTime.setText(bundle.getString("frmMain.LbInfoTime.text"));
+//		LbInfoTime.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoTime.setOpaque(true);
+//		Utils.addComponent(jPanelInfo, LbInfoTime, 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
+//				GridBagConstraints.BOTH);
+//
+//		// -- Total time value
+//		// --------------------------------------------------------
+//		LbInfoTimeVal = new javax.swing.JLabel();
+//		LbInfoTimeVal.setBackground(Color.WHITE);
+//		LbInfoTimeVal.setText(bundle.getString("frmMain.LbInfoTimeVal.text"));
+//		LbInfoTimeVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoTimeVal.setOpaque(true);
+//		Utils.addComponent(jPanelInfo, LbInfoTimeVal, 1, 3, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
+//				GridBagConstraints.BOTH);
+//
+//		// -- Calculation needed
+//		// ------------------------------------------------
+//		LbInfoCalculate = new javax.swing.JLabel();
+//		LbInfoCalculate.setBackground(Color.DARK_GRAY);
+//		LbInfoCalculate.setForeground(Color.WHITE);
+//		LbInfoCalculate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/calc.png")));
+//		LbInfoCalculate.setText(bundle.getString("frmMain.LbInfoCalculate.text"));
+//		LbInfoCalculate.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoCalculate.setOpaque(true);
+//		Utils.addComponent(jPanelInfo, LbInfoCalculate, 0, 4, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
+//				GridBagConstraints.BOTH);
+//
+//		// -- Calculation needed value
+//		// ------------------------------------------------
+//		LbInfoCalculateVal = new javax.swing.JLabel();
+//		LbInfoCalculateVal.setBackground(new java.awt.Color(255, 171, 81));
+//		LbInfoCalculateVal.setText(bundle.getString("frmMain.LbInfoCalculateOk.text"));
+//		LbInfoCalculateVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoCalculateVal.setOpaque(true);
+//		Utils.addComponent(jPanelInfo, LbInfoCalculateVal, 1, 4, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
+//				GridBagConstraints.BOTH);
+//
+//		// -- Internet connection present
+//		// ----------------------------------------
+//		LbInfoInternet = new javax.swing.JLabel();
+//		LbInfoInternet.setBackground(Color.DARK_GRAY);
+//		LbInfoInternet.setForeground(Color.WHITE);
+//		LbInfoInternet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/earth.png")));
+//		LbInfoInternet.setText(bundle.getString("frmMain.LbInfoInternet.text"));
+//		LbInfoInternet.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoInternet.setOpaque(true);
+//		Utils.addComponent(jPanelInfo, LbInfoInternet, 0, 5, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
+//				GridBagConstraints.BOTH);
+//
+//		// -- Internet connection present value
+//		// ----------------------------------------
+//		LbInfoInternetVal = new javax.swing.JLabel();
+//		LbInfoInternetVal.setBackground(new java.awt.Color(153, 255, 102));
+//		LbInfoInternetVal.setText(bundle.getString("frmMain.LbInfoInternetOnline.text"));
+//		LbInfoInternetVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoInternetVal.setOpaque(true);
+//		Utils.addComponent(jPanelInfo, LbInfoInternetVal, 1, 5, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
+//				GridBagConstraints.BOTH);
+//
+//		// -- Unit
+//		// ----------------------------------------
+//		LbInfoUnit = new javax.swing.JLabel();
+//		LbInfoUnit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/unit.png")));
+//		LbInfoUnit.setBackground(Color.DARK_GRAY);
+//		LbInfoUnit.setForeground(Color.WHITE);
+//		LbInfoUnit.setText(bundle.getString("frmMain.LbInfoUnit.text"));
+//		LbInfoUnit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoUnit.setOpaque(true);
+//		Utils.addComponent(jPanelInfo, LbInfoUnit, 0, 6, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
+//				GridBagConstraints.BOTH);
+//
+//		// -- Unit value
+//		// ----------------------------------------
+//		LbInfoUnitVal = new javax.swing.JLabel();
+//		LbInfoUnitVal.setBackground(Color.WHITE);
+//		LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMeter.text"));
+//		LbInfoUnitVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		LbInfoUnitVal.setOpaque(true);
+//		Utils.addComponent(jPanelInfo, LbInfoUnitVal, 1, 6, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
+//				GridBagConstraints.BOTH);
 
 		// -- Add the info panel to the left panel
 		// ------------------------------
@@ -3051,6 +3227,7 @@ public class frmMain extends javax.swing.JFrame {
 	 *            Track data object
 	 */
 	private void RefreshInfo(TrackData tdata) {
+				
 		// -- Distance
 		LbInfoTotalDistVal.setText(String.format("%1.3f ", tdata.getTotalDistance(Settings.Unit) / 1000.0)
 				+ Settings.getDistanceUnitString());
