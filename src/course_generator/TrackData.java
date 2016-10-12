@@ -149,6 +149,7 @@ public class TrackData {
 
 		Name = "";
 		param = new ParamData();
+		Paramfile = "default";
 		data = new ArrayList<CgData>();
 		tInNight = new StatData();
 		tInDay = new StatData();
