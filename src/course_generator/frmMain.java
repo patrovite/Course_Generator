@@ -250,7 +250,7 @@ public class frmMain extends javax.swing.JFrame {
 	private JMenuItem mnuDisplaySpeed;
 	private JMenuItem mnuDisplaySlope;
 	private JMenu mnuTools;
-	private JMenuItem mnuCalculateTackTime;
+	private JMenuItem mnuCalculateTrackTime;
 	private JMenuItem mnuFindMinMax;
 	private JMenuItem mnuInvertTrack;
 	private JMenuItem mnuDefineNewStart;
@@ -417,6 +417,65 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshMruGPX();
 		RefreshStatusbar(Track);
 	}
+	
+	
+	
+	
+	//-- Permet de lancer un calcul sur le tableau --
+	
+    private void CalcTrackTime() {
+    	if (Track.data.isEmpty()) return;
+
+//    	if (cd.isTimeLoaded==true) {
+//    		if (MessageBox.Show("Des données existent. Voulez-vous les écraser?", "Course Generator",
+//    				MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)==DialogResult.No) return;
+//    	}
+
+//    	StatusBar.Items["Message"].Visible = true;
+//    	StatusBar.Items["Message"].Text = "Calcul en cours...";
+//    	StatusBar.Refresh();
+
+        Track.Calculate();
+
+        RefreshStatusbar(Track);
+        
+		CalcClimbResult ccr = new CalcClimbResult();
+		
+		ccr = Track.CalcClimb(0, Track.data.size()-1, ccr);
+		Track.ClimbP=ccr.cp;
+		Track.ClimbM=ccr.cm;
+		Track.AscTime=ccr.tp;
+		Track.DescTime=ccr.tm;
+
+//        cd.CalcClimb(0, cd.data.Count - 1, ref cd.ClimbP, ref cd.ClimbM, ref cd.AscTime, ref cd.DescTime);
+        
+        Track.isCalculated = true;
+        Track.isModified = true;
+        
+        //-- Refresh statusbar
+        RefreshStatusbar(Track);
+        
+        
+		TableMain.invalidate();
+
+        //Refresh resume
+        RefreshResume();
+//        RefreshResume(false);
+        
+        //Refresh statistic
+        RefreshStat(false);
+        
+//        StatusBar.Items["Message"].Visible = false;
+    }
+
+    
+	private void RefreshStat(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 
 	/**
 	 * Create the main menu
@@ -977,18 +1036,17 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Calculate the track time
 		// -------------------------------------------
-		mnuCalculateTackTime = new javax.swing.JMenuItem();
-		mnuCalculateTackTime.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
-		mnuCalculateTackTime
+		mnuCalculateTrackTime = new javax.swing.JMenuItem();
+		mnuCalculateTrackTime.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+		mnuCalculateTrackTime
 				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/refresh.png")));
-		mnuCalculateTackTime.setText(bundle.getString("frmMain.mnuCalculateTackTime.text"));
-		mnuCalculateTackTime.addActionListener(new java.awt.event.ActionListener() {
+		mnuCalculateTrackTime.setText(bundle.getString("frmMain.mnuCalculateTackTime.text"));
+		mnuCalculateTrackTime.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				CalcTrackTime();
 			}
 		});
-		mnuCalculateTackTime.setEnabled(false);
-		mnuTools.add(mnuCalculateTackTime);
+		mnuTools.add(mnuCalculateTrackTime);
 
 		// -- Separator
 		// ---------------------------------------------------------
@@ -1450,10 +1508,9 @@ public class frmMain extends javax.swing.JFrame {
 		btCalculateTrackTime.setFocusable(false);
 		btCalculateTrackTime.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				CalcTrackTime();
 			}
 		});
-		btCalculateTrackTime.setEnabled(false);
 		ToolBarMain.add(btCalculateTrackTime);
 
 	}
@@ -2471,7 +2528,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		if (Track.data.isEmpty())
 			return;
-
+		
 		CalcClimbResult ccr = new CalcClimbResult();
 		CalcAvrSlopeResult casr = new CalcAvrSlopeResult();
 		CalcAvrSpeedResult speedResult = new CalcAvrSpeedResult();

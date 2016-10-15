@@ -834,7 +834,7 @@ public class TrackData {
 
 		isTimeLoaded = false;
 
-		String sParamfile = Utils.GetHomeDir() + "/Course Generator/config/" + Paramfile + ".par";
+		String sParamfile = Utils.GetHomeDir() + "/Course Generator/" + Paramfile + ".par";
 
 		try{
 			param.Load(sParamfile);
