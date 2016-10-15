@@ -1154,6 +1154,30 @@ public class Utils {
         return "";
     }
     
+    
+    /**
+     * Remove extention form the filename
+     * @param filename Filename without path
+     * @return filename without extention
+     */
+    public static String getFileNameWithoutExtension (String filename) {
+        // Handle null case specially.
+
+        if (filename == null) return null;
+
+        // Get position of last '.'.
+
+        int pos = filename.lastIndexOf(".");
+
+        // If there wasn't any '.' just return the string as is.
+
+        if (pos == -1) return filename;
+
+        // Otherwise return the string, up to the dot.
+
+        return filename.substring(0, pos);
+    }
+    
     /**
      * Return the path of a filename Cross platform??
      *

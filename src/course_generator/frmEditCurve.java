@@ -26,9 +26,13 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.DefaultListModel;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -40,6 +44,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.ListModel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -91,7 +96,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 	public frmEditCurve() {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		dataset = new XYSeriesCollection();
-		// dataset = CreateDataset();
 		chart = CreateChartProfil(dataset);
 
 		initComponents();
@@ -189,6 +193,34 @@ public class frmEditCurve extends javax.swing.JDialog {
 		return chart;
 	}
 
+	
+	
+	
+	/**
+	 * Refresh the curve list
+	 */
+    private void RefreshCurveList()
+    {
+    	File[] files = new File(Utils.GetHomeDir() + "/Course Generator/").listFiles(new FilenameFilter() 
+    		{ 
+    			@Override 
+    			public boolean accept(File dir, String name) {
+    				return name.toLowerCase().endsWith(".par"); 
+    			} 
+    		});
+    		
+    	ParamListModel model = (ParamListModel) jListCurves.getModel();
+    	model.clear();
+    	
+	    for (int i = 0; i < files.length; i++) {
+	      if (files[i].isFile()) {
+	    	  model.addElement(Utils.getFileNameWithoutExtension(files[i].getName())); 
+	      }
+	    }
+	    model.sort();
+    }
+
+    
 	/**
 	 * This method is called to initialize the form.
 	 */
@@ -198,6 +230,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmEditCurve.title"));
 		setAlwaysOnTop(true);
+		setResizable(false);
 		setType(java.awt.Window.Type.UTILITY);
 
 		// -- Layout
@@ -207,8 +240,8 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		//-- Curves list
         jListCurves = new javax.swing.JList<>();
+        jListCurves.setModel(new ParamListModel()); //filelist));
         jListCurves.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        //jListCurves.setToolTipText(bundle.getString("frmMain.jListBinders.toolTipText")); 
         jListCurves.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
 //                jListBindersMouseClicked(evt);
@@ -220,9 +253,9 @@ public class frmEditCurve extends javax.swing.JDialog {
 		Utils.addComponent(paneGlobal, jScrollPaneCurves,
 				0, 0, 
 				1, 4, 
-				0, 0, 
+				1, 0, 
 				10, 10, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
 		//-- Curve management toolbar
@@ -353,6 +386,8 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		// --
 		pack();
+		
+		RefreshCurveList();
 
 	}
 
