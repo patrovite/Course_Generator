@@ -16,12 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package course_generator;
+package course_generator.param;
 
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -29,6 +30,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -41,6 +43,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
@@ -56,6 +59,33 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import course_generator.settings.CgSettings;
+import course_generator.trackdata_table.CoeffClass;
+import course_generator.trackdata_table.CoeffRenderer;
+import course_generator.trackdata_table.DiffClass;
+import course_generator.trackdata_table.DiffRenderer;
+import course_generator.trackdata_table.DistClass;
+import course_generator.trackdata_table.DistRenderer;
+import course_generator.trackdata_table.ElevationClass;
+import course_generator.trackdata_table.ElevationRenderer;
+import course_generator.trackdata_table.HourClass;
+import course_generator.trackdata_table.HourRenderer;
+import course_generator.trackdata_table.LatClass;
+import course_generator.trackdata_table.LatRenderer;
+import course_generator.trackdata_table.LonClass;
+import course_generator.trackdata_table.LonRenderer;
+import course_generator.trackdata_table.MainHeaderRenderer;
+import course_generator.trackdata_table.RecupClass;
+import course_generator.trackdata_table.RecupRenderer;
+import course_generator.trackdata_table.StationClass;
+import course_generator.trackdata_table.StationRenderer;
+import course_generator.trackdata_table.TagClass;
+import course_generator.trackdata_table.TagRenderer;
+import course_generator.trackdata_table.TimeClass;
+import course_generator.trackdata_table.TimeRenderer;
+import course_generator.trackdata_table.TimelimitClass;
+import course_generator.trackdata_table.TimelimitRenderer;
+import course_generator.trackdata_table.TotalClass;
+import course_generator.trackdata_table.TotalRenderer;
 import course_generator.utils.Utils;
 
 public class frmEditCurve extends javax.swing.JDialog {
@@ -63,7 +93,9 @@ public class frmEditCurve extends javax.swing.JDialog {
 	private CgSettings settings;
 	private java.util.ResourceBundle bundle;
 	private JFreeChart chart = null;
-	
+	private ParamListModel model;
+	public ParamData param = null;
+	private ParamPointsModel tablemodel;
 	private JPanel jPanelButtons;
 	private JButton btCancel;
 	private JButton btOk;
@@ -89,6 +121,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 	private JButton btCancelEdit;
 	private ChartPanel jPanelProfilChart;
 	private XYSeriesCollection dataset;
+	private JTable TablePoints;
 
 	/**
 	 * Creates new form frmSettings
@@ -97,7 +130,8 @@ public class frmEditCurve extends javax.swing.JDialog {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		dataset = new XYSeriesCollection();
 		chart = CreateChartProfil(dataset);
-
+		param = new ParamData();
+		tablemodel=new ParamPointsModel(param);
 		initComponents();
 		setModal(true);
 	}
@@ -209,7 +243,7 @@ public class frmEditCurve extends javax.swing.JDialog {
     			} 
     		});
     		
-    	ParamListModel model = (ParamListModel) jListCurves.getModel();
+//    	ParamListModel model = (ParamListModel) jListCurves.getModel();
     	model.clear();
     	
 	    for (int i = 0; i < files.length; i++) {
@@ -240,11 +274,15 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		//-- Curves list
         jListCurves = new javax.swing.JList<>();
-        jListCurves.setModel(new ParamListModel()); //filelist));
+        model=new ParamListModel();
+        jListCurves.setModel(model);
         jListCurves.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListCurves.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-//                jListBindersMouseClicked(evt);
+            	int index=jListCurves.getSelectedIndex();
+            	if (index>=0) {
+            		LoadCurve(Utils.GetHomeDir() + "/Course Generator/"+(String)model.getElementAt(index)+".par");
+            	}
             }
         });
         jScrollPaneCurves = new javax.swing.JScrollPane();
@@ -294,14 +332,13 @@ public class frmEditCurve extends javax.swing.JDialog {
 		
 		lbNameVal = new javax.swing.JLabel();
 		lbNameVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		lbNameVal.setText("xxxx");
 		Utils.addComponent(paneGlobal, lbNameVal,
 				3, 1, 
 				GridBagConstraints.REMAINDER, 1, 
 				0, 0, 
 				0, 5, 5, 10, 
 				GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
+				GridBagConstraints.BOTH);
 		
 		//-- Curve comment
 		lbComment = new javax.swing.JLabel();
@@ -317,7 +354,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 		
 		tfComment = new JTextField();
 		tfComment.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		tfComment.setText("xxxx");
 		Utils.addComponent(paneGlobal, tfComment,
 				3, 2, 
 				GridBagConstraints.REMAINDER, 1, 
@@ -327,16 +363,24 @@ public class frmEditCurve extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 		
 		//-- Point list
-        jListPoint = new javax.swing.JList<>();
-        jListPoint.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        //jListCurves.setToolTipText(bundle.getString("frmMain.jListBinders.toolTipText")); 
-        jListPoint.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-//                jListBindersMouseClicked(evt);
-            }
-        });
+		TablePoints = new javax.swing.JTable();
+		TablePoints.setModel(tablemodel);//new ParamPointsModel(param));
+		TablePoints.getTableHeader().setReorderingAllowed(false);
+		TablePoints.setMaximumSize(new Dimension(100, 1000));
+//		TablePoints.setRowHeight(20);
+		TablePoints.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+//				TableMainMouseClicked(evt);
+			}
+		});
+		TablePoints.addKeyListener(new java.awt.event.KeyAdapter() {
+			public void keyReleased(java.awt.event.KeyEvent evt) {
+//				TableMainKeyReleased(evt);
+			}
+		});
+		
         jScrollPanePoint = new javax.swing.JScrollPane();
-        jScrollPanePoint.setViewportView(jListPoint);
+        jScrollPanePoint.setViewportView(TablePoints);
 		Utils.addComponent(paneGlobal, jScrollPanePoint,
 				2, 3, 
 				2, 1, 
@@ -360,7 +404,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		Utils.addComponent(paneGlobal, jPanelProfilChart,
 				5, 3, 
 				1, 1, 
-				0, 0, 
+				1, 0, 
 				0, 0, 0, 10, 
 				GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.BOTH);
@@ -391,6 +435,25 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 	}
 
+	protected void LoadCurve(String filename) {
+		 File f = new File(filename);
+		 String sname=Utils.getFileNameWithoutExtension(f.getName());
+		
+		if (Utils.FileExist(filename)) {
+			
+			try {
+				param.Load(filename);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			lbSelectedCurve.setText(bundle.getString("frmEditCurve.lbSelectedCurve.text")+" "+sname);
+			lbNameVal.setText(param.name);
+			tfComment.setText(param.comment);
+			tablemodel.fireTableDataChanged();
+		}
+	}
+
+	
 	private void CreateEditToolbar() {
 		//-- Buttons bar
 		ToolBarEdit = new javax.swing.JToolBar();

@@ -29,6 +29,7 @@
 /*
  * IN PROGRESS:
  * Hot:
+ * - Curve editing: Size of the table...
  * - Test that the curve is loaded and generate a message if it is missing. The test the calculation with the curve.
  *  
  * TODO:
@@ -119,6 +120,7 @@ import course_generator.TrackData.CalcAvrSlopeResult;
 import course_generator.TrackData.CalcAvrSpeedResult;
 import course_generator.TrackData.CalcClimbResult;
 import course_generator.dialogs.frmSearchPoint;
+import course_generator.param.frmEditCurve;
 import course_generator.resume_table.ResumeAvgSlopeNClass;
 import course_generator.resume_table.ResumeAvgSlopeNRenderer;
 import course_generator.resume_table.ResumeAvgSlopePClass;

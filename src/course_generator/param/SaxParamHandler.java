@@ -186,18 +186,20 @@ public class SaxParamHandler  extends DefaultHandler {
    
    @Override
    public void endElement(String uri, String localname, String qName) throws SAXException {
-       if (qName.equalsIgnoreCase("PROJECT")) {
-           level--;
-       }
-
-       if (level==LEVEL_PARAM) {
+	   if (level==LEVEL_PROJECT) {
            if (qName.equalsIgnoreCase("NAME")) {
                paramdata.name=ManageString();
            }
            else if (qName.equalsIgnoreCase("COMMENT")) {
                paramdata.comment=ManageString();
            }
-           else if (qName.equalsIgnoreCase("PARAM"))
+           else if (qName.equalsIgnoreCase("PROJECT")) {
+	           level--;
+	       }
+	   }
+
+       if (level==LEVEL_PARAM) {
+           if (qName.equalsIgnoreCase("PARAM"))
            		level--;
        }
        
