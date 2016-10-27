@@ -18,6 +18,26 @@
 
 package course_generator;
 
+import static course_generator.utils.Utils.CalcDistance;
+
+//import static course_generator.utils.Utils.ReadXMLDouble;
+//import static course_generator.utils.Utils.ReadXMLInt;
+//import static course_generator.utils.Utils.ReadXMLString;
+import java.awt.Color;
+import java.awt.Component;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Locale;
+
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+
+import org.joda.time.DateTime;
+
 import course_generator.param.ParamData;
 /*
 import course_generator.table.CoeffClass;
@@ -36,25 +56,7 @@ import course_generator.table.TotalClass;
 import course_generator.utils.CgConst;
 import course_generator.utils.StatData;
 import course_generator.utils.Utils;
-import static course_generator.utils.Utils.CalcDistance;
 import course_generator.utils.Utils.CalcLineResult;
-//import static course_generator.utils.Utils.ReadXMLDouble;
-//import static course_generator.utils.Utils.ReadXMLInt;
-//import static course_generator.utils.Utils.ReadXMLString;
-import java.awt.Color;
-import java.awt.Component;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Locale;
-
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-
-import org.joda.time.DateTime;
 
 //import org.jdom2.*;
 //import org.jdom2.output.*;
@@ -149,7 +151,7 @@ public class TrackData {
 
 		Name = "";
 		param = new ParamData();
-		Paramfile = "default";
+		Paramfile = "Default";
 		data = new ArrayList<CgData>();
 		tInNight = new StatData();
 		tInDay = new StatData();

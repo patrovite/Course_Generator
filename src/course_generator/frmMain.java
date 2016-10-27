@@ -29,7 +29,6 @@
 /*
  * IN PROGRESS:
  * Hot:
- * - Curve editing: Size of the table...
  * - Test that the curve is loaded and generate a message if it is missing. The test the calculation with the curve.
  *  
  * TODO:
@@ -96,7 +95,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 
-import org.jdesktop.swingx.plaf.StatusBarUI;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
@@ -1519,7 +1517,8 @@ public class frmMain extends javax.swing.JFrame {
 
 	private void EditSSCurves() {
 		frmEditCurve frm= new frmEditCurve();
-		frm.showDialog(Settings);
+		frm.showDialog(Track);
+		RefreshStatusbar(Track);
 	}
 
 	/**

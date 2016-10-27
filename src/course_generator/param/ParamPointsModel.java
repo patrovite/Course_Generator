@@ -3,18 +3,20 @@ package course_generator.param;
 import javax.swing.table.AbstractTableModel;
 
 public class ParamPointsModel extends AbstractTableModel {
-	
-//	private NoteService noteService;
-//	private List<NoteEleve> notes;
+	private java.util.ResourceBundle bundle;
 	private ParamData param;
 	
-	private final String[] header = { "Slope", "Speed" };	
+	private final String[] header; // = { "Slope", "Speed" };	
 
 	/**
 	 * Constructor
 	 */
 	public ParamPointsModel(ParamData p) {
 		param=p;
+		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		header = new String[2];
+		header[0]=bundle.getString("ParamPointsModel.slope");
+		header[1]=bundle.getString("ParamPointsModel.speed");
 	}
 
 	public void setParam(ParamData p) {

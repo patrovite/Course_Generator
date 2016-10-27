@@ -22,14 +22,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.FocusTraversalPolicy;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.text.ParseException;
 import java.util.Vector;
 
 import javax.swing.AbstractAction;
@@ -38,21 +34,18 @@ import javax.swing.BorderFactory;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import course_generator.CgConstants;
-import course_generator.frmMain;
 import course_generator.TrackData;
 import course_generator.TrackData.SearchPointResult;
+import course_generator.frmMain;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CustomFocusTraversalPolicy;
-import course_generator.utils.DoubleVerifier;
 import course_generator.utils.JTextFieldLimit;
 import course_generator.utils.Utils;
 
@@ -84,6 +77,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 	 * Creates new form frmSettings
 	 */
 	public frmSearchPoint() {
+		super();
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		// setModal(true);
@@ -317,6 +311,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		// --
 		pack();
 
+		//-- Center the windows
 		setLocationRelativeTo(null);
 	}
 

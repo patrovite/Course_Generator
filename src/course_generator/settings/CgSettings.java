@@ -18,22 +18,22 @@
 
 package course_generator.settings;
 
-import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
-
-import course_generator.CgConstants;
-import course_generator.utils.Utils;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+
 import org.xml.sax.SAXException;
+
+import course_generator.CgConstants;
+import course_generator.utils.Utils;
 
 /**
  *
@@ -63,7 +63,7 @@ public class CgSettings {
     public CgSettings() {
         int i=0;
         
-        String ParamFile = "";
+        ParamFile = "Default";
         bNoConnectOnStartup = true;
         ConnectionTimeout = 10;
         Language="";
