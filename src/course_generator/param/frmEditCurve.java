@@ -607,7 +607,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 	}
 	
 	/**
-	 * Edit the slected line
+	 * Edit the selected line
 	 */
 	protected void EditLine() {
 		if (!bEditMode) return;

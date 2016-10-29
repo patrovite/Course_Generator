@@ -1131,7 +1131,6 @@ public class frmMain extends javax.swing.JFrame {
 				RefreshStatusbar(Track);
 			}
 		});
-		mnuCGSettings.setEnabled(false);
 		mnuSettings.add(mnuCGSettings);
 
 		// --
@@ -2054,7 +2053,15 @@ public class frmMain extends javax.swing.JFrame {
 		TableMain.setRowHeight(20);
 		TableMain.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				TableMainMouseClicked(evt);
+				if 	(evt.getButton()==evt.BUTTON1 && evt.getClickCount() >= 2 && !evt.isConsumed()) {
+		            evt.consume();
+		    		int row = TableMain.rowAtPoint(evt.getPoint());
+		    		int col = TableMain.columnAtPoint(evt.getPoint());
+					frmEditPosition frm = new frmEditPosition();
+					frm.showDialog(Settings, Track, row, col);
+				}
+				else
+					TableMainMouseClicked(evt);
 			}
 		});
 		TableMain.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -2951,6 +2958,7 @@ public class frmMain extends javax.swing.JFrame {
 		int col = TableMain.columnAtPoint(evt.getPoint());
 		if ((row < 0) || (col < 0) || (row == old_row))
 			return;
+		
 		old_row = row;
 		if (Track.data.size() > 0) {
 			// -- Refresh marker position on the map
@@ -2959,8 +2967,7 @@ public class frmMain extends javax.swing.JFrame {
 			RefreshProfilInfo(row);
 			xCrosshair.setValue(Track.data.get(row).getTotal(Settings.Unit) / 1000.0);
 			yCrosshair.setValue(Track.data.get(row).getElevation(Settings.Unit));
-		}
-
+		}			
 	}
 
 	private void TableMainKeyReleased(java.awt.event.KeyEvent evt) {
