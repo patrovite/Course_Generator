@@ -30,6 +30,7 @@
  * IN PROGRESS:
  * Hot:
  * - Test that the curve is loaded and generate a message if it is missing. The test the calculation with the curve.
+ * -Replace tableMain.invalidate and same for the table resume
  *  
  * TODO:
  * - Move the track info on the a bottom line and add the curve name on this line
@@ -73,6 +74,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.security.auth.Refreshable;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -383,7 +385,7 @@ public class frmMain extends javax.swing.JFrame {
 		for (int i = 0; i < 15; i++) {
 			TableMain.getColumnModel().getColumn(i).setPreferredWidth(Settings.TableMainColWidth[i]);
 		}
-		TableMain.invalidate();
+		RefreshTableMain();
 
 		// -- Set the windows size and center it in the screen - Not tested on
 		// multi-screen configuration
@@ -456,7 +458,7 @@ public class frmMain extends javax.swing.JFrame {
         RefreshStatusbar(Track);
         
         
-		TableMain.invalidate();
+		RefreshTableMain();
 
         //Refresh resume
         RefreshResume();
@@ -1010,7 +1012,7 @@ public class frmMain extends javax.swing.JFrame {
 					Track.Invert();
 					RefreshProfil();
 					RefreshStatusbar(Track);
-					TableMain.invalidate();
+					RefreshTableMain();
 					RefreshResume();
 					// DrawMap();
 					// DrawProfil(Constantes.SRC_MAIN);
@@ -2059,6 +2061,7 @@ public class frmMain extends javax.swing.JFrame {
 		    		int col = TableMain.columnAtPoint(evt.getPoint());
 					frmEditPosition frm = new frmEditPosition();
 					frm.showDialog(Settings, Track, row, col);
+					RefreshTableMain();
 				}
 				else
 					TableMainMouseClicked(evt);
@@ -2668,7 +2671,7 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshStatusbar(Track);
 
 		// -- Force the update of the main table
-		TableMain.invalidate();
+		RefreshTableMain();
 		old_row = -1;
 
 		// -- Refresh resume grid
@@ -2756,7 +2759,7 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshTitle();
 		
 		// -- Force the update of the main table
-		TableMain.invalidate();
+		RefreshTableMain();
 		RefreshMruCGX();
 	}
 
@@ -2885,7 +2888,7 @@ public class frmMain extends javax.swing.JFrame {
 	// DisplayTrack(Track);
 	//
 	// // -- Force the update of the main table
-	// TableMain.invalidate();
+	// RefreshTableMain();
 	//
 	// RefreshInfo(Track);
 	// }
@@ -3129,6 +3132,26 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
+	/**
+	 * Refresh the content of the data table
+	 */
+	private void RefreshTableMain() {
+		int r=TableMain.getSelectedRow();
+		ModelTableMain.fireTableDataChanged();
+		if (r>=0)
+			TableMain.setRowSelectionInterval(r, r);
+	}
+
+	/**
+	 * Refresh the content of the resume table
+	 */
+	private void RefreshTableResume() {
+		int r=TableResume.getSelectedRow();
+		ModelTableResume.fireTableDataChanged();
+		if (r>=0)
+			TableResume.setRowSelectionInterval(r, r);
+	}
+	
 	/**
 	 * Refresh the position of the marker on the map
 	 * 

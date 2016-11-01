@@ -4,14 +4,18 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.awt.font.TextAttribute;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -27,7 +31,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
 import course_generator.settings.CgSettings;
+import course_generator.utils.CgConst;
 import course_generator.utils.CgSpinner;
+import course_generator.utils.JHourSetting;
 import course_generator.utils.Utils;
 
 public class frmEditPosition  extends javax.swing.JDialog {
@@ -63,7 +69,7 @@ public class frmEditPosition  extends javax.swing.JDialog {
 	private JLabel lbName;
 	private JTextField tfName;
 	private JLabel lbElevation;
-	private JSpinner spinElevation;
+	private CgSpinner spinElevation;
 	private JLabel lbDiff;
 	private CgSpinner spinDiff;
 	private CgSpinner spinCoeff;
@@ -91,9 +97,15 @@ public class frmEditPosition  extends javax.swing.JDialog {
 	private JLabel lbRoadbook;
 	private JCheckBox chkRoadbook;
 	private JLabel lbTimelimit;
-	private JTextField tfTimelimit;
+//	private JTextField tfTimelimit;
 	private JLabel lbStation;
-	private JTextField tfStation;
+//	private JTextField tfStation;
+	private JHourSetting hsStation;
+	private JHourSetting hsTimelimit;
+	private JPanel panelLeft;
+	private JPanel panelRight;
+	private JLabel lbElevationHelp;
+	private JLabel lbTags;
 
 	/**
 	 * Creates new form frmSettings
@@ -112,6 +124,18 @@ public class frmEditPosition  extends javax.swing.JDialog {
 		data = track.data.get(line);
 		// Set field
 
+        //Higher point
+		
+		chkHighPoint.setSelected((data.getTag() & CgConst.TAG_HIGH_PT)!=0);
+		chkLowPoint.setSelected((data.getTag() & CgConst.TAG_LOW_PT)!=0);
+		chkEat.setSelected((data.getTag() & CgConst.TAG_EAT_PT)!=0);
+		chkDrink.setSelected((data.getTag() & CgConst.TAG_WATER_PT)!=0);
+		chkMark.setSelected((data.getTag() & CgConst.TAG_MARK)!=0);
+		chkRoadbook.setSelected((data.getTag() & CgConst.TAG_ROADBOOK)!=0);
+		chkPhoto.setSelected((data.getTag() & CgConst.TAG_COOL_PT)!=0);
+		chkNote.setSelected((data.getTag() & CgConst.TAG_NOTE)!=0);
+		chkInfo.setSelected((data.getTag() & CgConst.TAG_INFO)!=0);
+		
 		// End set field
 		ok = false;
 
@@ -122,7 +146,54 @@ public class frmEditPosition  extends javax.swing.JDialog {
 
 		if (ok) {
 			// Copy fields
+			track.data.get(line).setName(tfName.getText());
+			int tag=0;
+            //Higher point
+			if (chkHighPoint.isSelected())
+				tag=tag | CgConst.TAG_HIGH_PT;
 
+			//Lower point
+			if (chkLowPoint.isSelected())
+				tag=tag | CgConst.TAG_LOW_PT;
+
+            //Station
+			if (chkEat.isSelected())
+            	tag=tag | CgConst.TAG_EAT_PT;
+
+            //Drink
+			if (chkDrink.isSelected())
+				tag=tag | CgConst.TAG_WATER_PT;
+            
+            //Mark
+			if (chkMark.isSelected())
+				tag=tag | CgConst.TAG_MARK;
+            
+            //Roadbook
+			if (chkRoadbook.isSelected())
+				tag=tag | CgConst.TAG_ROADBOOK;
+            
+            //Photo
+			if (chkPhoto.isSelected())
+				tag=tag | CgConst.TAG_COOL_PT;
+            
+            //Note
+			if (chkNote.isSelected())
+				tag=tag | CgConst.TAG_NOTE;
+
+            //Info
+			if (chkInfo.isSelected())
+				tag=tag | CgConst.TAG_INFO;
+			track.data.get(line).setTag(tag);
+			
+			track.data.get(line).setElevation(spinElevation.getValueAsDouble());
+			track.data.get(line).setDiff(spinDiff.getValueAsDouble());
+			track.data.get(line).setCoeff(spinCoeff.getValueAsDouble());
+			track.data.get(line).setRecovery(spinRecovery.getValueAsDouble());
+
+			track.data.get(line).setTimeLimit(hsTimelimit.getHMSinSecond());
+			track.data.get(line).setStation(hsStation.getHMSinSecond());
+			
+			track.data.get(line).setComment(tfComment.getText());
 		}
 		return ok;
 	}
@@ -179,48 +250,62 @@ public class frmEditPosition  extends javax.swing.JDialog {
 		setTitle(bundle.getString("frmEditPosition.title"));
 		setAlwaysOnTop(true);
 		setResizable(false);
-		setMinimumSize(new Dimension(500,400));
+		setMinimumSize(new Dimension(800,400));
 		setType(java.awt.Window.Type.UTILITY);
 
 		// -- Layout
 		// ------------------------------------------------------------
 		Container paneGlobal = getContentPane();
 		paneGlobal.setLayout(new GridBagLayout());
+
+		//== Left panel
+		panelLeft = new JPanel();
+		panelLeft.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		panelLeft.setBackground(Color.WHITE);
+		panelLeft.setOpaque(true);
+		panelLeft.setLayout(new GridBagLayout());
+		Utils.addComponent(paneGlobal, panelLeft, 
+				0, 0, 
+				1, 1, 
+				0, 1, 
+				10, 10, 20, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+		
 		
 		//-- Line
+		line=0;
+		
 		lbLine = new javax.swing.JLabel();
-		lbLine.setBackground(ColorLabel);
-		lbLine.setOpaque(true);
-		lbLine.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		lbLine.setText(" "+"Line"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbLine, 
+
+		Font font = lbLine.getFont();
+		font = font.deriveFont(
+		    Collections.singletonMap(
+		        TextAttribute.WEIGHT, TextAttribute.WEIGHT_EXTRABOLD));
+		
+		lbLine.setFont(font);
+		lbLine.setText("Line"); //bundle.getString("frmSettings.lbUnit.text"));
+		
+		Utils.addComponent(panelLeft, lbLine, 
 				0, line, 
 				1, 1, 
 				0, 0, 
-				10, 10, 0, 0, 
+				5, 10, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		lbLineVal = new javax.swing.JLabel();
-		lbLineVal.setHorizontalAlignment(SwingConstants.CENTER);
-		lbLineVal.setBackground(ColorValNotEditable);
-		lbLineVal.setOpaque(true);
-		lbLineVal.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		Utils.addComponent(paneGlobal, lbLineVal, 
+		Utils.addComponent(panelLeft, lbLineVal, 
 				1, line++, 
 				1, 1, 
 				1, 0, 
-				10, 0, 0, 0, 
+				5, 0, 0, 10, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
-		
+
 		//======================================================================
 		//-- Latitude
 		lbLatitude = new javax.swing.JLabel();
-		lbLatitude.setBackground(ColorLabel);
-		lbLatitude.setOpaque(true);
-		lbLatitude.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		lbLatitude.setText(" "+"Latitude"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbLatitude, 
+		lbLatitude.setFont(font);
+		lbLatitude.setText("Latitude"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelLeft, lbLatitude, 
 				0, line, 
 				1, 1, 
 				0, 0, 
@@ -228,37 +313,27 @@ public class frmEditPosition  extends javax.swing.JDialog {
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		lbLatitudeVal = new javax.swing.JLabel();
-		lbLatitudeVal.setHorizontalAlignment(SwingConstants.CENTER);
-		lbLatitudeVal.setBackground(ColorValNotEditable);
-		lbLatitudeVal.setOpaque(true);
-		lbLatitudeVal.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		Utils.addComponent(paneGlobal, lbLatitudeVal, 
-				1, line, 
+		Utils.addComponent(panelLeft, lbLatitudeVal, 
+				1, line++, 
 				1, 1, 
 				0, 0, 
-				5, 0, 0, 0, 
+				5, 0, 0, 10, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		//-- Longitude
 		lbLongitude = new javax.swing.JLabel();
-		lbLongitude.setBackground(ColorLabel);
-		lbLongitude.setOpaque(true);
-		lbLongitude.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		lbLongitude.setText(" "+"Longitude"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbLongitude, 
-				2, line, 
+		lbLongitude.setFont(font);
+		lbLongitude.setText("Longitude"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelLeft, lbLongitude, 
+				0, line, 
 				1, 1, 
 				0, 0, 
-				5, 5, 0, 0, 
+				5, 10, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		lbLongitudeVal = new javax.swing.JLabel();
-		lbLongitudeVal.setHorizontalAlignment(SwingConstants.CENTER);
-		lbLongitudeVal.setBackground(ColorValNotEditable);
-		lbLongitudeVal.setOpaque(true);
-		lbLongitudeVal.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));		
-		Utils.addComponent(paneGlobal, lbLongitudeVal, 
-				3, line++, 
+		Utils.addComponent(panelLeft, lbLongitudeVal, 
+				1, line++, 
 				1, 1, 
 				1, 0, 
 				5, 0, 0, 10, 
@@ -267,11 +342,9 @@ public class frmEditPosition  extends javax.swing.JDialog {
 		//======================================================================
 		//-- Distance
 		lbDistance = new javax.swing.JLabel();
-		lbDistance.setBackground(ColorLabel);
-		lbDistance.setOpaque(true);
-		lbDistance.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		lbDistance.setText(" "+"Distance"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbDistance, 
+		lbDistance.setFont(font);
+		lbDistance.setText("Distance"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelLeft, lbDistance, 
 				0, line, 
 				1, 1, 
 				0, 0, 
@@ -279,37 +352,27 @@ public class frmEditPosition  extends javax.swing.JDialog {
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		lbDistanceVal = new javax.swing.JLabel();
-		lbDistanceVal.setHorizontalAlignment(SwingConstants.CENTER);
-		lbDistanceVal.setBackground(ColorValNotEditable);
-		lbDistanceVal.setOpaque(true);
-		lbDistanceVal.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));		
-		Utils.addComponent(paneGlobal, lbDistanceVal, 
-				1, line, 
+		Utils.addComponent(panelLeft, lbDistanceVal, 
+				1, line++, 
 				1, 1, 
 				0, 0, 
-				5, 0, 0, 0, 
+				5, 0, 0, 10, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		//-- Total
 		lbTotal = new javax.swing.JLabel();
-		lbTotal.setBackground(ColorLabel);
-		lbTotal.setOpaque(true);
-		lbTotal.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		lbTotal.setText(" "+"Total distance"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbTotal, 
-				2, line, 
+		lbTotal.setFont(font);
+		lbTotal.setText("Total distance"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelLeft, lbTotal, 
+				0, line, 
 				1, 1, 
 				0, 0, 
-				5, 5, 0, 0, 
+				5, 10, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		lbTotalVal = new javax.swing.JLabel();
-		lbTotalVal.setHorizontalAlignment(SwingConstants.CENTER);
-		lbTotalVal.setBackground(ColorValNotEditable);
-		lbTotalVal.setOpaque(true);
-		lbTotalVal.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));		
-		Utils.addComponent(paneGlobal, lbTotalVal, 
-				3, line++, 
+		Utils.addComponent(panelLeft, lbTotalVal, 
+				1, line++, 
 				1, 1, 
 				1, 0, 
 				5, 0, 0, 10, 
@@ -318,11 +381,9 @@ public class frmEditPosition  extends javax.swing.JDialog {
 		//======================================================================
 		//-- Time
 		lbTime = new javax.swing.JLabel();
-		lbTime.setBackground(ColorLabel);
-		lbTime.setOpaque(true);
-		lbTime.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		lbTime.setText(" "+"Time"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbTime, 
+		lbTime.setFont(font);
+		lbTime.setText("Time"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelLeft, lbTime, 
 				0, line, 
 				1, 1, 
 				0, 0, 
@@ -330,120 +391,120 @@ public class frmEditPosition  extends javax.swing.JDialog {
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		lbTimeVal = new javax.swing.JLabel();
-		lbTimeVal.setHorizontalAlignment(SwingConstants.CENTER);
-		lbTimeVal.setBackground(ColorValNotEditable);
-		lbTimeVal.setOpaque(true);
-		lbTimeVal.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));		
-		Utils.addComponent(paneGlobal, lbTimeVal, 
-				1, line, 
+		Utils.addComponent(panelLeft, lbTimeVal, 
+				1, line++, 
 				1, 1, 
 				0, 0, 
-				5, 0, 0, 0, 
+				5, 0, 0, 10, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		//-- Hour
 		lbHour = new javax.swing.JLabel();
-		lbHour.setBackground(ColorLabel);
-		lbHour.setOpaque(true);
-		lbHour.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		lbHour.setText(" "+"Hour"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbHour, 
-				2, line, 
-				1, 1, 
-				0, 0, 
-				5, 5, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-
-		lbHourVal = new javax.swing.JLabel();
-		lbHourVal.setHorizontalAlignment(SwingConstants.CENTER);
-		lbHourVal.setBackground(ColorValNotEditable);
-		lbHourVal.setOpaque(true);
-		lbHourVal.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));		
-		Utils.addComponent(paneGlobal, lbHourVal, 
-				3, line++, 
-				1, 1, 
-				1, 0, 
-				5, 0, 0, 10, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
-		//-- Name
-		lbName = new javax.swing.JLabel();
-		lbName.setBackground(ColorLabel);
-		lbName.setOpaque(true);
-		lbName.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		lbName.setText(" "+"Name"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbName, 
+		lbHour.setFont(font);
+		lbHour.setText("Hour"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelLeft, lbHour, 
 				0, line, 
 				1, 1, 
-				0, 0, 
+				0, 1, 
 				5, 10, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
+		lbHourVal = new javax.swing.JLabel();
+		Utils.addComponent(panelLeft, lbHourVal, 
+				1, line++, 
+				1, 1, 
+				1, 1, 
+				5, 0, 0, 10, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
+		
+		//== Right panel
+		line=0;
+		panelRight = new JPanel();
+		panelRight.setLayout(new GridBagLayout());
+		Utils.addComponent(paneGlobal, panelRight, 
+				1, 0, 
+				1, 1, 
+				1, 1, 
+				10, 10, 20, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+		
+		//-- Name
+		lbName = new javax.swing.JLabel();
+		lbName.setFont(font);
+		lbName.setText("Name"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelRight, lbName, 
+				0, line, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 5, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+
 		tfName = new javax.swing.JTextField(16);
-		Utils.addComponent(paneGlobal, tfName, 
+		Utils.addComponent(panelRight, tfName, 
 				1, line++, 
 				GridBagConstraints.REMAINDER, 1, 
 				1, 0, 
-				5, 0, 0, 10, 
+				0, 0, 0, 10, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		//-- Elevation
 		lbElevation = new javax.swing.JLabel();
-		lbElevation.setBackground(ColorLabel);
-		lbElevation.setOpaque(true);
-		lbElevation.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		lbElevation.setText(" "+"Elevation"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbElevation, 
+		lbElevation.setFont(font);
+		lbElevation.setText("Elevation"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelRight, lbElevation, 
 				0, line, 
 				1, 1, 
 				0, 0, 
-				5, 10, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+				5, 0, 0, 5, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		
 		spinElevation = new CgSpinner(0,0,100000,1);
-		Utils.addComponent(paneGlobal, spinElevation, 
-				1, line++, 
-				1, 1, 
-				1, 0, 
-				5, 0, 0, 5, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(panelRight, spinElevation, 
+				1, line, 
+				2, 1, 
+				0, 0, 
+				5, 0, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
+		lbElevationHelp = new javax.swing.JLabel();
+		lbElevationHelp.setBackground(Color.YELLOW);
+		lbElevationHelp.setOpaque(true);
+		lbElevationHelp.setText("?"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelRight, lbElevationHelp, 
+				3, line++, 
+				GridBagConstraints.REMAINDER, 1, 
+				1, 0, 
+				5, 10, 0, 10, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+
+		
+		lbTags = new javax.swing.JLabel();
+		lbTags.setFont(font);
+		lbTags.setText("Tags"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelRight, lbTags, 
+				0, line, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 5, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+		
 		//-- Tag : Mark
 		lbMark = new javax.swing.JLabel(
 			"Mark position",	
 			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/flag.png")),
 			JLabel.LEFT);
-		Utils.addComponent(paneGlobal, lbMark, 
-				0, line, 
-				1, 1, 
-				0, 0, 
-				5, 10, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
-		chkMark = new javax.swing.JCheckBox();
-		Utils.addComponent(paneGlobal, chkMark, 
+		Utils.addComponent(panelRight, lbMark, 
 				1, line, 
 				1, 1, 
 				0, 0, 
-				5, 5, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-
-		//-- Tag : Place to see
-		lbPhoto = new javax.swing.JLabel(
-				"Place to see",	
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/photo.png")),
-				JLabel.LEFT);
-		Utils.addComponent(paneGlobal, lbPhoto, 
-				2, line, 
-				1, 1, 
-				0, 0, 
-				5, 5, 0, 0, 
+				5, 0, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 		
-		chkPhoto = new javax.swing.JCheckBox();
-		Utils.addComponent(paneGlobal, chkPhoto, 
-				3, line++, 
+		chkMark = new javax.swing.JCheckBox();
+		Utils.addComponent(panelRight, chkMark, 
+				2, line++, 
 				1, 1, 
 				0, 0, 
 				5, 5, 0, 0, 
@@ -454,16 +515,135 @@ public class frmEditPosition  extends javax.swing.JDialog {
 			"High point",	
 			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/high_point.png")),
 			JLabel.LEFT);
-		Utils.addComponent(paneGlobal, lbHighPoint, 
-				0, line, 
+		Utils.addComponent(panelRight, lbHighPoint, 
+				1, line, 
 				1, 1, 
 				0, 0, 
-				5, 10, 0, 0, 
+				5, 0, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 		
 		chkHighPoint = new javax.swing.JCheckBox();
-		Utils.addComponent(paneGlobal, chkHighPoint, 
+		chkHighPoint.setBackground(Color.GREEN);
+		chkHighPoint.setOpaque(true);	
+		chkHighPoint.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				if (chkHighPoint.isSelected() && chkLowPoint.isSelected()) {
+					chkLowPoint.setSelected(false);
+				}
+			}
+		});
+		Utils.addComponent(panelRight, chkHighPoint, 
+				2, line++, 
+				1, 1, 
+				0, 0, 
+				5, 5, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
+		
+		//-- Tag : Low point
+		lbLowPoint = new javax.swing.JLabel(
+			"Low point",	
+			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/low_point.png")),
+			JLabel.LEFT);
+		Utils.addComponent(panelRight, lbLowPoint, 
 				1, line, 
+				1, 1, 
+				0, 0, 
+				5, 0, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+		
+		chkLowPoint = new javax.swing.JCheckBox();
+		chkLowPoint.setBackground(Color.GREEN);
+		chkLowPoint.setOpaque(true);		
+		chkLowPoint.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				if (chkLowPoint.isSelected() && chkHighPoint.isSelected()) {
+					chkHighPoint.setSelected(false);
+				}
+			}
+		});
+		Utils.addComponent(panelRight, chkLowPoint, 
+				2, line++, 
+				1, 1, 
+				0, 0, 
+				5, 5, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
+		
+		//-- Tag : eat station
+		lbEat = new javax.swing.JLabel(
+			"Eat station",	
+			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/eat.png")),
+			JLabel.LEFT);
+		Utils.addComponent(panelRight, lbEat, 
+				1, line, 
+				1, 1, 
+				0, 0, 
+				5, 0, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+		
+		chkEat = new javax.swing.JCheckBox();
+		chkEat.setBackground(Color.YELLOW);
+		chkEat.setOpaque(true);
+		chkEat.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				if (chkEat.isSelected() && chkDrink.isSelected()) {
+					chkDrink.setSelected(false);
+				}
+			}
+		});
+		Utils.addComponent(panelRight, chkEat, 
+				2, line++, 
+				1, 1, 
+				0, 0, 
+				5, 5, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+		
+		//-- Tag : drink station
+		lbDrink = new javax.swing.JLabel(
+			"Drink station",	
+			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/drink.png")),
+			JLabel.LEFT);
+		Utils.addComponent(panelRight, lbDrink, 
+				1, line, 
+				1, 1, 
+				0, 0, 
+				5, 0, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+		
+		chkDrink = new javax.swing.JCheckBox();
+		chkDrink.setBackground(Color.YELLOW);
+		chkDrink.setOpaque(true);
+		chkDrink.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				if (chkDrink.isSelected() && chkEat.isSelected()) {
+					chkEat.setSelected(false);
+				}
+			}
+		});
+		Utils.addComponent(panelRight, chkDrink, 
+				2, line++, 
+				1, 1, 
+				0, 0, 
+				5, 5, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+		
+
+		//-- Tag : Place to see
+		lbPhoto = new javax.swing.JLabel(
+				"Place to see",	
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/photo.png")),
+				JLabel.LEFT);
+		Utils.addComponent(panelRight, lbPhoto, 
+				1, line, 
+				1, 1, 
+				0, 0, 
+				5, 0, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+		
+		chkPhoto = new javax.swing.JCheckBox();
+		Utils.addComponent(panelRight, chkPhoto, 
+				2, line++, 
 				1, 1, 
 				0, 0, 
 				5, 5, 0, 0, 
@@ -474,36 +654,16 @@ public class frmEditPosition  extends javax.swing.JDialog {
 			"Note",	
 			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/note.png")),
 			JLabel.LEFT);
-		Utils.addComponent(paneGlobal, lbNote, 
-				2, line, 
+		Utils.addComponent(panelRight, lbNote, 
+				1, line, 
 				1, 1, 
 				0, 0, 
-				5, 5, 0, 0, 
+				5, 0, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 		
 		chkNote = new javax.swing.JCheckBox();
-		Utils.addComponent(paneGlobal, chkNote, 
-				3, line++, 
-				1, 1, 
-				0, 0, 
-				5, 5, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
-		//-- Tag : Low point
-		lbLowPoint = new javax.swing.JLabel(
-			"Low point",	
-			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/low_point.png")),
-			JLabel.LEFT);
-		Utils.addComponent(paneGlobal, lbLowPoint, 
-				0, line, 
-				1, 1, 
-				0, 0, 
-				5, 10, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
-		chkLowPoint = new javax.swing.JCheckBox();
-		Utils.addComponent(paneGlobal, chkLowPoint, 
-				1, line, 
+		Utils.addComponent(panelRight, chkNote, 
+				2, line++, 
 				1, 1, 
 				0, 0, 
 				5, 5, 0, 0, 
@@ -514,209 +674,157 @@ public class frmEditPosition  extends javax.swing.JDialog {
 			"Information",	
 			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/info.png")),
 			JLabel.LEFT);
-		Utils.addComponent(paneGlobal, lbInfo, 
-				2, line, 
-				1, 1, 
-				0, 0, 
-				5, 5, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
-		chkInfo = new javax.swing.JCheckBox();
-		Utils.addComponent(paneGlobal, chkInfo, 
-				3, line++, 
-				1, 1, 
-				0, 0, 
-				5, 5, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
-		//-- Tag : eat station
-		lbEat = new javax.swing.JLabel(
-			"Eat station",	
-			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/eat.png")),
-			JLabel.LEFT);
-		Utils.addComponent(paneGlobal, lbEat, 
-				0, line, 
-				1, 1, 
-				0, 0, 
-				5, 10, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
-		chkEat = new javax.swing.JCheckBox();
-		Utils.addComponent(paneGlobal, chkEat, 
+		Utils.addComponent(panelRight, lbInfo, 
 				1, line, 
 				1, 1, 
 				0, 0, 
-				5, 5, 0, 0, 
+				5, 0, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 		
+		chkInfo = new javax.swing.JCheckBox();
+		Utils.addComponent(panelRight, chkInfo, 
+				2, line++, 
+				1, 1, 
+				0, 0, 
+				5, 5, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
 		//-- Tag : Roadbook
 		lbRoadbook = new javax.swing.JLabel(
 			"Roadbook",	
 			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/roadbook.png")),
 			JLabel.LEFT);
-		Utils.addComponent(paneGlobal, lbRoadbook, 
-				2, line, 
+		Utils.addComponent(panelRight, lbRoadbook, 
+				1, line, 
 				1, 1, 
 				0, 0, 
-				5, 5, 0, 0, 
+				5, 0, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 		
 		chkRoadbook = new javax.swing.JCheckBox();
-		Utils.addComponent(paneGlobal, chkRoadbook, 
-				3, line++, 
+		Utils.addComponent(panelRight, chkRoadbook, 
+				2, line++, 
 				1, 1, 
 				0, 0, 
 				5, 5, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
-		
-		//-- Tag : drink station
-		lbDrink = new javax.swing.JLabel(
-			"Drink station",	
-			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/drink.png")),
-			JLabel.LEFT);
-		Utils.addComponent(paneGlobal, lbDrink, 
-				0, line, 
-				1, 1, 
-				0, 0, 
-				5, 10, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
-		chkDrink = new javax.swing.JCheckBox();
-		Utils.addComponent(paneGlobal, chkDrink, 
-				1, line++, 
-				1, 1, 
-				0, 0, 
-				5, 5, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
 		
 		//-- Diff
 		lbDiff = new javax.swing.JLabel();
-		lbDiff.setBackground(ColorLabel);
-		lbDiff.setOpaque(true);
-		lbDiff.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		lbDiff.setText(" "+"Difficulty"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbDiff, 
+		lbDiff.setFont(font);
+		lbDiff.setText("Difficulty"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelRight, lbDiff, 
 				0, line, 
 				1, 1, 
 				0, 0, 
-				5, 10, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+				5, 0, 0, 5, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		
 		spinDiff = new CgSpinner(100,0,100,1);
-		Utils.addComponent(paneGlobal, spinDiff, 
+		Utils.addComponent(panelRight, spinDiff, 
 				1, line++, 
-				1, 1, 
-				1, 0, 
+				2, 1, 
+				0, 0, 
 				5, 0, 0, 5, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		//-- Coeff
 		lbCoeff = new javax.swing.JLabel();
-		lbCoeff.setBackground(ColorLabel);
-		lbCoeff.setOpaque(true);
-		lbCoeff.setText(" "+"Health coefficient"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbCoeff, 
+		lbCoeff.setFont(font);
+		lbCoeff.setText("Health coefficient"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelRight, lbCoeff, 
 				0, line, 
 				1, 1, 
 				0, 0, 
-				5, 10, 0, 0, 
+				5, 0, 0, 5, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		
 		spinCoeff = new CgSpinner(100,0,200,1);
-		Utils.addComponent(paneGlobal, spinCoeff, 
+		Utils.addComponent(panelRight, spinCoeff, 
 				1, line++, 
-				1, 1, 
-				1, 0, 
+				2, 1, 
+				0, 0, 
 				5, 0, 0, 5, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 		
 		//-- Recup
 		lbRecovery = new javax.swing.JLabel();
-		lbRecovery.setBackground(ColorLabel);
-		lbRecovery.setOpaque(true);
-		lbRecovery.setText(" "+"Recovery"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbRecovery, 
+		lbRecovery.setFont(font);
+		lbRecovery.setText("Recovery"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelRight, lbRecovery, 
 				0, line, 
 				1, 1, 
 				0, 0, 
-				5, 10, 0, 0, 
+				5, 0, 0, 5, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		
 		spinRecovery = new CgSpinner(0,0,100,1);
-		Utils.addComponent(paneGlobal, spinRecovery, 
+		Utils.addComponent(panelRight, spinRecovery, 
 				1, line++, 
-				1, 1, 
-				1, 0, 
+				2, 1, 
+				0, 0, 
 				5, 0, 0, 5, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		//-- Time limit
 		lbTimelimit = new javax.swing.JLabel();
-		lbTimelimit.setBackground(ColorLabel);
-		lbTimelimit.setOpaque(true);
-		lbTimelimit.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		lbTimelimit.setText(" "+"Time limit"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbTimelimit, 
+		lbTimelimit.setFont(font);
+		lbTimelimit.setText("Time limit"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelRight, lbTimelimit, 
 				0, line, 
 				1, 1, 
-				0, 1, 
-				5, 10, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+				0, 0, 
+				5, 0, 0, 5, 
+				GridBagConstraints.WEST, GridBagConstraints.BOTH);
 
-		tfTimelimit = new javax.swing.JTextField();
-		Utils.addComponent(paneGlobal, tfTimelimit, 
+		hsTimelimit = new JHourSetting();
+		Utils.addComponent(panelRight, hsTimelimit, 
 				1, line++, 
 				GridBagConstraints.REMAINDER, 1, 
-				1, 1, 
+				0, 0, 
 				5, 0, 0, 10, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+				GridBagConstraints.WEST, GridBagConstraints.VERTICAL);
 
 		//-- Station
 		lbStation = new javax.swing.JLabel();
-		lbStation.setBackground(ColorLabel);
-		lbStation.setOpaque(true);
-		lbStation.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		lbStation.setText(" "+"Station time"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbStation, 
+		lbStation.setFont(font);
+		lbStation.setText("Station time"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelRight, lbStation, 
 				0, line, 
 				1, 1, 
-				0, 1, 
-				5, 10, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+				0, 0, 
+				5, 0, 0, 5, 
+				GridBagConstraints.WEST, GridBagConstraints.BOTH);
 
-		tfStation = new javax.swing.JTextField();
-		Utils.addComponent(paneGlobal, tfStation, 
+		hsStation = new JHourSetting();
+		Utils.addComponent(panelRight, hsStation, 
 				1, line++, 
 				GridBagConstraints.REMAINDER, 1, 
-				1, 1, 
+				0, 0, 
 				5, 0, 0, 10, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+				GridBagConstraints.WEST, GridBagConstraints.VERTICAL);
 
 		//-- Comment
 		lbComment = new javax.swing.JLabel();
-		lbComment.setBackground(ColorLabel);
-		lbComment.setOpaque(true);
-		lbComment.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		lbComment.setText(" "+"Comment"+" "); //bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbComment, 
+		lbComment.setFont(font);
+		lbComment.setText("Comment"); //bundle.getString("frmSettings.lbUnit.text"));
+		Utils.addComponent(panelRight, lbComment, 
 				0, line, 
 				1, 1, 
 				0, 1, 
-				5, 10, 10, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+				5, 0, 0, 5, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		tfComment = new javax.swing.JTextField();
-		Utils.addComponent(paneGlobal, tfComment, 
+		Utils.addComponent(panelRight, tfComment, 
 				1, line++, 
-				GridBagConstraints.REMAINDER, 1, 
+				4, 1, 
 				1, 1, 
-				5, 0, 10, 10, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+				5, 0, 0, 10, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 		
 		
 		// == BUTTONS
@@ -724,7 +832,7 @@ public class frmEditPosition  extends javax.swing.JDialog {
 		jPanelButtons = new javax.swing.JPanel();
 		jPanelButtons.setLayout(new FlowLayout());
 		Utils.addComponent(paneGlobal, jPanelButtons, 
-				0, line, 
+				0, 1, 
 				GridBagConstraints.REMAINDER, 1, 
 				0, 0, 
 				0, 0, 0, 0,
@@ -761,13 +869,20 @@ public class frmEditPosition  extends javax.swing.JDialog {
 	}
 
 	private void Refresh() {
-		lbLineVal.setText(String.format("%1.0f", data.getNum()));
-        lbLatitudeVal.setText(String.format("%1.7f ",data.getLatitude()));
-        lbLongitudeVal.setText(String.format("%1.7f ",data.getLongitude()));
-        lbDistanceVal.setText(data.getDistString(settings.Unit,true));
-        lbTotalVal.setText(data.getTotalString(settings.Unit,true));
-        lbTimeVal.setText(data.getTimeString());        
-        lbHourVal.setText(data.getHourString());
-        spinElevation.setValue(data.getElevation(settings.Unit));
+		lbLineVal.setText(String.format(": %1.0f", data.getNum()));
+        lbLatitudeVal.setText(String.format(": %1.7f",data.getLatitude()));
+        lbLongitudeVal.setText(String.format(": %1.7f",data.getLongitude()));
+        lbDistanceVal.setText(": "+data.getDistString(settings.Unit,true));
+        lbTotalVal.setText(": "+data.getTotalString(settings.Unit,true));
+        lbTimeVal.setText(": "+data.getTimeString());        
+        lbHourVal.setText(": "+data.getHourString());
+        
+        spinElevation.setValue((int)data.getElevation(settings.Unit));
+        spinDiff.setValue((int)data.getDiff());
+        spinCoeff.setValue((int)data.getCoeff());
+        spinRecovery.setValue((int)data.getRecovery());
+        
+        hsStation.setHMSinSecond(data.getStation());
+        hsTimelimit.setHMSinSecond(data.getTimeLimit());
 	}
 }

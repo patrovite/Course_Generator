@@ -1331,7 +1331,7 @@ public class TrackData {
 				  	Utils.WriteStringToXML(writer, "DISTANCEMETERSCUMUL", String.format(Locale.ROOT,"%f", r.getTotal()));
 				  	Utils.WriteStringToXML(writer, "DIFF", String.format(Locale.ROOT,"%f", r.getDiff()));
 				  	Utils.WriteStringToXML(writer, "COEFF", String.format(Locale.ROOT,"%f", r.getCoeff()));
-				  	Utils.WriteStringToXML(writer, "RECUP", String.format(Locale.ROOT,"%f", r.getRecup()));
+				  	Utils.WriteStringToXML(writer, "RECUP", String.format(Locale.ROOT,"%f", r.getRecovery()));
 				  	Utils.WriteIntToXML(writer, "TIMESECONDE", r.getTime());
 				  	Utils.WriteIntToXML(writer, "EATTIME", r.getStation());
 				  	Utils.WriteIntToXML(writer, "TIMELIMIT", r.getTimeLimit());

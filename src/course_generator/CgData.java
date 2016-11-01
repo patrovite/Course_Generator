@@ -37,7 +37,7 @@ public class CgData {
 	private double Total; // Total distance in meter
 	private double Diff;
 	private double Coeff;
-	private double Recup;
+	private double Recovery;
 	private double Slope;
 	private double Speed; // Speed in km/h
 	private double dElevation; // Delta elevation in meter
@@ -253,12 +253,12 @@ public class CgData {
 		Coeff = coeff;
 	}
 
-	public double getRecup() {
-		return Recup;
+	public double getRecovery() {
+		return Recovery;
 	}
 
-	public void setRecup(double recup) {
-		Recup = recup;
+	public void setRecovery(double recup) {
+		Recovery = recup;
 	}
 
 	public double getSlope() {
@@ -430,7 +430,7 @@ public class CgData {
 		this.Total = Total;
 		this.Diff = Diff;
 		this.Coeff = Coeff;
-		this.Recup = Recup;
+		this.Recovery = Recup;
 		this.Slope = Slope;
 		this.Speed = Speed;
 		this.dElevation = dElevation;
