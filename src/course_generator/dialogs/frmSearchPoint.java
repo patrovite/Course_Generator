@@ -58,9 +58,9 @@ public class frmSearchPoint extends javax.swing.JDialog {
 	private java.util.ResourceBundle bundle;
 	private JPanel jPanelButtons;
 	private JLabel lbLatitude;
-	private JTextField tfLatitude;
+	private JTextFieldLimit tfLatitude;
 	private JLabel lbLongitude;
-	private JTextField tfLongitude;
+	private JTextFieldLimit tfLongitude;
 	private JButton btSearch;
 	private JPanel pnSearch;
 	private JPanel pnResult;
@@ -202,9 +202,9 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		Utils.addComponent(pnSearch, lbLatitude, 0, 0, 1, 1, 0, 0, 0, 5, 2, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
-		tfLatitude = new javax.swing.JTextField();
+		tfLatitude = new JTextFieldLimit(10);
 		tfLatitude.setFocusable(true);
-		tfLatitude.setDocument(new JTextFieldLimit(10));
+//		tfLatitude.setDocument(new JTextFieldLimit(10));
 		tfLatitude.setMinimumSize(new Dimension(100, 20));
 		tfLatitude.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 		Utils.addComponent(pnSearch, tfLatitude, 1, 0, 1, 1, 1, 0, 0, 5, 2, 5, GridBagConstraints.BASELINE_LEADING,
@@ -217,9 +217,9 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		Utils.addComponent(pnSearch, lbLongitude, 0, 1, 1, 1, 0, 0, 0, 5, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
-		tfLongitude = new javax.swing.JTextField();
+		tfLongitude = new JTextFieldLimit(10);
 		tfLongitude.setFocusable(true);
-		tfLongitude.setDocument(new JTextFieldLimit(10));
+//		tfLongitude.setDocument(new JTextFieldLimit(10));
 		tfLongitude.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 		Utils.addComponent(pnSearch, tfLongitude, 1, 1, 1, 1, 1, 0, 0, 5, 0, 5, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);

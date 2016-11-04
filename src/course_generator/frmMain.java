@@ -325,6 +325,8 @@ public class frmMain extends javax.swing.JFrame {
 	private JLabel lbStatusBarSpeed;
 	private JLabel LbInfoCurve;
 	private JLabel LbInfoCurveVal;
+	private JLabel LbModified;
+	private JLabel LbModifiedVal;
 
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
@@ -1273,17 +1275,32 @@ public class frmMain extends javax.swing.JFrame {
 		//-- Separator
 		StatusBar.add(createStatusbarSeparator());
 
-		// -- Total time
+		// -- Curve
 		// --------------------------------------------------------
 		LbInfoCurve = new javax.swing.JLabel();
 		LbInfoCurve
 				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/curve.png")));
 		StatusBar.add(LbInfoCurve);
 		
-		// -- Total time value
+		// -- Curve value
 		// --------------------------------------------------------
 		LbInfoCurveVal = new javax.swing.JLabel();
 		StatusBar.add(LbInfoCurveVal);
+		
+		//-- Separator
+		StatusBar.add(createStatusbarSeparator());
+
+		// -- Modified
+		// --------------------------------------------------------
+		LbModified = new javax.swing.JLabel();
+		LbModified
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/edit.png")));
+		StatusBar.add(LbModified);
+		
+		// -- Modified status
+		// --------------------------------------------------------
+		LbModifiedVal = new javax.swing.JLabel();
+		StatusBar.add(LbModifiedVal);
 		
 		//-- Separator
 		StatusBar.add(createStatusbarSeparator());
@@ -2060,8 +2077,12 @@ public class frmMain extends javax.swing.JFrame {
 		    		int row = TableMain.rowAtPoint(evt.getPoint());
 		    		int col = TableMain.columnAtPoint(evt.getPoint());
 					frmEditPosition frm = new frmEditPosition();
-					frm.showDialog(Settings, Track, row, col);
-					RefreshTableMain();
+					if (frm.showDialog(Settings, Track, row, col)) {
+						Track.isModified=true;
+						RefreshTableMain();
+						RefreshProfil();
+						RefreshStatusbar(Track);
+					}
 				}
 				else
 					TableMainMouseClicked(evt);
@@ -3100,6 +3121,15 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Curve
 		LbInfoCurveVal.setText(tdata.Paramfile);
+		
+		// -- Modified
+		if (Track.isModified) {
+			LbModifiedVal.setText(bundle.getString("frmMain.LbModified_Modified.text"));
+		}
+		else {
+			LbModifiedVal.setText(bundle.getString("frmMain.LbModified_Ok.text"));
+		}
+			
 		
 		// -- Calculation
 		if (Track.isCalculated) {

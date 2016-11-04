@@ -29,11 +29,14 @@ import javax.swing.KeyStroke;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.CgSpinner;
 import course_generator.utils.JHourSetting;
+import course_generator.utils.JTextFieldLimit;
 import course_generator.utils.Utils;
 
 public class frmEditPosition  extends javax.swing.JDialog {
@@ -67,7 +70,7 @@ public class frmEditPosition  extends javax.swing.JDialog {
 	private JLabel lbHour;
 	private JLabel lbHourVal;
 	private JLabel lbName;
-	private JTextField tfName;
+	private JTextFieldLimit tfName;
 	private JLabel lbElevation;
 	private CgSpinner spinElevation;
 	private JLabel lbDiff;
@@ -106,6 +109,15 @@ public class frmEditPosition  extends javax.swing.JDialog {
 	private JLabel lbTags;
 	private JLabel lbDiffHelp;
 	private JLabel lbRecoveryHelp;
+	private JLabel lbNameHelp;
+	private JButton btVeryEasy;
+	private JButton btEasy;
+	private JButton btAverage;
+	private JButton btHard;
+	private JButton btVeryHard;
+	private JLabel lbTimelimitHelp;
+	private JLabel lbStationHelp;
+	private JLabel lbCoeffHelp;
 
 	/**
 	 * Creates new form frmSettings
@@ -125,6 +137,8 @@ public class frmEditPosition  extends javax.swing.JDialog {
 		// Set field
 
         //Higher point
+		tfName.setText(data.getName());
+		tfComment.setText(data.getComment());
 		
 		chkHighPoint.setSelected((data.getTag() & CgConst.TAG_HIGH_PT)!=0);
 		chkLowPoint.setSelected((data.getTag() & CgConst.TAG_LOW_PT)!=0);
@@ -442,14 +456,27 @@ public class frmEditPosition  extends javax.swing.JDialog {
 				0, 0, 0, 5, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		tfName = new javax.swing.JTextField(16);
+		//tfName = new javax.swing.JTextField(16);
+		tfName = new JTextFieldLimit(40);
 		Utils.addComponent(panelRight, tfName, 
-				1, line++, 
-				GridBagConstraints.REMAINDER, 1, 
+				1, line, 
+				10, 1, 
 				1, 0, 
-				0, 0, 0, 10, 
+				0, 0, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
+		lbNameHelp = new javax.swing.JLabel("",	
+			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/help_dialog.png")),
+			JLabel.LEFT);
+		lbNameHelp.setToolTipText(bundle.getString("frmEditPosition.lbNameHelp.toolTipText"));
+		Utils.addComponent(panelRight, lbNameHelp, 
+				11, line++, 
+				1, 1, 
+				0, 0, 
+				0, 5, 0, 10, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+
+		
 		//-- Elevation
 		lbElevation = new javax.swing.JLabel();
 		lbElevation.setFont(font);
@@ -464,25 +491,24 @@ public class frmEditPosition  extends javax.swing.JDialog {
 		spinElevation = new CgSpinner(0,0,100000,1);
 		Utils.addComponent(panelRight, spinElevation, 
 				1, line, 
-				2, 1, 
+				3, 1, 
 				0, 0, 
-				5, 0, 0, 0, 
+				5, 0, 0, 5, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		
-		lbElevationHelp = new javax.swing.JLabel(
-				bundle.getString("frmEditPosition.lbElevationHelp.Text"),	
+		lbElevationHelp = new javax.swing.JLabel("",	
 			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/attention.png")),
 			JLabel.LEFT);
 		lbElevationHelp.setToolTipText(bundle.getString("frmEditPosition.lbElevationHelp.toolTipText"));
 		Utils.addComponent(panelRight, lbElevationHelp, 
-				3, line++, 
-				GridBagConstraints.REMAINDER, 1, 
-				1, 0, 
-				5, 10, 0, 10, 
+				4, line++, 
+				1, 1, 
+				0, 0, 
+				5, 0, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		
+		//-- Tags
 		lbTags = new javax.swing.JLabel();
 		lbTags.setFont(font);
 		lbTags.setText(bundle.getString("frmEditPosition.lbTags.Text"));//"Tags"
@@ -726,24 +752,102 @@ public class frmEditPosition  extends javax.swing.JDialog {
 		spinDiff = new CgSpinner(100,0,100,1);
 		Utils.addComponent(panelRight, spinDiff, 
 				1, line, 
-				2, 1, 
+				3, 1, 
 				0, 0, 
 				5, 0, 0, 5, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		lbDiffHelp = new javax.swing.JLabel(
-				bundle.getString("frmEditPosition.lbDiffHelp.Text"),	
+		lbDiffHelp = new javax.swing.JLabel("",	
 			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/help_dialog.png")),
 			JLabel.LEFT);
 		lbDiffHelp.setToolTipText(bundle.getString("frmEditPosition.lbDiffHelp.toolTipText"));
 		Utils.addComponent(panelRight, lbDiffHelp, 
-				3, line++, 
+				4, line, 
 				1, 1, 
 				0, 0, 
 				5, 0, 0, 5, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		
+		btVeryEasy = new javax.swing.JButton();
+		btVeryEasy.setOpaque(true);
+		btVeryEasy.setBackground(Color.WHITE);
+		btVeryEasy.setToolTipText(bundle.getString("frmEditPosition.btVeryEasy.toolTipText"));
+		btVeryEasy.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				spinDiff.setValue(100);
+			}
+		});
+		Utils.addComponent(panelRight, btVeryEasy, 
+				5, line, 
+				1, 1, 
+				0, 0, 
+				5, 0, 0, 5, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+
+		btEasy = new javax.swing.JButton();
+		btEasy.setOpaque(true);
+		btEasy.setBackground(Color.GREEN);
+		btEasy.setToolTipText(bundle.getString("frmEditPosition.btEasy.toolTipText"));
+		btEasy.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				spinDiff.setValue(98);
+			}
+		});
+		Utils.addComponent(panelRight, btEasy, 
+				6, line, 
+				1, 1, 
+				0, 0, 
+				5, 0, 0, 5, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+
+		btAverage = new javax.swing.JButton();
+		btAverage.setOpaque(true);
+		btAverage.setBackground(Color.BLUE);
+		btAverage.setToolTipText(bundle.getString("frmEditPosition.btAverage.toolTipText"));
+		btAverage.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				spinDiff.setValue(95);
+			}
+		});
+		Utils.addComponent(panelRight, btAverage, 
+				7, line, 
+				1, 1, 
+				0, 0, 
+				5, 0, 0, 5, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+
+		btHard = new javax.swing.JButton();
+		btHard.setOpaque(true);
+		btHard.setBackground(Color.RED);
+		btHard.setToolTipText(bundle.getString("frmEditPosition.btHard.toolTipText"));
+		btHard.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				spinDiff.setValue(88);
+			}
+		});		
+		Utils.addComponent(panelRight, btHard, 
+				8, line, 
+				1, 1, 
+				0, 0, 
+				5, 0, 0, 5, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+
+		btVeryHard = new javax.swing.JButton();
+		btVeryHard.setOpaque(true);
+		btVeryHard.setBackground(Color.BLACK);
+		btVeryHard.setToolTipText(bundle.getString("frmEditPosition.btVeryHard.toolTipText"));
+		btVeryHard.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				spinDiff.setValue(80);
+			}
+		});		
+		Utils.addComponent(panelRight, btVeryHard, 
+				9, line++, 
+				1, 1, 
+				0, 0, 
+				5, 0, 0, 5, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+
 		//-- Coeff
 		lbCoeff = new javax.swing.JLabel();
 		lbCoeff.setFont(font);
@@ -758,12 +862,23 @@ public class frmEditPosition  extends javax.swing.JDialog {
 		
 		spinCoeff = new CgSpinner(100,0,200,1);
 		Utils.addComponent(panelRight, spinCoeff, 
-				1, line++, 
-				2, 1, 
+				1, line, 
+				3, 1, 
 				0, 0, 
 				5, 0, 0, 5, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
+		lbCoeffHelp = new javax.swing.JLabel("",	
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/help_dialog.png")),
+				JLabel.LEFT);
+		lbCoeffHelp.setToolTipText(bundle.getString("frmEditPosition.lbCoeffHelp.toolTipText"));
+		Utils.addComponent(panelRight, lbCoeffHelp, 
+				4, line++, 
+				1, 1, 
+				0, 0, 
+				5, 0, 0, 5, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+		
 		//-- Recup
 		lbRecovery = new javax.swing.JLabel();
 		lbRecovery.setFont(font);
@@ -779,18 +894,17 @@ public class frmEditPosition  extends javax.swing.JDialog {
 		spinRecovery = new CgSpinner(0,0,100,1);
 		Utils.addComponent(panelRight, spinRecovery, 
 				1, line, 
-				2, 1, 
+				3, 1, 
 				0, 0, 
 				5, 0, 0, 5, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		lbRecoveryHelp = new javax.swing.JLabel(
-				bundle.getString("frmEditPosition.lbRecoveryHelp.Text"),	
+		lbRecoveryHelp = new javax.swing.JLabel("",	
 			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/help_dialog.png")),
 			JLabel.LEFT);
 		lbRecoveryHelp.setToolTipText(bundle.getString("frmEditPosition.lbRecoveryHelp.toolTipText"));
 		Utils.addComponent(panelRight, lbRecoveryHelp, 
-				3, line++, 
+				4, line++, 
 				1, 1, 
 				0, 0, 
 				5, 0, 0, 5, 
@@ -809,11 +923,22 @@ public class frmEditPosition  extends javax.swing.JDialog {
 
 		hsTimelimit = new JHourSetting();
 		Utils.addComponent(panelRight, hsTimelimit, 
-				1, line++, 
-				GridBagConstraints.REMAINDER, 1, 
+				1, line, 
+				3, 1, 
 				0, 0, 
 				5, 0, 0, 10, 
 				GridBagConstraints.WEST, GridBagConstraints.VERTICAL);
+
+		lbTimelimitHelp = new javax.swing.JLabel("",	
+			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/help_dialog.png")),
+			JLabel.LEFT);
+		lbTimelimitHelp.setToolTipText(bundle.getString("frmEditPosition.lbTimelimitHelp.toolTipText"));
+		Utils.addComponent(panelRight, lbTimelimitHelp, 
+				4, line++, 
+				1, 1, 
+				0, 0, 
+				5, 0, 0, 5, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		//-- Station
 		lbStation = new javax.swing.JLabel();
@@ -828,12 +953,23 @@ public class frmEditPosition  extends javax.swing.JDialog {
 
 		hsStation = new JHourSetting();
 		Utils.addComponent(panelRight, hsStation, 
-				1, line++, 
-				GridBagConstraints.REMAINDER, 1, 
+				1, line, 
+				3, 1, 
 				0, 0, 
 				5, 0, 0, 10, 
 				GridBagConstraints.WEST, GridBagConstraints.VERTICAL);
 
+		lbStationHelp = new javax.swing.JLabel("",	
+			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/help_dialog.png")),
+			JLabel.LEFT);
+		lbStationHelp.setToolTipText(bundle.getString("frmEditPosition.lbStationHelp.toolTipText"));
+		Utils.addComponent(panelRight, lbStationHelp, 
+				4, line++, 
+				1, 1, 
+				0, 0, 
+				5, 0, 0, 5, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+		
 		//-- Comment
 		lbComment = new javax.swing.JLabel();
 		lbComment.setFont(font);
@@ -848,7 +984,7 @@ public class frmEditPosition  extends javax.swing.JDialog {
 		tfComment = new javax.swing.JTextField();
 		Utils.addComponent(panelRight, tfComment, 
 				1, line++, 
-				4, 1, 
+				GridBagConstraints.REMAINDER, 1, 
 				1, 1, 
 				5, 0, 0, 10, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
@@ -895,6 +1031,7 @@ public class frmEditPosition  extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
+	
 	private void Refresh() {
 		lbLineVal.setText(String.format(" : %1.0f", data.getNum()));
         lbLatitudeVal.setText(String.format(" : %1.7f",data.getLatitude()));
