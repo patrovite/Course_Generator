@@ -129,4 +129,10 @@ public class CgConst {
     public static Color CL_PROFIL_SLOPE_SUP15 = new Color(0xA6, 0x55, 0x00);
     public static Color CL_PROFIL_SLOPE_BORDER = new Color(0xA6, 0x55, 0x00);
     
+    public static Color CL_DIFF_VERYEASY=new Color(255, 255, 255); //-- White
+    public static Color CL_DIFF_EASY=new Color(170, 212, 0); //-- Green
+    public static Color CL_DIFF_AVERAGE=new Color(85, 153, 255); //-- Blue
+    public static Color CL_DIFF_HARD=new Color(255, 0, 0); //-- Red
+    public static Color CL_DIFF_VERYHARD=new Color(77, 77, 77); //-- Gray
+    
 }

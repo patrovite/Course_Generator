@@ -119,6 +119,7 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import course_generator.TrackData.CalcAvrSlopeResult;
 import course_generator.TrackData.CalcAvrSpeedResult;
 import course_generator.TrackData.CalcClimbResult;
+import course_generator.frmEditDiff.EditDiffResult;
 import course_generator.dialogs.frmSearchPoint;
 import course_generator.param.frmEditCurve;
 import course_generator.resume_table.ResumeAvgSlopeNClass;
@@ -327,6 +328,8 @@ public class frmMain extends javax.swing.JFrame {
 	private JLabel LbInfoCurveVal;
 	private JLabel LbModified;
 	private JLabel LbModifiedVal;
+	private JButton btFillDiff;
+	private JButton btFillCoeff;
 
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
@@ -1517,6 +1520,53 @@ public class frmMain extends javax.swing.JFrame {
 		// ---------------------------------------------------------
 		ToolBarMain.add(new javax.swing.JToolBar.Separator());
 
+		// -- Fill difficulty
+		// ----------------------------------------------------
+		btFillDiff = new javax.swing.JButton();
+		btFillDiff
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/fill_diff.png")));
+		btFillDiff.setToolTipText(bundle.getString("frmMain.btFillDiff.toolTipText"));
+		btFillDiff.setFocusable(false);
+		btFillDiff.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				if (Track.data.size() <= 0)
+					return;
+				
+	    		int start = TableMain.getSelectedRow();
+	    		int end = start+TableMain.getSelectedRowCount();
+
+				frmEditDiff frm = new frmEditDiff();
+				EditDiffResult res=frm.showDialog(Settings, Track, start, end);
+				if (res.Valid) {
+					for(int i=res.Start; i<=res.End;i++) {
+						Track.data.get(i).setDiff(res.Difficulty);
+					}
+					Track.isModified=true;
+					RefreshTableMain();
+					RefreshProfil();
+					RefreshStatusbar(Track);
+				}
+			}
+		});
+		ToolBarMain.add(btFillDiff);
+
+		// -- Fill coeff
+		// ----------------------------------------------------
+		btFillCoeff = new javax.swing.JButton();
+		btFillCoeff
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/fill_coeff.png")));
+		btFillCoeff.setToolTipText(bundle.getString("frmMain.btFillCoeff.toolTipText"));
+		btFillCoeff.setFocusable(false);
+		btFillCoeff.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+			}
+		});
+		ToolBarMain.add(btFillCoeff);
+		
+		// -- Separator
+		// ---------------------------------------------------------
+		ToolBarMain.add(new javax.swing.JToolBar.Separator());
+		
 		// -- Calculate track time
 		// ----------------------------------------------
 		btCalculateTrackTime = new javax.swing.JButton();

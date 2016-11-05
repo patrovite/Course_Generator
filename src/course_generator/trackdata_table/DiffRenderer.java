@@ -47,19 +47,19 @@ public class DiffRenderer   extends DefaultTableCellRenderer {
         //-- Set the background color
         Color c = Color.WHITE;
         if ((diff <= CgConst.DIFF_VERYEASY) && (diff > CgConst.DIFF_EASY)) {
-            c = Color.WHITE; //-- paint in white
+            c = CgConst.CL_DIFF_VERYEASY; //Color.WHITE; //-- paint in white
         } 
         else if ((diff <= CgConst.DIFF_EASY) && (diff > CgConst.DIFF_AVERAGE)) {
-            c = new Color(170, 212, 0); //-- Paint in green
+            c = CgConst.CL_DIFF_EASY; //  new Color(170, 212, 0); //-- Paint in green
         } 
         else if ((diff <= CgConst.DIFF_AVERAGE) && (diff > CgConst.DIFF_HARD)) {
-            c = new Color(85, 153, 255); //-- Paint in blue
+            c = CgConst.CL_DIFF_AVERAGE; //new Color(85, 153, 255); //-- Paint in blue
         } 
         else if ((diff <= CgConst.DIFF_HARD) && (diff > CgConst.DIFF_VERYHARD)) {
-            c = new Color(255, 0, 0); //-- Paint in red
+            c = CgConst.CL_DIFF_HARD; //new Color(255, 0, 0); //-- Paint in red
         }     
         else if (diff <= CgConst.DIFF_VERYHARD) {
-            c = new Color(77, 77, 77); //-- Paint in gray
+            c = CgConst.CL_DIFF_VERYHARD; //new Color(77, 77, 77); //-- Paint in gray
         }
 
         if (isSelected)
