@@ -1,4 +1,4 @@
-package course_generator;
+package course_generator.dialogs;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -32,9 +32,12 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import course_generator.CgData;
+import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.CgSpinner;
+import course_generator.utils.CgSpinnerDouble;
 import course_generator.utils.JHourSetting;
 import course_generator.utils.JTextFieldLimit;
 import course_generator.utils.Utils;
@@ -75,10 +78,10 @@ public class frmEditPosition  extends javax.swing.JDialog {
 	private CgSpinner spinElevation;
 	private JLabel lbDiff;
 	private CgSpinner spinDiff;
-	private CgSpinner spinCoeff;
+	private CgSpinnerDouble spinCoeff;
 	private JLabel lbCoeff;
 	private JLabel lbRecovery;
-	private CgSpinner spinRecovery;
+	private CgSpinnerDouble spinRecovery;
 	private JLabel lbComment;
 	private JTextField tfComment;
 	private JCheckBox chkHighPoint;
@@ -749,7 +752,7 @@ public class frmEditPosition  extends javax.swing.JDialog {
 				5, 0, 0, 5, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		spinDiff = new CgSpinner(100,0,100,1);
+		spinDiff = new CgSpinner(100,1,100,1);
 		Utils.addComponent(panelRight, spinDiff, 
 				1, line, 
 				3, 1, 
@@ -860,7 +863,7 @@ public class frmEditPosition  extends javax.swing.JDialog {
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		
-		spinCoeff = new CgSpinner(100,0,200,1);
+		spinCoeff = new CgSpinnerDouble(100.0,0.1,200.0,0.1);
 		Utils.addComponent(panelRight, spinCoeff, 
 				1, line, 
 				3, 1, 
@@ -891,7 +894,7 @@ public class frmEditPosition  extends javax.swing.JDialog {
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		
-		spinRecovery = new CgSpinner(0,0,100,1);
+		spinRecovery = new CgSpinnerDouble(0.0, 0.0, 100.0, 0.1);
 		Utils.addComponent(panelRight, spinRecovery, 
 				1, line, 
 				3, 1, 
@@ -1043,8 +1046,8 @@ public class frmEditPosition  extends javax.swing.JDialog {
         
         spinElevation.setValue((int)data.getElevation(settings.Unit));
         spinDiff.setValue((int)data.getDiff());
-        spinCoeff.setValue((int)data.getCoeff());
-        spinRecovery.setValue((int)data.getRecovery());
+        spinCoeff.setValue(data.getCoeff());
+        spinRecovery.setValue(data.getRecovery());
         
         hsStation.setHMSinSecond(data.getStation());
         hsTimelimit.setHMSinSecond(data.getTimeLimit());

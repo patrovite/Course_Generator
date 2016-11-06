@@ -119,8 +119,12 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import course_generator.TrackData.CalcAvrSlopeResult;
 import course_generator.TrackData.CalcAvrSpeedResult;
 import course_generator.TrackData.CalcClimbResult;
-import course_generator.frmEditDiff.EditDiffResult;
+import course_generator.dialogs.frmFillDiff;
+import course_generator.dialogs.frmEditPosition;
+import course_generator.dialogs.frmFillCoeff;
+import course_generator.dialogs.frmFillCoeff.EditCoeffResult;
 import course_generator.dialogs.frmSearchPoint;
+import course_generator.dialogs.frmFillDiff.EditDiffResult;
 import course_generator.param.frmEditCurve;
 import course_generator.resume_table.ResumeAvgSlopeNClass;
 import course_generator.resume_table.ResumeAvgSlopeNRenderer;
@@ -1535,7 +1539,7 @@ public class frmMain extends javax.swing.JFrame {
 	    		int start = TableMain.getSelectedRow();
 	    		int end = start+TableMain.getSelectedRowCount();
 
-				frmEditDiff frm = new frmEditDiff();
+				frmFillDiff frm = new frmFillDiff();
 				EditDiffResult res=frm.showDialog(Settings, Track, start, end);
 				if (res.Valid) {
 					for(int i=res.Start; i<=res.End;i++) {
@@ -1559,6 +1563,23 @@ public class frmMain extends javax.swing.JFrame {
 		btFillCoeff.setFocusable(false);
 		btFillCoeff.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				if (Track.data.size() <= 0)
+					return;
+				
+	    		int start = TableMain.getSelectedRow();
+	    		int end = start+TableMain.getSelectedRowCount();
+
+				frmFillCoeff frm = new frmFillCoeff();
+				EditCoeffResult res=frm.showDialog(Settings, Track, start, end);
+				if (res.Valid) {
+//					for(int i=res.Start; i<=res.End;i++) {
+//						Track.data.get(i).setDiff(res.Difficulty);
+//					}
+//					Track.isModified=true;
+//					RefreshTableMain();
+//					RefreshProfil();
+//					RefreshStatusbar(Track);
+				}
 			}
 		});
 		ToolBarMain.add(btFillCoeff);
