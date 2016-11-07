@@ -20,6 +20,7 @@ package course_generator;
 
 import org.joda.time.DateTime;
 
+import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 /**
@@ -84,9 +85,9 @@ public class CgResume {
 
 	public double getElevation(int unit) {
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			return Elevation;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			// meter to miles
 			return Utils.Meter2Feet(Elevation);
 		default:
@@ -100,12 +101,12 @@ public class CgResume {
 
 		String s = "";
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			s = String.format("%1.0f ", e);
 			if (withunit)
 				s = s + "m";
 			break;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			s = String.format("%1.0f ", e);
 			if (withunit)
 				s = s + "feet";
@@ -130,9 +131,9 @@ public class CgResume {
 
 	public double getClimbP(int unit) {
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			return ClimbP;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			// meter to miles
 			return Utils.Meter2Feet(ClimbP);
 		default:
@@ -147,12 +148,12 @@ public class CgResume {
 		
 		String s="";
 		switch (unit) {
-			case CgConstants.UNIT_METER:
+			case CgConst.UNIT_METER:
 				s=String.format("%1.0f ",e);
 				if (withunit)
 					s=s+"m";
 				break;
-			case CgConstants.UNIT_MILES_FEET:
+			case CgConst.UNIT_MILES_FEET:
 				s=String.format("%1.0f ",e);
 				if (withunit)
 					s=s+"feet";
@@ -177,9 +178,9 @@ public class CgResume {
 
 	public double getClimbM(int unit) {
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			return ClimbM;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			// meter to miles
 			return Utils.Meter2Feet(ClimbM);
 		default:
@@ -194,12 +195,12 @@ public class CgResume {
 		
 		String s="";
 		switch (unit) {
-			case CgConstants.UNIT_METER:
+			case CgConst.UNIT_METER:
 				s=String.format("%1.0f ",e);
 				if (withunit)
 					s=s+"m";
 				break;
-			case CgConstants.UNIT_MILES_FEET:
+			case CgConst.UNIT_MILES_FEET:
 				s=String.format("%1.0f ",e);
 				if (withunit)
 					s=s+"feet";
@@ -224,9 +225,9 @@ public class CgResume {
 
 	public double getDist(int unit) {
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			return Dist;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			// meter to miles
 			return Utils.Meter2uMiles(Dist);
 		default:
@@ -242,12 +243,12 @@ public class CgResume {
 
 		// -- Set the value
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			s = String.format("%1.0f ", d);
 			if (withunit)
 				s = s + "m";
 			break;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			s = String.format("%1.0f ", d);
 			if (withunit)
 				s = s + "miles";
@@ -299,9 +300,9 @@ public class CgResume {
 
 	public double getTotal(int unit) {
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			return Total;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			// meter to miles
 			return Utils.Meter2uMiles(Total);
 		default:
@@ -317,12 +318,12 @@ public class CgResume {
 
 		// -- Set the value
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			s = String.format("%1.3f ", d);
 			if (withunit)
 				s = s + "km";
 			break;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			s = String.format("%1.3f ", d);
 			if (withunit)
 				s = s + "miles";
@@ -365,9 +366,9 @@ public class CgResume {
 
 	public double getdDist(int unit) {
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			return dDist;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			// meter to miles
 			return Utils.Meter2uMiles(dDist);
 		default:
@@ -383,12 +384,12 @@ public class CgResume {
 
 		// -- Set the value
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			s = String.format("%1.0f ", d);
 			if (withunit)
 				s = s + "m";
 			break;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			s = String.format("%1.0f ", d);
 			if (withunit)
 				s = s + "miles";
@@ -413,9 +414,9 @@ public class CgResume {
 
 	public double getdClimbP(int unit) {
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			return dClimbP;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			// meter to miles
 			return Utils.Meter2Feet(dClimbP);
 		default:
@@ -430,12 +431,12 @@ public class CgResume {
 		
 		String s="";
 		switch (unit) {
-			case CgConstants.UNIT_METER:
+			case CgConst.UNIT_METER:
 				s=String.format("%1.0f ",e);
 				if (withunit)
 					s=s+"m";
 				break;
-			case CgConstants.UNIT_MILES_FEET:
+			case CgConst.UNIT_MILES_FEET:
 				s=String.format("%1.0f ",e);
 				if (withunit)
 					s=s+"feet";
@@ -460,9 +461,9 @@ public class CgResume {
 
 	public double getdClimbM(int unit) {
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			return dClimbM;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			// meter to miles
 			return Utils.Meter2Feet(dClimbM);
 		default:
@@ -477,12 +478,12 @@ public class CgResume {
 		
 		String s="";
 		switch (unit) {
-			case CgConstants.UNIT_METER:
+			case CgConst.UNIT_METER:
 				s=String.format("%1.0f ",e);
 				if (withunit)
 					s=s+"m";
 				break;
-			case CgConstants.UNIT_MILES_FEET:
+			case CgConst.UNIT_MILES_FEET:
 				s=String.format("%1.0f ",e);
 				if (withunit)
 					s=s+"feet";
@@ -507,9 +508,9 @@ public class CgResume {
 
 	public double getSpeedP(int unit) {
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			return SpeedP;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			// meter to miles
 			return Utils.Meter2Feet(SpeedP);
 		default:
@@ -525,12 +526,12 @@ public class CgResume {
 
 		String s = "";
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			s = String.format("%1.0f ", e);
 			if (withunit)
 				s = s + "m";
 			break;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			s = String.format("%1.0f ", e);
 			if (withunit)
 				s = s + "feet";
@@ -555,9 +556,9 @@ public class CgResume {
 
 	public double getSpeedM(int unit) {
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			return SpeedM;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			// meter to miles
 			return Utils.Meter2Feet(SpeedM);
 		default:
@@ -573,12 +574,12 @@ public class CgResume {
 
 		String s = "";
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			s = String.format("%1.0f ", e);
 			if (withunit)
 				s = s + "m";
 			break;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			s = String.format("%1.0f ", e);
 			if (withunit)
 				s = s + "feet";
@@ -630,9 +631,9 @@ public class CgResume {
 
 	public double getAvgSpeed(int unit) {
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			return AvgSpeed;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			// meter to miles
 			return Utils.Km2Miles(AvgSpeed);
 		default:
@@ -648,12 +649,12 @@ public class CgResume {
 
 		// -- Set the value
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			s = String.format("%1.1f ", d);
 			if (withunit)
 				s = s + "km/h";
 			break;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			s = String.format("%1.2f ", d);
 			if (withunit)
 				s = s + "miles/h";

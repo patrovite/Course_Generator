@@ -39,7 +39,7 @@ public class CoeffRenderer   extends DefaultTableCellRenderer {
         Double coeff = data.getCoeff();
 
         //-- Set the dist value
-        setText(String.format("%1.0f ",coeff));
+        setText(String.format("%1.1f ",coeff));
         setHorizontalAlignment(RIGHT);
         return this;
     }

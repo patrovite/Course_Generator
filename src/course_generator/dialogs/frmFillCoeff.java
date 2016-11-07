@@ -37,6 +37,7 @@ public class frmFillCoeff  extends javax.swing.JDialog {
 	private boolean ok;
 	private int start;
 	private int end;
+	private double estimatedCoeff;
 	private CgSettings settings;
 	private JPanel jPanelButtons;
 	private JButton btCancel;
@@ -74,6 +75,7 @@ public class frmFillCoeff  extends javax.swing.JDialog {
 	private JPanel panelEstimateTime;
 	private JPanel panelResult;
 
+	
 	public class EditCoeffResult {
 		public int Start; //Start line 
 		public int End; //End line 
@@ -87,6 +89,7 @@ public class frmFillCoeff  extends javax.swing.JDialog {
 	 */
 	public frmFillCoeff() {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		estimatedCoeff=100;
 		initComponents();
 		setModal(true);
 	}
@@ -118,7 +121,7 @@ public class frmFillCoeff  extends javax.swing.JDialog {
 		ok = false;
 
 		//-- Update the display
-		//Refresh();
+		Refresh();
 		
 		//-- Show the dialog
 		setVisible(true);
@@ -140,6 +143,9 @@ public class frmFillCoeff  extends javax.swing.JDialog {
 			else
 				res.End=spinToLine.getValueAsInt()-1;
 			
+			res.End_Coeff=spinToValue.getValueAsDouble();
+			
+			res.Start_Coeff=spinFromValue.getValueAsDouble();
 			res.End_Coeff=spinToValue.getValueAsDouble();
 		}
 		return res;
@@ -402,7 +408,8 @@ public class frmFillCoeff  extends javax.swing.JDialog {
 		btCalc = new javax.swing.JButton(bundle.getString("frmFillCoeff.btCalc.text"));
 		btCalc.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//setVisible(false);
+				Calc();
+				Refresh();
 			}
 		});
 		Utils.addComponent(panelEstimateTime, btCalc, 
@@ -445,7 +452,7 @@ public class frmFillCoeff  extends javax.swing.JDialog {
 		btCopyToStart.setToolTipText(bundle.getString("frmFillCoeff.btCopyToStart.toolTipText"));
 		btCopyToStart.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//setVisible(false);
+				spinFromValue.setValue(estimatedCoeff);
 			}
 		});
 		Utils.addComponent(panelResult, btCopyToStart, 
@@ -459,7 +466,7 @@ public class frmFillCoeff  extends javax.swing.JDialog {
 		btCopyToEnd.setToolTipText(bundle.getString("frmFillCoeff.btCopyToEnd.toolTipText"));
 		btCopyToEnd.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//setVisible(false);
+				spinToValue.setValue(estimatedCoeff);
 			}
 		});
 		Utils.addComponent(panelResult, btCopyToEnd, 
@@ -511,9 +518,18 @@ public class frmFillCoeff  extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
+	private void Calc() {
+		double t = spinHour.getValueAsDouble() * 3600 + spinMinute.getValueAsDouble() * 60;
+	    if (t > 5400)
+	    	estimatedCoeff = (-0.00000315 * t + 1.01701) * 100;
+	    else 
+	    	estimatedCoeff = 100;
+	}
+	
 	protected void Refresh() {
 		spinFromLine.setEnabled(rbFromLine.isSelected());
 		spinToLine.setEnabled(rbToLine.isSelected());
+		lbResultCoeffVal.setText(String.format("%1.1f ",estimatedCoeff));
 	}
 	
 }

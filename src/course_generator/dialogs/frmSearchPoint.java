@@ -40,11 +40,11 @@ import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import course_generator.CgConstants;
 import course_generator.TrackData;
 import course_generator.TrackData.SearchPointResult;
 import course_generator.frmMain;
 import course_generator.settings.CgSettings;
+import course_generator.utils.CgConst;
 import course_generator.utils.CustomFocusTraversalPolicy;
 import course_generator.utils.JTextFieldLimit;
 import course_generator.utils.Utils;
@@ -148,7 +148,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		if (result.Point > -1) {
 			lbPointFoundVal.setText(String.valueOf(result.Point + 1));
 
-			if (settings.Unit == CgConstants.UNIT_MILES_FEET) {
+			if (settings.Unit == CgConst.UNIT_MILES_FEET) {
 				// meter to miles
 				dist = Utils.Meter2uMiles(result.Distance);
 			} else

@@ -74,7 +74,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import javax.security.auth.Refreshable;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -201,9 +200,11 @@ import course_generator.trackdata_table.TimelimitRenderer;
 import course_generator.trackdata_table.TotalClass;
 import course_generator.trackdata_table.TotalRenderer;
 import course_generator.trackdata_table.TrackDataModel;
+import course_generator.utils.CgConst;
 import course_generator.utils.FileTypeFilter;
 import course_generator.utils.OsCheck;
 import course_generator.utils.Utils;
+import course_generator.utils.Utils.CalcLineResult;
 
 /**
  * This is the main class of the project.
@@ -1490,21 +1491,6 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		ToolBarMain.add(btDisplaySSCurves);
 
-		// -- Global tiredness settings
-		// -----------------------------------------
-		btTirednessSettings = new javax.swing.JButton();
-		btTirednessSettings
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/tiredness.png")));
-		btTirednessSettings.setToolTipText(bundle.getString("frmMain.btTirednessSettings.toolTipText"));
-		btTirednessSettings.setFocusable(false);
-		btTirednessSettings.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
-			}
-		});
-		btTirednessSettings.setEnabled(false);
-		ToolBarMain.add(btTirednessSettings);
-
 		// -- Track settings
 		// ----------------------------------------------------
 		btTrackSettings = new javax.swing.JButton();
@@ -1545,6 +1531,8 @@ public class frmMain extends javax.swing.JFrame {
 					for(int i=res.Start; i<=res.End;i++) {
 						Track.data.get(i).setDiff(res.Difficulty);
 					}
+
+					Track.isCalculated=false;
 					Track.isModified=true;
 					RefreshTableMain();
 					RefreshProfil();
@@ -1558,7 +1546,7 @@ public class frmMain extends javax.swing.JFrame {
 		// ----------------------------------------------------
 		btFillCoeff = new javax.swing.JButton();
 		btFillCoeff
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/fill_coeff.png")));
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/tiredness.png")));
 		btFillCoeff.setToolTipText(bundle.getString("frmMain.btFillCoeff.toolTipText"));
 		btFillCoeff.setFocusable(false);
 		btFillCoeff.addActionListener(new java.awt.event.ActionListener() {
@@ -1572,13 +1560,44 @@ public class frmMain extends javax.swing.JFrame {
 				frmFillCoeff frm = new frmFillCoeff();
 				EditCoeffResult res=frm.showDialog(Settings, Track, start, end);
 				if (res.Valid) {
-//					for(int i=res.Start; i<=res.End;i++) {
-//						Track.data.get(i).setDiff(res.Difficulty);
-//					}
-//					Track.isModified=true;
-//					RefreshTableMain();
-//					RefreshProfil();
-//					RefreshStatusbar(Track);
+			        if (res.Start == res.End) {
+			        	Track.data.get(res.Start).setCoeff(res.Start_Coeff);
+			        }
+			        else {
+			        	double x1 = Track.data.get(res.Start).getTotal();//   cd.data[frm.start].Total;
+			        	double y1 = res.Start_Coeff; //frm.startval;
+
+			        	double x2 =  Track.data.get(res.End).getTotal(); //cd.data[frm.end].Total;
+			        	double y2 = res.End_Coeff; //frm.endval;
+
+			        	CalcLineResult rc = new CalcLineResult(); 
+			        	rc=Utils.CalcLine(x1, y1, x2, y2, rc);
+			        
+			        	// Line equation calc with "Y"=distance and "X"=Coeff
+			        	double x = 0.0;
+			        	double offset = 0.0;
+			        	double coeff=0; 
+			        	
+			        	for ( int i= res.Start; i<= res.End; i++) {
+			        		x = Track.data.get(i).getTotal();
+			        		offset = offset + Track.data.get(i).getRecovery();
+			        		
+			        		coeff=(rc.a * x + rc.b)+offset;
+//			        		Track.data.get(i).setCoeff((rc.a * x + rc.b)+offset);
+			          
+			        		//Validity tests
+			        		if (coeff > CgConst.MAX_COEFF) coeff=CgConst.MAX_COEFF;
+			        		if (coeff < 0) coeff=0;
+			        		
+			        		Track.data.get(i).setCoeff(coeff);
+			        	}
+			        }
+			        
+					Track.isCalculated=false;
+					Track.isModified=true;
+					RefreshTableMain();
+					RefreshProfil();
+					RefreshStatusbar(Track);
 				}
 			}
 		});
@@ -3222,10 +3241,10 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Unit
 		switch (Settings.Unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMeter.text"));
 			break;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMilesFeet.text"));
 			break;
 		default:

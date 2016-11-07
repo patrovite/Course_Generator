@@ -236,9 +236,9 @@ public class TrackData {
 	 */
 	public double getTotalDistance(int unit) {
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			return TotalDistance;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			// meter to miles
 			return Utils.Meter2uMiles(TotalDistance);
 		default:

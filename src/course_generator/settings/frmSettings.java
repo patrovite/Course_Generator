@@ -41,7 +41,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import course_generator.CgConstants;
+import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 /**
@@ -82,9 +82,9 @@ public class frmSettings extends javax.swing.JDialog {
 			cbLanguage.setSelectedIndex(2);
 
 		// -- Units
-		if (s.Unit == CgConstants.UNIT_METER)
+		if (s.Unit == CgConst.UNIT_METER)
 			cbUnit.setSelectedIndex(0);
-		else if (s.Unit == CgConstants.UNIT_MILES_FEET)
+		else if (s.Unit == CgConst.UNIT_MILES_FEET)
 			cbUnit.setSelectedIndex(1);
 		else
 			cbUnit.setSelectedIndex(0);
@@ -115,13 +115,13 @@ public class frmSettings extends javax.swing.JDialog {
 			// -- Units
 			switch (cbUnit.getSelectedIndex()) {
 			case 0: // Kilometer / Feet
-				s.Unit = CgConstants.UNIT_METER;
+				s.Unit = CgConst.UNIT_METER;
 				break;
 			case 1: // Miles / Feet
-				s.Unit = CgConstants.UNIT_MILES_FEET;
+				s.Unit = CgConst.UNIT_MILES_FEET;
 				break;
 			default: // Default
-				s.Unit = CgConstants.UNIT_METER;
+				s.Unit = CgConst.UNIT_METER;
 			}
 
 		}

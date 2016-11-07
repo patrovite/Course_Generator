@@ -27,7 +27,13 @@ import java.awt.Color;
 
 //TODO voir si parama CONST possible pour chaque variable
 public class CgConst {
+	public static final int UNIT_METER=0;
+    public static final int UNIT_MILES_FEET=1;
+    
     public static final int MAX_CGX_VERSION_TO_READ = 5;
+    public static final double MAX_COEFF=200.0;
+    public static final double MAX_DIFF=100.0;
+    
     /*
     const int COL_NB      = 0;
     const int COL_LAT     = 1;
