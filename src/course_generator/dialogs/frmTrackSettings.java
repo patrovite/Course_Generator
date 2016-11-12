@@ -32,6 +32,7 @@ import org.joda.time.DateTime;
 
 import course_generator.CgData;
 import course_generator.TrackData;
+import course_generator.dialogs.FrmCalcSunriseSunset.ResCalcSunriseSunset;
 import course_generator.settings.CgSettings;
 import course_generator.settings.frmSettings;
 import course_generator.utils.CgSpinner;
@@ -43,6 +44,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 
 	private ResourceBundle bundle;
 	private boolean ok;
+	private Double timezone;
+	private boolean summertime;
 	private CgSettings settings;
 	private JPanel jPanelButtons;
 	private JButton btCancel;
@@ -76,7 +79,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	private JLabel lbDescCoeff;
 	private CgSpinnerDouble spinDescCoeff;
 	private JPanel panelCoeff;
-
 	
 	/**
 	 * Creates new form frmSettings
@@ -90,7 +92,9 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	public boolean showDialog(CgSettings settings, TrackData track) {
 		this.settings = settings;
 		this.track = track;
-
+		this.timezone=track.TrackTimeZone;
+		this.summertime=track.TrackUseSumerTime;
+		
 		// Set field
 		tfTrackName.setText(this.track.CourseName);
 		tfDescription.setText(this.track.Description);
@@ -128,6 +132,9 @@ public class frmTrackSettings extends javax.swing.JDialog {
 			
 			track.NightCoeffAsc=spinAscCoeff.getValueAsDouble();
 			track.NightCoeffDesc=spinDescCoeff.getValueAsDouble();
+			
+			track.TrackTimeZone=this.timezone;
+			track.TrackUseSumerTime=this.summertime;
 		}
 		return ok;
 	}
@@ -283,19 +290,12 @@ public class frmTrackSettings extends javax.swing.JDialog {
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 		
 		chkElevationEffect = new JCheckBox(bundle.getString("frmTrackSettings.rbElevationEffect.Text"));
-//		chkElevationEffect.addActionListener(new java.awt.event.ActionListener() {
-//			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//				Refresh();
-//			}
-//		});
 		Utils.addComponent(panelElevationEffect, chkElevationEffect, 
 				0, 1, 
 				1, 1, 
 				1, 0, 
 				5, 5, 5, 5, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.NONE);
-
-		
 		
 		
 		//-- Panel night effect
@@ -365,12 +365,18 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		btCalc.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				FrmCalcSunriseSunset frm = new FrmCalcSunriseSunset();
-				frm.showDialog(
+				ResCalcSunriseSunset res = frm.showDialog(
 						track.data.get(0).getLongitude(),
 						track.data.get(0).getLatitude(),
 						track.StartTime,
 						track.TrackTimeZone.intValue(),
 						track.TrackUseSumerTime);
+				if (res.valid) {
+					timezone=Double.valueOf(res.TimeZone);
+					summertime=res.SummerTime;
+					spinEndNightModel.setValue(res.Sunrise.toDate());
+					spinStartNightModel.setValue(res.Sunset.toDate());
+				}
 			}
 		});
 		Utils.addComponent(panelNightEffect, btCalc, 

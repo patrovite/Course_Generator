@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
+import java.text.DateFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -24,9 +25,6 @@ import javax.swing.KeyStroke;
 
 import org.joda.time.DateTime;
 
-import course_generator.CgData;
-import course_generator.TrackData;
-import course_generator.settings.CgSettings;
 import course_generator.utils.CgSpinner;
 import course_generator.utils.SunCalculator;
 import course_generator.utils.Utils;
@@ -59,6 +57,8 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 	private JLabel lbSunset;
 	private JLabel lbSunsetVal;
 	private JCheckBox chkSummerTime;
+	private JLabel lbDate;
+	private JLabel lbDateVal;
 
 	public class ResCalcSunriseSunset {
 		DateTime Sunrise;
@@ -78,7 +78,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		setModal(true);
 	}
 
-	public boolean showDialog(double longitude, double latitude, DateTime starttime, int timezone, boolean summertime) {
+	public ResCalcSunriseSunset showDialog(double longitude, double latitude, DateTime starttime, int timezone, boolean summertime) {
 		this.longitude=longitude;
 		this.latitude=latitude;
 		this.date=starttime;
@@ -91,6 +91,8 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		spinTimeZone.setValue(timezone);
 		chkSummerTime.setSelected(summertime);
 		
+		lbDateVal.setText(this.date.toString("dd/MM/yyyy",getLocale()));
+		
 		// End set field
 		ok = false;
 
@@ -102,11 +104,19 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		
 		//-- Show the dialog
 		setVisible(true);
+		
+		ResCalcSunriseSunset res = new ResCalcSunriseSunset();
 
+		res.valid=ok;
+		
 		if (ok) {
 			// Copy fields
+			res.Sunrise=this.sunrise;
+			res.Sunset=this.sunset;
+			res.TimeZone=spinTimeZone.getValueAsInt();
+			res.SummerTime=chkSummerTime.isSelected();
 		}
-		return ok;
+		return res;
 	}
 
 	/**
@@ -154,6 +164,8 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 
 	
 	private void initComponents() {
+		int line=0;
+		
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("FrmCalcSunriseSunset.title"));
 		setAlwaysOnTop(true);
@@ -172,10 +184,30 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		Container paneGlobal = getContentPane();
 		paneGlobal.setLayout(new GridBagLayout());
 
+		//== Date
+		lbDate = new JLabel(bundle.getString("FrmCalcSunriseSunset.lbDate.Text"));
+		Utils.addComponent(paneGlobal, lbDate, 
+				0, line, 
+				1, 1, 
+				0, 0, 
+				5, 5, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+		
+		lbDateVal = new JLabel("",JLabel.CENTER);
+		lbDateVal.setOpaque(true);
+		lbDateVal.setBackground(Color.WHITE);
+		lbDateVal.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		Utils.addComponent(paneGlobal, lbDateVal, 
+				1, line++, 
+				1, 1, 
+				1, 0, 
+				5, 5, 0, 5, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
 		//== Longitude
 		lbLongitude = new JLabel(bundle.getString("FrmCalcSunriseSunset.lbLongitude.Text"));
 		Utils.addComponent(paneGlobal, lbLongitude, 
-				0, 0, 
+				0, line, 
 				1, 1, 
 				0, 0, 
 				5, 5, 0, 0, 
@@ -186,7 +218,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		lbLongitudeVal.setBackground(Color.WHITE);
 		lbLongitudeVal.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		Utils.addComponent(paneGlobal, lbLongitudeVal, 
-				1, 0, 
+				1, line++, 
 				1, 1, 
 				1, 0, 
 				5, 5, 0, 5, 
@@ -195,7 +227,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		//== Latitude
 		lbLatitude = new JLabel(bundle.getString("FrmCalcSunriseSunset.lbLatitude.Text"));
 		Utils.addComponent(paneGlobal, lbLatitude, 
-				0, 1, 
+				0, line, 
 				1, 1, 
 				0, 0, 
 				5, 5, 0, 0, 
@@ -206,7 +238,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		lbLatitudeVal.setBackground(Color.WHITE);
 		lbLatitudeVal.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		Utils.addComponent(paneGlobal, lbLatitudeVal, 
-				1, 1, 
+				1, line++, 
 				1, 1, 
 				1, 0, 
 				5, 5, 0, 5, 
@@ -215,7 +247,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		//Time zone
 		lbTimeZone = new JLabel(bundle.getString("FrmCalcSunriseSunset.lbTimeZone.Text"));
 		Utils.addComponent(paneGlobal, lbTimeZone, 
-				0, 2, 
+				0, line, 
 				1, 1, 
 				0, 0, 
 				5, 5, 0, 0, 
@@ -230,7 +262,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		});
 
 		Utils.addComponent(paneGlobal, spinTimeZone, 
-				1, 2, 
+				1, line++, 
 				1, 1, 
 				1, 0, 
 				5, 5, 0, 5, 
@@ -240,7 +272,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		//== Sunrise
 		lbSunrise = new JLabel(bundle.getString("FrmCalcSunriseSunset.lbSunrise.Text"));
 		Utils.addComponent(paneGlobal, lbSunrise, 
-				0, 3, 
+				0, line, 
 				1, 1, 
 				0, 0, 
 				5, 5, 0, 0, 
@@ -251,7 +283,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		lbSunriseVal.setBackground(Color.WHITE);
 		lbSunriseVal.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		Utils.addComponent(paneGlobal, lbSunriseVal, 
-				1, 3, 
+				1, line++, 
 				1, 1, 
 				1, 0, 
 				5, 5, 0, 5, 
@@ -260,7 +292,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		//== Sunset
 		lbSunset = new JLabel(bundle.getString("FrmCalcSunsetSunset.lbSunset.Text"));
 		Utils.addComponent(paneGlobal, lbSunset, 
-				0, 4, 
+				0, line, 
 				1, 1, 
 				0, 0, 
 				5, 5, 0, 0, 
@@ -271,7 +303,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		lbSunsetVal.setBackground(Color.WHITE);
 		lbSunsetVal.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		Utils.addComponent(paneGlobal, lbSunsetVal, 
-				1, 4, 
+				1, line++, 
 				1, 1, 
 				1, 0, 
 				5, 5, 0, 5, 
@@ -279,6 +311,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		
 		//== Summer time
 		chkSummerTime = new JCheckBox(bundle.getString("FrmCalcSunsetSunset.chkSummerTime.Text"));
+		chkSummerTime.setPreferredSize(new Dimension(50,25));
 		chkSummerTime.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				Calc();
@@ -286,7 +319,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 			}
 		});
 		Utils.addComponent(paneGlobal, chkSummerTime, 
-				1, 5, 
+				1, line++, 
 				1, 1, 
 				1, 1, 
 				5, 5, 0, 5, 
@@ -298,7 +331,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		jPanelButtons = new javax.swing.JPanel();
 		jPanelButtons.setLayout(new FlowLayout());
 		Utils.addComponent(paneGlobal, jPanelButtons, 
-				0, 6, 
+				0, line, 
 				GridBagConstraints.REMAINDER, 1, 
 				1, 0, 
 				10, 0, 0, 0,

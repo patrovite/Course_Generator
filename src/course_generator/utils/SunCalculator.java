@@ -12,6 +12,8 @@
 
 package course_generator.utils;
 
+import java.math.BigDecimal;
+
 import org.joda.time.DateTime;
 
 public class SunCalculator {

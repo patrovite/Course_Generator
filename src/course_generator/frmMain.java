@@ -1629,8 +1629,14 @@ public class frmMain extends javax.swing.JFrame {
 			return;
 
 		frmTrackSettings frm= new frmTrackSettings();
-		frm.showDialog(Settings,Track);
-//		RefreshStatusbar(Track);
+		if (frm.showDialog(Settings,Track)) {
+	        RefreshTableMain();
+	        RefreshProfil();
+			RefreshTitle();
+			RefreshStatusbar(Track);
+			Track.isModified=true;
+			Track.isCalculated=false;
+		}
 	}
 
 
