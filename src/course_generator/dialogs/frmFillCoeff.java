@@ -43,7 +43,7 @@ public class frmFillCoeff  extends javax.swing.JDialog {
 	private JButton btCancel;
 	private JButton btOk;
 	private TrackData track;
-	private CgData data;
+//	private CgData data;
 	private JPanel panelStart;
 	private JPanel panelEnd;
 	private JPanel panelHelp;
@@ -53,10 +53,10 @@ public class frmFillCoeff  extends javax.swing.JDialog {
 	private JRadioButton rbToEnd;
 	private JRadioButton rbToLine;
 	private ButtonGroup groupEnd;
-	private ButtonGroup groupDiff;
+//	private ButtonGroup groupDiff;
 	private CgSpinner spinFromLine;
 	private CgSpinner spinToLine;
-	private CgSpinner spinDiff;
+//	private CgSpinner spinDiff;
 	private JLabel lbFromValue;
 	private CgSpinnerDouble spinFromValue;
 	private JLabel lbToValue;
@@ -71,7 +71,7 @@ public class frmFillCoeff  extends javax.swing.JDialog {
 	private JLabel lbResultCoeffVal;
 	private JButton btCopyToEnd;
 	private JButton btCopyToStart;
-	private JTextField tfResultCoeffVal;
+//	private JTextField tfResultCoeffVal;
 	private JPanel panelEstimateTime;
 	private JPanel panelResult;
 

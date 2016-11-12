@@ -24,6 +24,8 @@
 *  - jcommon - LGPL - http://www.jfree.org/jcommon/
 *  - jfreechart - LGPL - http://www.jfree.org/index.html
 *  - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf/ 
+*  - SunCalculator - Patrick Kalkman - pkalkie@gmail.com
+
 */
 
 /*
@@ -123,6 +125,7 @@ import course_generator.dialogs.frmEditPosition;
 import course_generator.dialogs.frmFillCoeff;
 import course_generator.dialogs.frmFillCoeff.EditCoeffResult;
 import course_generator.dialogs.frmSearchPoint;
+import course_generator.dialogs.frmTrackSettings;
 import course_generator.dialogs.frmFillDiff.EditDiffResult;
 import course_generator.param.frmEditCurve;
 import course_generator.resume_table.ResumeAvgSlopeNClass;
@@ -1105,10 +1108,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuTrackSettings.setText(bundle.getString("frmMain.mnuTrackSettings.text"));
 		mnuTrackSettings.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				TrackSettings();
 			}
 		});
-		mnuTrackSettings.setEnabled(false);
 		mnuSettings.add(mnuTrackSettings);
 
 		// -- Speed/Slope curves
@@ -1500,10 +1502,9 @@ public class frmMain extends javax.swing.JFrame {
 		btTrackSettings.setFocusable(false);
 		btTrackSettings.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				TrackSettings();
 			}
 		});
-		btTrackSettings.setEnabled(false);
 		ToolBarMain.add(btTrackSettings);
 
 		// -- Separator
@@ -1622,6 +1623,18 @@ public class frmMain extends javax.swing.JFrame {
 		ToolBarMain.add(btCalculateTrackTime);
 
 	}
+
+	protected void TrackSettings() {
+		if (Track.data.size() <= 0)
+			return;
+
+		frmTrackSettings frm= new frmTrackSettings();
+		frm.showDialog(Settings,Track);
+//		RefreshStatusbar(Track);
+	}
+
+
+
 
 	private void EditSSCurves() {
 		frmEditCurve frm= new frmEditCurve();
