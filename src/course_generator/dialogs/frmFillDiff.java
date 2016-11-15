@@ -39,7 +39,7 @@ public class frmFillDiff  extends javax.swing.JDialog {
 	private JButton btCancel;
 	private JButton btOk;
 	private TrackData track;
-	private CgData data;
+//	private CgData data;
 	private JPanel panelStart;
 	private JPanel panelEnd;
 	private JPanel panelDiff;
@@ -76,6 +76,19 @@ public class frmFillDiff  extends javax.swing.JDialog {
 		setModal(true);
 	}
 
+	/**
+	 * Show the dialog
+	 * @param settings
+	 * 	Object containing the settings
+	 * @param track
+	 * 	Object containing the track
+	 * @param start_line
+	 * 	Line number where to start   
+	 * @param end_line
+	 *  Line number where to end
+	 * @return
+	 * 	Object containing the result 
+	 */
 	public EditDiffResult showDialog(CgSettings settings, TrackData track, int start_line, int end_line) {
 		this.settings = settings;
 		this.track = track;
@@ -362,6 +375,7 @@ public class frmFillDiff  extends javax.swing.JDialog {
 		rbHard = new JRadioButton(bundle.getString("frmFillDiff.rbHard.Text")); //Hard
 		rbHard.setOpaque(true);
 		rbHard.setBackground(CgConst.CL_DIFF_HARD);
+		rbHard.setForeground(Color.WHITE);
 		rbHard.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				Refresh();

@@ -21,6 +21,7 @@ package course_generator.param;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -67,8 +68,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 	private ParamListModel model;
 	public ParamData param = null;
 	private ParamPointsModel tablemodel;
-//	private JPanel jPanelButtons;
-//	private JButton btCancel;
 	private JButton btOk;
 	private JList ListCurves;
 	private JScrollPane jScrollPaneCurves;
@@ -226,6 +225,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmEditCurve.title"));
+		setPreferredSize(new Dimension(1200,600));
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setType(java.awt.Window.Type.UTILITY);
@@ -256,9 +256,9 @@ public class frmEditCurve extends javax.swing.JDialog {
 		Utils.addComponent(paneGlobal, jScrollPaneCurves,
 				0, 0, 
 				1, 4, 
-				1, 0, 
+				0.5, 1, 
 				10, 10, 0, 0, 
-				GridBagConstraints.WEST,
+				GridBagConstraints.PAGE_START,
 				GridBagConstraints.BOTH);
 
 		//-- Curve management toolbar
@@ -347,7 +347,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		Utils.addComponent(paneGlobal, jScrollPanePoint,
 				2, 3, 
 				2, 1, 
-				0, 0, 
+				0.5, 0, 
 				0, 0, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.BOTH);
@@ -367,7 +367,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		Utils.addComponent(paneGlobal, jPanelProfilChart,
 				5, 3, 
 				1, 1, 
-				0, 0, 
+				1, 0, 
 				0, 0, 0, 10, 
 				GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.BOTH);

@@ -25,14 +25,12 @@
 *  - jfreechart - LGPL - http://www.jfree.org/index.html
 *  - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf/ 
 *  - SunCalculator - Patrick Kalkman - pkalkie@gmail.com
-
 */
 
 /*
  * IN PROGRESS:
  * Hot:
- * - Test that the curve is loaded and generate a message if it is missing. The test the calculation with the curve.
- * -Replace tableMain.invalidate and same for the table resume
+ * - Check how the isBH/is TimeLimit is managed in order to have the display in the statusbar (CheckTimeLimit())
  *  
  * TODO:
  * - Move the track info on the a bottom line and add the curve name on this line
@@ -338,6 +336,9 @@ public class frmMain extends javax.swing.JFrame {
 	private JLabel LbModifiedVal;
 	private JButton btFillDiff;
 	private JButton btFillCoeff;
+	private JLabel LbTimeLimit;
+	private JComponent sepTimeLimit;
+	private JButton btMiniRoadbook;
 
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
@@ -441,46 +442,27 @@ public class frmMain extends javax.swing.JFrame {
     private void CalcTrackTime() {
     	if (Track.data.isEmpty()) return;
 
-//    	if (cd.isTimeLoaded==true) {
-//    		if (MessageBox.Show("Des données existent. Voulez-vous les écraser?", "Course Generator",
-//    				MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation)==DialogResult.No) return;
-//    	}
-
-//    	StatusBar.Items["Message"].Visible = true;
-//    	StatusBar.Items["Message"].Text = "Calcul en cours...";
-//    	StatusBar.Refresh();
-
         Track.Calculate();
 
         RefreshStatusbar(Track);
         
-		CalcClimbResult ccr = new CalcClimbResult();
-		
+		CalcClimbResult ccr = new CalcClimbResult();	
 		ccr = Track.CalcClimb(0, Track.data.size()-1, ccr);
 		Track.ClimbP=ccr.cp;
 		Track.ClimbM=ccr.cm;
 		Track.AscTime=ccr.tp;
 		Track.DescTime=ccr.tm;
+		
+		Track.CheckTimeLimit();
 
-//        cd.CalcClimb(0, cd.data.Count - 1, ref cd.ClimbP, ref cd.ClimbM, ref cd.AscTime, ref cd.DescTime);
-        
         Track.isCalculated = true;
         Track.isModified = true;
         
         //-- Refresh statusbar
         RefreshStatusbar(Track);
-        
-        
 		RefreshTableMain();
-
-        //Refresh resume
         RefreshResume();
-//        RefreshResume(false);
-        
-        //Refresh statistic
         RefreshStat(false);
-        
-//        StatusBar.Items["Message"].Visible = false;
     }
 
     
@@ -536,7 +518,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuLastGPX = new javax.swing.JMenu();
 		mnuLastGPX.setText(bundle.getString("frmMain.mnuLastGPX.text"));
 
-		// -- Mru GPX n°1
+		// -- Mru GPX n�1
 		mnuMruGPX1 = new javax.swing.JMenuItem();
 		mnuMruGPX1.setText(bundle.getString("frmMain.mnuMruGPX1.text"));
 		mnuMruGPX1.addActionListener(new java.awt.event.ActionListener() {
@@ -546,7 +528,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX1);
 
-		// -- Mru GPX n°2
+		// -- Mru GPX n�2
 		mnuMruGPX2 = new javax.swing.JMenuItem();
 		mnuMruGPX2.setText(bundle.getString("frmMain.mnuMruGPX2.text"));
 		mnuMruGPX2.addActionListener(new java.awt.event.ActionListener() {
@@ -556,7 +538,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX2);
 
-		// -- Mru GPX n°3
+		// -- Mru GPX n�3
 		mnuMruGPX3 = new javax.swing.JMenuItem();
 		mnuMruGPX3.setText(bundle.getString("frmMain.mnuMruGPX3.text"));
 		mnuMruGPX3.addActionListener(new java.awt.event.ActionListener() {
@@ -566,7 +548,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX3);
 
-		// -- Mru GPX n°4
+		// -- Mru GPX n�4
 		mnuMruGPX4 = new javax.swing.JMenuItem();
 		mnuMruGPX4.setText(bundle.getString("frmMain.mnuMruGPX4.text"));
 		mnuMruGPX4.addActionListener(new java.awt.event.ActionListener() {
@@ -576,7 +558,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX4);
 
-		// -- Mru GPX n°5
+		// -- Mru GPX n�5
 		mnuMruGPX5 = new javax.swing.JMenuItem();
 		mnuMruGPX5.setText(bundle.getString("frmMain.mnuMruGPX5.text"));
 		mnuMruGPX5.addActionListener(new java.awt.event.ActionListener() {
@@ -593,7 +575,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuLastCGX = new javax.swing.JMenu();
 		mnuLastCGX.setText(bundle.getString("frmMain.mnuLastCGX.text"));
 
-		// -- Mru CGX n°1
+		// -- Mru CGX n�1
 		mnuMruCGX1 = new javax.swing.JMenuItem();
 		mnuMruCGX1.setText(bundle.getString("frmMain.mnuMruCGX1.text"));
 		mnuMruCGX1.addActionListener(new java.awt.event.ActionListener() {
@@ -603,7 +585,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX1);
 
-		// -- Mru CGX n°2
+		// -- Mru CGX n�2
 		mnuMruCGX2 = new javax.swing.JMenuItem();
 		mnuMruCGX2.setText(bundle.getString("frmMain.mnuMruCGX2.text"));
 		mnuMruCGX2.addActionListener(new java.awt.event.ActionListener() {
@@ -613,7 +595,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX2);
 
-		// -- Mru CGX n°3
+		// -- Mru CGX n�3
 		mnuMruCGX3 = new javax.swing.JMenuItem();
 		mnuMruCGX3.setText(bundle.getString("frmMain.mnuMruCGX3.text"));
 		mnuMruCGX3.addActionListener(new java.awt.event.ActionListener() {
@@ -623,7 +605,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX3);
 
-		// -- Mru CGX n°4
+		// -- Mru CGX n�4
 		mnuMruCGX4 = new javax.swing.JMenuItem();
 		mnuMruCGX4.setText(bundle.getString("frmMain.mnuMruCGX4.text"));
 		mnuMruCGX4.addActionListener(new java.awt.event.ActionListener() {
@@ -633,7 +615,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX4);
 
-		// -- Mru CGX n°5
+		// -- Mru CGX n�5
 		mnuMruCGX5 = new javax.swing.JMenuItem();
 		mnuMruCGX5.setText(bundle.getString("frmMain.mnuMruCGX5.text"));
 		mnuMruCGX5.addActionListener(new java.awt.event.ActionListener() {
@@ -694,10 +676,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSavePartCGX.setText(bundle.getString("frmMain.mnuSavePartCGX.text"));
 		mnuSavePartCGX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				SavePartCGX();
 			}
 		});
-		mnuSavePartCGX.setEnabled(false);
 		mnuFile.add(mnuSavePartCGX);
 
 		// -- Save a part of the track in GPX
@@ -707,10 +688,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSavePartGPX.setText(bundle.getString("frmMain.mnuSavePartGPX.text"));
 		mnuSavePartGPX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveGPXActionPerformed(evt); //TODO
+				SavePartGPX();
 			}
 		});
-		mnuSavePartGPX.setEnabled(false);
 		mnuFile.add(mnuSavePartGPX);
 
 		// -- Save a part of the track in CSV
@@ -1043,10 +1023,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuDefineNewStart.setText(bundle.getString("frmMain.mnuDefineNewStart.text"));
 		mnuDefineNewStart.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				NewStartPoint();
 			}
 		});
-		mnuDefineNewStart.setEnabled(false);
 		mnuTools.add(mnuDefineNewStart);
 
 		// -- Calculate the track time
@@ -1208,6 +1187,121 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 	/**
+	 * Define a new starting point from the current position in the main table
+	 */
+	protected void NewStartPoint() {
+		if (Track.data.isEmpty())
+			return;
+
+		int start = TableMain.getSelectedRow();
+		if (start<0) return;
+
+		//-- Confirmation dialog
+		Object[] options = { " " + bundle.getString("frmMain.NewStartYes") + " ",
+				" " + bundle.getString("frmMain.NewStartNo") + " " };
+		int ret = JOptionPane.showOptionDialog(this, bundle.getString("frmMain.NewStartMessage"),
+				bundle.getString("frmMain.NewStartTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
+				null, options, options[1]);
+
+		//-- Ok! Let's go
+		if (ret == JOptionPane.YES_OPTION) {
+			Track.NewStartingPoint(start);
+			
+			//-- Move the cursor to the first line of the data table
+			TableMain.setRowSelectionInterval(0, 0);
+			Rectangle rect = TableMain.getCellRect(0, 0, true);
+			TableMain.scrollRectToVisible(rect);
+			
+	        Track.isCalculated = false;
+	        Track.isModified = true;
+	        
+	        //-- Refresh
+	        RefreshStatusbar(Track);
+			RefreshTableMain();
+	        RefreshResume();
+	        RefreshStat(false);
+
+	        //Refresh the marker position on the map
+			RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
+		}
+	}
+
+
+
+
+	/**
+	 * Save the selected data to disk in GPX format
+	 */
+	private void SavePartGPX() {
+		String s, ext;
+
+		if (Track.data.isEmpty())
+			return;
+
+		s = Utils.SaveDialog(this, Settings.LastDir, "", ".gpx", bundle.getString("frmMain.GPXFile"), true,
+				bundle.getString("frmMain.FileExist"));
+						
+		if (!s.isEmpty()) {
+			// -- Save track
+    		int start = TableMain.getSelectedRow();
+    		int end = start+TableMain.getSelectedRowCount();
+
+    		Track.SaveGPX(s, start, end);
+			// -- Store the directory
+			Settings.LastDir = Utils.GetDirFromFilename(s);
+
+			// -- Update GPX MRU
+			AddMruGPX(s);
+			RefreshMruGPX();
+
+			// -- We don't reset the track modified flag because we save only a part of the track!
+			//Track.isModified = false;
+
+			// -- Refresh info panel
+			RefreshStatusbar(Track);
+		}
+	}
+
+
+
+
+	/**
+	 * Save the selected data to disk in CGX format
+	 */
+	private void SavePartCGX() {
+		String s, ext;
+
+		if (Track.data.isEmpty())
+			return;
+
+		s = Utils.SaveDialog(this, Settings.LastDir, "", ".cgx", bundle.getString("frmMain.CGXFile"), true,
+				bundle.getString("frmMain.FileExist"));
+						
+		if (!s.isEmpty()) {
+			// -- Save track
+    		int start = TableMain.getSelectedRow();
+    		int end = start+TableMain.getSelectedRowCount();
+
+			Track.SaveCGX(s, start, end);
+			// -- Store the directory
+			Settings.LastDir = Utils.GetDirFromFilename(s);
+
+			// -- Update GPX MRU
+			AddMruCGX(s);
+			RefreshMruCGX();
+
+			// -- We don't reset the track modified flag because we save only a part of the track!
+			//Track.isModified = false;
+
+			// -- Refresh info panel
+			RefreshStatusbar(Track);
+		}
+	}
+
+
+
+
+	/**
 	 * Separator for the status bar
 	 * @return Separator object
 	 */
@@ -1217,6 +1311,10 @@ public class frmMain extends javax.swing.JFrame {
         return x;
     }
 	
+	
+	/**
+	 * Create the status bar
+	 */
 	private void Create_Statusbar() {
 		StatusBar = new javax.swing.JPanel();
 		FlowLayout fl = new FlowLayout(FlowLayout.RIGHT);
@@ -1299,6 +1397,18 @@ public class frmMain extends javax.swing.JFrame {
 		
 		//-- Separator
 		StatusBar.add(createStatusbarSeparator());
+
+		// -- Time limit
+		// --------------------------------------------------------
+		LbTimeLimit = new javax.swing.JLabel(" "+bundle.getString("frmMain.LbTimeLimit.text")+" ");
+		LbTimeLimit.setOpaque(true);
+		LbTimeLimit.setBackground(Color.RED);
+		LbTimeLimit.setForeground(Color.WHITE);
+		StatusBar.add(LbTimeLimit);
+		
+		//-- Separator
+		sepTimeLimit=createStatusbarSeparator();
+		StatusBar.add(sepTimeLimit);
 
 		// -- Modified
 		// --------------------------------------------------------
@@ -1479,6 +1589,20 @@ public class frmMain extends javax.swing.JFrame {
 		// ---------------------------------------------------------
 		ToolBarMain.add(new javax.swing.JToolBar.Separator());
 
+		// -- Mini roadbook
+		// ------------------------------------------------
+		btMiniRoadbook = new javax.swing.JButton();
+		btMiniRoadbook
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/profil.png")));
+		btMiniRoadbook.setToolTipText(bundle.getString("frmMain.btMiniRoadbook.toolTipText"));
+		btMiniRoadbook.setFocusable(false);
+		btMiniRoadbook.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+//				EditSSCurves();
+			}
+		});
+		ToolBarMain.add(btMiniRoadbook);
+
 		// -- Display S/S curves
 		// ------------------------------------------------
 		btDisplaySSCurves = new javax.swing.JButton();
@@ -1520,7 +1644,7 @@ public class frmMain extends javax.swing.JFrame {
 		btFillDiff.setFocusable(false);
 		btFillDiff.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (Track.data.size() <= 0)
+				if (Track.data.isEmpty())
 					return;
 				
 	    		int start = TableMain.getSelectedRow();
@@ -3204,6 +3328,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
+	
 	/**
 	 * Refresh the statusbar
 	 * 
@@ -3230,6 +3355,10 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Curve
 		LbInfoCurveVal.setText(tdata.Paramfile);
+		
+		// -- Time limit
+		LbTimeLimit.setVisible(Track.isTimeLimit);
+		sepTimeLimit.setVisible(Track.isTimeLimit);
 		
 		// -- Modified
 		if (Track.isModified) {
@@ -3281,6 +3410,7 @@ public class frmMain extends javax.swing.JFrame {
 			TableMain.setRowSelectionInterval(r, r);
 	}
 
+	
 	/**
 	 * Refresh the content of the resume table
 	 */
@@ -3291,9 +3421,9 @@ public class frmMain extends javax.swing.JFrame {
 			TableResume.setRowSelectionInterval(r, r);
 	}
 	
+	
 	/**
 	 * Refresh the position of the marker on the map
-	 * 
 	 * @param lat
 	 *            latitude of the position of the marker
 	 * @param lon
@@ -3312,6 +3442,10 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
+	
+	/**
+	 * Refresh the GPX most recent used files menu
+	 */
 	private void RefreshMruGPX() {
 		// -- Mru 1
 		if (Settings.mruGPX[0].isEmpty()) {
@@ -3355,9 +3489,9 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
+	
 	/**
 	 * Add "filename" to the CGX mru menu
-	 *
 	 * @param filename
 	 *            name of the file to add
 	 */
@@ -3372,6 +3506,10 @@ public class frmMain extends javax.swing.JFrame {
 		Settings.mruGPX[0] = filename;
 	}
 
+	
+	/**
+	 * Refresh the CGX most recent used files menu
+	 */
 	private void RefreshMruCGX() {
 		// -- Mru 1
 		if (Settings.mruCGX[0].isEmpty()) {
@@ -3417,7 +3555,6 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Add "filename" to the CGX mru menu
-	 *
 	 * @param filename
 	 *            name of the file to add
 	 */

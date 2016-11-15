@@ -1037,8 +1037,8 @@ public class frmEditPosition  extends javax.swing.JDialog {
 	
 	private void Refresh() {
 		lbLineVal.setText(String.format(" : %1.0f", data.getNum()));
-        lbLatitudeVal.setText(String.format(" : %1.7f",data.getLatitude()));
-        lbLongitudeVal.setText(String.format(" : %1.7f",data.getLongitude()));
+        lbLatitudeVal.setText(String.format(" : %1.7f",data.getLatitude())+"°");
+        lbLongitudeVal.setText(String.format(" : %1.7f",data.getLongitude())+"°");
         lbDistanceVal.setText(" : "+data.getDistString(settings.Unit,true));
         lbTotalVal.setText(" : "+data.getTotalString(settings.Unit,true));
         lbTimeVal.setText(" : "+data.getTimeString());        

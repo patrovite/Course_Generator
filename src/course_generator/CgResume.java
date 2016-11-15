@@ -28,28 +28,50 @@ import course_generator.utils.Utils;
  * @author pierre.delore
  */
 public class CgResume {
-	private double Num; // Line number
-	private String Name; // Name of the position
-	private double Line; // Line from the data grid
-	private double Elevation; // Elevation in meter
-	private double ClimbP; // Positive climb
-	private double ClimbM; // Negative climb
-	private double Dist; // Distance between point in meter
-	private int Time; // Total time in second
-	private DateTime Hour; // Date and hour at this position
-	private int dTime_f; // Time from the previous position in second
-	private double Total; // Total distance in meter
-	private int TimeLimit; // Time limit at this position
-	private int StationTime; // Time to stay at this position
-	private double dDist; // Distance from the previous position
-	private double dClimbP; // Positive from the previous position
-	private double dClimbM; // Negative from the previous position
-	private double SpeedP; // Positive climb speed m/h
-	private double SpeedM; // Negative climb speed m/h
-	private double AvgSlopeP; // Average positive slope %
-	private double AvgSlopeM; // Average negative slope %
-	private double AvgSpeed; // Average speed km/h
-	private String Comment; // Comment
+	/**Line number**/
+	private double Num; 
+	/**Name of the position**/
+	private String Name;
+	/**Line from the data grid**/
+	private double Line;
+	/**Elevation in meter**/
+	private double Elevation;
+	/**Positive climb**/
+	private double ClimbP;
+	/**Negative climb**/
+	private double ClimbM;
+	/**Distance between point in meter**/
+	private double Dist;
+	/**Total time in second**/
+	private int Time;
+	/**Date and hour at this position**/
+	private DateTime Hour;
+	/**Time from the previous position in second**/
+	private int dTime_f;
+	/**Total distance in meter**/
+	private double Total;
+	/**Time limit at this position**/
+	private int TimeLimit;
+	/**Time to stay at this position**/
+	private int StationTime;
+	/**Distance from the previous position**/
+	private double dDist;
+	/**Positive from the previous position**/
+	private double dClimbP;
+	/**Negative from the previous position**/
+	private double dClimbM;
+	/**Positive climb speed m/h**/
+	private double SpeedP;
+	/**Negative climb speed m/h**/
+	private double SpeedM;
+	/**Average positive slope %**/
+	private double AvgSlopeP;
+	/**Average negative slope %**/
+	private double AvgSlopeM
+	/**Average speed km/h**/;
+	private double AvgSpeed;
+	/**Comment**/
+	private String Comment;
 
 	// -- Number
 	public double getNum() {

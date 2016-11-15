@@ -28,36 +28,61 @@ import course_generator.utils.Utils;
  * @author pierre.delore
  */
 public class CgData {
+	/**Line number**/
 	private double Num;
+	/**Latitude of the position**/
 	private double Latitude;
+	/**Longitude of the position**/
 	private double Longitude;
-	private double Elevation; // Elevation in meter
+	/**Elevation of the position in meter**/
+	private double Elevation;
+	/**Memorized elevation of the position in meter**/
 	private double ElevationMemo; // Elevation in meter
+	/**Tag of the position**/
 	private int Tag;
-	private double Dist; // Distance between point in meter
-	private double Total; // Total distance in meter
+	/**Distance between 2 points in meters**/
+	private double Dist;
+	/**Total distance in meters from the start to this position**/
+	private double Total;
+	/**Track difficulty coefficient at this position**/
 	private double Diff;
+	/**Health coefficient at this position**/
 	private double Coeff;
+	/**Health recovery percentage at this position**/
 	private double Recovery;
+	/**Slope of the track from the last position to this position (in %)**/
 	private double Slope;
-	private double Speed; // Speed in km/h
-	private double dElevation; // Delta elevation in meter
-	private int Time; // Temps total en seconde
-	// public int dTime { get; set; } //temps de parcours du tronçon en seconde
-	// (sans virgule)
-	private double dTime_f; // temps de parcours du tronçon en seconde (avec
-							// virgule)
-	private int TimeLimit; // Barrière horaire
-	private DateTime Hour; // Contient la date et l'heure de passage
+	/**Speed from the last position to this position (in km/h)**/
+	private double Speed;
+	/**Elevation from the last position to this position (in m)**/
+	private double dElevation;
+	/**Time from the start to this position (in s)**/
+	private int Time;
+	/**Time from the previous position to this position (in s). In float format in order to maximize the precision**/
+	private double dTime_f;
+	/**Time limit at this position. in second from the start. 0=none**/
+	private int TimeLimit;
+	/**Hour at this position**/
+	private DateTime Hour;
+	/**Time stayed at this position. Rest, eat, drink... (in s)**/
 	private int Station;
+	/**Name of the position**/
 	private String Name;
+	/**Comment of the position**/
 	private String Comment;
+	/**Used for calculation*/
 	public double tmp1;
+	/**Used for calculation*/
 	public double tmp2;
+	/**Label format in the mini roadbook for this position**/
 	public String FmtLbMiniRoadbook;
+	/**Option of the mini roadbook for this position**/
 	public int OptionMiniRoadbook;
+	/**Vertical position of the label in the mini roadbook for this position**/
 	public int VPosMiniRoadbook;
+	/**Comment of this position in the mini roadbook**/
 	public String CommentMiniRoadbook;
+	/**Font size of this position in the mini roadbook**/
 	public int FontSizeMiniRoadbook;
 
 	public double getNum() {

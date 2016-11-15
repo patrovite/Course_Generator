@@ -40,12 +40,9 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 	private DateTime sunset;
 	private DateTime date;
 	
-//	private CgSettings settings;
 	private JPanel jPanelButtons;
 	private JButton btCancel;
 	private JButton btOk;
-//	private TrackData track;
-//	private CgData data;
 	private JLabel lbLongitude;
 	private JLabel lbLongitudeVal;
 	private JLabel lbLatitude;
@@ -84,8 +81,8 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		this.date=starttime;
 		
 		// Set field
-		lbLongitudeVal.setText(String.format("%10.7fÂ°", longitude));
-		lbLatitudeVal.setText(String.format("%10.7fÂ°", latitude));
+		lbLongitudeVal.setText(String.format("%10.7f°", longitude));
+		lbLatitudeVal.setText(String.format("%10.7f°", latitude));
 		lbSunriseVal.setText("00:00");
 		lbSunsetVal.setText("00:00");
 		spinTimeZone.setValue(timezone);
