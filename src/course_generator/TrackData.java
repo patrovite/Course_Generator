@@ -291,12 +291,18 @@ public class TrackData {
 		TotalDistance = totalDistance;
 	}
 
-	// -- Lit un fichier GPX et stocke dans la table --
-	// Retourne True si des données temporelles ont été trouvées
-	// mode:
-	// 0=Charge le fichier complet
-	// 1=Insertion fichier au début de la table
-	// 2=Insertion fichier à la fin de la table
+	/**
+	 * Read a GPX fileand store the data in the array
+	 * @param name 
+	 * 	Full name of the file
+	 * @param mode 
+	 * 	0 = Replace the existing data by the new data
+	 * 	1 = Insert the new data at the beginning of the existing data
+	 *  2 = Add the new data at the end of the existing data
+	 * @return 
+	 * 	Return true if time data have been loaded 
+	 * @throws Exception
+	 */
 	public boolean OpenGPX(String name, int mode) throws Exception {
 		SaxGPXHandler GPXhandler = new SaxGPXHandler();
 

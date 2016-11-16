@@ -31,6 +31,7 @@
  * IN PROGRESS:
  * Hot:
  * - Check how the isBH/is TimeLimit is managed in order to have the display in the statusbar (CheckTimeLimit())
+ * - Test the import
  *  
  * TODO:
  * - Move the track info on the a bottom line and add the curve name on this line
@@ -119,6 +120,7 @@ import course_generator.TrackData.CalcAvrSlopeResult;
 import course_generator.TrackData.CalcAvrSpeedResult;
 import course_generator.TrackData.CalcClimbResult;
 import course_generator.dialogs.frmFillDiff;
+import course_generator.dialogs.FrmImportChoice;
 import course_generator.dialogs.frmEditPosition;
 import course_generator.dialogs.frmFillCoeff;
 import course_generator.dialogs.frmFillCoeff.EditCoeffResult;
@@ -206,6 +208,7 @@ import course_generator.utils.FileTypeFilter;
 import course_generator.utils.OsCheck;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
+import sun.java2d.loops.DrawParallelogram;
 
 /**
  * This is the main class of the project.
@@ -339,6 +342,8 @@ public class frmMain extends javax.swing.JFrame {
 	private JLabel LbTimeLimit;
 	private JComponent sepTimeLimit;
 	private JButton btMiniRoadbook;
+	private JMenuItem mnuImportGPX;
+	private JMenuItem mnuImportCGX;
 
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
@@ -518,7 +523,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuLastGPX = new javax.swing.JMenu();
 		mnuLastGPX.setText(bundle.getString("frmMain.mnuLastGPX.text"));
 
-		// -- Mru GPX n°1
+		// -- Mru GPX nï¿½1
 		mnuMruGPX1 = new javax.swing.JMenuItem();
 		mnuMruGPX1.setText(bundle.getString("frmMain.mnuMruGPX1.text"));
 		mnuMruGPX1.addActionListener(new java.awt.event.ActionListener() {
@@ -528,7 +533,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX1);
 
-		// -- Mru GPX n°2
+		// -- Mru GPX nï¿½2
 		mnuMruGPX2 = new javax.swing.JMenuItem();
 		mnuMruGPX2.setText(bundle.getString("frmMain.mnuMruGPX2.text"));
 		mnuMruGPX2.addActionListener(new java.awt.event.ActionListener() {
@@ -538,7 +543,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX2);
 
-		// -- Mru GPX n°3
+		// -- Mru GPX nï¿½3
 		mnuMruGPX3 = new javax.swing.JMenuItem();
 		mnuMruGPX3.setText(bundle.getString("frmMain.mnuMruGPX3.text"));
 		mnuMruGPX3.addActionListener(new java.awt.event.ActionListener() {
@@ -548,7 +553,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX3);
 
-		// -- Mru GPX n°4
+		// -- Mru GPX nï¿½4
 		mnuMruGPX4 = new javax.swing.JMenuItem();
 		mnuMruGPX4.setText(bundle.getString("frmMain.mnuMruGPX4.text"));
 		mnuMruGPX4.addActionListener(new java.awt.event.ActionListener() {
@@ -558,7 +563,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX4);
 
-		// -- Mru GPX n°5
+		// -- Mru GPX nï¿½5
 		mnuMruGPX5 = new javax.swing.JMenuItem();
 		mnuMruGPX5.setText(bundle.getString("frmMain.mnuMruGPX5.text"));
 		mnuMruGPX5.addActionListener(new java.awt.event.ActionListener() {
@@ -575,7 +580,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuLastCGX = new javax.swing.JMenu();
 		mnuLastCGX.setText(bundle.getString("frmMain.mnuLastCGX.text"));
 
-		// -- Mru CGX n°1
+		// -- Mru CGX nï¿½1
 		mnuMruCGX1 = new javax.swing.JMenuItem();
 		mnuMruCGX1.setText(bundle.getString("frmMain.mnuMruCGX1.text"));
 		mnuMruCGX1.addActionListener(new java.awt.event.ActionListener() {
@@ -585,7 +590,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX1);
 
-		// -- Mru CGX n°2
+		// -- Mru CGX nï¿½2
 		mnuMruCGX2 = new javax.swing.JMenuItem();
 		mnuMruCGX2.setText(bundle.getString("frmMain.mnuMruCGX2.text"));
 		mnuMruCGX2.addActionListener(new java.awt.event.ActionListener() {
@@ -595,7 +600,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX2);
 
-		// -- Mru CGX n°3
+		// -- Mru CGX nï¿½3
 		mnuMruCGX3 = new javax.swing.JMenuItem();
 		mnuMruCGX3.setText(bundle.getString("frmMain.mnuMruCGX3.text"));
 		mnuMruCGX3.addActionListener(new java.awt.event.ActionListener() {
@@ -605,7 +610,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX3);
 
-		// -- Mru CGX n°4
+		// -- Mru CGX nï¿½4
 		mnuMruCGX4 = new javax.swing.JMenuItem();
 		mnuMruCGX4.setText(bundle.getString("frmMain.mnuMruCGX4.text"));
 		mnuMruCGX4.addActionListener(new java.awt.event.ActionListener() {
@@ -615,7 +620,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX4);
 
-		// -- Mru CGX n°5
+		// -- Mru CGX nï¿½5
 		mnuMruCGX5 = new javax.swing.JMenuItem();
 		mnuMruCGX5.setText(bundle.getString("frmMain.mnuMruCGX5.text"));
 		mnuMruCGX5.addActionListener(new java.awt.event.ActionListener() {
@@ -669,6 +674,31 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Separator
 		mnuFile.add(new javax.swing.JPopupMenu.Separator());
 
+		
+		// -- Import GPX
+		mnuImportGPX = new javax.swing.JMenuItem();
+		mnuImportGPX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/openGPX.png")));
+		mnuImportGPX.setText(bundle.getString("frmMain.mnuImportGPX.text"));
+		mnuImportGPX.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ImportGPX();
+			}
+		});
+		mnuFile.add(mnuImportGPX);
+
+		// -- Import CGX
+		mnuImportCGX = new javax.swing.JMenuItem();
+		mnuImportCGX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/openCGX.png")));
+		mnuImportCGX.setText(bundle.getString("frmMain.mnuImportCGX.text"));
+		mnuImportCGX.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+//				ImportCGX();
+			}
+		});
+		mnuFile.add(mnuImportCGX);
+
+		
+		
 		// -- Save a part of the track in CGX
 		mnuSavePartCGX = new javax.swing.JMenuItem();
 		mnuSavePartCGX
@@ -2721,7 +2751,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * Update the profil chart
 	 */
 	private void RefreshProfil() {
-		if (Track.data.size() <= 0)
+		if (Track.data.isEmpty())
 			return;
 
 		// -- Clear all series
@@ -2742,6 +2772,83 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
+	
+	public void ImportGPX() {
+		if (Track.data.isEmpty())
+			return;
+
+	    FrmImportChoice frm = new FrmImportChoice();
+
+	    int res=frm.showDialog();
+	    
+	    if (res!=FrmImportChoice.RESULT_CANCEL) {
+		    String s = Utils.LoadDialog(this, Settings.LastDir, ".gpx", bundle.getString("frmMain.GPXFile"));
+	        if (!s.isEmpty()) {
+        		int mode = FrmImportChoice.RESULT_AT_END;
+        		if (res==FrmImportChoice.RESULT_AT_END)
+        			mode = 1;
+        		else
+        			mode = 2;
+        			
+        		//BackupInCGX();
+        		//bAutorUpdatePos = false;
+        		try {
+					if (Track.OpenGPX(s, mode)) {
+						JOptionPane.showMessageDialog(this, bundle.getString("frmMain.NoTimeData"));
+		        		RefreshTableMain();
+		        		RefreshStatusbar(Track);
+		        		RefreshTitle();
+		        		RefreshProfil();
+		        		RefreshTrack(Track);
+		        		RefreshResume();
+		        		RefreshStat(false);
+		        		//RefreshInfoAnalyseSpeed(0);
+		        		//bAutorUpdatePos = true;	            		
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}        		
+	        }
+	    }
+        
+//	    if (frm.ShowDialog() == DialogResult.OK) {
+//	    	string s, ext;
+//
+//	    	openFileDialog.Filter = "Fichier GPX (*.gpx)|*.gpx";
+//	        openFileDialog.DefaultExt = "gpx";
+//	        DialogResult res = openFileDialog.ShowDialog();
+//	        if (res == DialogResult.OK) {
+//	        	s = openFileDialog.FileName;
+//	        	if (s == "") return;
+//
+//	        	ext = System.IO.Path.GetExtension(s);
+//	        	if (ext.ToUpper() == ".GPX") {
+//	        		int mode = Constantes.IMPORT_MODE_ADD_END;
+//	        		if (frm.insDeb) mode = Constantes.IMPORT_MODE_INS_START;
+//
+//	        		BackupInCGX();
+//	        		bAutorUpdatePos = false;
+//	        		if (!cd.OpenGPX(s, mode))
+//	        			MessageBox.Show("Le fichier que vous avez chargÃ© n'a pas de donnÃ©e temporelle.\nRÃ©glez les paramÃ¨tres du parcours et appuyez sur le bouton de calcul pour dÃ©terminer le temps de passage pour chaque point du parcours.", "Course Generator",
+//	        					MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+//
+//	        		InitMainGrid();
+//	        		RefreshStatusBar();
+//	        		RefreshTitle();
+//	        		DrawProfil(Constantes.SRC_MAIN);
+//	        		DrawMap();
+//	        		RefreshResume(false);
+//	        		RefreshStat(false);
+//	        		RefreshInfoAnalyseSpeed(0);
+//	        		bAutorUpdatePos = true;
+//	        		//bNoBackup = true;
+//	        	}
+//	        }
+//	    }		
+	}
+	
+	
 	/**
 	 * Refresh the fields in the profil info panel
 	 * 
@@ -2920,7 +3027,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Update the viewer
 		MapViewer.removeAllMapMarkers();
-		DisplayTrack(Track);
+		RefreshTrack(Track);
 		// -- Refresh the track information
 		RefreshStatusbar(Track);
 
@@ -3002,7 +3109,7 @@ public class frmMain extends javax.swing.JFrame {
 		}
 
 		// -- Update the viewer
-		DisplayTrack(Track);
+		RefreshTrack(Track);
 		// -- Refresh the track information
 		RefreshStatusbar(Track);
 		// -- Refresh resume grid
@@ -3264,7 +3371,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * @param tdata
 	 *            TrackData object to display
 	 */
-	private void DisplayTrack(TrackData tdata) {
+	private void RefreshTrack(TrackData tdata) {
 		// -- Remove the previous track
 		MapViewer.removeAllMapPolygons();
 

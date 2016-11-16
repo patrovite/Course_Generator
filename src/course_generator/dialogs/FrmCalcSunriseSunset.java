@@ -81,8 +81,8 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		this.date=starttime;
 		
 		// Set field
-		lbLongitudeVal.setText(String.format("%10.7f°", longitude));
-		lbLatitudeVal.setText(String.format("%10.7f°", latitude));
+		lbLongitudeVal.setText(String.format("%10.7fÂ°", longitude));
+		lbLatitudeVal.setText(String.format("%10.7fÂ°", latitude));
 		lbSunriseVal.setText("00:00");
 		lbSunsetVal.setText("00:00");
 		spinTimeZone.setValue(timezone);
