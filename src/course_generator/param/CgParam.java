@@ -22,9 +22,7 @@ package course_generator.param;
  *
  * @author pierre.delore
  */
-public class CgParam {
-    //TODO Liste triée
-//public class cgParam : IComparable
+public class CgParam implements Comparable<CgParam> {
     public double Slope;
     public double Speed;
     
@@ -33,13 +31,12 @@ public class CgParam {
     	Speed=speed;
     }
   
-    /*
-    public int CompareTo(object o)
+    @Override
+    public int compareTo(CgParam p)
     {
-      cgParam p = (cgParam)o;
       if (Slope - p.Slope < 0) return -1;
-      else if (Slope - p.Slope > 0) return 1;
+      else if (Slope -p.Slope> 0) return 1;
       else return 0;
     }
-    */
+    
 }

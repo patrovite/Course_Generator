@@ -298,7 +298,8 @@ public class SaxCGXHandler extends DefaultHandler{
      */
     private boolean ManageBoolean(boolean _default, int _errcode) {
         try {
-            return Boolean.parseBoolean(characters);
+            int v=Integer.parseInt(characters);
+            return (v==1?true:false);
         }
         catch (NumberFormatException e) {
             errcode=_errcode;

@@ -18,26 +18,8 @@
 
 package course_generator;
 
-import course_generator.param.ParamData;
-/*
-import course_generator.table.CoeffClass;
-import course_generator.table.DiffClass;
-import course_generator.table.DistClass;
-import course_generator.table.ElevationClass;
-import course_generator.table.HourClass;
-import course_generator.table.LatClass;
-import course_generator.table.LonClass;
-import course_generator.table.RecupClass;
-import course_generator.table.StationClass;
-import course_generator.table.TimeClass;
-import course_generator.table.TimelimitClass;
-import course_generator.table.TotalClass;
-*/
-import course_generator.utils.CgConst;
-import course_generator.utils.StatData;
-import course_generator.utils.Utils;
 import static course_generator.utils.Utils.CalcDistance;
-import course_generator.utils.Utils.CalcLineResult;
+
 //import static course_generator.utils.Utils.ReadXMLDouble;
 //import static course_generator.utils.Utils.ReadXMLInt;
 //import static course_generator.utils.Utils.ReadXMLString;
@@ -56,9 +38,26 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.joda.time.DateTime;
 
-//import org.jdom2.*;
-//import org.jdom2.output.*;
-//import org.jdom2.input.*;
+import course_generator.param.ParamData;
+/*
+import course_generator.table.CoeffClass;
+import course_generator.table.DiffClass;
+import course_generator.table.DistClass;
+import course_generator.table.ElevationClass;
+import course_generator.table.HourClass;
+import course_generator.table.LatClass;
+import course_generator.table.LonClass;
+import course_generator.table.RecupClass;
+import course_generator.table.StationClass;
+import course_generator.table.TimeClass;
+import course_generator.table.TimelimitClass;
+import course_generator.table.TotalClass;
+*/
+import course_generator.utils.CgConst;
+import course_generator.utils.StatData;
+import course_generator.utils.Utils;
+import course_generator.utils.Utils.CalcLineResult;
+
 
 /**
  *
@@ -68,69 +67,114 @@ public class TrackData {
 
 	private static TrackData instance;
 
+	/**Slope/Speed parameters**/
 	public ParamData param = null;
-	public ArrayList<CgData> data;
-
+	/**Parameters file name**/
 	public String Paramfile = "";
 
+	/**Arraylist containing the main data**/
+	public ArrayList<CgData> data;
+
+	/**Statistics data for 'in night'**/
 	public StatData tInNight;
+	/**Statistics data for 'in day'**/
 	public StatData tInDay;
 
-	public StatData[] StatSlope;// : Array [0..12] of TStat;
-	public StatData[] StatElev; // : Array [0..5] of TStat;
-	public StatData[] StatElevNight; // : Array [0..5] of TStat;
-	public StatData[] StatElevDay; // : Array [0..5] of TStat;
+	/**Statistics data for 'slope'**/
+	public StatData[] StatSlope;
+	/**Statistics data for 'elevation'**/
+	public StatData[] StatElev;
+	/**Statistics data for 'elevation during night'**/
+	public StatData[] StatElevNight;
+	/**Statistics data for 'elevation during day'**/
+	public StatData[] StatElevDay;
 
+	/**Track name**/
 	public String Name; // Track name
-	private double TotalDistance = 0.0;
-	public int TotalTime = 0;
+	/**Name of the track that appear in the track setting**/
 	public String CourseName = "";
+	/**Total distance in meters**/
+	private double TotalDistance = 0.0;
+	/**Total time in seconde**/
+	public int TotalTime = 0;
+	/**Indicate if during the last loading the time field as been loaded**/
 	public boolean isTimeLoaded = false;
+	/**Indicate if the data has been calculated. false=They must be calculate**/
 	public boolean isCalculated = false;
+	/**If 'true' this indicate that the data has been modified**/
 	public boolean isModified = false;
+	/**Contain the ascent climb of the whole track (in m)**/
 	public double ClimbP = 0.0;
+	/**Contain the descent climb of the whole track (in m)**/
 	public double ClimbM = 0.0;
+	/**Contain the ascent time of the whole track (in s)**/
 	public int AscTime = 0;
+	/**Contain the descent time of the whole track (in s)**/
 	public int DescTime = 0;
+	/**Description of the track**/
 	public String Description = "";
+	/**Indicate if the autocalc function is active**/
 	public boolean isAutoCalc = false;
+	/**Start time of the track**/
 	public DateTime StartTime = new DateTime();
+	/**Minimum elevation of the track (in m)**/
 	public double MinElev = -1;
+	/**Maximum elevation of the track (in m)**/
 	public double MaxElev = -1;
+	/**Global start health coefficient**/
 	public double StartGlobalCoeff = 100;
+	/**Global end health coefficient**/
 	public double EndGlobalCoeff = 100;
-	public boolean isBH = false; // Si true alors on a dépassé les barrières
-									// horaires
-	public int BH_Line = -1; // Indique ou est la barrière horaire dépassé.
-								// -1=Aucune
+	/**If 'true' this indicate that the time limit has been reached**/
+	public boolean isTimeLimit = false;
+	/**Indicate where the timelimit has been reached (-1 if none)**/
+	public int TimeLimit_Line = -1;
+	/**Timezone for the sunrise/sunset calculation**/
 	public Double TrackTimeZone = 0.0;
+	/**Are we using the summer time for the sunrise/sunset calculation**/
 	public boolean TrackUseSumerTime = false;
 	public double StartSpeed = 0.0;
 	public double EndSpeed = 0.0;
-	public double DistRoad = 0.0; // Nombre de mètres de route dans le parcours
+	/**Number of meter of road in the track**/
+	public double DistRoad = 0.0;
+	/**Indicate the type of error during the file reading**/
 	public int ReadError = 0;
+	/**Indicate the at which line the error appear**/
 	public int ReadLineError = 0;
 
 	// -- Night Coeff --
-	public DateTime StartNightTime; // = new DateTime();
-	public DateTime EndNightTime; // = new DateTime();
+	/**Start night time**/
+	public DateTime StartNightTime;
+	/**End night time**/
+	public DateTime EndNightTime; 
+	/**If 'true' this indicate that the night coefficients are used***/
 	public boolean bNightCoeff = false;
+	/**Ascent nigth coefficient (100%=normal)**/
 	public double NightCoeffAsc = 100.0;
+	/**Descent nigth coefficient (100%=normal)**/
 	public double NightCoeffDesc = 100.0;
 
 	// -- Elevation coeff
+	/**Indicate that the elevation effect is used during the calculation**/
 	public boolean bElevEffect = false;
 
 	// -- Profil mini-roadbook
+	/**Width of the mini roadbook (in pixels)**/
 	public int MrbSizeW = 640;
+	/**Height of the mini roadbook (in pixels)**/
 	public int MrbSizeH = 480;
+	/**Curve filter in the mini roadbook**/
 	public int CurveFilter = 1;
+	/**Number of characters before the line is word wrapped**/
 	public int WordWrapLength = 25;
+	/**Position of the label. 'true'=bottom**/
 	public boolean LabelToBottom = false;
+	/**Type of profil in the mini roadbook**/
 	public int MRBType = 0;
+	/**Top margin size in pixels in the mini roadbook**/
 	public int TopMargin = 100;
 
-	// -- Couleur profil
+	// -- Profil colors
 	public Color clProfil_Simple_Fill = Color.BLACK;
 	public Color clProfil_Simple_Border = Color.BLACK;
 	public Color clProfil_RS_Road = Color.BLACK;
@@ -143,12 +187,12 @@ public class TrackData {
 	public Color clProfil_SlopeSup15 = Color.BLACK;
 	public Color clProfil_SlopeBorder = Color.BLACK;
 
-	// CultureInfo culture = CultureInfo.CreateSpecificCulture("en-GB");
-	// -- Constructeur --
+	//-- Constructor --
 	public TrackData() {
 
 		Name = "";
 		param = new ParamData();
+		Paramfile = "Default";
 		data = new ArrayList<CgData>();
 		tInNight = new StatData();
 		tInDay = new StatData();
@@ -233,9 +277,9 @@ public class TrackData {
 	 */
 	public double getTotalDistance(int unit) {
 		switch (unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			return TotalDistance;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			// meter to miles
 			return Utils.Meter2uMiles(TotalDistance);
 		default:
@@ -247,12 +291,18 @@ public class TrackData {
 		TotalDistance = totalDistance;
 	}
 
-	// -- Lit un fichier GPX et stocke dans la table --
-	// Retourne True si des données temporelles ont été trouvées
-	// mode:
-	// 0=Charge le fichier complet
-	// 1=Insertion fichier au début de la table
-	// 2=Insertion fichier à la fin de la table
+	/**
+	 * Read a GPX fileand store the data in the array
+	 * @param name 
+	 * 	Full name of the file
+	 * @param mode 
+	 * 	0 = Replace the existing data by the new data
+	 * 	1 = Insert the new data at the beginning of the existing data
+	 *  2 = Add the new data at the end of the existing data
+	 * @return 
+	 * 	Return true if time data have been loaded 
+	 * @throws Exception
+	 */
 	public boolean OpenGPX(String name, int mode) throws Exception {
 		SaxGPXHandler GPXhandler = new SaxGPXHandler();
 
@@ -793,23 +843,22 @@ public class TrackData {
 	 */
 	public boolean CheckTimeLimit() {
 		int i = 0;
-		isBH = false;
-		BH_Line = -1;
+		isTimeLimit = false;
+		TimeLimit_Line = -1;
 		for (CgData r : data) {
 			if ((r.getTimeLimit() != 0) && (r.getTime() > r.getTimeLimit())) {
-				isBH = true;
-				BH_Line = i;
+				isTimeLimit = true;
+				TimeLimit_Line = i;
 			}
 			i++;
 		}
-		return isBH;
+		return isTimeLimit;
 	}
 
 	/**
-	 * Calculate the speed
+	 * Calculate the time for each position of the track
 	 */
 	public void Calculate() {
-		// int i=0;
 		int j = 0;
 		int k = 0;
 		double ts = 0.0;
@@ -818,8 +867,6 @@ public class TrackData {
 		double y1 = 0.0;
 		double x2 = 0.0;
 		double y2 = 0.0;
-		// double a = 0.0;
-		// double b = 0.0;
 		double y = 0.0;
 		double tmp = 0.0;
 		double night = 0.0;
@@ -833,7 +880,7 @@ public class TrackData {
 
 		isTimeLoaded = false;
 
-		String sParamfile = Utils.GetHomeDir() + "/Course Generator/config/" + Paramfile + ".par";
+		String sParamfile = Utils.GetHomeDir() + "/Course Generator/" + Paramfile + ".par";
 
 		try{
 			param.Load(sParamfile);
@@ -842,8 +889,6 @@ public class TrackData {
 			return;
 		}
 		
-		// a = 0;
-		// b = 0;
 		ef = 1;
 
 		dt = 0;
@@ -923,16 +968,14 @@ public class TrackData {
 			double station = (double) (r.getStation());
 
 			if (y != 0.0) {
-				// Calculate the travel time in seconde in a part of the track
+				// Calculate the travel time in second in a part of the track
 				ts = (dist / (y / 3.6)) * coeff * diff * night * ef + station; 
 			} else {
 				ts = 0.0;
 			}
 			dt = dt + ts;
 
-			// r.dTime=(int)Math.Truncate(ts);
 			r.setdTime_f(ts);
-
 			r.setTime((int) Math.round(dt));
 
 			if (ts != 0.0) {
@@ -1328,7 +1371,7 @@ public class TrackData {
 				  	Utils.WriteStringToXML(writer, "DISTANCEMETERSCUMUL", String.format(Locale.ROOT,"%f", r.getTotal()));
 				  	Utils.WriteStringToXML(writer, "DIFF", String.format(Locale.ROOT,"%f", r.getDiff()));
 				  	Utils.WriteStringToXML(writer, "COEFF", String.format(Locale.ROOT,"%f", r.getCoeff()));
-				  	Utils.WriteStringToXML(writer, "RECUP", String.format(Locale.ROOT,"%f", r.getRecup()));
+				  	Utils.WriteStringToXML(writer, "RECUP", String.format(Locale.ROOT,"%f", r.getRecovery()));
 				  	Utils.WriteIntToXML(writer, "TIMESECONDE", r.getTime());
 				  	Utils.WriteIntToXML(writer, "EATTIME", r.getStation());
 				  	Utils.WriteIntToXML(writer, "TIMELIMIT", r.getTimeLimit());

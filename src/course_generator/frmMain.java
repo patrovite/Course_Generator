@@ -24,12 +24,14 @@
 *  - jcommon - LGPL - http://www.jfree.org/jcommon/
 *  - jfreechart - LGPL - http://www.jfree.org/index.html
 *  - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf/ 
+*  - SunCalculator - Patrick Kalkman - pkalkie@gmail.com
 */
 
 /*
  * IN PROGRESS:
  * Hot:
- * - Test that the curve is loaded and generate a message if it is missing. The test the calculation with the curve.
+ * - Check how the isBH/is TimeLimit is managed in order to have the display in the statusbar (CheckTimeLimit())
+ * - Test the import
  *  
  * TODO:
  * - Move the track info on the a bottom line and add the curve name on this line
@@ -59,6 +61,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -75,15 +78,19 @@ import java.util.Locale;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -112,7 +119,15 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import course_generator.TrackData.CalcAvrSlopeResult;
 import course_generator.TrackData.CalcAvrSpeedResult;
 import course_generator.TrackData.CalcClimbResult;
+import course_generator.dialogs.frmFillDiff;
+import course_generator.dialogs.FrmImportChoice;
+import course_generator.dialogs.frmEditPosition;
+import course_generator.dialogs.frmFillCoeff;
+import course_generator.dialogs.frmFillCoeff.EditCoeffResult;
 import course_generator.dialogs.frmSearchPoint;
+import course_generator.dialogs.frmTrackSettings;
+import course_generator.dialogs.frmFillDiff.EditDiffResult;
+import course_generator.param.frmEditCurve;
 import course_generator.resume_table.ResumeAvgSlopeNClass;
 import course_generator.resume_table.ResumeAvgSlopeNRenderer;
 import course_generator.resume_table.ResumeAvgSlopePClass;
@@ -188,9 +203,12 @@ import course_generator.trackdata_table.TimelimitRenderer;
 import course_generator.trackdata_table.TotalClass;
 import course_generator.trackdata_table.TotalRenderer;
 import course_generator.trackdata_table.TrackDataModel;
+import course_generator.utils.CgConst;
 import course_generator.utils.FileTypeFilter;
 import course_generator.utils.OsCheck;
 import course_generator.utils.Utils;
+import course_generator.utils.Utils.CalcLineResult;
+import sun.java2d.loops.DrawParallelogram;
 
 /**
  * This is the main class of the project.
@@ -199,7 +217,7 @@ import course_generator.utils.Utils;
  */
 public class frmMain extends javax.swing.JFrame {
 	private final String Version = "4.0.0.Alpha1";
-	private FileFilter GPX_Filter;
+//	private FileFilter GPX_Filter;
 	public TrackData Track;
 	private ResumeData Resume;
 	private final TrackDataModel ModelTableMain;
@@ -244,7 +262,7 @@ public class frmMain extends javax.swing.JFrame {
 	private JMenuItem mnuDisplaySpeed;
 	private JMenuItem mnuDisplaySlope;
 	private JMenu mnuTools;
-	private JMenuItem mnuCalculateTackTime;
+	private JMenuItem mnuCalculateTrackTime;
 	private JMenuItem mnuFindMinMax;
 	private JMenuItem mnuInvertTrack;
 	private JMenuItem mnuDefineNewStart;
@@ -313,6 +331,19 @@ public class frmMain extends javax.swing.JFrame {
 	public Crosshair xCrosshair;
 
 	public Crosshair yCrosshair;
+	private JPanel StatusBar;
+	private JLabel lbStatusBarSpeed;
+	private JLabel LbInfoCurve;
+	private JLabel LbInfoCurveVal;
+	private JLabel LbModified;
+	private JLabel LbModifiedVal;
+	private JButton btFillDiff;
+	private JButton btFillCoeff;
+	private JLabel LbTimeLimit;
+	private JComponent sepTimeLimit;
+	private JButton btMiniRoadbook;
+	private JMenuItem mnuImportGPX;
+	private JMenuItem mnuImportCGX;
 
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
@@ -322,7 +353,7 @@ public class frmMain extends javax.swing.JFrame {
 			if (cmptInternetConnexion > Settings.ConnectionTimeout) {
 				cmptInternetConnexion = 0;
 				InternetConnectionActive = Utils.isInternetReachable();
-				RefreshInfo(Track);
+				RefreshStatusbar(Track);
 			}
 		}
 	}
@@ -367,13 +398,13 @@ public class frmMain extends javax.swing.JFrame {
 		initComponents();
 
 		// -- Set the icon of the application
-		setIconImage(createImageIcon("/course_generator/images/heart.jpg", "").getImage());
+		setIconImage(createImageIcon("/course_generator/images/cg.png", "").getImage());
 
 		// -- Set the preferred column width
 		for (int i = 0; i < 15; i++) {
 			TableMain.getColumnModel().getColumn(i).setPreferredWidth(Settings.TableMainColWidth[i]);
 		}
-		TableMain.invalidate();
+		RefreshTableMain();
 
 		// -- Set the windows size and center it in the screen - Not tested on
 		// multi-screen configuration
@@ -405,8 +436,48 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Refresh
 		RefreshMruCGX();
 		RefreshMruGPX();
-		RefreshInfo(Track);
+		RefreshStatusbar(Track);
 	}
+	
+	
+	
+	
+	//-- Permet de lancer un calcul sur le tableau --
+	
+    private void CalcTrackTime() {
+    	if (Track.data.isEmpty()) return;
+
+        Track.Calculate();
+
+        RefreshStatusbar(Track);
+        
+		CalcClimbResult ccr = new CalcClimbResult();	
+		ccr = Track.CalcClimb(0, Track.data.size()-1, ccr);
+		Track.ClimbP=ccr.cp;
+		Track.ClimbM=ccr.cm;
+		Track.AscTime=ccr.tp;
+		Track.DescTime=ccr.tm;
+		
+		Track.CheckTimeLimit();
+
+        Track.isCalculated = true;
+        Track.isModified = true;
+        
+        //-- Refresh statusbar
+        RefreshStatusbar(Track);
+		RefreshTableMain();
+        RefreshResume();
+        RefreshStat(false);
+    }
+
+    
+	private void RefreshStat(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 
 	/**
 	 * Create the main menu
@@ -452,7 +523,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuLastGPX = new javax.swing.JMenu();
 		mnuLastGPX.setText(bundle.getString("frmMain.mnuLastGPX.text"));
 
-		// -- Mru GPX n°1
+		// -- Mru GPX n�1
 		mnuMruGPX1 = new javax.swing.JMenuItem();
 		mnuMruGPX1.setText(bundle.getString("frmMain.mnuMruGPX1.text"));
 		mnuMruGPX1.addActionListener(new java.awt.event.ActionListener() {
@@ -462,7 +533,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX1);
 
-		// -- Mru GPX n°2
+		// -- Mru GPX n�2
 		mnuMruGPX2 = new javax.swing.JMenuItem();
 		mnuMruGPX2.setText(bundle.getString("frmMain.mnuMruGPX2.text"));
 		mnuMruGPX2.addActionListener(new java.awt.event.ActionListener() {
@@ -472,7 +543,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX2);
 
-		// -- Mru GPX n°3
+		// -- Mru GPX n�3
 		mnuMruGPX3 = new javax.swing.JMenuItem();
 		mnuMruGPX3.setText(bundle.getString("frmMain.mnuMruGPX3.text"));
 		mnuMruGPX3.addActionListener(new java.awt.event.ActionListener() {
@@ -482,7 +553,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX3);
 
-		// -- Mru GPX n°4
+		// -- Mru GPX n�4
 		mnuMruGPX4 = new javax.swing.JMenuItem();
 		mnuMruGPX4.setText(bundle.getString("frmMain.mnuMruGPX4.text"));
 		mnuMruGPX4.addActionListener(new java.awt.event.ActionListener() {
@@ -492,7 +563,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX4);
 
-		// -- Mru GPX n°5
+		// -- Mru GPX n�5
 		mnuMruGPX5 = new javax.swing.JMenuItem();
 		mnuMruGPX5.setText(bundle.getString("frmMain.mnuMruGPX5.text"));
 		mnuMruGPX5.addActionListener(new java.awt.event.ActionListener() {
@@ -509,7 +580,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuLastCGX = new javax.swing.JMenu();
 		mnuLastCGX.setText(bundle.getString("frmMain.mnuLastCGX.text"));
 
-		// -- Mru CGX n°1
+		// -- Mru CGX n�1
 		mnuMruCGX1 = new javax.swing.JMenuItem();
 		mnuMruCGX1.setText(bundle.getString("frmMain.mnuMruCGX1.text"));
 		mnuMruCGX1.addActionListener(new java.awt.event.ActionListener() {
@@ -519,7 +590,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX1);
 
-		// -- Mru CGX n°2
+		// -- Mru CGX n�2
 		mnuMruCGX2 = new javax.swing.JMenuItem();
 		mnuMruCGX2.setText(bundle.getString("frmMain.mnuMruCGX2.text"));
 		mnuMruCGX2.addActionListener(new java.awt.event.ActionListener() {
@@ -529,7 +600,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX2);
 
-		// -- Mru CGX n°3
+		// -- Mru CGX n�3
 		mnuMruCGX3 = new javax.swing.JMenuItem();
 		mnuMruCGX3.setText(bundle.getString("frmMain.mnuMruCGX3.text"));
 		mnuMruCGX3.addActionListener(new java.awt.event.ActionListener() {
@@ -539,7 +610,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX3);
 
-		// -- Mru CGX n°4
+		// -- Mru CGX n�4
 		mnuMruCGX4 = new javax.swing.JMenuItem();
 		mnuMruCGX4.setText(bundle.getString("frmMain.mnuMruCGX4.text"));
 		mnuMruCGX4.addActionListener(new java.awt.event.ActionListener() {
@@ -549,7 +620,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX4);
 
-		// -- Mru CGX n°5
+		// -- Mru CGX n�5
 		mnuMruCGX5 = new javax.swing.JMenuItem();
 		mnuMruCGX5.setText(bundle.getString("frmMain.mnuMruCGX5.text"));
 		mnuMruCGX5.addActionListener(new java.awt.event.ActionListener() {
@@ -603,6 +674,31 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Separator
 		mnuFile.add(new javax.swing.JPopupMenu.Separator());
 
+		
+		// -- Import GPX
+		mnuImportGPX = new javax.swing.JMenuItem();
+		mnuImportGPX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/openGPX.png")));
+		mnuImportGPX.setText(bundle.getString("frmMain.mnuImportGPX.text"));
+		mnuImportGPX.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ImportGPX();
+			}
+		});
+		mnuFile.add(mnuImportGPX);
+
+		// -- Import CGX
+		mnuImportCGX = new javax.swing.JMenuItem();
+		mnuImportCGX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/openCGX.png")));
+		mnuImportCGX.setText(bundle.getString("frmMain.mnuImportCGX.text"));
+		mnuImportCGX.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+//				ImportCGX();
+			}
+		});
+		mnuFile.add(mnuImportCGX);
+
+		
+		
 		// -- Save a part of the track in CGX
 		mnuSavePartCGX = new javax.swing.JMenuItem();
 		mnuSavePartCGX
@@ -610,10 +706,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSavePartCGX.setText(bundle.getString("frmMain.mnuSavePartCGX.text"));
 		mnuSavePartCGX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				SavePartCGX();
 			}
 		});
-		mnuSavePartCGX.setEnabled(false);
 		mnuFile.add(mnuSavePartCGX);
 
 		// -- Save a part of the track in GPX
@@ -623,10 +718,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSavePartGPX.setText(bundle.getString("frmMain.mnuSavePartGPX.text"));
 		mnuSavePartGPX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveGPXActionPerformed(evt); //TODO
+				SavePartGPX();
 			}
 		});
-		mnuSavePartGPX.setEnabled(false);
 		mnuFile.add(mnuSavePartGPX);
 
 		// -- Save a part of the track in CSV
@@ -940,8 +1034,8 @@ public class frmMain extends javax.swing.JFrame {
 					// BackupInCGX(); TODO BackupCGX
 					Track.Invert();
 					RefreshProfil();
-					RefreshInfo(Track);
-					TableMain.invalidate();
+					RefreshStatusbar(Track);
+					RefreshTableMain();
 					RefreshResume();
 					// DrawMap();
 					// DrawProfil(Constantes.SRC_MAIN);
@@ -959,26 +1053,24 @@ public class frmMain extends javax.swing.JFrame {
 		mnuDefineNewStart.setText(bundle.getString("frmMain.mnuDefineNewStart.text"));
 		mnuDefineNewStart.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				NewStartPoint();
 			}
 		});
-		mnuDefineNewStart.setEnabled(false);
 		mnuTools.add(mnuDefineNewStart);
 
 		// -- Calculate the track time
 		// -------------------------------------------
-		mnuCalculateTackTime = new javax.swing.JMenuItem();
-		mnuCalculateTackTime.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
-		mnuCalculateTackTime
+		mnuCalculateTrackTime = new javax.swing.JMenuItem();
+		mnuCalculateTrackTime.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+		mnuCalculateTrackTime
 				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/refresh.png")));
-		mnuCalculateTackTime.setText(bundle.getString("frmMain.mnuCalculateTackTime.text"));
-		mnuCalculateTackTime.addActionListener(new java.awt.event.ActionListener() {
+		mnuCalculateTrackTime.setText(bundle.getString("frmMain.mnuCalculateTackTime.text"));
+		mnuCalculateTrackTime.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				CalcTrackTime();
 			}
 		});
-		mnuCalculateTackTime.setEnabled(false);
-		mnuTools.add(mnuCalculateTackTime);
+		mnuTools.add(mnuCalculateTrackTime);
 
 		// -- Separator
 		// ---------------------------------------------------------
@@ -1025,10 +1117,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuTrackSettings.setText(bundle.getString("frmMain.mnuTrackSettings.text"));
 		mnuTrackSettings.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				TrackSettings();
 			}
 		});
-		mnuTrackSettings.setEnabled(false);
 		mnuSettings.add(mnuTrackSettings);
 
 		// -- Speed/Slope curves
@@ -1060,10 +1151,9 @@ public class frmMain extends javax.swing.JFrame {
 				frm.showDialog(Settings);
 
 				// -- Refresh data and display
-				RefreshInfo(Track);
+				RefreshStatusbar(Track);
 			}
 		});
-		mnuCGSettings.setEnabled(false);
 		mnuSettings.add(mnuCGSettings);
 
 		// --
@@ -1126,6 +1216,290 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
+	/**
+	 * Define a new starting point from the current position in the main table
+	 */
+	protected void NewStartPoint() {
+		if (Track.data.isEmpty())
+			return;
+
+		int start = TableMain.getSelectedRow();
+		if (start<0) return;
+
+		//-- Confirmation dialog
+		Object[] options = { " " + bundle.getString("frmMain.NewStartYes") + " ",
+				" " + bundle.getString("frmMain.NewStartNo") + " " };
+		int ret = JOptionPane.showOptionDialog(this, bundle.getString("frmMain.NewStartMessage"),
+				bundle.getString("frmMain.NewStartTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
+				null, options, options[1]);
+
+		//-- Ok! Let's go
+		if (ret == JOptionPane.YES_OPTION) {
+			Track.NewStartingPoint(start);
+			
+			//-- Move the cursor to the first line of the data table
+			TableMain.setRowSelectionInterval(0, 0);
+			Rectangle rect = TableMain.getCellRect(0, 0, true);
+			TableMain.scrollRectToVisible(rect);
+			
+	        Track.isCalculated = false;
+	        Track.isModified = true;
+	        
+	        //-- Refresh
+	        RefreshStatusbar(Track);
+			RefreshTableMain();
+	        RefreshResume();
+	        RefreshStat(false);
+
+	        //Refresh the marker position on the map
+			RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
+		}
+	}
+
+
+
+
+	/**
+	 * Save the selected data to disk in GPX format
+	 */
+	private void SavePartGPX() {
+		String s, ext;
+
+		if (Track.data.isEmpty())
+			return;
+
+		s = Utils.SaveDialog(this, Settings.LastDir, "", ".gpx", bundle.getString("frmMain.GPXFile"), true,
+				bundle.getString("frmMain.FileExist"));
+						
+		if (!s.isEmpty()) {
+			// -- Save track
+    		int start = TableMain.getSelectedRow();
+    		int end = start+TableMain.getSelectedRowCount();
+
+    		Track.SaveGPX(s, start, end);
+			// -- Store the directory
+			Settings.LastDir = Utils.GetDirFromFilename(s);
+
+			// -- Update GPX MRU
+			AddMruGPX(s);
+			RefreshMruGPX();
+
+			// -- We don't reset the track modified flag because we save only a part of the track!
+			//Track.isModified = false;
+
+			// -- Refresh info panel
+			RefreshStatusbar(Track);
+		}
+	}
+
+
+
+
+	/**
+	 * Save the selected data to disk in CGX format
+	 */
+	private void SavePartCGX() {
+		String s, ext;
+
+		if (Track.data.isEmpty())
+			return;
+
+		s = Utils.SaveDialog(this, Settings.LastDir, "", ".cgx", bundle.getString("frmMain.CGXFile"), true,
+				bundle.getString("frmMain.FileExist"));
+						
+		if (!s.isEmpty()) {
+			// -- Save track
+    		int start = TableMain.getSelectedRow();
+    		int end = start+TableMain.getSelectedRowCount();
+
+			Track.SaveCGX(s, start, end);
+			// -- Store the directory
+			Settings.LastDir = Utils.GetDirFromFilename(s);
+
+			// -- Update GPX MRU
+			AddMruCGX(s);
+			RefreshMruCGX();
+
+			// -- We don't reset the track modified flag because we save only a part of the track!
+			//Track.isModified = false;
+
+			// -- Refresh info panel
+			RefreshStatusbar(Track);
+		}
+	}
+
+
+
+
+	/**
+	 * Separator for the status bar
+	 * @return Separator object
+	 */
+	static JComponent createStatusbarSeparator() {
+        JSeparator x = new JSeparator(SwingConstants.VERTICAL);
+        x.setPreferredSize(new Dimension(3,20));
+        return x;
+    }
+	
+	
+	/**
+	 * Create the status bar
+	 */
+	private void Create_Statusbar() {
+		StatusBar = new javax.swing.JPanel();
+		FlowLayout fl = new FlowLayout(FlowLayout.RIGHT);
+		fl.setVgap(0);
+		StatusBar.setLayout(fl);
+
+		//-- Separator
+		StatusBar.add(createStatusbarSeparator());
+				
+		// -- Total distance
+		// ----------------------------------------------------
+		LbInfoTotalDist = new javax.swing.JLabel();
+		LbInfoTotalDist
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/distance.png")));
+		StatusBar.add(LbInfoTotalDist);
+		
+
+		// -- Total distance - value
+		// ----------------------------------------------------
+		LbInfoTotalDistVal = new javax.swing.JLabel();
+		StatusBar.add(LbInfoTotalDistVal);
+
+		//-- Separator
+		StatusBar.add(createStatusbarSeparator());
+		
+		// -- Ascent
+		// ------------------------------------------------------
+		LbInfoDp = new javax.swing.JLabel();
+		LbInfoDp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/dp.png")));
+		StatusBar.add(LbInfoDp);
+
+		// -- Ascent value
+		// ------------------------------------------------------
+		LbInfoDpVal = new javax.swing.JLabel();
+		StatusBar.add(LbInfoDpVal);
+
+		//-- Separator
+		StatusBar.add(createStatusbarSeparator());
+		
+		// -- Descent
+		// -----------------------------------------------------
+		LbInfoDm = new javax.swing.JLabel();
+		LbInfoDm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/dm.png")));
+		StatusBar.add(LbInfoDm);
+		
+		// -- Descent value
+		// -----------------------------------------------------
+		LbInfoDmVal = new javax.swing.JLabel();
+		StatusBar.add(LbInfoDmVal);
+
+		//-- Separator
+		StatusBar.add(createStatusbarSeparator());
+		
+		// -- Total time
+		// --------------------------------------------------------
+		LbInfoTime = new javax.swing.JLabel();
+		LbInfoTime
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chronometer.png")));
+		StatusBar.add(LbInfoTime);
+		
+		// -- Total time value
+		// --------------------------------------------------------
+		LbInfoTimeVal = new javax.swing.JLabel();
+		StatusBar.add(LbInfoTimeVal);
+		
+		//-- Separator
+		StatusBar.add(createStatusbarSeparator());
+
+		// -- Curve
+		// --------------------------------------------------------
+		LbInfoCurve = new javax.swing.JLabel();
+		LbInfoCurve
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/curve.png")));
+		StatusBar.add(LbInfoCurve);
+		
+		// -- Curve value
+		// --------------------------------------------------------
+		LbInfoCurveVal = new javax.swing.JLabel();
+		StatusBar.add(LbInfoCurveVal);
+		
+		//-- Separator
+		StatusBar.add(createStatusbarSeparator());
+
+		// -- Time limit
+		// --------------------------------------------------------
+		LbTimeLimit = new javax.swing.JLabel(" "+bundle.getString("frmMain.LbTimeLimit.text")+" ");
+		LbTimeLimit.setOpaque(true);
+		LbTimeLimit.setBackground(Color.RED);
+		LbTimeLimit.setForeground(Color.WHITE);
+		StatusBar.add(LbTimeLimit);
+		
+		//-- Separator
+		sepTimeLimit=createStatusbarSeparator();
+		StatusBar.add(sepTimeLimit);
+
+		// -- Modified
+		// --------------------------------------------------------
+		LbModified = new javax.swing.JLabel();
+		LbModified
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/edit.png")));
+		StatusBar.add(LbModified);
+		
+		// -- Modified status
+		// --------------------------------------------------------
+		LbModifiedVal = new javax.swing.JLabel();
+		StatusBar.add(LbModifiedVal);
+		
+		//-- Separator
+		StatusBar.add(createStatusbarSeparator());
+		
+		// -- Calculation needed
+		// ------------------------------------------------
+		LbInfoCalculate = new javax.swing.JLabel();
+		LbInfoCalculate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/calc.png")));
+		StatusBar.add(LbInfoCalculate);
+		
+		// -- Calculation needed value
+		// ------------------------------------------------
+		LbInfoCalculateVal = new javax.swing.JLabel();
+		StatusBar.add(LbInfoCalculateVal);
+
+		//-- Separator
+		StatusBar.add(createStatusbarSeparator());
+		
+		// -- Internet connection present
+		// ----------------------------------------
+		LbInfoInternet = new javax.swing.JLabel();
+		LbInfoInternet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/earth.png")));
+		StatusBar.add(LbInfoInternet);
+		
+		// -- Internet connection present value
+		// ----------------------------------------
+		LbInfoInternetVal = new javax.swing.JLabel();
+
+		StatusBar.add(LbInfoInternetVal);
+		
+		//-- Separator
+		StatusBar.add(createStatusbarSeparator());
+		
+		// -- Unit
+		// ----------------------------------------
+		LbInfoUnit = new javax.swing.JLabel();
+		LbInfoUnit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/unit.png")));
+		StatusBar.add(LbInfoUnit);
+		
+		// -- Unit value
+		// ----------------------------------------
+		LbInfoUnitVal = new javax.swing.JLabel();
+		StatusBar.add(LbInfoUnitVal);
+		
+	}
+	
+	/**
+	 * Create the Main toolbar
+	 */
 	private void Create_MainToolbar() {
 		ToolBarMain = new javax.swing.JToolBar();
 		ToolBarMain.setFloatable(false);
@@ -1245,6 +1619,20 @@ public class frmMain extends javax.swing.JFrame {
 		// ---------------------------------------------------------
 		ToolBarMain.add(new javax.swing.JToolBar.Separator());
 
+		// -- Mini roadbook
+		// ------------------------------------------------
+		btMiniRoadbook = new javax.swing.JButton();
+		btMiniRoadbook
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/profil.png")));
+		btMiniRoadbook.setToolTipText(bundle.getString("frmMain.btMiniRoadbook.toolTipText"));
+		btMiniRoadbook.setFocusable(false);
+		btMiniRoadbook.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+//				EditSSCurves();
+			}
+		});
+		ToolBarMain.add(btMiniRoadbook);
+
 		// -- Display S/S curves
 		// ------------------------------------------------
 		btDisplaySSCurves = new javax.swing.JButton();
@@ -1259,21 +1647,6 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		ToolBarMain.add(btDisplaySSCurves);
 
-		// -- Global tiredness settings
-		// -----------------------------------------
-		btTirednessSettings = new javax.swing.JButton();
-		btTirednessSettings
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/tiredness.png")));
-		btTirednessSettings.setToolTipText(bundle.getString("frmMain.btTirednessSettings.toolTipText"));
-		btTirednessSettings.setFocusable(false);
-		btTirednessSettings.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
-			}
-		});
-		btTirednessSettings.setEnabled(false);
-		ToolBarMain.add(btTirednessSettings);
-
 		// -- Track settings
 		// ----------------------------------------------------
 		btTrackSettings = new javax.swing.JButton();
@@ -1283,16 +1656,112 @@ public class frmMain extends javax.swing.JFrame {
 		btTrackSettings.setFocusable(false);
 		btTrackSettings.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				TrackSettings();
 			}
 		});
-		btTrackSettings.setEnabled(false);
 		ToolBarMain.add(btTrackSettings);
 
 		// -- Separator
 		// ---------------------------------------------------------
 		ToolBarMain.add(new javax.swing.JToolBar.Separator());
 
+		// -- Fill difficulty
+		// ----------------------------------------------------
+		btFillDiff = new javax.swing.JButton();
+		btFillDiff
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/fill_diff.png")));
+		btFillDiff.setToolTipText(bundle.getString("frmMain.btFillDiff.toolTipText"));
+		btFillDiff.setFocusable(false);
+		btFillDiff.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				if (Track.data.isEmpty())
+					return;
+				
+	    		int start = TableMain.getSelectedRow();
+	    		int end = start+TableMain.getSelectedRowCount();
+
+				frmFillDiff frm = new frmFillDiff();
+				EditDiffResult res=frm.showDialog(Settings, Track, start, end);
+				if (res.Valid) {
+					for(int i=res.Start; i<=res.End;i++) {
+						Track.data.get(i).setDiff(res.Difficulty);
+					}
+
+					Track.isCalculated=false;
+					Track.isModified=true;
+					RefreshTableMain();
+					RefreshProfil();
+					RefreshStatusbar(Track);
+				}
+			}
+		});
+		ToolBarMain.add(btFillDiff);
+
+		// -- Fill coeff
+		// ----------------------------------------------------
+		btFillCoeff = new javax.swing.JButton();
+		btFillCoeff
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/tiredness.png")));
+		btFillCoeff.setToolTipText(bundle.getString("frmMain.btFillCoeff.toolTipText"));
+		btFillCoeff.setFocusable(false);
+		btFillCoeff.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				if (Track.data.size() <= 0)
+					return;
+				
+	    		int start = TableMain.getSelectedRow();
+	    		int end = start+TableMain.getSelectedRowCount();
+
+				frmFillCoeff frm = new frmFillCoeff();
+				EditCoeffResult res=frm.showDialog(Settings, Track, start, end);
+				if (res.Valid) {
+			        if (res.Start == res.End) {
+			        	Track.data.get(res.Start).setCoeff(res.Start_Coeff);
+			        }
+			        else {
+			        	double x1 = Track.data.get(res.Start).getTotal();//   cd.data[frm.start].Total;
+			        	double y1 = res.Start_Coeff; //frm.startval;
+
+			        	double x2 =  Track.data.get(res.End).getTotal(); //cd.data[frm.end].Total;
+			        	double y2 = res.End_Coeff; //frm.endval;
+
+			        	CalcLineResult rc = new CalcLineResult(); 
+			        	rc=Utils.CalcLine(x1, y1, x2, y2, rc);
+			        
+			        	// Line equation calc with "Y"=distance and "X"=Coeff
+			        	double x = 0.0;
+			        	double offset = 0.0;
+			        	double coeff=0; 
+			        	
+			        	for ( int i= res.Start; i<= res.End; i++) {
+			        		x = Track.data.get(i).getTotal();
+			        		offset = offset + Track.data.get(i).getRecovery();
+			        		
+			        		coeff=(rc.a * x + rc.b)+offset;
+//			        		Track.data.get(i).setCoeff((rc.a * x + rc.b)+offset);
+			          
+			        		//Validity tests
+			        		if (coeff > CgConst.MAX_COEFF) coeff=CgConst.MAX_COEFF;
+			        		if (coeff < 0) coeff=0;
+			        		
+			        		Track.data.get(i).setCoeff(coeff);
+			        	}
+			        }
+			        
+					Track.isCalculated=false;
+					Track.isModified=true;
+					RefreshTableMain();
+					RefreshProfil();
+					RefreshStatusbar(Track);
+				}
+			}
+		});
+		ToolBarMain.add(btFillCoeff);
+		
+		// -- Separator
+		// ---------------------------------------------------------
+		ToolBarMain.add(new javax.swing.JToolBar.Separator());
+		
 		// -- Calculate track time
 		// ----------------------------------------------
 		btCalculateTrackTime = new javax.swing.JButton();
@@ -1302,54 +1771,40 @@ public class frmMain extends javax.swing.JFrame {
 		btCalculateTrackTime.setFocusable(false);
 		btCalculateTrackTime.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				CalcTrackTime();
 			}
 		});
-		btCalculateTrackTime.setEnabled(false);
 		ToolBarMain.add(btCalculateTrackTime);
 
-		// btTest = new javax.swing.JButton();
-		// btTest.setText(bundle.getString("frmMain.btTest.text"));
-		// btTest.setFocusable(false);
-		// btTest.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		// btTest.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		// btTest.addActionListener(new java.awt.event.ActionListener() {
-		// public void actionPerformed(java.awt.event.ActionEvent evt) {
-		// btTestActionPerformed(evt);
-		// }
-		// });
-		// ToolBarMain.add(btTest);
-		//
-		// Test2 = new javax.swing.JButton();
-		// Test2.setText(bundle.getString("frmMain.Test2.text"));
-		// Test2.setFocusable(false);
-		// Test2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		// Test2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		// Test2.addActionListener(new java.awt.event.ActionListener() {
-		// public void actionPerformed(java.awt.event.ActionEvent evt) {
-		// Test2ActionPerformed(evt);
-		// }
-		// });
-		// ToolBarMain.add(Test2);
-		//
-		// jBtTest = new javax.swing.JButton();
-		// jBtTest.setText(bundle.getString("frmMain.jBtTest.text"));
-		// jBtTest.setFocusable(false);
-		// jBtTest.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-		// jBtTest.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-		// jBtTest.addActionListener(new java.awt.event.ActionListener() {
-		// public void actionPerformed(java.awt.event.ActionEvent evt) {
-		// jBtTestActionPerformed(evt);
-		// }
-		// });
-		// ToolBarMain.add(jBtTest);
 	}
+
+	protected void TrackSettings() {
+		if (Track.data.size() <= 0)
+			return;
+
+		frmTrackSettings frm= new frmTrackSettings();
+		if (frm.showDialog(Settings,Track)) {
+	        RefreshTableMain();
+	        RefreshProfil();
+			RefreshTitle();
+			RefreshStatusbar(Track);
+			Track.isModified=true;
+			Track.isCalculated=false;
+		}
+	}
+
+
+
 
 	private void EditSSCurves() {
 		frmEditCurve frm= new frmEditCurve();
-		frm.showDialog(Settings);
+		frm.showDialog(Track);
+		RefreshStatusbar(Track);
 	}
 
+	/**
+	 * Create the profil toolbar
+	 */
 	private void Create_Profil_Toolbar() {
 		ToolBarProfil = new javax.swing.JToolBar();
 		ToolBarProfil.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -1423,6 +1878,9 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
+	/**
+	 * Create the status toolbar
+	 */
 	private void Create_Statistic_Toolbar() {
 		ToolBarStatistic = new javax.swing.JToolBar();
 		ToolBarStatistic.setOrientation(javax.swing.SwingConstants.HORIZONTAL);
@@ -1464,6 +1922,9 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
+	/**
+	 * Create resume toolbar
+	 */
 	private void Create_Resume_Toolbar() {
 		ToolBarResume = new javax.swing.JToolBar();
 		ToolBarResume.setOrientation(javax.swing.SwingConstants.HORIZONTAL);
@@ -1504,6 +1965,9 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
+	/**
+	 * Create the map toolbar
+	 */
 	private void Create_Map_Toolbar() {
 		jToolBarMapViewer = new javax.swing.JToolBar();
 		jToolBarMapViewer.setFloatable(false);
@@ -1732,6 +2196,11 @@ public class frmMain extends javax.swing.JFrame {
 		Create_MainToolbar();
 		paneGlobal.add(ToolBarMain, BorderLayout.NORTH);
 
+		// -- Status bar
+		// ------------------------------------------------------
+		Create_Statusbar();
+		paneGlobal.add(StatusBar, BorderLayout.SOUTH);
+		
 		// -- Main split bar (vertical)
 		// -----------------------------------------
 		SplitPaneMain = new javax.swing.JSplitPane();
@@ -1818,174 +2287,6 @@ public class frmMain extends javax.swing.JFrame {
 		// ----------------------------
 		jPanelLeft.add(jScrollPaneTree, java.awt.BorderLayout.CENTER);
 
-		// -- Info panel
-		// --------------------------------------------------------
-		jPanelInfo = new javax.swing.JPanel();
-		// jPanelInfo.setMaximumSize(new java.awt.Dimension(32767, 50));
-		// jPanelInfo.setPreferredSize(new java.awt.Dimension(100, 144));
-		jPanelInfo.setLayout(new GridBagLayout());
-
-		// -- Total distance
-		// ----------------------------------------------------
-		LbInfoTotalDist = new javax.swing.JLabel();
-		LbInfoTotalDist.setBackground(Color.DARK_GRAY);
-		LbInfoTotalDist.setForeground(Color.WHITE);
-		LbInfoTotalDist
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/distance.png")));
-		LbInfoTotalDist.setText(bundle.getString("frmMain.LbInfoTotalDist.text"));
-		LbInfoTotalDist.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoTotalDist.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoTotalDist, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Total distance - value
-		// ----------------------------------------------------
-		LbInfoTotalDistVal = new javax.swing.JLabel();
-		LbInfoTotalDistVal.setBackground(Color.WHITE);
-		LbInfoTotalDistVal.setText(bundle.getString("frmMain.LbInfoTotalDistVal.text"));
-		LbInfoTotalDistVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoTotalDistVal.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoTotalDistVal, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Ascent
-		// ------------------------------------------------------
-		LbInfoDp = new javax.swing.JLabel();
-		LbInfoDp.setBackground(Color.DARK_GRAY);
-		LbInfoDp.setForeground(Color.WHITE);
-		LbInfoDp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/dp.png")));
-		LbInfoDp.setText(bundle.getString("frmMain.LbInfoDp.text"));
-		LbInfoDp.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoDp.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoDp, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Ascent value
-		// ------------------------------------------------------
-		LbInfoDpVal = new javax.swing.JLabel();
-		LbInfoDpVal.setBackground(Color.WHITE);
-		LbInfoDpVal.setText(bundle.getString("frmMain.LbInfoDpVal.text"));
-		LbInfoDpVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoDpVal.setOpaque(true);
-		jPanelInfo.add(LbInfoDpVal);
-		Utils.addComponent(jPanelInfo, LbInfoDpVal, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Descent
-		// -----------------------------------------------------
-		LbInfoDm = new javax.swing.JLabel();
-		LbInfoDm.setBackground(Color.DARK_GRAY);
-		LbInfoDm.setForeground(Color.WHITE);
-		LbInfoDm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/dm.png")));
-		LbInfoDm.setText(bundle.getString("frmMain.LbInfoDm.text"));
-		LbInfoDm.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoDm.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoDm, 0, 2, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Descent value
-		// -----------------------------------------------------
-		LbInfoDmVal = new javax.swing.JLabel();
-		LbInfoDmVal.setBackground(Color.WHITE);
-		LbInfoDmVal.setText(bundle.getString("frmMain.LbInfoDmVal.text"));
-		LbInfoDmVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoDmVal.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoDmVal, 1, 2, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Total time
-		// --------------------------------------------------------
-		LbInfoTime = new javax.swing.JLabel();
-		LbInfoTime.setBackground(Color.DARK_GRAY);
-		LbInfoTime.setForeground(Color.WHITE);
-		LbInfoTime
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chronometer.png")));
-		LbInfoTime.setText(bundle.getString("frmMain.LbInfoTime.text"));
-		LbInfoTime.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoTime.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoTime, 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Total time value
-		// --------------------------------------------------------
-		LbInfoTimeVal = new javax.swing.JLabel();
-		LbInfoTimeVal.setBackground(Color.WHITE);
-		LbInfoTimeVal.setText(bundle.getString("frmMain.LbInfoTimeVal.text"));
-		LbInfoTimeVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoTimeVal.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoTimeVal, 1, 3, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Calculation needed
-		// ------------------------------------------------
-		LbInfoCalculate = new javax.swing.JLabel();
-		LbInfoCalculate.setBackground(Color.DARK_GRAY);
-		LbInfoCalculate.setForeground(Color.WHITE);
-		LbInfoCalculate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/calc.png")));
-		LbInfoCalculate.setText(bundle.getString("frmMain.LbInfoCalculate.text"));
-		LbInfoCalculate.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoCalculate.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoCalculate, 0, 4, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Calculation needed value
-		// ------------------------------------------------
-		LbInfoCalculateVal = new javax.swing.JLabel();
-		LbInfoCalculateVal.setBackground(new java.awt.Color(255, 171, 81));
-		LbInfoCalculateVal.setText(bundle.getString("frmMain.LbInfoCalculateOk.text"));
-		LbInfoCalculateVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoCalculateVal.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoCalculateVal, 1, 4, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Internet connection present
-		// ----------------------------------------
-		LbInfoInternet = new javax.swing.JLabel();
-		LbInfoInternet.setBackground(Color.DARK_GRAY);
-		LbInfoInternet.setForeground(Color.WHITE);
-		LbInfoInternet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/earth.png")));
-		LbInfoInternet.setText(bundle.getString("frmMain.LbInfoInternet.text"));
-		LbInfoInternet.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoInternet.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoInternet, 0, 5, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Internet connection present value
-		// ----------------------------------------
-		LbInfoInternetVal = new javax.swing.JLabel();
-		LbInfoInternetVal.setBackground(new java.awt.Color(153, 255, 102));
-		LbInfoInternetVal.setText(bundle.getString("frmMain.LbInfoInternetOnline.text"));
-		LbInfoInternetVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoInternetVal.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoInternetVal, 1, 5, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Unit
-		// ----------------------------------------
-		LbInfoUnit = new javax.swing.JLabel();
-		LbInfoUnit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/unit.png")));
-		LbInfoUnit.setBackground(Color.DARK_GRAY);
-		LbInfoUnit.setForeground(Color.WHITE);
-		LbInfoUnit.setText(bundle.getString("frmMain.LbInfoUnit.text"));
-		LbInfoUnit.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoUnit.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoUnit, 0, 6, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Unit value
-		// ----------------------------------------
-		LbInfoUnitVal = new javax.swing.JLabel();
-		LbInfoUnitVal.setBackground(Color.WHITE);
-		LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMeter.text"));
-		LbInfoUnitVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		LbInfoUnitVal.setOpaque(true);
-		Utils.addComponent(jPanelInfo, LbInfoUnitVal, 1, 6, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
-				GridBagConstraints.BOTH);
-
-		// -- Add the info panel to the left panel
-		// ------------------------------
-		jPanelLeft.add(jPanelInfo, java.awt.BorderLayout.SOUTH);
-
 		// -- Right split pane
 		// --------------------------------------------------
 		SplitPaneMainRight = new javax.swing.JSplitPane();
@@ -2034,7 +2335,20 @@ public class frmMain extends javax.swing.JFrame {
 		TableMain.setRowHeight(20);
 		TableMain.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				TableMainMouseClicked(evt);
+				if 	(evt.getButton()==evt.BUTTON1 && evt.getClickCount() >= 2 && !evt.isConsumed()) {
+		            evt.consume();
+		    		int row = TableMain.rowAtPoint(evt.getPoint());
+		    		int col = TableMain.columnAtPoint(evt.getPoint());
+					frmEditPosition frm = new frmEditPosition();
+					if (frm.showDialog(Settings, Track, row, col)) {
+						Track.isModified=true;
+						RefreshTableMain();
+						RefreshProfil();
+						RefreshStatusbar(Track);
+					}
+				}
+				else
+					TableMainMouseClicked(evt);
 			}
 		});
 		TableMain.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -2437,7 +2751,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * Update the profil chart
 	 */
 	private void RefreshProfil() {
-		if (Track.data.size() <= 0)
+		if (Track.data.isEmpty())
 			return;
 
 		// -- Clear all series
@@ -2458,6 +2772,83 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
+	
+	public void ImportGPX() {
+		if (Track.data.isEmpty())
+			return;
+
+	    FrmImportChoice frm = new FrmImportChoice();
+
+	    int res=frm.showDialog();
+	    
+	    if (res!=FrmImportChoice.RESULT_CANCEL) {
+		    String s = Utils.LoadDialog(this, Settings.LastDir, ".gpx", bundle.getString("frmMain.GPXFile"));
+	        if (!s.isEmpty()) {
+        		int mode = FrmImportChoice.RESULT_AT_END;
+        		if (res==FrmImportChoice.RESULT_AT_END)
+        			mode = 1;
+        		else
+        			mode = 2;
+        			
+        		//BackupInCGX();
+        		//bAutorUpdatePos = false;
+        		try {
+					if (Track.OpenGPX(s, mode)) {
+						JOptionPane.showMessageDialog(this, bundle.getString("frmMain.NoTimeData"));
+		        		RefreshTableMain();
+		        		RefreshStatusbar(Track);
+		        		RefreshTitle();
+		        		RefreshProfil();
+		        		RefreshTrack(Track);
+		        		RefreshResume();
+		        		RefreshStat(false);
+		        		//RefreshInfoAnalyseSpeed(0);
+		        		//bAutorUpdatePos = true;	            		
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}        		
+	        }
+	    }
+        
+//	    if (frm.ShowDialog() == DialogResult.OK) {
+//	    	string s, ext;
+//
+//	    	openFileDialog.Filter = "Fichier GPX (*.gpx)|*.gpx";
+//	        openFileDialog.DefaultExt = "gpx";
+//	        DialogResult res = openFileDialog.ShowDialog();
+//	        if (res == DialogResult.OK) {
+//	        	s = openFileDialog.FileName;
+//	        	if (s == "") return;
+//
+//	        	ext = System.IO.Path.GetExtension(s);
+//	        	if (ext.ToUpper() == ".GPX") {
+//	        		int mode = Constantes.IMPORT_MODE_ADD_END;
+//	        		if (frm.insDeb) mode = Constantes.IMPORT_MODE_INS_START;
+//
+//	        		BackupInCGX();
+//	        		bAutorUpdatePos = false;
+//	        		if (!cd.OpenGPX(s, mode))
+//	        			MessageBox.Show("Le fichier que vous avez chargé n'a pas de donnée temporelle.\nRéglez les paramètres du parcours et appuyez sur le bouton de calcul pour déterminer le temps de passage pour chaque point du parcours.", "Course Generator",
+//	        					MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+//
+//	        		InitMainGrid();
+//	        		RefreshStatusBar();
+//	        		RefreshTitle();
+//	        		DrawProfil(Constantes.SRC_MAIN);
+//	        		DrawMap();
+//	        		RefreshResume(false);
+//	        		RefreshStat(false);
+//	        		RefreshInfoAnalyseSpeed(0);
+//	        		bAutorUpdatePos = true;
+//	        		//bNoBackup = true;
+//	        	}
+//	        }
+//	    }		
+	}
+	
+	
 	/**
 	 * Refresh the fields in the profil info panel
 	 * 
@@ -2509,7 +2900,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		if (Track.data.isEmpty())
 			return;
-
+		
 		CalcClimbResult ccr = new CalcClimbResult();
 		CalcAvrSlopeResult casr = new CalcAvrSlopeResult();
 		CalcAvrSpeedResult speedResult = new CalcAvrSpeedResult();
@@ -2636,12 +3027,12 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Update the viewer
 		MapViewer.removeAllMapMarkers();
-		DisplayTrack(Track);
+		RefreshTrack(Track);
 		// -- Refresh the track information
-		RefreshInfo(Track);
+		RefreshStatusbar(Track);
 
 		// -- Force the update of the main table
-		TableMain.invalidate();
+		RefreshTableMain();
 		old_row = -1;
 
 		// -- Refresh resume grid
@@ -2681,7 +3072,7 @@ public class frmMain extends javax.swing.JFrame {
 			// -- Reset the track modified flag
 			Track.isModified = false;
 			// -- Refresh info panel
-			RefreshInfo(Track);
+			RefreshStatusbar(Track);
 		}
 	}
 
@@ -2718,9 +3109,9 @@ public class frmMain extends javax.swing.JFrame {
 		}
 
 		// -- Update the viewer
-		DisplayTrack(Track);
+		RefreshTrack(Track);
 		// -- Refresh the track information
-		RefreshInfo(Track);
+		RefreshStatusbar(Track);
 		// -- Refresh resume grid
 		RefreshResume();
 		// -- Refresh profil tab
@@ -2729,7 +3120,7 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshTitle();
 		
 		// -- Force the update of the main table
-		TableMain.invalidate();
+		RefreshTableMain();
 		RefreshMruCGX();
 	}
 
@@ -2758,7 +3149,7 @@ public class frmMain extends javax.swing.JFrame {
 			// -- Reset the track modified flag
 			Track.isModified = false;
 			// -- Refresh info panel
-			RefreshInfo(Track);
+			RefreshStatusbar(Track);
 		}
 	}
 	
@@ -2858,7 +3249,7 @@ public class frmMain extends javax.swing.JFrame {
 	// DisplayTrack(Track);
 	//
 	// // -- Force the update of the main table
-	// TableMain.invalidate();
+	// RefreshTableMain();
 	//
 	// RefreshInfo(Track);
 	// }
@@ -2931,6 +3322,7 @@ public class frmMain extends javax.swing.JFrame {
 		int col = TableMain.columnAtPoint(evt.getPoint());
 		if ((row < 0) || (col < 0) || (row == old_row))
 			return;
+		
 		old_row = row;
 		if (Track.data.size() > 0) {
 			// -- Refresh marker position on the map
@@ -2939,8 +3331,7 @@ public class frmMain extends javax.swing.JFrame {
 			RefreshProfilInfo(row);
 			xCrosshair.setValue(Track.data.get(row).getTotal(Settings.Unit) / 1000.0);
 			yCrosshair.setValue(Track.data.get(row).getElevation(Settings.Unit));
-		}
-
+		}			
 	}
 
 	private void TableMainKeyReleased(java.awt.event.KeyEvent evt) {
@@ -2980,7 +3371,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * @param tdata
 	 *            TrackData object to display
 	 */
-	private void DisplayTrack(TrackData tdata) {
+	private void RefreshTrack(TrackData tdata) {
 		// -- Remove the previous track
 		MapViewer.removeAllMapPolygons();
 
@@ -3044,13 +3435,15 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
+	
 	/**
-	 * Refresh the information panel
+	 * Refresh the statusbar
 	 * 
 	 * @param tdata
 	 *            Track data object
 	 */
-	private void RefreshInfo(TrackData tdata) {
+	private void RefreshStatusbar(TrackData tdata) {
+				
 		// -- Distance
 		LbInfoTotalDistVal.setText(String.format("%1.3f ", tdata.getTotalDistance(Settings.Unit) / 1000.0)
 				+ Settings.getDistanceUnitString());
@@ -3067,6 +3460,22 @@ public class frmMain extends javax.swing.JFrame {
 		int nbs = (tdata.TotalTime % 3600) % 60;
 		LbInfoTimeVal.setText(String.format("%02d:%02d:%02d ", nbh, nbm, nbs));
 
+		// -- Curve
+		LbInfoCurveVal.setText(tdata.Paramfile);
+		
+		// -- Time limit
+		LbTimeLimit.setVisible(Track.isTimeLimit);
+		sepTimeLimit.setVisible(Track.isTimeLimit);
+		
+		// -- Modified
+		if (Track.isModified) {
+			LbModifiedVal.setText(bundle.getString("frmMain.LbModified_Modified.text"));
+		}
+		else {
+			LbModifiedVal.setText(bundle.getString("frmMain.LbModified_Ok.text"));
+		}
+			
+		
 		// -- Calculation
 		if (Track.isCalculated) {
 			LbInfoCalculateVal.setText(bundle.getString("frmMain.LbInfoCalculateOk.text"));
@@ -3087,10 +3496,10 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Unit
 		switch (Settings.Unit) {
-		case CgConstants.UNIT_METER:
+		case CgConst.UNIT_METER:
 			LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMeter.text"));
 			break;
-		case CgConstants.UNIT_MILES_FEET:
+		case CgConst.UNIT_MILES_FEET:
 			LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMilesFeet.text"));
 			break;
 		default:
@@ -3099,8 +3508,29 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 	/**
+	 * Refresh the content of the data table
+	 */
+	private void RefreshTableMain() {
+		int r=TableMain.getSelectedRow();
+		ModelTableMain.fireTableDataChanged();
+		if (r>=0)
+			TableMain.setRowSelectionInterval(r, r);
+	}
+
+	
+	/**
+	 * Refresh the content of the resume table
+	 */
+	private void RefreshTableResume() {
+		int r=TableResume.getSelectedRow();
+		ModelTableResume.fireTableDataChanged();
+		if (r>=0)
+			TableResume.setRowSelectionInterval(r, r);
+	}
+	
+	
+	/**
 	 * Refresh the position of the marker on the map
-	 * 
 	 * @param lat
 	 *            latitude of the position of the marker
 	 * @param lon
@@ -3119,6 +3549,10 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
+	
+	/**
+	 * Refresh the GPX most recent used files menu
+	 */
 	private void RefreshMruGPX() {
 		// -- Mru 1
 		if (Settings.mruGPX[0].isEmpty()) {
@@ -3162,9 +3596,9 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
+	
 	/**
 	 * Add "filename" to the CGX mru menu
-	 *
 	 * @param filename
 	 *            name of the file to add
 	 */
@@ -3179,6 +3613,10 @@ public class frmMain extends javax.swing.JFrame {
 		Settings.mruGPX[0] = filename;
 	}
 
+	
+	/**
+	 * Refresh the CGX most recent used files menu
+	 */
 	private void RefreshMruCGX() {
 		// -- Mru 1
 		if (Settings.mruCGX[0].isEmpty()) {
@@ -3224,7 +3662,6 @@ public class frmMain extends javax.swing.JFrame {
 
 	/**
 	 * Add "filename" to the CGX mru menu
-	 *
 	 * @param filename
 	 *            name of the file to add
 	 */

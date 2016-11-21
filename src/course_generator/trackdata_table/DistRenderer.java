@@ -19,8 +19,8 @@
 package course_generator.trackdata_table;
 
 import course_generator.CgData;
-import course_generator.CgConstants;
 import course_generator.settings.CgSettings;
+import course_generator.utils.CgConst;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -43,17 +43,19 @@ public class DistRenderer extends DefaultTableCellRenderer {
         Double dist = data.getDist(settings.Unit);
 
         //-- Set the value
-        switch (settings.Unit) {
-        case CgConstants.UNIT_METER: 
-        	setText(String.format("%1.0f ",dist));
-        	break;
-        case CgConstants.UNIT_MILES_FEET: 
-        	setText(String.format("%1.0f ",dist));
-        	break;
-        default:
-        	setText(String.format("%1.0f ",dist));
-        	break;        	
-        }
+//        switch (settings.Unit) {
+//        case CgConst.UNIT_METER: 
+//        	setText(String.format("%1.0f ",dist));
+//        	break;
+//        case CgConst.UNIT_MILES_FEET: 
+//        	setText(String.format("%1.0f ",dist));
+//        	break;
+//        default:
+//        	setText(String.format("%1.0f ",dist));
+//        	break;        	
+//        }
+        
+        setText(data.getDistString(settings.Unit,false));
         setHorizontalAlignment(RIGHT);
         return this;
     }

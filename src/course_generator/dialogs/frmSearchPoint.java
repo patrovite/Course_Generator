@@ -22,14 +22,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.FocusTraversalPolicy;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.text.ParseException;
 import java.util.Vector;
 
 import javax.swing.AbstractAction;
@@ -38,21 +34,18 @@ import javax.swing.BorderFactory;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import course_generator.CgConstants;
-import course_generator.frmMain;
 import course_generator.TrackData;
 import course_generator.TrackData.SearchPointResult;
+import course_generator.frmMain;
 import course_generator.settings.CgSettings;
+import course_generator.utils.CgConst;
 import course_generator.utils.CustomFocusTraversalPolicy;
-import course_generator.utils.DoubleVerifier;
 import course_generator.utils.JTextFieldLimit;
 import course_generator.utils.Utils;
 
@@ -65,9 +58,9 @@ public class frmSearchPoint extends javax.swing.JDialog {
 	private java.util.ResourceBundle bundle;
 	private JPanel jPanelButtons;
 	private JLabel lbLatitude;
-	private JTextField tfLatitude;
+	private JTextFieldLimit tfLatitude;
 	private JLabel lbLongitude;
-	private JTextField tfLongitude;
+	private JTextFieldLimit tfLongitude;
 	private JButton btSearch;
 	private JPanel pnSearch;
 	private JPanel pnResult;
@@ -84,6 +77,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 	 * Creates new form frmSettings
 	 */
 	public frmSearchPoint() {
+		super();
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		// setModal(true);
@@ -154,7 +148,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		if (result.Point > -1) {
 			lbPointFoundVal.setText(String.valueOf(result.Point + 1));
 
-			if (settings.Unit == CgConstants.UNIT_MILES_FEET) {
+			if (settings.Unit == CgConst.UNIT_MILES_FEET) {
 				// meter to miles
 				dist = Utils.Meter2uMiles(result.Distance);
 			} else
@@ -208,9 +202,9 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		Utils.addComponent(pnSearch, lbLatitude, 0, 0, 1, 1, 0, 0, 0, 5, 2, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
-		tfLatitude = new javax.swing.JTextField();
+		tfLatitude = new JTextFieldLimit(10);
 		tfLatitude.setFocusable(true);
-		tfLatitude.setDocument(new JTextFieldLimit(10));
+//		tfLatitude.setDocument(new JTextFieldLimit(10));
 		tfLatitude.setMinimumSize(new Dimension(100, 20));
 		tfLatitude.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 		Utils.addComponent(pnSearch, tfLatitude, 1, 0, 1, 1, 1, 0, 0, 5, 2, 5, GridBagConstraints.BASELINE_LEADING,
@@ -223,9 +217,9 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		Utils.addComponent(pnSearch, lbLongitude, 0, 1, 1, 1, 0, 0, 0, 5, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
-		tfLongitude = new javax.swing.JTextField();
+		tfLongitude = new JTextFieldLimit(10);
 		tfLongitude.setFocusable(true);
-		tfLongitude.setDocument(new JTextFieldLimit(10));
+//		tfLongitude.setDocument(new JTextFieldLimit(10));
 		tfLongitude.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 		Utils.addComponent(pnSearch, tfLongitude, 1, 1, 1, 1, 1, 0, 0, 5, 0, 5, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
@@ -317,6 +311,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		// --
 		pack();
 
+		//-- Center the windows
 		setLocationRelativeTo(null);
 	}
 

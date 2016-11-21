@@ -37,7 +37,7 @@ public class RecupRenderer extends DefaultTableCellRenderer {
 
         CgData data = (CgData) value;
 
-        Double recup = data.getRecup();
+        Double recup = data.getRecovery();
 
         //-- Set the value
         DecimalFormat myFormatter = new DecimalFormat("0.#");

@@ -18,22 +18,22 @@
 
 package course_generator.settings;
 
-import com.sun.xml.internal.txw2.output.IndentingXMLStreamWriter;
-
-import course_generator.CgConstants;
-import course_generator.utils.Utils;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+
 import org.xml.sax.SAXException;
+
+import course_generator.utils.CgConst;
+import course_generator.utils.Utils;
 
 /**
  *
@@ -54,7 +54,7 @@ public class CgSettings {
     public int VertSplitPosition;
     public int HorizSplitPosition;
     
-    public int Unit = CgConstants.UNIT_METER; //Unit for the display 0=meter 1=Miles/feet
+    public int Unit = CgConst.UNIT_METER; //Unit for the display 0=meter 1=Miles/feet
     
     public int ReadError = 0;
     public int LineError = 0;
@@ -63,7 +63,7 @@ public class CgSettings {
     public CgSettings() {
         int i=0;
         
-        String ParamFile = "";
+        ParamFile = "Default";
         bNoConnectOnStartup = true;
         ConnectionTimeout = 10;
         Language="";
@@ -78,7 +78,7 @@ public class CgSettings {
         mruCGX = new String[5];
         TableMainColWidth = new int[16];
     
-        Unit = CgConstants.UNIT_METER;
+        Unit = CgConst.UNIT_METER;
         		
         ReadError = 0;
         LineError = 0;
@@ -210,9 +210,9 @@ public class CgSettings {
      */
     public String getDistanceUnitString() {
     	switch (Unit) {
-    	case CgConstants.UNIT_METER:
+    	case CgConst.UNIT_METER:
     		return "Km";
-    	case CgConstants.UNIT_MILES_FEET:
+    	case CgConst.UNIT_MILES_FEET:
     		return "Miles";
     	default:
     		return "Km";    		
@@ -225,9 +225,9 @@ public class CgSettings {
      */
     public String getElevationUnitString() {
     	switch (Unit) {
-    	case CgConstants.UNIT_METER:
+    	case CgConst.UNIT_METER:
     		return "m";
-    	case CgConstants.UNIT_MILES_FEET:
+    	case CgConst.UNIT_MILES_FEET:
     		return "feet";
     	default:
     		return "m";    		

@@ -70,7 +70,7 @@ public class ParamData {
 		// -- Save the data in the home directory
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
-			XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream(name), "UTF-8");
+			XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream(fname), "UTF-8");
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("Project");
 			Utils.WriteStringToXML(writer, "Name", name);

@@ -19,7 +19,6 @@
 package course_generator.trackdata_table;
 
 import course_generator.CgData;
-import course_generator.CgConstants;
 import course_generator.settings.CgSettings;
 
 import java.awt.Color;
@@ -45,21 +44,23 @@ public class ElevationRenderer  extends DefaultTableCellRenderer {
 
         CgSettings settings = ((TrackDataModel) table.getModel()).getSettings();
         
-        Double ele = data.getElevation(settings.Unit);
+//        Double ele = data.getElevation(settings.Unit);
         Double slope = data.getSlope();
         
         //-- Set the elevation value
-        switch (settings.Unit) {
-        case CgConstants.UNIT_METER: 
-        	setText(String.format("%1.0f ",ele));
-        	break;
-        case CgConstants.UNIT_MILES_FEET: 
-        	setText(String.format("%1.0f ",ele));
-        	break;
-        default:
-        	setText(String.format("%1.0f ",ele));
-        	break;        	
-        }
+//        switch (settings.Unit) {
+//        case CgConstants.UNIT_METER: 
+//        	setText(String.format("%1.0f ",ele));
+//        	break;
+//        case CgConstants.UNIT_MILES_FEET: 
+//        	setText(String.format("%1.0f ",ele));
+//        	break;
+//        default:
+//        	setText(String.format("%1.0f ",ele));
+//        	break;        	
+//        }
+        
+        setText(data.getElevationString(settings.Unit,false));
         
         //-- Set the icon next to the elevation value
         if (slope>1.0) {

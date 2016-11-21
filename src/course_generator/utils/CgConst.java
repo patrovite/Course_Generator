@@ -27,33 +27,18 @@ import java.awt.Color;
 
 //TODO voir si parama CONST possible pour chaque variable
 public class CgConst {
+	/**Unit is meter**/
+	public static final int UNIT_METER=0;
+	/**Unit is feet and miles**/
+    public static final int UNIT_MILES_FEET=1;
+    
+    /**Maximum version of the CGX file to read**/
     public static final int MAX_CGX_VERSION_TO_READ = 5;
-    /*
-    const int COL_NB      = 0;
-    const int COL_LAT     = 1;
-    const int COL_LON     = 2;
-    const int COL_ELEV    = 3;
-    const int COL_TAG     = 4;
-    const int COL_DIST    = 5;
-    const int COL_DISTC   = 6;
-    const int COL_DIFF    = 7;
-    const int COL_COEFF   = 8;
-    const int COL_TIME    = 9;
-    const int COL_HOUR    = 10;
-    const int COL_EAT_STATION = 11;
-    const int COL_NAME    = 12;
-    const int COL_COMM    = 13;
-    const int COL_PENTE   = 14;
-    const int COL_VITESSE = 15;
-    const int COL_dELEV   = 16;
-
-    const int SBAR_INDICATORS = 0;
-    const int SBAR_TOT_DIST   = 1;
-    const int SBAR_TOT_TIME   = 2;
-    const int SBAR_CLIMB      = 3;
-    const int SBAR_NAME       = 4;
-    const int SBAR_PARAM      = 5;
-    */
+    /**Maximum value of health coefficient**/
+    public static final double MAX_COEFF=200.0;
+    /**Maximum value of track difficulty coefficient**/
+    public static final double MAX_DIFF=100.0;
+    
     public static final int TAG_HIGH_PT    = 1;
     public static final int TAG_LOW_PT     = 2;
     public static final int TAG_EAT_PT     = 4;
@@ -65,10 +50,13 @@ public class CgConst {
     public static final int TAG_ROADBOOK   = 256;
 
 
+    /**Minimum value of the slope for the curve**/
     public static final double MIN_CLIMB = -50.0;
+    /**Maximum value of the slope for the curve**/
     public static final double MAX_CLIMB = 50.0;
 
-    public static final double MIN_ELEV = 10.0; //Delta minimum pour l'altitude
+    /**Delta value for the total elevation calculation**/
+    public static final double MIN_ELEV = 10.0;
 
     public static final double DIST_MAX_MINMAX = 1000.0;
     public static final double MIN_ELEV_MINMAX = 50.0;
@@ -128,5 +116,11 @@ public class CgConst {
     public static Color CL_PROFIL_SLOPE_INF15 = new Color(0xFF, 0x83, 0x00);
     public static Color CL_PROFIL_SLOPE_SUP15 = new Color(0xA6, 0x55, 0x00);
     public static Color CL_PROFIL_SLOPE_BORDER = new Color(0xA6, 0x55, 0x00);
+    
+    public static Color CL_DIFF_VERYEASY=new Color(255, 255, 255); //-- White
+    public static Color CL_DIFF_EASY=new Color(170, 212, 0); //-- Green
+    public static Color CL_DIFF_AVERAGE=new Color(85, 153, 255); //-- Blue
+    public static Color CL_DIFF_HARD=new Color(255, 0, 0); //-- Red
+    public static Color CL_DIFF_VERYHARD=new Color(77, 77, 77); //-- Gray
     
 }
