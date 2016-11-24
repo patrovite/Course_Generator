@@ -119,14 +119,15 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import course_generator.TrackData.CalcAvrSlopeResult;
 import course_generator.TrackData.CalcAvrSpeedResult;
 import course_generator.TrackData.CalcClimbResult;
-import course_generator.dialogs.frmFillDiff;
 import course_generator.dialogs.FrmImportChoice;
+import course_generator.dialogs.FrmMiniroadbook;
 import course_generator.dialogs.frmEditPosition;
 import course_generator.dialogs.frmFillCoeff;
 import course_generator.dialogs.frmFillCoeff.EditCoeffResult;
+import course_generator.dialogs.frmFillDiff;
+import course_generator.dialogs.frmFillDiff.EditDiffResult;
 import course_generator.dialogs.frmSearchPoint;
 import course_generator.dialogs.frmTrackSettings;
-import course_generator.dialogs.frmFillDiff.EditDiffResult;
 import course_generator.param.frmEditCurve;
 import course_generator.resume_table.ResumeAvgSlopeNClass;
 import course_generator.resume_table.ResumeAvgSlopeNRenderer;
@@ -208,7 +209,6 @@ import course_generator.utils.FileTypeFilter;
 import course_generator.utils.OsCheck;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
-import sun.java2d.loops.DrawParallelogram;
 
 /**
  * This is the main class of the project.
@@ -1628,7 +1628,22 @@ public class frmMain extends javax.swing.JFrame {
 		btMiniRoadbook.setFocusable(false);
 		btMiniRoadbook.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//				EditSSCurves();
+				if (Track.data.isEmpty())
+					return;
+				
+				FrmMiniroadbook frm = new FrmMiniroadbook();
+				frm.showDialog(Settings, Track);
+//				if (res.Valid) {
+//					for(int i=res.Start; i<=res.End;i++) {
+//						Track.data.get(i).setDiff(res.Difficulty);
+//					}
+//
+//					Track.isCalculated=false;
+//					Track.isModified=true;
+//					RefreshTableMain();
+//					RefreshProfil();
+//					RefreshStatusbar(Track);
+//				}
 			}
 		});
 		ToolBarMain.add(btMiniRoadbook);
