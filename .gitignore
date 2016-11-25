@@ -26,26 +26,3 @@ Desktop.ini
 ._*
 .Spotlight-V100
 .Trashes
-
-##########
-# ECLIPSE
-##########
-
-*.pydevproject
-.project
-.metadata
-bin/**
-tmp/**
-tmp/**/*
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.classpath
-.settings
-.loadpath
-
-*.launch
-.cproject
-.buildpath
