@@ -120,12 +120,12 @@ import course_generator.TrackData.CalcAvrSlopeResult;
 import course_generator.TrackData.CalcAvrSpeedResult;
 import course_generator.TrackData.CalcClimbResult;
 import course_generator.dialogs.FrmImportChoice;
-import course_generator.dialogs.FrmMiniroadbook;
 import course_generator.dialogs.frmEditPosition;
 import course_generator.dialogs.frmFillCoeff;
 import course_generator.dialogs.frmFillCoeff.EditCoeffResult;
 import course_generator.dialogs.frmFillDiff;
 import course_generator.dialogs.frmFillDiff.EditDiffResult;
+import course_generator.mrb.FrmMiniroadbook;
 import course_generator.dialogs.frmSearchPoint;
 import course_generator.dialogs.frmTrackSettings;
 import course_generator.param.frmEditCurve;
@@ -1631,9 +1631,9 @@ public class frmMain extends javax.swing.JFrame {
 				if (Track.data.isEmpty())
 					return;
 				
-				FrmMiniroadbook frm = new FrmMiniroadbook();
-				frm.showDialog(Settings, Track);
-//				if (res.Valid) {
+				FrmMiniroadbook frm = new FrmMiniroadbook(Settings);
+				frm.showDialog(Track);
+//				if (res.Valid)  {
 //					for(int i=res.Start; i<=res.End;i++) {
 //						Track.data.get(i).setDiff(res.Difficulty);
 //					}
@@ -3447,7 +3447,21 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Zoom to display the track
 		MapViewer.setDisplayToFitMapPolygons();
-
+		
+		
+		for (CgData r : tdata.data) {
+			int t=r.getTag();
+			int v=0;
+			if ((t & CgConst.TAG_MARK)!=0)
+				v=v+1;
+			if ((t & CgConst.TAG_EAT_PT)!=0)
+				v=v+2;
+			if ((t & CgConst.TAG_WATER_PT)!=0)
+				v=v+4;
+			
+			if (v!=0) 
+				MapViewer.addMapMarker(new MapMarkerImg(new Coordinate(r.getLatitude(), r.getLongitude()), createImageIcon("images/markers_"+v+".png", "").getImage()));
+		}		
 	}
 
 	

@@ -53,6 +53,8 @@ public class CgSettings {
     public int MainWindowHeight;
     public int VertSplitPosition;
     public int HorizSplitPosition;
+    /** Mini roadbook split position **/
+    public int MRB_SplitPosition; 
     
     public int Unit = CgConst.UNIT_METER; //Unit for the display 0=meter 1=Miles/feet
     
@@ -72,6 +74,7 @@ public class CgSettings {
         MainWindowHeight=600;
         VertSplitPosition=200;
         HorizSplitPosition=50;
+        MRB_SplitPosition=220;
         
         MemoFormat = new String[5];
         mruGPX = new String[5];
@@ -170,6 +173,7 @@ public class CgSettings {
                     Utils.WriteIntToXML(writer, "MAINWINDOWSHEIGHT",MainWindowHeight);
                     Utils.WriteIntToXML(writer, "VERTSPLITPOSITION",VertSplitPosition);
                     Utils.WriteIntToXML(writer, "HORIZSPLITPOSITION",HorizSplitPosition);
+                    Utils.WriteIntToXML(writer, "MRBSPLITPOSITION",MRB_SplitPosition);
                     
                 writer.writeEndElement();
             writer.writeEndDocument();

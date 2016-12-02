@@ -20,15 +20,15 @@ package course_generator.settings;
 
 import java.io.File;
 import java.io.IOException;
+
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
-import course_generator.utils.Utils;
 
 /**
  *
@@ -313,6 +313,10 @@ public class SaxConfigHandler extends DefaultHandler{
             else if (qName.equalsIgnoreCase("HORIZSPLITPOSITION")) {
                 Settings.HorizSplitPosition = ManageInt(50, ERR_READ_INT);
             }
+            else if (qName.equalsIgnoreCase("MRBSPLITPOSITION")) {
+                Settings.MRB_SplitPosition = ManageInt(220, ERR_READ_INT);
+            }
+
             else if (qName.equalsIgnoreCase("CONFIG")) {
                 level--;
             }        
