@@ -653,7 +653,9 @@ public class FrmMiniroadbook  extends javax.swing.JDialog {
 				0, 0, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 		
-		btAlignLeft = new javax.swing.JButton("|<");
+//		btAlignLeft = new javax.swing.JButton("|<");
+		btAlignLeft = new javax.swing.JButton();
+		btAlignLeft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/left.png")));
 		btAlignLeft.setToolTipText(bundle.getString("FrmMiniroadbook.btAlignLeft.toolTipText"));
 		btAlignLeft.setFocusable(false);
 		btAlignLeft.addActionListener(new java.awt.event.ActionListener() {
@@ -668,7 +670,9 @@ public class FrmMiniroadbook  extends javax.swing.JDialog {
 				0, 5, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 		
-		btAlignCenter = new javax.swing.JButton("|");
+//		btAlignCenter = new javax.swing.JButton("|");
+		btAlignCenter = new javax.swing.JButton();
+		btAlignCenter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/center.png")));
 		btAlignCenter.setToolTipText(bundle.getString("FrmMiniroadbook.btAlignCenter.toolTipText"));
 		btAlignCenter.setFocusable(false);
 		btAlignCenter.addActionListener(new java.awt.event.ActionListener() {
@@ -683,7 +687,9 @@ public class FrmMiniroadbook  extends javax.swing.JDialog {
 				0, 0, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 		
-		btAlignRight = new javax.swing.JButton(">|");
+//		btAlignRight = new javax.swing.JButton(">|");
+		btAlignRight = new javax.swing.JButton();
+		btAlignRight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/right.png")));
 		btAlignRight.setToolTipText(bundle.getString("FrmMiniroadbook.btAlignRight.toolTipText"));
 		btAlignRight.setFocusable(false);
 		btAlignRight.addActionListener(new java.awt.event.ActionListener() {
