@@ -1,7 +1,6 @@
 package course_generator.mrb;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -39,26 +38,8 @@ public class FrmMiniroadbook  extends javax.swing.JDialog {
 
 	private ResourceBundle bundle;
 	private boolean ok;
-//	private int start;
-//	private int end;
 	private CgSettings settings;
 	private TrackData track;
-//	private CgData data;
-//	private JRadioButton rbFromStart;
-//	private JRadioButton rbToEnd;
-//	private JRadioButton rbToLine;
-//	private ButtonGroup groupEnd;
-//	private JRadioButton rbVeryEasy;
-//	private JRadioButton rbEasy;
-//	private JRadioButton rbAverage;
-//	private JRadioButton rbVeryHard;
-//	private JRadioButton rbHard;
-//	private JRadioButton rbOther;
-//	private ButtonGroup groupDiff;
-//	private CgSpinner spinFromLine;
-//	private CgSpinner spinToLine;
-//	private CgSpinner spinDiff;
-//	private JToolBar ToolBar;
 	private MrbTableDataModel model;
 	private JButton btSaveAsImage;
 	private JButton btConfig;
@@ -98,10 +79,7 @@ public class FrmMiniroadbook  extends javax.swing.JDialog {
 	private JTextFieldLimit tfComment;
 	private JTable TableData;
 	private JScrollPane jScrollPaneData;
-//	private JLabel lbProfilSize;
-//	private JSlider sliderWidth;
-//	private JSlider sliderHeigth;
-	private JPanel pnlProfil;
+	private PanelProfilMRB pnlProfil;
 	private CgSpinner spinWidth;
 	private CgSpinner spinHeight;
 	private JLabel lbWidth;
@@ -178,8 +156,9 @@ public class FrmMiniroadbook  extends javax.swing.JDialog {
 			}
 		}
 		
-		// Set field
-
+		//-- Set profil
+		pnlProfil.setData(datalist);
+		pnlProfil.setTrack(track);
 		
 		//-- Set the position of the split bar
 		SplitPane.setDividerLocation(settings.MRB_SplitPosition);
@@ -527,7 +506,8 @@ public class FrmMiniroadbook  extends javax.swing.JDialog {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				track.MrbSizeW=spinWidth.getValueAsInt();
-				//TODO change profil width
+				pnlProfil.setWidth(track.MrbSizeW);
+//				jScrollPaneProfil.repaint();
 			}
 		});
 		Utils.addComponent(pnlToolbar, spinWidth, 
@@ -553,7 +533,8 @@ public class FrmMiniroadbook  extends javax.swing.JDialog {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				track.MrbSizeH=spinHeight.getValueAsInt();
-				//TODO change profil width
+				pnlProfil.setHeight(track.MrbSizeH);
+//				jScrollPaneProfil.repaint();
 			}
 		});
 		Utils.addComponent(pnlToolbar, spinHeight, 
@@ -571,8 +552,8 @@ public class FrmMiniroadbook  extends javax.swing.JDialog {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("FrmMiniroadbook.title"));
 		setAlwaysOnTop(true);
-		setMinimumSize(new Dimension(1000,700));
-		setType(java.awt.Window.Type.UTILITY);
+		setPreferredSize(new Dimension(1000,700));
+		setType(java.awt.Window.Type.NORMAL);
 
 		// -- Layout
 		// ------------------------------------------------------------
@@ -811,13 +792,11 @@ public class FrmMiniroadbook  extends javax.swing.JDialog {
 				10, 0, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 		
-		pnlProfil = new JPanel();
-		pnlProfil.setOpaque(true);
-		pnlProfil.setBackground(Color.WHITE);
+		pnlProfil = new PanelProfilMRB(640,480);
 		
 		jScrollPaneProfil = new javax.swing.JScrollPane();
 		jScrollPaneProfil.setViewportView(pnlProfil);
-
+		
 		Utils.addComponent(pnlBottom, jScrollPaneProfil, 
 				0, 0, 
 				1, 1, 

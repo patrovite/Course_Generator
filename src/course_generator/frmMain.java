@@ -125,9 +125,9 @@ import course_generator.dialogs.frmFillCoeff;
 import course_generator.dialogs.frmFillCoeff.EditCoeffResult;
 import course_generator.dialogs.frmFillDiff;
 import course_generator.dialogs.frmFillDiff.EditDiffResult;
-import course_generator.mrb.FrmMiniroadbook;
 import course_generator.dialogs.frmSearchPoint;
 import course_generator.dialogs.frmTrackSettings;
+import course_generator.mrb.FrmMiniroadbook;
 import course_generator.param.frmEditCurve;
 import course_generator.resume_table.ResumeAvgSlopeNClass;
 import course_generator.resume_table.ResumeAvgSlopeNRenderer;
@@ -953,7 +953,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuGenerateRoadbook.setText(bundle.getString("frmMain.mnuGenerateRoadbook.text"));
 		mnuGenerateRoadbook.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				//TODO
 			}
 		});
 		mnuGenerateRoadbook.setEnabled(false);
@@ -962,16 +962,15 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Mini roadbook
 		// -----------------------------------------------------
 		mnuGenerateMiniRoadbook = new javax.swing.JMenuItem();
-		mnuGenerateMiniRoadbook.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F8, 0));
+		mnuGenerateMiniRoadbook.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
 		mnuGenerateMiniRoadbook
 				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/profil.png")));
 		mnuGenerateMiniRoadbook.setText(bundle.getString("frmMain.mnuGenerateMiniRoadbook.text"));
 		mnuGenerateMiniRoadbook.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				ShowMRB();
 			}
 		});
-		mnuGenerateMiniRoadbook.setEnabled(false);
 		mnuDisplay.add(mnuGenerateMiniRoadbook);
 
 		// -- Separator
@@ -1628,22 +1627,7 @@ public class frmMain extends javax.swing.JFrame {
 		btMiniRoadbook.setFocusable(false);
 		btMiniRoadbook.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (Track.data.isEmpty())
-					return;
-				
-				FrmMiniroadbook frm = new FrmMiniroadbook(Settings);
-				frm.showDialog(Track);
-//				if (res.Valid)  {
-//					for(int i=res.Start; i<=res.End;i++) {
-//						Track.data.get(i).setDiff(res.Difficulty);
-//					}
-//
-//					Track.isCalculated=false;
-//					Track.isModified=true;
-//					RefreshTableMain();
-//					RefreshProfil();
-//					RefreshStatusbar(Track);
-//				}
+				ShowMRB();
 			}
 		});
 		ToolBarMain.add(btMiniRoadbook);
@@ -1792,6 +1776,32 @@ public class frmMain extends javax.swing.JFrame {
 		ToolBarMain.add(btCalculateTrackTime);
 
 	}
+
+	
+	/**
+	 * Display the mini roadbook
+	 */
+	protected void ShowMRB() {
+		if (Track.data.isEmpty())
+			return;
+		
+		FrmMiniroadbook frm = new FrmMiniroadbook(Settings);
+		frm.showDialog(Track);
+//		if (res.Valid)  {
+//			for(int i=res.Start; i<=res.End;i++) {
+//				Track.data.get(i).setDiff(res.Difficulty);
+//			}
+//
+//			Track.isCalculated=false;
+//			Track.isModified=true;
+//			RefreshTableMain();
+//			RefreshProfil();
+//			RefreshStatusbar(Track);
+//		}
+	}
+
+
+
 
 	protected void TrackSettings() {
 		if (Track.data.size() <= 0)

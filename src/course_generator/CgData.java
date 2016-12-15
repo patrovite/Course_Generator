@@ -563,6 +563,36 @@ public class CgData {
 		this.FontSizeMiniRoadbook = FontSizeMiniRoadbook;
 	}
 
+	public CgData() {
+		this.Num = 0;
+		this.Latitude = 0;
+		this.Longitude = 0;
+		this.Elevation = 0;
+		this.ElevationMemo = 0;
+		this.Tag = 0;
+		this.Dist = 0;
+		this.Total = 0;
+		this.Diff = 0;
+		this.Coeff = 0;
+		this.Recovery = 0;
+		this.Slope = 0;
+		this.Speed = 0;
+		this.dElevation = 0;
+		this.Time = 0;
+		this.dTime_f = 0; 
+		this.TimeLimit = 0; 
+		this.Hour = new DateTime(); 
+		this.Station = 0;
+		this.Name = "";
+		this.Comment = "";
+		this.tmp1 = 0;
+		this.tmp2 = 0;
+		this.FmtLbMiniRoadbook = "";
+		this.OptionMiniRoadbook = 0;
+		this.VPosMiniRoadbook = 0;
+		this.CommentMiniRoadbook = "";
+		this.FontSizeMiniRoadbook = 0;
+	}
 
 	public double getElevationMemo() {
 		return ElevationMemo;
