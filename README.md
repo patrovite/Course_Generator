@@ -31,5 +31,18 @@ With Course Generator you can :
 * Extract and save a part of the track
 * Save all your specific settings in a CGX file (a Course Generator specific format)
 
+  
+How to run Course Generator : 
+
+* Currently (alpha version) there no installer.
+* You need a version 7 (minimum) of the java runtime environment (JRE) 
+* Copy the "course_generator.jar" in a folder (where you want).
+* Execute "course_generator.jar"
+* Once the main window is displayed exit from CG
+* A "Course Generator" folder has been created in your home/user directory. Inside a "config.xml" file is present
+* Download the ".par" file from the github "default_curves" directory and put them next to the "config.xml" file.
+* Restart CG
+* That's all. Enjoy ;)
+
 More information at [www.techandrun.com](http://www.techandrun.com)
 
