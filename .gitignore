@@ -1,7 +1,7 @@
 # Directories #
-/build/classes/
-/bin/
-target/
+build/classes/**
+bin/**
+target/**
 
 *.class
 
@@ -21,6 +21,3 @@ Desktop.ini
 ._*
 .Spotlight-V100
 .Trashes
-
-build/classes/org/openstreetmap/gui/jmapviewer/OsmMercator.class
-build/classes/org/openstreetmap/gui/jmapviewer/OsmFileCacheTileLoader.class
