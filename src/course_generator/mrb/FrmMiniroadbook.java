@@ -393,6 +393,11 @@ public class FrmMiniroadbook  extends javax.swing.JDialog {
 				bundle.getString("FrmMiniroadbook.ProfilRoadTrack"), 
 				bundle.getString("FrmMiniroadbook.ProfilSlope") };
 		cbProfilType.setModel(new javax.swing.DefaultComboBoxModel<String>(profiltype));
+		cbProfilType.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				pnlProfil.setProfileType(cbProfilType.getSelectedIndex());
+			}
+		});
 		Utils.addComponent(pnlToolbar, cbProfilType, 
 		col++, 0, 
 		1, 1, 

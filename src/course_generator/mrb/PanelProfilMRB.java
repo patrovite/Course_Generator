@@ -51,6 +51,8 @@ public class PanelProfilMRB extends JPanel {
 	private BasicStroke PenSimpleBorder;
 	private int wp = 0; // width of the profil
 	private int hp = 0; // height of the profil
+	private BasicStroke PenRP_Border;
+	private BasicStroke PenSlopeBorder;
 
 
 	public PanelProfilMRB(int width, int height) {
@@ -65,6 +67,12 @@ public class PanelProfilMRB extends JPanel {
 		myPenDot = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 1, 2 }, 0);
 
 		PenSimpleBorder = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 1, 0 }, 0);
+
+		PenRP_Border = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 1, 0 }, 0);
+
+		PenSlopeBorder = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 1, 0 }, 0);
+
+		
 
 		// grues=new ArrayList<Grue>();
 		// ordreAffichage = new ArrayList<ElementTri>();
@@ -182,6 +190,19 @@ public class PanelProfilMRB extends JPanel {
 	}
 
 
+	public int getProfileType() {
+		return ProfileType;
+	}
+
+
+	public void setProfileType(int profileType) {
+		if ((profileType<0) || (profileType>2)) return;
+		
+		ProfileType = profileType;
+		repaint();
+	}
+
+
 	/**
 	 * Refresh the panel
 	 */
@@ -202,8 +223,8 @@ public class PanelProfilMRB extends JPanel {
 		double resx = 0.0;
 		double resy = 0.0;
 		double tf = 0;
-		double ta = 0.0;
-		double tb = 0.0;
+		// double ta = 0.0;
+		// double tb = 0.0;
 		// int SelLine = GridMiniRoadbook.CurrentCellAddress.Y;
 		boolean first = false;
 		int[] TabY = new int[w];
@@ -290,6 +311,8 @@ public class PanelProfilMRB extends JPanel {
 		Font FontSmall = new Font("ARIAL", Font.PLAIN, 7);
 		Font FontAvr = new Font("ARIAL", Font.PLAIN, 8);
 		Font FontBig = new Font("ARIAL", Font.PLAIN, 10);
+
+		CalcLineResult res = new CalcLineResult();
 
 		// -- Main frame display with white background
 		g2d.setPaint(Color.WHITE);
@@ -491,7 +514,7 @@ public class PanelProfilMRB extends JPanel {
 			first = true;
 			Point[] curvePts;
 			curvePts = new Point[4];
-			
+
 			g2d.setPaint(track.clProfil_Simple_Fill);
 			// -- Dessin du profil avec une couleur unique
 			for (CgData r : track.data) {
@@ -515,8 +538,6 @@ public class PanelProfilMRB extends JPanel {
 
 				// g.SmoothingMode =
 				// System.Drawing.Drawing2D.SmoothingMode.None;
-
-				CalcLineResult res = new CalcLineResult();
 
 				if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) // Filtre
 				{
@@ -579,244 +600,211 @@ public class PanelProfilMRB extends JPanel {
 
 		}
 
-		//
-		// //-- Dessin du profil avec une couleur pour la route et pour les
+		// -- Dessin du profil avec une couleur pour la route et pour les
 		// sentiers --
-		// else if (cbChoixCourbe.SelectedIndex == 1)
-		// {
-		// int cmpt = 0;
-		// first = true;
-		// //-- Dessin du profil avec une couleur pour la route et pour les
-		// sentiers
-		// foreach (cgData r in Main.cd.data)
-		// {
-		//
-		// //Point en bas à gauche (ancien point)
-		// curvePts[0].X = (float)Math.Round((offx + 1 + ((oldr.Total - xmin) *
-		// resx)));
-		// curvePts[0].Y = (float)(h - offy);
-		//
-		// //point en haut à gauche (ancien point)
-		// curvePts[1].X = (float)Math.Round((offx + 1 + ((oldr.Total - xmin) *
-		// resx)));
-		// curvePts[1].Y = (float)(h - offy - ((oldr.Elevation - ymin) * resy));
-		//
-		// //point en haut à droite (nouveau point)
-		// curvePts[2].X = (float)Math.Round((offx + 1 + ((r.Total - xmin) *
-		// resx)));
-		// curvePts[2].Y = (float)(h - offy - ((r.Elevation - ymin) * resy));
-		//
-		// //point en bas à droite (nouveau point)
-		// curvePts[3].X = (float)Math.Round((offx + 1 + ((r.Total - xmin) *
-		// resx)));
-		// curvePts[3].Y = (float)(h - offy);
-		//
-		// b = BrushRP_Path;
-		//
-		// if (r.Diff == 100) cmpt++;
-		//
-		// g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
-		//
-		// if ((curvePts[2].X - curvePts[0].X) > Main.cd.CurveFilter) //Filtre
-		// {
-		// if (cmpt > 0) b = BrushRP_Road;
-		// g.FillPolygon(b, curvePts, newFillMode);
-		//
-		// Utils.CalcLine(curvePts[1].X, curvePts[1].Y, curvePts[2].X,
-		// curvePts[2].Y, ref ta, ref tb);
-		// for (tf = curvePts[1].X; tf < curvePts[2].X; tf++)
-		// {
-		// TabY[(int)tf] = (int)(ta * tf + tb);
-		// //Permier passage. Permet de tracer le premier trait
-		// if ((first) && (tf > 0))
-		// {
-		// TabY[(int)tf - 1] = TabY[(int)tf];
-		// first = false;
-		// }
-		// }
-		//
-		// oldr.Elevation = r.Elevation;
-		// oldr.Total = r.Total;
-		// cmpt = 0;
-		// }
-		//
-		// } //foreach
-		//
-		// //-- Dessin du trait sur le profil
-		// oldr.Elevation = Main.cd.data[0].Elevation;
-		// oldr.Total = Main.cd.data[0].Total;
-		//
-		// foreach (cgData r in Main.cd.data)
-		// {
-		//
-		// //Point en bas à gauche (ancien point)
-		// curvePts[0].X = (float)Math.Round((offx + 1 + ((oldr.Total - xmin) *
-		// resx)));
-		// curvePts[0].Y = (float)(h - offy);
-		//
-		// //point en haut à gauche (ancien point)
-		// curvePts[1].X = (float)Math.Round((offx + 1 + ((oldr.Total - xmin) *
-		// resx)));
-		// curvePts[1].Y = (float)(h - offy - ((oldr.Elevation - ymin) * resy));
-		//
-		// //point en haut à droite (nouveau point)
-		// curvePts[2].X = (float)Math.Round((offx + 1 + ((r.Total - xmin) *
-		// resx)));
-		// curvePts[2].Y = (float)(h - offy - ((r.Elevation - ymin) * resy));
-		//
-		// //point en bas à droite (nouveau point)
-		// curvePts[3].X = (float)Math.Round((offx + 1 + ((r.Total - xmin) *
-		// resx)));
-		// curvePts[3].Y = (float)(h - offy);
-		//
-		// b = BrushRP_Path;
-		//
-		// g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-		// if ((curvePts[2].X - curvePts[0].X) > Main.cd.CurveFilter) //Filtre
-		// {
-		// g.DrawLine(PenRP_Border,
-		// (int)curvePts[1].X,
-		// (int)curvePts[1].Y,
-		// (int)curvePts[2].X,
-		// (int)curvePts[2].Y
-		// );
-		//
-		// oldr.Elevation = r.Elevation;
-		// oldr.Total = r.Total;
-		// }
-		//
-		// } //foreach
-		//
-		// //Dernier point
-		// g.FillPolygon(b, curvePts, newFillMode);
-		// g.DrawLine(PenRP_Border,
-		// (int)curvePts[1].X,
-		// (int)curvePts[1].Y,
-		// (int)curvePts[2].X,
-		// (int)curvePts[2].Y
-		// );
-		//
-		// }
+		else if (ProfileType == 1) {
 
-		// //-- Boucle de dessin de la courbe avec dénivelé --
-		// else if (cbChoixCourbe.SelectedIndex==2)
-		// {
-		// double avrSlope = 0.0;
-		// int nbSlope = 0;
-		// b = Brushes.Black;
-		// first = true;
-		// //-- Dessin du profil avec la pente
-		// foreach (cgData r in Main.cd.data)
-		// {
-		//
-		// g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
-		// curvePts[0].X = (float)Math.Round((offx + 1 + ((oldr.Total - xmin) *
-		// resx)));
-		// curvePts[0].Y = (float)(h - offy);
-		//
-		// curvePts[1].X = (float)Math.Round((offx + 1 + ((oldr.Total - xmin) *
-		// resx)));
-		// curvePts[1].Y = (float)(h - offy - ((oldr.Elevation - ymin) * resy));
-		//
-		// curvePts[2].X = (float)Math.Round((offx + 1 + ((r.Total - xmin) *
-		// resx)));
-		// curvePts[2].Y = (float)(h - offy - ((r.Elevation - ymin) * resy));
-		//
-		// curvePts[3].X = (float)Math.Round((offx + 1 + ((r.Total - xmin) *
-		// resx)));
-		// curvePts[3].Y = (float)(h - offy);
-		//
-		// avrSlope += Math.Abs(r.Slope);
-		// nbSlope++;
-		//
-		// if ((curvePts[2].X - curvePts[0].X) > Main.cd.CurveFilter) //Filtre
-		// {
-		// double avr = avrSlope / nbSlope;
-		// if (avr < 5.0) b = BrushSlopeInf5;//Brushes.BurlyWood; //FFBB73
-		// else if (avr < 10.0) b = BrushSlopeInf10; //Brushes.Orange; //FFA240
-		// else if (avr < 15.0) b = BrushSlopeInf15;
-		// //Brushes.OrangeRed;//FF8300
-		// else if (avr >= 15.0) b = BrushSlopeSup15; // Brushes.Sienna;//A65500
-		//
-		// g.FillPolygon(b, curvePts, newFillMode);
-		//
-		// Utils.CalcLine(curvePts[1].X, curvePts[1].Y, curvePts[2].X,
-		// curvePts[2].Y, ref ta, ref tb);
-		// for (tf = curvePts[1].X; tf < curvePts[2].X; tf++)
-		// {
-		// TabY[(int)tf] = (int)(ta * tf + tb);
-		// //Permier passage. Permet de tracer le premier trait
-		// if ((first) && (tf > 0))
-		// {
-		// TabY[(int)tf - 1] = TabY[(int)tf];
-		// first = false;
-		// }
-		// }
-		//
-		// oldr.Elevation = r.Elevation;
-		// oldr.Total = r.Total;
-		// avrSlope = 0.0;
-		// nbSlope = 0;
-		// }
-		// }
-		//
-		// //-- Dessin du trait sur le profil
-		// oldr.Elevation = Main.cd.data[0].Elevation;
-		// oldr.Total = Main.cd.data[0].Total;
-		//
-		// foreach (cgData r in Main.cd.data)
-		// {
-		//
-		// //Point en bas à gauche (ancien point)
-		// curvePts[0].X = (float)Math.Round((offx + 1 + ((oldr.Total - xmin) *
-		// resx)));
-		// curvePts[0].Y = (float)(h - offy);
-		//
-		// //point en haut à gauche (ancien point)
-		// curvePts[1].X = (float)Math.Round((offx + 1 + ((oldr.Total - xmin) *
-		// resx)));
-		// curvePts[1].Y = (float)(h - offy - ((oldr.Elevation - ymin) * resy));
-		//
-		// //point en haut à droite (nouveau point)
-		// curvePts[2].X = (float)Math.Round((offx + 1 + ((r.Total - xmin) *
-		// resx)));
-		// curvePts[2].Y = (float)(h - offy - ((r.Elevation - ymin) * resy));
-		//
-		// //point en bas à droite (nouveau point)
-		// curvePts[3].X = (float)Math.Round((offx + 1 + ((r.Total - xmin) *
-		// resx)));
-		// curvePts[3].Y = (float)(h - offy);
-		//
-		// b = BrushSlopeInf5;
-		//
-		// g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-		// if ((curvePts[2].X - curvePts[0].X) > Main.cd.CurveFilter) //Filtre
-		// {
-		// g.DrawLine(PenSlopeBorder,
-		// (int)curvePts[1].X,
-		// (int)curvePts[1].Y,
-		// (int)curvePts[2].X,
-		// (int)curvePts[2].Y
-		// );
-		//
-		// oldr.Elevation = r.Elevation;
-		// oldr.Total = r.Total;
-		// }
-		//
-		// } //foreach
-		//
-		// //Dernier point
-		// g.FillPolygon(b, curvePts, newFillMode);
-		// g.DrawLine(PenSimpleBorder,
-		// (int)curvePts[1].X,
-		// (int)curvePts[1].Y,
-		// (int)curvePts[2].X,
-		// (int)curvePts[2].Y
-		// );
-		//
-		// }
-		//
-		//
+			int cmpt = 0;
+			first = true;
+			// -- Dessin du profil avec une couleur pour la route et pour les
+			// sentiers
+			for (CgData r : track.data) {
+
+				// Point en bas à gauche (ancien point)
+				xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
+				yCurvePts[0] = h - offy;
+
+				// point en haut à gauche (ancien point)
+				xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
+				yCurvePts[1] = (int) (h - offy - ((oldr.getElevation() - ymin) * resy));
+
+				// point en haut à droite (nouveau point)
+				xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
+				yCurvePts[2] = (int) (h - offy - ((r.getElevation() - ymin) * resy));
+
+				// point en bas à droite (nouveau point)
+				xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
+				yCurvePts[3] = h - offy;
+
+				g2d.setColor(track.clProfil_RS_Path);
+
+				if (r.getDiff() == 100)
+					cmpt++;
+
+				// g.SmoothingMode =
+				// System.Drawing.Drawing2D.SmoothingMode.None;
+
+				if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) // Filtre
+				{
+					if (cmpt > 0)
+						g2d.setColor(track.clProfil_RS_Road);
+					g2d.fillPolygon(xCurvePts, yCurvePts, 4);
+					// g.FillPolygon(b, curvePts, newFillMode);
+
+					res = Utils.CalcLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2], res);
+					for (tf = xCurvePts[1]; tf < xCurvePts[2]; tf++) {
+						TabY[(int) tf] = (int) (res.a * tf + res.b);
+						// Premier passage. Permet de tracer le premier trait
+						if ((first) && (tf > 0)) {
+							TabY[(int) tf - 1] = TabY[(int) tf];
+							first = false;
+						}
+					}
+
+					oldr.setElevation(r.getElevation());
+					oldr.setTotal(r.getTotal());
+					cmpt = 0;
+				}
+
+			} // foreach
+
+			// -- Dessin du trait sur le profil
+			oldr.setElevation(track.data.get(0).getElevation());
+			oldr.setTotal(track.data.get(0).getTotal());
+
+			for (CgData r : track.data) {
+				// Point en bas à gauche (ancien point)
+				xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
+				yCurvePts[0] = h - offy;
+
+				// point en haut à gauche (ancien point)
+				xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
+				yCurvePts[1] = (int) (h - offy - ((oldr.getElevation() - ymin) * resy));
+
+				// point en haut à droite (nouveau point)
+				xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
+				yCurvePts[2] = (int) (h - offy - ((r.getElevation() - ymin) * resy));
+
+				// point en bas à droite (nouveau point)
+				xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
+				yCurvePts[3] = h - offy;
+
+				g2d.setColor(track.clProfil_RS_Path);
+
+				// g.SmoothingMode =
+				// System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+				g2d.setColor(track.clProfil_RS_Border);
+				g2d.setStroke(PenRP_Border);
+
+				if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) // Filtre
+				{
+					g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
+					oldr.setElevation(r.getElevation());
+					oldr.setTotal(r.getTotal());
+				}
+
+			} // foreach
+
+			// Dernier point
+			// g2d.fillPolygon(b, curvePts, newFillMode);
+			g2d.fillPolygon(xCurvePts, yCurvePts, 4);
+			g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
+
+		}
+
+		// -- Boucle de dessin de la courbe avec dénivelé --
+		else if (ProfileType == 2) {
+			double avrSlope = 0.0;
+			int nbSlope = 0;
+			g2d.setColor(Color.BLACK);
+			// b = Brushes.Black;
+			first = true;
+
+			// -- Dessin du profil avec la pente
+			for (CgData r : track.data) {
+				// g.SmoothingMode =
+				// System.Drawing.Drawing2D.SmoothingMode.None;
+				xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
+				yCurvePts[0] = h - offy;
+
+				xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
+				yCurvePts[1] = (int) (h - offy - ((oldr.getElevation() - ymin) * resy));
+
+				xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
+				yCurvePts[2] = (int) (h - offy - ((r.getElevation() - ymin) * resy));
+
+				xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
+				yCurvePts[3] = h - offy;
+
+				avrSlope += Math.abs(r.getSlope());
+				nbSlope++;
+
+				if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) // Filtre
+				{
+					double avr = avrSlope / nbSlope;
+					if (avr < 5.0)
+						g2d.setColor(track.clProfil_SlopeInf5);
+					else if (avr < 10.0)
+						g2d.setColor(track.clProfil_SlopeInf10);
+					else if (avr < 15.0)
+						g2d.setColor(track.clProfil_SlopeInf15);
+					// Brushes.OrangeRed;//FF8300
+					else if (avr >= 15.0)
+						g2d.setColor(track.clProfil_SlopeSup15);
+
+					g2d.fillPolygon(xCurvePts, yCurvePts, 4);
+
+					res = Utils.CalcLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2], res);
+					for (tf = xCurvePts[1]; tf < xCurvePts[2]; tf++) {
+						TabY[(int) tf] = (int) (res.a * tf + res.b);
+						// Premier passage. Permet de tracer le premier trait
+						if ((first) && (tf > 0)) {
+							TabY[(int) tf - 1] = TabY[(int) tf];
+							first = false;
+						}
+					}
+
+					oldr.setElevation(r.getElevation());
+					oldr.setTotal(r.getTotal());
+					avrSlope = 0.0;
+					nbSlope = 0;
+				}
+			}
+
+			// -- Dessin du trait sur le profil
+			oldr.setElevation(track.data.get(0).getElevation());
+			oldr.setTotal(track.data.get(0).getTotal());
+
+			g2d.setColor(track.clProfil_SlopeBorder);
+			g2d.setStroke(PenSlopeBorder);
+			
+			for (CgData r : track.data) {
+				// Point en bas à gauche (ancien point)
+				xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
+				yCurvePts[0] = h - offy;
+
+				// point en haut à gauche (ancien point)
+				xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
+				yCurvePts[1] = (int) (h - offy - ((oldr.getElevation() - ymin) * resy));
+
+				// point en haut à droite (nouveau point)
+				xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
+				yCurvePts[2] = (int) (h - offy - ((r.getElevation() - ymin) * resy));
+
+				// point en bas à droite (nouveau point)
+				xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
+				yCurvePts[3] = h - offy;
+
+
+				// g.SmoothingMode =
+				// System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+				if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) // Filtre
+				{
+					g2d.drawLine(xCurvePts[1], yCurvePts[1], (int) xCurvePts[2], (int) yCurvePts[2]);
+
+					oldr.setElevation(r.getElevation());
+					oldr.setTotal(r.getTotal());
+				}
+			} // foreach
+
+			// Dernier point
+			// g.FillPolygon(b, curvePts, newFillMode);
+			g2d.fillPolygon(xCurvePts, yCurvePts, 4);
+			g2d.setStroke(PenSimpleBorder);
+			g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
+		}
+
 		// //-- Dessin des lignes verticales --
 		// double km = 0;
 		// int posx = 0;
@@ -835,7 +823,7 @@ public class PanelProfilMRB extends JPanel {
 		// )
 		// {
 		//
-		// km = r.Total;
+		// km = r.getTotal();
 		// posx = (int)(km * resx);
 		// //posy = hp + tMargin - 5 - r.VPosMiniRoadbook;
 		// posy = h - offy - (hp + Main.cd.TopMargin - 7 - r.VPosMiniRoadbook);
@@ -843,7 +831,7 @@ public class PanelProfilMRB extends JPanel {
 		// posy_s = h - offy;
 		// else
 		// {
-		// //posy_s = (int)(h - offy - ((r.Elevation - ymin) * resy));
+		// //posy_s = (int)(h - offy - ((r.getElevation() - ymin) * resy));
 		// posy_s = TabY[offx + posx];
 		// }
 		//
@@ -869,7 +857,7 @@ public class PanelProfilMRB extends JPanel {
 		// //--Caclul le nb de tag
 		// n = NbTag(r.Tag);
 		//
-		// km = r.Total;
+		// km = r.getTotal();
 		// posx = (int)(km * resx);
 		// posy = hp + Main.cd.TopMargin - 7 - r.VPosMiniRoadbook;
 		// /*

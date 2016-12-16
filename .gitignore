@@ -1,15 +1,10 @@
 # Directories #
-/build/
+/build/classes/
 /bin/
 target/
 
 *.class
 
-# Package files #
-*.jar
-*.war
-*.ear
-*.db
 
 ##########
 # WINDOWS
