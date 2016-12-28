@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//TODO Update properties if the selection change (mouse or keyboard) 
 
 package course_generator.mrb;
 
@@ -168,6 +167,7 @@ public class FrmMiniroadbook extends javax.swing.JDialog {
 		// -- Set profil
 		pnlProfil.setData(datalist);
 		pnlProfil.setTrack(track);
+		pnlProfil.setSettings(settings);
 		pnlProfil.setWidth(track.MrbSizeW);
 		pnlProfil.setHeight(track.MrbSizeH);
 

@@ -58,136 +58,139 @@ import course_generator.utils.StatData;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
 
-
 /**
  *
  * @author pierre.delore
  */
 public class TrackData {
 
-	private static TrackData instance;
+	private static TrackData	instance;
 
-	/**Slope/Speed parameters**/
-	public ParamData param = null;
-	/**Parameters file name**/
-	public String Paramfile = "";
+	/** Slope/Speed parameters **/
+	public ParamData			param					= null;
+	/** Parameters file name **/
+	public String				Paramfile				= "";
 
-	/**Arraylist containing the main data**/
-	public ArrayList<CgData> data;
+	/** Arraylist containing the main data **/
+	public ArrayList<CgData>	data;
 
-	/**Statistics data for 'in night'**/
-	public StatData tInNight;
-	/**Statistics data for 'in day'**/
-	public StatData tInDay;
+	/** Statistics data for 'in night' **/
+	public StatData				tInNight;
+	/** Statistics data for 'in day' **/
+	public StatData				tInDay;
 
-	/**Statistics data for 'slope'**/
-	public StatData[] StatSlope;
-	/**Statistics data for 'elevation'**/
-	public StatData[] StatElev;
-	/**Statistics data for 'elevation during night'**/
-	public StatData[] StatElevNight;
-	/**Statistics data for 'elevation during day'**/
-	public StatData[] StatElevDay;
+	/** Statistics data for 'slope' **/
+	public StatData[]			StatSlope;
+	/** Statistics data for 'elevation' **/
+	public StatData[]			StatElev;
+	/** Statistics data for 'elevation during night' **/
+	public StatData[]			StatElevNight;
+	/** Statistics data for 'elevation during day' **/
+	public StatData[]			StatElevDay;
 
-	/**Track name**/
-	public String Name; // Track name
-	/**Name of the track that appear in the track setting**/
-	public String CourseName = "";
-	/**Total distance in meters**/
-	private double TotalDistance = 0.0;
-	/**Total time in seconde**/
-	public int TotalTime = 0;
-	/**Indicate if during the last loading the time field as been loaded**/
-	public boolean isTimeLoaded = false;
-	/**Indicate if the data has been calculated. false=They must be calculate**/
-	public boolean isCalculated = false;
-	/**If 'true' this indicate that the data has been modified**/
-	public boolean isModified = false;
-	/**Contain the ascent climb of the whole track (in m)**/
-	public double ClimbP = 0.0;
-	/**Contain the descent climb of the whole track (in m)**/
-	public double ClimbM = 0.0;
-	/**Contain the ascent time of the whole track (in s)**/
-	public int AscTime = 0;
-	/**Contain the descent time of the whole track (in s)**/
-	public int DescTime = 0;
-	/**Description of the track**/
-	public String Description = "";
-	/**Indicate if the autocalc function is active**/
-	public boolean isAutoCalc = false;
-	/**Start time of the track**/
-	public DateTime StartTime = new DateTime();
-	/**Minimum elevation of the track (in m)**/
-	public double MinElev = -1;
-	/**Maximum elevation of the track (in m)**/
-	public double MaxElev = -1;
-	/**Global start health coefficient**/
-	public double StartGlobalCoeff = 100;
-	/**Global end health coefficient**/
-	public double EndGlobalCoeff = 100;
-	/**If 'true' this indicate that the time limit has been reached**/
-	public boolean isTimeLimit = false;
-	/**Indicate where the timelimit has been reached (-1 if none)**/
-	public int TimeLimit_Line = -1;
-	/**Timezone for the sunrise/sunset calculation**/
-	public Double TrackTimeZone = 0.0;
-	/**Are we using the summer time for the sunrise/sunset calculation**/
-	public boolean TrackUseSumerTime = false;
-	public double StartSpeed = 0.0;
-	public double EndSpeed = 0.0;
-	/**Number of meter of road in the track**/
-	public double DistRoad = 0.0;
-	/**Indicate the type of error during the file reading**/
-	public int ReadError = 0;
-	/**Indicate the at which line the error appear**/
-	public int ReadLineError = 0;
+	/** Track name **/
+	public String				Name;										// Track
+																			// name
+	/** Name of the track that appear in the track setting **/
+	public String				CourseName				= "";
+	/** Total distance in meters **/
+	private double				TotalDistance			= 0.0;
+	/** Total time in seconde **/
+	public int					TotalTime				= 0;
+	/** Indicate if during the last loading the time field as been loaded **/
+	public boolean				isTimeLoaded			= false;
+	/**
+	 * Indicate if the data has been calculated. false=They must be calculate
+	 **/
+	public boolean				isCalculated			= false;
+	/** If 'true' this indicate that the data has been modified **/
+	public boolean				isModified				= false;
+	/** Contain the ascent climb of the whole track (in m) **/
+	public double				ClimbP					= 0.0;
+	/** Contain the descent climb of the whole track (in m) **/
+	public double				ClimbM					= 0.0;
+	/** Contain the ascent time of the whole track (in s) **/
+	public int					AscTime					= 0;
+	/** Contain the descent time of the whole track (in s) **/
+	public int					DescTime				= 0;
+	/** Description of the track **/
+	public String				Description				= "";
+	/** Indicate if the autocalc function is active **/
+	public boolean				isAutoCalc				= false;
+	/** Start time of the track **/
+	public DateTime				StartTime				= new DateTime();
+	/** Minimum elevation of the track (in m) **/
+	private double				MinElev					= -1;
+	/** Maximum elevation of the track (in m) **/
+	private double				MaxElev					= -1;
+	/** Global start health coefficient **/
+	public double				StartGlobalCoeff		= 100;
+	/** Global end health coefficient **/
+	public double				EndGlobalCoeff			= 100;
+	/** If 'true' this indicate that the time limit has been reached **/
+	public boolean				isTimeLimit				= false;
+	/** Indicate where the timelimit has been reached (-1 if none) **/
+	public int					TimeLimit_Line			= -1;
+	/** Timezone for the sunrise/sunset calculation **/
+	public Double				TrackTimeZone			= 0.0;
+	/** Are we using the summer time for the sunrise/sunset calculation **/
+	public boolean				TrackUseSumerTime		= false;
+	public double				StartSpeed				= 0.0;
+	public double				EndSpeed				= 0.0;
+	/** Number of meter of road in the track **/
+	public double				DistRoad				= 0.0;
+	/** Indicate the type of error during the file reading **/
+	public int					ReadError				= 0;
+	/** Indicate the at which line the error appear **/
+	public int					ReadLineError			= 0;
 
 	// -- Night Coeff --
-	/**Start night time**/
-	public DateTime StartNightTime;
-	/**End night time**/
-	public DateTime EndNightTime; 
-	/**If 'true' this indicate that the night coefficients are used***/
-	public boolean bNightCoeff = false;
-	/**Ascent nigth coefficient (100%=normal)**/
-	public double NightCoeffAsc = 100.0;
-	/**Descent nigth coefficient (100%=normal)**/
-	public double NightCoeffDesc = 100.0;
+	/** Start night time **/
+	public DateTime				StartNightTime;
+	/** End night time **/
+	public DateTime				EndNightTime;
+	/** If 'true' this indicate that the night coefficients are used ***/
+	public boolean				bNightCoeff				= false;
+	/** Ascent nigth coefficient (100%=normal) **/
+	public double				NightCoeffAsc			= 100.0;
+	/** Descent nigth coefficient (100%=normal) **/
+	public double				NightCoeffDesc			= 100.0;
 
 	// -- Elevation coeff
-	/**Indicate that the elevation effect is used during the calculation**/
-	public boolean bElevEffect = false;
+	/** Indicate that the elevation effect is used during the calculation **/
+	public boolean				bElevEffect				= false;
 
 	// -- Profil mini-roadbook
-	/**Width of the mini roadbook (in pixels)**/
-	public int MrbSizeW = 640;
-	/**Height of the mini roadbook (in pixels)**/
-	public int MrbSizeH = 480;
-	/**Curve filter in the mini roadbook**/
-	public int CurveFilter = 1;
-	/**Number of characters before the line is word wrapped**/
-	public int WordWrapLength = 25;
-	/**Position of the label. 'true'=bottom**/
-	public boolean LabelToBottom = false;
-	/**Type of profil in the mini roadbook**/
-	public int MRBType = 0;
-	/**Top margin size in pixels in the mini roadbook**/
-	public int TopMargin = 100;
+	/** Width of the mini roadbook (in pixels) **/
+	public int					MrbSizeW				= 640;
+	/** Height of the mini roadbook (in pixels) **/
+	public int					MrbSizeH				= 480;
+	/** Curve filter in the mini roadbook **/
+	public int					CurveFilter				= 1;
+	/** Number of characters before the line is word wrapped **/
+	public int					WordWrapLength			= 25;
+	/** Position of the label. 'true'=bottom **/
+	public boolean				LabelToBottom			= false;
+	/** Type of profil in the mini roadbook **/
+	public int					MRBType					= 0;
+	/** Top margin size in pixels in the mini roadbook **/
+	public int					TopMargin				= 100;
 
 	// -- Profil colors
-	public Color clProfil_Simple_Fill = Color.BLACK;
-	public Color clProfil_Simple_Border = Color.BLACK;
-	public Color clProfil_RS_Road = Color.BLACK;
-	public Color clProfil_RS_Path = Color.BLACK;
-	public Color clProfil_RS_Border = Color.BLACK;
+	public Color				clProfil_Simple_Fill	= Color.BLACK;
+	public Color				clProfil_Simple_Border	= Color.BLACK;
+	public Color				clProfil_RS_Road		= Color.BLACK;
+	public Color				clProfil_RS_Path		= Color.BLACK;
+	public Color				clProfil_RS_Border		= Color.BLACK;
 
-	public Color clProfil_SlopeInf5 = Color.BLACK;
-	public Color clProfil_SlopeInf10 = Color.BLACK;
-	public Color clProfil_SlopeInf15 = Color.BLACK;
-	public Color clProfil_SlopeSup15 = Color.BLACK;
-	public Color clProfil_SlopeBorder = Color.BLACK;
+	public Color				clProfil_SlopeInf5		= Color.BLACK;
+	public Color				clProfil_SlopeInf10		= Color.BLACK;
+	public Color				clProfil_SlopeInf15		= Color.BLACK;
+	public Color				clProfil_SlopeSup15		= Color.BLACK;
+	public Color				clProfil_SlopeBorder	= Color.BLACK;
 
-	//-- Constructor --
+
+	// -- Constructor --
 	public TrackData() {
 
 		Name = "";
@@ -224,12 +227,14 @@ public class TrackData {
 		DefaultMRBProfilSlopeColor();
 	}
 
+
 	public static synchronized TrackData getInstance() {
 		if (instance == null) {
 			instance = new TrackData();
 		}
 		return instance;
 	}
+
 
 	/**
 	 * Initialize the mini roadbook profil color (simple mode)
@@ -239,6 +244,7 @@ public class TrackData {
 		clProfil_Simple_Border = CgConst.CL_PROFIL_SIMPLE_BORDER;
 	}
 
+
 	/**
 	 * Initialize the mini roadbook profil color (Road and track mode)
 	 */
@@ -247,6 +253,7 @@ public class TrackData {
 		clProfil_RS_Path = CgConst.CL_PROFIL_RS_PATH;
 		clProfil_RS_Border = CgConst.CL_PROFIL_RS_BORDER;
 	}
+
 
 	/**
 	 * Initialize the mini roadbook profil color (Slope mode)
@@ -259,6 +266,7 @@ public class TrackData {
 		clProfil_SlopeBorder = CgConst.CL_PROFIL_SLOPE_BORDER;
 	}
 
+
 	/**
 	 * Return the total distance in meter
 	 * 
@@ -267,6 +275,7 @@ public class TrackData {
 	public double getTotalDistance() {
 		return TotalDistance;
 	}
+
 
 	/**
 	 * Return the total distance. Unit depend of the 'unit'
@@ -277,30 +286,32 @@ public class TrackData {
 	 */
 	public double getTotalDistance(int unit) {
 		switch (unit) {
-		case CgConst.UNIT_METER:
-			return TotalDistance;
-		case CgConst.UNIT_MILES_FEET:
-			// meter to miles
-			return Utils.Meter2uMiles(TotalDistance);
-		default:
-			return TotalDistance;
+			case CgConst.UNIT_METER:
+				return TotalDistance;
+			case CgConst.UNIT_MILES_FEET:
+				// meter to miles
+				return Utils.Meter2uMiles(TotalDistance);
+			default:
+				return TotalDistance;
 		}
 	}
+
 
 	public void setTotalDistance(double totalDistance) {
 		TotalDistance = totalDistance;
 	}
 
+
 	/**
 	 * Read a GPX fileand store the data in the array
-	 * @param name 
-	 * 	Full name of the file
-	 * @param mode 
-	 * 	0 = Replace the existing data by the new data
-	 * 	1 = Insert the new data at the beginning of the existing data
-	 *  2 = Add the new data at the end of the existing data
-	 * @return 
-	 * 	Return true if time data have been loaded 
+	 * 
+	 * @param name
+	 *            Full name of the file
+	 * @param mode
+	 *            0 = Replace the existing data by the new data 1 = Insert the
+	 *            new data at the beginning of the existing data 2 = Add the new
+	 *            data at the end of the existing data
+	 * @return Return true if time data have been loaded
 	 * @throws Exception
 	 */
 	public boolean OpenGPX(String name, int mode) throws Exception {
@@ -346,6 +357,7 @@ public class TrackData {
 
 		return isTimeLoaded;
 	} // -- OpenGPX
+
 
 	// -- Save GPX file (complet or partial) --
 	/**
@@ -453,6 +465,7 @@ public class TrackData {
 		}
 	}
 
+
 	// -- Save tags as waypoint in a GPX file --
 	public void SaveWaypoint(String name, int mask) {
 		if (data.size() <= 0) {
@@ -527,14 +540,16 @@ public class TrackData {
 	 */
 	public static class SearchPointResult {
 
-		public double Distance; // Distance in meter
-		public int Point; // -1= no point
+		public double	Distance;	// Distance in meter
+		public int		Point;		// -1= no point
+
 
 		public SearchPointResult(int _point, double _distance) {
 			Distance = _distance;
 			Point = _point;
 		}
 	}
+
 
 	/**
 	 * Search the best point from the latitude and longitude
@@ -566,6 +581,7 @@ public class TrackData {
 		}
 		return new SearchPointResult(p, best);
 	}
+
 
 	// -- Calculate Distance ---
 	public void CalcDist() {
@@ -602,9 +618,9 @@ public class TrackData {
 		}
 	} // Calcdist
 
+
 	/**
-	 * Calculate speed
-	 * !!! To call after Calcdist()
+	 * Calculate speed !!! To call after Calcdist()
 	 */
 	public void CalcSpeed() {
 		boolean b = false;
@@ -621,6 +637,7 @@ public class TrackData {
 			} // if
 		}
 	} // CalcSpeed
+
 
 	/**
 	 * Calculate slope
@@ -667,6 +684,7 @@ public class TrackData {
 		public double AvrSlopeP, AvrSlopeM, TotClimbP, TotFlat, TotClimbM;
 	}
 
+
 	// -- Calculate climb - and + ---
 	public CalcAvrSlopeResult CalcAvrSlope(int StartLine, int EndLine, CalcAvrSlopeResult r) {
 		int i = 0;
@@ -708,9 +726,10 @@ public class TrackData {
 	} // CalcAvrSlope
 
 	public static class CalcClimbResult {
-		public double cp, cm;
-		public int tp, tm;
+		public double	cp, cm;
+		public int		tp, tm;
 	}
+
 
 	// -- Calculate climb - and + ---
 	// cp: cumul D+ (m)
@@ -768,6 +787,7 @@ public class TrackData {
 		public double avrspeed;
 	}
 
+
 	// -- Calculate the average speed between 2 points
 	public CalcAvrSpeedResult CalcAvrSpeed(int StartLine, int EndLine, CalcAvrSpeedResult r) {
 		int t = 0;
@@ -782,6 +802,7 @@ public class TrackData {
 		} // if
 		return r;
 	} // CalcAvrSpeed
+
 
 	// -- Calculate Hour --
 	/**
@@ -798,6 +819,7 @@ public class TrackData {
 		return last;
 	}
 
+
 	// -- Calculate road distance --
 	public void CalcRoad() {
 		DistRoad = 0.0;
@@ -812,6 +834,7 @@ public class TrackData {
 
 		public double min, max;
 	}
+
 
 	public SearchMinMaxElevationResult SearchMinMaxElevation(int start, int end, SearchMinMaxElevationResult r) {
 		r.min = 9999.0;
@@ -828,6 +851,7 @@ public class TrackData {
 		}
 		return r;
 	}
+
 
 	/*
 	 * public void SearchMinMaxElevation(int start, int end, ref min, ref max) {
@@ -854,6 +878,7 @@ public class TrackData {
 		}
 		return isTimeLimit;
 	}
+
 
 	/**
 	 * Calculate the time for each position of the track
@@ -882,13 +907,12 @@ public class TrackData {
 
 		String sParamfile = Utils.GetHomeDir() + "/Course Generator/" + Paramfile + ".par";
 
-		try{
+		try {
 			param.Load(sParamfile);
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			return;
 		}
-		
+
 		ef = 1;
 
 		dt = 0;
@@ -969,7 +993,7 @@ public class TrackData {
 
 			if (y != 0.0) {
 				// Calculate the travel time in second in a part of the track
-				ts = (dist / (y / 3.6)) * coeff * diff * night * ef + station; 
+				ts = (dist / (y / 3.6)) * coeff * diff * night * ef + station;
 			} else {
 				ts = 0.0;
 			}
@@ -991,7 +1015,7 @@ public class TrackData {
 		isModified = true;
 	} // Calculate
 
-	
+
 	/**
 	 * Calc the min / max of the datas
 	 */
@@ -1097,6 +1121,7 @@ public class TrackData {
 		} // Boucle principale
 	} // CalcMinMax
 
+
 	/**
 	 * Invert track
 	 */
@@ -1126,7 +1151,7 @@ public class TrackData {
 			CalcHour();
 
 			SearchMinMaxElevationResult resMinMaxElev = new SearchMinMaxElevationResult();
-			resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev); 
+			resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev);
 			MinElev = resMinMaxElev.min;
 			MaxElev = resMinMaxElev.max;
 
@@ -1134,6 +1159,7 @@ public class TrackData {
 			isModified = true;
 		}
 	}
+
 
 	/**
 	 * Invert track
@@ -1243,6 +1269,7 @@ public class TrackData {
 		}
 	}
 
+
 	/**
 	 * Load a CGX file
 	 * 
@@ -1279,7 +1306,7 @@ public class TrackData {
 		CalcSlope();
 
 		CalcClimbResult resClimb = new CalcClimbResult();
-		CalcClimb(0, data.size() - 1, resClimb); 
+		CalcClimb(0, data.size() - 1, resClimb);
 		ClimbP = resClimb.cp;
 		ClimbM = resClimb.cm;
 		AscTime = resClimb.tp;
@@ -1297,6 +1324,7 @@ public class TrackData {
 		// return isTimeLoaded;
 	}// LoadCGX
 
+
 	/**
 	 * Save data in CGX format (complet and partial)
 	 * 
@@ -1308,8 +1336,10 @@ public class TrackData {
 	 *            last line to save
 	 */
 	public void SaveCGX(String name, int start, int end) {
-		if (data.isEmpty()) { return; }
-		  
+		if (data.isEmpty()) {
+			return;
+		}
+
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
 			XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream(name), "UTF-8");
@@ -1317,13 +1347,13 @@ public class TrackData {
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("COURSEGENERATOR");
 			Utils.WriteStringToXML(writer, "VERSION", "5");
-		  
+
 			double d = data.get(end).getTotal() - data.get(start).getTotal();
-			Utils.WriteStringToXML(writer, "TOTALDISTANCE", String.format(Locale.ROOT,"%f", d));
-		  
+			Utils.WriteStringToXML(writer, "TOTALDISTANCE", String.format(Locale.ROOT, "%f", d));
+
 			int j = data.get(end).getTime() - data.get(start).getTime();
 			Utils.WriteStringToXML(writer, "TOTALSECOND", String.valueOf(j));
-		  
+
 			Utils.WriteStringToXML(writer, "COURSENAME", CourseName);
 			Utils.WriteStringToXML(writer, "DESCRIPTION", Description);
 			Utils.WriteStringToXML(writer, "STARTTIME", StartTime.toString());
@@ -1331,71 +1361,72 @@ public class TrackData {
 			Utils.WriteStringToXML(writer, "USENIGHTCOEFF", (bNightCoeff ? "1" : "0"));
 			Utils.WriteStringToXML(writer, "NIGHTSTARTTIME", StartNightTime.toString("HH:mm"));
 			Utils.WriteStringToXML(writer, "NIGHTENDTIME", EndNightTime.toString("HH:mm"));
-			Utils.WriteStringToXML(writer, "NIGHTCOEFF", String.format(Locale.ROOT,"%f", NightCoeffAsc));
-			Utils.WriteStringToXML(writer, "NIGHTCOEFFDESC", String.format(Locale.ROOT,"%f", NightCoeffDesc));
-			Utils.WriteStringToXML(writer, "STARTGLOBALCOEFF",  String.format(Locale.ROOT,"%f", StartGlobalCoeff));
-			Utils.WriteStringToXML(writer, "ENDGLOBALCOEFF",  String.format(Locale.ROOT,"%f", EndGlobalCoeff)); 
-			Utils.WriteStringToXML(writer, "TIMEZONE", String.format(Locale.ROOT,"%f", TrackTimeZone));
-			Utils.WriteStringToXML(writer, "USESUMMERTIME", (TrackUseSumerTime ? "1" : "0")); 
+			Utils.WriteStringToXML(writer, "NIGHTCOEFF", String.format(Locale.ROOT, "%f", NightCoeffAsc));
+			Utils.WriteStringToXML(writer, "NIGHTCOEFFDESC", String.format(Locale.ROOT, "%f", NightCoeffDesc));
+			Utils.WriteStringToXML(writer, "STARTGLOBALCOEFF", String.format(Locale.ROOT, "%f", StartGlobalCoeff));
+			Utils.WriteStringToXML(writer, "ENDGLOBALCOEFF", String.format(Locale.ROOT, "%f", EndGlobalCoeff));
+			Utils.WriteStringToXML(writer, "TIMEZONE", String.format(Locale.ROOT, "%f", TrackTimeZone));
+			Utils.WriteStringToXML(writer, "USESUMMERTIME", (TrackUseSumerTime ? "1" : "0"));
 			Utils.WriteStringToXML(writer, "CURVE", Paramfile);
 			Utils.WriteIntToXML(writer, "MRBSIZEW", MrbSizeW);
 			Utils.WriteIntToXML(writer, "MRBSIZEH", MrbSizeH);
-		  
+
 			Utils.WriteIntToXML(writer, "CLPROFILSIMPLEFILL", clProfil_Simple_Fill.getRGB());
 			Utils.WriteIntToXML(writer, "CLPROFILSIMPLEBORDER", clProfil_Simple_Border.getRGB());
-		  
+
 			Utils.WriteIntToXML(writer, "CLPROFILRSROAD", clProfil_RS_Road.getRGB());
 			Utils.WriteIntToXML(writer, "CLPROFILRSPATH", clProfil_RS_Path.getRGB());
 			Utils.WriteIntToXML(writer, "CLPROFILRSBORDER", clProfil_RS_Border.getRGB());
-		  
+
 			Utils.WriteIntToXML(writer, "CLPROFILSLOPEINF5", clProfil_SlopeInf5.getRGB());
 			Utils.WriteIntToXML(writer, "CLPROFILSLOPEINF10", clProfil_SlopeInf10.getRGB());
 			Utils.WriteIntToXML(writer, "CLPROFILSLOPEINF15", clProfil_SlopeInf15.getRGB());
 			Utils.WriteIntToXML(writer, "CLPROFILSLOPESUP15", clProfil_SlopeSup15.getRGB());
 			Utils.WriteIntToXML(writer, "CLPROFILSLOPEBORDER", clProfil_SlopeBorder.getRGB());
-		  
+
 			Utils.WriteIntToXML(writer, "MRBCURVEFILTER", CurveFilter);
 			Utils.WriteIntToXML(writer, "WORDWRAPLENGTH", WordWrapLength);
 			Utils.WriteStringToXML(writer, "LABELTOBOTTOM", (LabelToBottom ? "1" : "0"));
 			Utils.WriteIntToXML(writer, "MRBTYPE", MRBType);
 			Utils.WriteIntToXML(writer, "TOPMARGIN", TopMargin);
-		  
-			for (int i = start; i <= end; i++) { 
+
+			for (int i = start; i <= end; i++) {
 				CgData r = data.get(i);
-		  
+
 				writer.writeStartElement("TRACKPOINT");
-			  		Utils.WriteStringToXML(writer, "LATITUDEDEGREES", String.format(Locale.ROOT,"%f", r.getLatitude()));
-				  	Utils.WriteStringToXML(writer, "LONGITUDEDEGREES", String.format(Locale.ROOT,"%f", r.getLongitude()));
-				  	Utils.WriteStringToXML(writer, "ALTITUDEMETERS",  String.format(Locale.ROOT,"%f", r.getElevation()));
-				  	Utils.WriteStringToXML(writer, "DISTANCEMETERS", String.format(Locale.ROOT,"%f", r.getDist()));
-				  	Utils.WriteStringToXML(writer, "DISTANCEMETERSCUMUL", String.format(Locale.ROOT,"%f", r.getTotal()));
-				  	Utils.WriteStringToXML(writer, "DIFF", String.format(Locale.ROOT,"%f", r.getDiff()));
-				  	Utils.WriteStringToXML(writer, "COEFF", String.format(Locale.ROOT,"%f", r.getCoeff()));
-				  	Utils.WriteStringToXML(writer, "RECUP", String.format(Locale.ROOT,"%f", r.getRecovery()));
-				  	Utils.WriteIntToXML(writer, "TIMESECONDE", r.getTime());
-				  	Utils.WriteIntToXML(writer, "EATTIME", r.getStation());
-				  	Utils.WriteIntToXML(writer, "TIMELIMIT", r.getTimeLimit());
-				  	Utils.WriteStringToXML(writer, "COMMENT", r.getComment()); 
-				  	Utils.WriteStringToXML(writer, "NAME", r.getName()); 
-				  	Utils.WriteIntToXML(writer, "TAG", r.getTag());
-				  	Utils.WriteStringToXML(writer, "FMTLBMINIROADBOOK", r.FmtLbMiniRoadbook);
-				  	Utils.WriteIntToXML(writer, "OPTMINIROADBOOK", r.OptionMiniRoadbook);
-				  	Utils.WriteIntToXML(writer, "VPOSMINIROADBOOK", r.VPosMiniRoadbook);
-				  	Utils.WriteStringToXML(writer, "COMMENTMINIROADBOOK", r.CommentMiniRoadbook);
-				  	Utils.WriteIntToXML(writer, "FONTSIZEMINIROADBOOK", r.FontSizeMiniRoadbook); 
-			  writer.writeEndElement(); 
-		  } //for
-		  writer.writeEndElement();
-		  
-		  writer.writeEndDocument(); 
-		  writer.flush(); 
-		  writer.close();
-		  isModified = false;
-		  Name = new File(name).getName();
+				Utils.WriteStringToXML(writer, "LATITUDEDEGREES", String.format(Locale.ROOT, "%f", r.getLatitude()));
+				Utils.WriteStringToXML(writer, "LONGITUDEDEGREES", String.format(Locale.ROOT, "%f", r.getLongitude()));
+				Utils.WriteStringToXML(writer, "ALTITUDEMETERS", String.format(Locale.ROOT, "%f", r.getElevation()));
+				Utils.WriteStringToXML(writer, "DISTANCEMETERS", String.format(Locale.ROOT, "%f", r.getDist()));
+				Utils.WriteStringToXML(writer, "DISTANCEMETERSCUMUL", String.format(Locale.ROOT, "%f", r.getTotal()));
+				Utils.WriteStringToXML(writer, "DIFF", String.format(Locale.ROOT, "%f", r.getDiff()));
+				Utils.WriteStringToXML(writer, "COEFF", String.format(Locale.ROOT, "%f", r.getCoeff()));
+				Utils.WriteStringToXML(writer, "RECUP", String.format(Locale.ROOT, "%f", r.getRecovery()));
+				Utils.WriteIntToXML(writer, "TIMESECONDE", r.getTime());
+				Utils.WriteIntToXML(writer, "EATTIME", r.getStation());
+				Utils.WriteIntToXML(writer, "TIMELIMIT", r.getTimeLimit());
+				Utils.WriteStringToXML(writer, "COMMENT", r.getComment());
+				Utils.WriteStringToXML(writer, "NAME", r.getName());
+				Utils.WriteIntToXML(writer, "TAG", r.getTag());
+				Utils.WriteStringToXML(writer, "FMTLBMINIROADBOOK", r.FmtLbMiniRoadbook);
+				Utils.WriteIntToXML(writer, "OPTMINIROADBOOK", r.OptionMiniRoadbook);
+				Utils.WriteIntToXML(writer, "VPOSMINIROADBOOK", r.VPosMiniRoadbook);
+				Utils.WriteStringToXML(writer, "COMMENTMINIROADBOOK", r.CommentMiniRoadbook);
+				Utils.WriteIntToXML(writer, "FONTSIZEMINIROADBOOK", r.FontSizeMiniRoadbook);
+				writer.writeEndElement();
+			} // for
+			writer.writeEndElement();
+
+			writer.writeEndDocument();
+			writer.flush();
+			writer.close();
+			isModified = false;
+			Name = new File(name).getName();
 		} catch (XMLStreamException | IOException e) {
 			System.out.println(e.getMessage());
 		}
 	}
+
 
 	/**
 	 * Save CSV file
@@ -1434,6 +1465,7 @@ public class TrackData {
 		 */
 	}
 
+
 	/**
 	 * Calculate the night and day time
 	 */
@@ -1470,6 +1502,7 @@ public class TrackData {
 			}
 		}
 	}
+
 
 	/**
 	 * Calculate the slope statistic
@@ -1570,6 +1603,7 @@ public class TrackData {
 			}
 		} // foreach
 	}
+
 
 	/**
 	 * Calculate the elevation statistic
@@ -1720,6 +1754,7 @@ public class TrackData {
 		}
 	}
 
+
 	/**
 	 * Find the nearest point in the point list
 	 * 
@@ -1772,6 +1807,46 @@ public class TrackData {
 
 		// Résultat en mètres
 		return index;
+	}
+
+
+	/**
+	 * Return the minimum elevation of the track
+	 * 
+	 * @param unit
+	 *            Unit wanted (To get from the settings)
+	 * @return Minimum elevation of the track
+	 */
+	public double getMinElev(int unit) {
+		switch (unit) {
+			case CgConst.UNIT_METER:
+				return MinElev;
+			case CgConst.UNIT_MILES_FEET:
+				// meter to miles
+				return Utils.Meter2Feet(MinElev);
+			default:
+				return MinElev;
+		}
+	}
+
+
+	/**
+	 * Return the maximum elevation of the track
+	 * 
+	 * @param unit
+	 *            Unit wanted (To get from the settings)
+	 * @return Maximum elevation of the track
+	 */
+	public double getMaxElev(int unit) {
+		switch (unit) {
+			case CgConst.UNIT_METER:
+				return MaxElev;
+			case CgConst.UNIT_MILES_FEET:
+				// meter to miles
+				return Utils.Meter2Feet(MaxElev);
+			default:
+				return MaxElev;
+		}
 	}
 
 } // TrackData

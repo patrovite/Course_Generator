@@ -34,6 +34,7 @@
  * - Test the import
  *  
  * TODO:
+ * - Utils.CalcDistance calculate the distance between 2 points without the elevation. Something is done after?
  * - Move the track info on the a bottom line and add the curve name on this line
  * - Application icon
  * - About dialog
@@ -2793,10 +2794,10 @@ public class frmMain extends javax.swing.JFrame {
 		}
 		dataset.addSeries(serie1);
 
-		if (Track.MaxElev > Track.MinElev) {
+		if (Track.getMaxElev(Settings.Unit) > Track.getMinElev(Settings.Unit)) {
 			XYPlot plot = chart.getXYPlot();
 			ValueAxis axisY = plot.getRangeAxis();
-			axisY.setRange(Math.floor(Track.MinElev / 100.0) * 100.0, Math.ceil(Track.MaxElev / 100.0) * 100.0);
+			axisY.setRange(Math.floor(Track.getMinElev(Settings.Unit) / 100.0) * 100.0, Math.ceil(Track.getMaxElev(Settings.Unit) / 100.0) * 100.0);
 		}
 	}
 

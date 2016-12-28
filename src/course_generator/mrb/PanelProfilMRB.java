@@ -37,6 +37,7 @@ import javax.swing.JPanel;
 
 import course_generator.CgData;
 import course_generator.TrackData;
+import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.DrawStringMultiLine;
 import course_generator.utils.Utils;
@@ -46,6 +47,7 @@ public class PanelProfilMRB extends JPanel {
 	private boolean WithHighlight;
 	private float transparence;
 	private TrackData track;
+	private CgSettings settings;
 	private MrbDataList data;
 	private int ProfileType;
 	private Stroke PenBlackS;
@@ -57,9 +59,12 @@ public class PanelProfilMRB extends JPanel {
 	private int height;
 	/** X position of the vertical axis of the profile **/
 	private int offx = 40;
-	/** Y position of the horizontal axis of the profile from the bottom of the panel **/
-	private int offy = 25; 
-	
+	/**
+	 * Y position of the horizontal axis of the profile from the bottom of the
+	 * panel
+	 **/
+	private int offy = 25;
+
 	/** Horizontal margin in pixel from the right border **/
 	private int rMargin = 25;
 	/** Number of pixel per horizontal unit (kilometer or miles) **/
@@ -69,9 +74,9 @@ public class PanelProfilMRB extends JPanel {
 	// private int ConfigReplication = CgConst.MRB_REP_POS |
 	// CgConst.MRB_REP_ALIGN | CgConst.MRB_REP_FORMAT |
 	// CgConst.MRB_REP_SIZE | CgConst.MRB_REP_TAGS;
-	
+
 	/** Base line for the duplicate feature **/
-	private int RepLine = 0; 
+	private int RepLine = 0;
 	private Boolean isGridInit = false;
 	private int xSel1 = 0;
 	private int xSel2 = 0;
@@ -84,16 +89,16 @@ public class PanelProfilMRB extends JPanel {
 	/** width of the profil **/
 	private int wp = 0;
 	/** height of the profil **/
-	private int hp = 0; 
+	private int hp = 0;
 	private BasicStroke PenRP_Border;
 	private BasicStroke PenSlopeBorder;
 	private BasicStroke myPenMoy;
-
 
 	public PanelProfilMRB(int width, int height) {
 		super();
 		track = null;
 		data = null;
+		settings = null;
 		this.width = width;
 		this.height = height;
 		ProfileType = 0;
@@ -108,6 +113,15 @@ public class PanelProfilMRB extends JPanel {
 		PenSlopeBorder = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 1, 0 }, 0);
 	}
 
+	/**
+	 * Set the CG settings on the object
+	 * 
+	 * @param settings
+	 *            CG settings
+	 */
+	public void setSettings(CgSettings settings) {
+		this.settings = settings;
+	}
 
 	/**
 	 * Refresh the profil
@@ -115,7 +129,6 @@ public class PanelProfilMRB extends JPanel {
 	public void Refresh() {
 		repaint();
 	}
-
 
 	/**
 	 * Get the track object
@@ -125,7 +138,6 @@ public class PanelProfilMRB extends JPanel {
 	public TrackData getTrack() {
 		return track;
 	}
-
 
 	/**
 	 * Set the track object
@@ -137,7 +149,6 @@ public class PanelProfilMRB extends JPanel {
 		this.track = track;
 	}
 
-
 	/**
 	 * Get the data list object
 	 * 
@@ -146,7 +157,6 @@ public class PanelProfilMRB extends JPanel {
 	public MrbDataList getData() {
 		return data;
 	}
-
 
 	/**
 	 * Set the data list object
@@ -157,7 +167,6 @@ public class PanelProfilMRB extends JPanel {
 	public void setData(MrbDataList data) {
 		this.data = data;
 	}
-
 
 	/**
 	 * Set the width of the panel
@@ -171,14 +180,12 @@ public class PanelProfilMRB extends JPanel {
 		repaint();
 	}
 
-
 	/**
 	 * Return the width of the panel
 	 */
 	public int getWidth() {
 		return width;
 	}
-
 
 	/**
 	 * Set the height of the panel
@@ -192,7 +199,6 @@ public class PanelProfilMRB extends JPanel {
 		repaint();
 	}
 
-
 	/**
 	 * Return the height of the panel
 	 */
@@ -200,11 +206,9 @@ public class PanelProfilMRB extends JPanel {
 		return height;
 	}
 
-
 	public int getProfileType() {
 		return ProfileType;
 	}
-
 
 	public void setProfileType(int profileType) {
 		if ((profileType < 0) || (profileType > 2))
@@ -213,7 +217,6 @@ public class PanelProfilMRB extends JPanel {
 		ProfileType = profileType;
 		repaint();
 	}
-
 
 	/**
 	 * Refresh the panel
@@ -230,15 +233,10 @@ public class PanelProfilMRB extends JPanel {
 		double[] stepval2 = { 0.1, 0.1, 0.2, 0.1 };
 
 		String s;
-		// int w = bmProfil.Width;
-		// int h = bmProfil.Height;
 		double resx = 0.0;
 		double resy = 0.0;
-		double tf = 0;
-		// double ta = 0.0;
-		// double tb = 0.0;
-		// int SelLine = GridMiniRoadbook.CurrentCellAddress.Y;
-		boolean first = false;
+//		double tf = 0;
+//		boolean first = false;
 		int[] TabY = new int[width];
 
 		for (int i = 0; i < width; i++)
@@ -246,83 +244,23 @@ public class PanelProfilMRB extends JPanel {
 
 		// Calculate the profile width
 		wp = width - offx - rMargin;
-		PixelPerHUnit = wp / ((int) (track.getTotalDistance() / 1000.0));
+		PixelPerHUnit = wp / ((int) (track.getTotalDistance(settings.Unit) / 1000.0));
 
 		// Calculate the profile height
-		Double dElev = track.MaxElev - track.MinElev;
+		
+		Double dElev = track.getMaxElev(settings.Unit) - track.getMinElev(settings.Unit);
 		if (dElev < 100) {
-			dElev = Math.ceil(track.MaxElev / 10.0) * 10.0;
+			dElev = Math.ceil(track.getMaxElev(settings.Unit) / 10.0) * 10.0;
 		} else {
-			dElev = (Math.ceil(track.MaxElev / 100.0) * 100.0) - (Math.floor(track.MinElev / 100.0) * 100.0);
+			dElev = (Math.ceil(track.getMaxElev(settings.Unit) / 100.0) * 100.0) - (Math.floor(track.getMinElev((settings.Unit)) / 100.0) * 100.0);
 		}
 
 		hp = height - offy - track.TopMargin;
 		PixelPerVUnit = dElev / hp;
 
-		// System.Drawing.Font SelFont= null;
-		/*
-		 * String s; int w = bmProfil.Width; int h = bmProfil.Height; double
-		 * resx = 0.0; double resy = 0.0; double tf = 0; double ta=0.0; double
-		 * tb=0.0; double[] stepval= {1, 2, 2.5 ,5}; double[] stepval2 = { 0.1,
-		 * 0.1, 0.2, 0.1 }; int SelLine = GridMiniRoadbook.CurrentCellAddress.Y;
-		 * boolean first = false; int[] TabY = new int[w];
-		 * 
-		 * for(int i=0;i<w;i++) TabY[i]=0;
-		 * 
-		 * using (Graphics g = Graphics.FromImage(bmProfil)) { //-- Tools
-		 * creation System.Drawing.Pen PenBlackS = new
-		 * System.Drawing.Pen(System.Drawing.Color.Black);
-		 * 
-		 * System.Drawing.Pen myPenLarge = new
-		 * System.Drawing.Pen(System.Drawing.Color.Black); myPenLarge.Width =
-		 * 4f;
-		 * 
-		 * System.Drawing.Pen PenSimpleBorder = new
-		 * System.Drawing.Pen(Main.cd.clProfil_Simple_Border);
-		 * //Color.FromArgb(0x05, 0x82, 0x05)); PenSimpleBorder.Width = 3f;
-		 * 
-		 * System.Drawing.Pen PenRP_Border = new
-		 * System.Drawing.Pen(Main.cd.clProfil_RS_Border); PenRP_Border.Width =
-		 * 3f;
-		 * 
-		 * System.Drawing.Pen PenSlopeBorder = new
-		 * System.Drawing.Pen(Main.cd.clProfil_SlopeBorder);
-		 * PenSlopeBorder.Width = 3f;
-		 * 
-		 * System.Drawing.Pen myPenMoy = new
-		 * System.Drawing.Pen(System.Drawing.Color.Black); myPenMoy.Width = 2f;
-		 * 
-		 * System.Drawing.Pen myPenDot = new
-		 * System.Drawing.Pen(System.Drawing.Color.Black); myPenDot.DashPattern
-		 * = new float[] { 1, 2 };
-		 * 
-		 * System.Drawing.Brush myBrushWhite = new SolidBrush(Color.White);
-		 * System.Drawing.Brush myBrushSelLabel = new
-		 * SolidBrush(Color.FromArgb(0xFF,0xEF, 0xBB));
-		 * 
-		 * System.Drawing.Brush BrushSlopeInf5 = new
-		 * SolidBrush(Main.cd.clProfil_SlopeInf5); System.Drawing.Brush
-		 * BrushSlopeInf10 = new SolidBrush(Main.cd.clProfil_SlopeInf10);
-		 * System.Drawing.Brush BrushSlopeInf15 = new
-		 * SolidBrush(Main.cd.clProfil_SlopeInf15); System.Drawing.Brush
-		 * BrushSlopeSup15 = new SolidBrush(Main.cd.clProfil_SlopeSup15);
-		 * 
-		 * System.Drawing.Brush BrushSimpleFill = new
-		 * SolidBrush(Main.cd.clProfil_Simple_Fill);
-		 * 
-		 * System.Drawing.Brush BrushRP_Road = new
-		 * SolidBrush(Main.cd.clProfil_RS_Road); System.Drawing.Brush
-		 * BrushRP_Path = new SolidBrush(Main.cd.clProfil_RS_Path);
-		 * 
-		 * System.Drawing.Brush myBrushBlack = new SolidBrush(Color.Black);
-		 * 
-		 * System.Drawing.Font FontSmall = new System.Drawing.Font("TAHOMA", 7);
-		 * System.Drawing.Font FontAvr = new System.Drawing.Font("TAHOMA", 8);
-		 * System.Drawing.Font FontBig = new System.Drawing.Font("TAHOMA", 10);
-		 */
-		Font FontSmall = new Font("ARIAL", Font.PLAIN, 7);
+//		Font FontSmall = new Font("ARIAL", Font.PLAIN, 7);
 		Font FontGraduation = new Font("ARIAL", Font.PLAIN, 10);
-		Font FontLabel= new Font("ARIAL", Font.PLAIN, 11);
+//		Font FontLabel = new Font("ARIAL", Font.PLAIN, 11);
 
 		// CalcLineResult res = new CalcLineResult();
 
@@ -334,7 +272,10 @@ public class PanelProfilMRB extends JPanel {
 		g2d.setPaint(Color.BLACK);
 		g2d.drawRect(0, 0, width - 1, height - 1);
 
+		//-- Some tests in order to be sure that we have data
 		if (data == null)
+			return;
+		if (settings == null)
 			return;
 		if (track == null)
 			return;
@@ -356,11 +297,13 @@ public class PanelProfilMRB extends JPanel {
 		g2d.fillPolygon(x, y, 3);
 
 		// -- Vertical unit drawing
+		s = settings.getShortElevationUnitString();
+		Dimension d = Utils.StringDimension(g2d, s);
+		g2d.drawString(s, offx - d.width - 8, track.TopMargin - YPosArrow);
 
-		// TODO Set the horizontal text pos corresponding to the text size
-		g2d.drawString("m", offx - 15 - 2, track.TopMargin - YPosArrow); // -
-																			// FontAvr.GetHeight());
-
+		
+		
+		
 		// -- Horizontal axis drawing
 		g2d.drawLine(offx - 3, height - offy, width - 10, height - offy);
 
@@ -369,11 +312,12 @@ public class PanelProfilMRB extends JPanel {
 		int[] y1 = { height - 20, height - 25, height - 30 };
 		g2d.fillPolygon(x1, y1, 3);
 
-		// //-- Horizontal unit drawing
-		// g.DrawString("km", FontAvr, Brushes.Black, w - 20, h-offy-18);
-		// TODO Set the pos of the text corresponding to the text length
-		g2d.drawString("km", width - 20, height - offy - 18);
+		// -- Horizontal unit drawing
+		s = settings.getShortDistanceUnitString();
+		d = Utils.StringDimension(g2d, s);
+		g2d.drawString(s, width - d.width-2, height - offy - 10);
 
+		
 		Double ymin = 0.0;
 		Double ymax = 0.0;
 		Double xmin = 0.0;
@@ -387,7 +331,7 @@ public class PanelProfilMRB extends JPanel {
 
 		// -- Min and max of the X axis
 		xmin = 0.0;
-		xmax = track.getTotalDistance();
+		xmax = track.getTotalDistance(settings.Unit);
 
 		// -- X axis ticks calculation
 		int ctab = 0;
@@ -416,12 +360,12 @@ public class PanelProfilMRB extends JPanel {
 		NbGradX = cmul;
 		xmax = xmin + stepx * NbGradX;
 
-		// -- Min and max of the x axis calculation
-		if (track.MaxElev - track.MinElev < 100)
+		// -- Min and max of the y axis calculation
+		if (track.getMaxElev(settings.Unit) - track.getMinElev(settings.Unit) < 100)
 			ymin = 0.0;
 		else
-			ymin = Math.floor(track.MinElev / 100.0) * 100.0;
-		ymax = track.MaxElev;
+			ymin = Math.floor(track.getMinElev(settings.Unit) / 100.0) * 100.0;
+		ymax = track.getMaxElev(settings.Unit);
 
 		// -- Y axis ticks calculation
 		ctab = 0;
@@ -472,14 +416,17 @@ public class PanelProfilMRB extends JPanel {
 		// -- Horizontal grid drawing --
 		g2d.setStroke(PenBlackS);
 		for (double i = ymin; i <= ymax; i += stepy2) {
-			g.drawLine(offx - 2, height - offy - (int) ((i - ymin) * resy), offx, height - offy - (int) ((i - ymin) * resy));
+			g.drawLine(offx - 2, height - offy - (int) ((i - ymin) * resy), offx,
+					height - offy - (int) ((i - ymin) * resy));
 		}
 
 		for (double i = ymin; i <= ymax; i += stepy) {
 			g2d.setStroke(myPenDot);
-			g.drawLine(offx, height - offy - (int) ((i - ymin) * resy), offx + wp, height - offy - (int) ((i - ymin) * resy));
+			g.drawLine(offx, height - offy - (int) ((i - ymin) * resy), offx + wp,
+					height - offy - (int) ((i - ymin) * resy));
 			g2d.setStroke(PenBlackS);
-			g.drawLine(offx - 4, height - offy - (int) ((i - ymin) * resy), offx, height - offy - (int) ((i - ymin) * resy));
+			g.drawLine(offx - 4, height - offy - (int) ((i - ymin) * resy), offx,
+					height - offy - (int) ((i - ymin) * resy));
 		}
 
 		// -- Y axis value drawing
@@ -487,7 +434,7 @@ public class PanelProfilMRB extends JPanel {
 		g2d.setPaint(Color.BLACK);
 		for (int c = 0; c <= NbGradY; c++) {
 			s = String.format("%1.0f", (ymin + c * stepy));
-			Dimension d = Utils.StringDimension(g2d, s);
+			d = Utils.StringDimension(g2d, s);
 			g2d.drawString(s, offx - d.width - 5, (int) ((height - offy) - (c * stepy * resy)) + (d.height / 2));
 		}
 
@@ -495,13 +442,9 @@ public class PanelProfilMRB extends JPanel {
 		for (int c = 0; c <= NbGradX; c++) {
 			s = String.format("%1.0f", (xmin + c * stepx) / 1000);
 			// stringSize = g.MeasureString(s, FontAvr);
-			Dimension d = Utils.StringDimension(g2d, s);
+			d = Utils.StringDimension(g2d, s);
 			g2d.drawString(s, (int) (offx + (c * stepx * resx) - (d.width / 2)), height - offy + 4 + d.height);
 		}
-
-		CgData oldr = new CgData();
-		oldr.setElevation(track.data.get(0).getElevation());
-		oldr.setTotal(track.data.get(0).getTotal());
 
 		// -- Simple profile drawing --
 		if (ProfileType == 0)
@@ -514,7 +457,7 @@ public class PanelProfilMRB extends JPanel {
 			DrawSlopeProfile(g2d, xmin, ymin, resx, resy, TabY);
 
 		// -- Vertical line drawing --
-		double km = 0;
+		double dist = 0;
 		int posx = 0;
 		int posy = 0;
 		int posy_s = 0;
@@ -526,17 +469,13 @@ public class PanelProfilMRB extends JPanel {
 			if ((((r.getTag() & CgConst.TAG_HIGH_PT) != 0) || ((r.getTag() & CgConst.TAG_LOW_PT) != 0)
 					|| ((r.getTag() & CgConst.TAG_EAT_PT) != 0) || ((r.getTag() & CgConst.TAG_WATER_PT) != 0)
 					|| ((r.getTag() & CgConst.TAG_MARK) != 0)) && ((r.OptionMiniRoadbook & CgConst.MRBOPT_SEL) != 0)) {
-				km = r.getTotal();
-				posx = (int) (km * resx);
-				// posy = hp + tMargin - 5 - r.VPosMiniRoadbook;
+				dist = r.getTotal(settings.Unit);
+				posx = (int) (dist * resx);
 				posy = height - offy - (hp + track.TopMargin - 7 - r.VPosMiniRoadbook);
 				if (track.LabelToBottom)
 					posy_s = height - offy;
-				else {
-					// posy_s = (int)(h - offy - ((r.getElevation() - ymin) *
-					// resy));
+				else
 					posy_s = TabY[offx + posx];
-				}
 
 				g2d.drawLine(offx + posx, posy_s, offx + posx, posy);
 			}
@@ -554,42 +493,29 @@ public class PanelProfilMRB extends JPanel {
 
 				g2d.setFont(new Font("ARIAL", Font.PLAIN, r.FontSizeMiniRoadbook));
 
-				km = r.getTotal();
-				posx = (int) (km * resx);
+				dist = r.getTotal(settings.Unit);
+				posx = (int) (dist * resx);
 				posy = hp + track.TopMargin - 0 - r.VPosMiniRoadbook;
-				/*
-				 * if ((r.OptionMiniRoadbook & CgConst.MRBOPT_FONTSMALL) != 0)
-				 * SelFont = FontSmall; else if ((r.OptionMiniRoadbook &
-				 * CgConst.MRBOPT_FONTAVR) != 0) SelFont = FontAvr; else if
-				 * ((r.OptionMiniRoadbook & CgConst.MRBOPT_FONTBIG) != 0)
-				 * SelFont = FontBig;
-				 */
-				// TODO Font managment
-				// if (SelFont != null) SelFont.Dispose();
-				// SelFont = new System.Drawing.Font("TAHOMA",
-				// r.FontSizeMiniRoadbook);
 
+				//-- Generate the text to display
 				// s = "Les Contamines\n1083m - km:100\n10h23";
 				// s = GenLabel("%N\n%Am - km:%D\n%H", r);
 				// s = GenLabel(r.FmtLbMiniRoadbook, r);
 				// s = Utils.GenLabel(r.FmtLbMiniRoadbook, r, track);
-				s = Utils.GenLabel("%N%L%Am - km:%D\n%H", r, track);
-//				Dimension stringSize = Utils.StringDimension(g2d, s);
-				// stringSize = g.MeasureString(s, SelFont);
-
+				s = Utils.GenLabel("%N%L%Am - km:%D\n%H", r, track, settings);
 				drawStringMulti.setText(g2d, s);
-				
-//				int l = stringSize.width + 4 + 2;
-				
+
+				// int l = stringSize.width + 4 + 2;
+
 				// -- Width calculation
 				int w = drawStringMulti.getWidth() + 4 + 2;
 				int w1 = (nbtag * 16) + ((nbtag - 1) * 2) + 4;
 				if (w1 > w)
 					w = w1;
 
-				//-- Text height
+				// -- Text height
 				int htext = drawStringMulti.getHeight();
-				
+
 				// -- Alignment position (left/center/right)
 				// Left nothing change
 				if ((r.OptionMiniRoadbook & CgConst.MRBOPT_CENTER) != 0) {
@@ -625,13 +551,14 @@ public class PanelProfilMRB extends JPanel {
 					ySel2 = ySel2 + htext + htags + 4;
 				}
 
-				//-- Draw the text
+				// -- Draw the text
 				g2d.setColor(Color.BLACK);
-				drawStringMulti.draw(g2d, s, offx + posx + 2, height - offy - posy);// + htext);
-				
-				//-- Set the clipping to the whole panel
+				drawStringMulti.draw(g2d, s, offx + posx + 2, height - offy - posy);// +
+																					// htext);
+
+				// -- Set the clipping to the whole panel
 				g2d.setClip(0, 0, width, height);
-				
+
 				if ((r.OptionMiniRoadbook & CgConst.MRBOPT_SHOWTAGS) != 0) {
 					int m = 0;
 					int lt = (int) ((w - w1) / 2);
@@ -639,56 +566,49 @@ public class PanelProfilMRB extends JPanel {
 					if ((r.getTag() & CgConst.TAG_HIGH_PT) != 0) {
 						Image img = Toolkit.getDefaultToolkit()
 								.getImage(getClass().getResource("/course_generator/images/high_point.png"));
-						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext,
-								this);
+						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
 
 					if ((r.getTag() & CgConst.TAG_LOW_PT) != 0) {
 						Image img = Toolkit.getDefaultToolkit()
 								.getImage(getClass().getResource("/course_generator/images/low_point.png"));
-						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext,
-								this);
+						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
 
 					if ((r.getTag() & CgConst.TAG_EAT_PT) != 0) {
 						Image img = Toolkit.getDefaultToolkit()
 								.getImage(getClass().getResource("/course_generator/images/eat.png"));
-						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext,
-								this);
+						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
 
 					if ((r.getTag() & CgConst.TAG_WATER_PT) != 0) {
 						Image img = Toolkit.getDefaultToolkit()
 								.getImage(getClass().getResource("/course_generator/images/drink.png"));
-						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext,
-								this);
+						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
 
 					if ((r.getTag() & CgConst.TAG_COOL_PT) != 0) {
 						Image img = Toolkit.getDefaultToolkit()
 								.getImage(getClass().getResource("/course_generator/images/photo.png"));
-						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext,
-								this);
+						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
 
 					if ((r.getTag() & CgConst.TAG_NOTE) != 0) {
 						Image img = Toolkit.getDefaultToolkit()
 								.getImage(getClass().getResource("/course_generator/images/note.png"));
-						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext,
-								this);
+						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
 
 					if ((r.getTag() & CgConst.TAG_INFO) != 0) {
 						Image img = Toolkit.getDefaultToolkit()
 								.getImage(getClass().getResource("/course_generator/images/info.png"));
-						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext,
-								this);
+						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
 				}
@@ -696,35 +616,34 @@ public class PanelProfilMRB extends JPanel {
 			}
 			if ((((r.getTag() & CgConst.TAG_HIGH_PT) != 0) || ((r.getTag() & CgConst.TAG_LOW_PT) != 0)
 					|| ((r.getTag() & CgConst.TAG_EAT_PT) != 0) || ((r.getTag() & CgConst.TAG_WATER_PT) != 0)
-					|| ((r.getTag() & CgConst.TAG_MARK) != 0)) 
-			)
+					|| ((r.getTag() & CgConst.TAG_MARK) != 0)))
 				ii++;
 		}
 
-		//-- Copyright --
+		// -- Copyright --
 		Image img = Toolkit.getDefaultToolkit()
 				.getImage(getClass().getResource("/course_generator/images/copyright.png"));
-		g2d.drawImage(img, width-15,(height-offy-img.getHeight(null))/2, this);
-		
-		
-		
-//		g2d.setFont(new Font("ARIAL", Font.PLAIN, 10));
-//		s="COURSE GENERATOR - Http://www.TechAndRun.com";
-//		Dimension stringSize = Utils.StringDimension(g2d, s);
-//		
-//		AffineTransform defaultAt = g2d.getTransform();
-//		
-//		AffineTransform at = new AffineTransform();
-//		at.rotate(-Math.PI / 2);
-// 
-//		g2d.setTransform(at);
-//		// x=y and y=-x 
-//		//g2d.drawString(s, -(height-(int)(stringSize.getWidth()))/2, width-5);
-////		g2d.drawString(s, -(height-(height-(int)(stringSize.getWidth()))/2), width-5);
-//		g2d.drawString(s, -width, width-5);
-//		
-//		g2d.setTransform(defaultAt);
-		
+		g2d.drawImage(img, width - 15, (height - offy - img.getHeight(null)) / 2, this);
+
+		// g2d.setFont(new Font("ARIAL", Font.PLAIN, 10));
+		// s="COURSE GENERATOR - Http://www.TechAndRun.com";
+		// Dimension stringSize = Utils.StringDimension(g2d, s);
+		//
+		// AffineTransform defaultAt = g2d.getTransform();
+		//
+		// AffineTransform at = new AffineTransform();
+		// at.rotate(-Math.PI / 2);
+		//
+		// g2d.setTransform(at);
+		// // x=y and y=-x
+		// //g2d.drawString(s, -(height-(int)(stringSize.getWidth()))/2,
+		// width-5);
+		//// g2d.drawString(s,
+		// -(height-(height-(int)(stringSize.getWidth()))/2), width-5);
+		// g2d.drawString(s, -width, width-5);
+		//
+		// g2d.setTransform(defaultAt);
+
 		// Image myImage = Resources.copyright;
 		// Bitmap bmCopyright = null;
 		// if (bmProfil.Height>290)
@@ -739,10 +658,225 @@ public class PanelProfilMRB extends JPanel {
 		//
 		// }
 
-
 		g2d.dispose();
 	}
 
+	/**
+	 * Draw the simple type profile
+	 * 
+	 * @param g2d
+	 *            Graphic context
+	 * @param xmin
+	 *            Minimum x axis value
+	 * @param ymin
+	 *            Minimum y axis value
+	 * @param resx
+	 *            x axis resolution
+	 * @param resy
+	 *            y axis resolution
+	 * @param TabY
+	 *            Array of y value for each x pixel
+	 */
+	private void DrawSimpleProfile(Graphics2D g2d, double xmin, double ymin, double resx, double resy, int[] TabY) {
+		boolean first = true;
+		int[] xCurvePts = { 0, 0, 0, 0 };
+		int[] yCurvePts = { 0, 0, 0, 0 };
+		CalcLineResult res = new CalcLineResult();
+	
+		CgData oldr = new CgData();
+	
+		oldr.setElevation(track.data.get(0).getElevation());
+		oldr.setTotal(track.data.get(0).getTotal());
+	
+		g2d.setPaint(track.clProfil_Simple_Fill);
+	
+		// -- Draw the profile with a unique color
+		for (CgData r : track.data) {
+			// Point on bottom left (old point)
+			xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[0] = height - offy;
+	
+			// Point on top left (old point)
+			xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[1] = height - offy - (int)((oldr.getElevation(settings.Unit) - ymin) * resy);
+	
+			// Point on top right (new point)
+			xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[2] = height - offy - (int)((r.getElevation(settings.Unit) - ymin) * resy);
+	
+			// Point on bottom right (new point)
+			xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[3] = height - offy;
+	
+			// Filter
+			if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) {
+				//-- Draw the polygon
+				g2d.fillPolygon(xCurvePts, yCurvePts, 4);
+	
+				res = Utils.CalcLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2], res);
+				for (int tf = xCurvePts[1]; tf < xCurvePts[2]; tf++) {
+					TabY[(int) tf] = (int) (res.a * tf + res.b);
+					// First pass. Allow to draw the first line
+					if ((first) && (tf > 0)) {
+						TabY[(int) tf - 1] = TabY[(int) tf];
+						first = false;
+					}
+				}
+				oldr.setElevation(r.getElevation());
+				oldr.setTotal(r.getTotal());
+			}
+		} // for
+	
+		// -- Draw the line on the profile
+		oldr.setElevation(track.data.get(0).getElevation());
+		oldr.setTotal(track.data.get(0).getTotal());
+	
+		g2d.setColor(track.clProfil_Simple_Border);
+		g2d.setStroke(PenSimpleBorder);
+		for (CgData r : track.data) {
+			// Point on bottom left (old point)
+			xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[0] = height - offy;
+	
+			// Point on top left (old point)
+			xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[1] = (int) (height - offy - ((oldr.getElevation(settings.Unit) - ymin) * resy));
+	
+			// Point on top right (new point)
+			xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[2] = (int) (height - offy - ((r.getElevation(settings.Unit) - ymin) * resy));
+	
+			// Point on bottom right (new point)
+			xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[3] = height - offy;
+	
+			if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) // Filter
+			{
+				g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
+				oldr.setElevation(r.getElevation());
+				oldr.setTotal(r.getTotal());
+			}
+		} // for
+	
+		// Last point
+		g2d.fillPolygon(xCurvePts, yCurvePts, 4);
+		g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
+	}
+
+	/**
+	 * Draw the road/path type profile
+	 * 
+	 * @param g2d
+	 *            Graphic context
+	 * @param xmin
+	 *            Minimum x axis value
+	 * @param ymin
+	 *            Minimum y axis value
+	 * @param resx
+	 *            x axis resolution
+	 * @param resy
+	 *            y axis resolution
+	 * @param TabY
+	 *            Array of y value for each x pixel
+	 */
+	private void DrawRoadPathProfile(Graphics2D g2d, Double xmin, Double ymin, double resx, double resy, int[] TabY) {
+		int cmpt = 0;
+		boolean first = true;
+		int[] xCurvePts = { 0, 0, 0, 0 };
+		int[] yCurvePts = { 0, 0, 0, 0 };
+		CalcLineResult res = new CalcLineResult();
+		CgData oldr = new CgData();
+	
+		oldr.setElevation(track.data.get(0).getElevation());
+		oldr.setTotal(track.data.get(0).getTotal());
+	
+		// -- Draw the profile with a color for the road and a color for the
+		// path
+		for (CgData r : track.data) {
+	
+			// Point on botton left (old point)
+			xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[0] = height - offy;
+	
+			// Point on top left (old point)
+			xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[1] = (int) (height - offy - ((oldr.getElevation(settings.Unit) - ymin) * resy));
+	
+			// Point on top right (new point)
+			xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[2] = (int) (height - offy - ((r.getElevation(settings.Unit) - ymin) * resy));
+	
+			// Point on bottom right (new point)
+			xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[3] = height - offy;
+	
+			g2d.setColor(track.clProfil_RS_Path);
+	
+			if (r.getDiff() == 100)
+				cmpt++;
+	
+			if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) // Filtre
+			{
+				if (cmpt > 0)
+					g2d.setColor(track.clProfil_RS_Road);
+				g2d.fillPolygon(xCurvePts, yCurvePts, 4);
+	
+				res = Utils.CalcLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2], res);
+				for (int tf = xCurvePts[1]; tf < xCurvePts[2]; tf++) {
+					TabY[(int) tf] = (int) (res.a * tf + res.b);
+					// First pass. Allow to draw the first line
+					if ((first) && (tf > 0)) {
+						TabY[(int) tf - 1] = TabY[(int) tf];
+						first = false;
+					}
+				}
+	
+				oldr.setElevation(r.getElevation());
+				oldr.setTotal(r.getTotal());
+				cmpt = 0;
+			}
+	
+		} // for
+	
+		// -- Draw the line on the profile
+		oldr.setElevation(track.data.get(0).getElevation());
+		oldr.setTotal(track.data.get(0).getTotal());
+	
+		for (CgData r : track.data) {
+			// Point on bottom left (old point)
+			xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[0] = height - offy;
+	
+			// Point on top left (old point)
+			xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[1] = (int) (height - offy - ((oldr.getElevation(settings.Unit) - ymin) * resy));
+	
+			// Point on top right (new point)
+			xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[2] = (int) (height - offy - ((r.getElevation(settings.Unit) - ymin) * resy));
+	
+			// Point on bottom right (new point)
+			xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[3] = height - offy;
+	
+			g2d.setColor(track.clProfil_RS_Path);
+	
+			g2d.setColor(track.clProfil_RS_Border);
+			g2d.setStroke(PenRP_Border);
+	
+			if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) // Filtre
+			{
+				g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
+				oldr.setElevation(r.getElevation());
+				oldr.setTotal(r.getTotal());
+			}
+	
+		} // for
+	
+		// Last point
+		g2d.fillPolygon(xCurvePts, yCurvePts, 4);
+		g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
+	}
 
 	/**
 	 * Draw the slope type profile
@@ -776,16 +910,16 @@ public class PanelProfilMRB extends JPanel {
 
 		// -- Draw the slope profile
 		for (CgData r : track.data) {
-			xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
+			xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal(settings.Unit) - xmin) * resx)));
 			yCurvePts[0] = height - offy;
 
-			xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
-			yCurvePts[1] = (int) (height - offy - ((oldr.getElevation() - ymin) * resy));
+			xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[1] = (int) (height - offy - ((oldr.getElevation(settings.Unit) - ymin) * resy));
 
-			xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
-			yCurvePts[2] = (int) (height - offy - ((r.getElevation() - ymin) * resy));
+			xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[2] = (int) (height - offy - ((r.getElevation(settings.Unit) - ymin) * resy));
 
-			xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
+			xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal(settings.Unit) - xmin) * resx)));
 			yCurvePts[3] = height - offy;
 
 			avrSlope += Math.abs(r.getSlope());
@@ -831,19 +965,19 @@ public class PanelProfilMRB extends JPanel {
 
 		for (CgData r : track.data) {
 			// Point on the bottom left (old point)
-			xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
+			xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal(settings.Unit) - xmin) * resx)));
 			yCurvePts[0] = height - offy;
 
 			// Point on the top left (old point)
-			xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
-			yCurvePts[1] = (int) (height - offy - ((oldr.getElevation() - ymin) * resy));
+			xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[1] = (int) (height - offy - ((oldr.getElevation(settings.Unit) - ymin) * resy));
 
 			// Point on top right (new point)
-			xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
-			yCurvePts[2] = (int) (height - offy - ((r.getElevation() - ymin) * resy));
+			xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal(settings.Unit) - xmin) * resx)));
+			yCurvePts[2] = (int) (height - offy - ((r.getElevation(settings.Unit) - ymin) * resy));
 
 			// Point on bottom right (new point)
-			xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
+			xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal(settings.Unit) - xmin) * resx)));
 			yCurvePts[3] = height - offy;
 
 			// Filter
@@ -861,234 +995,13 @@ public class PanelProfilMRB extends JPanel {
 		g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
 	}
 
-
-	/**
-	 * Draw the road/path type profile
-	 * 
-	 * @param g2d
-	 *            Graphic context
-	 * @param xmin
-	 *            Minimum x axis value
-	 * @param ymin
-	 *            Minimum y axis value
-	 * @param resx
-	 *            x axis resolution
-	 * @param resy
-	 *            y axis resolution
-	 * @param TabY
-	 *            Array of y value for each x pixel
-	 */
-	private void DrawRoadPathProfile(Graphics2D g2d, Double xmin, Double ymin, double resx, double resy, int[] TabY) {
-		int cmpt = 0;
-		boolean first = true;
-		int[] xCurvePts = { 0, 0, 0, 0 };
-		int[] yCurvePts = { 0, 0, 0, 0 };
-		CalcLineResult res = new CalcLineResult();
-		CgData oldr = new CgData();
-
-		oldr.setElevation(track.data.get(0).getElevation());
-		oldr.setTotal(track.data.get(0).getTotal());
-
-		// -- Draw the profile with a color for the road and a color for the
-		// path
-		for (CgData r : track.data) {
-
-			// Point on botton left (old point)
-			xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
-			yCurvePts[0] = height - offy;
-
-			// Point on top left (old point)
-			xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
-			yCurvePts[1] = (int) (height - offy - ((oldr.getElevation() - ymin) * resy));
-
-			// Point on top right (new point)
-			xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
-			yCurvePts[2] = (int) (height - offy - ((r.getElevation() - ymin) * resy));
-
-			// Point on bottom right (new point)
-			xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
-			yCurvePts[3] = height - offy;
-
-			g2d.setColor(track.clProfil_RS_Path);
-
-			if (r.getDiff() == 100)
-				cmpt++;
-
-			if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) // Filtre
-			{
-				if (cmpt > 0)
-					g2d.setColor(track.clProfil_RS_Road);
-				g2d.fillPolygon(xCurvePts, yCurvePts, 4);
-
-				res = Utils.CalcLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2], res);
-				for (int tf = xCurvePts[1]; tf < xCurvePts[2]; tf++) {
-					TabY[(int) tf] = (int) (res.a * tf + res.b);
-					// First pass. Allow to draw the first line
-					if ((first) && (tf > 0)) {
-						TabY[(int) tf - 1] = TabY[(int) tf];
-						first = false;
-					}
-				}
-
-				oldr.setElevation(r.getElevation());
-				oldr.setTotal(r.getTotal());
-				cmpt = 0;
-			}
-
-		} // for
-
-		// -- Draw the line on the profile
-		oldr.setElevation(track.data.get(0).getElevation());
-		oldr.setTotal(track.data.get(0).getTotal());
-
-		for (CgData r : track.data) {
-			// Point on bottom left (old point)
-			xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
-			yCurvePts[0] = height - offy;
-
-			// Point on top left (old point)
-			xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
-			yCurvePts[1] = (int) (height - offy - ((oldr.getElevation() - ymin) * resy));
-
-			// Point on top right (new point)
-			xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
-			yCurvePts[2] = (int) (height - offy - ((r.getElevation() - ymin) * resy));
-
-			// Point on bottom right (new point)
-			xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
-			yCurvePts[3] = height - offy;
-
-			g2d.setColor(track.clProfil_RS_Path);
-
-			g2d.setColor(track.clProfil_RS_Border);
-			g2d.setStroke(PenRP_Border);
-
-			if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) // Filtre
-			{
-				g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
-				oldr.setElevation(r.getElevation());
-				oldr.setTotal(r.getTotal());
-			}
-
-		} // for
-
-		// Last point
-		g2d.fillPolygon(xCurvePts, yCurvePts, 4);
-		g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
-	}
-
-
-	/**
-	 * Draw the simple type profile
-	 * 
-	 * @param g2d
-	 *            Graphic context
-	 * @param xmin
-	 *            Minimum x axis value
-	 * @param ymin
-	 *            Minimum y axis value
-	 * @param resx
-	 *            x axis resolution
-	 * @param resy
-	 *            y axis resolution
-	 * @param TabY
-	 *            Array of y value for each x pixel
-	 */
-	private void DrawSimpleProfile(Graphics2D g2d, double xmin, double ymin, double resx, double resy, int[] TabY) {
-		boolean first = true;
-		int[] xCurvePts = { 0, 0, 0, 0 };
-		int[] yCurvePts = { 0, 0, 0, 0 };
-		CalcLineResult res = new CalcLineResult();
-
-		CgData oldr = new CgData();
-
-		oldr.setElevation(track.data.get(0).getElevation());
-		oldr.setTotal(track.data.get(0).getTotal());
-
-		g2d.setPaint(track.clProfil_Simple_Fill);
-
-		// -- Draw the profile with a unique color
-		for (CgData r : track.data) {
-			// Point on bottom left (old point)
-			xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
-			yCurvePts[0] = height - offy;
-
-			// Point on top left (old point)
-			xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
-			yCurvePts[1] = (int) (height - offy - ((oldr.getElevation() - ymin) * resy));
-
-			// Point on top right (new point)
-			xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
-			yCurvePts[2] = (int) (height - offy - ((r.getElevation() - ymin) * resy));
-
-			// Point on bottom right (new point)
-			xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
-			yCurvePts[3] = (int) (height - offy);
-
-			// Filter
-			if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) {
-				g2d.fillPolygon(xCurvePts, yCurvePts, 4);
-
-				res = Utils.CalcLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2], res);
-				for (int tf = xCurvePts[1]; tf < xCurvePts[2]; tf++) {
-					TabY[(int) tf] = (int) (res.a * tf + res.b);
-					// First pass. Allow to draw the first line
-					if ((first) && (tf > 0)) {
-						TabY[(int) tf - 1] = TabY[(int) tf];
-						first = false;
-					}
-				}
-				oldr.setElevation(r.getElevation());
-				oldr.setTotal(r.getTotal());
-			}
-		} // for
-
-		// -- Draw the line on the profile
-		oldr.setElevation(track.data.get(0).getElevation());
-		oldr.setTotal(track.data.get(0).getTotal());
-
-		g2d.setColor(track.clProfil_Simple_Border);
-		g2d.setStroke(PenSimpleBorder);
-		for (CgData r : track.data) {
-			// Point on bottom left (old point)
-			xCurvePts[0] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
-			yCurvePts[0] = height - offy;
-
-			// Point on top left (old point)
-			xCurvePts[1] = (int) Math.round((offx + 1 + ((oldr.getTotal() - xmin) * resx)));
-			yCurvePts[1] = (int) (height - offy - ((oldr.getElevation() - ymin) * resy));
-
-			// Point on top right (new point)
-			xCurvePts[2] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
-			yCurvePts[2] = (int) (height - offy - ((r.getElevation() - ymin) * resy));
-
-			// Point on bottom right (new point)
-			xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal() - xmin) * resx)));
-			yCurvePts[3] = height - offy;
-
-			if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) // Filtre
-			{
-				g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
-				oldr.setElevation(r.getElevation());
-				oldr.setTotal(r.getTotal());
-			}
-		} // for
-
-		// Last point
-		g2d.fillPolygon(xCurvePts, yCurvePts, 4);
-		g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
-	}
-
-
 	public float getTransparence() {
 		return transparence;
 	}
 
-
 	public void setTransparence(float transparence) {
 		this.transparence = transparence;
 	}
-
 
 	public void save(String filename) {
 		// -- Disable Highlight of the current box
@@ -1105,7 +1018,6 @@ public class PanelProfilMRB extends JPanel {
 		// -- Enable Highlight of the current box
 		WithHighlight = true;
 	}
-
 
 	private int NbTag(int Value) {
 		int n = 0;
@@ -1128,11 +1040,9 @@ public class PanelProfilMRB extends JPanel {
 		return n;
 	}
 
-
 	public int getSelLine() {
 		return SelLine;
 	}
-
 
 	public void setSelLine(int selLine) {
 		SelLine = selLine;

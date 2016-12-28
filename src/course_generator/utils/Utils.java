@@ -46,16 +46,13 @@ import org.joda.time.DateTime;
 import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.TrackData.CalcClimbResult;
+import course_generator.settings.CgSettings;
 
 /**
  *
  * @author pierre.delore
  */
 public class Utils {
-	// static private CultureInfo cultureEN =
-	// CultureInfo.CreateSpecificCulture("en-GB");
-	// static private CultureInfo cultureFR =
-	// CultureInfo.CreateSpecificCulture("fr-FR");
 
 	/**
 	 * Display a load dialog
@@ -217,11 +214,11 @@ public class Utils {
 					}
 					break;
 				} // Case 2
-				// case 10: { //Error
-				// error=true;
-				// ok=false;
-				// break;
-				// }
+					// case 10: { //Error
+					// error=true;
+					// ok=false;
+					// break;
+					// }
 
 			} // Case
 		} // While
@@ -296,43 +293,86 @@ public class Utils {
 	}
 
 
-	// Converti des mètres en pieds
+	/**
+	 * Convert meters in feet
+	 * 
+	 * @param m
+	 *            meters to convert
+	 * @return Converted value
+	 */
+
 	public static double Meter2Feet(double m) {
 		return m * 3.28083989501;
 	}
 
 
-	// Converti des pieds en mètres
+	/**
+	 * Convert feet in meter
+	 * 
+	 * @param m
+	 *            feet to convert
+	 * @return Converted value
+	 */
 	public static double Feet2Meter(double f) {
 		return f * 0.3048;
 	}
 
 
-	// Convert meters to 1/1000 miles
+	/**
+	 * Convert meters in 1/1000 miles
+	 * 
+	 * @param m
+	 *            meters to convert
+	 * @return Converted value
+	 */
 	public static double Meter2uMiles(double m) {
 		return m * 0.62137119223;
 	}
 
 
-	// Converti des miles en mètres
+	/**
+	 * Convert miles in meters
+	 * 
+	 * @param m
+	 *            miles to convert
+	 * @return Converted value
+	 */
 	public static double Miles2Meter(double m) {
 		return m * 1.609344 * 1000;
 	}
 
 
-	// Converti des kilomètres en miles
+	/**
+	 * Convert kilometers in miles
+	 * 
+	 * @param m
+	 *            kilometers to convert
+	 * @return Converted value
+	 */
 	public static double Km2Miles(double m) {
 		return m * 0.62137119223;
 	}
 
 
-	// Converti des miles en kilomètres
+	/**
+	 * Convert miles in kilometer
+	 * 
+	 * @param m
+	 *            Value in miles to convert
+	 * @return Converted value
+	 */
 	public static double Miles2Km(double m) {
 		return m * 1.609344;
 	}
 
 
-	// -- Converti des secondes en HMS sous forme de string --
+	/**
+	 * Convert the seconds in string. Format hh:mm:ss
+	 * 
+	 * @param v
+	 *            Number of second to convert
+	 * @return Result string
+	 */
 	public static String Second2DateString(int v) {
 		int nbh = v / 3600;
 		int nbm = (v % 3600) / 60;
@@ -342,7 +382,13 @@ public class Utils {
 	}
 
 
-	// -- Converti des secondes en HM sous forme de string (Pas de secondes)--
+	/**
+	 * Convert the seconds in string. Format hh:mm
+	 * 
+	 * @param v
+	 *            Number of second to convert
+	 * @return Result string
+	 */
 	public static String Second2DateString_HM(int v) {
 		int nbh = v / 3600;
 		int nbm = (v % 3600) / 60;
@@ -351,15 +397,23 @@ public class Utils {
 	}
 
 
-	// -- Calculate the distance between two GPS points (with the elevation) --
+	/**
+	 * Calculate the distance between two GPS points (without the elevation)
+	 * 
+	 * @param lat1
+	 *            Latitude of the first point
+	 * @param lon1
+	 *            Longitude of the first point
+	 * @param lat2
+	 *            Latitude of the second point
+	 * @param lon2
+	 *            Longitude of the second point
+	 * @return Distance in meter
+	 */
 	public static double CalcDistance(double lat1, double lon1, double lat2, double lon2) {
 		double a, c, dDistance, dLat1InRad, dLong1InRad, dLat2InRad, dLong2InRad, dLongitude, dLatitude;
 		double kEarthRadiusKms;
 
-		// CalcDistance = Math.Acos(Math.Sin(ToRadians(lat1)) *
-		// Math.Sin(ToRadians(lat2)) + Math.Cos(ToRadians(lat1)) *
-		// Math.Cos(ToRadians(lat2)) * Math.Cos(ToRadians(lon1 - lon2))) * 6378D
-		// * 1000D
 		kEarthRadiusKms = 6378.14; // 6376.5
 
 		dDistance = 0; // Double.MinValue
@@ -381,7 +435,7 @@ public class Utils {
 		// Distance.
 		dDistance = kEarthRadiusKms * c;
 
-		// Résultat en mètres
+		// Result in meter
 		return dDistance * 1000.0;
 	}
 
@@ -394,6 +448,21 @@ public class Utils {
 
 
 	// -- Calculate 'a' and 'b' from Y=aX+b --
+	/**
+	 * Calculate 'a' and 'b' from Y=aX+b
+	 * 
+	 * @param x1
+	 *            X value of the first point
+	 * @param y1
+	 *            Y value of the first point
+	 * @param x2
+	 *            X value of the second point
+	 * @param y2
+	 *            Y value of the second point
+	 * @param r
+	 *            Result object
+	 * @return Result object
+	 */
 	public static CalcLineResult CalcLine(double x1, double y1, double x2, double y2, CalcLineResult r) {
 		r.a = (y1 - y2) / (x1 - x2);
 		r.b = ((y1 * x2) - (y2 * x1)) / (x2 - x1);
@@ -401,10 +470,15 @@ public class Utils {
 	}
 
 
-	// Compare t1 and t2
-	// Return 0 if t1=t2
-	// Return 1 if t1>t2
-	// Return -1 if t1<t2
+	/**
+	 * Compare two DateTime
+	 * 
+	 * @param t1
+	 *            First DateTime
+	 * @param t2
+	 *            Second DateTime
+	 * @return Return 0 if t1=t2 Return 1 if t1>t2 Return -1 if t1<t2
+	 */
 	public static int CompareHMS(DateTime t1, DateTime t2) {
 		int h1, h2, m1, m2, s1, s2;
 
@@ -483,7 +557,11 @@ public class Utils {
 	}
 
 
-	// checks for connection to the internet through dummy request
+	/**
+	 * checks for connection to the internet through dummy request
+	 * 
+	 * @return
+	 */
 	public static boolean isInternetReachable() {
 		try {
 			// make a URL to a known source
@@ -508,219 +586,77 @@ public class Utils {
 		return true;
 	}
 
-	/*
-	 * //-- Détermine la couleur entre rouge et blanc -- //-- V = entre 0 et 100
-	 * -- public static Color GradientRed(int v) { //Blanc R=255 G=255 B=255
-	 * //Jaune R=255 G=255 B=0 //Rouge R=255 G=0 B=0
+
+	/**
+	 * Return the home directory path. Cross platform
 	 * 
-	 * int r, g, b = 0;
-	 * 
-	 * if (v > 100) { v = 100; } if (v < 0) { v = 0; } int step = (0 + 256 +
-	 * 256) / 100; int Val = v * step;
-	 * 
-	 * r = 255;
-	 * 
-	 * if (Val <= 255) { g = 255; b = 255 - Val; } else { g = 255 - (Val - 256);
-	 * b = 0; } return new Color(r, g, b); }
-	 * 
-	 * //-- Détermine la couleur entre Bleu et blanc -- public static Color
-	 * GradientBlue(int v) { //Blanc R=255 G=255 B=255 //Vert R=0 G=255 B=0
-	 * 
-	 * //R=0 G=170 B=0 //R=255 G=255 B=255 int r = 64; int g = 64; int b = 255;
-	 * 
-	 * if (v > 100) { v = 100; } if (v < 0) { v = 0; }
-	 * 
-	 * double step_rb = 256.0 / 100.0; //double step_g = 196.0 / 100.0; int
-	 * Val_rb = (int) (v * step_rb); //int Val_g = (int)(v * step_g);
-	 * 
-	 * g = 255 - Val_rb; if (g < 0) { g = 0; } //b = 255 - Val_rb; //if (b < 0)
-	 * b = 0; r = 255 - Val_rb; if (r < 0) { r = 0; } return new Color(255, r,
-	 * g, b);
-	 * 
-	 * }
-	 * 
-	 * public static Color ColorFromHSV(double hue, double saturation, double
-	 * value) { int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6; double f =
-	 * hue / 60 - Math.Floor(hue / 60);
-	 * 
-	 * value = value * 255; int v = Convert.ToInt32(value); int p =
-	 * Convert.ToInt32(value * (1 - saturation)); int q = Convert.ToInt32(value
-	 * * (1 - f * saturation)); int t = Convert.ToInt32(value * (1 - (1 - f) *
-	 * saturation));
-	 * 
-	 * if (hi == 0) { return Color.FromArgb(255, v, t, p); } else if (hi == 1) {
-	 * return Color.FromArgb(255, q, v, p); } else if (hi == 2) { return
-	 * Color.FromArgb(255, p, v, t); } else if (hi == 3) { return
-	 * Color.FromArgb(255, p, q, v); } else if (hi == 4) { return
-	 * Color.FromArgb(255, t, p, v); } else { return Color.FromArgb(255, v, p,
-	 * q); } }
-	 * 
-	 * // Given H,S,L in range of 0-1 // Returns a Color (RGB struct) in range
-	 * of 0-255 public static Color HSL2RGB(double h, double sl, double l) {
-	 * double v; double r, g, b;
-	 * 
-	 * r = l; // default to gray g = l; b = l; v = (l <= 0.5) ? (l * (1.0 + sl))
-	 * : (l + sl - l * sl);
-	 * 
-	 * if (v > 0) { double m; double sv; int sextant; double fract, vsf, mid1,
-	 * mid2;
-	 * 
-	 * m = l + l - v; sv = (v - m) / v; h *= 6.0; sextant = (int) h; fract = h -
-	 * sextant; vsf = v * sv * fract; mid1 = m + vsf; mid2 = v - vsf; switch
-	 * (sextant) { case 0: r = v; g = mid1; b = m; break; case 1: r = mid2; g =
-	 * v; b = m; break; case 2: r = m; g = v; b = mid1; break; case 3: r = m; g
-	 * = mid2; b = v; break; case 4: r = mid1; g = m; b = v; break; case 5: r =
-	 * v; g = m; b = mid2; break; } } return Color.FromArgb(Convert.ToByte(r *
-	 * 255.0f), Convert.ToByte(g * 255.0f), Convert.ToByte(b * 255.0f)); }
+	 * @return Home directory path
 	 */
-
-
-	// TODO Inputbox à traiter
-	/*
-	 * public static DialogResult InputBox(string title, string promptText, ref
-	 * string value,int maxlen
-	 * 
-	 * 
-	 * ) { Form form = new Form(); Label label = new Label(); TextBox textBox =
-	 * new TextBox(); Button buttonOk = new Button(); Button buttonCancel = new
-	 * Button();
-	 * 
-	 * form.Text = title; form.StartPosition = FormStartPosition.CenterParent;
-	 * form.TopMost = true;
-	 * 
-	 * label.Text = promptText; textBox.Text = value; if (maxlen > 0) {
-	 * textBox.MaxLength = maxlen; }
-	 * 
-	 * buttonOk.Text = "OK"; buttonCancel.Text = "Cancel"; buttonOk.DialogResult
-	 * = DialogResult.OK; buttonCancel.DialogResult = DialogResult.Cancel;
-	 * 
-	 * label.SetBounds(9, 20, 372, 13); textBox.SetBounds(12, 36, 372, 20);
-	 * buttonOk.SetBounds(228, 72, 75, 23); buttonCancel.SetBounds(309, 72, 75,
-	 * 23);
-	 * 
-	 * label.AutoSize = true; textBox.Anchor = textBox.Anchor |
-	 * AnchorStyles.Right; buttonOk.Anchor = AnchorStyles.Bottom |
-	 * AnchorStyles.Right; buttonCancel.Anchor = AnchorStyles.Bottom |
-	 * AnchorStyles.Right;
-	 * 
-	 * form.ClientSize = new Size(396, 107); form.Controls.AddRange(new
-	 * Control[]{label, textBox, buttonOk, buttonCancel}); form.ClientSize = new
-	 * Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
-	 * form.FormBorderStyle = FormBorderStyle.FixedDialog; form.StartPosition =
-	 * FormStartPosition.CenterScreen; form.MinimizeBox = false;
-	 * form.MaximizeBox = false; form.AcceptButton = buttonOk; form.CancelButton
-	 * = buttonCancel;
-	 * 
-	 * DialogResult dialogResult = form.ShowDialog(); value = textBox.Text;
-	 * return dialogResult; }
-	 */
-
 	public static String GetHomeDir() {
 		// return Environment.GetEnvironmentVariable("USERPROFILE");
 		return System.getProperty("user.home");
 	}
 
-	/*
-	 * public static String GetMyDocumentsDir() { return
-	 * Environment.GetFolderPath(Environment.SpecialFolder.Personal); }
-	 */
 
-
-	// TODO Valider que c'est multiplateforme!
+	// TODO Test if cross platform!
 	public static String GetTempDir() {
 		return System.getProperty("java.io.tmpdir");
 	}
 
-	/*
-	 * Supprimé car pas multiplateforme public static String GetAppDataDir() {
-	 * return
-	 * Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData); }
+
+	/**
+	 * Test if a bit of a word is true
 	 * 
-	 * 
-	 * public static String GetCommonAppDataDir() { return
-	 * Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData
-	 * ); }
+	 * @param Value
+	 *            Value of the word to test
+	 * @param Mask
+	 *            Mask of the bit
+	 * @return New value of the word
 	 */
-
-
-	/// Vérifie si un bit est à 1.
-	/// </summary>
-	/// <param name="Value">Valeur à contrôler.</param>
-	/// <param name="Bit">Position du bit.</param>
-	/// <returns>True si le bit est 1, false s'il est à 0.</returns>
 	public static boolean IsBitOn(int Value, byte Bit) {
 		return (Value >> Bit & 1) == 1;
 	}
 
 
-	/// <summary>
-	/// Met à 1 le bit d'un mot.
-	/// </summary>
-	/// <param name="Value">Valeur du mot à modifier.</param>
-	/// <param name="Bit">Position du bit.</param>
-	/// <returns>Nouvelle valeur du mot.</returns>
-	// public static int SetBit(int Value, byte Bit)
-	// { return BitSetEx(Value, Bit, true); }
-	/// <summary>
-	/// Modifie la valeur d'un mot.
-	/// </summary>
-	/// <param name="Value">Valeur du mot à modifier.</param>
-	/// <param name="Bit">Position du bit.</param>
-	/// <param name="On">Si True met le bit à 1, si False met le bit à
-	/// 0.</param>
-	/// <returns>Nouvelle valeur du mot.</returns>
-	// public static int BitSetEx(int Value, byte Bit, bool On)
-	// { return On ? Value | (1 << Bit) : ResetBit(Value, Bit); }
-	/// <summary>
-	/// Modifie la valeur d'un mot.
-	/// </summary>
-	/// <param name="Value">Référence sur le mot à modifier.</param>
-	/// <param name="Bit">Position du bit.</param>
-	/// <param name="On">Si True met le bit à 1, si False met le bit à
-	/// 0.</param>
-	/// <returns>Nouvelle valeur du mot.</returns>
-	/*
-	 * public static void BitSet(ref int Value, byte Bit, bool On) { if (On)
-	 * Value=Value | (1 << Bit); else Value=ResetBit(Value, Bit); }
+	/**
+	 * Reset a bit of a word
+	 * 
+	 * @param Value
+	 *            Value of the word to modify
+	 * @param Mask
+	 *            Mask of the bit
+	 * @return New value of the word
 	 */
-	/// <summary>
-	/// Met à 0 le bit d'un mot.
-	/// </summary>
-	/// <param name="Value">Valeur du mot à modifier.</param>
-	/// <param name="Bit">Position du bit.</param>
-	/// <returns>Nouvelle valeur du mot.</returns>
-	// public static int ResetBit(int Value, byte Bit)
-	// { return Value & ~(1 << Bit); }
-	/// <summary>
-	/// Met à 0 le bit d'un mot.
-	/// </summary>
-	/// <param name="Value">Valeur du mot à modifier.</param>
-	/// <param name="Mask">Masque.</param>
-	/// <returns>Nouvelle valeur du mot.</returns>
 	public static int Reset(int Value, int Mask) {
 		return Value & ~Mask;
 	}
 
 
-	/// <summary>
-	/// Met à 1 le bit d'un mot.
-	/// </summary>
-	/// <param name="Value">Valeur du mot à modifier.</param>
-	/// <param name="Mask">Masque.</param>
-	/// <returns>Nouvelle valeur du mot.</returns>
+	/**
+	 * Set a bit of a word
+	 * 
+	 * @param Value
+	 *            Value of the word to modify
+	 * @param Mask
+	 *            Mask of the bit
+	 * @return New value of the word
+	 */
 	public static int Set(int Value, int Mask) {
 		return Value | Mask;
 	}
 
 
-	/// <summary>
-	/// Word wraps the given text to fit within the specified width.
-	/// </summary>
-	/// <param name="text">Text to be word wrapped</param>
-	/// <param name="width">Width, in characters, to which the text
-	/// should be word wrapped</param>
-	/// <param name="trim">true=The is trimmed false=no modification</param>
-	/// <returns>The modified text</returns>
+	/**
+	 * Word wraps the given text to fit within the specified width.
+	 * 
+	 * @param s
+	 *            Text to be word wrapped
+	 * @param l
+	 *            Width, in characters, to which the text should be word wrapped
+	 * @param trim
+	 *            true=The text is trimmed -- false=no modification
+	 * @return The modified text
+	 */
 	public static String WordWrap(String s, int l, boolean trim) {
 		String sr = "";
 		String st = "";
@@ -747,14 +683,14 @@ public class Utils {
 		String r = "";
 		int step = 0;
 
-		// Supression des essais de début et de fin
+		// Trim the spaces
 		if (trim) {
 			text = text.trim();
 		}
 
 		while (step != 100) {
 			switch (step) {
-				// Ajout de la taille
+				// Add the size
 				case 0: {
 					if (ps + width < text.length()) {
 						pe = ps + width;
@@ -766,38 +702,39 @@ public class Utils {
 					break;
 				}
 
-				// Recherche arrière du premier espace
+				// Search the first space
 				case 1: {
 					pt = pe;
 					while ((text.charAt(pe) != ' ') && (pe > 0) && (pe > ps)) {
 						pe--;
 					}
 					if ((pe == ps) || (pe == 0)) {
+						// Search before the space because size overflow
 						pe = pt;
-						step = 5; // Recherche avant du premier espace car
-									// dépassement taille
+						step = 5;
 					} else {
 						step = 2;
 					}
 					break;
 				}
 
-				// Recherche arrière du premier non-espace
+				// Backward search of the first "none-space"
 				case 2: {
 					pt = pe;
 					while ((text.charAt(pe) == ' ') && (pe > 0) && (pe > ps)) {
 						pe--;
 					}
 					if ((pe == ps) || (pe == 0)) {
+						// Forward search of the first search
 						pe = pt;
-						step = 99; // Recherche avant du premier espace
+						step = 99;
 					} else {
 						step = 3;
 					}
 					break;
 				}
 
-				// Copie de ps..pe vers la chaine résultat
+				// Copy of ps..pe to the result string
 				case 3: {
 					for (int i = ps; i <= pe; i++) {
 						r = r + text.charAt(i);
@@ -813,7 +750,7 @@ public class Utils {
 					break;
 				}
 
-				// Recherche avant du premier non-espace
+				// Forward search of the first "none-space"
 				case 4: {
 					while ((text.charAt(ps) == ' ') && (ps < text.length())) {
 						ps++;
@@ -827,7 +764,7 @@ public class Utils {
 					break;
 				}
 
-				// Recherche avant du premier espace car dépassement taille
+				// Forward search of the first space because size overflow
 				case 5: {
 					while ((text.charAt(pe) != ' ') && (pe < text.length() - 1)) {
 						pe++;
@@ -841,7 +778,7 @@ public class Utils {
 					break;
 				}
 
-				case 99: // Fin du traitement
+				case 99: // End
 				{
 					step = 100;
 					break;
@@ -854,33 +791,37 @@ public class Utils {
 	}
 
 
-	public static String GenLabel(String s, CgData r, TrackData cd) {
+	public static String GenLabel(String s, CgData r, TrackData cd, CgSettings settings) {
 		/*
-		 * %N:Nom %A:Altitude %D:Distance depuis le départ %T:Temps (hh:mm)
-		 * %Ts:Temps (hh:mm) %Tl:Temps (hh:mm:ss) %H:Heure (ddd hh:mm) %h:Heure
-		 * (hh:mm) %hs:Heure (hh:mm) %hl:Heure (hh:mm:s) %B:Barrière horaire
-		 * (hh:mm) -> Temps depuis le départ %b:Barrière horaire (hh:mm) ->
-		 * Heure limite %C:Commentaire %c:Commentaire venant du tableau
-		 * principal %L:Retour à la ligne %R:Temps de ravitaillement (hh:mm)
-		 * %Rs:Temps de ravitaillement (hh:mm) %Rl:Temps de ravitaillement
-		 * (hh:mm:ss) %+:Cumul du D+ %-:Cumul du D-
+		 * %N:Name 
+		 * %A:Elevation 
+		 * %D:Distance from the start 
+		 * %T:Time (hh:mm)
+		 * %Ts:Time (hh:mm) 
+		 * %Tl:Time (hh:mm:ss) 
+		 * %H: Hour (ddd hh:mm) 
+		 * %h: Hour (hh:mm) 
+		 * %hs:Hour (hh:mm) 
+		 * %hl:Hour (hh:mm:s) 
+		 * %B :Time limit (hh:mm) -> Time from the start 
+		 * %b :Time limit (hh:mm) -> Limit hour 
+		 * %C :Comment
+		 * %c :Comment from the main data 
+		 * %L :Carriage return 
+		 * %R :Station time (hh:mm) 
+		 * %Rs:Station time (hh:mm) 
+		 * %Rl:Station time (Duration) (hh:mm:ss) 
+		 * %+ :Sum ascend 
+		 * %- :Sum descend
 		 */
 		int i = 0;
 		int step = 0;
-		double cp = 0.0;
-		double cm = 0.0;
-		int tm = 0;
-		int tp = 0;
 		String sr = "";
 		DateTime dt;
 
 		if (cd != null) {
 			CalcClimbResult res = new CalcClimbResult();
 			res = cd.CalcClimb(0, (int) (r.getNum() - 1), res);
-			/*
-			 * cd.CalcClimb(0, (int) (r.Num - 1), ref }cp , ref cm, ref tm , ref
-			 * tp );
-			 */
 
 			for (i = 0; i < s.length(); i++) {
 				switch (step) {
@@ -894,63 +835,52 @@ public class Utils {
 					}
 					case 1: {
 						switch (s.charAt(i)) {
-							// %N:Nom
+							// %N:Name
 							case 'N':
 								sr = sr + r.getName();
 								step = 0;
 								break;
 
-							// A:Altitude
+							// A:Elevation
 							case 'A':
-								sr = sr + String.format("%.0f", r.getElevation()); // string.Format(cultureEN,
-																					// "{0:0}",
-																					// r.Elevation);
+								sr = sr + String.format("%.0f", r.getElevation(settings.Unit));
 								step = 0;
 								break;
 
-							// %D:Distance depuis le départ
+							// %D:Distance from the start
 							case 'D':
-								sr = sr + String.format("%.1f", r.getTotal() / 1000.0); // string.Format(cultureEN,
-																						// "{0:0.0}",
-																						// r.Total
-																						// /
-																						// 1000.0);
+								sr = sr + String.format("%.1f", r.getTotal(settings.Unit) / 1000.0);
 								step = 0;
 								break;
 
-							// %T:Temps (hh:mm)
+							// %T:Time (hh:mm)
 							case 'T':
-								// sr = sr + Utils.Second2DateString_HM(r.Time);
 								step = 3;
 								break;
 
-							// %H:Heure (ddd hh:mm)
+							// %H:Hour (ddd hh:mm)
 							case 'H':
-								sr = sr + r.getHour().toString("E HH:mm"); // ToString("ddd
-																			// HH:mm");
+								sr = sr + r.getHour().toString("E HH:mm");
 								step = 0;
 								break;
 
-							// %h:Heure (hh:mm)
+							// %h:Time (hh:mm)
 							case 'h':
-								// sr = sr + r.Hour.ToString("HH:mm");
 								step = 2;
 								break;
 
-							// %R:Ravito (hh:mm:ss)
+							// %R:Station time (hh:mm:ss)
 							case 'R':
-								// sr = sr + Utils.Second2DateString(r.Station);
 								step = 4;
 								break;
 
-							// %B:Barrière horaire (hh:mm) -> Temps depuis le
-							// départ
+							// %B:Time limit (hh:mm) -> Time from the start
 							case 'B':
 								sr = sr + Utils.Second2DateString_HM(r.getTimeLimit());
 								step = 0;
 								break;
 
-							// %b:Barrière horaire (hh:mm) -> Heure limite
+							// %b:Time limit (hh:mm) -> Limit hour
 							case 'b':
 								if (cd != null) {
 									dt = cd.StartTime.plusSeconds(r.getTimeLimit());
@@ -958,40 +888,34 @@ public class Utils {
 								} else {
 									sr = sr + "00:00";
 								}
-								// sr = sr +
-								// Utils.Second2DateString_HM(r.TimeLimit);
 								step = 0;
 								break;
 
-							// %C:Commentaire
+							// %C:Comment from the MRB data
 							case 'C':
 								sr = sr + r.CommentMiniRoadbook;
 								step = 0;
 								break;
 
-							// %c:Commentaire venant du tableau
+							// %c:Comment from the main data
 							case 'c':
 								sr = sr + r.getComment();
 								step = 0;
 								break;
 
-							// %+:Cumul du D+
+							// %+: Sum ascend
 							case '+':
-								sr = sr + String.format("%.0f", res.cp); // string.Format(cultureEN,
-																			// "{0:0}",
-																			// cp);
+								sr = sr + String.format("%.0f", res.cp);
 								step = 0;
 								break;
 
-							// %-:Cumul du D-
+							// %-: Sum descend
 							case '-':
-								sr = sr + String.format("%.0f", res.cm); // string.Format(cultureEN,
-																			// "{0:0}",
-																			// cm);
+								sr = sr + String.format("%.0f", res.cm);
 								step = 0;
 								break;
 
-							// %L:Retour à la ligne
+							// %L: Carriage return
 							case 'L':
 								sr = sr + "\n";
 								step = 0;
@@ -1067,8 +991,8 @@ public class Utils {
 				}
 			}
 
-			// Traitement d'une commande si dernier caractère (au cas ou on est
-			// une commande 1 ou 2 caractères => valeur par défaut
+			// Manage a command if it's the last character
+			// If a command with 1 or 2 characters => Default value
 			if (step == 2) {
 				sr = sr + r.getHour().toString("HH:mm");
 			} else if (step == 3) {
@@ -1079,11 +1003,12 @@ public class Utils {
 
 			if (cd != null) {
 				return Utils.WordWrap(sr, cd.WordWrapLength, true);
-			} else {
-				return sr;
 			}
+			// else {
+			// return sr;
+			// }
 		}
-		return sr; // TODO Ajout: a valider
+		return sr;
 	}
 
 
@@ -1106,11 +1031,11 @@ public class Utils {
 
 
 	/**
-	 * Remove extention form the filename
+	 * Remove extension form the filename
 	 * 
 	 * @param filename
 	 *            Filename without path
-	 * @return filename without extention
+	 * @return filename without extension
 	 */
 	public static String getFileNameWithoutExtension(String filename) {
 		// Handle null case specially.
@@ -1146,29 +1071,15 @@ public class Utils {
 	}
 
 
+	/**
+	 * Return if a file exist
+	 * 
+	 * @param fname
+	 *            file with the full path to test
+	 * @return Return 'true' if the file exist
+	 */
 	public static boolean FileExist(String fname) {
 		return new File(fname).isFile();
 	}
-
-	/*
-	 * public static String ReadXMLString(Element node, String key, String
-	 * def_val) { Element childnode=node.getChild(key);
-	 * 
-	 * if (childnode!=null) return childnode.getText(); else return def_val; }
-	 * 
-	 * public static int ReadXMLInt(Element node, String key, int def_val) {
-	 * Element childnode=node.getChild(key);
-	 * 
-	 * if (childnode!=null) { try { return
-	 * Integer.parseInt(childnode.getText()); } catch (NumberFormatException e)
-	 * { return def_val; } } else return def_val; }
-	 * 
-	 * public static double ReadXMLDouble(Element node, String key, double
-	 * def_val) { Element childnode=node.getChild(key);
-	 * 
-	 * if (childnode!=null) { try { return
-	 * Double.parseDouble(childnode.getText()); } catch (NumberFormatException
-	 * e) { return def_val; } } else return def_val; }
-	 */
 
 } // Class
