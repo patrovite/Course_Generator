@@ -560,7 +560,10 @@ public class CgData {
 		this.OptionMiniRoadbook = OptionMiniRoadbook;
 		this.VPosMiniRoadbook = VPosMiniRoadbook;
 		this.CommentMiniRoadbook = CommentMiniRoadbook;
-		this.FontSizeMiniRoadbook = FontSizeMiniRoadbook;
+		if (FontSizeMiniRoadbook==0)
+			this.FontSizeMiniRoadbook = 10;
+		else
+			this.FontSizeMiniRoadbook = FontSizeMiniRoadbook;
 	}
 
 	public CgData() {
@@ -591,7 +594,7 @@ public class CgData {
 		this.OptionMiniRoadbook = 0;
 		this.VPosMiniRoadbook = 0;
 		this.CommentMiniRoadbook = "";
-		this.FontSizeMiniRoadbook = 0;
+		this.FontSizeMiniRoadbook = 10;
 	}
 
 	public double getElevationMemo() {

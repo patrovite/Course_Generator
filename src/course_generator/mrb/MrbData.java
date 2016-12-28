@@ -1,3 +1,21 @@
+/*
+ * Course Generator
+ * Copyright (C) 2016 Pierre Delore
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package course_generator.mrb;
 
 import org.joda.time.DateTime;
@@ -16,19 +34,18 @@ public class MrbData extends CgData {
 	public MrbData(double Num, double Latitude, double Longitude, double Elevation, double ElevationMemo, int Tag,
 			double Dist, double Total, double Diff, double Coeff, double Recup, double Slope, double Speed,
 			double dElevation, int Time, // Time in second
-			double dTime_f, // Temps de parcours du tronÃ§on en seconde (avec
-							// virgule)
-			int TimeLimit, // Barrière horaire
-			DateTime Hour, // Contient la date et l'heure de passage
+			double dTime_f, // Time this part of the track in second (with decimal)
+			int TimeLimit, // Time limit
+			DateTime Hour, // Date and time at this point
 			int Station, String Name, String Comment, double tmp1, double tmp2, String FmtLbMiniRoadbook,
 			int OptionMiniRoadbook, int VPosMiniRoadbook, String CommentMiniRoadbook, int FontSizeMiniRoadbook,
 			double deltadistance, int deltatime) {
+		
 		super(Num, Latitude, Longitude, Elevation, ElevationMemo, Tag, Dist, Total, Diff, Coeff, Recup, Slope, Speed,
 				dElevation, Time, // Time in second
-				dTime_f, // Temps de parcours du tronÃ§on en seconde (avec
-							// virgule)
-				TimeLimit, // Barrière horaire
-				Hour, // Contient la date et l'heure de passage
+				dTime_f, //  Time this part of the track in second (with decimal)
+				TimeLimit, // Time limit
+				Hour, // Date and time at this point
 				Station, Name, Comment, tmp1, tmp2, FmtLbMiniRoadbook, OptionMiniRoadbook, VPosMiniRoadbook,
 				CommentMiniRoadbook, FontSizeMiniRoadbook);
 

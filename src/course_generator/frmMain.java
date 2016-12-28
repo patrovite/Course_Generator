@@ -175,6 +175,7 @@ import course_generator.resume_table.ResumedtTimeClass;
 import course_generator.resume_table.ResumedtTimeRenderer;
 import course_generator.settings.CgSettings;
 import course_generator.settings.frmSettings;
+import course_generator.tiles.opentopomap.OpenTopoMap;
 import course_generator.tiles.thunderforest.Thunderforest_Outdoors;
 import course_generator.trackdata_table.CoeffClass;
 import course_generator.trackdata_table.CoeffRenderer;
@@ -424,12 +425,14 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Configure the tile source for the map
 		MapViewer.setTileSource(new Thunderforest_Outdoors());
+		//TODO Switch to OpenTopomap
+		//MapViewer.setTileSource(new OpenTopoMap());
 
 		// -- Set the counter in order near the end in order to start the
 		// connection test
 		cmptInternetConnexion = Settings.ConnectionTimeout - 1;
 
-		// -- Start the 1 seconde timer
+		// -- Start the 1 second timer
 		timer1s = new Timer(1000, new TimerActionListener());
 		timer1s.start();
 
@@ -3253,7 +3256,10 @@ public class frmMain extends javax.swing.JFrame {
 		// MapPolygonImpl polyLine = new MapPolygonImpl(route);
 
 		// MapViewer.setTileSource(new Thunderforest_Landscape());
-		MapViewer.setTileSource(new Thunderforest_Outdoors());
+		
+		//MapViewer.setTileSource(new Thunderforest_Outdoors());
+		MapViewer.setTileSource(new OpenTopoMap());
+		
 		// MapViewer.setTileSource(new Thunderforest_Transport());
 
 		// MapViewer.setTileSource(new OsmTileSource.Mapnik());
