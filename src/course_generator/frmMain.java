@@ -218,7 +218,7 @@ import course_generator.utils.Utils.CalcLineResult;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.ALPHA 1";
+	private final String Version = "4.0.0.ALPHA 2";
 //	private FileFilter GPX_Filter;
 	public TrackData Track;
 	private ResumeData Resume;
