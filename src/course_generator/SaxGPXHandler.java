@@ -321,7 +321,7 @@ public class SaxGPXHandler extends DefaultHandler{
                             CgConst.MRBOPT_SEL | CgConst.MRBOPT_LEFT | CgConst.MRBOPT_SHOWTAGS, //int OptionMiniRoadbook
                             0, //int VPosMiniRoadbook
                             "", //String CommentMiniRoadbook
-                            10 //int FontSizeMiniRoadbook
+                            CgConst.DEFAULTMRBFONTSIZE //int FontSizeMiniRoadbook
                         ) 
                     );
                 }
@@ -341,10 +341,10 @@ public class SaxGPXHandler extends DefaultHandler{
                             0.0, //double Slope
                             0.0, //double Speed
                             0.0, //double dElevation
-                            Time_s, //int Time //Temps total en seconde
-                            dTime_f, //double dTime_f  //temps de parcours du tronçon en seconde (avec virgule)
-                            0, //int TimeLimit //Barrière horaire
-                            trkpt_time, //DateTime Hour //Contient la date et l'heure de passage
+                            Time_s, //int Time
+                            dTime_f, //double dTime_f
+                            0, //int TimeLimit
+                            trkpt_time, //DateTime Hour
                             0, //int Station
                             "", //String Name
                             "", //String Comment
@@ -354,7 +354,7 @@ public class SaxGPXHandler extends DefaultHandler{
                             CgConst.MRBOPT_SEL | CgConst.MRBOPT_LEFT | CgConst.MRBOPT_SHOWTAGS, //int OptionMiniRoadbook
                             0, //int VPosMiniRoadbook
                             "", //String CommentMiniRoadbook
-                            10 //int FontSizeMiniRoadbook
+                            CgConst.DEFAULTMRBFONTSIZE //int FontSizeMiniRoadbook
                         ) 
                     );
                 } //else

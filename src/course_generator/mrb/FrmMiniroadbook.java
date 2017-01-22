@@ -25,6 +25,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -53,13 +55,13 @@ import course_generator.utils.CgSpinner;
 import course_generator.utils.JTextFieldLimit;
 import course_generator.utils.Utils;
 
-public class FrmMiniroadbook extends javax.swing.JDialog {
+public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListener {
 
 	private ResourceBundle bundle;
 	private boolean ok;
 	private CgSettings settings;
 	private TrackData track;
-	private MrbTableDataModel model;
+	private MrbTableDataModel modelTableData;
 	private JButton btSaveAsImage;
 	private JButton btConfig;
 	private JButton btCopyFormat;
@@ -117,7 +119,7 @@ public class FrmMiniroadbook extends javax.swing.JDialog {
 		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		datalist = new MrbDataList();
-		model = new MrbTableDataModel(datalist, settings);
+		modelTableData = new MrbTableDataModel(datalist, settings);
 		memoFormat = new String[5];
 		initComponents();
 		setModal(true);
@@ -230,32 +232,32 @@ public class FrmMiniroadbook extends javax.swing.JDialog {
 	 *
 	 * @return
 	 */
-	protected JRootPane createRootPane() {
-		JRootPane rootPane = new JRootPane();
-		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
-		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
-
-		Action actionListener = new AbstractAction() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				setVisible(false);
-			}
-		};
-
-		Action actionListenerEnter = new AbstractAction() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				RequestToClose();
-			}
-		};
-
-		InputMap inputMap = rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-		inputMap.put(strokeEscape, "ESCAPE");
-		rootPane.getActionMap().put("ESCAPE", actionListener);
-
-		inputMap.put(strokeEnter, "ENTER");
-		rootPane.getActionMap().put("ENTER", actionListenerEnter);
-
-		return rootPane;
-	}
+//	protected JRootPane createRootPane() {
+//		JRootPane rootPane = new JRootPane();
+//		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
+//		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
+//
+//		Action actionListener = new AbstractAction() {
+//			public void actionPerformed(ActionEvent actionEvent) {
+//				setVisible(false);
+//			}
+//		};
+//
+//		Action actionListenerEnter = new AbstractAction() {
+//			public void actionPerformed(ActionEvent actionEvent) {
+//				RequestToClose();
+//			}
+//		};
+//
+//		InputMap inputMap = rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+//		inputMap.put(strokeEscape, "ESCAPE");
+//		rootPane.getActionMap().put("ESCAPE", actionListener);
+//
+//		inputMap.put(strokeEnter, "ENTER");
+//		rootPane.getActionMap().put("ENTER", actionListenerEnter);
+//
+//		return rootPane;
+//	}
 
 
 	/**
@@ -558,6 +560,8 @@ public class FrmMiniroadbook extends javax.swing.JDialog {
 
 	private void initComponents() {
 //		int line = 0;
+		int lbw=100;
+		int lbh=40;
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("FrmMiniroadbook.title"));
@@ -590,20 +594,31 @@ public class FrmMiniroadbook extends javax.swing.JDialog {
 		pnlBottom.setLayout(new GridBagLayout());
 		SplitPane.setBottomComponent(pnlBottom);
 
+		
+		
 		// == Panel properties
 		pnlProperties = new JPanel();
-//		pnlProperties
-//				.setBorder(BorderFactory.createTitledBorder(bundle.getString("FrmMiniroadbook.pnlProperties.Title")));
 		pnlProperties.setLayout(new GridBagLayout());
-		Utils.addComponent(pnlTop, pnlProperties, 0, 0, 1, 1, 0, 1, 5, 10, 0, 5, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(pnlTop, pnlProperties, 
+				0, 0, 
+				1, 1, 
+				0, 1, 
+				5, 10, 0, 5, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.BOTH);
 
 		// -- Selection
 		lbSelect = new javax.swing.JLabel(bundle.getString("FrmMiniroadbook.lbSelect.Text"));
-		Utils.addComponent(pnlProperties, lbSelect, 0, 0, 1, 1, 0, 0, 10, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		lbSelect.setMinimumSize(new Dimension(100,25));
+		Utils.addComponent(pnlProperties, lbSelect, 
+				0, 0, 
+				1, 1, 
+				0, 0, 
+				10, 0, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.BOTH);
 
 		chkSelect = new javax.swing.JCheckBox();
+		chkSelect.setMinimumSize(new Dimension(100,25));
 		chkSelect.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				if (datalist.data.isEmpty()) return;
@@ -623,15 +638,24 @@ public class FrmMiniroadbook extends javax.swing.JDialog {
 			        }
 			        track.isModified = true;
 			        pnlProfil.Refresh();
-//			        repaint();
 			}
 		});
-		Utils.addComponent(pnlProperties, chkSelect, 1, 0, GridBagConstraints.REMAINDER, 1, 1, 0, 10, 5, 0, 0,
+		Utils.addComponent(pnlProperties, chkSelect, 
+				1, 0, 
+				GridBagConstraints.REMAINDER, 1, 
+				1, 0, 
+				10, 5, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		// -- Position
 		lbPosition = new javax.swing.JLabel(bundle.getString("FrmMiniroadbook.lbPosition.Text"));
-		Utils.addComponent(pnlProperties, lbPosition, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		lbPosition.setPreferredSize(new Dimension(100,25));
+		Utils.addComponent(pnlProperties, lbPosition, 
+				0, 1, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.BOTH);
 
 		spinPosition = new CgSpinner(0, 0, 1000, 1);
@@ -652,17 +676,25 @@ public class FrmMiniroadbook extends javax.swing.JDialog {
 				pnlProfil.Refresh();
 			}
 		});
-		Utils.addComponent(pnlProperties, spinPosition, 1, 1, GridBagConstraints.REMAINDER, 1, 0, 0, 0, 5, 0, 0,
+		Utils.addComponent(pnlProperties, spinPosition, 
+				1, 1, 
+				GridBagConstraints.REMAINDER, 1, 
+				0, 0, 
+				0, 5, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		// -- Alignement
 		lbAlignement = new javax.swing.JLabel(bundle.getString("FrmMiniroadbook.lbAlignement.Text"));
-		Utils.addComponent(pnlProperties, lbAlignement, 0, 2, 1, 1, 0, 0, 0, 0, 0, 0,
+		lbAlignement.setPreferredSize(new Dimension(100,25));
+		Utils.addComponent(pnlProperties, lbAlignement, 
+				0, 2, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		btAlignLeft = new javax.swing.JButton();
 		btAlignLeft = new javax.swing.JButton("|<");
-		//btAlignLeft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/left.png")));
 		btAlignLeft.setToolTipText(bundle.getString("FrmMiniroadbook.btAlignLeft.toolTipText"));
 		btAlignLeft.setFocusable(false);
 		btAlignLeft.addActionListener(new java.awt.event.ActionListener() {
@@ -683,15 +715,17 @@ public class FrmMiniroadbook extends javax.swing.JDialog {
 			        RefreshAligmentBt(row);
 			        track.isModified = true;
 			        pnlProfil.Refresh();
-//			        repaint();
 			}
 		});
-		Utils.addComponent(pnlProperties, btAlignLeft, 1, 2, 1, 1, 0, 0, 0, 5, 0, 0,
+		Utils.addComponent(pnlProperties, btAlignLeft, 
+				1, 2, 
+				1, 1, 
+				0.33, 0, 
+				0, 5, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		btAlignCenter = new javax.swing.JButton();
 		btAlignCenter = new javax.swing.JButton("|");
-		// btAlignCenter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/center.png")));
 		btAlignCenter.setToolTipText(bundle.getString("FrmMiniroadbook.btAlignCenter.toolTipText"));
 		btAlignCenter.setFocusable(false);
 		btAlignCenter.addActionListener(new java.awt.event.ActionListener() {
@@ -712,15 +746,17 @@ public class FrmMiniroadbook extends javax.swing.JDialog {
 		        RefreshAligmentBt(row);
 		        track.isModified = true;
 		        pnlProfil.Refresh();
-//		        repaint();
 				}
 		});
-		Utils.addComponent(pnlProperties, btAlignCenter, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0,
+		Utils.addComponent(pnlProperties, btAlignCenter, 
+				2, 2, 
+				1, 1, 
+				0.33, 0, 
+				0, 0, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		btAlignRight = new javax.swing.JButton();
 		btAlignRight = new javax.swing.JButton(">|");
-		// btAlignRight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/right.png")));
 		btAlignRight.setToolTipText(bundle.getString("FrmMiniroadbook.btAlignRight.toolTipText"));
 		btAlignRight.setFocusable(false);
 		btAlignRight.addActionListener(new java.awt.event.ActionListener() {
@@ -741,37 +777,40 @@ public class FrmMiniroadbook extends javax.swing.JDialog {
 		        RefreshAligmentBt(row);
 		        track.isModified = true;
 		        pnlProfil.Refresh();
-//		        repaint();
 			}
 		});
-		Utils.addComponent(pnlProperties, btAlignRight, 3, 2, 1, 1, 0, 0, 0, 0, 0, 0,
+		Utils.addComponent(pnlProperties, btAlignRight, 
+				3, 2, 
+				1, 1, 
+				0.33, 0, 
+				0, 0, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
+		
 		// -- Format
 		lbFormat = new javax.swing.JLabel(bundle.getString("FrmMiniroadbook.lbFormat.Text"));
-		Utils.addComponent(pnlProperties, lbFormat, 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		lbFormat.setPreferredSize(new Dimension(100,25));
+		Utils.addComponent(pnlProperties, lbFormat, 
+				0, 3, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.BOTH);
 
 		tfFormat = new JTextFieldLimit(200);
-		//Job to do when we leave the field
-//		if (GridMiniRoadbook.Rows.Count <= 0) return;
-//
-//	      int p = GridMiniRoadbook.CurrentCellAddress.Y;
-//	      int v = 0;
-//	      if (!Int32.TryParse(GridMiniRoadbook.Rows[p].Cells["mrbLine"].Value.ToString(), out v))
-//	        return;
-//	      else
-//	      {
-//	        Main.cd.data[v].FmtLbMiniRoadbook = edFormat.Text;
-//	        Main.cd.isModified = true;
-//	      }
-//	      RefreshProfil(true);
-		
+		tfFormat.addFocusListener(this);
 		tfFormat.setToolTipText(bundle.getString("FrmMiniroadbook.tfFormat.toolTipText"));
-		Utils.addComponent(pnlProperties, tfFormat, 1, 3, 2, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		tfFormat.setPreferredSize(new Dimension(100,25));
+		Utils.addComponent(pnlProperties, tfFormat, 
+				1, 3, 
+				2, 1, 
+				1, 0, 
+				0, 5, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.BOTH);
 
 		btFormat = new javax.swing.JButton("...");
+		btFormat.setPreferredSize(new Dimension(100,25));
 		btFormat.setToolTipText(bundle.getString("FrmMiniroadbook.btFormat.toolTipText"));
 		btFormat.setFocusable(false);
 		btFormat.addActionListener(new java.awt.event.ActionListener() {
@@ -779,12 +818,23 @@ public class FrmMiniroadbook extends javax.swing.JDialog {
 				// TODO Config
 			}
 		});
-		Utils.addComponent(pnlProperties, btFormat, 3, 3, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(pnlProperties, btFormat, 
+				3, 3, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.BOTH);
 
 		// -- Size
 		lbSize = new javax.swing.JLabel(bundle.getString("FrmMiniroadbook.lbSize.Text"));
-		Utils.addComponent(pnlProperties, lbSize, 0, 4, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		lbSize.setPreferredSize(new Dimension(100,25));
+		Utils.addComponent(pnlProperties, lbSize, 
+				0, 4, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.BOTH);
 
 		spinSize = new CgSpinner(10, 7, 72, 1);
@@ -803,15 +853,26 @@ public class FrmMiniroadbook extends javax.swing.JDialog {
 		        pnlProfil.Refresh();
 			}
 		});
-		Utils.addComponent(pnlProperties, spinSize, 1, 4, GridBagConstraints.REMAINDER, 1, 0, 0, 0, 5, 0, 0,
+		Utils.addComponent(pnlProperties, spinSize, 
+				1, 4, 
+				GridBagConstraints.REMAINDER, 1, 
+				1, 0, 
+				0, 5, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		// -- Tags
 		lbTags = new javax.swing.JLabel(bundle.getString("FrmMiniroadbook.Tags.Text"));
-		Utils.addComponent(pnlProperties, lbTags, 0, 5, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		lbTags.setMinimumSize(new Dimension(100,25));
+		Utils.addComponent(pnlProperties, lbTags, 
+				0, 5, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.BOTH);
 
 		chkTags = new javax.swing.JCheckBox();
+		chkTags.setMinimumSize(new Dimension(100,25));
 		chkTags.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				if (datalist.data.isEmpty()) return;
@@ -831,38 +892,39 @@ public class FrmMiniroadbook extends javax.swing.JDialog {
 			        }
 			        track.isModified = true;
 			        pnlProfil.Refresh();
-//			        repaint();
 			}
 		});
 
-		Utils.addComponent(pnlProperties, chkTags, 1, 5, GridBagConstraints.REMAINDER, 1, 1, 0, 0, 5, 0, 0,
+		Utils.addComponent(pnlProperties, chkTags, 
+				1, 5, 
+				GridBagConstraints.REMAINDER, 1, 
+				1, 0, 
+				0, 5, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		// -- Comment
 		lbComment = new javax.swing.JLabel(bundle.getString("FrmMiniroadbook.lbComment.Text"));
-		Utils.addComponent(pnlProperties, lbComment, 0, 6, 1, 1, 0, 1, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		lbComment.setMinimumSize(new Dimension(100,25));
+		Utils.addComponent(pnlProperties, lbComment, 
+				0, 6, 
+				1, 1, 
+				0, 1, 
+				0, 0, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		tfComment = new JTextFieldLimit(200);
-		//Job to do when we leave the field
-//		if (GridMiniRoadbook.Rows.Count <= 0) return;
-//
-//	      int p = GridMiniRoadbook.CurrentCellAddress.Y;
-//	      int v = 0;
-//	      if (!Int32.TryParse(GridMiniRoadbook.Rows[p].Cells["mrbLine"].Value.ToString(), out v))
-//	        return;
-//	      else
-//	      {
-//	        Main.cd.data[v].CommentMiniRoadbook = edComment.Text;
-//	        Main.cd.isModified = true;
-//	      }
-//	      RefreshProfil(true);
-		Utils.addComponent(pnlProperties, tfComment, 1, 6, GridBagConstraints.REMAINDER, 1, 1, 1, 0, 5, 0, 0,
+		tfComment.addFocusListener(this);
+		Utils.addComponent(pnlProperties, tfComment, 
+				1, 6, 
+				GridBagConstraints.REMAINDER, 1, 
+				1, 1, 
+				0, 5, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		// -- Panel data
 		TableData = new javax.swing.JTable();
-		TableData.setModel(model);// new ParamPointsModel(param));
+		TableData.setModel(modelTableData);// new ParamPointsModel(param));
 		TableData.getTableHeader().setReorderingAllowed(false);
 		TableData.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -949,6 +1011,64 @@ public class FrmMiniroadbook extends javax.swing.JDialog {
 		}
 		
 		
+	}
+
+
+	@Override
+	public void focusGained(FocusEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void focusLost(FocusEvent fe) {
+
+		//-- We exit from the format field i
+		if (fe.getSource()==tfFormat) {
+			if (datalist.data.isEmpty()) return;
+
+			int row = TableData.getSelectedRow();
+			if (row>=0) {
+		        int line=(int)datalist.data.get(row).getNum()-1;
+		        if (line>track.data.size()) return;
+		        
+		        String txt=tfFormat.getText();
+//		        track.data.get(line).FmtLbMiniRoadbook = tfFormat.getText();
+//		        datalist.data.get(row).FmtLbMiniRoadbook = tfFormat.getText();
+		        track.data.get(line).FmtLbMiniRoadbook = txt;
+		        datalist.data.get(row).FmtLbMiniRoadbook = txt;
+
+		        track.isModified = true;
+		        RefreshTableData();
+		        pnlProfil.Refresh();
+			}
+		}
+		
+		//-- We exit from the comment field 
+		if (fe.getSource()==tfComment) {
+			if (datalist.data.isEmpty()) return;
+
+			int row = TableData.getSelectedRow();
+			if (row>=0) {
+		        int line=(int)datalist.data.get(row).getNum()-1;
+		        if (line>track.data.size()) return;
+		        
+		        track.data.get(line).CommentMiniRoadbook = tfComment.getText();
+		        datalist.data.get(row).CommentMiniRoadbook = tfComment.getText();
+
+		        track.isModified = true;
+		        RefreshTableData();
+		        pnlProfil.Refresh();
+			}
+		}		
+	}
+
+	private void RefreshTableData() {
+		int r=TableData.getSelectedRow();
+		modelTableData.fireTableDataChanged();
+		if (r>=0)
+			TableData.setRowSelectionInterval(r, r);
 	}
 
 }

@@ -37,7 +37,7 @@ public class CgData {
 	/** Elevation of the position in meter **/
 	private double Elevation;
 	/** Memorized elevation of the position in meter **/
-	private double ElevationMemo; // Elevation in meter
+	private double ElevationMemo;
 	/** Tag of the position **/
 	private int Tag;
 	/** Distance between 2 points in meters **/
@@ -73,9 +73,9 @@ public class CgData {
 	private String Name;
 	/** Comment of the position **/
 	private String Comment;
-	/** Used for calculation */
+	/** Used for calculation **/
 	public double tmp1;
-	/** Used for calculation */
+	/** Used for calculation **/
 	public double tmp2;
 	/** Label format in the mini roadbook for this position **/
 	public String FmtLbMiniRoadbook;
@@ -90,445 +90,12 @@ public class CgData {
 	/** Font size of this position in the mini roadbook **/
 	public int FontSizeMiniRoadbook;
 
-
-	public double getNum() {
-		return Num;
-	}
-
-
-	public String getNumString() {
-		return String.format("%1.0f ", Num);
-	}
-
-
-	public void setNum(double num) {
-		Num = num;
-	}
-
-
-	public double getLatitude() {
-		return Latitude;
-	}
-
-
-	public void setLatitude(double latitude) {
-		Latitude = latitude;
-	}
-
-
-	public double getLongitude() {
-		return Longitude;
-	}
-
-
-	public void setLongitude(double longitude) {
-		Longitude = longitude;
-	}
-
-
-	public double getElevation() {
-		return Elevation;
-	}
-
-
-	public double getElevation(int unit) {
-		switch (unit) {
-			case CgConst.UNIT_METER:
-				return Elevation;
-			case CgConst.UNIT_MILES_FEET:
-				// meter to miles
-				return Utils.Meter2Feet(Elevation);
-			default:
-				return Elevation;
-		}
-	}
-
-
-	public String getElevationString(int unit, boolean withunit) {
-
-		double e = getElevation(unit);
-
-		String s = "";
-		switch (unit) {
-			case CgConst.UNIT_METER:
-				s = String.format("%1.0f ", e);
-				if (withunit)
-					s = s + "m";
-				break;
-			case CgConst.UNIT_MILES_FEET:
-				s = String.format("%1.0f ", e);
-				if (withunit)
-					s = s + "feet";
-				break;
-			default:
-				s = String.format("%1.0f ", e);
-				if (withunit)
-					s = s + "m";
-				break;
-		}
-		return s;
-	}
-
-
-	public void setElevation(double elevation) {
-		Elevation = elevation;
-	}
-
-
-	public int getTag() {
-		return Tag;
-	}
-
-
-	public void setTag(int tag) {
-		Tag = tag;
-	}
-
-
-	public double getDist() {
-		return Dist;
-	}
-
-
-	public double getDist(int unit) {
-		switch (unit) {
-			case CgConst.UNIT_METER:
-				return Dist;
-			case CgConst.UNIT_MILES_FEET:
-				// meter to miles
-				return Utils.Meter2uMiles(Dist);
-			default:
-				return Dist;
-		}
-	}
-
-
-	public String getDistString(int unit, boolean withunit) {
-
-		Double d = getDist(unit);
-
-		String s = "";
-
-		// -- Set the value
-		switch (unit) {
-			case CgConst.UNIT_METER:
-				s = String.format("%1.0f ", d);
-				if (withunit)
-					s = s + "m";
-				break;
-			case CgConst.UNIT_MILES_FEET:
-				s = String.format("%1.0f ", d);
-				if (withunit)
-					s = s + "miles";
-				break;
-			default:
-				s = String.format("%1.0f ", d);
-				if (withunit)
-					s = s + "m";
-				break;
-		}
-		return s;
-	}
-
-
-	public void setDist(double dist) {
-		Dist = dist;
-	}
-
-
-	public double getTotal() {
-		return Total;
-	}
-
-
-	public double getTotal(int unit) {
-		switch (unit) {
-			case CgConst.UNIT_METER:
-				return Total;
-			case CgConst.UNIT_MILES_FEET:
-				// meter to miles
-				return Utils.Meter2uMiles(Total);
-			default:
-				return Total;
-		}
-	}
-
-
-	public String getTotalString(int unit, boolean withunit) {
-
-		Double d = getTotal(unit) / 1000.0;
-
-		String s = "";
-
-		// -- Set the value
-		switch (unit) {
-			case CgConst.UNIT_METER:
-				s = String.format("%1.3f ", d);
-				if (withunit)
-					s = s + "km";
-				break;
-			case CgConst.UNIT_MILES_FEET:
-				s = String.format("%1.3f ", d);
-				if (withunit)
-					s = s + "miles";
-				break;
-			default:
-				s = String.format("%1.3f ", d);
-				if (withunit)
-					s = s + "km";
-				break;
-		}
-		return s;
-	}
-
-
-	public void setTotal(double total) {
-		Total = total;
-	}
-
-
-	public double getDiff() {
-		return Diff;
-	}
-
-
-	public void setDiff(double diff) {
-		Diff = diff;
-	}
-
-
-	public double getCoeff() {
-		return Coeff;
-	}
-
-
-	public void setCoeff(double coeff) {
-		Coeff = coeff;
-	}
-
-
-	public double getRecovery() {
-		return Recovery;
-	}
-
-
-	public void setRecovery(double recup) {
-		Recovery = recup;
-	}
-
-
-	public double getSlope() {
-		return Slope;
-	}
-
-
-	public String getSlopeString(boolean withunit) {
-		if (withunit)
-			return String.format("%1.1f ", getSlope()) + "%";
-		else
-			return String.format("%1.1f ", getSlope());
-	}
-
-
-	public void setSlope(double slope) {
-		Slope = slope;
-	}
-
-
-	public double getSpeed() {
-		return Speed;
-	}
-
-
-	public double getSpeed(int unit) {
-		switch (unit) {
-			case CgConst.UNIT_METER:
-				return Speed;
-			case CgConst.UNIT_MILES_FEET:
-				// meter to miles
-				return Utils.Meter2uMiles(Speed);
-			default:
-				return Speed;
-		}
-	}
-
-
-	public String getSpeedString(int unit, boolean withunit) {
-		double v = getSpeed(unit);
-
-		String s = "";
-		switch (unit) {
-			case CgConst.UNIT_METER:
-				s = String.format("%1.1f ", v);
-				if (withunit)
-					s = s + "km/h";
-				break;
-			case CgConst.UNIT_MILES_FEET:
-				s = String.format("%1.1f ", v);
-				if (withunit)
-					s = s + "miles/h";
-				break;
-			default:
-				s = String.format("%1.1f ", v);
-				if (withunit)
-					s = s + "km/h";
-				break;
-		}
-		return s;
-	}
-
-
-	public void setSpeed(double speed) {
-		Speed = speed;
-	}
-
-
-	public double getdElevation() {
-		return dElevation;
-	}
-
-
-	public double getdElevation(int unit) {
-		switch (unit) {
-			case CgConst.UNIT_METER:
-				return dElevation;
-			case CgConst.UNIT_MILES_FEET:
-				// meter to miles
-				return Utils.Meter2Feet(dElevation);
-			default:
-				return dElevation;
-		}
-	}
-
-
-	public void setdElevation(double dElevation) {
-		this.dElevation = dElevation;
-	}
-
-
-	public int getTime() {
-		return Time;
-	}
-
-
-	public String getTimeString() {
-		int time = getTime();
-
-		// -- Set the value
-		int nbh = time / 3600;
-		int nbm = (time % 3600) / 60;
-		int nbs = (time % 3600) % 60;
-		return String.format("%02d:%02d:%02d ", nbh, nbm, nbs);
-	}
-
-
-	public void setTime(int time) {
-		Time = time;
-	}
-
-
-	public double getdTime_f() {
-		return dTime_f;
-	}
-
-
-	public void setdTime_f(double dTime_f) {
-		this.dTime_f = dTime_f;
-	}
-
-
-	public int getTimeLimit() {
-		return TimeLimit;
-	}
-
-
-	public String getTimeLimitString(boolean empty_if_0) {
-		int time = getTimeLimit();
-
-		if ((time==0) && empty_if_0) 
-			return "";
-		else {
-			// -- Set the value
-			int nbh = time / 3600;
-			int nbm = (time % 3600) / 60;
-			int nbs = (time % 3600) % 60;
-			return String.format("%02d:%02d:%02d ", nbh, nbm, nbs);
-		}
-	}
-
-
-	public void setTimeLimit(int timeLimit) {
-		TimeLimit = timeLimit;
-	}
-
-
-	public DateTime getHour() {
-		return Hour;
-	}
-
-
-	public String getHourString() {
-		return getHour().toString("E HH:mm:ss");
-	}
-
-
-	public void setHour(DateTime hour) {
-		Hour = hour;
-	}
-
-
-	public int getStation() {
-		return Station;
-	}
-
-
-	public String getStationString(boolean empty_if_0) {		
-		int time = getStation();
-
-		if ((time==0) && empty_if_0) 
-			return "";
-		else {
-			// -- Set the value
-			int nbh = time / 3600;
-			int nbm = (time % 3600) / 60;
-			int nbs = (time % 3600) % 60;
-			return String.format("%02d:%02d:%02d ", nbh, nbm, nbs);
-		}
-	}
-
-
-	public void setStation(int station) {
-		Station = station;
-	}
-
-
-	public String getName() {
-		return Name;
-	}
-
-
-	public void setName(String name) {
-		Name = name;
-	}
-
-
-	public String getComment() {
-		return Comment;
-	}
-
-
-	public void setComment(String comment) {
-		Comment = comment;
-	}
-
-
 	public CgData(double Num, double Latitude, double Longitude, double Elevation, double ElevationMemo, int Tag,
 			double Dist, double Total, double Diff, double Coeff, double Recup, double Slope, double Speed,
-			double dElevation, int Time, // Temps total en seconde
-			double dTime_f, // temps de parcours du tronçon en seconde (avec
-							// virgule)
-			int TimeLimit, // Barrière horaire
-			DateTime Hour, // Contient la date et l'heure de passage
+			double dElevation, int Time,
+			double dTime_f,
+			int TimeLimit,
+			DateTime Hour,
 			int Station, String Name, String Comment, double tmp1, double tmp2, String FmtLbMiniRoadbook,
 			int OptionMiniRoadbook, int VPosMiniRoadbook, String CommentMiniRoadbook, int FontSizeMiniRoadbook) {
 		this.Num = Num;
@@ -539,18 +106,16 @@ public class CgData {
 		this.Tag = Tag;
 		this.Dist = Dist;
 		this.Total = Total;
-		this.Diff = Diff;
+		this.Diff = Diff;// Elevation in meter
 		this.Coeff = Coeff;
 		this.Recovery = Recup;
 		this.Slope = Slope;
 		this.Speed = Speed;
 		this.dElevation = dElevation;
-		this.Time = Time; // Temps total en seconde
-		this.dTime_f = dTime_f; // temps de parcours du tronçon en seconde
-								// (avec
-								// virgule)
-		this.TimeLimit = TimeLimit; // Barrière horaire
-		this.Hour = Hour; // Contient la date et l'heure de passage
+		this.Time = Time; // Total time in second
+		this.dTime_f = dTime_f; // partial time in second (with digit)
+		this.TimeLimit = TimeLimit; // Time limit
+		this.Hour = Hour; // Date and time at this position
 		this.Station = Station;
 		this.Name = Name;
 		this.Comment = Comment;
@@ -560,8 +125,8 @@ public class CgData {
 		this.OptionMiniRoadbook = OptionMiniRoadbook;
 		this.VPosMiniRoadbook = VPosMiniRoadbook;
 		this.CommentMiniRoadbook = CommentMiniRoadbook;
-		if (FontSizeMiniRoadbook==0)
-			this.FontSizeMiniRoadbook = 10;
+		if (FontSizeMiniRoadbook == 0)
+			this.FontSizeMiniRoadbook = CgConst.DEFAULTMRBFONTSIZE;
 		else
 			this.FontSizeMiniRoadbook = FontSizeMiniRoadbook;
 	}
@@ -582,9 +147,9 @@ public class CgData {
 		this.Speed = 0;
 		this.dElevation = 0;
 		this.Time = 0;
-		this.dTime_f = 0; 
-		this.TimeLimit = 0; 
-		this.Hour = new DateTime(); 
+		this.dTime_f = 0;
+		this.TimeLimit = 0;
+		this.Hour = new DateTime();
 		this.Station = 0;
 		this.Name = "";
 		this.Comment = "";
@@ -597,10 +162,385 @@ public class CgData {
 		this.FontSizeMiniRoadbook = 10;
 	}
 
+	public double getNum() {
+		return Num;
+	}
+
+	public String getNumString() {
+		return String.format("%1.0f ", Num);
+	}
+
+	public void setNum(double num) {
+		Num = num;
+	}
+
+	public double getLatitude() {
+		return Latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		Latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return Longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		Longitude = longitude;
+	}
+
+	public double getElevation() {
+		return Elevation;
+	}
+
+	public double getElevation(int unit) {
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			return Elevation;
+		case CgConst.UNIT_MILES_FEET:
+			// meter to miles
+			return Utils.Meter2Feet(Elevation);
+		default:
+			return Elevation;
+		}
+	}
+
+	public String getElevationString(int unit, boolean withunit) {
+
+		double e = getElevation(unit);
+
+		String s = "";
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			s = String.format("%1.0f ", e);
+			if (withunit)
+				s = s + "m";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			s = String.format("%1.0f ", e);
+			if (withunit)
+				s = s + "feet";
+			break;
+		default:
+			s = String.format("%1.0f ", e);
+			if (withunit)
+				s = s + "m";
+			break;
+		}
+		return s;
+	}
+
+	public void setElevation(double elevation) {
+		Elevation = elevation;
+	}
+
+	public int getTag() {
+		return Tag;
+	}
+
+	public void setTag(int tag) {
+		Tag = tag;
+	}
+
+	public double getDist() {
+		return Dist;
+	}
+
+	public double getDist(int unit) {
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			return Dist;
+		case CgConst.UNIT_MILES_FEET:
+			// meter to miles
+			return Utils.Meter2uMiles(Dist);
+		default:
+			return Dist;
+		}
+	}
+
+	public String getDistString(int unit, boolean withunit) {
+
+		Double d = getDist(unit);
+
+		String s = "";
+
+		// -- Set the value
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			s = String.format("%1.0f ", d);
+			if (withunit)
+				s = s + "m";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			s = String.format("%1.0f ", d);
+			if (withunit)
+				s = s + "miles";
+			break;
+		default:
+			s = String.format("%1.0f ", d);
+			if (withunit)
+				s = s + "m";
+			break;
+		}
+		return s;
+	}
+
+	public void setDist(double dist) {
+		Dist = dist;
+	}
+
+	public double getTotal() {
+		return Total;
+	}
+
+	public double getTotal(int unit) {
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			return Total;
+		case CgConst.UNIT_MILES_FEET:
+			// meter to miles
+			return Utils.Meter2uMiles(Total);
+		default:
+			return Total;
+		}
+	}
+
+	public String getTotalString(int unit, boolean withunit) {
+
+		Double d = getTotal(unit) / 1000.0;
+
+		String s = "";
+
+		// -- Set the value
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			s = String.format("%1.3f ", d);
+			if (withunit)
+				s = s + "km";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			s = String.format("%1.3f ", d);
+			if (withunit)
+				s = s + "miles";
+			break;
+		default:
+			s = String.format("%1.3f ", d);
+			if (withunit)
+				s = s + "km";
+			break;
+		}
+		return s;
+	}
+
+	public void setTotal(double total) {
+		Total = total;
+	}
+
+	public double getDiff() {
+		return Diff;
+	}
+
+	public void setDiff(double diff) {
+		Diff = diff;
+	}
+
+	public double getCoeff() {
+		return Coeff;
+	}
+
+	public void setCoeff(double coeff) {
+		Coeff = coeff;
+	}
+
+	public double getRecovery() {
+		return Recovery;
+	}
+
+	public void setRecovery(double recup) {
+		Recovery = recup;
+	}
+
+	public double getSlope() {
+		return Slope;
+	}
+
+	public String getSlopeString(boolean withunit) {
+		if (withunit)
+			return String.format("%1.1f ", getSlope()) + "%";
+		else
+			return String.format("%1.1f ", getSlope());
+	}
+
+	public void setSlope(double slope) {
+		Slope = slope;
+	}
+
+	public double getSpeed() {
+		return Speed;
+	}
+
+	public double getSpeed(int unit) {
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			return Speed;
+		case CgConst.UNIT_MILES_FEET:
+			// meter to miles
+			return Utils.Meter2uMiles(Speed);
+		default:
+			return Speed;
+		}
+	}
+
+	public String getSpeedString(int unit, boolean withunit) {
+		double v = getSpeed(unit);
+
+		String s = "";
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			s = String.format("%1.1f ", v);
+			if (withunit)
+				s = s + "km/h";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			s = String.format("%1.1f ", v);
+			if (withunit)
+				s = s + "miles/h";
+			break;
+		default:
+			s = String.format("%1.1f ", v);
+			if (withunit)
+				s = s + "km/h";
+			break;
+		}
+		return s;
+	}
+
+	public void setSpeed(double speed) {
+		Speed = speed;
+	}
+
+	public double getdElevation() {
+		return dElevation;
+	}
+
+	public double getdElevation(int unit) {
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			return dElevation;
+		case CgConst.UNIT_MILES_FEET:
+			// meter to miles
+			return Utils.Meter2Feet(dElevation);
+		default:
+			return dElevation;
+		}
+	}
+
+	public void setdElevation(double dElevation) {
+		this.dElevation = dElevation;
+	}
+
+	public int getTime() {
+		return Time;
+	}
+
+	public String getTimeString() {
+		int time = getTime();
+
+		// -- Set the value
+		int nbh = time / 3600;
+		int nbm = (time % 3600) / 60;
+		int nbs = (time % 3600) % 60;
+		return String.format("%02d:%02d:%02d ", nbh, nbm, nbs);
+	}
+
+	public void setTime(int time) {
+		Time = time;
+	}
+
+	public double getdTime_f() {
+		return dTime_f;
+	}
+
+	public void setdTime_f(double dTime_f) {
+		this.dTime_f = dTime_f;
+	}
+
+	public int getTimeLimit() {
+		return TimeLimit;
+	}
+
+	public String getTimeLimitString(boolean empty_if_0) {
+		int time = getTimeLimit();
+
+		if ((time == 0) && empty_if_0)
+			return "";
+		else {
+			// -- Set the value
+			int nbh = time / 3600;
+			int nbm = (time % 3600) / 60;
+			int nbs = (time % 3600) % 60;
+			return String.format("%02d:%02d:%02d ", nbh, nbm, nbs);
+		}
+	}
+
+	public void setTimeLimit(int timeLimit) {
+		TimeLimit = timeLimit;
+	}
+
+	public DateTime getHour() {
+		return Hour;
+	}
+
+	public String getHourString() {
+		return getHour().toString("E HH:mm:ss");
+	}
+
+	public void setHour(DateTime hour) {
+		Hour = hour;
+	}
+
+	public int getStation() {
+		return Station;
+	}
+
+	public String getStationString(boolean empty_if_0) {
+		int time = getStation();
+
+		if ((time == 0) && empty_if_0)
+			return "";
+		else {
+			// -- Set the value
+			int nbh = time / 3600;
+			int nbm = (time % 3600) / 60;
+			int nbs = (time % 3600) % 60;
+			return String.format("%02d:%02d:%02d ", nbh, nbm, nbs);
+		}
+	}
+
+	public void setStation(int station) {
+		Station = station;
+	}
+
+	public String getName() {
+		return Name;
+	}
+
+	public void setName(String name) {
+		Name = name;
+	}
+
+	public String getComment() {
+		return Comment;
+	}
+
+	public void setComment(String comment) {
+		Comment = comment;
+	}
+
 	public double getElevationMemo() {
 		return ElevationMemo;
 	}
-
 
 	public void setElevationMemo(double elevationMemo) {
 		ElevationMemo = elevationMemo;

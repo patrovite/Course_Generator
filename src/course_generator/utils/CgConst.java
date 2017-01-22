@@ -93,7 +93,8 @@ public class CgConst {
     public  int MRBOPT_FONTBIG_P = 6;
     */
     public static final String DEFAULTMRBFORMAT = "%N%L%Am%L%Dkm%L%H";
-
+    public static final int DEFAULTMRBFONTSIZE = 10;
+    
     public static final int MRB_REP_POS = 0x0001;
     public static final int MRB_REP_ALIGN = 0x0002;
     public static final int MRB_REP_FORMAT = 0x0004;

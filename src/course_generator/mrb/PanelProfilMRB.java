@@ -502,7 +502,8 @@ public class PanelProfilMRB extends JPanel {
 				// s = GenLabel("%N\n%Am - km:%D\n%H", r);
 				// s = GenLabel(r.FmtLbMiniRoadbook, r);
 				// s = Utils.GenLabel(r.FmtLbMiniRoadbook, r, track);
-				s = Utils.GenLabel("%N%L%Am - km:%D\n%H", r, track, settings);
+//				s = Utils.GenLabel("%N%L%Am - km:%D\n%H", r, track, settings);
+				s = Utils.GenLabel(r.FmtLbMiniRoadbook, r, track, settings);
 				drawStringMulti.setText(g2d, s);
 
 				// int l = stringSize.width + 4 + 2;

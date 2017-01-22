@@ -627,10 +627,10 @@ public class SaxCGXHandler extends DefaultHandler{
                             0.0, //double Slope
                             trkpt_speed, //double Speed
                             0.0, //double dElevation
-                            trkpt_timesecond, //int Time //Temps total en seconde
-                            trkpt_timesecond-old_time, //double dTime_f  //temps de parcours du tronçon en seconde (avec virgule)
-                            trkpt_timelimit, //int TimeLimit //Barrière horaire
-                            new DateTime(), //DateTime Hour //Contient la date et l'heure de passage
+                            trkpt_timesecond, //int Time
+                            trkpt_timesecond-old_time, //double dTime_f
+                            trkpt_timelimit, //int TimeLimit
+                            new DateTime(), //DateTime Hour
                             trkpt_eattime, //int Station
                             trkpt_name, //String Name
                             trkpt_comment, //String Comment
@@ -660,10 +660,10 @@ public class SaxCGXHandler extends DefaultHandler{
                             0.0, //double Slope
                             trkpt_speed, //double Speed
                             0.0, //double dElevation
-                            trkpt_timesecond, //int Time //Temps total en seconde
-                            trkpt_timesecond-old_time, //double dTime_f  //temps de parcours du tronçon en seconde (avec virgule)
-                            trkpt_timelimit, //int TimeLimit //Barrière horaire
-                            new DateTime(), //DateTime Hour //Contient la date et l'heure de passage
+                            trkpt_timesecond, //int Time
+                            trkpt_timesecond-old_time, //double dTime_f
+                            trkpt_timelimit, //int TimeLimit
+                            new DateTime(), //DateTime Hour
                             trkpt_eattime, //int Station
                             trkpt_name, //String Name
                             trkpt_comment, //String Comment

@@ -1207,7 +1207,7 @@ public class TrackData {
 						data.get(n).OptionMiniRoadbook, // int
 						data.get(n).VPosMiniRoadbook, // int
 						data.get(n).CommentMiniRoadbook, // String
-						0 // FontSizeMiniRoadbook //int
+						data.get(n).FontSizeMiniRoadbook // FontSizeMiniRoadbook //int
 				));
 				nb++;
 				n++;
