@@ -808,15 +808,14 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		btFormat.setFocusable(false);
 		btFormat.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				
-				
+								
 				if (datalist.data.isEmpty()) return;
 	    		int row = TableData.getSelectedRow();
 	    		if (row<0) return;
 		        int line=(int)datalist.data.get(row).getNum()-1;
 		        
 		        FrmEditMrbFormat frm=new FrmEditMrbFormat(settings);
-		        tfFormat.setText(frm.showDialog(track.data.get(line), tfFormat.getText()));
+		        tfFormat.setText(frm.showDialog(track.data.get(line), track, tfFormat.getText()));
 
 		        track.data.get(line).FmtLbMiniRoadbook = tfFormat.getText();
 		        datalist.data.get(row).FmtLbMiniRoadbook = tfFormat.getText();

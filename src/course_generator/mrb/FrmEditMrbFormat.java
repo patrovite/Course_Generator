@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import course_generator.CgData;
+import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.Utils;
 
@@ -30,6 +31,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 	private boolean ok;
 	private CgSettings settings;
 	private String format="";
+	private TrackData track;
+	private CgData data;
 	private JLabel lbLabelFormat;
 	private JTextField tfLabelFormat;
 	private JButton btName;
@@ -53,10 +56,11 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 	private JButton btNewLine;
 	private JLabel lbHelp;
 	private JLabel lbResult;
-	private JPanel pnResult;
+	private PanelPreviewLabel pnResult;
 	private JButton btOk;
 	private JButton btCancel;
 	private JPanel jPanelButtons;
+	private JButton btRefresh;
 
 	/**
 	 * Creates new form frmSettings
@@ -82,26 +86,29 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 	 *            Line number where to end
 	 * @return Object containing the result
 	 */
-	public String showDialog(CgData r, String format) {
-		this.format=format;
+	public String showDialog(CgData r, TrackData track, String format) {
+		this.format = format;
+		this.track = track;
+		this.data = r;
 		
 		// Set fieds
+		tfLabelFormat.setText(format);
 		
 		// End set field
 		ok = false;
 
 		// -- Update the display
-		// Refresh();
+		Refresh();
 
 		// -- Show the dialog
 		setVisible(true);
 		
 		if (ok) {
-
-			return this.format;
+			return tfLabelFormat.getText();
 		}
 		else return format;
 	}
+
 
 
 	/**
@@ -156,7 +163,6 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("FrmEditMrbFormat.title"));
 		setAlwaysOnTop(true);
-//		setPreferredSize(new Dimension(1000, 700));
 		setType(java.awt.Window.Type.NORMAL);
 		addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -174,34 +180,50 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				0, 0, 
 				3, 1, 
 				0, 0, 
-				10, 5, 0, 0,
+				10, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		tfLabelFormat = new JTextField();
 		Utils.addComponent(paneGlobal, tfLabelFormat, 
 				0, 1, 
-				3, 1, 
+				2, 1, 
 				0, 0, 
-				0, 5, 0, 0,
+				0, 10, 10, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+
+		btRefresh = new JButton(bundle.getString("FrmEditMrbFormat.btRefresh.text"));
+		btRefresh.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				Refresh();
+			}
+		});
+		Utils.addComponent(paneGlobal, btRefresh, 
+				2, 1, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
 		
 		btName = new JButton(bundle.getString("FrmEditMrbFormat.btName.text"));
 		btName.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%N");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%N");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btName, 
 				0, 2, 
 				1, 1, 
 				0, 0, 
-				0, 5, 0, 0,
+				0, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 		
 		btTotalDist = new JButton(bundle.getString("FrmEditMrbFormat.btTotalDist.text"));
 		btTotalDist.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%D");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%D");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btTotalDist, 
@@ -214,7 +236,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		btElevation = new JButton(bundle.getString("FrmEditMrbFormat.btElevation.text"));
 		btElevation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%A");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%A");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btElevation, 
@@ -227,20 +250,22 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		btStation = new JButton(bundle.getString("FrmEditMrbFormat.btStation.text"));
 		btStation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%R");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%R");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btStation, 
 				0, 3, 
 				1, 1, 
 				0, 0, 
-				0, 5, 0, 0,
+				0, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 		
 		btStationLong = new JButton(bundle.getString("FrmEditMrbFormat.btStationLong.text"));
 		btStationLong.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%Rl");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%Rl");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btStationLong, 
@@ -253,7 +278,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		btStationShort = new JButton(bundle.getString("FrmEditMrbFormat.btStationShort.text"));
 		btStationShort.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%Rs");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%Rs");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btStationShort, 
@@ -266,20 +292,22 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		btHour = new JButton(bundle.getString("FrmEditMrbFormat.btHour.text"));
 		btHour.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%H");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%H");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btHour, 
 				0, 4, 
 				1, 1, 
 				0, 0, 
-				0, 5, 0, 0,
+				0, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		btHourLong = new JButton(bundle.getString("FrmEditMrbFormat.btHourLong.text"));
 		btHourLong.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%hl");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%hl");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btHourLong, 
@@ -293,7 +321,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		btHourShort = new JButton(bundle.getString("FrmEditMrbFormat.btHourShort.text"));
 		btHourShort.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%hs");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%hs");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btHourShort, 
@@ -306,20 +335,22 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		btTime = new JButton(bundle.getString("FrmEditMrbFormat.btTime.text"));
 		btTime.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%T");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%T");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btTime, 
 				0, 5, 
 				1, 1, 
 				0, 0, 
-				0, 5, 0, 0,
+				0, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		btTimeLong = new JButton(bundle.getString("FrmEditMrbFormat.btTimeLong.text"));
 		btTimeLong.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%Tl");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%Tl");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btTimeLong, 
@@ -332,7 +363,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		btTimeShort = new JButton(bundle.getString("FrmEditMrbFormat.btTimeShort.text"));
 		btTimeShort.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%Ts");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%Ts");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btTimeShort, 
@@ -345,20 +377,22 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		btTotalAscend = new JButton(bundle.getString("FrmEditMrbFormat.btTotalAscend.text"));
 		btTotalAscend.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%+");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%+");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btTotalAscend, 
 				0, 6, 
 				1, 1, 
 				0, 0, 
-				0, 5, 0, 0,
+				0, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		btTimeLimitTime = new JButton(bundle.getString("FrmEditMrbFormat.btTimeLimitTime.text"));
 		btTimeLimitTime.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%B");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%B");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btTimeLimitTime, 
@@ -371,7 +405,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		btTimeLimitHour = new JButton(bundle.getString("FrmEditMrbFormat.btTimeLimitHour.text"));
 		btTimeLimitHour.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%b");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%b");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btTimeLimitHour, 
@@ -384,20 +419,22 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		btTotalDescend = new JButton(bundle.getString("FrmEditMrbFormat.btTotalDescend.text"));
 		btTotalDescend.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%-");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%-");
+				Refresh();
 			}
 		});		
 		Utils.addComponent(paneGlobal, btTotalDescend, 
 				0, 7, 
 				1, 1, 
 				0, 0, 
-				0, 5, 0, 0,
+				0, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		btComment = new JButton(bundle.getString("FrmEditMrbFormat.btComment.text"));
 		btComment.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%c");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%c");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btComment, 
@@ -410,7 +447,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		btCommentSpecific = new JButton(bundle.getString("FrmEditMrbFormat.btCommentSpecific.text"));
 		btCommentSpecific.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%C");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%C");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btCommentSpecific, 
@@ -423,14 +461,15 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		btNewLine = new JButton(bundle.getString("FrmEditMrbFormat.btNewLine.text"));
 		btNewLine.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				tfLabelFormat.setText(tfLabelFormat.getText()+"%L");				
+				tfLabelFormat.setText(tfLabelFormat.getText()+"%L");
+				Refresh();
 			}
 		});
 		Utils.addComponent(paneGlobal, btNewLine, 
 				0, 8, 
 				1, 1, 
 				0, 0, 
-				0, 5, 0, 0,
+				0, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		lbHelp = new JLabel(bundle.getString("FrmEditMrbFormat.lbHelp.text"));
@@ -441,7 +480,7 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				0, 9, 
 				3, 1, 
 				0, 1, 
-				0, 5, 0, 0,
+				10, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		lbResult = new JLabel(bundle.getString("FrmEditMrbFormat.lbResult.text"), JLabel.CENTER);
@@ -449,15 +488,16 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				3, 0, 
 				1, 1, 
 				1, 0, 
-				10, 5, 0, 5,
+				10, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
-		pnResult = new JPanel();
+		//pnResult = new JPanel();
+		pnResult = new PanelPreviewLabel();
 		Utils.addComponent(paneGlobal, pnResult, 
 				3, 1, 
 				1, 9, 
 				1, 1, 
-				0, 5, 0, 5,
+				0, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		
@@ -500,4 +540,17 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		pack();
 		setLocationRelativeTo(null);
 	}
+
+	/**
+	 * Refresh the preview panel
+	 */
+	private void Refresh() {
+		data.FmtLbMiniRoadbook=tfLabelFormat.getText();
+		pnResult.setData(data);
+		pnResult.setTrack(track);
+		pnResult.setSettings(settings);
+		pnResult.Refresh();
+	}
+	
 }
+
