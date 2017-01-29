@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -35,12 +36,9 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
-/**
- *
- * @author pierre.delore
- */
 public class SaxCGXHandler extends DefaultHandler{
 	private java.util.ResourceBundle bundle = null;
 	private Component Parent;
@@ -63,7 +61,6 @@ public class SaxCGXHandler extends DefaultHandler{
     private String curve="Run_10km_h";
     private int mrb_sizew=800;
     private int mrb_sizeh=300;
-    //private boolean isTimeLoaded=false;
      
     private Color clProfil_Simple_Fill;
     private Color clProfil_Simple_Border;
@@ -75,10 +72,6 @@ public class SaxCGXHandler extends DefaultHandler{
     private Color clProfil_SlopeInf15;
     private Color clProfil_SlopeSup15;
     private Color clProfil_SlopeBorder;
-    
-    
-    
-    
     
     private double trkpt_lat=0.0;
     private double trkpt_lon=0.0;
@@ -123,8 +116,6 @@ public class SaxCGXHandler extends DefaultHandler{
     private final int ERR_READ_VERSION=-5;
     private final int ERR_READ_NOTEXIST=-6;
     private final int ERR_READ_COLOR=-7;
-    
-    private final int MAX_CGX_VERSION_TO_READ=5; //TODO à déplacer dans un fichier spécifique
     
     //-- Profil mini-roadbook
     public int MrbSizeW = 640;
@@ -185,17 +176,14 @@ public class SaxCGXHandler extends DefaultHandler{
         trk_nb=0;
         trkseg_nb=0;
         characters="";
-        //trk_name="";
         trkpt_lat=0.0;
         trkpt_lon=0.0;
         trkpt_ele=0.0;
         trkpt_name="";
-        //trkpt_time=new DateTime();
         level=0;
         errcode=ERR_READ_NO;
         Cmpt=0;
         old_time=0;
-        //isTimeLoaded=false;
         
         SAXParserFactory factory =SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
@@ -245,6 +233,7 @@ public class SaxCGXHandler extends DefaultHandler{
         }
     }
 
+        
     /**
      * Parse a string element
      * @return Return the parsed value
@@ -259,16 +248,19 @@ public class SaxCGXHandler extends DefaultHandler{
     /**
      * Parse a double element
      * @param _default Default value
-     * @param _errcode Error code if a parse error occure
+     * @param _errcode Error code if a parse error occur
      * @return Return the parsed value
      */
     private double ManageDouble(double _default, int _errcode) {
         try {
-            return Double.parseDouble(characters);
+            Double d=Double.parseDouble(characters);
+            characters="";
+            return d;
         }
         catch (NumberFormatException e) {
             errcode=_errcode;
             errline=locator.getLineNumber();
+            characters="";
             return _default;
         } 
     }
@@ -276,16 +268,19 @@ public class SaxCGXHandler extends DefaultHandler{
     /**
      * Parse a integer element
      * @param _default Default value
-     * @param _errcode Error code if a parse error occure
+     * @param _errcode Error code if a parse error occur
      * @return Return the parsed value
      */
     private int ManageInt(int _default, int _errcode) {
         try {
-            return Integer.parseInt(characters);
+            int i=Integer.parseInt(characters);
+            characters="";
+            return i;
         }
         catch (NumberFormatException e) {
             errcode=_errcode;
             errline=locator.getLineNumber();
+            characters="";
             return _default;
         } 
     }
@@ -293,21 +288,44 @@ public class SaxCGXHandler extends DefaultHandler{
     /**
      * Parse a boolean element
      * @param _default Default value
-     * @param _errcode Error code if a parse error occure
+     * @param _errcode Error code if a parse error occur
      * @return Return the parsed value
      */
     private boolean ManageBoolean(boolean _default, int _errcode) {
         try {
             int v=Integer.parseInt(characters);
+            characters="";
             return (v==1?true:false);
         }
         catch (NumberFormatException e) {
             errcode=_errcode;
             errline=locator.getLineNumber();
+            characters="";
             return _default;
         } 
     }
     
+    /**
+     * Parse a color element
+     * @param _default Default value
+     * @param _errcode Error code if a parse error occur
+     * @return Return the parsed color
+     */
+    private Color ManageColor(Color _default, int _errcode) {
+        try {
+            int v=Integer.parseInt(characters);
+            characters="";
+            return new Color(v);
+        }
+        catch (NumberFormatException e) {
+            errcode=_errcode;
+            errline=locator.getLineNumber();
+            characters="";
+            return _default;
+        } 
+    }
+    
+
     
     @Override
     public void endElement(String uri, String localname, String qName) throws SAXException {
@@ -319,7 +337,7 @@ public class SaxCGXHandler extends DefaultHandler{
             if (qName.equalsIgnoreCase("VERSION")) {
                 cgx_version = ManageDouble(0.0, ERR_READ_VERSION);
 
-                if (cgx_version>MAX_CGX_VERSION_TO_READ) {
+                if (cgx_version>CgConst.MAX_CGX_VERSION_TO_READ) {
                     errcode=ERR_READ_VERSION;
                     errline=locator.getLineNumber();
                     //TODO Afficher message de défaut car version non lisible
@@ -340,6 +358,7 @@ public class SaxCGXHandler extends DefaultHandler{
             else if (qName.equalsIgnoreCase("STARTTIME")) {
                 try {
                     trkdata.StartTime=DateTime.parse(characters);
+                    characters="";
                     if ( (trkdata.StartTime.getYear()==0) ||
                          (trkdata.StartTime.getMonthOfYear()==0) ||
                             (trkdata.StartTime.getDayOfMonth()==0)
@@ -351,6 +370,7 @@ public class SaxCGXHandler extends DefaultHandler{
                     trkdata.StartTime=new DateTime();
                     errcode=ERR_READ_TIME;
                     errline=locator.getLineNumber();
+                    characters="";
                 }
             }        
             else if (qName.equalsIgnoreCase("USEELEVEFFECT")) {
@@ -362,23 +382,27 @@ public class SaxCGXHandler extends DefaultHandler{
             else if (qName.equalsIgnoreCase("NIGHTSTARTTIME")) {
                 try {
                     trkdata.StartNightTime=DateTime.parse(characters,fmt);
+                    characters="";
                 }
                 catch (IllegalArgumentException e)
                 {
                     trkdata.StartNightTime=new DateTime();
                     errcode=ERR_READ_TIME;
                     errline=locator.getLineNumber();
+                    characters="";
                 }
             }        
             else if (qName.equalsIgnoreCase("NIGHTENDTIME")) {
                 try {
                     trkdata.EndNightTime=DateTime.parse(characters, fmt);
+                    characters="";
                 }
                 catch (IllegalArgumentException e)
                 {
                     trkdata.EndNightTime=new DateTime();
                     errcode=ERR_READ_TIME;
                     errline=locator.getLineNumber();
+                    characters="";
                 }
             }        
             else if (qName.equalsIgnoreCase("NIGHTCOEFF")) {
@@ -401,8 +425,7 @@ public class SaxCGXHandler extends DefaultHandler{
             }
             else if (qName.equalsIgnoreCase("CURVE")) {
                 curve=ManageString();
-                //TODO traiter la lecture du fichier courbe
-                if (!Utils.FileExist(Utils.GetHomeDir() + "/Course Generator/"+ curve + ".par")) {
+                if (!Utils.FileExist(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/"+ curve + ".par")) {
                 	 JOptionPane.showMessageDialog(Parent, bundle.getString("loadCGX.CurveFileError"));
                 	trkdata.Paramfile="Default";
                 }
@@ -416,104 +439,34 @@ public class SaxCGXHandler extends DefaultHandler{
                 trkdata.MrbSizeH=ManageInt(480,ERR_READ_INT); 
             }
             else if (qName.equalsIgnoreCase("CLPROFILSIMPLEFILL")) {
-                try {
-                    trkdata.clProfil_Simple_Fill=new Color(Integer.parseInt(characters));
-                }
-                catch (NumberFormatException e) {
-                    trkdata.clProfil_Simple_Fill=Color.black;
-                    errcode=ERR_READ_COLOR;
-                    errline=locator.getLineNumber();
-                }
+            	trkdata.clProfil_Simple_Fill=ManageColor(Color.BLACK, ERR_READ_COLOR);
             }
             else if (qName.equalsIgnoreCase("CLPROFILSIMPLEBORDER")) {
-                try {
-                    trkdata.clProfil_Simple_Border=new Color(Integer.parseInt(characters));
-                }
-                catch (NumberFormatException e) {
-                    trkdata.clProfil_Simple_Border=Color.black;
-                    errcode=ERR_READ_COLOR;
-                    errline=locator.getLineNumber();
-                } 
+            	trkdata.clProfil_Simple_Border=ManageColor(Color.BLACK, ERR_READ_COLOR);
             }
             else if (qName.equalsIgnoreCase("CLPROFILRSROAD")) {
-                try {
-                    trkdata.clProfil_RS_Road=new Color(Integer.parseInt(characters));
-                }
-                catch (NumberFormatException e) {
-                    trkdata.clProfil_RS_Road=Color.black;
-                    errcode=ERR_READ_COLOR;
-                    errline=locator.getLineNumber();
-                } 
+            	trkdata.clProfil_RS_Road=ManageColor(Color.BLACK, ERR_READ_COLOR);
             }
             else if (qName.equalsIgnoreCase("CLPROFILRSPATH")) {
-                try {
-                    trkdata.clProfil_RS_Path=new Color(Integer.parseInt(characters));
-                }
-                catch (NumberFormatException e) {
-                    trkdata.clProfil_RS_Path=Color.black;
-                    errcode=ERR_READ_COLOR;
-                    errline=locator.getLineNumber();
-                } 
+            	trkdata.clProfil_RS_Path=ManageColor(Color.BLACK, ERR_READ_COLOR);
             }
             else if (qName.equalsIgnoreCase("CLPROFILRSBORDER")) {
-                try {
-                    trkdata.clProfil_RS_Border=new Color(Integer.parseInt(characters));
-                }
-                catch (NumberFormatException e) {
-                    trkdata.clProfil_RS_Border=Color.black;
-                    errcode=ERR_READ_COLOR;
-                    errline=locator.getLineNumber();
-                } 
+            	trkdata.clProfil_RS_Border=ManageColor(Color.BLACK, ERR_READ_COLOR);
             }
             else if (qName.equalsIgnoreCase("CLPROFILSLOPEINF5")) {
-                try {
-                    trkdata.clProfil_SlopeInf5=new Color(Integer.parseInt(characters));
-                }
-                catch (NumberFormatException e) {
-                    trkdata.clProfil_SlopeInf5=Color.black;
-                    errcode=ERR_READ_COLOR;
-                    errline=locator.getLineNumber();
-                } 
+            	trkdata.clProfil_SlopeInf5=ManageColor(Color.BLACK, ERR_READ_COLOR);
             }
             else if (qName.equalsIgnoreCase("CLPROFILSLOPEINF10")) {
-                try {
-                    trkdata.clProfil_SlopeInf10=new Color(Integer.parseInt(characters));
-                }
-                catch (NumberFormatException e) {
-                    trkdata.clProfil_SlopeInf10=Color.black;
-                    errcode=ERR_READ_COLOR;
-                    errline=locator.getLineNumber();
-                } 
+            	trkdata.clProfil_SlopeInf10=ManageColor(Color.BLACK, ERR_READ_COLOR);
             }
             else if (qName.equalsIgnoreCase("CLPROFILSLOPEINF15")) {
-                try {
-                    trkdata.clProfil_SlopeInf15=new Color(Integer.parseInt(characters));
-                }
-                catch (NumberFormatException e) {
-                    trkdata.clProfil_SlopeInf15=Color.black;
-                    errcode=ERR_READ_COLOR;
-                    errline=locator.getLineNumber();
-                } 
+            	trkdata.clProfil_SlopeInf15=ManageColor(Color.BLACK, ERR_READ_COLOR);
             }
             else if (qName.equalsIgnoreCase("CLPROFILSLOPESUP15")) {
-                try {
-                    trkdata.clProfil_SlopeSup15=new Color(Integer.parseInt(characters));
-                }
-                catch (NumberFormatException e) {
-                    trkdata.clProfil_SlopeSup15=Color.black;
-                    errcode=ERR_READ_COLOR;
-                    errline=locator.getLineNumber();
-                } 
+            	trkdata.clProfil_SlopeSup15=ManageColor(Color.BLACK, ERR_READ_COLOR);
             }
             else if (qName.equalsIgnoreCase("CLPROFILSLOPEBORDER")) {
-                try {
-                    trkdata.clProfil_SlopeBorder=new Color(Integer.parseInt(characters));
-                }
-                catch (NumberFormatException e) {
-                    trkdata.clProfil_SlopeBorder=Color.black;
-                    errcode=ERR_READ_COLOR;
-                    errline=locator.getLineNumber();
-                } 
+            	trkdata.clProfil_SlopeBorder=ManageColor(Color.BLACK, ERR_READ_COLOR);
             }
             else if (qName.equalsIgnoreCase("MRBCURVEFILTER")) {
                 trkdata.CurveFilter=ManageInt(4, ERR_READ_INT);

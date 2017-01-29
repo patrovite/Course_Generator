@@ -24,26 +24,19 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ResourceBundle;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -815,7 +808,21 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		btFormat.setFocusable(false);
 		btFormat.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// TODO Config
+				
+				
+				if (datalist.data.isEmpty()) return;
+	    		int row = TableData.getSelectedRow();
+	    		if (row<0) return;
+		        int line=(int)datalist.data.get(row).getNum()-1;
+		        
+		        FrmEditMrbFormat frm=new FrmEditMrbFormat(settings);
+		        tfFormat.setText(frm.showDialog(track.data.get(line), tfFormat.getText()));
+
+		        track.data.get(line).FmtLbMiniRoadbook = tfFormat.getText();
+		        datalist.data.get(row).FmtLbMiniRoadbook = tfFormat.getText();
+
+		        track.isModified = true;
+		        pnlProfil.Refresh();
 			}
 		});
 		Utils.addComponent(pnlProperties, btFormat, 

@@ -506,8 +506,6 @@ public class PanelProfilMRB extends JPanel {
 				s = Utils.GenLabel(r.FmtLbMiniRoadbook, r, track, settings);
 				drawStringMulti.setText(g2d, s);
 
-				// int l = stringSize.width + 4 + 2;
-
 				// -- Width calculation
 				int w = drawStringMulti.getWidth() + 4 + 2;
 				int w1 = (nbtag * 16) + ((nbtag - 1) * 2) + 4;

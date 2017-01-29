@@ -905,7 +905,7 @@ public class TrackData {
 
 		isTimeLoaded = false;
 
-		String sParamfile = Utils.GetHomeDir() + "/Course Generator/" + Paramfile + ".par";
+		String sParamfile = Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/" + Paramfile + ".par";
 
 		try {
 			param.Load(sParamfile);

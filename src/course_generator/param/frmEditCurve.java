@@ -57,6 +57,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import course_generator.TrackData;
+import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class frmEditCurve extends javax.swing.JDialog {
@@ -124,7 +125,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		Old_Paramfile=Paramfile;
 		bEditMode=false;
 
-		LoadCurve(Utils.GetHomeDir() + "/Course Generator/"+Paramfile+".par");
+		LoadCurve(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/"+Paramfile+".par");
         ChangeEditStatus();
         RefreshView();
 		// Set field
@@ -198,7 +199,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 	 */
     private void RefreshCurveList()
     {
-    	File[] files = new File(Utils.GetHomeDir() + "/Course Generator/").listFiles(new FilenameFilter() 
+    	File[] files = new File(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/").listFiles(new FilenameFilter() 
     		{ 
     			@Override 
     			public boolean accept(File dir, String name) {
@@ -456,7 +457,7 @@ public class frmEditCurve extends javax.swing.JDialog {
     	int index=ListCurves.getSelectedIndex();
     	if (index>=0) {
     		Paramfile=(String)model.getElementAt(index);
-    		LoadCurve(Utils.GetHomeDir() + "/Course Generator/"+(String)model.getElementAt(index)+".par");
+    		LoadCurve(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/"+(String)model.getElementAt(index)+".par");
     		bEditMode=false;
     		RefreshView();
     	}
@@ -536,7 +537,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 				if (bEditMode) {
 					param.comment = tfComment.getText();
 					param.name = lbNameVal.getText();
-			        param.Save(Utils.GetHomeDir() + "/Course Generator/"+Paramfile+".par");
+			        param.Save(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/"+Paramfile+".par");
 			        bEditMode = false;
 			        ChangeEditStatus();
 			        RefreshView();
@@ -555,7 +556,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 				if (bEditMode) {
 					bEditMode = false;
 			        Paramfile = Old_Paramfile;
-			        LoadCurve(Utils.GetHomeDir() + "/Course Generator/"+Paramfile+".par");
+			        LoadCurve(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/"+Paramfile+".par");
 			        ChangeEditStatus();
 			        RefreshView();
 			    }
@@ -759,13 +760,13 @@ public class frmEditCurve extends javax.swing.JDialog {
 			panel.add(tfName);
 			int result=JOptionPane.showConfirmDialog(this, panel,bundle.getString("frmEditCurve.DuplicatePanel.title"),JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 			if ((result==JOptionPane.OK_OPTION) && (!tfName.getText().isEmpty())) {
-				if (Utils.FileExist(Utils.GetHomeDir() + "/Course Generator/" + tfName.getText() + ".par")) {
+				if (Utils.FileExist(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/" + tfName.getText() + ".par")) {
 					JOptionPane.showMessageDialog(this, bundle.getString("frmEditCurve.DuplicatePanel.fileexist"));
 					return;
 				}
 				param.name = tfName.getText();
 				Paramfile = param.name;
-				param.Save(Utils.GetHomeDir() + "/Course Generator/" + param.name + ".par");
+				param.Save(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/" + param.name + ".par");
 				ChangeEditStatus();
 				RefreshCurveList();
 				RefreshView();
@@ -790,9 +791,9 @@ public class frmEditCurve extends javax.swing.JDialog {
 						null, options, options[1]);
 
 				if (ret == JOptionPane.YES_OPTION) {
-					File f = new File(Utils.GetHomeDir() + "/Course Generator/" + s + ".par");
+					File f = new File(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/" + s + ".par");
 					f.delete();
-					LoadCurve(Utils.GetHomeDir() + "/Course Generator/default.par");
+					LoadCurve(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/default.par");
 					Paramfile = "Default";
 					RefreshView();
 					RefreshCurveList();
@@ -814,7 +815,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 			panel.add(tfName);
 			int result=JOptionPane.showConfirmDialog(this, panel,bundle.getString("frmEditCurve.AddCurvePanel.title"),JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 			if ((result==JOptionPane.OK_OPTION) && (!tfName.getText().isEmpty())) {
-				if (Utils.FileExist(Utils.GetHomeDir() + "/Course Generator/" + tfName.getText() + ".par")) {
+				if (Utils.FileExist(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/" + tfName.getText() + ".par")) {
 					JOptionPane.showMessageDialog(this, bundle.getString("frmEditCurve.AddCurvePanelPanel.fileexist"));
 					return;
 				}

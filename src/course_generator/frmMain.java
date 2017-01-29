@@ -219,7 +219,6 @@ import course_generator.utils.Utils.CalcLineResult;
  */
 public class frmMain extends javax.swing.JFrame {
 	private final String Version = "4.0.0.ALPHA 3";
-//	private FileFilter GPX_Filter;
 	public TrackData Track;
 	private ResumeData Resume;
 	private final TrackDataModel ModelTableMain;
@@ -233,7 +232,7 @@ public class frmMain extends javax.swing.JFrame {
 	private java.util.ResourceBundle bundle = null;
 	private int cmptInternetConnexion = 0;
 	private boolean InternetConnectionActive = false;
-	private Timer timer1s; // 1 seconde timer object
+	private Timer timer1s; // 1 second timer object
 
 	/**
 	 * Creates new form frmMain
