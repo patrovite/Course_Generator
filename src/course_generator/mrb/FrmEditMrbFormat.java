@@ -189,9 +189,11 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				2, 1, 
 				0, 0, 
 				0, 10, 10, 0,
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+				GridBagConstraints.WEST, GridBagConstraints.BOTH);
 
-		btRefresh = new JButton(bundle.getString("FrmEditMrbFormat.btRefresh.text"));
+//		btRefresh = new JButton(bundle.getString("FrmEditMrbFormat.btRefresh.text"));
+		btRefresh = new JButton();
+		btRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/refresh.png")));
 		btRefresh.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				Refresh();
@@ -201,8 +203,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				2, 1, 
 				1, 1, 
 				0, 0, 
-				0, 0, 0, 0,
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+				0, 2, 10, 0,
+				GridBagConstraints.WEST, GridBagConstraints.VERTICAL);
 
 		
 		btName = new JButton(bundle.getString("FrmEditMrbFormat.btName.text"));
