@@ -26,6 +26,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
@@ -184,6 +187,7 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		memoFormat[4] = settings.MemoFormat[4];
 
 		RefreshBtLabel();
+		RefreshTooltips();
 		
 		// spinFromLine.setValue(start);
 		// spinFromLine.setMaximum(track.data.size());
@@ -414,29 +418,12 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		// -- Memory 1
 		btMemory1 = new javax.swing.JButton();
 		btMemory1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/favoris1.png")));
-		btMemory1.setToolTipText(bundle.getString("FrmMiniroadbook.btMemory1.toolTipText"));
 		btMemory1.setPreferredSize(new Dimension(btw, bth));
 		btMemory1.setFocusable(false);
-		btMemory1.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//				TableMain.addMouseListener(new java.awt.event.MouseAdapter() {
-//					public void mouseClicked(java.awt.event.MouseEvent evt) {
-//						if 	(evt.getButton()==evt.BUTTON1 && evt.getClickCount() >= 2 && !evt.isConsumed()) {
-//				            evt.consume();
-//				    		int row = TableMain.rowAtPoint(evt.getPoint());
-//				    		int col = TableMain.columnAtPoint(evt.getPoint());
-//							frmEditPosition frm = new frmEditPosition();
-//							if (frm.showDialog(Settings, Track, row, col)) {
-//								Track.isModified=true;
-//								RefreshTableMain();
-//								RefreshProfil();
-//								RefreshStatusbar(Track);
-//							}
-//						}
-//						else
-//							TableMainMouseClicked(evt);
-//					}
-//				});
+		btMemory1.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				memoFormat[0]=ManageMemories(e, memoFormat[0]);
+				RefreshTooltips();
 			}
 		});
 		ToolBarMRB.add(btMemory1);
@@ -444,12 +431,12 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		// -- Memory 2
 		btMemory2 = new javax.swing.JButton();
 		btMemory2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/favoris2.png")));
-		btMemory2.setToolTipText(bundle.getString("FrmMiniroadbook.btMemory2.toolTipText"));
 		btMemory2.setPreferredSize(new Dimension(btw, bth));
 		btMemory2.setFocusable(false);
-		btMemory2.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// TODO Config
+		btMemory2.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				memoFormat[1]=ManageMemories(e, memoFormat[1]);
+				RefreshTooltips();
 			}
 		});
 		ToolBarMRB.add(btMemory2);
@@ -457,12 +444,12 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		// -- Memory 3
 		btMemory3 = new javax.swing.JButton();
 		btMemory3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/favoris3.png")));
-		btMemory3.setToolTipText(bundle.getString("FrmMiniroadbook.btMemory3.toolTipText"));
 		btMemory3.setPreferredSize(new Dimension(btw, bth));
 		btMemory3.setFocusable(false);
-		btMemory3.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// TODO Config
+		btMemory3.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				memoFormat[2]=ManageMemories(e, memoFormat[2]);
+				RefreshTooltips();
 			}
 		});
 		ToolBarMRB.add(btMemory3);
@@ -470,12 +457,12 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		// -- Memory 4
 		btMemory4 = new javax.swing.JButton();
 		btMemory4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/favoris4.png")));
-		btMemory4.setToolTipText(bundle.getString("FrmMiniroadbook.btMemory4.toolTipText"));
 		btMemory4.setPreferredSize(new Dimension(btw, bth));
 		btMemory4.setFocusable(false);
-		btMemory4.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// TODO Config
+		btMemory4.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				memoFormat[3]=ManageMemories(e, memoFormat[3]);
+				RefreshTooltips();
 			}
 		});
 		ToolBarMRB.add(btMemory4);
@@ -483,12 +470,12 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		// -- Memory 5
 		btMemory5 = new javax.swing.JButton();
 		btMemory5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/favoris5.png")));
-		btMemory5.setToolTipText(bundle.getString("FrmMiniroadbook.btMemory5.toolTipText"));
 		btMemory5.setPreferredSize(new Dimension(btw, bth));
 		btMemory5.setFocusable(false);
-		btMemory5.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// TODO Config
+		btMemory5.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				memoFormat[4]=ManageMemories(e, memoFormat[4]);
+				RefreshTooltips();
 			}
 		});
 		ToolBarMRB.add(btMemory5);
@@ -527,6 +514,46 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 			}
 		});
 		ToolBarMRB.add(spinHeight);
+		
+		RefreshTooltips();
+	}
+
+
+	protected String ManageMemories(MouseEvent e, String memo) {
+		if (datalist.data.isEmpty()) return memo;
+		int row = TableData.getSelectedRow();
+		if (row<0) return memo;
+		
+		//-- Left click
+	    if (e.getButton() == MouseEvent.BUTTON1) {
+	    	int line=(int)datalist.data.get(row).getNum()-1;
+	        if (line>track.data.size()) return memo;
+	        
+	        String txt=memo;
+	        tfFormat.setText(txt);
+	        track.data.get(line).FmtLbMiniRoadbook = txt;
+	        datalist.data.get(row).FmtLbMiniRoadbook = txt;
+
+	        track.isModified = true;
+	        RefreshTableData();
+	        pnlProfil.Refresh();
+	    }
+	    //-- Right click
+	    else if (e.getButton() == MouseEvent.BUTTON3) {
+	    	memo=tfFormat.getText();
+	    	track.isModified = true;
+	    	//RefreshTooltips();
+	    }
+	    return memo;
+	}
+
+
+	protected void RefreshTooltips() {
+		btMemory1.setToolTipText(String.format(bundle.getString("FrmMiniroadbook.btMemory1.toolTipText"), memoFormat[0]));
+		btMemory2.setToolTipText(String.format(bundle.getString("FrmMiniroadbook.btMemory2.toolTipText"), memoFormat[1]));
+		btMemory3.setToolTipText(String.format(bundle.getString("FrmMiniroadbook.btMemory3.toolTipText"), memoFormat[2]));
+		btMemory4.setToolTipText(String.format(bundle.getString("FrmMiniroadbook.btMemory4.toolTipText"), memoFormat[3]));
+		btMemory5.setToolTipText(String.format(bundle.getString("FrmMiniroadbook.btMemory5.toolTipText"), memoFormat[4]));
 	}
 
 
@@ -552,10 +579,6 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 
 
 	private void initComponents() {
-//		int line = 0;
-		int lbw=100;
-		int lbh=40;
-
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("FrmMiniroadbook.title"));
 		setAlwaysOnTop(true);
@@ -1040,8 +1063,6 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		        if (line>track.data.size()) return;
 		        
 		        String txt=tfFormat.getText();
-//		        track.data.get(line).FmtLbMiniRoadbook = tfFormat.getText();
-//		        datalist.data.get(row).FmtLbMiniRoadbook = tfFormat.getText();
 		        track.data.get(line).FmtLbMiniRoadbook = txt;
 		        datalist.data.get(row).FmtLbMiniRoadbook = txt;
 
