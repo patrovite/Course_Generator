@@ -375,7 +375,7 @@ public class frmMain extends javax.swing.JFrame {
 		dataset = new XYSeriesCollection();
 		// dataset = CreateDataset();
 		chart = CreateChartProfil(dataset);
-
+		
 		// -- Load configuration
 		LoadConfig();
 

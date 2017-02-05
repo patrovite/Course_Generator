@@ -74,32 +74,20 @@ public class CgConst {
     public static final int MRBOPT_LEFT      = 0x0002;
     public static final int MRBOPT_CENTER    = 0x0004; 
     public static final int MRBOPT_RIGHT     = 0x0008;
-    //public  int MRBOPT_FONTSMALL = 0x0010;
-    //public  int MRBOPT_FONTAVR   = 0x0020;
-    //public  int MRBOPT_FONTBIG   = 0x0040;
     public static final int MRBOPT_SHOWTAGS  = 0x0080;
 
-    /*     
-    public int MRBOPT_SEL_P     = 0;
-    public  int MRBOPT_LEFT_P    = 1;
-    public  int MRBOPT_CENTER_P  = 2;
-    public  int MRBOPT_RIGHT_P   = 3;
-    public  int MRBOPT_FONTSMALL_P = 4;
-    public  int MRBOPT_FONTAVR_P = 5;
-    public  int MRBOPT_FONTBIG_P = 6;
-    */
     public static final String DEFAULTMRBFORMAT = "%N%L%Am%L%Dkm%L%H";
     public static final int DEFAULTMRBFONTSIZE = 10;
     
-    public static final int MRB_REP_POS = 0x0001;
-    public static final int MRB_REP_ALIGN = 0x0002;
-    public static final int MRB_REP_FORMAT = 0x0004;
-    public static final int MRB_REP_SIZE = 0x0008;
-    public static final int MRB_REP_TAGS = 0x0010;
+    public static final int MRB_DUP_POS = 0x0001;
+    public static final int MRB_DUP_ALIGN = 0x0002;
+    public static final int MRB_DUP_FORMAT = 0x0004;
+    public static final int MRB_DUP_SIZE = 0x0008;
+    public static final int MRB_DUP_TAGS = 0x0010;
 
-    public static final int MRB_REP_NONE = 0;
-    public static final int MRB_REP_SIMPLE = 1;
-    public static final int MRB_REP_MULTI = 2;
+    public static final int MRB_DUP_NONE = 0;
+    public static final int MRB_DUP_SIMPLE = 1;
+    public static final int MRB_DUP_MULTI = 2;
 
     public static final Color CL_PROFIL_SIMPLE_FILL = new Color(0xAB, 0xF9, 0x2F);
     public static final Color CL_PROFIL_SIMPLE_BORDER = new Color(0x05, 0x82, 0x05);

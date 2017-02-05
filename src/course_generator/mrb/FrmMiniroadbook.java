@@ -28,9 +28,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ResourceBundle;
 
+import javax.sound.midi.Track;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -58,6 +58,8 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 	private CgSettings settings;
 	private TrackData track;
 	private MrbTableDataModel modelTableData;
+	private int DupLine = -1; //Base line for duplication
+	private int ConfigDuplication = CgConst.MRB_DUP_POS | CgConst.MRB_DUP_ALIGN | CgConst.MRB_DUP_FORMAT | CgConst.MRB_DUP_SIZE | CgConst.MRB_DUP_TAGS;
 	private JButton btSaveAsImage;
 	private JButton btConfig;
 	private JButton btCopyFormat;
@@ -101,7 +103,6 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 	private CgSpinner spinHeight;
 	private JLabel lbWidth;
 	private JLabel lbHeight;
-	private JPanel pnlToolbar;
 	private JScrollPane jScrollPaneProfil;
 	private MrbDataList datalist;
 	private JToolBar ToolBarMRB;
@@ -138,6 +139,8 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 	public boolean showDialog(TrackData track) {
 		this.track = track;
 
+		DupLine=-1;
+		
 		// -- Set the content of the model
 		datalist.data.clear();
 		for (CgData r : track.data) {
@@ -175,7 +178,6 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		// -- Set profil size
 		spinWidth.setValue(track.MrbSizeW);
 		spinHeight.setValue(track.MrbSizeH);
-		// TODO set the size of the profil
 
 		//-- Set profile type
 		cbProfilType.setSelectedIndex(track.MRBType);
@@ -188,11 +190,6 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 
 		RefreshBtLabel();
 		RefreshTooltips();
-		
-		// spinFromLine.setValue(start);
-		// spinFromLine.setMaximum(track.data.size());
-		// spinToLine.setValue(end);
-		// spinToLine.setMaximum(track.data.size());
 
 		// End set field
 		ok = false;
@@ -323,7 +320,7 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		btCopyFormat.setFocusable(false);
 		btCopyFormat.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// TODO Config
+				CopyFormat();
 			}
 		});
 		ToolBarMRB.add(btCopyFormat);
@@ -337,7 +334,7 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		btPasteFormat.setFocusable(false);
 		btPasteFormat.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// TODO Config
+				PasteFormat();
 			}
 		});
 		ToolBarMRB.add(btPasteFormat);
@@ -345,13 +342,14 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		// -- Config format duplication
 		btPasteFormatConfig = new javax.swing.JButton();
 		btPasteFormatConfig
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/replicate.png")));
+				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/replicate_config.png")));
 		btPasteFormatConfig.setToolTipText(bundle.getString("FrmMiniroadbook.btPasteFormatConfig.toolTipText"));
 		btPasteFormatConfig.setPreferredSize(new Dimension(btw, bth));
 		btPasteFormatConfig.setFocusable(false);
 		btPasteFormatConfig.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// TODO Config
+				FrmConfigMrbDuplicate frm = new FrmConfigMrbDuplicate();
+				ConfigDuplication = frm.showDialog(ConfigDuplication);
 			}
 		});
 		ToolBarMRB.add(btPasteFormatConfig);
@@ -518,6 +516,80 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		RefreshTooltips();
 	}
 
+
+
+
+	protected void CopyFormat() {
+		if (datalist.data.isEmpty()) return;
+		int row = TableData.getSelectedRow();
+		if (row<0) return;
+	    DupLine=(int) datalist.data.get(row).getNum()-1;
+	}
+
+	
+	protected void PasteFormat() {
+		if (datalist.data.isEmpty()) return;
+		int row = TableData.getSelectedRow();
+		if (row<0) return;
+	    int line = (int) datalist.data.get(row).getNum()-1;
+	    if (line>track.data.size()) return;
+
+	    track.isModified=true;
+	    if ((ConfigDuplication & CgConst.MRB_DUP_POS) != 0) {
+	    	track.data.get(line).VPosMiniRoadbook = track.data.get(DupLine).VPosMiniRoadbook;
+	    	datalist.data.get(row).VPosMiniRoadbook = track.data.get(DupLine).VPosMiniRoadbook;	    	
+	    }
+	    
+	    if ((ConfigDuplication & CgConst.MRB_DUP_FORMAT) != 0) {
+	    	track.data.get(line).FmtLbMiniRoadbook = track.data.get(DupLine).FmtLbMiniRoadbook;
+	    	datalist.data.get(row).FmtLbMiniRoadbook = track.data.get(DupLine).FmtLbMiniRoadbook;	    	
+	    }
+	    
+	    if ((ConfigDuplication & CgConst.MRB_DUP_ALIGN) != 0) {
+	    	int src=track.data.get(DupLine).OptionMiniRoadbook;
+	    	int dst=track.data.get(line).OptionMiniRoadbook;
+	    	
+	    	if ((src & CgConst.MRBOPT_LEFT) !=0)
+	    		dst=Utils.Set(dst, CgConst.MRBOPT_LEFT);
+	    	else
+	    		dst=Utils.Reset(dst, CgConst.MRBOPT_LEFT);
+	    	
+	    	if ((src & CgConst.MRBOPT_CENTER) !=0)
+	    		dst=Utils.Set(dst, CgConst.MRBOPT_CENTER);
+	    	else
+	    		dst=Utils.Reset(dst, CgConst.MRBOPT_CENTER);
+	    	
+	    	if ((src & CgConst.MRBOPT_RIGHT) !=0)
+	    		dst=Utils.Set(dst, CgConst.MRBOPT_RIGHT);
+	    	else
+	    		dst=Utils.Reset(dst, CgConst.MRBOPT_RIGHT);
+	    	
+	    	track.data.get(line).OptionMiniRoadbook = dst;
+	    	datalist.data.get(row).OptionMiniRoadbook = dst;	    	
+	    }
+	    
+	    if ((ConfigDuplication & CgConst.MRB_DUP_SIZE) != 0) {
+	    	track.data.get(line).FontSizeMiniRoadbook = track.data.get(DupLine).FontSizeMiniRoadbook;
+	    	datalist.data.get(row).FontSizeMiniRoadbook = track.data.get(DupLine).FontSizeMiniRoadbook;	    	
+	    }
+	    
+	    if ((ConfigDuplication & CgConst.MRB_DUP_TAGS) != 0) {
+	    	int src=track.data.get(DupLine).OptionMiniRoadbook;
+	    	int dst=track.data.get(line).OptionMiniRoadbook;
+	    	
+	    	if ((src & CgConst.MRBOPT_SHOWTAGS) !=0)
+	    		dst=Utils.Set(dst, CgConst.MRBOPT_SHOWTAGS);
+	    	else
+	    		dst=Utils.Reset(dst, CgConst.MRBOPT_SHOWTAGS);
+	    	
+	    	track.data.get(line).OptionMiniRoadbook = dst;
+	    	datalist.data.get(row).OptionMiniRoadbook = dst;	    	
+	    }
+
+	    RefreshProperties();
+	    RefreshTableData();
+	    pnlProfil.Refresh();
+	}
 
 	protected String ManageMemories(MouseEvent e, String memo) {
 		if (datalist.data.isEmpty()) return memo;
