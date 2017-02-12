@@ -304,7 +304,12 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		btConfig.setFocusable(false);
 		btConfig.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// TODO Config
+				FrmConfigMrb frm = new FrmConfigMrb();
+				frm.showDialog(track);
+				
+				track.isModified = true;
+		        pnlProfil.setTrack(track);
+				pnlProfil.Refresh();
 			}
 		});
 		ToolBarMRB.add(btConfig);

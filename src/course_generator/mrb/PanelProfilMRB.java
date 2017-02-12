@@ -624,39 +624,6 @@ public class PanelProfilMRB extends JPanel {
 				.getImage(getClass().getResource("/course_generator/images/copyright.png"));
 		g2d.drawImage(img, width - 15, (height - offy - img.getHeight(null)) / 2, this);
 
-		// g2d.setFont(new Font("ARIAL", Font.PLAIN, 10));
-		// s="COURSE GENERATOR - Http://www.TechAndRun.com";
-		// Dimension stringSize = Utils.StringDimension(g2d, s);
-		//
-		// AffineTransform defaultAt = g2d.getTransform();
-		//
-		// AffineTransform at = new AffineTransform();
-		// at.rotate(-Math.PI / 2);
-		//
-		// g2d.setTransform(at);
-		// // x=y and y=-x
-		// //g2d.drawString(s, -(height-(int)(stringSize.getWidth()))/2,
-		// width-5);
-		//// g2d.drawString(s,
-		// -(height-(height-(int)(stringSize.getWidth()))/2), width-5);
-		// g2d.drawString(s, -width, width-5);
-		//
-		// g2d.setTransform(defaultAt);
-
-		// Image myImage = Resources.copyright;
-		// Bitmap bmCopyright = null;
-		// if (bmProfil.Height>290)
-		// bmCopyright = new Bitmap(Resources.copyright);
-		// else if (bmProfil.Height > 230)
-		// bmCopyright = new Bitmap(Resources.copyright_S);
-		// else
-		// bmCopyright = new Bitmap(Resources.copyright_XS);
-		//
-		// g.DrawImage(bmCopyright,w-15,(h-offy-bmCopyright.Height)/2);
-		// bmCopyright.Dispose();
-		//
-		// }
-
 		g2d.dispose();
 	}
 
