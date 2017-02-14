@@ -412,7 +412,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		// == Bottom button
 		// ===========================================================
 		btOk = new javax.swing.JButton();
-		btOk.setText(bundle.getString("frmEditCurve.btOk.text"));
+		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
 		btOk.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {

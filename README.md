@@ -2,7 +2,7 @@
 
 Course Generator is a software which can estimate your time in trail races. 
 
-STATUS : Version 4.0.0 alpha 1 - Usable but not all the features has been rewritten from the C# version.
+STATUS : Version 4.0.0 alpha 5 - Usable but not all the features has been rewritten from the C# version.
 
 I created Course Generator in 2008 for my first 100 km ultra trail. Since then I added a lot of features and it has been used by a lot of french ultra-runner. Up to the version 3.88 it has been written in C# and now java is used in order to be cross platform (Windows, Mac OS and Linux) and multilingual. 
 
@@ -39,10 +39,13 @@ How to run Course Generator :
 * Copy the "course_generator.jar" in a folder (where you want).
 * Execute "course_generator.jar"
 * Once the main window is displayed exit from CG
-* A "Course Generator" folder has been created in your home/user directory. Inside a "config.xml" file is present
+* A ".course_generator" folder has been created in your home/user directory. Inside a "config.xml" file is present
 * Download the ".par" file from the github "default_curves" directory and put them next to the "config.xml" file.
 * Restart CG
 * That's all. Enjoy ;)
+
+Note:
+Since version alpha 5, the course generator directory has been changed from "Course Generator" to ".course_generator".
 
 More information at [www.techandrun.com](http://www.techandrun.com)
 

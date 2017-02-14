@@ -435,7 +435,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 
 		btCancel = new javax.swing.JButton();
 		btCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
-		btCancel.setText(bundle.getString("frmTrackSettings.btCancel.text"));
+		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setVisible(false);
@@ -444,7 +444,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 
 		btOk = new javax.swing.JButton();
 		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
-		btOk.setText(bundle.getString("frmTrackSettings.btOk.text"));
+		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());
 		btOk.addActionListener(new java.awt.event.ActionListener() {

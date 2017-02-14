@@ -126,7 +126,7 @@ public class frmEditPoint extends javax.swing.JDialog {
         
         //----------------------------------------------------------------------
         btCancel = new javax.swing.JButton();
-        btCancel.setText(bundle.getString("frmEditPoint.btCancel.text")); 
+        btCancel.setText(bundle.getString("Global.btCancel.text")); 
         btCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
         btCancel.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,7 +136,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 
         //----------------------------------------------------------------------
 		btOk = new javax.swing.JButton();
-		btOk.setText(bundle.getString("frmEditPoint.btOk.text")); 
+		btOk.setText(bundle.getString("Global.btOk.text")); 
 		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
         btOk.setPreferredSize(btCancel.getPreferredSize());

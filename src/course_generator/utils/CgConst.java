@@ -26,8 +26,8 @@ public class CgConst {
 	/**Unit is feet and miles**/
     public static final int UNIT_MILES_FEET=1;
     
-    /**Course Generator directory**/
-    public static final String CG_DIR="Course Generator";
+    /**Course Generator config and curve directory**/
+    public static final String CG_DIR=".course_generator";
     /**Maximum version of the CGX file to read**/
     public static final int MAX_CGX_VERSION_TO_READ = 5;
     /**Maximum value of health coefficient**/
@@ -46,13 +46,16 @@ public class CgConst {
     public static final int TAG_ROADBOOK   = 256;
 
 
-    /**Minimum value of the slope for the curve**/
+    /** Minimum value of the slope for the curve **/
     public static final double MIN_CLIMB = -50.0;
-    /**Maximum value of the slope for the curve**/
+    /** Maximum value of the slope for the curve **/
     public static final double MAX_CLIMB = 50.0;
 
-    /**Delta value for the total elevation calculation**/
+    /** Delta value for the total elevation calculation **/
     public static final double MIN_ELEV = 10.0;
+
+    /** Tickness of the track on the map **/
+    public static final int TRACK_TICKNESS=3; 
 
     public static final double DIST_MAX_MINMAX = 1000.0;
     public static final double MIN_ELEV_MINMAX = 50.0;
@@ -108,4 +111,10 @@ public class CgConst {
     public static final Color CL_DIFF_HARD=new Color(255, 0, 0); //-- Red
     public static final Color CL_DIFF_VERYHARD=new Color(77, 77, 77); //-- Gray
     
+    public static final Color CL_MAP_DIFF_VERYEASY=new Color(0, 255, 0); //-- Green
+    public static final Color CL_MAP_DIFF_EASY=new Color(0, 128, 0); //-- Dark Green
+    public static final Color CL_MAP_DIFF_AVERAGE=new Color(0, 0, 255); //-- Blue
+    public static final Color CL_MAP_DIFF_HARD=new Color(255, 0, 0); //-- Red
+    public static final Color CL_MAP_DIFF_VERYHARD=new Color(0, 0, 0); //-- Black
+
 }

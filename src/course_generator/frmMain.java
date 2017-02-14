@@ -218,7 +218,7 @@ import course_generator.utils.Utils.CalcLineResult;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.ALPHA 4";
+	private final String Version = "4.0.0.ALPHA 5";
 	public TrackData Track;
 	private ResumeData Resume;
 	private final TrackDataModel ModelTableMain;
@@ -226,6 +226,7 @@ public class frmMain extends javax.swing.JFrame {
 	public CgSettings Settings;
 	public String DataDir;
 	private MapMarker CurrentPosMarker = null;
+	private MapMarker MapMarker = null;
 	private int old_row = -1;
 	private JFreeChart chart = null;
 	private XYSeriesCollection dataset = null;
@@ -233,7 +234,11 @@ public class frmMain extends javax.swing.JFrame {
 	private int cmptInternetConnexion = 0;
 	private boolean InternetConnectionActive = false;
 	private Timer timer1s; // 1 second timer object
-
+	private int IndexMarker = -1;
+	private int Old_MarkerStart = -1;
+	private int Old_MarkerEnd = -1;
+	private ArrayList<Double> UndoDiff;
+	
 	/**
 	 * Creates new form frmMain
 	 */
@@ -371,7 +376,8 @@ public class frmMain extends javax.swing.JFrame {
 		Settings = new CgSettings();
 		ModelTableMain = new TrackDataModel(Track, Settings);
 		ModelTableResume = new ResumeModel(Resume, Settings);
-
+		UndoDiff = new ArrayList<Double>();
+		
 		dataset = new XYSeriesCollection();
 		// dataset = CreateDataset();
 		chart = CreateChartProfil(dataset);
@@ -440,13 +446,14 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshMruCGX();
 		RefreshMruGPX();
 		RefreshStatusbar(Track);
+		RefreshMapButtons();
 	}
 	
 	
 	
-	
-	//-- Permet de lancer un calcul sur le tableau --
-	
+	/**
+	 * Launch the calculation on the track
+	 */
     private void CalcTrackTime() {
     	if (Track.data.isEmpty()) return;
 
@@ -2010,10 +2017,9 @@ public class frmMain extends javax.swing.JFrame {
 		btMapAddMarker.setFocusable(false);
 		btMapAddMarker.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				ShowMapMarker();
 			}
 		});
-		btMapAddMarker.setEnabled(false);
 		jToolBarMapViewer.add(btMapAddMarker);
 
 		// -- Hide marker
@@ -2024,10 +2030,9 @@ public class frmMain extends javax.swing.JFrame {
 		btMapHideMarker.setFocusable(false);
 		btMapHideMarker.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				HideMapMarker();
 			}
 		});
-		btMapHideMarker.setEnabled(false);
 		jToolBarMapViewer.add(btMapHideMarker);
 
 		// -- Separator
@@ -2040,10 +2045,9 @@ public class frmMain extends javax.swing.JFrame {
 		btMapUndo.setFocusable(false);
 		btMapUndo.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				UndoMapFillDiff();
 			}
 		});
-		btMapUndo.setEnabled(false);
 		jToolBarMapViewer.add(btMapUndo);
 
 		// -- Separator
@@ -2057,10 +2061,9 @@ public class frmMain extends javax.swing.JFrame {
 		btMapTrackVeryEasy.setFocusable(false);
 		btMapTrackVeryEasy.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				MapTrackDifficulty(CgConst.DIFF_VERYEASY);
 			}
 		});
-		btMapTrackVeryEasy.setEnabled(false);
 		jToolBarMapViewer.add(btMapTrackVeryEasy);
 
 		// -- Track easy
@@ -2071,10 +2074,9 @@ public class frmMain extends javax.swing.JFrame {
 		btMapTrackEasy.setFocusable(false);
 		btMapTrackEasy.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				MapTrackDifficulty(CgConst.DIFF_EASY);
 			}
 		});
-		btMapTrackEasy.setEnabled(false);
 		jToolBarMapViewer.add(btMapTrackEasy);
 
 		// -- Track average
@@ -2085,10 +2087,9 @@ public class frmMain extends javax.swing.JFrame {
 		btMapTrackAverage.setFocusable(false);
 		btMapTrackAverage.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				MapTrackDifficulty(CgConst.DIFF_AVERAGE);
 			}
 		});
-		btMapTrackAverage.setEnabled(false);
 		jToolBarMapViewer.add(btMapTrackAverage);
 
 		// -- Track hard
@@ -2099,10 +2100,9 @@ public class frmMain extends javax.swing.JFrame {
 		btMapTrackHard.setFocusable(false);
 		btMapTrackHard.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				MapTrackDifficulty(CgConst.DIFF_HARD);
 			}
 		});
-		btMapTrackHard.setEnabled(false);
 		jToolBarMapViewer.add(btMapTrackHard);
 
 		// -- Track average
@@ -2113,10 +2113,9 @@ public class frmMain extends javax.swing.JFrame {
 		btMapTrackVeryHard.setFocusable(false);
 		btMapTrackVeryHard.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				MapTrackDifficulty(CgConst.DIFF_VERYHARD);
 			}
 		});
-		btMapTrackVeryHard.setEnabled(false);
 		jToolBarMapViewer.add(btMapTrackVeryHard);
 
 		// -- Separator
@@ -2129,10 +2128,9 @@ public class frmMain extends javax.swing.JFrame {
 		btMapMark.setFocusable(false);
 		btMapMark.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				SetMarkMapMarker();
 			}
 		});
-		btMapMark.setEnabled(false);
 		jToolBarMapViewer.add(btMapMark);
 
 		// -- Eat
@@ -2142,10 +2140,9 @@ public class frmMain extends javax.swing.JFrame {
 		btMapEat.setFocusable(false);
 		btMapEat.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				SetEatMapMarker();
 			}
 		});
-		btMapEat.setEnabled(false);
 		jToolBarMapViewer.add(btMapEat);
 
 		// -- Drink
@@ -2155,13 +2152,210 @@ public class frmMain extends javax.swing.JFrame {
 		btMapDrink.setFocusable(false);
 		btMapDrink.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				SetDrinkMapMarker();
 			}
 		});
-		btMapDrink.setEnabled(false);
 		jToolBarMapViewer.add(btMapDrink);
-
 	}
+
+
+	private void MapTrackDifficulty(double diff) {
+		if ((Track.data.size() > 0) && (IndexMarker >= 0)) {
+			int row = TableMain.getSelectedRow();
+		
+			if (row < 0) return;
+	    	
+			Old_MarkerStart = IndexMarker;
+			Old_MarkerEnd = row;
+	        
+			//-- Check the start line is after the end line
+			int start=IndexMarker;
+			int end=row;				
+			if (IndexMarker>row) {
+				start=row;
+				end=IndexMarker;
+			}
+
+			//-- Clear the undo array
+			UndoDiff.clear();
+			
+			//-- Fill the table
+			for(int i=start; i<=end;i++) {
+				UndoDiff.add(Track.data.get(i).getDiff());
+				Track.data.get(i).setDiff(diff);
+			}
+			
+			IndexMarker = row;
+
+			//-- Set the flags
+	        Track.isCalculated = false;
+	        Track.isModified = true;
+
+			//-- Refresh the table and map
+			RefreshTableMain();
+			RefreshTrack(Track,false);
+			ShowMapMarker();
+		}
+	}
+
+
+
+	private void HideMapMarker() {
+		if (Track.data.size() > 0) {
+	        IndexMarker = -1;
+	        if (MapMarker!=null) {
+		        MapViewer.removeMapMarker(MapMarker);
+		        MapMarker=null;
+	        }
+	        RefreshMapButtons();
+	      }
+	}
+
+
+
+	private void ShowMapMarker() {
+		if (Track.data.size() > 0) {
+			int row = TableMain.getSelectedRow();
+			if (row < 0) return;
+
+			IndexMarker = row;
+
+			double lat = Track.data.get(row).getLatitude();
+			double lon = Track.data.get(row).getLongitude();
+	        
+	        //-- Display the marker at "lat,lon" position
+			RefreshMapMarker(lat, lon);
+	        RefreshMapButtons();
+	      }
+	}
+
+
+	private void SetEatMapMarker() {
+		if (Track.data.size() > 0) {
+			int row = TableMain.getSelectedRow();
+			if (row < 0) return;
+			
+			int tag = Track.data.get(row).getTag();
+			
+			if ((tag & CgConst.TAG_EAT_PT) == 0) {
+				tag = tag | CgConst.TAG_EAT_PT;
+				tag = tag & (~CgConst.TAG_WATER_PT);
+			}
+			else
+				tag = tag & (~CgConst.TAG_EAT_PT);
+			
+			Track.data.get(row).setTag(tag);
+			
+			//-- Set the flags
+			Track.isCalculated = false;
+			Track.isModified = true;
+			
+			//-- Refresh the table and map
+			RefreshTableMain();
+			RefreshTrack(Track,false);
+			ShowMapMarker();
+		}
+	}
+	
+	
+	private void SetDrinkMapMarker() {
+		if (Track.data.size() > 0) {
+			int row = TableMain.getSelectedRow();
+			if (row < 0) return;
+			
+			int tag = Track.data.get(row).getTag();
+			
+			if ((tag & CgConst.TAG_WATER_PT) == 0) {
+				tag = tag | CgConst.TAG_WATER_PT;
+				tag = tag & (~CgConst.TAG_EAT_PT);
+			}
+			else
+				tag = tag & (~CgConst.TAG_WATER_PT);
+			
+			Track.data.get(row).setTag(tag);
+			
+			//-- Set the flags
+			Track.isCalculated = false;
+			Track.isModified = true;
+			
+			//-- Refresh the table and map
+			RefreshTableMain();
+			RefreshTrack(Track,false);
+			ShowMapMarker();
+		}
+	}
+	
+	
+	 private void SetMarkMapMarker() {
+		 if (Track.data.size() > 0) {
+			 int row = TableMain.getSelectedRow();
+			 if (row < 0) return;
+				
+			 int tag = Track.data.get(row).getTag();
+
+			 if ((tag & CgConst.TAG_MARK) == 0)
+				 tag = tag | CgConst.TAG_MARK;
+			 else
+				 tag = tag & (~CgConst.TAG_MARK);
+
+			 Track.data.get(row).setTag(tag);
+
+			 //-- Set the flags
+			 Track.isCalculated = false;
+			 Track.isModified = true;
+
+			 //-- Refresh the table and map
+			 RefreshTableMain();
+			 RefreshTrack(Track,false);
+			 ShowMapMarker();
+		 }
+	 }
+
+
+	 private void UndoMapFillDiff() {
+		 if ((Old_MarkerStart >= 0) && (Old_MarkerEnd >= 0) && (UndoDiff.size()>0)) {
+			 int i1 = Old_MarkerStart;
+			 int i2 = Old_MarkerEnd;
+			 if (Old_MarkerStart > Old_MarkerEnd) {
+				 i1 = Old_MarkerEnd;
+				 i2 = Old_MarkerStart;
+			 }
+			 if (i1 != 0) i1++;
+
+			 for (int i = i1; i <= i2; i++) {
+				 Track.data.get(i).setDiff(UndoDiff.get(i-i1));
+			 }
+
+			 Old_MarkerStart = -1;
+			 Old_MarkerEnd = -1;
+	        
+			 UndoDiff.clear();
+
+			 //-- Set the flags
+			 Track.isCalculated = false;
+			 Track.isModified = true;
+
+			 //-- Refresh the table and map
+			 RefreshTableMain();
+			 RefreshTrack(Track,false);
+			 ShowMapMarker();
+		 }
+	}
+	 
+	private void RefreshMapButtons() {
+		btMapDrink.setEnabled(IndexMarker != -1);
+		btMapEat.setEnabled(IndexMarker != -1);
+		btMapMark.setEnabled(IndexMarker != -1);
+		btMapTrackVeryHard.setEnabled(IndexMarker != -1);
+		btMapTrackHard.setEnabled(IndexMarker != -1);
+		btMapTrackAverage.setEnabled(IndexMarker != -1);
+		btMapTrackEasy.setEnabled(IndexMarker != -1);
+		btMapTrackVeryEasy.setEnabled(IndexMarker != -1);
+		btMapHideMarker.setEnabled(IndexMarker != -1);
+//		btMapAddMarker.setEnabled(IndexMarker != -1);
+		btMapUndo.setEnabled(Old_MarkerStart != -1);
+	}
+
 
 	/**
 	 * Add a tab to JTabbedPane. The icon is at the left of the text and there
@@ -2197,12 +2391,9 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Main windows
 		// ------------------------------------------------------
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		// java.util.ResourceBundle bundle =
-		// java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		setTitle(bundle.getString("frmMain.title"));
 		setIconImages(null);
-		// setName("FrameMain");
-		// setPreferredSize(new java.awt.Dimension(812, 800));
+
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosing(java.awt.event.WindowEvent evt) {
 				formWindowClosing(evt);
@@ -2212,7 +2403,6 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Layout
 		// ------------------------------------------------------------
 		Container paneGlobal = getContentPane();
-		// paneGlobal.setLayout(new GridBagLayout());
 		paneGlobal.setLayout(new BorderLayout());
 
 		// -- Menu bar
@@ -2238,82 +2428,84 @@ public class frmMain extends javax.swing.JFrame {
 		// ----------------------------------------
 		jPanelLeft = new javax.swing.JPanel();
 		jPanelLeft.setLayout(new java.awt.BorderLayout());
-
+		
 		// -- Add the left panel to the main split panel
 		// ------------------------
 		SplitPaneMain.setLeftComponent(jPanelLeft);
-
-		// -- Content of the tree
-		javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode(
-				"Course Generator");
-		javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Parcours");
-		javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Utmb 2011");
-		javax.swing.tree.DefaultMutableTreeNode treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-		treeNode3.add(treeNode4);
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-		treeNode3.add(treeNode4);
-		treeNode2.add(treeNode3);
-		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Montagnard");
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-		treeNode3.add(treeNode4);
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-		treeNode3.add(treeNode4);
-		treeNode2.add(treeNode3);
-		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2008");
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-		treeNode3.add(treeNode4);
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-		treeNode3.add(treeNode4);
-		treeNode2.add(treeNode3);
-		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2009");
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-		treeNode3.add(treeNode4);
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-		treeNode3.add(treeNode4);
-		treeNode2.add(treeNode3);
-		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2010");
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-		treeNode3.add(treeNode4);
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-		treeNode3.add(treeNode4);
-		treeNode2.add(treeNode3);
-		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2011");
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-		treeNode3.add(treeNode4);
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-		treeNode3.add(treeNode4);
-		treeNode2.add(treeNode3);
-		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2012");
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-		treeNode3.add(treeNode4);
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-		treeNode3.add(treeNode4);
-		treeNode2.add(treeNode3);
-		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2013");
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-		treeNode3.add(treeNode4);
-		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-		treeNode3.add(treeNode4);
-		treeNode2.add(treeNode3);
-		treeNode1.add(treeNode2);
-		treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Configuration");
-		treeNode1.add(treeNode2);
-
-		// -- Tree
-		// --------------------------------------------------------------
-		jTreeMain = new javax.swing.JTree();
-		jTreeMain.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-		jTreeMain.setPreferredSize(new java.awt.Dimension(109, 25));
-
-		// -- Add the tree to a scroll panel
-		// ------------------------------------
-		jScrollPaneTree = new javax.swing.JScrollPane();
-		jScrollPaneTree.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		jScrollPaneTree.setViewportView(jTreeMain);
-
-		// -- Add the scroll panel to the left panel
-		// ----------------------------
-		jPanelLeft.add(jScrollPaneTree, java.awt.BorderLayout.CENTER);
+		SplitPaneMain.setDividerLocation(0);
+		
+//		// -- Content of the tree
+//		javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode(
+//				"Course Generator");
+//		javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Parcours");
+//		javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Utmb 2011");
+//		javax.swing.tree.DefaultMutableTreeNode treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+//		treeNode3.add(treeNode4);
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+//		treeNode3.add(treeNode4);
+//		treeNode2.add(treeNode3);
+//		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Montagnard");
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+//		treeNode3.add(treeNode4);
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+//		treeNode3.add(treeNode4);
+//		treeNode2.add(treeNode3);
+//		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2008");
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+//		treeNode3.add(treeNode4);
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+//		treeNode3.add(treeNode4);
+//		treeNode2.add(treeNode3);
+//		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2009");
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+//		treeNode3.add(treeNode4);
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+//		treeNode3.add(treeNode4);
+//		treeNode2.add(treeNode3);
+//		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2010");
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+//		treeNode3.add(treeNode4);
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+//		treeNode3.add(treeNode4);
+//		treeNode2.add(treeNode3);
+//		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2011");
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+//		treeNode3.add(treeNode4);
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+//		treeNode3.add(treeNode4);
+//		treeNode2.add(treeNode3);
+//		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2012");
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+//		treeNode3.add(treeNode4);
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+//		treeNode3.add(treeNode4);
+//		treeNode2.add(treeNode3);
+//		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2013");
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+//		treeNode3.add(treeNode4);
+//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+//		treeNode3.add(treeNode4);
+//		treeNode2.add(treeNode3);
+//		treeNode1.add(treeNode2);
+//		treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Configuration");
+//		treeNode1.add(treeNode2);
+//
+//		// -- Tree
+//		// --------------------------------------------------------------
+//		jTreeMain = new javax.swing.JTree();
+//		jTreeMain.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+//		jTreeMain.setPreferredSize(new java.awt.Dimension(109, 25));
+//
+//		// -- Add the tree to a scroll panel
+//		// ------------------------------------
+//		jScrollPaneTree = new javax.swing.JScrollPane();
+//		jScrollPaneTree.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+//		jScrollPaneTree.setViewportView(jTreeMain);
+//		jScrollPaneTree.setMaximumSize(new Dimension(0,0));
+//
+//		// -- Add the scroll panel to the left panel
+//		// ----------------------------
+//		jPanelLeft.add(jScrollPaneTree, java.awt.BorderLayout.CENTER);
 
 		// -- Right split pane
 		// --------------------------------------------------
@@ -2827,7 +3019,7 @@ public class frmMain extends javax.swing.JFrame {
 		        		RefreshStatusbar(Track);
 		        		RefreshTitle();
 		        		RefreshProfil();
-		        		RefreshTrack(Track);
+		        		RefreshTrack(Track,true);
 		        		RefreshResume();
 		        		RefreshStat(false);
 		        		//RefreshInfoAnalyseSpeed(0);
@@ -3055,7 +3247,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Update the viewer
 		MapViewer.removeAllMapMarkers();
-		RefreshTrack(Track);
+		RefreshTrack(Track,true);
 		// -- Refresh the track information
 		RefreshStatusbar(Track);
 
@@ -3137,7 +3329,7 @@ public class frmMain extends javax.swing.JFrame {
 		}
 
 		// -- Update the viewer
-		RefreshTrack(Track);
+		RefreshTrack(Track,true);
 		// -- Refresh the track information
 		RefreshStatusbar(Track);
 		// -- Refresh resume grid
@@ -3185,7 +3377,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * Load the configuration file
 	 */
 	private void LoadConfig() {
-		Settings.Load(DataDir + "/Course Generator");
+		Settings.Load(DataDir + "/"+CgConst.CG_DIR);
 	}
 
 	/**
@@ -3204,7 +3396,7 @@ public class frmMain extends javax.swing.JFrame {
 		for (int i = 0; i < 16; i++)
 			Settings.TableMainColWidth[i] = TableMain.getColumnModel().getColumn(i).getWidth();
 
-		Settings.Save(DataDir + "/Course Generator");
+		Settings.Save(DataDir + "/"+CgConst.CG_DIR);
 	}
 
 	/**
@@ -3401,21 +3593,17 @@ public class frmMain extends javax.swing.JFrame {
 	 * 
 	 * @param tdata
 	 *            TrackData object to display
+	 * @param zoom2fit
+	 *            If true the zoom is set have the complete display of the track
+	 *            
 	 */
-	private void RefreshTrack(TrackData tdata) {
+	private void RefreshTrack(TrackData tdata, boolean zoom2fit) {
 		// -- Remove the previous track
 		MapViewer.removeAllMapPolygons();
+		MapViewer.removeAllMapMarkers();
 
-		/*
-		 * //-- Create the route List<Coordinate> route1 = new
-		 * ArrayList<Coordinate>(); for (CgData r: tdata.data) { route1.add(new
-		 * Coordinate(r.Latitude, r.Longitude)); } MapPolyLine polyLine1 = new
-		 * MapPolyLine(route1); //-- Set the line color
-		 * polyLine1.setColor(Color.MAGENTA); //-- Set the line width
-		 * polyLine1.setStroke(new BasicStroke(3)); //-- Upddate the viewer
-		 * MapViewer.addMapPolygon(polyLine1); //-- Zoom to display the track
-		 * MapViewer.setDisplayToFitMapPolygons();
-		 */
+		MapMarker = null;
+		CurrentPosMarker = null;
 
 		// -- Create the route
 		List<Coordinate> route1 = new ArrayList<Coordinate>();
@@ -3427,16 +3615,20 @@ public class frmMain extends javax.swing.JFrame {
 				route1.add(new Coordinate(r.getLatitude(), r.getLongitude()));
 				MapPolyLine polyLine1 = new MapPolyLine(route1);
 				// -- Set the line color
-				if (last_diff >= 98.0)
-					polyLine1.setColor(Color.GREEN);
+				if (last_diff==100.0)
+					polyLine1.setColor(CgConst.CL_MAP_DIFF_VERYEASY);
+				else if (last_diff >= 98.0)
+					polyLine1.setColor(CgConst.CL_MAP_DIFF_EASY);
 				else if (last_diff >= 95.0)
-					polyLine1.setColor(Color.BLUE);
+					polyLine1.setColor(CgConst.CL_MAP_DIFF_AVERAGE);
 				else if (last_diff >= 88)
-					polyLine1.setColor(Color.RED);
+					polyLine1.setColor(CgConst.CL_MAP_DIFF_HARD);
 				else
-					polyLine1.setColor(Color.BLACK);
+					polyLine1.setColor(CgConst.CL_MAP_DIFF_VERYHARD);
 
-				polyLine1.setStroke(new BasicStroke(3));
+				//-- Track width
+				polyLine1.setStroke(new BasicStroke(CgConst.TRACK_TICKNESS));
+
 				// -- Upddate the viewer
 				MapViewer.addMapPolygon(polyLine1);
 
@@ -3462,8 +3654,8 @@ public class frmMain extends javax.swing.JFrame {
 		MapViewer.addMapPolygon(polyLine1);
 
 		// -- Zoom to display the track
-		MapViewer.setDisplayToFitMapPolygons();
-		
+		if (zoom2fit)
+			MapViewer.setDisplayToFitMapPolygons();
 		
 		for (CgData r : tdata.data) {
 			int t=r.getTag();
@@ -3590,6 +3782,27 @@ public class frmMain extends javax.swing.JFrame {
 		} else {
 			CurrentPosMarker.setLat(lat);
 			CurrentPosMarker.setLon(lon);
+			MapViewer.setDisplayPosition(new Coordinate(lat, lon), MapViewer.getZoom());
+		}
+	}
+
+
+	/**
+	 * Refresh the marker on the map
+	 * @param lat
+	 *            latitude of the position of the marker
+	 * @param lon
+	 *            longitude of the position of the marker
+	 */
+	public void RefreshMapMarker(double lat, double lon) {
+		if (MapMarker == null) {
+			// -- Define the current position marker
+			MapMarker = new MapMarkerImg(new Coordinate(lat, lon),
+					createImageIcon("images/marker1.png", "").getImage());
+			MapViewer.addMapMarker(MapMarker);
+		} else {
+			MapMarker.setLat(lat);
+			MapMarker.setLon(lon);
 			MapViewer.setDisplayPosition(new Coordinate(lat, lon), MapViewer.getZoom());
 		}
 	}
