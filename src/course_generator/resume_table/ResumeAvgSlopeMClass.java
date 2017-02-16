@@ -18,6 +18,6 @@
 
 package course_generator.resume_table;
 
-public class ResumeAvgSlopeNClass {
+public class ResumeAvgSlopeMClass {
     //Empty class - This is normal ;)
 }

@@ -130,8 +130,8 @@ import course_generator.dialogs.frmSearchPoint;
 import course_generator.dialogs.frmTrackSettings;
 import course_generator.mrb.FrmMiniroadbook;
 import course_generator.param.frmEditCurve;
-import course_generator.resume_table.ResumeAvgSlopeNClass;
-import course_generator.resume_table.ResumeAvgSlopeNRenderer;
+import course_generator.resume_table.ResumeAvgSlopeMClass;
+import course_generator.resume_table.ResumeAvgSlopeMRenderer;
 import course_generator.resume_table.ResumeAvgSlopePClass;
 import course_generator.resume_table.ResumeAvgSlopePRenderer;
 import course_generator.resume_table.ResumeAvgSpeedClass;
@@ -1974,10 +1974,9 @@ public class frmMain extends javax.swing.JFrame {
 		btResumeSave.setFocusable(false);
 		btResumeSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				SaveResumeAsCSV();
 			}
 		});
-		btResumeSave.setEnabled(false);
 		ToolBarResume.add(btResumeSave);
 
 		// -- Separator
@@ -1999,6 +1998,23 @@ public class frmMain extends javax.swing.JFrame {
 		ToolBarResume.add(btRefreshRefresh);
 
 	}
+
+	private void SaveResumeAsCSV() {
+		if (Resume.data.size()>0) {
+			String s;
+			s = Utils.SaveDialog(this, Settings.LastDir, "", ".csv", bundle.getString("frmMain.CSVFile"), true,
+					bundle.getString("frmMain.FileExist"));
+							
+			if (!s.isEmpty()) {
+				Resume.SaveAsCSV(s,Settings.Unit);
+
+				// -- Store the directory
+				Settings.LastDir = Utils.GetDirFromFilename(s);
+			}
+		}
+	}
+
+
 
 	/**
 	 * Create the map toolbar
@@ -2788,7 +2804,7 @@ public class frmMain extends javax.swing.JFrame {
 		TableResume.setDefaultRenderer(ResumeSpeedPClass.class, new ResumeSpeedPRenderer());
 		TableResume.setDefaultRenderer(ResumeSpeedNClass.class, new ResumeSpeedNRenderer());
 		TableResume.setDefaultRenderer(ResumeAvgSlopePClass.class, new ResumeAvgSlopePRenderer());
-		TableResume.setDefaultRenderer(ResumeAvgSlopeNClass.class, new ResumeAvgSlopeNRenderer());
+		TableResume.setDefaultRenderer(ResumeAvgSlopeMClass.class, new ResumeAvgSlopeMRenderer());
 		TableResume.setDefaultRenderer(ResumeAvgSpeedClass.class, new ResumeAvgSpeedRenderer());
 		TableResume.setDefaultRenderer(ResumeCommentClass.class, new ResumeCommentRenderer());
 

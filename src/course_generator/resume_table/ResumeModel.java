@@ -209,7 +209,7 @@ public class ResumeModel  extends AbstractTableModel{
 	        	return ResumeAvgSlopePClass.class;
 	        case 18: 
 	        	//Average descend slope
-	        	return ResumeAvgSlopeNClass.class;
+	        	return ResumeAvgSlopeMClass.class;
 	        case 19: 
 	        	//Average speed
 	        	return ResumeAvgSpeedClass.class;

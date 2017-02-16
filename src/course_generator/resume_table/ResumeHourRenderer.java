@@ -39,10 +39,12 @@ public class ResumeHourRenderer   extends DefaultTableCellRenderer {
 
        CgResume data = (CgResume) value;
 
-       DateTime val = data.getHour();
-
-       //-- Display the value
-       setText(val.toString("E HH:mm:ss "));
+       setText(data.getHourString());
+       
+//       DateTime val = data.getHour();
+//
+//       //-- Display the value
+//       setText(val.toString("E HH:mm:ss "));
        setHorizontalAlignment(CENTER);
        return this;
    }

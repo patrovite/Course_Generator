@@ -37,12 +37,13 @@ public class ResumeAvgSlopePRenderer   extends DefaultTableCellRenderer {
 
        CgResume data = (CgResume) value;
 
-       Double val = data.getAvgSlopeP();
-
-       if (!val.isNaN())
-    	   setText(String.format("%1.1f ",val));
-       else
-    	   setText("0.0");
+       setText(data.getAvgSlopePString());
+//       Double val = data.getAvgSlopeP();
+//
+//       if (!val.isNaN())
+//    	   setText(String.format("%1.1f ",val));
+//       else
+//    	   setText("0.0");
        setHorizontalAlignment(CENTER);
        return this;
    }

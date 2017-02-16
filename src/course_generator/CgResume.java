@@ -78,6 +78,10 @@ public class CgResume {
 		return Num;
 	}
 
+	public String getNumString() {
+		return String.format("%1.0f", Num);
+	}
+	
 	public void setNum(double num) {
 		Num = num;
 	}
@@ -94,6 +98,10 @@ public class CgResume {
 	// -- Line number
 	public double getLine() {
 		return Line;
+	}
+
+	public String getLineString() {
+		return String.format("%1.0f", Line);
 	}
 
 	public void setLine(double line) {
@@ -297,6 +305,13 @@ public class CgResume {
 		Time = time;
 	}
 
+	public String getTimeString() {
+		int nbh = Time / 3600;
+		int nbm = (Time % 3600) / 60;
+		int nbs = (Time % 3600) % 60;
+	    return String.format("%02d:%02d:%02d ",nbh,nbm,nbs);
+	}
+	
 	// -- Hour
 	public DateTime getHour() {
 		return Hour;
@@ -306,6 +321,10 @@ public class CgResume {
 		Hour = hour;
 	}
 
+	public String getHourString() {
+		return Hour.toString("E HH:mm:ss ");
+	}
+
 	// -- Delta Time
 	public int getdTime_f() {
 		return dTime_f;
@@ -313,6 +332,13 @@ public class CgResume {
 
 	public void setdTime_f(int dTime_f) {
 		this.dTime_f = dTime_f;
+	}
+
+	public String getdTime_f_String() {
+	    int nbh = dTime_f / 3600;
+	    int nbm = (dTime_f % 3600) / 60;
+	    int nbs = (dTime_f % 3600) % 60;
+	    return String.format("%02d:%02d:%02d ",nbh,nbm,nbs);
 	}
 
 	// -- Total distance
@@ -372,6 +398,18 @@ public class CgResume {
 		TimeLimit = timeLimit;
 	}
 
+	public String getTimeLimitString() {
+		if (TimeLimit!=0) {
+		       //-- Set the value
+		       int nbh = TimeLimit / 3600;
+		       int nbm = (TimeLimit % 3600) / 60;
+		       int nbs = (TimeLimit % 3600) % 60;
+		       return String.format("%02d:%02d:%02d ",nbh,nbm,nbs);
+	       }
+	       else
+	    	   return "";
+	}
+
 	// -- Station time
 	public int getStationTime() {
 		return StationTime;
@@ -379,6 +417,18 @@ public class CgResume {
 
 	public void setStationTime(int stationTime) {
 		StationTime = stationTime;
+	}
+
+	public String getStationTimeString() {
+       if (StationTime!=0) {
+	       //-- Set the value
+	       int nbh = StationTime / 3600;
+	       int nbm = (StationTime % 3600) / 60;
+	       int nbs = (StationTime % 3600) % 60;
+	       return String.format("%02d:%02d:%02d ",nbh,nbm,nbs);
+       }
+       else
+    	   return "";
 	}
 
 	// -- Delta distance
@@ -628,6 +678,14 @@ public class CgResume {
 		AvgSlopeP = avgSlopeP;
 	}
 
+	public String getAvgSlopePString() {
+		Double val=AvgSlopeP;
+       if (!val.isNaN())
+    	   return String.format("%1.1f ",val);
+       else
+    	   return "0.0";
+	}
+	
 	// -- average descend slope
 	public double getAvgSlopeM() {
 		return AvgSlopeM;
@@ -635,6 +693,14 @@ public class CgResume {
 
 	public void setAvgSlopeM(double avgSlopeM) {
 		AvgSlopeM = avgSlopeM;
+	}
+
+	public String getAvgSlopeMString() {
+		Double val=AvgSlopeM;
+	       if (!val.isNaN())
+	    	   return String.format("%1.1f ",val);
+	       else
+	    	   return "0.0";
 	}
 
 	// -- Comment

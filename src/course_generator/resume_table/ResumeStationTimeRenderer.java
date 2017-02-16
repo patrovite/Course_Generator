@@ -36,17 +36,19 @@ public class ResumeStationTimeRenderer   extends DefaultTableCellRenderer {
        super.getTableCellRendererComponent(table, value, isSelected, hasFocus,	row, column);
 
        CgResume data = (CgResume) value;
+       
+       setText(data.getStationTimeString());
 
-       int time = data.getStationTime();
-       if (time!=0) {
-	       //-- Set the value
-	       int nbh = time / 3600;
-	       int nbm = (time % 3600) / 60;
-	       int nbs = (time % 3600) % 60;
-	       setText(String.format("%02d:%02d:%02d ",nbh,nbm,nbs));
-       }
-       else
-    	   setText("");
+//       int time = data.getStationTime();
+//       if (time!=0) {
+//	       //-- Set the value
+//	       int nbh = time / 3600;
+//	       int nbm = (time % 3600) / 60;
+//	       int nbs = (time % 3600) % 60;
+//	       setText(String.format("%02d:%02d:%02d ",nbh,nbm,nbs));
+//       }
+//       else
+//    	   setText("");
 
        setHorizontalAlignment(CENTER);
        return this;

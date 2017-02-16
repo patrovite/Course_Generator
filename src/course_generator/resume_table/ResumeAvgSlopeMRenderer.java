@@ -30,20 +30,21 @@ import course_generator.settings.CgSettings;
 *
 * @author pierre.delore
 */
-public class ResumeAvgSlopeNRenderer   extends DefaultTableCellRenderer {
+public class ResumeAvgSlopeMRenderer   extends DefaultTableCellRenderer {
    
    @Override
    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
        super.getTableCellRendererComponent(table, value, isSelected, hasFocus,	row, column);
 
        CgResume data = (CgResume) value;
-       
-       Double val = data.getAvgSlopeM();
 
-       if (!val.isNaN())
-    	   setText(String.format("%1.1f ",val));
-       else
-    	   setText("0.0");
+       setText(data.getAvgSlopeMString());
+//       Double val = data.getAvgSlopeM();
+//
+//       if (!val.isNaN())
+//    	   setText(String.format("%1.1f ",val));
+//       else
+//    	   setText("0.0");
        setHorizontalAlignment(CENTER);
        return this;
    }

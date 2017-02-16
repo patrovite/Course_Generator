@@ -37,13 +37,14 @@ public class ResumedtTimeRenderer   extends DefaultTableCellRenderer {
 
        CgResume data = (CgResume) value;
 
-       int time = data.getdTime_f();
-
-       //-- Set the value
-       int nbh = time / 3600;
-       int nbm = (time % 3600) / 60;
-       int nbs = (time % 3600) % 60;
-       setText(String.format("%02d:%02d:%02d ",nbh,nbm,nbs));
+       setText(data.getdTime_f_String());
+//       int time = data.getdTime_f();
+//
+//       //-- Set the value
+//       int nbh = time / 3600;
+//       int nbm = (time % 3600) / 60;
+//       int nbs = (time % 3600) % 60;
+//       setText(String.format("%02d:%02d:%02d ",nbh,nbm,nbs));
 
        setHorizontalAlignment(CENTER);
        return this;

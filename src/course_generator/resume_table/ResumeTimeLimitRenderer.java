@@ -37,17 +37,18 @@ public class ResumeTimeLimitRenderer   extends DefaultTableCellRenderer {
 
        CgResume data = (CgResume) value;
 
-       int time = data.getTimeLimit();
-
-       if (time!=0) {
-	       //-- Set the value
-	       int nbh = time / 3600;
-	       int nbm = (time % 3600) / 60;
-	       int nbs = (time % 3600) % 60;
-	       setText(String.format("%02d:%02d:%02d ",nbh,nbm,nbs));
-       }
-       else
-    	   setText("");
+       setText(data.getTimeLimitString());
+//       int time = data.getTimeLimit();
+//
+//       if (time!=0) {
+//	       //-- Set the value
+//	       int nbh = time / 3600;
+//	       int nbm = (time % 3600) / 60;
+//	       int nbs = (time % 3600) % 60;
+//	       setText(String.format("%02d:%02d:%02d ",nbh,nbm,nbs));
+//       }
+//       else
+//    	   setText("");
        setHorizontalAlignment(CENTER);
        return this;
    }
