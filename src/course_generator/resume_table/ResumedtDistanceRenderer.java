@@ -40,7 +40,7 @@ public class ResumedtDistanceRenderer   extends DefaultTableCellRenderer {
        CgSettings settings = ((ResumeModel) table.getModel()).getSettings();
 
        //-- Display the value
-       setText(data.getDistString(settings.Unit, false)); 
+       setText(data.getdDistString(settings.Unit, false)); 
        setHorizontalAlignment(CENTER);
        return this;
    }

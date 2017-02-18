@@ -192,14 +192,23 @@ public class frmSettings extends javax.swing.JDialog {
 		// -- LANGUAGE - String
 		lbLanguage = new javax.swing.JLabel();
 		lbLanguage.setText(bundle.getString("frmSettings.lbLanguage.text"));
-		Utils.addComponent(paneGlobal, lbLanguage, 0, line, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(paneGlobal, lbLanguage, 
+				0, line, 
+				1, 1, 
+				1, 0, 
+				10, 10, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		cbLanguage = new javax.swing.JComboBox<>();
 		String language[] = { bundle.getString("frmSettings.LanguageDefault"),
 				bundle.getString("frmSettings.LanguageEN"), bundle.getString("frmSettings.LanguageFR") };
 		cbLanguage.setModel(new javax.swing.DefaultComboBoxModel<>(language));
-		Utils.addComponent(paneGlobal, cbLanguage, 1, line++, 1, 1, 0, 0, 0, 5, 0, 5,
+		Utils.addComponent(paneGlobal, cbLanguage, 
+				1, line++, 
+				1, 1, 
+				0, 0, 
+				10, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		line++;
@@ -207,13 +216,22 @@ public class frmSettings extends javax.swing.JDialog {
 		// -- UNIT - int - Unit
 		lbUnit = new javax.swing.JLabel();
 		lbUnit.setText(bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbUnit, 0, line, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(paneGlobal, lbUnit, 
+				0, line, 
+				1, 1, 
+				1, 0, 
+				2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		cbUnit = new javax.swing.JComboBox<>();
 		String units[] = { bundle.getString("frmSettings.Units.KmM"), bundle.getString("frmSettings.Units.MilesFeet") };
 		cbUnit.setModel(new javax.swing.DefaultComboBoxModel<>(units));
-		Utils.addComponent(paneGlobal, cbUnit, 1, line++, 1, 1, 0, 0, 0, 5, 0, 5, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(paneGlobal, cbUnit, 
+				1, line++, 
+				1, 1, 
+				0, 0, 
+				2, 5, 0, 10, 
+				GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		// -- Separator
@@ -224,10 +242,15 @@ public class frmSettings extends javax.swing.JDialog {
 		// ===========================================================
 		jPanelButtons = new javax.swing.JPanel();
 		jPanelButtons.setLayout(new FlowLayout());
-		Utils.addComponent(paneGlobal, jPanelButtons, 0, line, GridBagConstraints.REMAINDER, 1, 0, 0, 0, 0, 0, 0,
+		Utils.addComponent(paneGlobal, jPanelButtons, 
+				0, line, 
+				GridBagConstraints.REMAINDER, 1, 
+				0, 0, 
+				10, 0, 0, 0,
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
+		btCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -236,6 +259,7 @@ public class frmSettings extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
+		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());

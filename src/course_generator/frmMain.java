@@ -64,6 +64,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
@@ -71,6 +72,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,17 +105,28 @@ import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.annotations.XYAnnotation;
+import org.jfree.chart.annotations.XYDrawableAnnotation;
+import org.jfree.chart.annotations.XYPointerAnnotation;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.entity.XYItemEntity;
+import org.jfree.chart.event.AnnotationChangeListener;
 import org.jfree.chart.panel.CrosshairOverlay;
 import org.jfree.chart.plot.Crosshair;
+import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.PlotRenderingInfo;
+import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYAreaRenderer;
+import org.jfree.data.xy.XYDataItem;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.RectangleAnchor;
+import org.jfree.ui.RectangleInsets;
+import org.jfree.ui.TextAnchor;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
@@ -218,7 +231,7 @@ import course_generator.utils.Utils.CalcLineResult;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.ALPHA 5";
+	private final String Version = "4.0.0.ALPHA 6";
 	public TrackData Track;
 	private ResumeData Resume;
 	private final TrackDataModel ModelTableMain;
@@ -238,6 +251,7 @@ public class frmMain extends javax.swing.JFrame {
 	private int Old_MarkerStart = -1;
 	private int Old_MarkerEnd = -1;
 	private ArrayList<Double> UndoDiff;
+	private boolean showProfilMarker = true;
 	
 	/**
 	 * Creates new form frmMain
@@ -291,7 +305,7 @@ public class frmMain extends javax.swing.JFrame {
 	private JButton btTirednessSettings;
 	private JButton btTrackSettings;
 	private JButton btCalculateTrackTime;
-	private JButton btProfilSave;
+	private JButton btProfilMarker;
 	private JButton btProfilZoomX;
 	private JButton btProfilZoomY;
 	private JButton btProfilSettings;
@@ -377,6 +391,7 @@ public class frmMain extends javax.swing.JFrame {
 		ModelTableMain = new TrackDataModel(Track, Settings);
 		ModelTableResume = new ResumeModel(Resume, Settings);
 		UndoDiff = new ArrayList<Double>();
+		showProfilMarker=true;
 		
 		dataset = new XYSeriesCollection();
 		// dataset = CreateDataset();
@@ -447,10 +462,19 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshMruGPX();
 		RefreshStatusbar(Track);
 		RefreshMapButtons();
+		RefreshProfilButtons();
 	}
 	
 	
-	
+	/*
+	 * Refresh the buttons status of the profil toolbar
+	 */
+	private void RefreshProfilButtons() {
+		btProfilMarker.setSelected(showProfilMarker);
+	}
+
+
+
 	/**
 	 * Launch the calculation on the track
 	 */
@@ -1161,6 +1185,14 @@ public class frmMain extends javax.swing.JFrame {
 
 				// -- Refresh data and display
 				RefreshStatusbar(Track);
+				RefreshResume();
+				RefreshProfil();
+				
+				int row = TableMain.getSelectedRow();
+				if (row>= 0) RefreshProfilInfo(row);
+				
+				RefreshTableMain();
+				RefreshTableResume();
 			}
 		});
 		mnuSettings.add(mnuCGSettings);
@@ -1846,70 +1878,71 @@ public class frmMain extends javax.swing.JFrame {
 		ToolBarProfil.setFloatable(false);
 		ToolBarProfil.setRollover(true);
 
-		// -- Save
+		// -- Show/Hide profil marker
 		// --------------------------------------------------------------
-		btProfilSave = new javax.swing.JButton();
-		btProfilSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/save.png")));
-		btProfilSave.setToolTipText(bundle.getString("frmMain.btProfilSave.toolTipText"));
-		btProfilSave.setFocusable(false);
-		btProfilSave.addActionListener(new java.awt.event.ActionListener() {
+		btProfilMarker = new javax.swing.JButton();
+		btProfilMarker.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/profil_marker.png")));
+		btProfilMarker.setToolTipText(bundle.getString("frmMain.btProfilMarker.toolTipText"));
+		btProfilMarker.setFocusable(false);
+		btProfilMarker.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				showProfilMarker=!showProfilMarker;
+				RefreshProfilButtons();
+				RefreshProfil();
 			}
 		});
-		btProfilSave.setEnabled(false);
-		ToolBarProfil.add(btProfilSave);
+		ToolBarProfil.add(btProfilMarker);
 
-		// -- Separator
-		// ---------------------------------------------------------
-		ToolBarProfil.add(new javax.swing.JToolBar.Separator());
-
-		// -- Zoom X
-		// ------------------------------------------------------------
-		btProfilZoomX = new javax.swing.JButton();
-		btProfilZoomX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/zoom_x.png")));
-		btProfilZoomX.setToolTipText(bundle.getString("frmMain.btProfilZoomX.toolTipText"));
-		btProfilZoomX.setFocusable(false);
-		btProfilZoomX.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
-			}
-		});
-		btProfilZoomX.setEnabled(false);
-		ToolBarProfil.add(btProfilZoomX);
-
-		// -- Zoom Y
-		// ------------------------------------------------------------
-		btProfilZoomY = new javax.swing.JButton();
-		btProfilZoomY.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/zoom_y.png")));
-		btProfilZoomY.setToolTipText(bundle.getString("frmMain.btProfilZoomY.toolTipText"));
-		btProfilZoomY.setFocusable(false);
-		btProfilZoomY.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
-			}
-		});
-		btProfilZoomY.setEnabled(false);
-		ToolBarProfil.add(btProfilZoomY);
-
-		// -- Separator
-		// ---------------------------------------------------------
-		ToolBarProfil.add(new javax.swing.JToolBar.Separator());
-
-		// -- Settings
-		// ----------------------------------------------------------
-		btProfilSettings = new javax.swing.JButton();
-		btProfilSettings
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/settings.png")));
-		btProfilSettings.setToolTipText(bundle.getString("frmMain.btProfilSettings.toolTipText"));
-		btProfilSettings.setFocusable(false);
-		btProfilSettings.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
-			}
-		});
-		btProfilSettings.setEnabled(false);
-		ToolBarProfil.add(btProfilSettings);
+//		// -- Separator
+//		// ---------------------------------------------------------
+//		ToolBarProfil.add(new javax.swing.JToolBar.Separator());
+//
+//		// -- Zoom X
+//		// ------------------------------------------------------------
+//		btProfilZoomX = new javax.swing.JButton();
+//		btProfilZoomX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/zoom_x.png")));
+//		btProfilZoomX.setToolTipText(bundle.getString("frmMain.btProfilZoomX.toolTipText"));
+//		btProfilZoomX.setFocusable(false);
+//		btProfilZoomX.addActionListener(new java.awt.event.ActionListener() {
+//			public void actionPerformed(java.awt.event.ActionEvent evt) {
+//				// btOpenCGXActionPerformed(evt); //TODO
+//			}
+//		});
+//		btProfilZoomX.setEnabled(false);
+//		ToolBarProfil.add(btProfilZoomX);
+//
+//		// -- Zoom Y
+//		// ------------------------------------------------------------
+//		btProfilZoomY = new javax.swing.JButton();
+//		btProfilZoomY.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/zoom_y.png")));
+//		btProfilZoomY.setToolTipText(bundle.getString("frmMain.btProfilZoomY.toolTipText"));
+//		btProfilZoomY.setFocusable(false);
+//		btProfilZoomY.addActionListener(new java.awt.event.ActionListener() {
+//			public void actionPerformed(java.awt.event.ActionEvent evt) {
+//				// btOpenCGXActionPerformed(evt); //TODO
+//			}
+//		});
+//		btProfilZoomY.setEnabled(false);
+//		ToolBarProfil.add(btProfilZoomY);
+//
+//		// -- Separator
+//		// ---------------------------------------------------------
+//		ToolBarProfil.add(new javax.swing.JToolBar.Separator());
+//
+//		// -- Settings
+//		// ----------------------------------------------------------
+//		btProfilSettings = new javax.swing.JButton();
+//		btProfilSettings
+//				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/settings.png")));
+//		btProfilSettings.setToolTipText(bundle.getString("frmMain.btProfilSettings.toolTipText"));
+//		btProfilSettings.setFocusable(false);
+//		btProfilSettings.addActionListener(new java.awt.event.ActionListener() {
+//			public void actionPerformed(java.awt.event.ActionEvent evt) {
+//				// btOpenCGXActionPerformed(evt); //TODO
+//			}
+//		});
+//		btProfilSettings.setEnabled(false);
+//		ToolBarProfil.add(btProfilSettings);
 
 	}
 
@@ -2611,18 +2644,18 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Profil tool bar
 		// ---------------------------------------------------
-		// Create_Profil_Toolbar();
-		// jPanelProfil.add(ToolBarProfil, java.awt.BorderLayout.WEST);
+		Create_Profil_Toolbar();
+		jPanelProfil.add(ToolBarProfil, java.awt.BorderLayout.WEST);
 
 		// -- Profil chart
 		// ------------------------------------------------------
 		jPanelProfilChart = new ChartPanel(chart);
 		CrosshairOverlay crosshairOverlay = new CrosshairOverlay();
-		xCrosshair = new Crosshair(Double.NaN, Color.DARK_GRAY, new BasicStroke(0f));
+		xCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
 		// xCrosshair.setLabelVisible(true);
 		xCrosshair.setLabelBackgroundPaint(Color.WHITE);
 
-		yCrosshair = new Crosshair(Double.NaN, Color.DARK_GRAY, new BasicStroke(0f));
+		yCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
 		// yCrosshair.setLabelVisible(true);
 		yCrosshair.setLabelBackgroundPaint(Color.WHITE);
 
@@ -2672,6 +2705,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Distance
 		// ----------------------------------------------------------
 		lbProfilDistance = new javax.swing.JLabel();
+		lbProfilDistance.setOpaque(true);
+		lbProfilDistance.setBackground(Color.WHITE);		
 		lbProfilDistance.setText(" " + bundle.getString("frmMain.lbProfilDistance.text") + "=0.000km ");
 		lbProfilDistance.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelProfilInfo, lbProfilDistance, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
@@ -2680,6 +2715,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Time
 		// --------------------------------------------------------------
 		lbProfilTime = new javax.swing.JLabel();
+		lbProfilTime.setOpaque(true);
+		lbProfilTime.setBackground(Color.WHITE);		
 		lbProfilTime.setText(" " + bundle.getString("frmMain.lbProfilTime.text") + "=00:00:00 ");
 		lbProfilTime.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelProfilInfo, lbProfilTime, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
@@ -2688,6 +2725,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Slope
 		// -------------------------------------------------------------
 		lbProfilSlope = new javax.swing.JLabel();
+		lbProfilSlope.setOpaque(true);
+		lbProfilSlope.setBackground(Color.WHITE);		
 		lbProfilSlope.setText(" " + bundle.getString("frmMain.lbProfilSlope.text") + "=0.0% ");
 		lbProfilSlope.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelProfilInfo, lbProfilSlope, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
@@ -2696,6 +2735,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Name
 		// --------------------------------------------------------------
 		lbProfilName = new javax.swing.JLabel();
+		lbProfilName.setOpaque(true);
+		lbProfilName.setBackground(Color.WHITE);		
 		lbProfilName.setText(" " + bundle.getString("frmMain.lbProfilName.text") + "= ");
 		lbProfilName.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelProfilInfo, lbProfilName, 3, 0, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
@@ -2705,6 +2746,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Elevation
 		// ---------------------------------------------------------
 		lbProfilElevation = new javax.swing.JLabel();
+		lbProfilElevation.setOpaque(true);
+		lbProfilElevation.setBackground(Color.WHITE);		
 		lbProfilElevation.setText(" " + bundle.getString("frmMain.lbProfilElevation.text") + "=0m ");
 		lbProfilElevation.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelProfilInfo, lbProfilElevation, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
@@ -2713,6 +2756,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Hour
 		// --------------------------------------------------------------
 		lbProfilHour = new javax.swing.JLabel();
+		lbProfilHour.setOpaque(true);
+		lbProfilHour.setBackground(Color.WHITE);		
 		lbProfilHour.setText(" " + bundle.getString("frmMain.lbProfilHour.text") + "=00:00:00 ");
 		lbProfilHour.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelProfilInfo, lbProfilHour, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
@@ -2721,6 +2766,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Speed
 		// -------------------------------------------------------------
 		lbProfilSpeed = new javax.swing.JLabel();
+		lbProfilSpeed.setOpaque(true);
+		lbProfilSpeed.setBackground(Color.WHITE);		
 		lbProfilSpeed.setText(" " + bundle.getString("frmMain.lbProfilSpeed.text") + "=0.0km/h ");
 		lbProfilSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelProfilInfo, lbProfilSpeed, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
@@ -2729,6 +2776,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Comment
 		// -----------------------------------------------------------
 		lbProfilComment = new javax.swing.JLabel();
+		lbProfilComment.setOpaque(true);
+		lbProfilComment.setBackground(Color.WHITE);		
 		lbProfilComment.setText(" " + bundle.getString("frmMain.lbProfilComment.text") + "= ");
 		lbProfilComment.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelProfilInfo, lbProfilComment, 3, 1, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
@@ -2994,15 +3043,34 @@ public class frmMain extends javax.swing.JFrame {
 		if (dataset.getSeriesCount() > 0)
 			dataset.removeAllSeries();
 
+		XYPlot plot = chart.getXYPlot();
+		plot.clearDomainMarkers();
+		
 		// -- Populate the serie
 		XYSeries serie1 = new XYSeries("Elevation/Distance");
+		int cmpt=1;
 		for (CgData r : Track.data) {
-			serie1.add(r.getTotal() / 1000, r.getElevation()); // TODO miles/km
+			double x=r.getTotal(Settings.Unit) / 1000;
+			double y=r.getElevation(Settings.Unit);
+			serie1.add(x, y);
+
+			if ( ((r.getTag() & CgConst.TAG_MARK) !=0) & showProfilMarker)
+			{
+				Marker m = new ValueMarker(x);
+			    m.setPaint(Color.GRAY);
+		        m.setLabelFont(new Font("SansSerif", Font.PLAIN, 10));
+			    m.setLabel(String.valueOf(cmpt));
+			    m.setLabelOffset(new RectangleInsets(5, 0, 0, 2));
+			    m.setLabelAnchor(RectangleAnchor.TOP_RIGHT);
+			    m.setLabelTextAnchor(TextAnchor.TOP_LEFT);
+			    plot.addDomainMarker(m);
+				cmpt++;
+			}
 		}
 		dataset.addSeries(serie1);
 
 		if (Track.getMaxElev(Settings.Unit) > Track.getMinElev(Settings.Unit)) {
-			XYPlot plot = chart.getXYPlot();
+			//XYPlot plot = chart.getXYPlot();
 			ValueAxis axisY = plot.getRangeAxis();
 			axisY.setRange(Math.floor(Track.getMinElev(Settings.Unit) / 100.0) * 100.0, Math.ceil(Track.getMaxElev(Settings.Unit) / 100.0) * 100.0);
 		}

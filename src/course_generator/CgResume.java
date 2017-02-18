@@ -274,17 +274,17 @@ public class CgResume {
 		// -- Set the value
 		switch (unit) {
 		case CgConst.UNIT_METER:
-			s = String.format("%1.0f ", d);
+			s = String.format("%1.3f ", d);
 			if (withunit)
 				s = s + "m";
 			break;
 		case CgConst.UNIT_MILES_FEET:
-			s = String.format("%1.0f ", d);
+			s = String.format("%1.3f ", d);
 			if (withunit)
 				s = s + "miles";
 			break;
 		default:
-			s = String.format("%1.0f ", d);
+			s = String.format("%1.3f ", d);
 			if (withunit)
 				s = s + "m";
 			break;
@@ -457,17 +457,17 @@ public class CgResume {
 		// -- Set the value
 		switch (unit) {
 		case CgConst.UNIT_METER:
-			s = String.format("%1.0f ", d);
+			s = String.format("%1.3f ", d);
 			if (withunit)
 				s = s + "m";
 			break;
 		case CgConst.UNIT_MILES_FEET:
-			s = String.format("%1.0f ", d);
+			s = String.format("%1.3f ", d);
 			if (withunit)
 				s = s + "miles";
 			break;
 		default:
-			s = String.format("%1.0f ", d);
+			s = String.format("%1.3f ", d);
 			if (withunit)
 				s = s + "m";
 			break;
