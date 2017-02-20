@@ -1833,17 +1833,6 @@ public class frmMain extends javax.swing.JFrame {
 		
 		FrmMiniroadbook frm = new FrmMiniroadbook(Settings);
 		frm.showDialog(Track);
-//		if (res.Valid)  {
-//			for(int i=res.Start; i<=res.End;i++) {
-//				Track.data.get(i).setDiff(res.Difficulty);
-//			}
-//
-//			Track.isCalculated=false;
-//			Track.isModified=true;
-//			RefreshTableMain();
-//			RefreshProfil();
-//			RefreshStatusbar(Track);
-//		}
 	}
 
 
