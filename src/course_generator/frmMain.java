@@ -1074,11 +1074,6 @@ public class frmMain extends javax.swing.JFrame {
 					RefreshStatusbar(Track);
 					RefreshTableMain();
 					RefreshResume();
-					// DrawMap();
-					// DrawProfil(Constantes.SRC_MAIN);
-					// RefreshPosMap(Constantes.SRC_MAIN);
-					// MainGrid.Refresh();
-					// RefreshMarker();
 				}
 			}
 		});
