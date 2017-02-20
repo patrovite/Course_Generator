@@ -224,6 +224,7 @@ import course_generator.utils.FileTypeFilter;
 import course_generator.utils.OsCheck;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
+import static course_generator.dialogs.frmAbout.showDialogAbout;
 
 /**
  * This is the main class of the project.
@@ -463,6 +464,9 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshStatusbar(Track);
 		RefreshMapButtons();
 		RefreshProfilButtons();
+		
+		//-- Display the splash screen
+        showDialogAbout(this, true, Version);
 	}
 	
 	
@@ -1239,10 +1243,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuAbout.setText(bundle.getString("frmMain.mnuAbout.text"));
 		mnuAbout.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				mnuAbout();
 			}
 		});
-		mnuAbout.setEnabled(false);
 		mnuHelp.add(mnuAbout);
 
 		// --
@@ -1256,6 +1259,12 @@ public class frmMain extends javax.swing.JFrame {
 																	// necessary
 
 	}
+
+	
+	private void mnuAbout() {
+		showDialogAbout(this, false, Version);
+	}
+
 
 	/**
 	 * Define a new starting point from the current position in the main table
