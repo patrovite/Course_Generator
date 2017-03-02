@@ -145,9 +145,9 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		datalist.data.clear();
 		for (CgData r : track.data) {
 			if ((r.getTag() & CgConst.TAG_ROADBOOK) != 0) {
-				MrbData d = new MrbData(r.getNum(), r.getLatitude(), r.getLongitude(), r.getElevation(),
-						r.getElevationMemo(), r.getTag(), r.getDist(), r.getTotal(), r.getDiff(), r.getCoeff(),
-						r.getRecovery(), r.getSlope(), r.getSpeed(), r.getdElevation(), r.getTime(), r.getdTime_f(),
+				MrbData d = new MrbData(r.getNum(), r.getLatitude(), r.getLongitude(), r.getElevation(CgConst.UNIT_METER),
+						r.getElevationMemo(), r.getTag(), r.getDist(CgConst.UNIT_METER), r.getTotal(CgConst.UNIT_METER), r.getDiff(), r.getCoeff(),
+						r.getRecovery(), r.getSlope(), r.getSpeed(CgConst.UNIT_METER), r.getdElevation(CgConst.UNIT_METER), r.getTime(), r.getdTime_f(),
 						r.getTimeLimit(), r.getHour(), r.getStation(), r.getName(), r.getComment(), 0, 0,
 						r.FmtLbMiniRoadbook, r.OptionMiniRoadbook, r.VPosMiniRoadbook, r.CommentMiniRoadbook,
 						r.FontSizeMiniRoadbook, 0, 0);
@@ -160,7 +160,7 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 			for (int i = 1; i < datalist.data.size(); i++) {
 				MrbData d = datalist.data.get(i);
 				MrbData p = datalist.data.get(i - 1);
-				d.setDeltaDist(d.getTotal() - p.getTotal());
+				d.setDeltaDist(d.getTotal(CgConst.UNIT_METER) - p.getTotal(CgConst.UNIT_METER));
 				d.setDeltaTime(d.getTime() - p.getTime());
 			}
 		}

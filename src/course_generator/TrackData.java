@@ -39,6 +39,7 @@ import javax.xml.stream.XMLStreamWriter;
 import org.joda.time.DateTime;
 
 import course_generator.param.ParamData;
+import course_generator.settings.CgSettings;
 /*
 import course_generator.table.CoeffClass;
 import course_generator.table.DiffClass;
@@ -106,9 +107,9 @@ public class TrackData {
 	/** If 'true' this indicate that the data has been modified **/
 	public boolean				isModified				= false;
 	/** Contain the ascent climb of the whole track (in m) **/
-	public double				ClimbP					= 0.0;
+	private double				ClimbP					= 0.0;
 	/** Contain the descent climb of the whole track (in m) **/
-	public double				ClimbM					= 0.0;
+	private double				ClimbM					= 0.0;
 	/** Contain the ascent time of the whole track (in s) **/
 	public int					AscTime					= 0;
 	/** Contain the descent time of the whole track (in s) **/
@@ -138,7 +139,7 @@ public class TrackData {
 	public double				StartSpeed				= 0.0;
 	public double				EndSpeed				= 0.0;
 	/** Number of meter of road in the track **/
-	public double				DistRoad				= 0.0;
+	private double				DistRoad				= 0.0;
 	/** Indicate the type of error during the file reading **/
 	public int					ReadError				= 0;
 	/** Indicate the at which line the error appear **/
@@ -441,7 +442,7 @@ public class TrackData {
 				// "{0:0.0000000}", r.Longitude));
 
 				// <ele>1180.4</ele>
-				Utils.WriteStringToXML(writer, "ele", String.format(Locale.ROOT, "%1.7f", r.getElevation()));
+				Utils.WriteStringToXML(writer, "ele", String.format(Locale.ROOT, "%1.7f", r.getElevation(CgConst.UNIT_METER)));
 
 				// <time>2010-08-18T07:57:07.000Z</time>
 				// dt = r.getHour().ToUniversalTime();
@@ -472,64 +473,77 @@ public class TrackData {
 			return;
 		}
 
-		/*
-		 * DateTime dt = new DateTime();
-		 * 
-		 * XmlTextWriter wr = new XmlTextWriter(name, Encoding.UTF8);
-		 * wr.Formatting = Formatting.Indented; wr.WriteStartDocument(true);
-		 * 
-		 * 
-		 * wr.WriteStartElement("gpx"); wr.WriteStringToXML("xmlns",
-		 * "http://www.topografix.com/GPX/1/1"); wr.WriteStringToXML("creator",
-		 * "Course Generator http://dpsite.free.fr");
-		 * wr.WriteStringToXML("version", "1.1");
-		 * wr.WriteStringToXML("xmlns:xsi",
-		 * "http://www.w3.org/2001/XMLSchema-instance");
-		 * wr.WriteStringToXML("xsi:schemaLocation",
-		 * "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
-		 * );
-		 * 
-		 * //foreach (cgData r in data) int i = 1; String s; foreach (cgData r
-		 * in data) { if ((r.Tag != 0) && ((r.Tag & mask)!=0)) { // <wpt>
-		 * wr.WriteStartElement("wpt"); wr.WriteStringToXML("lat",
-		 * String.Format(culture, "{0:0.0000000}", r.Latitude));
-		 * wr.WriteStringToXML("lon", String.Format(culture, "{0:0.0000000}",
-		 * r.Longitude));
-		 * 
-		 * // <time>2010-08-18T07:57:07.000Z</time> dt =
-		 * r.Hour.ToUniversalTime(); wr.WriteElementString("time",
-		 * dt.ToString("s") + "Z");
-		 * 
-		 * //<name>toto</name> if (r.Name == "") { wr.WriteElementString("name",
-		 * "NoName" + i.ToString()); i++; } else wr.WriteElementString("name",
-		 * r.Name);
-		 * 
-		 * 
-		 * //<sym>Flag, Green</sym> s = "Flag, Green"; //Par defaut if ((r.Tag &
-		 * CgConst.TAG_HIGH_PT) != 0) s = "Summit"; if ((r.Tag &
-		 * CgConst.TAG_WATER_PT) != 0) s = "Bar"; if ((r.Tag &
-		 * CgConst.TAG_EAT_PT) != 0) s = "Restaurant";
-		 * 
-		 * wr.WriteElementString("sym", s);
-		 */
-		/*
-		 * <extensions> <gpxx:WaypointExtension
-		 * xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
-		 * <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
-		 * </gpxx:WaypointExtension> </extensions>
-		 */
-		/*
-		 * wr.WriteStartElement("extensions");
-		 * wr.WriteStartElement("gpxx:WaypointExtension");
-		 * wr.WriteStringToXML("xmlns:gpxx",
-		 * "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
-		 * wr.WriteElementString("gpxx:DisplayMode", "SymbolAndName");
-		 * wr.WriteEndElement();//gpxx:WaypointExtension
-		 * wr.WriteEndElement();//extensions
-		 * 
-		 * wr.WriteEndElement();//wpt } }//foreach wr.WriteEndElement();//gpx
-		 * wr.WriteEndDocument(); wr.Flush(); wr.Close();
-		 */
+		DateTime dt = new DateTime();
+		
+		// -- Save the data in the home directory
+		XMLOutputFactory factory = XMLOutputFactory.newInstance();
+		try {
+			XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream(name), "UTF-8");
+
+			writer.writeStartDocument("UTF-8", "1.0");
+			writer.writeStartElement("gpx"); 
+				Utils.WriteStringToXML(writer,"xmlns", "http://www.topografix.com/GPX/1/1"); 
+				Utils.WriteStringToXML(writer,"creator","Course Generator http://techandrun.com");
+				Utils.WriteStringToXML(writer,"version", "1.1");
+				Utils.WriteStringToXML(writer,"xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+				Utils.WriteStringToXML(writer,"xsi:schemaLocation",	"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd");
+
+			    int i = 1;
+			    String s;
+			    for (CgData r : data) {
+			    	if ((r.getTag() != 0) && ((r.getTag() & mask)!=0)) {
+			          // <wpt>
+			          writer.writeStartElement("wpt");
+			          	writer.writeAttribute("lat", String.format("%1.7f", r.getLatitude()));
+			          	writer.writeAttribute("lon", String.format("%1.7f", r.getLongitude()));
+
+			          	// <time>2010-08-18T07:57:07.000Z</time>
+			          	Utils.WriteStringToXML(writer,"time", r.getHour().toString());
+
+			          	//<name>toto</name>
+			          	if (r.getName() == "") {
+			          		Utils.WriteStringToXML(writer,"name", String.format("NoName%d", i));
+			          		i++;
+			          	}
+			          	else
+			          		Utils.WriteStringToXML(writer,"name", r.getName());
+
+
+			          	//<sym>Flag, Green</sym>
+			          	s = "Flag, Green"; //Par defaut
+			          	if ((r.getTag() & CgConst.TAG_HIGH_PT) != 0)
+			          		s = "Summit";
+			          	if ((r.getTag() & CgConst.TAG_WATER_PT) != 0)
+			          		s = "Bar";
+			          	if ((r.getTag() & CgConst.TAG_EAT_PT) != 0)
+			          		s = "Restaurant";
+
+			          	Utils.WriteStringToXML(writer,"sym", s);
+
+				          /*
+				          <extensions>
+				            <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+				              <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
+				            </gpxx:WaypointExtension>
+				          </extensions>
+				          */
+			          	writer.writeStartElement("extensions");
+			          		writer.writeStartElement("gpxx:WaypointExtension");
+			          		writer.writeAttribute("xmlns:gpxx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+			          			Utils.WriteStringToXML(writer,"gpxx:DisplayMode", "SymbolAndName");
+			          		writer.writeEndElement();//gpxx:WaypointExtension
+			          	writer.writeEndElement();//extensions
+
+			          writer.writeEndElement();//wpt
+			        } //if
+			      }//for
+			writer.writeEndElement();//gpx
+			writer.writeEndDocument();
+			writer.flush();
+			writer.close();
+		} catch (XMLStreamException | IOException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	/**
@@ -600,7 +614,7 @@ public class TrackData {
 		for (CgData r : data) {
 			Lat = r.getLatitude();
 			Lon = r.getLongitude();
-			Ele = r.getElevation();
+			Ele = r.getElevation(CgConst.UNIT_METER);
 			if (b) {
 				dist = CalcDistance(mLat, mLon, Lat, Lon);
 				v = Math.sqrt(dist * dist + (Ele - mEle) * (Ele - mEle));
@@ -627,7 +641,7 @@ public class TrackData {
 		for (CgData r : data) {
 			if (b) {
 				if (r.getdTime_f() != 0.0) {
-					r.setSpeed(r.getDist() / r.getdTime_f() * 3.6);
+					r.setSpeed(r.getDist(CgConst.UNIT_METER) / r.getdTime_f() * 3.6);
 				} else {
 					r.setSpeed(0.0);
 				}
@@ -658,7 +672,7 @@ public class TrackData {
 			r.setSlope(0.0);
 			Lat = (double) r.getLatitude();
 			Lon = (double) r.getLongitude();
-			Ele = (double) r.getElevation();
+			Ele = (double) r.getElevation(CgConst.UNIT_METER);
 
 			if (b) {
 				dist = CalcDistance(mLat, mLon, Lat, Lon);
@@ -681,7 +695,68 @@ public class TrackData {
 
 	public static class CalcAvrSlopeResult {
 
-		public double AvrSlopeP, AvrSlopeM, TotClimbP, TotFlat, TotClimbM;
+		/** Average positive slope **/ 
+		public double AvrSlopeP;
+		/** Average negative slope **/
+		public double AvrSlopeM;
+		
+		/** Total distance with positive climb (stored in m) **/
+		private double TotClimbP;
+		/** Totale distance with flat (stored in m) **/
+		private double TotFlat;
+		/** Total distance with negative climb (stored in m) **/
+		private double TotClimbM;
+		
+		
+		public double getTotClimbP(int unit) {
+			switch (unit) {
+				case CgConst.UNIT_METER:
+					return TotClimbP;
+				case CgConst.UNIT_MILES_FEET:
+					// meter to miles
+					return Utils.Meter2uMiles(TotClimbP);
+				default:
+					return TotClimbP;
+			}
+		}
+		
+		public void setTotClimbP(double totClimbP) {
+			TotClimbP = totClimbP;
+		}
+		
+		public double getTotFlat(int unit) {
+			switch (unit) {
+			case CgConst.UNIT_METER:
+				return TotFlat;
+			case CgConst.UNIT_MILES_FEET:
+				// meter to miles
+				return Utils.Meter2uMiles(TotFlat);
+			default:
+				return TotFlat;
+			}
+		}
+
+		public void setTotFlat(double totFlat) {
+			TotFlat = totFlat;
+		}
+		
+		public double getTotClimbM(int unit) {
+			switch (unit) {
+			case CgConst.UNIT_METER:
+				return TotClimbM;
+			case CgConst.UNIT_MILES_FEET:
+				// meter to miles
+				return Utils.Meter2uMiles(TotClimbM);
+			default:
+				return TotClimbM;
+			}
+		}
+		
+		public void setTotClimbM(double totClimbM) {
+			TotClimbM = totClimbM;
+		}
+		
+		
 	}
 
 
@@ -711,11 +786,11 @@ public class TrackData {
 				}
 
 				if (slope <= -2) {
-					r.TotClimbM += data.get(i).getDist();
+					r.TotClimbM += data.get(i).getDist(CgConst.UNIT_METER);
 				} else if ((slope > -2) && (slope < 2)) {
-					r.TotFlat += data.get(i).getDist();
+					r.TotFlat += data.get(i).getDist(CgConst.UNIT_METER);
 				} else if (slope >= 2) {
-					r.TotClimbP += data.get(i).getDist();
+					r.TotClimbP += data.get(i).getDist(CgConst.UNIT_METER);
 				}
 
 			} // for i
@@ -751,11 +826,11 @@ public class TrackData {
 		r.tm = 0;
 
 		if (data.size() > 0) {
-			oldElev = data.get(StartLine).getElevation();
+			oldElev = data.get(StartLine).getElevation(CgConst.UNIT_METER);
 			oldTime = data.get(StartLine).getTime();
 
 			for (i = StartLine; i <= EndLine; i++) {
-				elev = data.get(i).getElevation();
+				elev = data.get(i).getElevation(CgConst.UNIT_METER);
 				time = data.get(i).getTime();
 
 				de = (elev - oldElev);
@@ -784,7 +859,26 @@ public class TrackData {
 	 */
 	public static class CalcAvrSpeedResult {
 
-		public double avrspeed;
+		/** Average speed (km/h) **/
+		private double avrspeed;
+
+		public double getAvrspeed(int unit) {
+			switch (unit) {
+			case CgConst.UNIT_METER:
+				return avrspeed;
+			case CgConst.UNIT_MILES_FEET:
+				// meter to miles
+				return Utils.Meter2uMiles(avrspeed);
+			default:
+				return avrspeed;
+			}
+		}
+
+		public void setAvrspeed(double avrspeed) {
+			this.avrspeed = avrspeed;
+		}
+		
+		
 	}
 
 
@@ -795,7 +889,7 @@ public class TrackData {
 		if (data.size() > 0) {
 			t = (data.get(EndLine).getTime() - data.get(StartLine).getTime());
 			if (t != 0) {
-				r.avrspeed = (data.get(EndLine).getTotal() - data.get(StartLine).getTotal()) * 3.600 / t;
+				r.avrspeed = (data.get(EndLine).getTotal(CgConst.UNIT_METER) - data.get(StartLine).getTotal(CgConst.UNIT_METER)) * 3.600 / t;
 			} else {
 				r.avrspeed = 0.0;
 			}
@@ -820,12 +914,12 @@ public class TrackData {
 	}
 
 
-	// -- Calculate road distance --
+	// -- Calculate road distance (in meter) --
 	public void CalcRoad() {
 		DistRoad = 0.0;
 		for (CgData r : data) {
 			if (r.getDiff() == 100) {
-				DistRoad = DistRoad + r.getDist();
+				DistRoad = DistRoad + r.getDist(CgConst.UNIT_METER);
 			}
 		}
 	}
@@ -836,12 +930,23 @@ public class TrackData {
 	}
 
 
-	public SearchMinMaxElevationResult SearchMinMaxElevation(int start, int end, SearchMinMaxElevationResult r) {
+	/**
+	 * Search the minmimum and maximum elevation of the track betwwen two points
+	 * @param start
+	 * 	Starting point
+	 * @param end
+	 * 	Ending point
+	 * @param r
+	 * 	SearchMinMaxElevationResult object
+	 * @return
+	 * 	Result in a SearchMinMaxElevationResult object 
+	 */
+	private SearchMinMaxElevationResult SearchMinMaxElevation(int start, int end, SearchMinMaxElevationResult r) {
 		r.min = 9999.0;
 		r.max = -1.0;
 		int i = 0;
 		for (i = start; i < end; i++) {
-			double e = data.get(i).getElevation();
+			double e = data.get(i).getElevation(CgConst.UNIT_METER);
 			if (e < r.min) {
 				r.min = e;
 			}
@@ -972,13 +1077,13 @@ public class TrackData {
 				night = 1;
 			}
 			// --Elev effect --
-			if (bElevEffect && ((double) r.getElevation() > 1500.0)) {
-				ef = 1.0 + (Math.round(((double) r.getElevation() - 1500.0) / 100.0) / 100.0);
+			if (bElevEffect && ((double) r.getElevation(CgConst.UNIT_METER) > 1500.0)) {
+				ef = 1.0 + (Math.round(((double) r.getElevation(CgConst.UNIT_METER) - 1500.0) / 100.0) / 100.0);
 			} else {
 				ef = 1.0;
 			}
 			// --
-			double dist = r.getDist();
+			double dist = r.getDist(CgConst.UNIT_METER);
 			double coeff = 100.0;
 			double diff = 100.0;
 
@@ -1017,7 +1122,7 @@ public class TrackData {
 
 
 	/**
-	 * Calc the min / max of the datas
+	 * Calc the min / max of the data
 	 */
 	public void CalcMinMax() {
 		int i = 0;
@@ -1057,22 +1162,22 @@ public class TrackData {
 
 				if ((r2.getTag() & (CgConst.TAG_LOW_PT | CgConst.TAG_HIGH_PT)) == 1) {
 					findmax = true;
-					valmax = r2.getElevation();
+					valmax = r2.getElevation(CgConst.UNIT_METER);
 				}
 				if ((r2.getTag() & (CgConst.TAG_LOW_PT | CgConst.TAG_HIGH_PT)) == 2) {
 					findmin = true;
-					valmin = r2.getElevation();
+					valmin = r2.getElevation(CgConst.UNIT_METER);
 				}
 
-				if (r2.getElevation() > r1.getElevation()) {
+				if (r2.getElevation(CgConst.UNIT_METER) > r1.getElevation(CgConst.UNIT_METER)) {
 					maxm = false;
 				}
 
-				if (r2.getElevation() < r1.getElevation()) {
+				if (r2.getElevation(CgConst.UNIT_METER) < r1.getElevation(CgConst.UNIT_METER)) {
 					minm = false;
 				}
 
-				dist = dist + r2.getDist();
+				dist = dist + r2.getDist(CgConst.UNIT_METER);
 				if (dist > CgConst.DIST_MAX_MINMAX) {
 					break;// return;//Break
 				}
@@ -1081,10 +1186,10 @@ public class TrackData {
 			if ((r1 == null) || (r2 == null)) {
 				return;
 			}
-			if (maxm && (findmax || (Math.abs(r2.getElevation() - valmax) < CgConst.MIN_ELEV_MINMAX))) {
+			if (maxm && (findmax || (Math.abs(r2.getElevation(CgConst.UNIT_METER) - valmax) < CgConst.MIN_ELEV_MINMAX))) {
 				maxm = false;
 			}
-			if (minm && (findmin || (Math.abs(r2.getElevation() - valmin) < CgConst.MIN_ELEV_MINMAX))) {
+			if (minm && (findmin || (Math.abs(r2.getElevation(CgConst.UNIT_METER) - valmin) < CgConst.MIN_ELEV_MINMAX))) {
 				minm = false;
 			}
 
@@ -1094,16 +1199,16 @@ public class TrackData {
 
 			for (k = i; k < data.size(); k++) {
 				r3 = data.get(k);
-				if (r3.getElevation() > r1.getElevation()) {
+				if (r3.getElevation(CgConst.UNIT_METER) > r1.getElevation(CgConst.UNIT_METER)) {
 					maxp = false;
 				}
 
-				if (r3.getElevation() < r1.getElevation()) {
+				if (r3.getElevation(CgConst.UNIT_METER) < r1.getElevation(CgConst.UNIT_METER)) {
 					minp = false;
 				}
 
 				if (k < data.size() - 1) {
-					dist = dist + (double) data.get(k + 1).getDist();
+					dist = dist + (double) data.get(k + 1).getDist(CgConst.UNIT_METER);
 				}
 
 				if (dist > CgConst.DIST_MAX_MINMAX) {
@@ -1182,18 +1287,18 @@ public class TrackData {
 				datatmp.add(new CgData((double) (nb + 1), // Num - double
 						data.get(n).getLatitude(), // Latitude - double
 						data.get(n).getLongitude(), // Longitude - double
-						data.get(n).getElevation(), // Elevation - double
+						data.get(n).getElevation(CgConst.UNIT_METER), // Elevation - double
 						data.get(n).getElevationMemo(), // ElevationMemo -
 														// double
 						data.get(n).getTag(), // Tag - int
-						data.get(n).getDist(), // Dist - double
-						data.get(n).getTotal(), // Total - double
+						data.get(n).getDist(CgConst.UNIT_METER), // Dist - double
+						data.get(n).getTotal(CgConst.UNIT_METER), // Total - double
 						data.get(n).getDiff(), // Diff - double
 						data.get(n).getCoeff(), // Coeff - double
 						0.0, // Recup - double
 						data.get(n).getSlope(), // Slope - double
-						data.get(n).getSpeed(), // Speed - double
-						data.get(n).getdElevation(), // dElevation - double
+						data.get(n).getSpeed(CgConst.UNIT_METER), // Speed - double
+						data.get(n).getdElevation(CgConst.UNIT_METER), // dElevation - double
 						data.get(n).getTime(), // Time - int
 						data.get(n).getdTime_f(), // dTime_f - double
 						data.get(n).getTimeLimit(), // TimeLimit - int
@@ -1221,16 +1326,16 @@ public class TrackData {
 				r.setNum(datatmp.get(n).getNum()); // Num
 				r.setLatitude(datatmp.get(n).getLatitude()); // Latitude
 				r.setLongitude(datatmp.get(n).getLongitude()); // Longitude
-				r.setElevation(datatmp.get(n).getElevation()); // Elevation
+				r.setElevation(datatmp.get(n).getElevation(CgConst.UNIT_METER)); // Elevation
 				r.setElevationMemo(datatmp.get(n).getElevationMemo()); // ElevationMemo
 				r.setTag(datatmp.get(n).getTag()); // Tag
-				r.setDist(datatmp.get(n).getDist()); // Dist
-				r.setTotal(datatmp.get(n).getTotal()); // Total
+				r.setDist(datatmp.get(n).getDist(CgConst.UNIT_METER)); // Dist
+				r.setTotal(datatmp.get(n).getTotal(CgConst.UNIT_METER)); // Total
 				r.setDiff(datatmp.get(n).getDiff()); // Diff
 				r.setCoeff(datatmp.get(n).getCoeff()); // Coeff
 				r.setSlope(datatmp.get(n).getSlope()); // Slope
-				r.setSpeed(datatmp.get(n).getSpeed()); // Speed
-				r.setdElevation(datatmp.get(n).getdElevation()); // dElevation
+				r.setSpeed(datatmp.get(n).getSpeed(CgConst.UNIT_METER)); // Speed
+				r.setdElevation(datatmp.get(n).getdElevation(CgConst.UNIT_METER)); // dElevation
 				r.setTime(datatmp.get(n).getTime()); // Time
 				// r.dTime(datatmp[n].dTime; //dTime
 				r.setdTime_f(datatmp.get(n).getdTime_f()); // dTime_f
@@ -1348,7 +1453,7 @@ public class TrackData {
 			writer.writeStartElement("COURSEGENERATOR");
 			Utils.WriteStringToXML(writer, "VERSION", "5");
 
-			double d = data.get(end).getTotal() - data.get(start).getTotal();
+			double d = data.get(end).getTotal(CgConst.UNIT_METER) - data.get(start).getTotal(CgConst.UNIT_METER);
 			Utils.WriteStringToXML(writer, "TOTALDISTANCE", String.format(Locale.ROOT, "%f", d));
 
 			int j = data.get(end).getTime() - data.get(start).getTime();
@@ -1396,9 +1501,9 @@ public class TrackData {
 				writer.writeStartElement("TRACKPOINT");
 				Utils.WriteStringToXML(writer, "LATITUDEDEGREES", String.format(Locale.ROOT, "%f", r.getLatitude()));
 				Utils.WriteStringToXML(writer, "LONGITUDEDEGREES", String.format(Locale.ROOT, "%f", r.getLongitude()));
-				Utils.WriteStringToXML(writer, "ALTITUDEMETERS", String.format(Locale.ROOT, "%f", r.getElevation()));
-				Utils.WriteStringToXML(writer, "DISTANCEMETERS", String.format(Locale.ROOT, "%f", r.getDist()));
-				Utils.WriteStringToXML(writer, "DISTANCEMETERSCUMUL", String.format(Locale.ROOT, "%f", r.getTotal()));
+				Utils.WriteStringToXML(writer, "ALTITUDEMETERS", String.format(Locale.ROOT, "%f", r.getElevation(CgConst.UNIT_METER)));
+				Utils.WriteStringToXML(writer, "DISTANCEMETERS", String.format(Locale.ROOT, "%f", r.getDist(CgConst.UNIT_METER)));
+				Utils.WriteStringToXML(writer, "DISTANCEMETERSCUMUL", String.format(Locale.ROOT, "%f", r.getTotal(CgConst.UNIT_METER)));
 				Utils.WriteStringToXML(writer, "DIFF", String.format(Locale.ROOT, "%f", r.getDiff()));
 				Utils.WriteStringToXML(writer, "COEFF", String.format(Locale.ROOT, "%f", r.getCoeff()));
 				Utils.WriteStringToXML(writer, "RECUP", String.format(Locale.ROOT, "%f", r.getRecovery()));
@@ -1488,13 +1593,13 @@ public class TrackData {
 				if (bNightCoeff && ((r.getHour().getSecondOfDay() >= StartNightTime.getSecondOfDay())
 						|| (r.getHour().getSecondOfDay() <= EndNightTime.getSecondOfDay()))) {
 					tInNight.Time = tInNight.Time + r.getdTime_f();
-					tInNight.Speed = tInNight.Speed + r.getSpeed();
-					tInNight.Dist = tInNight.Dist + r.getDist();
+					tInNight.setSpeed(tInNight.getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					tInNight.setDist(tInNight.getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					tInNight.Cmpt++;
 				} else {
 					tInDay.Time = tInDay.Time + r.getdTime_f();
-					tInDay.Speed = tInDay.Speed + r.getSpeed();
-					tInDay.Dist = tInDay.Dist + r.getDist();
+					tInDay.setSpeed(tInDay.getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					tInDay.setDist(tInDay.getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					tInDay.Cmpt++;
 				}
 			} else {
@@ -1521,80 +1626,80 @@ public class TrackData {
 			if (!first) {
 				if (r.getSlope() < -40) {
 					j = 0;
-					StatSlope[j].Speed = StatSlope[j].Speed + r.getSpeed();
-					StatSlope[j].Dist = StatSlope[j].Dist + r.getDist();
+					StatSlope[j].setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatSlope[j].setDist(StatSlope[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatSlope[j].Time = StatSlope[j].Time + r.getdTime_f();
 					StatSlope[j].Cmpt++;
 				} else if ((r.getSlope() >= -40) && (r.getSlope() < -30)) {
 					j = 1;
-					StatSlope[j].Speed = StatSlope[j].Speed + r.getSpeed();
-					StatSlope[j].Dist = StatSlope[j].Dist + r.getDist();
+					StatSlope[j].setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatSlope[j].setDist(StatSlope[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatSlope[j].Time = StatSlope[j].Time + r.getdTime_f();
 					StatSlope[j].Cmpt++;
 				} else if ((r.getSlope() >= -30) && (r.getSlope() < -20)) {
 					j = 2;
-					StatSlope[j].Speed = StatSlope[j].Speed + r.getSpeed();
-					StatSlope[j].Dist = StatSlope[j].Dist + r.getDist();
+					StatSlope[j].setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatSlope[j].setDist(StatSlope[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatSlope[j].Time = StatSlope[j].Time + r.getdTime_f();
 					StatSlope[j].Cmpt++;
 				} else if ((r.getSlope() >= -20) && (r.getSlope() < -10)) {
 					j = 3;
-					StatSlope[j].Speed = StatSlope[j].Speed + r.getSpeed();
-					StatSlope[j].Dist = StatSlope[j].Dist + r.getDist();
+					StatSlope[j].setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatSlope[j].setDist(StatSlope[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatSlope[j].Time = StatSlope[j].Time + r.getdTime_f();
 					StatSlope[j].Cmpt++;
 				} else if ((r.getSlope() >= -10) && (r.getSlope() < -5)) {
 					j = 4;
-					StatSlope[j].Speed = StatSlope[j].Speed + r.getSpeed();
-					StatSlope[j].Dist = StatSlope[j].Dist + r.getDist();
+					StatSlope[j].setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatSlope[j].setDist(StatSlope[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatSlope[j].Time = StatSlope[j].Time + r.getdTime_f();
 					StatSlope[j].Cmpt++;
 				} else if ((r.getSlope() >= -5) && (r.getSlope() < -2)) {
 					j = 5;
-					StatSlope[j].Speed = StatSlope[j].Speed + r.getSpeed();
-					StatSlope[j].Dist = StatSlope[j].Dist + r.getDist();
+					StatSlope[j].setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatSlope[j].setDist(StatSlope[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatSlope[j].Time = StatSlope[j].Time + r.getdTime_f();
 					StatSlope[j].Cmpt++;
 				} else if ((r.getSlope() >= -2) && (r.getSlope() <= 2)) {
 					j = 6;
-					StatSlope[j].Speed = StatSlope[j].Speed + r.getSpeed();
-					StatSlope[j].Dist = StatSlope[j].Dist + r.getDist();
+					StatSlope[j].setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatSlope[j].setDist(StatSlope[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatSlope[j].Time = StatSlope[j].Time + r.getdTime_f();
 					StatSlope[j].Cmpt++;
 				} else if ((r.getSlope() > 2) && (r.getSlope() <= 5)) {
 					j = 7;
-					StatSlope[j].Speed = StatSlope[j].Speed + r.getSpeed();
-					StatSlope[j].Dist = StatSlope[j].Dist + r.getDist();
+					StatSlope[j].setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatSlope[j].setDist(StatSlope[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatSlope[j].Time = StatSlope[j].Time + r.getdTime_f();
 					StatSlope[j].Cmpt++;
 				} else if ((r.getSlope() > 5) && (r.getSlope() <= 10)) {
 					j = 8;
-					StatSlope[j].Speed = StatSlope[j].Speed + r.getSpeed();
-					StatSlope[j].Dist = StatSlope[j].Dist + r.getDist();
+					StatSlope[j].setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatSlope[j].setDist(StatSlope[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatSlope[j].Time = StatSlope[j].Time + r.getdTime_f();
 					StatSlope[j].Cmpt++;
 				} else if ((r.getSlope() > 10) && (r.getSlope() <= 20)) {
 					j = 9;
-					StatSlope[j].Speed = StatSlope[j].Speed + r.getSpeed();
-					StatSlope[j].Dist = StatSlope[j].Dist + r.getDist();
+					StatSlope[j].setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatSlope[j].setDist(StatSlope[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatSlope[j].Time = StatSlope[j].Time + r.getdTime_f();
 					StatSlope[j].Cmpt++;
 				} else if ((r.getSlope() > 20) && (r.getSlope() <= 30)) {
 					j = 10;
-					StatSlope[j].Speed = StatSlope[j].Speed + r.getSpeed();
-					StatSlope[j].Dist = StatSlope[j].Dist + r.getDist();
+					StatSlope[j].setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatSlope[j].setDist(StatSlope[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatSlope[j].Time = StatSlope[j].Time + r.getdTime_f();
 					StatSlope[j].Cmpt++;
 				} else if ((r.getSlope() > 30) && (r.getSlope() <= 40)) {
 					j = 11;
-					StatSlope[j].Speed = StatSlope[j].Speed + r.getSpeed();
-					StatSlope[j].Dist = StatSlope[j].Dist + r.getDist();
+					StatSlope[j].setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatSlope[j].setDist(StatSlope[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatSlope[j].Time = StatSlope[j].Time + r.getdTime_f();
 					StatSlope[j].Cmpt++;
 				} else if (r.getSlope() > 40) {
 					j = 12;
-					StatSlope[j].Speed = StatSlope[j].Speed + r.getSpeed();
-					StatSlope[j].Dist = StatSlope[j].Dist + r.getDist();
+					StatSlope[j].setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatSlope[j].setDist(StatSlope[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatSlope[j].Time = StatSlope[j].Time + r.getdTime_f();
 					StatSlope[j].Cmpt++;
 				}
@@ -1626,10 +1731,10 @@ public class TrackData {
 		boolean first = true;
 		for (CgData r : data) {
 			if (!first) {
-				if (r.getElevation() < 1000) {
+				if (r.getElevation(CgConst.UNIT_METER) < 1000) {
 					j = 0;
-					StatElev[j].Speed = StatElev[j].Speed + r.getSpeed();
-					StatElev[j].Dist = StatElev[j].Dist + r.getDist();
+					StatElev[j].setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatElev[j].Time = StatElev[j].Time + r.getdTime_f();
 					StatElev[j].Cmpt++;
 
@@ -1637,114 +1742,114 @@ public class TrackData {
 					if (bNightCoeff && ((r.getHour().getSecondOfDay() >= StartNightTime.getSecondOfDay())
 							|| (r.getHour().getSecondOfDay() <= EndNightTime.getSecondOfDay()))) {
 						StatElevNight[j].Time = StatElevNight[j].Time + r.getdTime_f();
-						StatElevNight[j].Speed = StatElevNight[j].Speed + r.getSpeed();
-						StatElevNight[j].Dist = StatElevNight[j].Dist + r.getDist();
+						StatElevNight[j].setSpeed(StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevNight[j].setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevNight[j].Cmpt++;
 					} else // Day
 					{
 						StatElevDay[j].Time = StatElevDay[j].Time + r.getdTime_f();
-						StatElevDay[j].Speed = StatElevDay[j].Speed + r.getSpeed();
-						StatElevDay[j].Dist = StatElevDay[j].Dist + r.getDist();
+						StatElevDay[j].setSpeed(StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevDay[j].setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevDay[j].Cmpt++;
 					}
-				} else if ((r.getElevation() >= 1000) && (r.getElevation() < 1500)) {
+				} else if ((r.getElevation(CgConst.UNIT_METER) >= 1000) && (r.getElevation(CgConst.UNIT_METER) < 1500)) {
 					j = 1;
-					StatElev[j].Speed = StatElev[j].Speed + r.getSpeed();
-					StatElev[j].Dist = StatElev[j].Dist + r.getDist();
+					StatElev[j].setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatElev[j].Time = StatElev[j].Time + r.getdTime_f();
 					StatElev[j].Cmpt++;
 					// Night
 					if (bNightCoeff && ((r.getHour().getSecondOfDay() >= StartNightTime.getSecondOfDay())
 							|| (r.getHour().getSecondOfDay() <= EndNightTime.getSecondOfDay()))) {
 						StatElevNight[j].Time = StatElevNight[j].Time + r.getdTime_f();
-						StatElevNight[j].Speed = StatElevNight[j].Speed + r.getSpeed();
-						StatElevNight[j].Dist = StatElevNight[j].Dist + r.getDist();
+						StatElevNight[j].setSpeed(StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevNight[j].setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevNight[j].Cmpt++;
 					} else // Day
 					{
 						StatElevDay[j].Time = StatElevDay[j].Time + r.getdTime_f();
-						StatElevDay[j].Speed = StatElevDay[j].Speed + r.getSpeed();
-						StatElevDay[j].Dist = StatElevDay[j].Dist + r.getDist();
+						StatElevDay[j].setSpeed( StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevDay[j].setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevDay[j].Cmpt++;
 					}
-				} else if ((r.getElevation() >= 1500) && (r.getElevation() < 2000)) {
+				} else if ((r.getElevation(CgConst.UNIT_METER) >= 1500) && (r.getElevation(CgConst.UNIT_METER) < 2000)) {
 					j = 2;
-					StatElev[j].Speed = StatElev[j].Speed + r.getSpeed();
-					StatElev[j].Dist = StatElev[j].Dist + r.getDist();
+					StatElev[j].setSpeed( StatElev[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatElev[j].Time = StatElev[j].Time + r.getdTime_f();
 					StatElev[j].Cmpt++;
 					// Night
 					if (bNightCoeff && ((r.getHour().getSecondOfDay() >= StartNightTime.getSecondOfDay())
 							|| (r.getHour().getSecondOfDay() <= EndNightTime.getSecondOfDay()))) {
 						StatElevNight[j].Time = StatElevNight[j].Time + r.getdTime_f();
-						StatElevNight[j].Speed = StatElevNight[j].Speed + r.getSpeed();
-						StatElevNight[j].Dist = StatElevNight[j].Dist + r.getDist();
+						StatElevNight[j].setSpeed( StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevNight[j].setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevNight[j].Cmpt++;
 					} else // Day
 					{
 						StatElevDay[j].Time = StatElevDay[j].Time + r.getdTime_f();
-						StatElevDay[j].Speed = StatElevDay[j].Speed + r.getSpeed();
-						StatElevDay[j].Dist = StatElevDay[j].Dist + r.getDist();
+						StatElevDay[j].setSpeed(StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevDay[j].setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevDay[j].Cmpt++;
 					}
-				} else if ((r.getElevation() >= 2000) && (r.getElevation() < 2500)) {
+				} else if ((r.getElevation(CgConst.UNIT_METER) >= 2000) && (r.getElevation(CgConst.UNIT_METER) < 2500)) {
 					j = 3;
-					StatElev[j].Speed = StatElev[j].Speed + r.getSpeed();
-					StatElev[j].Dist = StatElev[j].Dist + r.getDist();
+					StatElev[j].setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatElev[j].Time = StatElev[j].Time + r.getdTime_f();
 					StatElev[j].Cmpt++;
 					// Night
 					if (bNightCoeff && ((r.getHour().getSecondOfDay() >= StartNightTime.getSecondOfDay())
 							|| (r.getHour().getSecondOfDay() <= EndNightTime.getSecondOfDay()))) {
 						StatElevNight[j].Time = StatElevNight[j].Time + r.getdTime_f();
-						StatElevNight[j].Speed = StatElevNight[j].Speed + r.getSpeed();
-						StatElevNight[j].Dist = StatElevNight[j].Dist + r.getDist();
+						StatElevNight[j].setSpeed(StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevNight[j].setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevNight[j].Cmpt++;
 					} else // Day
 					{
 						StatElevDay[j].Time = StatElevDay[j].Time + r.getdTime_f();
-						StatElevDay[j].Speed = StatElevDay[j].Speed + r.getSpeed();
-						StatElevDay[j].Dist = StatElevDay[j].Dist + r.getDist();
+						StatElevDay[j].setSpeed(StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevDay[j].setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevDay[j].Cmpt++;
 					}
-				} else if ((r.getElevation() >= 2500) && (r.getElevation() < 3000)) {
+				} else if ((r.getElevation(CgConst.UNIT_METER) >= 2500) && (r.getElevation(CgConst.UNIT_METER) < 3000)) {
 					j = 4;
-					StatElev[j].Speed = StatElev[j].Speed + r.getSpeed();
-					StatElev[j].Dist = StatElev[j].Dist + r.getDist();
+					StatElev[j].setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatElev[j].Time = StatElev[j].Time + r.getdTime_f();
 					StatElev[j].Cmpt++;
 					// Night
 					if (bNightCoeff && ((r.getHour().getSecondOfDay() >= StartNightTime.getSecondOfDay())
 							|| (r.getHour().getSecondOfDay() <= EndNightTime.getSecondOfDay()))) {
 						StatElevNight[j].Time = StatElevNight[j].Time + r.getdTime_f();
-						StatElevNight[j].Speed = StatElevNight[j].Speed + r.getSpeed();
-						StatElevNight[j].Dist = StatElevNight[j].Dist + r.getDist();
+						StatElevNight[j].setSpeed(StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevNight[j].setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevNight[j].Cmpt++;
 					} else // Day
 					{
 						StatElevDay[j].Time = StatElevDay[j].Time + r.getdTime_f();
-						StatElevDay[j].Speed = StatElevDay[j].Speed + r.getSpeed();
-						StatElevDay[j].Dist = StatElevDay[j].Dist + r.getDist();
+						StatElevDay[j].setSpeed( StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevDay[j].setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevDay[j].Cmpt++;
 					}
-				} else if ((r.getElevation() >= 3000)) {
+				} else if ((r.getElevation(CgConst.UNIT_METER) >= 3000)) {
 					j = 5;
-					StatElev[j].Speed = StatElev[j].Speed + r.getSpeed();
-					StatElev[j].Dist = StatElev[j].Dist + r.getDist();
+					StatElev[j].setSpeed( StatElev[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatElev[j].Time = StatElev[j].Time + r.getdTime_f();
 					StatElev[j].Cmpt++;
 					// Night
 					if (bNightCoeff && ((r.getHour().getSecondOfDay() >= StartNightTime.getSecondOfDay())
 							|| (r.getHour().getSecondOfDay() <= EndNightTime.getSecondOfDay()))) {
 						StatElevNight[j].Time = StatElevNight[j].Time + r.getdTime_f();
-						StatElevNight[j].Speed = StatElevNight[j].Speed + r.getSpeed();
-						StatElevNight[j].Dist = StatElevNight[j].Dist + r.getDist();
+						StatElevNight[j].setSpeed(StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevNight[j].setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevNight[j].Cmpt++;
 					} else // Day
 					{
 						StatElevDay[j].Time = StatElevDay[j].Time + r.getdTime_f();
-						StatElevDay[j].Speed = StatElevDay[j].Speed + r.getSpeed();
-						StatElevDay[j].Dist = StatElevDay[j].Dist + r.getDist();
+						StatElevDay[j].setSpeed(StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevDay[j].setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevDay[j].Cmpt++;
 					}
 				}
@@ -1847,6 +1952,75 @@ public class TrackData {
 			default:
 				return MaxElev;
 		}
+	}
+
+
+	
+	public double getClimbP(int unit) {
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			return ClimbP;
+		case CgConst.UNIT_MILES_FEET:
+			// meter to miles
+			return Utils.Meter2Feet(ClimbP);
+		default:
+			return ClimbP;
+		}
+	}
+
+
+	/**
+	 * Set climbP variable
+	 * @param climbP 
+	 * 	Value in meter
+	 */
+	public void setClimbP(double climbP) {
+		ClimbP = climbP;
+	}
+
+
+	public double getClimbM(int unit) {
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			return ClimbM;
+		case CgConst.UNIT_MILES_FEET:
+			// meter to miles
+			return Utils.Meter2Feet(ClimbM);
+		default:
+			return ClimbM;
+		}
+	}
+
+	/**
+	 * Set climbM variable
+	 * @param climbM 
+	 * 	Value in meter
+	 */
+	public void setClimbM(double climbM) {
+		ClimbM = climbM;
+	}
+
+
+	public double getDistRoad(int unit) {
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			return DistRoad;
+		case CgConst.UNIT_MILES_FEET:
+			// meter to miles
+			return Utils.Meter2uMiles(DistRoad);
+		default:
+			return DistRoad;
+		}
+	}
+
+
+	/**
+	 * Set distRoad variable
+	 * @param distRoad 
+	 * 	Value in meter
+	 */
+	public void setDistRoad(double distRoad) {
+		DistRoad = distRoad;
 	}
 
 } // TrackData

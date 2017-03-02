@@ -162,6 +162,7 @@ public class CgData {
 		this.FontSizeMiniRoadbook = 10;
 	}
 
+	//-------------------------------
 	public double getNum() {
 		return Num;
 	}
@@ -174,6 +175,7 @@ public class CgData {
 		Num = num;
 	}
 
+	//-------------------------------
 	public double getLatitude() {
 		return Latitude;
 	}
@@ -182,6 +184,7 @@ public class CgData {
 		Latitude = latitude;
 	}
 
+	//-------------------------------
 	public double getLongitude() {
 		return Longitude;
 	}
@@ -190,7 +193,8 @@ public class CgData {
 		Longitude = longitude;
 	}
 
-	public double getElevation() {
+	//-------------------------------
+	private double getElevation() {
 		return Elevation;
 	}
 
@@ -235,6 +239,7 @@ public class CgData {
 		Elevation = elevation;
 	}
 
+	//-------------------------------
 	public int getTag() {
 		return Tag;
 	}
@@ -243,7 +248,8 @@ public class CgData {
 		Tag = tag;
 	}
 
-	public double getDist() {
+	//-------------------------------
+	private double getDist() {
 		return Dist;
 	}
 
@@ -290,7 +296,8 @@ public class CgData {
 		Dist = dist;
 	}
 
-	public double getTotal() {
+	//-------------------------------
+	private double getTotal() {
 		return Total;
 	}
 
@@ -337,6 +344,7 @@ public class CgData {
 		Total = total;
 	}
 
+	//-------------------------------
 	public double getDiff() {
 		return Diff;
 	}
@@ -345,6 +353,7 @@ public class CgData {
 		Diff = diff;
 	}
 
+	//-------------------------------
 	public double getCoeff() {
 		return Coeff;
 	}
@@ -353,6 +362,7 @@ public class CgData {
 		Coeff = coeff;
 	}
 
+	//-------------------------------
 	public double getRecovery() {
 		return Recovery;
 	}
@@ -361,6 +371,7 @@ public class CgData {
 		Recovery = recup;
 	}
 
+	//-------------------------------
 	public double getSlope() {
 		return Slope;
 	}
@@ -376,7 +387,8 @@ public class CgData {
 		Slope = slope;
 	}
 
-	public double getSpeed() {
+	//-------------------------------
+	private double getSpeed() {
 		return Speed;
 	}
 
@@ -420,7 +432,8 @@ public class CgData {
 		Speed = speed;
 	}
 
-	public double getdElevation() {
+	//-------------------------------
+	private double getdElevation() {
 		return dElevation;
 	}
 
@@ -440,6 +453,7 @@ public class CgData {
 		this.dElevation = dElevation;
 	}
 
+	//-------------------------------
 	public int getTime() {
 		return Time;
 	}
@@ -458,6 +472,7 @@ public class CgData {
 		Time = time;
 	}
 
+	//-------------------------------
 	public double getdTime_f() {
 		return dTime_f;
 	}
@@ -466,6 +481,7 @@ public class CgData {
 		this.dTime_f = dTime_f;
 	}
 
+	//-------------------------------
 	public int getTimeLimit() {
 		return TimeLimit;
 	}
@@ -488,6 +504,7 @@ public class CgData {
 		TimeLimit = timeLimit;
 	}
 
+	//-------------------------------
 	public DateTime getHour() {
 		return Hour;
 	}
@@ -500,6 +517,7 @@ public class CgData {
 		Hour = hour;
 	}
 
+	//-------------------------------
 	public int getStation() {
 		return Station;
 	}
@@ -522,6 +540,7 @@ public class CgData {
 		Station = station;
 	}
 
+	//-------------------------------
 	public String getName() {
 		return Name;
 	}
@@ -530,6 +549,7 @@ public class CgData {
 		Name = name;
 	}
 
+	//-------------------------------
 	public String getComment() {
 		return Comment;
 	}
@@ -538,6 +558,7 @@ public class CgData {
 		Comment = comment;
 	}
 
+	//-------------------------------
 	public double getElevationMemo() {
 		return ElevationMemo;
 	}

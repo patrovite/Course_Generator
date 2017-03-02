@@ -73,15 +73,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Scanner;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -92,6 +99,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
@@ -99,6 +107,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.Document;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.StyleSheet;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartMouseEvent;
@@ -133,6 +145,7 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import course_generator.TrackData.CalcAvrSlopeResult;
 import course_generator.TrackData.CalcAvrSpeedResult;
 import course_generator.TrackData.CalcClimbResult;
+import course_generator.dialogs.FrmExportWaypoints;
 import course_generator.dialogs.FrmImportChoice;
 import course_generator.dialogs.frmEditPosition;
 import course_generator.dialogs.frmFillCoeff;
@@ -325,7 +338,7 @@ public class frmMain extends javax.swing.JFrame {
 	private JButton btResumeSave;
 	private JTable TableResume;
 	private JScrollPane jScrollPaneResume;
-	private JButton btMapMarker;
+//	private JButton btMapMarker;
 	private JButton btMapHideMarker;
 	private JButton btMapAddMarker;
 	private JButton btMapUndo;
@@ -353,7 +366,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	public Crosshair yCrosshair;
 	private JPanel StatusBar;
-	private JLabel lbStatusBarSpeed;
+//	private JLabel lbStatusBarSpeed;
 	private JLabel LbInfoCurve;
 	private JLabel LbInfoCurveVal;
 	private JLabel LbModified;
@@ -365,6 +378,8 @@ public class frmMain extends javax.swing.JFrame {
 	private JButton btMiniRoadbook;
 	private JMenuItem mnuImportGPX;
 	private JMenuItem mnuImportCGX;
+	private JEditorPane editorStat;
+	private JScrollPane scrollPaneStat;
 
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
@@ -380,8 +395,10 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 	/**
-	 * Creates new form frmMain ------------------------------- !!!! Everything
-	 * start here !!!! ------------------------
+	 * Creates new form frmMain 
+	 * ------------------------------- 
+	 * !!!! Everything start here !!!! 
+	 * ------------------------
 	 */
 	public frmMain(String args[]) {
 		// Initialize data
@@ -408,6 +425,8 @@ public class frmMain extends javax.swing.JFrame {
 			Locale.setDefault(Locale.US);
 		}
 
+		System.out.println("Selected language : " + Locale.getDefault().toString());
+		
 		// -- Set default font
 		setUIFont(new javax.swing.plaf.FontUIResource("Tahoma", // Settings.DefaultFont.getFontName(),
 																// //"Tahoma"
@@ -449,7 +468,18 @@ public class frmMain extends javax.swing.JFrame {
 		MapViewer.setTileSource(new Thunderforest_Outdoors());
 		//TODO Switch to OpenTopomap
 		//MapViewer.setTileSource(new OpenTopoMap());
+		
+		/*
+		OpenTopoMap est sous licence CC-BY-SA. Cela signifie que la carte peut être utilisée gratuitement et librement tant que toujours Paternité est et le partage sur un pied d'égalité est possible.
 
+		Les tuiles peuvent être trouvés à l'emplacement suivant:
+		{A | b | c} .tile.opentopomap.org / {z} / {x} / {y} .png
+
+		Le texte de la licence, ce qui suit doit être clairement visible:
+		Les données des cartes: © OpenStreetMap contributeurs, SRTM | Affichage de la carte: © OpenTopoMap (CC-BY-SA)
+		Le style de la carte est la même licence et est sur Github disponible.
+		*/
+		
 		// -- Set the counter in order near the end in order to start the
 		// connection test
 		cmptInternetConnexion = Settings.ConnectionTimeout - 1;
@@ -464,12 +494,15 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshStatusbar(Track);
 		RefreshMapButtons();
 		RefreshProfilButtons();
+		RefreshStat(false);
 		
 		//-- Display the splash screen
         showDialogAbout(this, true, Version);
 	}
 	
 	
+
+
 	/*
 	 * Refresh the buttons status of the profil toolbar
 	 */
@@ -491,8 +524,8 @@ public class frmMain extends javax.swing.JFrame {
         
 		CalcClimbResult ccr = new CalcClimbResult();	
 		ccr = Track.CalcClimb(0, Track.data.size()-1, ccr);
-		Track.ClimbP=ccr.cp;
-		Track.ClimbM=ccr.cm;
+		Track.setClimbP(ccr.cp);
+		Track.setClimbM(ccr.cm);
 		Track.AscTime=ccr.tp;
 		Track.DescTime=ccr.tm;
 		
@@ -509,17 +542,186 @@ public class frmMain extends javax.swing.JFrame {
     }
 
     
+    private String CalcVMoy(double d, double t, int unit)
+    {
+      if (t!=0) {
+        return String.format("%1.1f "+Utils.uSpeed2String(unit),d/t*3.6);
+      }
+      else
+        return "0.0 "+Utils.uSpeed2String(unit);
+    }
+    
+    /**
+     * Refresh the statistic tab
+     */
 	private void RefreshStat(boolean b) {
-		// TODO Auto-generated method stub
-		
+    	if (Track.data.isEmpty()) return;
+
+    	String lang=Locale.getDefault().toString(); 
+
+    	if (getClass().getResource("/course_generator/html/stattemplate_"+lang+".html")==null) {
+    		lang="en_US";
+    		System.out.println("RefreshStat: Statistic file not present! Loading the english statistic file");
+    	}
+    	int unit=Settings.Unit;
+    	
+    	StringBuilder sb = new StringBuilder("");
+
+		File file = new File(getClass().getResource("/course_generator/html/stattemplate_"+lang+".html").getFile());
+
+		//-- Load the file from the resource
+		try (Scanner scanner = new Scanner(file)) {
+
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				sb.append(line).append("\n");
+			}
+
+			scanner.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+        Track.CalcStatElev();
+        Track.CalcStatSlope();
+        Track.CalcStatNight();
+
+        CalcAvrSlopeResult casr = new CalcAvrSlopeResult();
+        casr = Track.CalcAvrSlope(0, Track.data.size()-1, casr);
+
+        CalcAvrSpeedResult speedResult = new CalcAvrSpeedResult();
+        speedResult = Track.CalcAvrSpeed(0, Track.data.size()-1, speedResult);
+
+        Track.CalcRoad();
+
+        sb = Utils.sbReplace(sb,"@500",String.format( "%1.3f "+Utils.uLDist2String(unit), Track.getTotalDistance(unit) / 1000));
+        sb = Utils.sbReplace(sb,"@501",String.format( "%1.0f "+Utils.uElev2String(unit), Track.getClimbP(unit)));
+        sb = Utils.sbReplace(sb,"@502",String.format( "%1.0f "+Utils.uElev2String(unit), Track.getClimbM(unit)));
+        sb = Utils.sbReplace(sb,"@503",String.format( "%1.0f "+Utils.uElev2String(unit), Track.getMinElev(unit)));
+        sb = Utils.sbReplace(sb,"@504",String.format( "%1.0f "+Utils.uElev2String(unit), Track.getMaxElev(unit)));
+        double temp = ((Track.getMaxElev(CgConst.UNIT_METER) - Track.getMinElev(CgConst.UNIT_METER)) / 100) * 0.6;
+        sb = Utils.sbReplace(sb,"@505",String.format( "~%1.1f°C / ~%1.1f°F", temp, Utils.C2F(temp)-32.0));
+        sb = Utils.sbReplace(sb,"@506",String.format( "%1.1f%%", casr.AvrSlopeP));
+        sb = Utils.sbReplace(sb,"@507",String.format( "%1.1f%%", casr.AvrSlopeM));
+        sb = Utils.sbReplace(sb,"@508",String.format( "%1.3f "+Utils.uLDist2String(unit), casr.getTotClimbP(unit)/1000));
+        sb = Utils.sbReplace(sb,"@509",String.format( "%1.3f "+Utils.uLDist2String(unit), casr.getTotFlat(unit)/1000));
+        sb = Utils.sbReplace(sb,"@510",String.format( "%1.3f "+Utils.uLDist2String(unit), casr.getTotClimbM(unit)/1000));
+        sb = Utils.sbReplace(sb,"@511",String.format( "%1.1f "+Utils.uSpeed2String(unit), speedResult.getAvrspeed(unit)));
+
+        double tmpdbl = (Track.getDistRoad(unit) * 100 / Track.getTotalDistance(unit));
+        sb = Utils.sbReplace(sb,"@512", String.format( "%1.0f%% / %1.3f "+Utils.uLDist2String(unit), tmpdbl, Track.getDistRoad(unit) / 1000));
+        sb = Utils.sbReplace(sb,"@513", String.format( "%1.0f%% / %1.3f "+Utils.uLDist2String(unit), 100.0-tmpdbl, (Track.getTotalDistance(unit) - Track.getDistRoad(unit)) / 1000));
+
+        sb = Utils.sbReplace(sb,"@514", Track.CourseName);
+        sb = Utils.sbReplace(sb,"@515", Track.Description);
+
+        //-- Speed, distance and time vs slope
+        for (int i=1; i<=13; i++)
+        	sb = Utils.sbReplace(sb,String.format("@%03d",i), CalcVMoy(Track.StatSlope[i-1].getDist(unit), Track.StatSlope[i-1].Time, unit));
+        
+        for (int i=21; i<=33; i++)
+            sb = Utils.sbReplace(sb,
+            		String.format("@%03d",i),
+            		String.format( "%1.3f "+Utils.uLDist2String(unit), Track.StatSlope[i-21].getDist(unit) / 1000) + ' ' + String.format( "(%1.1f%%)", Track.StatSlope[i-21].getDist(unit) / Track.getTotalDistance(unit) * 100));
+                  
+        for (int i=41; i<=53; i++) {
+            int k = (int)Track.StatSlope[i-41].Time;
+            sb = Utils.sbReplace(sb,String.format("@%03d",i),Utils.Second2DateString(k));
+        }
+
+        //-- Speed, distance and time vs elevation
+        for (int i=100; i<=105; i++)
+            sb = Utils.sbReplace(sb, String.format("@%03d",i), CalcVMoy(Track.StatElev[i - 100].getDist(unit), Track.StatElev[i - 100].Time, unit));
+
+        for (int i=110; i<=115; i++)
+            sb = Utils.sbReplace(sb,
+            		String.format("@%03d",i),
+            		String.format( "%1.3f "+Utils.uLDist2String(unit), Track.StatElev[i - 110].getDist(unit) / 1000) + ' ' + String.format( "(%1.1f%%)", Track.StatElev[i - 110].getDist(unit) / Track.getTotalDistance(unit) * 100));
+            
+        for (int i=120; i<=125; i++) {
+            int k = (int)Track.StatElev[i - 120].Time;
+            sb = Utils.sbReplace(sb, String.format("@%03d",i), Utils.Second2DateString(k));
+        }
+
+        //-- Speed, distance and track time vs the elevation (day)
+        for (int i=200; i<=205; i++)
+            sb = Utils.sbReplace(sb,
+            		String.format("@%03d",i),
+            		CalcVMoy(Track.StatElevDay[i - 200].getDist(unit), Track.StatElevDay[i - 200].Time, unit));
+            
+        for (int i=210; i<=215; i++)
+            sb = Utils.sbReplace(sb,
+            		String.format("@%03d",i),
+            		String.format( "%1.3f "+Utils.uLDist2String(unit), Track.StatElevDay[i - 210].getDist(unit) / 1000) + ' ' + String.format( "(%1.1f%%)", Track.StatElevDay[i - 210].getDist(unit) / Track.getTotalDistance(unit) * 100));
+            
+        for (int i=220; i<=225; i++) {
+            int k = (int)Track.StatElevDay[i - 220].Time;
+            sb = Utils.sbReplace(sb, String.format("@%03d",i), Utils.Second2DateString(k));
+        }
+
+
+        //-- Speed, distance and track time vs the elevation (night)
+        for (int i=300; i<=305; i++)
+            sb = Utils.sbReplace(sb,
+            		String.format("@%03d",i),
+            		CalcVMoy(Track.StatElevNight[i - 300].getDist(unit), Track.StatElevNight[i - 300].Time, unit));
+            
+        for (int i=310; i<=315; i++)
+            sb = Utils.sbReplace(sb,
+            		String.format("@%03d",i),
+            		String.format( "%1.3f "+Utils.uLDist2String(unit), Track.StatElevNight[i - 310].getDist(unit) / 1000) + ' ' + String.format( "(%1.1f%%)", Track.StatElevNight[i - 310].getDist(unit) / Track.getTotalDistance(unit) * 100));
+            
+        for (int i=320; i<=325; i++) {
+            int k = (int)Track.StatElevNight[i - 320].Time;
+            sb = Utils.sbReplace(sb,String.format("@%03d",i),Utils.Second2DateString(k));
+        }
+
+        //-- Speed, distance and track time during day and night
+        sb = Utils.sbReplace(sb,"@400", CalcVMoy(Track.tInDay.getDist(unit), Track.tInDay.Time, unit));
+        sb = Utils.sbReplace(sb,"@410", String.format( "%1.3f "+Utils.uLDist2String(unit), Track.tInDay.getDist(unit) / 1000) + ' ' + String.format( "(%1.1f%%)", Track.tInDay.getDist(unit) / Track.getTotalDistance(unit) * 100));
+
+        int k1 = (int)Track.tInDay.Time;
+        sb = Utils.sbReplace(sb,"@420",Utils.Second2DateString(k1));
+
+        sb = Utils.sbReplace(sb,"@401", CalcVMoy(Track.tInNight.getDist(unit), Track.tInNight.Time, unit));
+        sb = Utils.sbReplace(sb,"@411", String.format( "%1.3f "+Utils.uLDist2String(unit), Track.tInNight.getDist(unit) / 1000) + ' ' + String.format( "(%1.1f%%)", Track.tInNight.getDist(unit) / Track.getTotalDistance(unit) * 100));
+          
+        k1 = (int)Track.tInNight.Time;
+        sb = Utils.sbReplace(sb,"@421",Utils.Second2DateString(k1));
+
+        /*
+        @900=1000m=3280feet
+        @901=1500m=4921feet
+        @902=2000m=6561feet
+        @903=2500m=8202feet
+        @904=3000m=9842feet
+         */
+        if (unit==CgConst.UNIT_METER) {
+        	sb = Utils.sbReplace(sb,"@900","1000m");
+        	sb = Utils.sbReplace(sb,"@901","1500m");
+        	sb = Utils.sbReplace(sb,"@902","2000m");
+        	sb = Utils.sbReplace(sb,"@903","2500m");
+        	sb = Utils.sbReplace(sb,"@904","3000m");
+        }
+        else {
+        	sb = Utils.sbReplace(sb,"@900","3280 feet");
+        	sb = Utils.sbReplace(sb,"@901","4921 feet");
+        	sb = Utils.sbReplace(sb,"@902","6561 feet");
+        	sb = Utils.sbReplace(sb,"@903","8202 feet");
+        	sb = Utils.sbReplace(sb,"@904","9842 feet");
+        }
+        
+        
+        //-- Refresh the view and set the cursor position
+		editorStat.setText(sb.toString());
+		editorStat.setCaretPosition(0);
 	}
-
-
-
 
 	/**
 	 * Create the main menu
 	 */
+	
 	private void Create_MenuBarMain() {
 		// Create the menu
 		mnuMain = new javax.swing.JMenuBar();
@@ -571,7 +773,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX1);
 
-		// -- Mru GPX n�2
+		// -- Mru GPX n°2
 		mnuMruGPX2 = new javax.swing.JMenuItem();
 		mnuMruGPX2.setText(bundle.getString("frmMain.mnuMruGPX2.text"));
 		mnuMruGPX2.addActionListener(new java.awt.event.ActionListener() {
@@ -581,7 +783,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX2);
 
-		// -- Mru GPX n�3
+		// -- Mru GPX n°3
 		mnuMruGPX3 = new javax.swing.JMenuItem();
 		mnuMruGPX3.setText(bundle.getString("frmMain.mnuMruGPX3.text"));
 		mnuMruGPX3.addActionListener(new java.awt.event.ActionListener() {
@@ -591,7 +793,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX3);
 
-		// -- Mru GPX n�4
+		// -- Mru GPX n°4
 		mnuMruGPX4 = new javax.swing.JMenuItem();
 		mnuMruGPX4.setText(bundle.getString("frmMain.mnuMruGPX4.text"));
 		mnuMruGPX4.addActionListener(new java.awt.event.ActionListener() {
@@ -601,7 +803,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastGPX.add(mnuMruGPX4);
 
-		// -- Mru GPX n�5
+		// -- Mru GPX n°5
 		mnuMruGPX5 = new javax.swing.JMenuItem();
 		mnuMruGPX5.setText(bundle.getString("frmMain.mnuMruGPX5.text"));
 		mnuMruGPX5.addActionListener(new java.awt.event.ActionListener() {
@@ -618,7 +820,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuLastCGX = new javax.swing.JMenu();
 		mnuLastCGX.setText(bundle.getString("frmMain.mnuLastCGX.text"));
 
-		// -- Mru CGX n�1
+		// -- Mru CGX n°1
 		mnuMruCGX1 = new javax.swing.JMenuItem();
 		mnuMruCGX1.setText(bundle.getString("frmMain.mnuMruCGX1.text"));
 		mnuMruCGX1.addActionListener(new java.awt.event.ActionListener() {
@@ -628,7 +830,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX1);
 
-		// -- Mru CGX n�2
+		// -- Mru CGX n°2
 		mnuMruCGX2 = new javax.swing.JMenuItem();
 		mnuMruCGX2.setText(bundle.getString("frmMain.mnuMruCGX2.text"));
 		mnuMruCGX2.addActionListener(new java.awt.event.ActionListener() {
@@ -638,7 +840,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX2);
 
-		// -- Mru CGX n�3
+		// -- Mru CGX n°3
 		mnuMruCGX3 = new javax.swing.JMenuItem();
 		mnuMruCGX3.setText(bundle.getString("frmMain.mnuMruCGX3.text"));
 		mnuMruCGX3.addActionListener(new java.awt.event.ActionListener() {
@@ -648,7 +850,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX3);
 
-		// -- Mru CGX n�4
+		// -- Mru CGX n°4
 		mnuMruCGX4 = new javax.swing.JMenuItem();
 		mnuMruCGX4.setText(bundle.getString("frmMain.mnuMruCGX4.text"));
 		mnuMruCGX4.addActionListener(new java.awt.event.ActionListener() {
@@ -658,7 +860,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuLastCGX.add(mnuMruCGX4);
 
-		// -- Mru CGX n�5
+		// -- Mru CGX n°5
 		mnuMruCGX5 = new javax.swing.JMenuItem();
 		mnuMruCGX5.setText(bundle.getString("frmMain.mnuMruCGX5.text"));
 		mnuMruCGX5.addActionListener(new java.awt.event.ActionListener() {
@@ -813,10 +1015,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuExportTagAsWaypoints.setText(bundle.getString("frmMain.mnuExportTagAsWaypoints.text"));
 		mnuExportTagAsWaypoints.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveGPXActionPerformed(evt); //TODO
+				ExportTagsAsWaypoints();
 			}
 		});
-		mnuExportTagAsWaypoints.setEnabled(false);
 		mnuFile.add(mnuExportTagAsWaypoints);
 
 		// -- Separator
@@ -1186,6 +1387,7 @@ public class frmMain extends javax.swing.JFrame {
 				RefreshStatusbar(Track);
 				RefreshResume();
 				RefreshProfil();
+				RefreshStat(true);
 				
 				int row = TableMain.getSelectedRow();
 				if (row>= 0) RefreshProfilInfo(row);
@@ -1308,7 +1510,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * Save the selected data to disk in GPX format
 	 */
 	private void SavePartGPX() {
-		String s, ext;
+		String s;
 
 		if (Track.data.isEmpty())
 			return;
@@ -1344,7 +1546,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * Save the selected data to disk in CGX format
 	 */
 	private void SavePartCGX() {
-		String s, ext;
+		String s;
 
 		if (Track.data.isEmpty())
 			return;
@@ -1559,7 +1761,6 @@ public class frmMain extends javax.swing.JFrame {
 		btOpenGPX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				OpenGPXDialog();
-				// btOpenGPXActionPerformed(evt);
 			}
 		});
 		ToolBarMain.add(btOpenGPX);
@@ -1764,10 +1965,10 @@ public class frmMain extends javax.swing.JFrame {
 			        	Track.data.get(res.Start).setCoeff(res.Start_Coeff);
 			        }
 			        else {
-			        	double x1 = Track.data.get(res.Start).getTotal();//   cd.data[frm.start].Total;
+			        	double x1 = Track.data.get(res.Start).getTotal(CgConst.UNIT_METER);//   cd.data[frm.start].Total;
 			        	double y1 = res.Start_Coeff; //frm.startval;
 
-			        	double x2 =  Track.data.get(res.End).getTotal(); //cd.data[frm.end].Total;
+			        	double x2 =  Track.data.get(res.End).getTotal(CgConst.UNIT_METER); //cd.data[frm.end].Total;
 			        	double y2 = res.End_Coeff; //frm.endval;
 
 			        	CalcLineResult rc = new CalcLineResult(); 
@@ -1779,11 +1980,10 @@ public class frmMain extends javax.swing.JFrame {
 			        	double coeff=0; 
 			        	
 			        	for ( int i= res.Start; i<= res.End; i++) {
-			        		x = Track.data.get(i).getTotal();
+			        		x = Track.data.get(i).getTotal(CgConst.UNIT_METER);
 			        		offset = offset + Track.data.get(i).getRecovery();
 			        		
 			        		coeff=(rc.a * x + rc.b)+offset;
-//			        		Track.data.get(i).setCoeff((rc.a * x + rc.b)+offset);
 			          
 			        		//Validity tests
 			        		if (coeff > CgConst.MAX_COEFF) coeff=CgConst.MAX_COEFF;
@@ -1956,10 +2156,9 @@ public class frmMain extends javax.swing.JFrame {
 		btStatisticSave.setFocusable(false);
 		btStatisticSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				SaveStat();
 			}
 		});
-		btStatisticSave.setEnabled(false);
 		ToolBarStatistic.add(btStatisticSave);
 
 		// -- Separator
@@ -1975,12 +2174,10 @@ public class frmMain extends javax.swing.JFrame {
 		btStatisticRefresh.setFocusable(false);
 		btStatisticRefresh.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				RefreshStat(true);
 			}
 		});
-		btStatisticRefresh.setEnabled(false);
 		ToolBarStatistic.add(btStatisticRefresh);
-
 	}
 
 	/**
@@ -2793,9 +2990,41 @@ public class frmMain extends javax.swing.JFrame {
 		Create_Statistic_Toolbar();
 		jPanelStatistic.add(ToolBarStatistic, java.awt.BorderLayout.NORTH);
 
-		// TODO Add the component to display the statistics
+		editorStat = new JEditorPane();
+		editorStat.setContentType( "text/html" );
+	    editorStat.setEditable( false );
+	    scrollPaneStat = new JScrollPane( editorStat );
+	    jPanelStatistic.add(scrollPaneStat, java.awt.BorderLayout.CENTER);
 
-		addTab(TabbedPaneMain, jPanelStatistic, bundle.getString("frmMain.TabStatistic.tabTitle"),
+//	    StyleSheet css = ((HTMLEditorKit)editorStat.getEditorKit()).getStyleSheet();
+//        css.addRule("UNKNOWN	{FONT-FAMILY: Arial; BACKGROUND-COLOR: gainsboro}");
+//        css.addRule("H1 {FONT-WEIGHT: bold; FONT-SIZE: 24pt; COLOR: black; FONT-FAMILY: Arial; TEXT-ALIGN: left;	}");
+//        css.addRule("H2 {FONT-WEIGHT: bold; FONT-SIZE: 16pt; COLOR: black; FONT-FAMILY: Arial; TEXT-ALIGN: left;	}");
+//        css.addRule("table.Tableau { border: 1px solid black; width: 800px; margin-left:auto; margin-right:auto;	}");
+//        css.addRule("TD.titreTableau { FONT-WEIGHT: bold; FONT-SIZE: 12pt; FONT-FAMILY: Arial; BACKGROUND-COLOR: #ffffff; text-align: center; padding-left: 5px; padding-right: 5px;}");
+//        css.addRule("TD.titreTableauGauche {	FONT-WEIGHT: bold; FONT-SIZE: 12pt;	FONT-FAMILY: Arial;	BACKGROUND-COLOR: #ffffff; text-align: left; padding-left: 5px;	padding-right: 5px;	}");
+//        css.addRule("TD.Valeur { FONT-WEIGHT: normal; FONT-SIZE: 12pt; FONT-FAMILY: Arial; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: center; padding-left: 5px;	padding-right: 5px;	}");
+//        css.addRule("P {	FONT-SIZE: 12pt; COLOR: black; FONT-FAMILY: Arial; TEXT-DECORATION: none }");
+		
+//	    // add an html editor kit
+//        HTMLEditorKit kit = new HTMLEditorKit();        
+//        // add some styles to the html
+//        StyleSheet styleSheet = kit.getStyleSheet();
+//        styleSheet.addRule("UNKNOWN	{FONT-FAMILY: Arial; BACKGROUND-COLOR: gainsboro}");
+//        styleSheet.addRule("H1 {FONT-WEIGHT: bold; FONT-SIZE: 24pt; COLOR: black; FONT-FAMILY: Arial; TEXT-ALIGN: left;	}");
+//        styleSheet.addRule("H2 {FONT-WEIGHT: bold; FONT-SIZE: 16pt; COLOR: black; FONT-FAMILY: Arial; TEXT-ALIGN: left;	}");
+//        styleSheet.addRule("table.Tableau { border: 1px solid black; width: 800px; margin-left:auto; margin-right:auto;	}");
+//        styleSheet.addRule("TD.titreTableau { FONT-WEIGHT: bold; FONT-SIZE: 12pt; FONT-FAMILY: Arial; BACKGROUND-COLOR: #ffffff; text-align: center; padding-left: 5px; padding-right: 5px;}");
+//        styleSheet.addRule("TD.titreTableauGauche {	FONT-WEIGHT: bold; FONT-SIZE: 12pt;	FONT-FAMILY: Arial;	BACKGROUND-COLOR: #ffffff; text-align: left; padding-left: 5px;	padding-right: 5px;	}");
+//        styleSheet.addRule("TD.Valeur { FONT-WEIGHT: normal; FONT-SIZE: 12pt; FONT-FAMILY: Arial; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: center; padding-left: 5px;	padding-right: 5px;	}");
+//        styleSheet.addRule("P {	FONT-SIZE: 12pt; COLOR: black; FONT-FAMILY: Arial; TEXT-DECORATION: none }");
+//        editorStat.setEditorKit(kit);
+        
+        // create a document, set it on the jeditorpane, then add the html
+//        Document doc = kit.createDefaultDocument();
+//        editorStat.setDocument(doc);
+		
+        addTab(TabbedPaneMain, jPanelStatistic, bundle.getString("frmMain.TabStatistic.tabTitle"),
 				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/stat.png")));
 
 		// -- Tab - Analysis
@@ -3216,13 +3445,13 @@ public class frmMain extends javax.swing.JFrame {
 				dst.setNum(k);
 				dst.setName(src.getName());
 				dst.setLine(src.getNum());
-				dst.setElevation(src.getElevation());
+				dst.setElevation(src.getElevation(CgConst.UNIT_METER));
 
 				ccr = Track.CalcClimb(0, i, ccr);
 				dst.setClimbP(ccr.cp);
 				dst.setClimbM(ccr.cm);
 
-				dst.setDist(src.getTotal() / 1000.0);
+				dst.setDist(src.getTotal(CgConst.UNIT_METER) / 1000.0);
 				dst.setTime(src.getTime());
 				dst.setHour(src.getHour());
 
@@ -3230,7 +3459,7 @@ public class frmMain extends javax.swing.JFrame {
 				dst.setStationTime(src.getStation());
 
 				dst.setdTime_f(src.getTime() - OldData.getTime());
-				dst.setdDist((src.getTotal() - OldData.getTotal()) / 1000.0);
+				dst.setdDist((src.getTotal(CgConst.UNIT_METER) - OldData.getTotal(CgConst.UNIT_METER)) / 1000.0);
 
 				ccr = Track.CalcClimb(old, i, ccr);
 				casr = Track.CalcAvrSlope(old, i, casr);
@@ -3246,7 +3475,7 @@ public class frmMain extends javax.swing.JFrame {
 				dst.setAvgSlopeP(casr.AvrSlopeP);
 				dst.setAvgSlopeM(casr.AvrSlopeM);
 
-				dst.setAvgSpeed(speedResult.avrspeed);
+				dst.setAvgSpeed(speedResult.getAvrspeed(CgConst.UNIT_METER));
 
 				dst.setComment(src.getComment());
 
@@ -3334,6 +3563,8 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Refresh resume grid
 		RefreshResume();
+		// -- Refresh statistic 
+		RefreshStat(true);
 
 		RefreshMruGPX();
 		RefreshProfil();
@@ -3415,6 +3646,8 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshProfil();
 		// -- Refresh the form title 
 		RefreshTitle();
+		// -- Refresh statistic 
+		RefreshStat(true);
 		
 		// -- Force the update of the main table
 		RefreshTableMain();
@@ -3449,6 +3682,56 @@ public class frmMain extends javax.swing.JFrame {
 			RefreshStatusbar(Track);
 		}
 	}
+
+	/**
+	 * Save the statistics in TXT format
+	 */
+	private void SaveStat() {
+		String s, ext;
+
+		if (Track.data.isEmpty())
+			return;
+
+		s = Utils.SaveDialog(this, Settings.LastDir, "", ".html", bundle.getString("frmMain.HTMLFile"), true,
+				bundle.getString("frmMain.FileExist"));
+						
+		if (!s.isEmpty()) {
+			// -- Save the statistics
+			Track.SaveCGX(s, 0, Track.data.size() - 1);
+		    try {
+		    	FileWriter out = new FileWriter(s);
+		        out.write(editorStat.getText());
+		        out.close();
+		      } catch (Exception f) {
+		      	 f.printStackTrace();
+		      }
+
+			
+			// -- Store the directory
+			Settings.LastDir = Utils.GetDirFromFilename(s);
+		}
+	}
+
+	/**
+	 * Export tags as waypoints
+	 */
+	private void ExportTagsAsWaypoints() {
+		String s, ext;
+
+		if (Track.data.isEmpty())
+			return;
+
+		s = Utils.SaveDialog(this, Settings.LastDir, "", ".gpx", bundle.getString("frmMain.GPXFile"), true,
+				bundle.getString("frmMain.FileExist"));
+						
+		if (!s.isEmpty()) {
+			FrmExportWaypoints frm = new FrmExportWaypoints();
+			if (frm.showDialog()) {
+				Track.SaveWaypoint(s, frm.getTag());
+			}
+		}
+	}
+
 	
 	/**
 	 * Load the configuration file
@@ -3763,10 +4046,10 @@ public class frmMain extends javax.swing.JFrame {
 				+ Settings.getDistanceUnitString());
 
 		// -- Ascent
-		LbInfoDpVal.setText(String.format("%1.0f ", tdata.ClimbP) + Settings.getElevationUnitString());
+		LbInfoDpVal.setText(String.format("%1.0f ", tdata.getClimbP(Settings.Unit)) + Settings.getElevationUnitString());
 
 		// -- Descent
-		LbInfoDmVal.setText(String.format("%1.0f ", tdata.ClimbM) + Settings.getElevationUnitString());
+		LbInfoDmVal.setText(String.format("%1.0f ", tdata.getClimbM(Settings.Unit)) + Settings.getElevationUnitString());
 
 		// -- Time
 		int nbh = tdata.TotalTime / 3600;
@@ -3841,7 +4124,7 @@ public class frmMain extends javax.swing.JFrame {
 		if (r>=0)
 			TableResume.setRowSelectionInterval(r, r);
 	}
-	
+
 	
 	/**
 	 * Refresh the position of the marker on the map

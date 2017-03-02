@@ -4,11 +4,11 @@ Course Generator is a software which can estimate your time in trail races.
 
 STATUS : Version 4.0.0 alpha 5 - Usable but not all the features has been rewritten from the C# version.
 
-I created Course Generator in 2008 for my first 100 km ultra trail. Since then I added a lot of features and it has been used by a lot of french ultra-runner. Up to the version 3.88 it has been written in C# and now java is used in order to be cross platform (Windows, Mac OS and Linux) and multilingual. 
+I created Course Generator in 2008 for my first 100 km ultra trail. Since then, I added a lot of features and it has been used by a lot of french ultra-runner. Up to the version 3.88 it has been written in C# and now java is used in order to be cross platform (Windows, Mac OS and Linux) and multilingual. 
 
 Course Generator is free (donation are welcome ;) ) and open source under GPL V3.
 
-In order to works Course Generator (also called CG) need a GPS file and some extra information.
+In order to works Course Generator (also called CG) need a GPS file and some extra informations.
 
 With Course Generator you can :
 

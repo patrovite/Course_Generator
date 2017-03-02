@@ -23,15 +23,17 @@ package course_generator.utils;
  * @author pierre.delore
  */
 public class StatData {
-    public double Speed;
-    public double Dist;
+    /** Speed in meter per hour **/
+	private double Speed;
+	/** Disatnce in meter **/
+    private double Dist;
+    /** Time **/
     public double Time;
+    /** Counter **/
     public int Cmpt;
 
-    //CultureInfo culture = CultureInfo.CreateSpecificCulture("en-GB");
-
     public StatData() {
-	Init();
+    	Init();
     }
 
     public void Init()  {
@@ -40,4 +42,120 @@ public class StatData {
             Time=0.0;
             Cmpt=0;
     }    
+
+    /**
+     * Set the speed
+     * @param speed 
+     * 	Speed in meter per hour
+     */
+    public void setSpeed(double speed) {
+    	this.Speed=speed;
+    }
+    
+    /**
+     * Get the speed depending the unit
+     * @param unit
+     * 	Unit for the returned value
+     * @return
+     * 	Speed in the corresponding unit
+     */
+    public double getSpeed(int unit) {
+    	switch (unit) {
+    		case CgConst.UNIT_METER:
+    			return Speed;
+    		case CgConst.UNIT_MILES_FEET:
+    			// meter to miles
+    			return Utils.Meter2uMiles(Speed);
+    		default:
+    			return Speed;
+    	}
+	}
+
+    /**
+     * Get the speed as a string
+     * @param unit
+     * 	Unit for the returned value
+     * @return
+     * 	String containing speed
+     */
+	public String getSpeedString(int unit) {
+
+		Double d = getSpeed(unit);
+
+		String s = "";
+
+		// -- Set the value
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			s = String.format("%1.0f ", d);
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			s = String.format("%1.0f ", d);
+			break;
+		default:
+			s = String.format("%1.0f ", d);
+			break;
+		}
+		return s;
+	}
+
+	//-------------------------------------------
+	
+    /**
+     * Set the distance
+     * @param dist
+     * 	Speed in meter per hour
+     */
+    public void setDist(double dist) {
+    	this.Dist=dist;
+    }
+    
+    /**
+     * Get the dist depending the unit
+     * @param unit
+     * 	Unit for the returned value
+     * @return
+     * 	Dist in the corresponding unit
+     */
+    public double getDist(int unit) {
+    	switch (unit) {
+    		case CgConst.UNIT_METER:
+    			return Dist;
+    		case CgConst.UNIT_MILES_FEET:
+    			// meter to miles
+    			return Utils.Meter2uMiles(Dist);
+    		default:
+    			return Dist;
+    	}
+	}
+
+    /**
+     * Get the dist as a string
+     * @param unit
+     * 	Unit for the returned value
+     * @return
+     * 	String containing dist
+     */
+	public String getDistString(int unit) {
+
+		Double d = getDist(unit);
+
+		String s = "";
+
+		// -- Set the value
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			s = String.format("%1.0f ", d);
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			s = String.format("%1.0f ", d);
+			break;
+		default:
+			s = String.format("%1.0f ", d);
+			break;
+		}
+		return s;
+	}
+
+    
 }

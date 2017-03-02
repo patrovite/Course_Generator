@@ -365,6 +365,81 @@ public class Utils {
 		return m * 1.609344;
 	}
 
+	/**
+	 * Convert °C to °F
+	 * @param c
+	 * 	Temperature in °C
+	 * @return
+	 * 	Temperature in °F
+	 */
+	public static double C2F(double c) {
+		return c*9/5+32;
+	}
+	
+	/**
+	 * Convert °F to °C
+	 * @param f
+	 * 	Temperature in °F
+	 * @return
+	 * 	Temperature in °C
+	 */
+	public static double F2C(double f) {
+		return (f-32)*5/9;
+	}
+	
+	/**
+	 * Return the speed unit as string (km/h or miles/h)
+	 * @param unit
+	 * 	Unit
+	 * @return
+	 * 	String with the unit
+	 */
+	public static String uSpeed2String(int unit) {
+		switch (unit) {
+			case CgConst.UNIT_METER:
+				return "km/h";
+			case CgConst.UNIT_MILES_FEET:
+				return "miles/h";
+			default:
+				return "km/h";
+		}
+	}
+
+	/**
+	 * Return the (long) distance unit as string (km or miles)
+	 * @param unit
+	 * 	Unit
+	 * @return
+	 * 	String with the unit
+	 */
+	public static String uLDist2String(int unit) {
+		switch (unit) {
+			case CgConst.UNIT_METER:
+				return "km";
+			case CgConst.UNIT_MILES_FEET:
+				return "miles";
+			default:
+				return "km";
+		}
+	}
+
+	/**
+	 * Return the elevation unit as string (m or feet)
+	 * @param unit
+	 * 	Unit
+	 * @return
+	 * 	String with the unit
+	 */
+	public static String uElev2String(int unit) {
+		switch (unit) {
+			case CgConst.UNIT_METER:
+				return "m";
+			case CgConst.UNIT_MILES_FEET:
+				return "feet";
+			default:
+				return "m";
+		}
+	}
 
 	/**
 	 * Convert the seconds in string. Format hh:mm:ss
@@ -1082,4 +1157,27 @@ public class Utils {
 		return new File(fname).isFile();
 	}
 
+	/**
+	 * Search and replace all strings in a stringbuilder object
+	 * @param sb 
+	 * 		StringBuilder object
+	 * @param from 
+	 * 		String to search
+	 * @param to 
+	 * 		Replacement string
+	 * @return 
+	 * 		StringBuilder object
+	 */
+	public static StringBuilder sbReplace(StringBuilder sb, String from, String to) { 
+		int position = sb.indexOf(from);
+		while (position != -1)
+	    {
+			sb.replace(position, position + from.length(), to);
+			position += to.length(); // Move to the end of the replacement
+	        position = sb.indexOf(from, position);
+	    }
+		return sb;
+	}
+	
+	
 } // Class
