@@ -25,6 +25,11 @@
 *  - jfreechart - LGPL - http://www.jfree.org/index.html
 *  - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf/ 
 *  - SunCalculator - Patrick Kalkman - pkalkie@gmail.com
+*  
+* Copyrights:
+* Maps :
+* - Openstreetmap : http://www.openstreetmap.org/
+* - OpenTopoMap : https://opentopomap.org/
 */
 
 /*
@@ -203,7 +208,6 @@ import course_generator.resume_table.ResumedtTimeRenderer;
 import course_generator.settings.CgSettings;
 import course_generator.settings.frmSettings;
 import course_generator.tiles.opentopomap.OpenTopoMap;
-import course_generator.tiles.thunderforest.Thunderforest_Outdoors;
 import course_generator.trackdata_table.CoeffClass;
 import course_generator.trackdata_table.CoeffRenderer;
 import course_generator.trackdata_table.DiffClass;
@@ -245,7 +249,7 @@ import static course_generator.dialogs.frmAbout.showDialogAbout;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.ALPHA 6";
+	private final String Version = "4.0.0.ALPHA 7";
 	public TrackData Track;
 	private ResumeData Resume;
 	private final TrackDataModel ModelTableMain;
@@ -338,7 +342,6 @@ public class frmMain extends javax.swing.JFrame {
 	private JButton btResumeSave;
 	private JTable TableResume;
 	private JScrollPane jScrollPaneResume;
-//	private JButton btMapMarker;
 	private JButton btMapHideMarker;
 	private JButton btMapAddMarker;
 	private JButton btMapUndo;
@@ -366,7 +369,6 @@ public class frmMain extends javax.swing.JFrame {
 
 	public Crosshair yCrosshair;
 	private JPanel StatusBar;
-//	private JLabel lbStatusBarSpeed;
 	private JLabel LbInfoCurve;
 	private JLabel LbInfoCurveVal;
 	private JLabel LbModified;
@@ -462,23 +464,8 @@ public class frmMain extends javax.swing.JFrame {
 		SplitPaneMain.setDividerLocation(Settings.VertSplitPosition);
 		SplitPaneMainRight.setDividerLocation(Settings.HorizSplitPosition);
 
-		// -- Tests - To Remove...
-
 		// -- Configure the tile source for the map
-		MapViewer.setTileSource(new Thunderforest_Outdoors());
-		//TODO Switch to OpenTopomap
-		//MapViewer.setTileSource(new OpenTopoMap());
-		
-		/*
-		OpenTopoMap est sous licence CC-BY-SA. Cela signifie que la carte peut être utilisée gratuitement et librement tant que toujours Paternité est et le partage sur un pied d'égalité est possible.
-
-		Les tuiles peuvent être trouvés à l'emplacement suivant:
-		{A | b | c} .tile.opentopomap.org / {z} / {x} / {y} .png
-
-		Le texte de la licence, ce qui suit doit être clairement visible:
-		Les données des cartes: © OpenStreetMap contributeurs, SRTM | Affichage de la carte: © OpenTopoMap (CC-BY-SA)
-		Le style de la carte est la même licence et est sur Github disponible.
-		*/
+		MapViewer.setTileSource(new OpenTopoMap());
 		
 		// -- Set the counter in order near the end in order to start the
 		// connection test
@@ -497,7 +484,7 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshStat(false);
 		
 		//-- Display the splash screen
-        showDialogAbout(this, true, Version);
+        showDialogAbout(this, true, false, Version);
 	}
 	
 	
@@ -1459,7 +1446,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	
 	private void mnuAbout() {
-		showDialogAbout(this, false, Version);
+		showDialogAbout(this, false, true,  Version);
 	}
 
 

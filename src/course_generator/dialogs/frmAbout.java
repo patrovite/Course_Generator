@@ -20,6 +20,7 @@ package course_generator.dialogs;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -29,6 +30,8 @@ import java.util.ResourceBundle;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.Timer;
 
 import course_generator.utils.Utils;
@@ -42,6 +45,8 @@ public class frmAbout extends javax.swing.JDialog {
     
     private ResourceBundle bundle;
     private Timer timer;
+	private JTextArea taCopyright;
+	private JScrollPane jScrollPaneCopyright;
 
     
     class MyTimerActionListener implements ActionListener {
@@ -74,13 +79,44 @@ public class frmAbout extends javax.swing.JDialog {
      * @param parent Parent
      * @param version String containing the version of the software
 l     */
-    public static void showDialogAbout(java.awt.Frame parent, boolean autoclose, String version) {
+    public static void showDialogAbout(java.awt.Frame parent, boolean autoclose, boolean withcopyrights, String version) {
         frmAbout dlg = new frmAbout(parent, false, autoclose, version);
+        dlg.Refresh(withcopyrights);
         dlg.setVisible(true);
     }
 
     
-    /**
+    private void Refresh(boolean withcopyrights) {
+    	if (withcopyrights) {
+	    	StringBuilder sb = new StringBuilder();
+	    	sb.append(" .oO Copyrights Oo.\n");
+	    	sb.append(" Used libraries:\n");
+	    	sb.append(" - Joda-time - http://www.joda.org/joda-time\n");
+	    	sb.append(" - SwingX - LGPL 2.1 - https://swingx.java.net\n");
+	    	sb.append(" - JMapViewer - GPL - http://wiki.openstreetmap.org/wiki/JMapViewer\n");
+	    	sb.append(" - jcommon - LGPL - http://www.jfree.org/jcommon\n");
+	    	sb.append(" - jfreechart - LGPL - http://www.jfree.org/index.html\n");
+	    	sb.append(" - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf\n"); 
+	    	sb.append(" - SunCalculator - Patrick Kalkman - pkalkie@gmail.com\n");
+	    	sb.append("\n"); 
+	    	sb.append(" Maps :\n");
+	    	sb.append(" - Openstreetmap : http://www.openstreetmap.org\n");
+	    	sb.append(" - OpenTopoMap : https://opentopomap.org\n");
+	    	taCopyright.setText(sb.toString());
+	    	jScrollPaneCopyright.setPreferredSize(new Dimension(400, 100));
+	    	jScrollPaneCopyright.setVisible(true);
+    	}
+    	else {
+    		jScrollPaneCopyright.setPreferredSize(new Dimension(0, 0));
+    		jScrollPaneCopyright.setVisible(false);
+    	}
+    	pack();
+    	setLocationRelativeTo(null);
+    	
+	}
+
+
+	/**
      * This method initialize the form.
      */
     private void initComponents() {
@@ -102,7 +138,21 @@ l     */
         //-- Layout ------------------------------------------------------------
         Container paneGlobal=getContentPane();
         paneGlobal.setLayout(new GridBagLayout());
+        
+        taCopyright = new JTextArea();
+        taCopyright.setEditable(false);
+		jScrollPaneCopyright = new javax.swing.JScrollPane();
+		jScrollPaneCopyright.setViewportView(taCopyright);
+		jScrollPaneCopyright.setPreferredSize(new Dimension(0, 0));
+		jScrollPaneCopyright.setVisible(false);		
+        Utils.addComponent(paneGlobal, jScrollPaneCopyright, 
+        		1, 0, 
+        		1, GridBagConstraints.REMAINDER,
+        		1, 1,
+        		0, 0, 0, 0,
+        		GridBagConstraints.WEST, GridBagConstraints.BOTH);
 
+        
         //----------------------------------------------------------------------
         lbVersion = new javax.swing.JLabel();
         lbVersion.setFont(new java.awt.Font("ARIAL", Font.BOLD + Font.ITALIC, 12)); 
