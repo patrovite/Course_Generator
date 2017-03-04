@@ -404,57 +404,71 @@ public class TrackData {
 
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("gpx");
-			Utils.WriteStringToXML(writer, "creator", "Course Generator http://www.techandrun.com");
-			Utils.WriteStringToXML(writer, "version", "1.1");
+				writer.writeAttribute("creator", "Course Generator http://www.techandrun.com");
+				writer.writeAttribute("version", "1.1");
+				writer.writeAttribute("xsi:schemaLocation","http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/ActivityExtension/v1 http://www8.garmin.com/xmlschemas/ActivityExtensionv1.xsd http://www.garmin.com/xmlschemas/AdventuresExtensions/v1 http://www8.garmin.com/xmlschemas/AdventuresExtensionv1.xsd http://www.garmin.com/xmlschemas/PressureExtension/v1 http://www.garmin.com/xmlschemas/PressureExtensionv1.xsd http://www.garmin.com/xmlschemas/TripExtensions/v1 http://www.garmin.com/xmlschemas/TripExtensionsv1.xsd http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1 http://www.garmin.com/xmlschemas/TripMetaDataExtensionsv1.xsd http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1 http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensionsv1.xsd http://www.garmin.com/xmlschemas/CreationTimeExtension/v1 http://www.garmin.com/xmlschemas/CreationTimeExtensionsv1.xsd http://www.garmin.com/xmlschemas/AccelerationExtension/v1 http://www.garmin.com/xmlschemas/AccelerationExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.garmin.com/xmlschemas/VideoExtension/v1 http://www.garmin.com/xmlschemas/VideoExtensionv1.xsd");
+				writer.writeAttribute("xmlns","http://www.topografix.com/GPX/1/1"); 
+				writer.writeAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance"); 
+				writer.writeAttribute("xmlns:wptx1","http://www.garmin.com/xmlschemas/WaypointExtension/v1"); 
+				writer.writeAttribute("xmlns:gpxtrx","http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+				writer.writeAttribute("xmlns:gpxtpx","http://www.garmin.com/xmlschemas/TrackPointExtension/v1"); 
+				writer.writeAttribute("xmlns:gpxx","http://www.garmin.com/xmlschemas/GpxExtensions/v3"); 
+				writer.writeAttribute("xmlns:trp","http://www.garmin.com/xmlschemas/TripExtensions/v1"); 
+				writer.writeAttribute("xmlns:adv","http://www.garmin.com/xmlschemas/AdventuresExtensions/v1"); 
+				writer.writeAttribute("xmlns:prs","http://www.garmin.com/xmlschemas/PressureExtension/v1"); 
+				writer.writeAttribute("xmlns:tmd","http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1"); 
+				writer.writeAttribute("xmlns:vptm","http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1"); 
+				writer.writeAttribute("xmlns:ctx","http://www.garmin.com/xmlschemas/CreationTimeExtension/v1"); 
+				writer.writeAttribute("xmlns:gpxacc","http://www.garmin.com/xmlschemas/AccelerationExtension/v1"); 
+				writer.writeAttribute("xmlns:gpxpx","http://www.garmin.com/xmlschemas/PowerExtension/v1"); 
+				writer.writeAttribute("xmlns:vidx1","http://www.garmin.com/xmlschemas/VideoExtension/v1");
 
-			Utils.WriteStringToXML(writer, "xsi:schemaLocation",
-					"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/ActivityExtension/v1 http://www8.garmin.com/xmlschemas/ActivityExtensionv1.xsd http://www.garmin.com/xmlschemas/AdventuresExtensions/v1 http://www8.garmin.com/xmlschemas/AdventuresExtensionv1.xsd");
-			Utils.WriteStringToXML(writer, "xmlns", "http://www.topografix.com/GPX/1/1");
-			Utils.WriteStringToXML(writer, "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-			Utils.WriteStringToXML(writer, "xmlns:wptx1", "http://www.garmin.com/xmlschemas/WaypointExtension/v1");
-			Utils.WriteStringToXML(writer, "xmlns:gpxtrx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
-			Utils.WriteStringToXML(writer, "xmlns:gpxtpx", "http://www.garmin.com/xmlschemas/TrackPointExtension/v1");
-			Utils.WriteStringToXML(writer, "xmlns:gpxx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
-			Utils.WriteStringToXML(writer, "xmlns:trp", "http://www.garmin.com/xmlschemas/TripExtensions/v1");
-			Utils.WriteStringToXML(writer, "xmlns:adv", "http://www.garmin.com/xmlschemas/AdventuresExtensions/v1");
+//			Utils.WriteStringToXML(writer, "creator", "Course Generator http://www.techandrun.com");
+//			Utils.WriteStringToXML(writer, "version", "1.1");
+//
+//			Utils.WriteStringToXML(writer, "xsi:schemaLocation",
+//					"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/ActivityExtension/v1 http://www8.garmin.com/xmlschemas/ActivityExtensionv1.xsd http://www.garmin.com/xmlschemas/AdventuresExtensions/v1 http://www8.garmin.com/xmlschemas/AdventuresExtensionv1.xsd");
+//			Utils.WriteStringToXML(writer, "xmlns", "http://www.topografix.com/GPX/1/1");
+//			Utils.WriteStringToXML(writer, "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+//			Utils.WriteStringToXML(writer, "xmlns:wptx1", "http://www.garmin.com/xmlschemas/WaypointExtension/v1");
+//			Utils.WriteStringToXML(writer, "xmlns:gpxtrx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+//			Utils.WriteStringToXML(writer, "xmlns:gpxtpx", "http://www.garmin.com/xmlschemas/TrackPointExtension/v1");
+//			Utils.WriteStringToXML(writer, "xmlns:gpxx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+//			Utils.WriteStringToXML(writer, "xmlns:trp", "http://www.garmin.com/xmlschemas/TripExtensions/v1");
+//			Utils.WriteStringToXML(writer, "xmlns:adv", "http://www.garmin.com/xmlschemas/AdventuresExtensions/v1");
 
-			// <trk> node
-			writer.writeStartElement("trk");
+				// <trk> node
+				writer.writeStartElement("trk");
 
-			// <name> node
-			Utils.WriteStringToXML(writer, "name", CourseName);
+					// <name> node
+					Utils.WriteStringToXML(writer, "name", CourseName);
 
-			// <trkseg> node
-			writer.writeStartElement("trkseg");
+					// <trkseg> node
+					writer.writeStartElement("trkseg");
 
-			for (int i = start; i <= end; i++) {
-				CgData r = data.get(i);
-
-				// <trkpt>
-				// <trkpt lat="45.8547528" lon="6.7226378">
-				writer.writeStartElement("trkpt");
-				writer.writeAttribute("lat", String.format(Locale.ROOT, "%1.7f", r.getLatitude()));
-				writer.writeAttribute("lon", String.format(Locale.ROOT, "%1.7f", r.getLongitude()));
-
-				// Utils.WriteStringToXML(writer, "lat", String.Format(culture,
-				// "{0:0.0000000}", r.Latitude));
-				// Utils.WriteStringToXML(writer, "lon", String.Format(culture,
-				// "{0:0.0000000}", r.Longitude));
-
-				// <ele>1180.4</ele>
-				Utils.WriteStringToXML(writer, "ele", String.format(Locale.ROOT, "%1.7f", r.getElevation(CgConst.UNIT_METER)));
-
-				// <time>2010-08-18T07:57:07.000Z</time>
-				// dt = r.getHour().ToUniversalTime();
-				Utils.WriteStringToXML(writer, "time", r.getHour().toString());
-
-				// <name>toto</name>
-				Utils.WriteStringToXML(writer, "name", String.valueOf(i));
-
-				writer.writeEndElement();// Trkpt
-			} // for
-			writer.writeEndElement();// Trkseg
-			writer.writeEndElement();// trk
+						for (int i = start; i <= end; i++) {
+							CgData r = data.get(i);
+			
+							// <trkpt>
+							// <trkpt lat="45.8547528" lon="6.7226378">
+							writer.writeStartElement("trkpt");
+							writer.writeAttribute("lat", String.format(Locale.ROOT, "%1.14f", r.getLatitude()));
+							writer.writeAttribute("lon", String.format(Locale.ROOT, "%1.14f", r.getLongitude()));
+			
+							// <ele>1180.4</ele>
+							Utils.WriteStringToXML(writer, "ele", String.format(Locale.ROOT, "%1.7f", r.getElevation(CgConst.UNIT_METER)));
+			
+							// <time>2010-08-18T07:57:07.000Z</time>
+							// dt = r.getHour().ToUniversalTime();
+							Utils.WriteStringToXML(writer, "time", r.getHour().toString());
+			
+							// <name>toto</name>
+							Utils.WriteStringToXML(writer, "name", String.valueOf(i));
+			
+							writer.writeEndElement();// Trkpt
+						} // for
+					writer.writeEndElement();// Trkseg
+				writer.writeEndElement();// trk
 			writer.writeEndElement();// gpx
 			writer.writeEndDocument();
 			writer.flush();
@@ -486,34 +500,24 @@ public class TrackData {
 			
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("gpx"); 
-			writer.writeAttribute("xmlns", "http://www.topografix.com/GPX/1/1"); 
-			writer.writeAttribute("creator","Course Generator http://www.techandrun.com");
-			writer.writeAttribute("version", "1.1");
-			writer.writeAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-			writer.writeAttribute("xsi:schemaLocation",	"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd");
-
-			//<gpx 
-			//creator="Garmin Desktop App" 
-			//version="1.1" 
-			//xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/ActivityExtension/v1 http://www8.garmin.com/xmlschemas/ActivityExtensionv1.xsd http://www.garmin.com/xmlschemas/AdventuresExtensions/v1 http://www8.garmin.com/xmlschemas/AdventuresExtensionv1.xsd http://www.garmin.com/xmlschemas/PressureExtension/v1 http://www.garmin.com/xmlschemas/PressureExtensionv1.xsd http://www.garmin.com/xmlschemas/TripExtensions/v1 http://www.garmin.com/xmlschemas/TripExtensionsv1.xsd http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1 http://www.garmin.com/xmlschemas/TripMetaDataExtensionsv1.xsd http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1 http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensionsv1.xsd http://www.garmin.com/xmlschemas/CreationTimeExtension/v1 http://www.garmin.com/xmlschemas/CreationTimeExtensionsv1.xsd http://www.garmin.com/xmlschemas/AccelerationExtension/v1 http://www.garmin.com/xmlschemas/AccelerationExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.garmin.com/xmlschemas/VideoExtension/v1 http://www.garmin.com/xmlschemas/VideoExtensionv1.xsd"
-			//xmlns="http://www.topografix.com/GPX/1/1" 
-			//xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-			//xmlns:wptx1="http://www.garmin.com/xmlschemas/WaypointExtension/v1" 
-			//xmlns:gpxtrx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" 
-			//xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" 
-			//xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3" 
-			//xmlns:trp="http://www.garmin.com/xmlschemas/TripExtensions/v1" 
-			//xmlns:adv="http://www.garmin.com/xmlschemas/AdventuresExtensions/v1" 
-			//xmlns:prs="http://www.garmin.com/xmlschemas/PressureExtension/v1" 
-			//xmlns:tmd="http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1" 
-			//xmlns:vptm="http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1" 
-			//xmlns:ctx="http://www.garmin.com/xmlschemas/CreationTimeExtension/v1" 
-			//xmlns:gpxacc="http://www.garmin.com/xmlschemas/AccelerationExtension/v1" 
-			//xmlns:gpxpx="http://www.garmin.com/xmlschemas/PowerExtension/v1" 
-			//xmlns:vidx1="http://www.garmin.com/xmlschemas/VideoExtension/v1">
-
-			
-			
+				writer.writeAttribute("creator", "Course Generator http://www.techandrun.com");
+				writer.writeAttribute("version", "1.1");
+				writer.writeAttribute("xsi:schemaLocation","http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/ActivityExtension/v1 http://www8.garmin.com/xmlschemas/ActivityExtensionv1.xsd http://www.garmin.com/xmlschemas/AdventuresExtensions/v1 http://www8.garmin.com/xmlschemas/AdventuresExtensionv1.xsd http://www.garmin.com/xmlschemas/PressureExtension/v1 http://www.garmin.com/xmlschemas/PressureExtensionv1.xsd http://www.garmin.com/xmlschemas/TripExtensions/v1 http://www.garmin.com/xmlschemas/TripExtensionsv1.xsd http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1 http://www.garmin.com/xmlschemas/TripMetaDataExtensionsv1.xsd http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1 http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensionsv1.xsd http://www.garmin.com/xmlschemas/CreationTimeExtension/v1 http://www.garmin.com/xmlschemas/CreationTimeExtensionsv1.xsd http://www.garmin.com/xmlschemas/AccelerationExtension/v1 http://www.garmin.com/xmlschemas/AccelerationExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.garmin.com/xmlschemas/VideoExtension/v1 http://www.garmin.com/xmlschemas/VideoExtensionv1.xsd");
+				writer.writeAttribute("xmlns","http://www.topografix.com/GPX/1/1"); 
+				writer.writeAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance"); 
+				writer.writeAttribute("xmlns:wptx1","http://www.garmin.com/xmlschemas/WaypointExtension/v1"); 
+				writer.writeAttribute("xmlns:gpxtrx","http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+				writer.writeAttribute("xmlns:gpxtpx","http://www.garmin.com/xmlschemas/TrackPointExtension/v1"); 
+				writer.writeAttribute("xmlns:gpxx","http://www.garmin.com/xmlschemas/GpxExtensions/v3"); 
+				writer.writeAttribute("xmlns:trp","http://www.garmin.com/xmlschemas/TripExtensions/v1"); 
+				writer.writeAttribute("xmlns:adv","http://www.garmin.com/xmlschemas/AdventuresExtensions/v1"); 
+				writer.writeAttribute("xmlns:prs","http://www.garmin.com/xmlschemas/PressureExtension/v1"); 
+				writer.writeAttribute("xmlns:tmd","http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1"); 
+				writer.writeAttribute("xmlns:vptm","http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1"); 
+				writer.writeAttribute("xmlns:ctx","http://www.garmin.com/xmlschemas/CreationTimeExtension/v1"); 
+				writer.writeAttribute("xmlns:gpxacc","http://www.garmin.com/xmlschemas/AccelerationExtension/v1"); 
+				writer.writeAttribute("xmlns:gpxpx","http://www.garmin.com/xmlschemas/PowerExtension/v1"); 
+				writer.writeAttribute("xmlns:vidx1","http://www.garmin.com/xmlschemas/VideoExtension/v1");
 			
 			    int i = 1;
 			    String s;
@@ -521,11 +525,11 @@ public class TrackData {
 			    	if ((r.getTag() != 0) && ((r.getTag() & mask)!=0)) {
 			          // <wpt>
 			          writer.writeStartElement("wpt");
-			          	writer.writeAttribute("lat", String.format(Locale.ROOT,"%1.7f", r.getLatitude()));
-			          	writer.writeAttribute("lon", String.format(Locale.ROOT,"%1.7f", r.getLongitude()));
+			          	writer.writeAttribute("lat", String.format(Locale.ROOT,"%1.14f", r.getLatitude()));
+			          	writer.writeAttribute("lon", String.format(Locale.ROOT,"%1.14f", r.getLongitude()));
 
 			          	// <time>2010-08-18T07:57:07.000Z</time>
-			          	Utils.WriteStringToXML(writer,"time", r.getHour().toString()+"Z");
+			          	//Utils.WriteStringToXML(writer,"time", r.getHour().toString()+"Z");
 
 			          	//<name>toto</name>
 			          	if (r.getName().isEmpty()) {
@@ -534,8 +538,7 @@ public class TrackData {
 			          	}
 			          	else
 			          		Utils.WriteStringToXML(writer,"name", r.getName());
-
-
+			          	
 			          	//<sym>Flag, Green</sym>
 			          	s = "Flag, Green"; //Par defaut
 			          	if ((r.getTag() & CgConst.TAG_HIGH_PT) != 0)
@@ -547,19 +550,8 @@ public class TrackData {
 
 			          	Utils.WriteStringToXML(writer,"sym", s);
 
-				          /*
-				          <extensions>
-				            <gpxx:WaypointExtension xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
-				              <gpxx:DisplayMode>SymbolAndName</gpxx:DisplayMode>
-				            </gpxx:WaypointExtension>
-				          </extensions>
-				          */
-//			          	writer.writeStartElement("extensions");
-//			          		writer.writeStartElement("gpxx:WaypointExtension");
-//			          		writer.writeAttribute("xmlns:gpxx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
-//			          			Utils.WriteStringToXML(writer,"gpxx:DisplayMode", "SymbolAndName");
-//			          		writer.writeEndElement();//gpxx:WaypointExtension
-//			          	writer.writeEndElement();//extensions
+			          	//<type>user</type>
+			          	Utils.WriteStringToXML(writer,"type", "user");
 
 			          writer.writeEndElement();//wpt
 			        } //if
@@ -625,6 +617,11 @@ public class TrackData {
 
 
 	// -- Calculate Distance ---
+
+	/**
+	 * Calculate the distance of each portion of the track and the total distance
+	 * The calculation take into account the elevation
+	 */
 	public void CalcDist() {
 		double dist = 0.0;
 		double mLat = 0.0;
@@ -643,8 +640,11 @@ public class TrackData {
 			Lon = r.getLongitude();
 			Ele = r.getElevation(CgConst.UNIT_METER);
 			if (b) {
+				//-- Calculate the "flat" distance
 				dist = CalcDistance(mLat, mLon, Lat, Lon);
+				//-- A lit bit of Pythagoras theorem in order to include the difference of elevation between the points
 				v = Math.sqrt(dist * dist + (Ele - mEle) * (Ele - mEle));
+				
 				TotalDistance = TotalDistance + v;
 				r.setDist(v);
 				r.setTotal(TotalDistance);

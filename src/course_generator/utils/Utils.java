@@ -474,6 +474,7 @@ public class Utils {
 
 	/**
 	 * Calculate the distance between two GPS points (without the elevation)
+	 * https://en.wikipedia.org/wiki/Great-circle_distance
 	 * 
 	 * @param lat1
 	 *            Latitude of the first point
@@ -487,9 +488,8 @@ public class Utils {
 	 */
 	public static double CalcDistance(double lat1, double lon1, double lat2, double lon2) {
 		double a, c, dDistance, dLat1InRad, dLong1InRad, dLat2InRad, dLong2InRad, dLongitude, dLatitude;
-		double kEarthRadiusKms;
 
-		kEarthRadiusKms = 6378.14; // 6376.5
+		double kEarthRadiusKms = 6371; //6378.14; // 6376.5
 
 		dDistance = 0; // Double.MinValue
 		dLat1InRad = lat1 * (Math.PI / 180.0);
@@ -514,6 +514,7 @@ public class Utils {
 		return dDistance * 1000.0;
 	}
 
+	
 	public static class CalcLineResult {
 		public double a, b;
 		/*

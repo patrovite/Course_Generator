@@ -84,6 +84,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -544,31 +546,34 @@ public class frmMain extends javax.swing.JFrame {
 	private void RefreshStat(boolean b) {
     	if (Track.data.isEmpty()) return;
 
-    	String lang=Locale.getDefault().toString(); 
+    	StringBuilder sb = new StringBuilder();
+    	int unit=Settings.Unit;    		
 
-    	if (getClass().getResource("/course_generator/html/stattemplate_"+lang+".html")==null) {
-    		lang="en_US";
+    	//-- Get current language
+    	String lang=Locale.getDefault().toString();     	
+
+    	InputStream is = getClass().getResourceAsStream("stattemplate_"+lang+".html");
+    	//-- File exist?
+    	if (is==null) {
+    		///-- Use default file
+    		is = getClass().getResourceAsStream("stattemplate_en_US.html");
     		System.out.println("RefreshStat: Statistic file not present! Loading the english statistic file");
     	}
-    	int unit=Settings.Unit;
+
+    	try {
+    		InputStreamReader isr = new InputStreamReader(is, "UTF-8");
+    		BufferedReader br = new BufferedReader(isr);
     	
-    	StringBuilder sb = new StringBuilder("");
-
-		File file = new File(getClass().getResource("/course_generator/html/stattemplate_"+lang+".html").getFile());
-
-		//-- Load the file from the resource
-		try (Scanner scanner = new Scanner(file)) {
-
-			while (scanner.hasNextLine()) {
-				String line = scanner.nextLine();
-				sb.append(line).append("\n");
-			}
-
-			scanner.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    		String line;
+    		while ((line = br.readLine()) != null)  {
+    			sb.append(line);
+    		}
+    		br.close();
+    		isr.close();
+    		is.close();
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
 
         Track.CalcStatElev();
         Track.CalcStatSlope();
