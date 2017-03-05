@@ -34,29 +34,15 @@
 
 /*
  * IN PROGRESS:
+ *
  * Hot:
- * - Check how the isBH/is TimeLimit is managed in order to have the display in the statusbar (CheckTimeLimit())
- * - Test the import
- *  
+ *
  * TODO:
- * - Utils.CalcDistance calculate the distance between 2 points without the elevation. Something is done after?
- * - Move the track info on the a bottom line and add the curve name on this line
- * - Application icon
- * - About dialog
- * - Memorize the horizontal split position
- * - Add default font choice in the settings => Save in the configuration
- * - Save the Resume and data grids columns size in the config
- * - Map source selection
+ * - Dialog to display the tile directory size and a button to empty the directory
+ * - Add a library to log all the message
  * 
- * RefresResume Called by (TODO):
- * DoubleClick on a cell of data grid (false)
- * Keydown sur coeff (false)
- * Calculation (false)
- * LoadCgx(false)
- * ImportGPX(false)
- * ImportCGX(false)
- * RestoreInCGX(false)
- * Tab Resume Selection(true)
+ * Notes:
+ * http://stackoverflow.com/questions/10657239/jmapviewer-add-tiles-for-offline-view
  */
 
 package course_generator;
@@ -147,6 +133,8 @@ import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
+import org.openstreetmap.gui.jmapviewer.MemoryTileCache;
+import org.openstreetmap.gui.jmapviewer.OsmFileCacheTileLoader;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
 import course_generator.TrackData.CalcAvrSlopeResult;
@@ -251,7 +239,7 @@ import static course_generator.dialogs.frmAbout.showDialogAbout;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.ALPHA 7";
+	private final String Version = "4.0.0.ALPHA 8";
 	public TrackData Track;
 	private ResumeData Resume;
 	private final TrackDataModel ModelTableMain;
@@ -432,10 +420,7 @@ public class frmMain extends javax.swing.JFrame {
 		System.out.println("Selected language : " + Locale.getDefault().toString());
 		
 		// -- Set default font
-		setUIFont(new javax.swing.plaf.FontUIResource("Tahoma", // Settings.DefaultFont.getFontName(),
-																// //"Tahoma"
-				Font.PLAIN, // Settings.DefaultFont.getStyle(), // Font.PLAIN,
-				14)); // Settings.DefaultFont.getSize())); //24));
+		setUIFont(new javax.swing.plaf.FontUIResource("Tahoma",	Font.PLAIN,	14));
 
 		// -- Initialize the string resource for internationalization
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
@@ -462,10 +447,13 @@ public class frmMain extends javax.swing.JFrame {
 		r.y = (screensize.height - r.height) / 2;
 		setBounds(r);
 
-		// -- Set the left panel width
-		SplitPaneMain.setDividerLocation(Settings.VertSplitPosition);
+		//-- Set the horizontal splitter position
 		SplitPaneMainRight.setDividerLocation(Settings.HorizSplitPosition);
-
+		
+		// -- Set the vertical splitter position (currently because the feature is not implemented)
+//		SplitPaneMain.setDividerLocation(Settings.VertSplitPosition);
+		SplitPaneMain.setDividerLocation(0);
+		
 		// -- Configure the tile source for the map
 		MapViewer.setTileSource(new OpenTopoMap());
 		
@@ -1016,20 +1004,18 @@ public class frmMain extends javax.swing.JFrame {
 		mnuFile.add(new javax.swing.JPopupMenu.Separator());
 
 		// -- Offline
-		mnuOffLine = new javax.swing.JMenuItem();
-		// mnuOffLine.setIcon(new
-		// javax.swing.ImageIcon(getClass().getResource("/course_generator/images/export.png")));
-		mnuOffLine.setText(bundle.getString("frmMain.mnuOffLine.text"));
-		mnuOffLine.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveGPXActionPerformed(evt); //TODO
-			}
-		});
-		mnuOffLine.setEnabled(false);
-		mnuFile.add(mnuOffLine);
+//		mnuOffLine = new javax.swing.JMenuItem();
+//		mnuOffLine.setText(bundle.getString("frmMain.mnuOffLine.text"));
+//		mnuOffLine.addActionListener(new java.awt.event.ActionListener() {
+//			public void actionPerformed(java.awt.event.ActionEvent evt) {
+//				// mnuSaveGPXActionPerformed(evt); //TODO
+//			}
+//		});
+//		mnuOffLine.setEnabled(false);
+//		mnuFile.add(mnuOffLine);
 
 		// -- Separator
-		mnuFile.add(new javax.swing.JPopupMenu.Separator());
+//		mnuFile.add(new javax.swing.JPopupMenu.Separator());
 
 		// -- Quit
 		mnuQuit = new javax.swing.JMenuItem();
@@ -2574,9 +2560,10 @@ public class frmMain extends javax.swing.JFrame {
 	}
 	 
 	private void RefreshMapButtons() {
-		btMapDrink.setEnabled(IndexMarker != -1);
-		btMapEat.setEnabled(IndexMarker != -1);
-		btMapMark.setEnabled(IndexMarker != -1);
+		btMapDrink.setEnabled(true); //IndexMarker != -1);
+		btMapEat.setEnabled(true); //IndexMarker != -1);
+		btMapMark.setEnabled(true); //IndexMarker != -1);
+		
 		btMapTrackVeryHard.setEnabled(IndexMarker != -1);
 		btMapTrackHard.setEnabled(IndexMarker != -1);
 		btMapTrackAverage.setEnabled(IndexMarker != -1);
@@ -2987,35 +2974,6 @@ public class frmMain extends javax.swing.JFrame {
 	    editorStat.setEditable( false );
 	    scrollPaneStat = new JScrollPane( editorStat );
 	    jPanelStatistic.add(scrollPaneStat, java.awt.BorderLayout.CENTER);
-
-//	    StyleSheet css = ((HTMLEditorKit)editorStat.getEditorKit()).getStyleSheet();
-//        css.addRule("UNKNOWN	{FONT-FAMILY: Arial; BACKGROUND-COLOR: gainsboro}");
-//        css.addRule("H1 {FONT-WEIGHT: bold; FONT-SIZE: 24pt; COLOR: black; FONT-FAMILY: Arial; TEXT-ALIGN: left;	}");
-//        css.addRule("H2 {FONT-WEIGHT: bold; FONT-SIZE: 16pt; COLOR: black; FONT-FAMILY: Arial; TEXT-ALIGN: left;	}");
-//        css.addRule("table.Tableau { border: 1px solid black; width: 800px; margin-left:auto; margin-right:auto;	}");
-//        css.addRule("TD.titreTableau { FONT-WEIGHT: bold; FONT-SIZE: 12pt; FONT-FAMILY: Arial; BACKGROUND-COLOR: #ffffff; text-align: center; padding-left: 5px; padding-right: 5px;}");
-//        css.addRule("TD.titreTableauGauche {	FONT-WEIGHT: bold; FONT-SIZE: 12pt;	FONT-FAMILY: Arial;	BACKGROUND-COLOR: #ffffff; text-align: left; padding-left: 5px;	padding-right: 5px;	}");
-//        css.addRule("TD.Valeur { FONT-WEIGHT: normal; FONT-SIZE: 12pt; FONT-FAMILY: Arial; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: center; padding-left: 5px;	padding-right: 5px;	}");
-//        css.addRule("P {	FONT-SIZE: 12pt; COLOR: black; FONT-FAMILY: Arial; TEXT-DECORATION: none }");
-		
-//	    // add an html editor kit
-//        HTMLEditorKit kit = new HTMLEditorKit();        
-//        // add some styles to the html
-//        StyleSheet styleSheet = kit.getStyleSheet();
-//        styleSheet.addRule("UNKNOWN	{FONT-FAMILY: Arial; BACKGROUND-COLOR: gainsboro}");
-//        styleSheet.addRule("H1 {FONT-WEIGHT: bold; FONT-SIZE: 24pt; COLOR: black; FONT-FAMILY: Arial; TEXT-ALIGN: left;	}");
-//        styleSheet.addRule("H2 {FONT-WEIGHT: bold; FONT-SIZE: 16pt; COLOR: black; FONT-FAMILY: Arial; TEXT-ALIGN: left;	}");
-//        styleSheet.addRule("table.Tableau { border: 1px solid black; width: 800px; margin-left:auto; margin-right:auto;	}");
-//        styleSheet.addRule("TD.titreTableau { FONT-WEIGHT: bold; FONT-SIZE: 12pt; FONT-FAMILY: Arial; BACKGROUND-COLOR: #ffffff; text-align: center; padding-left: 5px; padding-right: 5px;}");
-//        styleSheet.addRule("TD.titreTableauGauche {	FONT-WEIGHT: bold; FONT-SIZE: 12pt;	FONT-FAMILY: Arial;	BACKGROUND-COLOR: #ffffff; text-align: left; padding-left: 5px;	padding-right: 5px;	}");
-//        styleSheet.addRule("TD.Valeur { FONT-WEIGHT: normal; FONT-SIZE: 12pt; FONT-FAMILY: Arial; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: center; padding-left: 5px;	padding-right: 5px;	}");
-//        styleSheet.addRule("P {	FONT-SIZE: 12pt; COLOR: black; FONT-FAMILY: Arial; TEXT-DECORATION: none }");
-//        editorStat.setEditorKit(kit);
-        
-        // create a document, set it on the jeditorpane, then add the html
-//        Document doc = kit.createDefaultDocument();
-//        editorStat.setDocument(doc);
-		
         addTab(TabbedPaneMain, jPanelStatistic, bundle.getString("frmMain.TabStatistic.tabTitle"),
 				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/stat.png")));
 
@@ -3048,7 +3006,6 @@ public class frmMain extends javax.swing.JFrame {
 		TableResume.getTableHeader()
 				.setDefaultRenderer(new ResumeHeaderRenderer(TableResume.getTableHeader().getDefaultRenderer()));
 
-		// TODO Change the Renderer name. Add Resume...
 		TableResume.setDefaultRenderer(ResumeNumClass.class, new ResumeNumRenderer());
 		TableResume.setDefaultRenderer(ResumeNameClass.class, new ResumeNameRenderer());
 		TableResume.setDefaultRenderer(ResumeLineClass.class, new ResumeLineRenderer());
@@ -3071,16 +3028,6 @@ public class frmMain extends javax.swing.JFrame {
 		TableResume.setDefaultRenderer(ResumeAvgSpeedClass.class, new ResumeAvgSpeedRenderer());
 		TableResume.setDefaultRenderer(ResumeCommentClass.class, new ResumeCommentRenderer());
 
-		// TableResume.addMouseListener(new java.awt.event.MouseAdapter() {
-		// public void mouseClicked(java.awt.event.MouseEvent evt) {
-		// TableMainMouseClicked(evt);
-		// }
-		// });
-		// TableResume.addKeyListener(new java.awt.event.KeyAdapter() {
-		// public void keyReleased(java.awt.event.KeyEvent evt) {
-		// TableMainKeyReleased(evt);
-		// }
-		// });
 
 		// -- Add the grid to a scroll panel
 		// ------------------------------------
@@ -3100,6 +3047,19 @@ public class frmMain extends javax.swing.JFrame {
 		jPanelMap.add(jToolBarMapViewer, java.awt.BorderLayout.WEST);
 
 		MapViewer = new org.openstreetmap.gui.jmapviewer.JMapViewer();
+		OsmFileCacheTileLoader ofctl;
+		try {
+		    File cacheDir = new File(DataDir + "/"+CgConst.CG_DIR, "OpenStreetMapTileCache");
+		    System.out.println("Config Directory = " + DataDir + "/"+CgConst.CG_DIR + ", cacheDir=" + cacheDir);
+		    cacheDir.mkdirs();
+		    ofctl = new OsmFileCacheTileLoader(MapViewer, cacheDir);
+		    MapViewer.setTileLoader(ofctl);
+		} catch (IOException ex) {
+		    System.out.println("Exception creating OsmFileCacheTileLoader" + ex);
+		}
+		
+		
+		
 		MapViewer.setMapMarkerVisible(true);
 		MapViewer.setScrollWrapEnabled(true);
 		MapViewer.setZoomButtonStyle(org.openstreetmap.gui.jmapviewer.JMapViewer.ZOOM_BUTTON_STYLE.VERTICAL);
