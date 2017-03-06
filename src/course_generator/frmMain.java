@@ -239,7 +239,7 @@ import static course_generator.dialogs.frmAbout.showDialogAbout;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.ALPHA 8";
+	private final String Version = "4.0.0.ALPHA 9";
 	public TrackData Track;
 	private ResumeData Resume;
 	private final TrackDataModel ModelTableMain;

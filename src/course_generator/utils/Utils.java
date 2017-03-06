@@ -468,7 +468,7 @@ public class Utils {
 		int nbh = v / 3600;
 		int nbm = (v % 3600) / 60;
 
-		return String.format("%02d:%02d:%02d ", nbh, nbm);
+		return String.format("%02d:%02d ", nbh, nbm);
 	}
 
 
