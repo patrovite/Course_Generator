@@ -30,7 +30,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
 
-import javax.sound.midi.Track;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -51,7 +50,8 @@ import course_generator.utils.CgSpinner;
 import course_generator.utils.JTextFieldLimit;
 import course_generator.utils.Utils;
 
-public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListener {
+//public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListener {
+public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener {
 
 	private ResourceBundle bundle;
 	private boolean ok;
@@ -119,7 +119,7 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 		modelTableData = new MrbTableDataModel(datalist, settings);
 		memoFormat = new String[5];
 		initComponents();
-		setModal(true);
+//		setModal(true);
 	}
 
 
@@ -497,6 +497,7 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 			public void stateChanged(ChangeEvent arg0) {
 				track.MrbSizeW = spinWidth.getValueAsInt();
 				pnlProfil.setWidth(track.MrbSizeW);
+				jScrollPaneProfil.repaint();
 				track.isModified=true;
 			}
 		});
@@ -513,6 +514,7 @@ public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListene
 			public void stateChanged(ChangeEvent arg0) {
 				track.MrbSizeH = spinHeight.getValueAsInt();
 				pnlProfil.setHeight(track.MrbSizeH);
+				jScrollPaneProfil.repaint();
 				track.isModified=true;
 			}
 		});

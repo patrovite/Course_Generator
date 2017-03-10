@@ -426,7 +426,7 @@ public class SaxCGXHandler extends DefaultHandler{
             else if (qName.equalsIgnoreCase("CURVE")) {
                 curve=ManageString();
                 if (!Utils.FileExist(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/"+ curve + ".par")) {
-                	 JOptionPane.showMessageDialog(Parent, bundle.getString("loadCGX.CurveFileError"));
+                	 JOptionPane.showMessageDialog(Parent, String.format(bundle.getString("loadCGX.CurveFileError"),curve+".par"));
                 	trkdata.Paramfile="Default";
                 }
                 else

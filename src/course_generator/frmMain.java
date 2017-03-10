@@ -47,6 +47,8 @@
 
 package course_generator;
 
+import static course_generator.dialogs.frmAbout.showDialogAbout;
+
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -55,19 +57,17 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
-import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -75,7 +75,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Scanner;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -92,7 +91,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
@@ -100,32 +98,22 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.Document;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.annotations.XYAnnotation;
-import org.jfree.chart.annotations.XYDrawableAnnotation;
-import org.jfree.chart.annotations.XYPointerAnnotation;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.ChartEntity;
 import org.jfree.chart.entity.XYItemEntity;
-import org.jfree.chart.event.AnnotationChangeListener;
 import org.jfree.chart.panel.CrosshairOverlay;
 import org.jfree.chart.plot.Crosshair;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.PlotRenderingInfo;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYAreaRenderer;
-import org.jfree.data.xy.XYDataItem;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -133,7 +121,6 @@ import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.TextAnchor;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
-import org.openstreetmap.gui.jmapviewer.MemoryTileCache;
 import org.openstreetmap.gui.jmapviewer.OsmFileCacheTileLoader;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
@@ -231,7 +218,6 @@ import course_generator.utils.FileTypeFilter;
 import course_generator.utils.OsCheck;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
-import static course_generator.dialogs.frmAbout.showDialogAbout;
 
 /**
  * This is the main class of the project.
@@ -239,7 +225,7 @@ import static course_generator.dialogs.frmAbout.showDialogAbout;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.ALPHA 9";
+	private final String Version = "4.0.0.ALPHA 10";
 	public TrackData Track;
 	private ResumeData Resume;
 	private final TrackDataModel ModelTableMain;
@@ -249,6 +235,7 @@ public class frmMain extends javax.swing.JFrame {
 	private MapMarker CurrentPosMarker = null;
 	private MapMarker MapMarker = null;
 	private int old_row = -1;
+	private int old_row_resume = -1;
 	private JFreeChart chart = null;
 	private XYSeriesCollection dataset = null;
 	private java.util.ResourceBundle bundle = null;
@@ -3028,6 +3015,17 @@ public class frmMain extends javax.swing.JFrame {
 		TableResume.setDefaultRenderer(ResumeAvgSpeedClass.class, new ResumeAvgSpeedRenderer());
 		TableResume.setDefaultRenderer(ResumeCommentClass.class, new ResumeCommentRenderer());
 
+		TableResume.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				TableResumeMouseClicked(evt);
+			}
+		});
+		TableResume.addKeyListener(new java.awt.event.KeyAdapter() {
+			public void keyReleased(java.awt.event.KeyEvent evt) {
+				TableResumeKeyReleased(evt);
+			}
+		});
+
 
 		// -- Add the grid to a scroll panel
 		// ------------------------------------
@@ -3080,18 +3078,42 @@ public class frmMain extends javax.swing.JFrame {
 		pack();
 	}
 
-	/*
-	 * private XYDataset CreateDataset() { XYSeries serie1 = new
-	 * XYSeries("First"); serie1.add(1.0,1.0); serie1.add(2.0,1.5);
-	 * serie1.add(3.0,2.5); serie1.add(4.0,2.0); serie1.add(5.0,5.0);
-	 * serie1.add(6.0,7.0); serie1.add(7.0,3.0); serie1.add(8.0,6.0);
-	 * serie1.add(9.0,3.0); serie1.add(10.0,3.0);
-	 * 
-	 * XYSeriesCollection dataset = new XYSeriesCollection();
-	 * dataset.addSeries(serie1);
-	 * 
-	 * return dataset; }
-	 */
+
+	private void TableResumeKeyReleased(KeyEvent evt) {
+		int row = TableResume.getSelectedRow();
+		int col = TableResume.getSelectedColumn();
+		if ((row < 0) || (col < 0) || (row == old_row_resume))
+			return;
+		old_row_resume = row;
+		SelectPositionFromResume(row);
+	}
+
+	private void TableResumeMouseClicked(MouseEvent evt) {
+		int row = TableResume.rowAtPoint(evt.getPoint());
+		int col = TableResume.columnAtPoint(evt.getPoint());
+		if ((row < 0) || (col < 0) || (row == old_row_resume))
+			return;
+
+		old_row_resume = row;
+		SelectPositionFromResume(row);
+	}
+
+	private void SelectPositionFromResume(int row) {
+		if (Resume.data.size() > 0) {
+			int r=(int)(Resume.data.get(row).getLine())-1;
+			//-- Set table main selection
+			TableMain.setRowSelectionInterval(r, r);
+			TableMain.scrollRectToVisible(new Rectangle(TableMain.getCellRect(r, 0, true)));
+			// -- Refresh marker position on the map
+			RefreshCurrentPosMarker(Track.data.get(r).getLatitude(), Track.data.get(r).getLongitude());
+			// -- Refresh profil crooshair position and profil info
+			RefreshProfilInfo(r);
+			xCrosshair.setValue(Track.data.get(r).getTotal(Settings.Unit) / 1000.0);
+			yCrosshair.setValue(Track.data.get(r).getElevation(Settings.Unit));
+		}					
+	}
+	
+
 
 	private JFreeChart CreateChartProfil(XYDataset dataset) {
 		JFreeChart chart = ChartFactory.createXYAreaChart("", "Distance", // x

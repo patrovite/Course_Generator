@@ -51,6 +51,7 @@ import course_generator.utils.CgSpinner;
 import course_generator.utils.CgSpinnerDouble;
 import course_generator.utils.JHourSetting;
 import course_generator.utils.JTextFieldLimit;
+import course_generator.utils.JTimeSetting;
 import course_generator.utils.Utils;
 
 public class frmEditPosition  extends javax.swing.JDialog {
@@ -116,7 +117,7 @@ public class frmEditPosition  extends javax.swing.JDialog {
 	private JLabel lbTimelimit;
 	private JLabel lbStation;
 	private JHourSetting hsStation;
-	private JHourSetting hsTimelimit;
+	private JTimeSetting hsTimelimit;
 	private JPanel panelLeft;
 	private JPanel panelRight;
 	private JLabel lbElevationHelp;
@@ -935,7 +936,7 @@ public class frmEditPosition  extends javax.swing.JDialog {
 				5, 0, 0, 5, 
 				GridBagConstraints.WEST, GridBagConstraints.BOTH);
 
-		hsTimelimit = new JHourSetting();
+		hsTimelimit = new JTimeSetting(999);
 		Utils.addComponent(panelRight, hsTimelimit, 
 				1, line, 
 				3, 1, 
