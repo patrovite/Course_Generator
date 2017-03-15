@@ -17,20 +17,27 @@
  */
 
 /*
-* Used libraries:
-*  - Joda-time - http://www.joda.org/joda-time/
-*  - SwingX - LGPL 2.1 - https://swingx.java.net/
-*  - JMapViewer - GPL - http://wiki.openstreetmap.org/wiki/JMapViewer
-*  - jcommon - LGPL - http://www.jfree.org/jcommon/
-*  - jfreechart - LGPL - http://www.jfree.org/index.html
-*  - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf/ 
-*  - SunCalculator - Patrick Kalkman - pkalkie@gmail.com
-*  
-* Copyrights:
-* Maps :
-* - Openstreetmap : http://www.openstreetmap.org/
-* - OpenTopoMap : https://opentopomap.org/
-*/
+ * Settings for the development :
+ * - In order to have the log message in the eclipse console set in the 
+ * run configuration "-DrunInEclipse=true" in Arguments/VM argument 
+ * otherwise the message go to a log file 
+ * 
+ * Used libraries:
+ *  - Joda-time - http://www.joda.org/joda-time/
+ *  - SwingX - LGPL 2.1 - https://swingx.java.net/
+ *  - JMapViewer - GPL - http://wiki.openstreetmap.org/wiki/JMapViewer
+ *  - jcommon - LGPL - http://www.jfree.org/jcommon/
+ *  - jfreechart - LGPL - http://www.jfree.org/index.html
+ *  - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf/ 
+ *  - SunCalculator - Patrick Kalkman - pkalkie@gmail.com
+ *  - Log4j - Apache V2 - https://logging.apache.org/log4j
+ *  
+ * Copyrights:
+ * Maps :
+ * - Openstreetmap : http://www.openstreetmap.org/
+ * - OpenTopoMap : https://opentopomap.org/
+ * 
+ */
 
 /*
  * IN PROGRESS:
@@ -75,6 +82,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+//import java.util.Properties;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -214,6 +228,7 @@ import course_generator.trackdata_table.TotalClass;
 import course_generator.trackdata_table.TotalRenderer;
 import course_generator.trackdata_table.TrackDataModel;
 import course_generator.utils.CgConst;
+import course_generator.utils.CgLog;
 import course_generator.utils.FileTypeFilter;
 import course_generator.utils.OsCheck;
 import course_generator.utils.Utils;
@@ -225,7 +240,11 @@ import course_generator.utils.Utils.CalcLineResult;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.ALPHA 10";
+	private final String Version = "4.0.0.ALPHA 11";
+
+	public static boolean inEclipse=false;
+	public static CgLog log=null;
+	
 	public TrackData Track;
 	private ResumeData Resume;
 	private final TrackDataModel ModelTableMain;
@@ -240,6 +259,7 @@ public class frmMain extends javax.swing.JFrame {
 	private XYSeriesCollection dataset = null;
 	private java.util.ResourceBundle bundle = null;
 	private int cmptInternetConnexion = 0;
+	private int cmptMinute = 0;
 	private boolean InternetConnectionActive = false;
 	private Timer timer1s; // 1 second timer object
 	private int IndexMarker = -1;
@@ -359,6 +379,7 @@ public class frmMain extends javax.swing.JFrame {
 	private JMenuItem mnuImportCGX;
 	private JEditorPane editorStat;
 	private JScrollPane scrollPaneStat;
+	
 
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
@@ -370,6 +391,13 @@ public class frmMain extends javax.swing.JFrame {
 				InternetConnectionActive = Utils.isInternetReachable();
 				RefreshStatusbar(Track);
 			}
+			cmptMinute++;
+			if (cmptMinute > 60) {
+				cmptMinute = 0;
+				//-- Check every minute if we need to switch log file
+				log.checkFileSize();
+			}
+			
 		}
 	}
 
@@ -379,9 +407,11 @@ public class frmMain extends javax.swing.JFrame {
 	 * !!!! Everything start here !!!! 
 	 * ------------------------
 	 */
-	public frmMain(String args[]) {
+	public frmMain(String OS, String args[]) {
 		// Initialize data
 		DataDir = Utils.GetHomeDir();
+		
+		//-- Initialize data
 		Track = new TrackData();
 		Resume = new ResumeData();
 		Settings = new CgSettings();
@@ -389,22 +419,31 @@ public class frmMain extends javax.swing.JFrame {
 		ModelTableResume = new ResumeModel(Resume, Settings);
 		UndoDiff = new ArrayList<Double>();
 		showProfilMarker=true;
-		
+
 		dataset = new XYSeriesCollection();
 		// dataset = CreateDataset();
 		chart = CreateChartProfil(dataset);
-		
+
 		// -- Load configuration
 		LoadConfig();
 
+		log.info("Start Course Generator version "+Version);
+		log.info("Java version : "+System.getProperty("java.version"));
+		log.info("OS : "+OS);
+		//-- List the java properties
+		System.getProperties().list(System.out);
+		
+		//-- Set the language
+		log.info("System language : " + Locale.getDefault().toString());
 		// -- Set the language
 		if (Settings.Language.equalsIgnoreCase("FR")) {
 			Locale.setDefault(Locale.FRANCE);
 		} else if (Settings.Language.equalsIgnoreCase("EN")) {
 			Locale.setDefault(Locale.US);
 		}
+		else Locale.setDefault(Locale.US);
 
-		System.out.println("Selected language : " + Locale.getDefault().toString());
+		log.info("Selected language : " + Locale.getDefault().toString());
 		
 		// -- Set default font
 		setUIFont(new javax.swing.plaf.FontUIResource("Tahoma",	Font.PLAIN,	14));
@@ -532,7 +571,7 @@ public class frmMain extends javax.swing.JFrame {
     	if (is==null) {
     		///-- Use default file
     		is = getClass().getResourceAsStream("stattemplate_en_US.html");
-    		System.out.println("RefreshStat: Statistic file not present! Loading the english statistic file");
+//    		logger.warning("RefreshStat: Statistic file not present! Loading the english statistic file");
     	}
 
     	try {
@@ -547,6 +586,7 @@ public class frmMain extends javax.swing.JFrame {
     		isr.close();
     		is.close();
     	} catch (IOException e) {
+    		log.error("RefreshStat : Impossible to read the template file from resource");
     		e.printStackTrace();
     	}
 
@@ -3048,12 +3088,12 @@ public class frmMain extends javax.swing.JFrame {
 		OsmFileCacheTileLoader ofctl;
 		try {
 		    File cacheDir = new File(DataDir + "/"+CgConst.CG_DIR, "OpenStreetMapTileCache");
-		    System.out.println("Config Directory = " + DataDir + "/"+CgConst.CG_DIR + ", cacheDir=" + cacheDir);
+//		    logger.info("Config Directory = " + DataDir + "/"+CgConst.CG_DIR + ", cacheDir=" + cacheDir);
 		    cacheDir.mkdirs();
 		    ofctl = new OsmFileCacheTileLoader(MapViewer, cacheDir);
 		    MapViewer.setTileLoader(ofctl);
 		} catch (IOException ex) {
-		    System.out.println("Exception creating OsmFileCacheTileLoader" + ex);
+//			logger.throwing(this.getName(), "Exception creating OsmFileCacheTileLoader", ex.fillInStackTrace());
 		}
 		
 		
@@ -3294,6 +3334,7 @@ public class frmMain extends javax.swing.JFrame {
         		//bAutorUpdatePos = false;
         		try {
 					if (Track.OpenGPX(s, mode)) {
+						//TODO normal dialog? Test?
 						JOptionPane.showMessageDialog(this, bundle.getString("frmMain.NoTimeData"));
 		        		RefreshTableMain();
 		        		RefreshStatusbar(Track);
@@ -3306,7 +3347,7 @@ public class frmMain extends javax.swing.JFrame {
 		        		//bAutorUpdatePos = true;	            		
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+					log.error("ImportGPX : Impossible to import the GPX file");
 					e.printStackTrace();
 				}        		
 	        }
@@ -3488,7 +3529,7 @@ public class frmMain extends javax.swing.JFrame {
 		if (imgURL != null) {
 			return new ImageIcon(imgURL, description);
 		} else {
-			System.err.println("Couldn't find file: " + path);
+			System.err.println("CreateImageIcon : Couldn't find file: " + path);
 			return null;
 		}
 	}
@@ -3676,9 +3717,10 @@ public class frmMain extends javax.swing.JFrame {
 		    	FileWriter out = new FileWriter(s);
 		        out.write(editorStat.getText());
 		        out.close();
-		      } catch (Exception f) {
-		      	 f.printStackTrace();
-		      }
+		    } catch (Exception f) {
+		    	log.error("SaveStat : impossible to save the statistic file" );
+		    	f.printStackTrace();
+		    }
 
 			
 			// -- Store the directory
@@ -3827,12 +3869,14 @@ public class frmMain extends javax.swing.JFrame {
 			if (ret == JOptionPane.YES_OPTION) {
 				setDefaultCloseOperation(EXIT_ON_CLOSE);
 				SaveConfig();
+				log.info("End of the application! Bye :(");
 			} else {
 				setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 			}
 		} else { // No modification! Bye
 			setDefaultCloseOperation(EXIT_ON_CLOSE);
 			SaveConfig();
+			log.info("End of the application! Bye :(");
 		}
 	}
 	
@@ -4285,6 +4329,8 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
+	
+	
 	/**
 	 * Everything start here!!!
 	 * 
@@ -4292,6 +4338,22 @@ public class frmMain extends javax.swing.JFrame {
 	 *            the command line arguments
 	 */
 	public static void main(final String args[]) {
+		String OS;
+
+		//-- Get the VM parameters
+		String inEclipseStr = System.getProperty("runInEclipse");
+        inEclipse = "true".equalsIgnoreCase(inEclipseStr);
+
+        //-- Set the data dir
+		String DataDir = Utils.GetHomeDir();
+		
+		//-- ensure log directory exists
+		new File(new File(DataDir + "/" + CgConst.CG_DIR), "logs").mkdirs();
+
+		//-- Initialize the log directory
+		log = new CgLog(DataDir + "/" + CgConst.CG_DIR + "/logs/logs.txt", 10*1024*1024, !inEclipse); //10Mb file
+		
+		//-- Set the look and feel
 		try {
 			// Set System L&F
 			OsCheck.OSType ostype = OsCheck.getOperatingSystemType();
@@ -4327,50 +4389,41 @@ public class frmMain extends javax.swing.JFrame {
 					ex.printStackTrace();
 					javax.swing.UIManager.getSystemLookAndFeelClassName();
 				}
-
-				// javax.swing.UIManager.setLookAndFeel("de.muntjak.tinylookandfeel.TinyLookAndFeel");
-				// boolean found = false;
-				// for (javax.swing.UIManager.LookAndFeelInfo info :
-				// javax.swing.UIManager.getInstalledLookAndFeels()) {
-				// if ("Nimbus".equals(info.getName())) {
-				// javax.swing.UIManager.setLookAndFeel(info.getClassName());
-				// found = true;
-				// break;
-				// }
-				// }
-				// if (!found)
-				// javax.swing.UIManager.getSystemLookAndFeelClassName();
 				break;
 			case Other:
 				javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
 				break;
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			ex.printStackTrace();
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			ex.printStackTrace();
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			ex.printStackTrace();
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(frmMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			ex.printStackTrace();
 		}
 
-		// -- Set thing according to the OS
+		// -- Set things according to the OS
 		OsCheck.OSType ostype = OsCheck.getOperatingSystemType();
 		switch (ostype) {
 		case Windows:
+			OS="WIN";
 			// setUIFont(new javax.swing.plaf.FontUIResource("Tahoma",
 			// Font.PLAIN, 12));
 			break;
 		case MacOS:
+			OS="MAC";
 			// setUIFont(new javax.swing.plaf.FontUIResource("Arial",
 			// Font.PLAIN, 12));
 			break;
 		case Linux:
+			OS="LINUX";
 			// setUIFont(new javax.swing.plaf.FontUIResource("Arial",
 			// Font.PLAIN, 12));
 			break;
-		case Other:
+		default :
+			OS="OTHER";
 			// setUIFont(new javax.swing.plaf.FontUIResource("Arial",
 			// Font.PLAIN, 12));
 			break;
@@ -4379,7 +4432,7 @@ public class frmMain extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new frmMain(args).setVisible(true);
+				new frmMain(OS, args).setVisible(true);
 			}
 		});
 	}

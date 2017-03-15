@@ -115,7 +115,7 @@ public class CgSettings {
                 Files.createDirectory(DataFolder);
                 result = true;
             } catch(IOException e){
-                System.out.println("Impossible to create the data directory"); 
+                System.out.println("CgSettings.Save : Impossible to create the data/config directory"); 
                 return;
             }
         }
@@ -182,7 +182,7 @@ public class CgSettings {
             writer.close();
 
         } catch (XMLStreamException | IOException e) {
-            System.out.println(e.getMessage());	
+            e.printStackTrace();	
         }
     }
 
@@ -202,10 +202,10 @@ public class CgSettings {
         }
         catch (SAXException | IOException | ParserConfigurationException e)
         {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         if (ret!=0)
-            System.out.println("Error line ="+Confighandler.getErrLine());
+            System.out.println("CgSettings.Load : Error while loading config file '" + _Path + "'- line ="+Confighandler.getErrLine());
     }
     
     /**

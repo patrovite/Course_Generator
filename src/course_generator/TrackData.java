@@ -55,6 +55,7 @@ import course_generator.table.TimelimitClass;
 import course_generator.table.TotalClass;
 */
 import course_generator.utils.CgConst;
+import course_generator.utils.CgLog;
 import course_generator.utils.StatData;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
@@ -320,7 +321,7 @@ public class TrackData {
 
 		int ret = GPXhandler.readDataFromGPX(name, this, mode);
 		if (ret != 0)
-			System.out.println("Error line =" + GPXhandler.getErrLine());
+			CgLog.error("TrackData.OpenGPX : Error while reading '"+name+"'. Line =" + GPXhandler.getErrLine());
 
 		int cmpt = 1;
 
@@ -356,6 +357,8 @@ public class TrackData {
 		isCalculated = true;
 		Name = new File(name).getName();
 
+		CgLog.info("TrackData.OpenGPX : '"+name+"' loaded");
+		
 		return isTimeLoaded;
 	} // -- OpenGPX
 
@@ -475,8 +478,10 @@ public class TrackData {
 			writer.close();
 			isModified = false;
 			Name = new File(name).getName();
+			
+			CgLog.info("TrackData.SaveGPX : '"+name+"' saved");
 		} catch (XMLStreamException | IOException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -560,8 +565,9 @@ public class TrackData {
 			writer.writeEndDocument();
 			writer.flush();
 			writer.close();
+			CgLog.info("TrackData.SaveWaypoint : '"+name+"' saved");
 		} catch (XMLStreamException | IOException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -1420,7 +1426,7 @@ public class TrackData {
 		}
 
 		if (ret != 0)
-			System.out.println("Erreur ligne =" + CGXhandler.getErrLine());
+			CgLog.error("TrackData.OpenCGX : Error while reading '"+name+"'. Line =" + CGXhandler.getErrLine());
 
 		int cmpt = 1;
 
@@ -1453,6 +1459,8 @@ public class TrackData {
 
 		CheckTimeLimit();
 		isCalculated = true;
+		
+		CgLog.info("TrackData.OpenCGX : '"+name+"' loaded");
 		// return isTimeLoaded;
 	}// LoadCGX
 
@@ -1554,8 +1562,10 @@ public class TrackData {
 			writer.close();
 			isModified = false;
 			Name = new File(name).getName();
+			
+			CgLog.info("TrackData.SaveCGX : '"+name+"' saved");
 		} catch (XMLStreamException | IOException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

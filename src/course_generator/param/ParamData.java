@@ -52,7 +52,7 @@ public class ParamData {
 
 		int ret = paramHandler.readDataFromParam(name, this);
 		if (ret != 0)
-			System.out.println("Error line =" + paramHandler.getErrLine());
+			System.out.println("Load parameters '" + name + "'from disk. Error line =" + paramHandler.getErrLine());
 
 	} // -- Load
 	
@@ -88,7 +88,7 @@ public class ParamData {
 			writer.flush();
 			writer.close();
 		} catch (XMLStreamException | IOException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 

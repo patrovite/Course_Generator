@@ -39,11 +39,13 @@ import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
+import course_generator.utils.CgLog;
 import course_generator.utils.DrawStringMultiLine;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
 
-public class PanelProfilMRB extends JPanel {
+
+public class PanelProfilMRB extends JPanel {	
 	private boolean WithHighlight;
 	private float transparence;
 	private TrackData track;
@@ -979,6 +981,7 @@ public class PanelProfilMRB extends JPanel {
 		try {
 			ImageIO.write(image, "png", new File(filename));
 		} catch (IOException ex) {
+			CgLog.error("PanelProfilMRB.save : Impossible to save the profil image");
 			System.out.println(ex.getMessage());
 		}
 		// -- Enable Highlight of the current box
