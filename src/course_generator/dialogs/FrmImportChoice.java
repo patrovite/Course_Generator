@@ -19,7 +19,6 @@
 package course_generator.dialogs;
 
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -157,7 +156,6 @@ public class FrmImportChoice  extends javax.swing.JDialog {
 		paneGlobal.setLayout(new GridBagLayout());
 
 		rbAtBeginning = new JRadioButton(bundle.getString("FrmImportChoice.chkAtBeginning.Text"));
-		rbAtBeginning.setPreferredSize(new Dimension(50,25));
 		Utils.addComponent(paneGlobal, rbAtBeginning, 
 				0, line++, 
 				1, 1, 
@@ -166,7 +164,6 @@ public class FrmImportChoice  extends javax.swing.JDialog {
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		rbAtEnd = new JRadioButton(bundle.getString("FrmImportChoice.chkAtEnd.Text"));
-		rbAtEnd.setPreferredSize(new Dimension(50,25));
 		Utils.addComponent(paneGlobal, rbAtEnd, 
 				0, line++, 
 				1, 1, 

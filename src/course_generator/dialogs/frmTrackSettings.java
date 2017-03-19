@@ -36,6 +36,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JRootPane;
@@ -150,6 +151,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 			
 			track.TrackTimeZone=this.timezone;
 			track.TrackUseSumerTime=this.summertime;
+			
+			JOptionPane.showMessageDialog(this, bundle.getString("frmTrackSettings.ModificationMsg"));
 		}
 		return ok;
 	}

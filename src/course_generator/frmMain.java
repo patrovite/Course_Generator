@@ -82,13 +82,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.FileHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-//import java.util.Properties;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -255,8 +248,10 @@ public class frmMain extends javax.swing.JFrame {
 	private MapMarker MapMarker = null;
 	private int old_row = -1;
 	private int old_row_resume = -1;
-	private JFreeChart chart = null;
-	private XYSeriesCollection dataset = null;
+	private JFreeChart chartProfil = null;
+	private JFreeChart chartTimeDist = null;
+	private XYSeriesCollection datasetProfil = null;
+	private XYSeriesCollection datasetTimeDist = null;
 	private java.util.ResourceBundle bundle = null;
 	private int cmptInternetConnexion = 0;
 	private int cmptMinute = 0;
@@ -360,7 +355,7 @@ public class frmMain extends javax.swing.JFrame {
 	private JLabel LbInfoUnitVal;
 	private JScrollPane jScrollPanelMap;
 	private JButton btRefreshRefresh;
-	private ChartPanel jPanelProfilChart;
+	private ChartPanel ChartPanelProfil;
 
 	public Crosshair xCrosshair;
 
@@ -379,6 +374,48 @@ public class frmMain extends javax.swing.JFrame {
 	private JMenuItem mnuImportCGX;
 	private JEditorPane editorStat;
 	private JScrollPane scrollPaneStat;
+
+	private JTabbedPane TabbedPaneAnalysis;
+	private JPanel jPanelTimeDist;
+	private JPanel jPanelSpeed;
+	private JPanel jPanelSpeedSlope;
+	private JToolBar ToolBarTimeDist;
+	private JButton btTimeDistSave;
+	private JPanel jPanelTimeDistInfo;
+	private JLabel lbTimeDistInfoDistance;
+	private JLabel lbTimeDistInfoElevation;
+	private JLabel lbTimeDistInfoTime;
+	private JLabel lbTimeDistInfoHour;
+	private JLabel lbTimeDistSlope;
+	private ChartPanel ChartPanelTimeDist;
+
+	private JToolBar ToolBarSpeed;
+
+	private JButton btSpeedSave;
+
+	private JPanel jPanelSpeedInfo;
+
+	private JLabel lbSpeedInfoDistance;
+
+	private JLabel lbSpeedInfoStartSpeed;
+
+	private ChartPanel ChartPanelSpeed;
+
+	private JLabel lbSpeedInfoEndSpeed;
+
+	private JLabel lbSpeedInfoSpeed;
+
+	private JToolBar ToolBarSpeedSlope;
+
+	private JButton btSpeedSlopeSave;
+
+	private JPanel jPanelSpeedSlopeInfo;
+
+	private JLabel lbSpeedSlopeInfoSpeed;
+
+	private JLabel lbSpeedSlopeInfoSlope;
+
+	private ChartPanel ChartPanelSpeedSlope;
 	
 
 	// -- Called every second
@@ -395,7 +432,7 @@ public class frmMain extends javax.swing.JFrame {
 			if (cmptMinute > 60) {
 				cmptMinute = 0;
 				//-- Check every minute if we need to switch log file
-				log.checkFileSize();
+				CgLog.checkFileSize();
 			}
 			
 		}
@@ -407,7 +444,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * !!!! Everything start here !!!! 
 	 * ------------------------
 	 */
-	public frmMain(String OS, String args[]) {
+	public frmMain(String args[]) {
 		// Initialize data
 		DataDir = Utils.GetHomeDir();
 		
@@ -420,30 +457,59 @@ public class frmMain extends javax.swing.JFrame {
 		UndoDiff = new ArrayList<Double>();
 		showProfilMarker=true;
 
-		dataset = new XYSeriesCollection();
-		// dataset = CreateDataset();
-		chart = CreateChartProfil(dataset);
+		datasetProfil = new XYSeriesCollection();
+		chartProfil = CreateChartProfil(datasetProfil);
+		datasetTimeDist = new XYSeriesCollection();
+		chartTimeDist = CreateChartTimeDist(datasetTimeDist);
 
 		// -- Load configuration
 		LoadConfig();
 
-		log.info("Start Course Generator version "+Version);
-		log.info("Java version : "+System.getProperty("java.version"));
-		log.info("OS : "+OS);
+		CgLog.info("Start Course Generator version "+Version);
+		CgLog.info("Java version : "+System.getProperty("java.version"));
+		CgLog.info("java.runtime.name : "+System.getProperty("java.runtime.name"));
+		CgLog.info("java.vm.version : "+System.getProperty("java.vm.version"));
+		CgLog.info("java.vm.vendor : "+System.getProperty("java.vm.vendor"));
+		CgLog.info("path.separator : "+System.getProperty("path.separator"));
+		CgLog.info("user.country : "+System.getProperty("user.country"));
+		CgLog.info("java.runtime.version : "+System.getProperty("java.runtime.version"));
+		CgLog.info("os.arch : "+System.getProperty("os.arch"));
+		CgLog.info("os.name : "+System.getProperty("os.name"));
+		CgLog.info("user.timezone : "+System.getProperty("user.timezone"));
+		CgLog.info("file.encoding : "+System.getProperty("file.encoding"));
+		CgLog.info("java.specification.version : "+System.getProperty("java.specification.version"));
+		CgLog.info("java.vm.specification.version : "+System.getProperty("java.vm.specification.version"));
+		CgLog.info("sun.arch.data.model : "+System.getProperty("sun.arch.data.model"));
+		CgLog.info("user.language : "+System.getProperty("user.language"));
+		CgLog.info("java.version : "+System.getProperty("java.version"));
+		CgLog.info("java.vendor : "+System.getProperty("java.vendor"));
+		CgLog.info("file.separator : "+System.getProperty("file.separator"));
+		CgLog.info("sun.cpu.endian : "+System.getProperty("sun.cpu.endian"));
+		CgLog.info("sun.desktop : "+System.getProperty("sun.desktop"));
+		CgLog.info("sun.cpu.isalist : "+System.getProperty("sun.cpu.isalist"));
+		
 		//-- List the java properties
-		System.getProperties().list(System.out);
+		//-- To activate only if necessary. It talks a lot!
+		//System.getProperties().list(System.out);
 		
 		//-- Set the language
-		log.info("System language : " + Locale.getDefault().toString());
+		CgLog.info("System language : " + Locale.getDefault().toString());
 		// -- Set the language
-		if (Settings.Language.equalsIgnoreCase("FR")) {
-			Locale.setDefault(Locale.FRANCE);
-		} else if (Settings.Language.equalsIgnoreCase("EN")) {
-			Locale.setDefault(Locale.US);
+		if (Settings.Language.isEmpty()) {
+			//-- System language
+			CgLog.info("Configured language : System");			
 		}
-		else Locale.setDefault(Locale.US);
+		else {
+			CgLog.info("Configured language : "+Settings.Language);			
+			if (Settings.Language.equalsIgnoreCase("FR")) {
+				Locale.setDefault(Locale.FRANCE);
+			} else if (Settings.Language.equalsIgnoreCase("EN")) {
+				Locale.setDefault(Locale.US);
+			}
+			else Locale.setDefault(Locale.US);
+		}
 
-		log.info("Selected language : " + Locale.getDefault().toString());
+		CgLog.info("Selected language : " + Locale.getDefault().toString());
 		
 		// -- Set default font
 		setUIFont(new javax.swing.plaf.FontUIResource("Tahoma",	Font.PLAIN,	14));
@@ -571,7 +637,7 @@ public class frmMain extends javax.swing.JFrame {
     	if (is==null) {
     		///-- Use default file
     		is = getClass().getResourceAsStream("stattemplate_en_US.html");
-//    		logger.warning("RefreshStat: Statistic file not present! Loading the english statistic file");
+    		CgLog.info("RefreshStat: Statistic file not present! Loading the english statistic file");
     	}
 
     	try {
@@ -586,7 +652,7 @@ public class frmMain extends javax.swing.JFrame {
     		isr.close();
     		is.close();
     	} catch (IOException e) {
-    		log.error("RefreshStat : Impossible to read the template file from resource");
+    		CgLog.error("RefreshStat : Impossible to read the template file from resource");
     		e.printStackTrace();
     	}
 
@@ -939,7 +1005,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuImportCGX.setText(bundle.getString("frmMain.mnuImportCGX.text"));
 		mnuImportCGX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//				ImportCGX();
+				ImportCGX();
 			}
 		});
 		mnuFile.add(mnuImportCGX);
@@ -1276,7 +1342,8 @@ public class frmMain extends javax.swing.JFrame {
 				if (Track.data.size() > 0) {
 					// BackupInCGX(); TODO BackupCGX
 					Track.Invert();
-					RefreshProfil();
+					RefreshProfilChart();
+					RefreshTimeDistanceChart();
 					RefreshStatusbar(Track);
 					RefreshTableMain();
 					RefreshResume();
@@ -1391,7 +1458,8 @@ public class frmMain extends javax.swing.JFrame {
 				// -- Refresh data and display
 				RefreshStatusbar(Track);
 				RefreshResume();
-				RefreshProfil();
+				RefreshProfilChart();
+				RefreshTimeDistanceChart();
 				RefreshStat(true);
 				
 				int row = TableMain.getSelectedRow();
@@ -1462,7 +1530,51 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
-	
+	/**
+	 * Import a CGX file 
+	 */
+	protected void ImportCGX() {
+		if (Track.data.isEmpty())
+			return;
+
+	    FrmImportChoice frm = new FrmImportChoice();
+
+	    int res=frm.showDialog();
+	    
+	    if (res!=FrmImportChoice.RESULT_CANCEL) {
+		    String s = Utils.LoadDialog(this, Settings.LastDir, ".cgx", bundle.getString("frmMain.CGXFile"));
+	        if (!s.isEmpty()) {
+        		int mode = FrmImportChoice.RESULT_AT_END;
+        		if (res==FrmImportChoice.RESULT_AT_END)
+        			mode = 1;
+        		else
+        			mode = 2;
+        			
+        		//BackupInCGX();
+        		//bAutorUpdatePos = false;
+        		try {
+					Track.OpenCGX(this, s, mode);
+	        		RefreshTableMain();
+	        		RefreshStatusbar(Track);
+	        		RefreshTitle();
+	        		RefreshProfilChart();
+	        		RefreshTimeDistanceChart();
+	        		RefreshTrack(Track,true);
+	        		RefreshResume();
+	        		RefreshStat(false);
+	        		//RefreshInfoAnalyseSpeed(0);
+	        		//bAutorUpdatePos = true;	            		
+				} catch (Exception e) {
+					CgLog.error("ImportCGX : Impossible to import the CGX file");
+					e.printStackTrace();
+				}        		
+	        }
+	    }
+	}
+
+
+
+
 	private void mnuAbout() {
 		showDialogAbout(this, false, true,  Version);
 	}
@@ -1941,7 +2053,8 @@ public class frmMain extends javax.swing.JFrame {
 					Track.isCalculated=false;
 					Track.isModified=true;
 					RefreshTableMain();
-					RefreshProfil();
+					RefreshProfilChart();
+					RefreshTimeDistanceChart();
 					RefreshStatusbar(Track);
 				}
 			}
@@ -2001,7 +2114,8 @@ public class frmMain extends javax.swing.JFrame {
 					Track.isCalculated=false;
 					Track.isModified=true;
 					RefreshTableMain();
-					RefreshProfil();
+					RefreshProfilChart();
+					RefreshTimeDistanceChart();
 					RefreshStatusbar(Track);
 				}
 			}
@@ -2050,7 +2164,8 @@ public class frmMain extends javax.swing.JFrame {
 		frmTrackSettings frm= new frmTrackSettings();
 		if (frm.showDialog(Settings,Track)) {
 	        RefreshTableMain();
-	        RefreshProfil();
+	        RefreshProfilChart();
+	        RefreshTimeDistanceChart();
 			RefreshTitle();
 			RefreshStatusbar(Track);
 			Track.isModified=true;
@@ -2086,7 +2201,7 @@ public class frmMain extends javax.swing.JFrame {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				showProfilMarker=!showProfilMarker;
 				RefreshProfilButtons();
-				RefreshProfil();
+				RefreshProfilChart();
 			}
 		});
 		ToolBarProfil.add(btProfilMarker);
@@ -2620,7 +2735,8 @@ public class frmMain extends javax.swing.JFrame {
 
 		// Create bespoke component for rendering the tab.
 		javax.swing.JLabel lbl = new javax.swing.JLabel(title);
-		lbl.setIcon(icon);
+		if (icon!=null)
+			lbl.setIcon(icon);
 
 		// Add some spacing between text and icon, and position text to the RHS.
 		lbl.setIconTextGap(5);
@@ -2800,7 +2916,7 @@ public class frmMain extends javax.swing.JFrame {
 		TableMain.setRowHeight(20);
 		TableMain.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				if 	(evt.getButton()==evt.BUTTON1 && evt.getClickCount() >= 2 && !evt.isConsumed()) {
+				if 	(evt.getButton()==MouseEvent.BUTTON1 && evt.getClickCount() >= 2 && !evt.isConsumed()) {
 		            evt.consume();
 		    		int row = TableMain.rowAtPoint(evt.getPoint());
 		    		int col = TableMain.columnAtPoint(evt.getPoint());
@@ -2808,7 +2924,7 @@ public class frmMain extends javax.swing.JFrame {
 					if (frm.showDialog(Settings, Track, row, col)) {
 						Track.isModified=true;
 						RefreshTableMain();
-						RefreshProfil();
+						RefreshProfilChart();
 						RefreshStatusbar(Track);
 					}
 				}
@@ -2845,7 +2961,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Profil chart
 		// ------------------------------------------------------
-		jPanelProfilChart = new ChartPanel(chart);
+		ChartPanelProfil = new ChartPanel(chartProfil);
 		CrosshairOverlay crosshairOverlay = new CrosshairOverlay();
 		xCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
 		// xCrosshair.setLabelVisible(true);
@@ -2858,9 +2974,9 @@ public class frmMain extends javax.swing.JFrame {
 		crosshairOverlay.addDomainCrosshair(xCrosshair);
 		crosshairOverlay.addRangeCrosshair(yCrosshair);
 
-		jPanelProfilChart.addOverlay(crosshairOverlay);
-		jPanelProfilChart.setBackground(new java.awt.Color(255, 0, 51));
-		jPanelProfilChart.addChartMouseListener(new ChartMouseListener() {
+		ChartPanelProfil.addOverlay(crosshairOverlay);
+		ChartPanelProfil.setBackground(new java.awt.Color(255, 0, 51));
+		ChartPanelProfil.addChartMouseListener(new ChartMouseListener() {
 			@Override
 			public void chartMouseClicked(ChartMouseEvent event) {
 
@@ -2889,7 +3005,7 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 
-		jPanelProfil.add(jPanelProfilChart, java.awt.BorderLayout.CENTER);
+		jPanelProfil.add(ChartPanelProfil, java.awt.BorderLayout.CENTER);
 
 		// -- Profil info bar
 		// ---------------------------------------------------
@@ -2978,8 +3094,8 @@ public class frmMain extends javax.swing.JFrame {
 		lbProfilComment.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelProfilInfo, lbProfilComment, 3, 1, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
 				GridBagConstraints.BOTH);
-		// -- Distance / Temps / Pente / Nom
-		// -- Altitude / Heure / Vitesse / Commentaire
+		// -- Distance / Time / Slope / Name
+		// -- Elevation / Hour / Speed / Comment
 
 		// -- Add the panel to the tabbed panel
 		// ---------------------------------
@@ -3004,15 +3120,351 @@ public class frmMain extends javax.swing.JFrame {
         addTab(TabbedPaneMain, jPanelStatistic, bundle.getString("frmMain.TabStatistic.tabTitle"),
 				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/stat.png")));
 
+        
 		// -- Tab - Analysis
 		// ----------------------------------------------------
 		jPanelAnalyze = new javax.swing.JPanel();
-
-		// TODO Define this panel
-
+		jPanelAnalyze.setLayout(new java.awt.BorderLayout());
 		addTab(TabbedPaneMain, jPanelAnalyze, bundle.getString("frmMain.TabAnalyze.tabTitle"),
 				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/search.png")));
 
+		//-- Create the tab bar
+		TabbedPaneAnalysis = new javax.swing.JTabbedPane();
+		jPanelAnalyze.add(TabbedPaneAnalysis,java.awt.BorderLayout.CENTER);
+		
+		//-- Tab Analysis : Time/Dist
+		jPanelTimeDist = new javax.swing.JPanel();
+		jPanelTimeDist.setLayout(new java.awt.BorderLayout());
+		addTab(TabbedPaneAnalysis, jPanelTimeDist, bundle.getString("frmMain.TabTimeDist.tabTitle"),null);
+		//-- Left - Toolbar
+		Create_TimeDist_Toolbar();
+		jPanelTimeDist.add(ToolBarTimeDist, java.awt.BorderLayout.WEST);
+		//-- Bottom - Info
+		jPanelTimeDistInfo = new javax.swing.JPanel();
+		jPanelTimeDistInfo.setOpaque(true);
+		jPanelTimeDistInfo.setBackground(Color.WHITE);
+		jPanelTimeDistInfo.setLayout(new GridBagLayout());
+		jPanelTimeDist.add(jPanelTimeDistInfo, java.awt.BorderLayout.SOUTH);
+
+		//-- Distance/Elevation/Time/Hour/Slope
+		lbTimeDistInfoDistance = new javax.swing.JLabel();
+		lbTimeDistInfoDistance.setOpaque(true);
+		lbTimeDistInfoDistance.setBackground(Color.WHITE);		
+		lbTimeDistInfoDistance.setText(" " + bundle.getString("frmMain.lbTimeDistInfoDistance.text") + "=0.000km ");
+		lbTimeDistInfoDistance.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		Utils.addComponent(jPanelTimeDistInfo, lbTimeDistInfoDistance, 
+				0, 0, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0, 
+				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+
+		// -- Elevation
+		lbTimeDistInfoElevation = new javax.swing.JLabel();
+		lbTimeDistInfoElevation.setOpaque(true);
+		lbTimeDistInfoElevation.setBackground(Color.WHITE);		
+		lbTimeDistInfoElevation.setText(" " + bundle.getString("frmMain.lbTimeDistInfoElevation.text") + "=0m ");
+		lbTimeDistInfoElevation.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		Utils.addComponent(jPanelTimeDistInfo, lbTimeDistInfoElevation, 
+				1, 0, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		
+		// -- Time
+		lbTimeDistInfoTime = new javax.swing.JLabel();
+		lbTimeDistInfoTime.setOpaque(true);
+		lbTimeDistInfoTime.setBackground(Color.WHITE);		
+		lbTimeDistInfoTime.setText(" " + bundle.getString("frmMain.lbTimeDistInfoTime.text") + "=00:00:00 ");
+		lbTimeDistInfoTime.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		Utils.addComponent(jPanelTimeDistInfo, lbTimeDistInfoTime, 
+				2, 0, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0, 
+				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+
+		// -- Hour
+		lbTimeDistInfoHour = new javax.swing.JLabel();
+		lbTimeDistInfoHour.setOpaque(true);
+		lbTimeDistInfoHour.setBackground(Color.WHITE);		
+		lbTimeDistInfoHour.setText(" " + bundle.getString("frmMain.lbTimeDistInfoHour.text") + "=00:00:00 ");
+		lbTimeDistInfoHour.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		Utils.addComponent(jPanelTimeDistInfo, lbTimeDistInfoHour, 
+				3, 0, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0, 
+				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		
+		// -- Slope
+		lbTimeDistSlope = new javax.swing.JLabel();
+		lbTimeDistSlope.setOpaque(true);
+		lbTimeDistSlope.setBackground(Color.WHITE);		
+		lbTimeDistSlope.setText(" " + bundle.getString("frmMain.lbTimeDistSlope.text") + "=0.0% ");
+		lbTimeDistSlope.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		Utils.addComponent(jPanelTimeDistInfo, lbTimeDistSlope, 
+				4, 0, 
+				1, 1, 
+				1, 0, 
+				0, 0, 0, 0, GridBagConstraints.WEST, GridBagConstraints.VERTICAL);
+		
+		
+		//-- Chart Time/Dist
+		ChartPanelTimeDist = new ChartPanel(chartTimeDist);
+	
+//		CrosshairOverlay crosshairOverlay = new CrosshairOverlay();
+//
+//		xCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
+//		xCrosshair.setLabelBackgroundPaint(Color.WHITE);
+//
+//		yCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
+//		yCrosshair.setLabelBackgroundPaint(Color.WHITE);
+//
+//		crosshairOverlay.addDomainCrosshair(xCrosshair);
+//		crosshairOverlay.addRangeCrosshair(yCrosshair);
+
+//		ChartPanelTimeDist.addOverlay(crosshairOverlay);
+		ChartPanelTimeDist.setBackground(new java.awt.Color(255, 0, 51));
+//		ChartPanelTimeDist.addChartMouseListener(new ChartMouseListener() {
+//			@Override
+//			public void chartMouseClicked(ChartMouseEvent event) {
+//
+//				ChartEntity chartentity = event.getEntity();
+//				if (chartentity instanceof XYItemEntity) {
+//					XYItemEntity e = (XYItemEntity) chartentity;
+//					XYDataset d = e.getDataset();
+//					int s = e.getSeriesIndex();
+//					int i = e.getItem();
+//					double x = d.getXValue(s, i);
+//					double y = d.getYValue(s, i);
+//					xCrosshair.setValue(x);
+//					yCrosshair.setValue(y);
+//					RefreshProfilInfo(i);
+//					//Refresh the position on the data grid
+//					TableMain.setRowSelectionInterval(i, i);
+//					Rectangle rect = TableMain.getCellRect(i, 0, true);
+//					TableMain.scrollRectToVisible(rect);
+//					//Refresh the marker position on the map
+//					RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
+//				}
+//			}
+//
+//			@Override
+//			public void chartMouseMoved(ChartMouseEvent event) {
+//			}
+//		});
+		jPanelTimeDist.add(ChartPanelTimeDist, java.awt.BorderLayout.CENTER);
+		
+		//-- Tab Analysis : Speed
+		jPanelSpeed = new javax.swing.JPanel();
+		jPanelSpeed.setLayout(new java.awt.BorderLayout());
+		addTab(TabbedPaneAnalysis, jPanelSpeed, bundle.getString("frmMain.TabSpeed.tabTitle"),null);
+		
+		//-- Left - Toolbar
+		Create_Speed_Toolbar();
+		jPanelSpeed.add(ToolBarSpeed, java.awt.BorderLayout.WEST);
+		//-- Bottom - Info
+		jPanelSpeedInfo = new javax.swing.JPanel();
+		jPanelSpeedInfo.setOpaque(true);
+		jPanelSpeedInfo.setBackground(Color.WHITE);
+		jPanelSpeedInfo.setLayout(new GridBagLayout());
+		jPanelSpeed.add(jPanelSpeedInfo, java.awt.BorderLayout.SOUTH);
+
+		//-- Start speed/End speed/Speed/Distance
+
+		// -- Start speed
+		lbSpeedInfoStartSpeed = new javax.swing.JLabel();
+		lbSpeedInfoStartSpeed.setOpaque(true);
+		lbSpeedInfoStartSpeed.setBackground(Color.WHITE);		
+		lbSpeedInfoStartSpeed.setText(" " + bundle.getString("frmMain.lbSpeedInfoStartSpeed.text") + "=0km/h ");
+		lbSpeedInfoStartSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoStartSpeed, 
+				0, 0, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		
+		// -- End speed
+		lbSpeedInfoEndSpeed = new javax.swing.JLabel();
+		lbSpeedInfoEndSpeed.setOpaque(true);
+		lbSpeedInfoEndSpeed.setBackground(Color.WHITE);		
+		lbSpeedInfoEndSpeed.setText(" " + bundle.getString("frmMain.lbSpeedInfoEndSpeed.text") + "=0km/h ");
+		lbSpeedInfoEndSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoEndSpeed, 
+				1, 0, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0, 
+				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+
+		// -- Speed
+		lbSpeedInfoSpeed = new javax.swing.JLabel();
+		lbSpeedInfoSpeed.setOpaque(true);
+		lbSpeedInfoSpeed.setBackground(Color.WHITE);		
+		lbSpeedInfoSpeed.setText(" " + bundle.getString("frmMain.lbSpeedInfoSpeed.text") + "=0km/h ");
+		lbSpeedInfoSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoSpeed, 
+				2, 0, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0, 
+				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		
+		//-- Distance
+		lbSpeedInfoDistance = new javax.swing.JLabel();
+		lbSpeedInfoDistance.setOpaque(true);
+		lbSpeedInfoDistance.setBackground(Color.WHITE);		
+		lbSpeedInfoDistance.setText(" " + bundle.getString("frmMain.lbSpeedInfoDistance.text") + "=0.000km ");
+		lbSpeedInfoDistance.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoDistance, 
+				3, 0, 
+				1, 1, 
+				1, 0, 
+				0, 0, 0, 0, 
+				GridBagConstraints.WEST, GridBagConstraints.VERTICAL);
+
+
+		//-- Chart Speed/Dist & Time/Dist
+		ChartPanelSpeed = new ChartPanel(chartTimeDist);
+	
+//		CrosshairOverlay crosshairOverlay = new CrosshairOverlay();
+//
+//		xCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
+//		xCrosshair.setLabelBackgroundPaint(Color.WHITE);
+//
+//		yCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
+//		yCrosshair.setLabelBackgroundPaint(Color.WHITE);
+//
+//		crosshairOverlay.addDomainCrosshair(xCrosshair);
+//		crosshairOverlay.addRangeCrosshair(yCrosshair);
+
+//		ChartPanelTimeDist.addOverlay(crosshairOverlay);
+		ChartPanelSpeed.setBackground(new java.awt.Color(255, 0, 51));
+//		ChartPanelTimeDist.addChartMouseListener(new ChartMouseListener() {
+//			@Override
+//			public void chartMouseClicked(ChartMouseEvent event) {
+//
+//				ChartEntity chartentity = event.getEntity();
+//				if (chartentity instanceof XYItemEntity) {
+//					XYItemEntity e = (XYItemEntity) chartentity;
+//					XYDataset d = e.getDataset();
+//					int s = e.getSeriesIndex();
+//					int i = e.getItem();
+//					double x = d.getXValue(s, i);
+//					double y = d.getYValue(s, i);
+//					xCrosshair.setValue(x);
+//					yCrosshair.setValue(y);
+//					RefreshProfilInfo(i);
+//					//Refresh the position on the data grid
+//					TableMain.setRowSelectionInterval(i, i);
+//					Rectangle rect = TableMain.getCellRect(i, 0, true);
+//					TableMain.scrollRectToVisible(rect);
+//					//Refresh the marker position on the map
+//					RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
+//				}
+//			}
+//
+//			@Override
+//			public void chartMouseMoved(ChartMouseEvent event) {
+//			}
+//		});
+		jPanelSpeed.add(ChartPanelSpeed, java.awt.BorderLayout.CENTER);
+		
+		//-- Tab Analysis : Speed/slope
+		jPanelSpeedSlope = new javax.swing.JPanel();
+		jPanelSpeedSlope.setLayout(new java.awt.BorderLayout());
+		addTab(TabbedPaneAnalysis, jPanelSpeedSlope, bundle.getString("frmMain.TabSpeedSlope.tabTitle"),null);
+
+		//-- Left - Toolbar
+		Create_SpeedSlope_Toolbar();
+		jPanelSpeedSlope.add(ToolBarSpeedSlope, java.awt.BorderLayout.WEST);
+		//-- Bottom - Info
+		jPanelSpeedSlopeInfo = new javax.swing.JPanel();
+		jPanelSpeedSlopeInfo.setOpaque(true);
+		jPanelSpeedSlopeInfo.setBackground(Color.WHITE);
+		jPanelSpeedSlopeInfo.setLayout(new GridBagLayout());
+		jPanelSpeedSlope.add(jPanelSpeedSlopeInfo, java.awt.BorderLayout.SOUTH);
+
+		//-- Speed/Slope
+
+		// -- Speed
+		lbSpeedSlopeInfoSpeed = new javax.swing.JLabel();
+		lbSpeedSlopeInfoSpeed.setOpaque(true);
+		lbSpeedSlopeInfoSpeed.setBackground(Color.WHITE);		
+		lbSpeedSlopeInfoSpeed.setText(" " + bundle.getString("frmMain.lbSpeedSlopeInfoSpeed.text") + "=0km/h ");
+		lbSpeedSlopeInfoSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		Utils.addComponent(jPanelSpeedSlopeInfo, lbSpeedSlopeInfoSpeed, 
+				0, 0, 
+				1, 1, 
+				0, 0, 
+				0, 0, 0, 0, 
+				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		
+		//-- Slope
+		lbSpeedSlopeInfoSlope = new javax.swing.JLabel();
+		lbSpeedSlopeInfoSlope.setOpaque(true);
+		lbSpeedSlopeInfoSlope.setBackground(Color.WHITE);		
+		lbSpeedSlopeInfoSlope.setText(" " + bundle.getString("frmMain.lbSpeedSlopeInfoSlope.text") + "=0.0% ");
+		lbSpeedSlopeInfoSlope.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		Utils.addComponent(jPanelSpeedSlopeInfo, lbSpeedSlopeInfoSlope, 
+				1, 0, 
+				1, 1, 
+				1, 0, 
+				0, 0, 0, 0, 
+				GridBagConstraints.WEST, GridBagConstraints.VERTICAL);
+
+
+		//-- Chart Speed/Dist & Time/Dist
+		ChartPanelSpeedSlope = new ChartPanel(chartTimeDist);
+	
+//		CrosshairOverlay crosshairOverlay = new CrosshairOverlay();
+//
+//		xCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
+//		xCrosshair.setLabelBackgroundPaint(Color.WHITE);
+//
+//		yCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
+//		yCrosshair.setLabelBackgroundPaint(Color.WHITE);
+//
+//		crosshairOverlay.addDomainCrosshair(xCrosshair);
+//		crosshairOverlay.addRangeCrosshair(yCrosshair);
+
+//		ChartPanelTimeDist.addOverlay(crosshairOverlay);
+		ChartPanelSpeedSlope.setBackground(new java.awt.Color(255, 0, 51));
+//		ChartPanelTimeDist.addChartMouseListener(new ChartMouseListener() {
+//			@Override
+//			public void chartMouseClicked(ChartMouseEvent event) {
+//
+//				ChartEntity chartentity = event.getEntity();
+//				if (chartentity instanceof XYItemEntity) {
+//					XYItemEntity e = (XYItemEntity) chartentity;
+//					XYDataset d = e.getDataset();
+//					int s = e.getSeriesIndex();
+//					int i = e.getItem();
+//					double x = d.getXValue(s, i);
+//					double y = d.getYValue(s, i);
+//					xCrosshair.setValue(x);
+//					yCrosshair.setValue(y);
+//					RefreshProfilInfo(i);
+//					//Refresh the position on the data grid
+//					TableMain.setRowSelectionInterval(i, i);
+//					Rectangle rect = TableMain.getCellRect(i, 0, true);
+//					TableMain.scrollRectToVisible(rect);
+//					//Refresh the marker position on the map
+//					RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
+//				}
+//			}
+//
+//			@Override
+//			public void chartMouseMoved(ChartMouseEvent event) {
+//			}
+//		});
+		jPanelSpeedSlope.add(ChartPanelSpeedSlope, java.awt.BorderLayout.CENTER);
+
+		
+		
+		
+		
 		// -- Tab - Resume
 		// ------------------------------------------------------
 		jPanelResume = new javax.swing.JPanel();
@@ -3088,15 +3540,14 @@ public class frmMain extends javax.swing.JFrame {
 		OsmFileCacheTileLoader ofctl;
 		try {
 		    File cacheDir = new File(DataDir + "/"+CgConst.CG_DIR, "OpenStreetMapTileCache");
-//		    logger.info("Config Directory = " + DataDir + "/"+CgConst.CG_DIR + ", cacheDir=" + cacheDir);
+		    CgLog.info("Config Directory = " + DataDir + "/"+CgConst.CG_DIR + ", cacheDir=" + cacheDir);
 		    cacheDir.mkdirs();
 		    ofctl = new OsmFileCacheTileLoader(MapViewer, cacheDir);
 		    MapViewer.setTileLoader(ofctl);
 		} catch (IOException ex) {
-//			logger.throwing(this.getName(), "Exception creating OsmFileCacheTileLoader", ex.fillInStackTrace());
+			CgLog.error("Exception creating OsmFileCacheTileLoader");
+			ex.printStackTrace();
 		}
-		
-		
 		
 		MapViewer.setMapMarkerVisible(true);
 		MapViewer.setScrollWrapEnabled(true);
@@ -3116,6 +3567,68 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Finished - Pack
 		// ---------------------------------------------------
 		pack();
+	}
+
+
+	private void Create_TimeDist_Toolbar() {
+		ToolBarTimeDist = new javax.swing.JToolBar();
+		ToolBarTimeDist.setOrientation(javax.swing.SwingConstants.VERTICAL);
+		ToolBarTimeDist.setFloatable(false);
+		ToolBarTimeDist.setRollover(true);
+
+		// -- Save
+		// --------------------------------------------------------------
+		btTimeDistSave = new javax.swing.JButton();
+		btTimeDistSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/save.png")));
+		btTimeDistSave.setToolTipText(bundle.getString("frmMain.btTimeDistSave.toolTipText"));
+		btTimeDistSave.setFocusable(false);
+		btTimeDistSave.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				//TODO
+			}
+		});
+		ToolBarTimeDist.add(btTimeDistSave);
+	}
+
+
+	private void Create_Speed_Toolbar() {
+		ToolBarSpeed = new javax.swing.JToolBar();
+		ToolBarSpeed.setOrientation(javax.swing.SwingConstants.VERTICAL);
+		ToolBarSpeed.setFloatable(false);
+		ToolBarSpeed.setRollover(true);
+		
+		// -- Save
+		// --------------------------------------------------------------
+		btSpeedSave = new javax.swing.JButton();
+		btSpeedSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/save.png")));
+		btSpeedSave.setToolTipText(bundle.getString("frmMain.btSpeedSave.toolTipText"));
+		btSpeedSave.setFocusable(false);
+		btSpeedSave.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				//TODO
+			}
+		});
+		ToolBarSpeed.add(btSpeedSave);
+	}
+	
+	private void Create_SpeedSlope_Toolbar() {
+		ToolBarSpeedSlope = new javax.swing.JToolBar();
+		ToolBarSpeedSlope.setOrientation(javax.swing.SwingConstants.VERTICAL);
+		ToolBarSpeedSlope.setFloatable(false);
+		ToolBarSpeedSlope.setRollover(true);
+
+		// -- Save
+		// --------------------------------------------------------------
+		btSpeedSlopeSave = new javax.swing.JButton();
+		btSpeedSlopeSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/save.png")));
+		btSpeedSlopeSave.setToolTipText(bundle.getString("frmMain.btSpeedSlopeSave.toolTipText"));
+		btSpeedSlopeSave.setFocusable(false);
+		btSpeedSlopeSave.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				//TODO
+			}
+		});
+		ToolBarSpeedSlope.add(btSpeedSlopeSave);
 	}
 
 
@@ -3156,9 +3669,8 @@ public class frmMain extends javax.swing.JFrame {
 
 
 	private JFreeChart CreateChartProfil(XYDataset dataset) {
-		JFreeChart chart = ChartFactory.createXYAreaChart("", "Distance", // x
-																			// axis
-																			// label
+		JFreeChart chart = ChartFactory.createXYAreaChart("", 
+				"Distance", // x axis label
 				"Elevation", // y axis label
 				dataset, // data
 				PlotOrientation.VERTICAL, false, // include legend
@@ -3172,14 +3684,10 @@ public class frmMain extends javax.swing.JFrame {
 		plot.setDomainGridlinePaint(Color.gray);
 		plot.setRangeGridlinePaint(Color.gray);
 
-		// XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
 		XYAreaRenderer renderer = new XYAreaRenderer();
-		renderer.setSeriesPaint(0, new Color(0x99, 0xff, 0x00)); // Green (safe
-																	// color)
+		renderer.setSeriesPaint(0, new Color(0x99, 0xff, 0x00));
 		renderer.setOutline(true);
-		renderer.setSeriesOutlineStroke(0, new BasicStroke(2.0f)); // Width of
-																	// the
-																	// outline
+		renderer.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
 		plot.setRenderer(renderer);
 
 		// NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
@@ -3188,6 +3696,34 @@ public class frmMain extends javax.swing.JFrame {
 		return chart;
 	}
 
+	private JFreeChart CreateChartTimeDist(XYDataset dataset) {
+		JFreeChart chart = ChartFactory.createXYAreaChart("", 
+				"Distance", // x axis label
+				"Elevation", // y axis label
+				dataset, // data
+				PlotOrientation.VERTICAL, false, // include legend
+				true, // tooltips
+				false // urls
+		);
+
+		chart.setBackgroundPaint(Color.white); // Panel background color
+		XYPlot plot = chart.getXYPlot();
+		plot.setBackgroundPaint(Color.white);
+		plot.setDomainGridlinePaint(Color.gray);
+		plot.setRangeGridlinePaint(Color.gray);
+
+		XYAreaRenderer renderer = new XYAreaRenderer();
+		renderer.setSeriesPaint(0, new Color(0x99, 0xff, 0x00));
+		renderer.setOutline(true);
+		renderer.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
+		plot.setRenderer(renderer);
+
+		// NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+		// rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+
+		return chart;
+	}
+	
 	/**
 	 * Go to the next tag
 	 */
@@ -3271,15 +3807,15 @@ public class frmMain extends javax.swing.JFrame {
 	/**
 	 * Update the profil chart
 	 */
-	private void RefreshProfil() {
+	private void RefreshProfilChart() {
 		if (Track.data.isEmpty())
 			return;
 
 		// -- Clear all series
-		if (dataset.getSeriesCount() > 0)
-			dataset.removeAllSeries();
+		if (datasetProfil.getSeriesCount() > 0)
+			datasetProfil.removeAllSeries();
 
-		XYPlot plot = chart.getXYPlot();
+		XYPlot plot = chartProfil.getXYPlot();
 		plot.clearDomainMarkers();
 		
 		// -- Populate the serie
@@ -3303,7 +3839,7 @@ public class frmMain extends javax.swing.JFrame {
 				cmpt++;
 			}
 		}
-		dataset.addSeries(serie1);
+		datasetProfil.addSeries(serie1);
 
 		if (Track.getMaxElev(Settings.Unit) > Track.getMinElev(Settings.Unit)) {
 			//XYPlot plot = chart.getXYPlot();
@@ -3312,6 +3848,52 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
+
+	/**
+	 * Update the Time/Distance chart
+	 */
+	private void RefreshTimeDistanceChart() {
+		if (Track.data.isEmpty())
+			return;
+
+		// -- Clear all series
+		if (datasetTimeDist.getSeriesCount() > 0)
+			datasetTimeDist.removeAllSeries();
+
+		XYPlot plot = chartTimeDist.getXYPlot();
+		plot.clearDomainMarkers();
+		
+		// -- Populate the serie
+		XYSeries serie1 = new XYSeries("Elevation/Distance");
+		int cmpt=1;
+		for (CgData r : Track.data) {
+			double x=r.getTotal(Settings.Unit) / 1000;
+			double y=r.getElevation(Settings.Unit);
+			serie1.add(x, y);
+
+//			if ( ((r.getTag() & CgConst.TAG_MARK) !=0) & showProfilMarker)
+//			{
+//				Marker m = new ValueMarker(x);
+//			    m.setPaint(Color.GRAY);
+//		        m.setLabelFont(new Font("SansSerif", Font.PLAIN, 10));
+//			    m.setLabel(String.valueOf(cmpt));
+//			    m.setLabelOffset(new RectangleInsets(5, 0, 0, 2));
+//			    m.setLabelAnchor(RectangleAnchor.TOP_RIGHT);
+//			    m.setLabelTextAnchor(TextAnchor.TOP_LEFT);
+//			    plot.addDomainMarker(m);
+//				cmpt++;
+//			}
+		}
+		datasetTimeDist.addSeries(serie1);
+
+		if (Track.getMaxElev(Settings.Unit) > Track.getMinElev(Settings.Unit)) {
+			//XYPlot plot = chart.getXYPlot();
+			ValueAxis axisY = plot.getRangeAxis();
+			axisY.setRange(Math.floor(Track.getMinElev(Settings.Unit) / 100.0) * 100.0, Math.ceil(Track.getMaxElev(Settings.Unit) / 100.0) * 100.0);
+		}
+	}
+
+	
 	
 	public void ImportGPX() {
 		if (Track.data.isEmpty())
@@ -3333,60 +3915,24 @@ public class frmMain extends javax.swing.JFrame {
         		//BackupInCGX();
         		//bAutorUpdatePos = false;
         		try {
-					if (Track.OpenGPX(s, mode)) {
-						//TODO normal dialog? Test?
+					if (Track.OpenGPX(s, mode))
 						JOptionPane.showMessageDialog(this, bundle.getString("frmMain.NoTimeData"));
-		        		RefreshTableMain();
-		        		RefreshStatusbar(Track);
-		        		RefreshTitle();
-		        		RefreshProfil();
-		        		RefreshTrack(Track,true);
-		        		RefreshResume();
-		        		RefreshStat(false);
-		        		//RefreshInfoAnalyseSpeed(0);
-		        		//bAutorUpdatePos = true;	            		
-					}
+	        		RefreshTableMain();
+	        		RefreshStatusbar(Track);
+	        		RefreshTitle();
+	        		RefreshProfilChart();
+	        		RefreshTimeDistanceChart();
+	        		RefreshTrack(Track,true);
+	        		RefreshResume();
+	        		RefreshStat(false);
+	        		//RefreshInfoAnalyseSpeed(0);
+	        		//bAutorUpdatePos = true;	            		
 				} catch (Exception e) {
-					log.error("ImportGPX : Impossible to import the GPX file");
+					CgLog.error("ImportGPX : Impossible to import the GPX file");
 					e.printStackTrace();
 				}        		
 	        }
 	    }
-        
-//	    if (frm.ShowDialog() == DialogResult.OK) {
-//	    	string s, ext;
-//
-//	    	openFileDialog.Filter = "Fichier GPX (*.gpx)|*.gpx";
-//	        openFileDialog.DefaultExt = "gpx";
-//	        DialogResult res = openFileDialog.ShowDialog();
-//	        if (res == DialogResult.OK) {
-//	        	s = openFileDialog.FileName;
-//	        	if (s == "") return;
-//
-//	        	ext = System.IO.Path.GetExtension(s);
-//	        	if (ext.ToUpper() == ".GPX") {
-//	        		int mode = Constantes.IMPORT_MODE_ADD_END;
-//	        		if (frm.insDeb) mode = Constantes.IMPORT_MODE_INS_START;
-//
-//	        		BackupInCGX();
-//	        		bAutorUpdatePos = false;
-//	        		if (!cd.OpenGPX(s, mode))
-//	        			MessageBox.Show("Le fichier que vous avez chargé n'a pas de donnée temporelle.\nRéglez les paramètres du parcours et appuyez sur le bouton de calcul pour déterminer le temps de passage pour chaque point du parcours.", "Course Generator",
-//	        					MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-//
-//	        		InitMainGrid();
-//	        		RefreshStatusBar();
-//	        		RefreshTitle();
-//	        		DrawProfil(Constantes.SRC_MAIN);
-//	        		DrawMap();
-//	        		RefreshResume(false);
-//	        		RefreshStat(false);
-//	        		RefreshInfoAnalyseSpeed(0);
-//	        		bAutorUpdatePos = true;
-//	        		//bNoBackup = true;
-//	        	}
-//	        }
-//	    }		
 	}
 	
 	
@@ -3582,7 +4128,8 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshStat(true);
 
 		RefreshMruGPX();
-		RefreshProfil();
+		RefreshProfilChart();
+		RefreshTimeDistanceChart();
 		// -- Refresh the form title
 		RefreshTitle();
 
@@ -3658,7 +4205,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Refresh resume grid
 		RefreshResume();
 		// -- Refresh profil tab
-		RefreshProfil();
+		RefreshProfilChart();
+		RefreshTimeDistanceChart();
 		// -- Refresh the form title 
 		RefreshTitle();
 		// -- Refresh statistic 
@@ -3718,7 +4266,7 @@ public class frmMain extends javax.swing.JFrame {
 		        out.write(editorStat.getText());
 		        out.close();
 		    } catch (Exception f) {
-		    	log.error("SaveStat : impossible to save the statistic file" );
+		    	CgLog.error("SaveStat : impossible to save the statistic file" );
 		    	f.printStackTrace();
 		    }
 
@@ -3869,14 +4417,14 @@ public class frmMain extends javax.swing.JFrame {
 			if (ret == JOptionPane.YES_OPTION) {
 				setDefaultCloseOperation(EXIT_ON_CLOSE);
 				SaveConfig();
-				log.info("End of the application! Bye :(");
+				CgLog.info("End of the application! Bye :(");
 			} else {
 				setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 			}
 		} else { // No modification! Bye
 			setDefaultCloseOperation(EXIT_ON_CLOSE);
 			SaveConfig();
-			log.info("End of the application! Bye :(");
+			CgLog.info("End of the application! Bye :(");
 		}
 	}
 	
@@ -4338,8 +4886,6 @@ public class frmMain extends javax.swing.JFrame {
 	 *            the command line arguments
 	 */
 	public static void main(final String args[]) {
-		String OS;
-
 		//-- Get the VM parameters
 		String inEclipseStr = System.getProperty("runInEclipse");
         inEclipse = "true".equalsIgnoreCase(inEclipseStr);
@@ -4408,22 +4954,18 @@ public class frmMain extends javax.swing.JFrame {
 		OsCheck.OSType ostype = OsCheck.getOperatingSystemType();
 		switch (ostype) {
 		case Windows:
-			OS="WIN";
 			// setUIFont(new javax.swing.plaf.FontUIResource("Tahoma",
 			// Font.PLAIN, 12));
 			break;
 		case MacOS:
-			OS="MAC";
 			// setUIFont(new javax.swing.plaf.FontUIResource("Arial",
 			// Font.PLAIN, 12));
 			break;
 		case Linux:
-			OS="LINUX";
 			// setUIFont(new javax.swing.plaf.FontUIResource("Arial",
 			// Font.PLAIN, 12));
 			break;
 		default :
-			OS="OTHER";
 			// setUIFont(new javax.swing.plaf.FontUIResource("Arial",
 			// Font.PLAIN, 12));
 			break;
@@ -4432,7 +4974,7 @@ public class frmMain extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new frmMain(OS, args).setVisible(true);
+				new frmMain(args).setVisible(true);
 			}
 		});
 	}

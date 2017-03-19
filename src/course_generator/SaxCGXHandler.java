@@ -528,7 +528,7 @@ public class SaxCGXHandler extends DefaultHandler{
             }
             else if (qName.equalsIgnoreCase("DELTATIMESECONDE")) {
                 trkpt_dtime=ManageDouble(0.0, ERR_READ_DOUBLE);
-                //TODO voir si utilisé
+                //TODO used?
             }
             else if (qName.equalsIgnoreCase("TIMELIMIT")) {
                 trkpt_timelimit=ManageInt(0, ERR_READ_INT);

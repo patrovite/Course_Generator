@@ -39,7 +39,6 @@ import javax.xml.stream.XMLStreamWriter;
 import org.joda.time.DateTime;
 
 import course_generator.param.ParamData;
-import course_generator.settings.CgSettings;
 /*
 import course_generator.table.CoeffClass;
 import course_generator.table.DiffClass;
@@ -357,7 +356,16 @@ public class TrackData {
 		isCalculated = true;
 		Name = new File(name).getName();
 
-		CgLog.info("TrackData.OpenGPX : '"+name+"' loaded");
+		switch (mode) {
+			case 1 : 
+				CgLog.info("TrackData.OpenGPX : '"+name+"' imported at the end of the data");
+				break;
+			case 2 :	
+				CgLog.info("TrackData.OpenGPX : '"+name+"' imported at the start of the data");
+				break;
+			default :
+				CgLog.info("TrackData.OpenGPX : '"+name+"' loaded");
+		}
 		
 		return isTimeLoaded;
 	} // -- OpenGPX
@@ -1460,7 +1468,17 @@ public class TrackData {
 		CheckTimeLimit();
 		isCalculated = true;
 		
-		CgLog.info("TrackData.OpenCGX : '"+name+"' loaded");
+		switch (mode) {
+			case 1 : 
+				CgLog.info("TrackData.OpenCGX : '"+name+"' imported at the end of the data");
+				break;
+			case 2 :	
+				CgLog.info("TrackData.OpenCGX : '"+name+"' imported at the start of the data");
+				break;
+			default :
+				CgLog.info("TrackData.OpenCGX : '"+name+"' loaded");
+		}
+		
 		// return isTimeLoaded;
 	}// LoadCGX
 
