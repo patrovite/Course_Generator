@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package course_generator.resume_table;
+package course_generator.trackdata_table;
 
-public class ResumeCommentClass {
-    //Empty class - This is normal ;)
+public class TrackDataClass {
+	//Empty class - This is normal ;)
 }

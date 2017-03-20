@@ -92,6 +92,8 @@ public class CgConst {
     public static final int MRB_DUP_SIMPLE = 1;
     public static final int MRB_DUP_MULTI = 2;
 
+    public static final Color CL_LINE_SELECTION = new Color(151, 153, 255);
+
     public static final Color CL_PROFIL_SIMPLE_FILL = new Color(0xAB, 0xF9, 0x2F);
     public static final Color CL_PROFIL_SIMPLE_BORDER = new Color(0x05, 0x82, 0x05);
 

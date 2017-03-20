@@ -18,31 +18,6 @@
 
 package course_generator.resume_table;
 
-import java.awt.Component;
-
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
-
-import course_generator.CgResume;
-
-/**
-*
-* @author pierre.delore
-*/
-public class ResumeNumRenderer extends DefaultTableCellRenderer {
-   
-   @Override
-   public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-       super.getTableCellRendererComponent(table, value, isSelected, hasFocus,	row, column);
-
-       CgResume data = (CgResume) value;
-
-       Double val = data.getNum();
-       
-       //-- Display the value
-       setText(String.format("%1.0f ",val));
-       setHorizontalAlignment(CENTER);
-       return this;
-   }
-   
+public class ResumeClass {
+	//Empty class - This is normal ;)
 }

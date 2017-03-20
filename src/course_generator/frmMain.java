@@ -47,6 +47,7 @@
  * TODO:
  * - Dialog to display the tile directory size and a button to empty the directory
  * - Add a library to log all the message
+ * - Statistic: Add the highest ascend and descend
  * 
  * Notes:
  * http://stackoverflow.com/questions/10657239/jmapviewer-add-tiles-for-offline-view
@@ -134,6 +135,9 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import course_generator.TrackData.CalcAvrSlopeResult;
 import course_generator.TrackData.CalcAvrSpeedResult;
 import course_generator.TrackData.CalcClimbResult;
+import course_generator.analysis.JPanelAnalysisSpeed;
+import course_generator.analysis.JPanelAnalysisSpeedSlope;
+import course_generator.analysis.JPanelAnalysisTimeDist;
 import course_generator.dialogs.FrmExportWaypoints;
 import course_generator.dialogs.FrmImportChoice;
 import course_generator.dialogs.frmEditPosition;
@@ -145,81 +149,17 @@ import course_generator.dialogs.frmSearchPoint;
 import course_generator.dialogs.frmTrackSettings;
 import course_generator.mrb.FrmMiniroadbook;
 import course_generator.param.frmEditCurve;
-import course_generator.resume_table.ResumeAvgSlopeMClass;
-import course_generator.resume_table.ResumeAvgSlopeMRenderer;
-import course_generator.resume_table.ResumeAvgSlopePClass;
-import course_generator.resume_table.ResumeAvgSlopePRenderer;
-import course_generator.resume_table.ResumeAvgSpeedClass;
-import course_generator.resume_table.ResumeAvgSpeedRenderer;
-import course_generator.resume_table.ResumeClimbNClass;
-import course_generator.resume_table.ResumeClimbNRenderer;
-import course_generator.resume_table.ResumeClimbPClass;
-import course_generator.resume_table.ResumeClimbPRenderer;
-import course_generator.resume_table.ResumeCommentClass;
-import course_generator.resume_table.ResumeCommentRenderer;
-import course_generator.resume_table.ResumeDistanceClass;
-import course_generator.resume_table.ResumeDistanceRenderer;
-import course_generator.resume_table.ResumeElevationClass;
-import course_generator.resume_table.ResumeElevationRenderer;
+import course_generator.resume_table.ResumeClass;
 import course_generator.resume_table.ResumeHeaderRenderer;
-import course_generator.resume_table.ResumeHourClass;
-import course_generator.resume_table.ResumeHourRenderer;
-import course_generator.resume_table.ResumeLineClass;
-import course_generator.resume_table.ResumeLineRenderer;
 import course_generator.resume_table.ResumeModel;
-import course_generator.resume_table.ResumeNameClass;
-import course_generator.resume_table.ResumeNameRenderer;
-import course_generator.resume_table.ResumeNumClass;
-import course_generator.resume_table.ResumeNumRenderer;
-import course_generator.resume_table.ResumeSpeedNClass;
-import course_generator.resume_table.ResumeSpeedNRenderer;
-import course_generator.resume_table.ResumeSpeedPClass;
-import course_generator.resume_table.ResumeSpeedPRenderer;
-import course_generator.resume_table.ResumeStationTimeClass;
-import course_generator.resume_table.ResumeStationTimeRenderer;
-import course_generator.resume_table.ResumeTimeClass;
-import course_generator.resume_table.ResumeTimeLimitClass;
-import course_generator.resume_table.ResumeTimeLimitRenderer;
-import course_generator.resume_table.ResumeTimeRenderer;
-import course_generator.resume_table.ResumedtClimbNClass;
-import course_generator.resume_table.ResumedtClimbNRenderer;
-import course_generator.resume_table.ResumedtClimbPClass;
-import course_generator.resume_table.ResumedtClimbPRenderer;
-import course_generator.resume_table.ResumedtDistanceClass;
-import course_generator.resume_table.ResumedtDistanceRenderer;
-import course_generator.resume_table.ResumedtTimeClass;
-import course_generator.resume_table.ResumedtTimeRenderer;
+import course_generator.resume_table.ResumeRenderer;
 import course_generator.settings.CgSettings;
 import course_generator.settings.frmSettings;
 import course_generator.tiles.opentopomap.OpenTopoMap;
-import course_generator.trackdata_table.CoeffClass;
-import course_generator.trackdata_table.CoeffRenderer;
-import course_generator.trackdata_table.DiffClass;
-import course_generator.trackdata_table.DiffRenderer;
-import course_generator.trackdata_table.DistClass;
-import course_generator.trackdata_table.DistRenderer;
-import course_generator.trackdata_table.ElevationClass;
-import course_generator.trackdata_table.ElevationRenderer;
-import course_generator.trackdata_table.HourClass;
-import course_generator.trackdata_table.HourRenderer;
-import course_generator.trackdata_table.LatClass;
-import course_generator.trackdata_table.LatRenderer;
-import course_generator.trackdata_table.LonClass;
-import course_generator.trackdata_table.LonRenderer;
 import course_generator.trackdata_table.MainHeaderRenderer;
-import course_generator.trackdata_table.RecupClass;
-import course_generator.trackdata_table.RecupRenderer;
-import course_generator.trackdata_table.StationClass;
-import course_generator.trackdata_table.StationRenderer;
-import course_generator.trackdata_table.TagClass;
-import course_generator.trackdata_table.TagRenderer;
-import course_generator.trackdata_table.TimeClass;
-import course_generator.trackdata_table.TimeRenderer;
-import course_generator.trackdata_table.TimelimitClass;
-import course_generator.trackdata_table.TimelimitRenderer;
-import course_generator.trackdata_table.TotalClass;
-import course_generator.trackdata_table.TotalRenderer;
+import course_generator.trackdata_table.TrackDataClass;
 import course_generator.trackdata_table.TrackDataModel;
+import course_generator.trackdata_table.TrackDataRenderer;
 import course_generator.utils.CgConst;
 import course_generator.utils.CgLog;
 import course_generator.utils.FileTypeFilter;
@@ -249,9 +189,9 @@ public class frmMain extends javax.swing.JFrame {
 	private int old_row = -1;
 	private int old_row_resume = -1;
 	private JFreeChart chartProfil = null;
-	private JFreeChart chartTimeDist = null;
 	private XYSeriesCollection datasetProfil = null;
-	private XYSeriesCollection datasetTimeDist = null;
+//	private JFreeChart chartTimeDist = null;
+//	private XYSeriesCollection datasetTimeDist = null;
 	private java.util.ResourceBundle bundle = null;
 	private int cmptInternetConnexion = 0;
 	private int cmptMinute = 0;
@@ -376,9 +316,9 @@ public class frmMain extends javax.swing.JFrame {
 	private JScrollPane scrollPaneStat;
 
 	private JTabbedPane TabbedPaneAnalysis;
-	private JPanel jPanelTimeDist;
-	private JPanel jPanelSpeed;
-	private JPanel jPanelSpeedSlope;
+	private JPanelAnalysisTimeDist jPanelTimeDist;
+	private JPanelAnalysisSpeed jPanelSpeed;
+	private JPanelAnalysisSpeedSlope jPanelSpeedSlope;
 	private JToolBar ToolBarTimeDist;
 	private JButton btTimeDistSave;
 	private JPanel jPanelTimeDistInfo;
@@ -459,8 +399,8 @@ public class frmMain extends javax.swing.JFrame {
 
 		datasetProfil = new XYSeriesCollection();
 		chartProfil = CreateChartProfil(datasetProfil);
-		datasetTimeDist = new XYSeriesCollection();
-		chartTimeDist = CreateChartTimeDist(datasetTimeDist);
+//		datasetTimeDist = new XYSeriesCollection();
+//		chartTimeDist = CreateChartTimeDist(datasetTimeDist);
 
 		// -- Load configuration
 		LoadConfig();
@@ -1343,7 +1283,8 @@ public class frmMain extends javax.swing.JFrame {
 					// BackupInCGX(); TODO BackupCGX
 					Track.Invert();
 					RefreshProfilChart();
-					RefreshTimeDistanceChart();
+					jPanelTimeDist.Refresh(Track, Settings);
+//					RefreshTimeDistanceChart();
 					RefreshStatusbar(Track);
 					RefreshTableMain();
 					RefreshResume();
@@ -1459,7 +1400,8 @@ public class frmMain extends javax.swing.JFrame {
 				RefreshStatusbar(Track);
 				RefreshResume();
 				RefreshProfilChart();
-				RefreshTimeDistanceChart();
+				jPanelTimeDist.Refresh(Track, Settings);
+//				RefreshTimeDistanceChart();
 				RefreshStat(true);
 				
 				int row = TableMain.getSelectedRow();
@@ -1558,7 +1500,8 @@ public class frmMain extends javax.swing.JFrame {
 	        		RefreshStatusbar(Track);
 	        		RefreshTitle();
 	        		RefreshProfilChart();
-	        		RefreshTimeDistanceChart();
+	        		jPanelTimeDist.Refresh(Track, Settings);
+//	        		RefreshTimeDistanceChart();
 	        		RefreshTrack(Track,true);
 	        		RefreshResume();
 	        		RefreshStat(false);
@@ -2054,7 +1997,8 @@ public class frmMain extends javax.swing.JFrame {
 					Track.isModified=true;
 					RefreshTableMain();
 					RefreshProfilChart();
-					RefreshTimeDistanceChart();
+					jPanelTimeDist.Refresh(Track, Settings);
+//					RefreshTimeDistanceChart();
 					RefreshStatusbar(Track);
 				}
 			}
@@ -2115,7 +2059,8 @@ public class frmMain extends javax.swing.JFrame {
 					Track.isModified=true;
 					RefreshTableMain();
 					RefreshProfilChart();
-					RefreshTimeDistanceChart();
+					jPanelTimeDist.Refresh(Track, Settings);
+//					RefreshTimeDistanceChart();
 					RefreshStatusbar(Track);
 				}
 			}
@@ -2165,7 +2110,8 @@ public class frmMain extends javax.swing.JFrame {
 		if (frm.showDialog(Settings,Track)) {
 	        RefreshTableMain();
 	        RefreshProfilChart();
-	        RefreshTimeDistanceChart();
+	        jPanelTimeDist.Refresh(Track, Settings);
+//	        RefreshTimeDistanceChart();
 			RefreshTitle();
 			RefreshStatusbar(Track);
 			Track.isModified=true;
@@ -2897,20 +2843,8 @@ public class frmMain extends javax.swing.JFrame {
 		TableMain.getTableHeader()
 				.setDefaultRenderer(new MainHeaderRenderer(TableMain.getTableHeader().getDefaultRenderer()));
 		TableMain.getTableHeader().setReorderingAllowed(false);
-
-		TableMain.setDefaultRenderer(ElevationClass.class, new ElevationRenderer());
-		TableMain.setDefaultRenderer(DistClass.class, new DistRenderer());
-		TableMain.setDefaultRenderer(TotalClass.class, new TotalRenderer());
-		TableMain.setDefaultRenderer(DiffClass.class, new DiffRenderer());
-		TableMain.setDefaultRenderer(CoeffClass.class, new CoeffRenderer());
-		TableMain.setDefaultRenderer(LatClass.class, new LatRenderer());
-		TableMain.setDefaultRenderer(LonClass.class, new LonRenderer());
-		TableMain.setDefaultRenderer(RecupClass.class, new RecupRenderer());
-		TableMain.setDefaultRenderer(TimeClass.class, new TimeRenderer());
-		TableMain.setDefaultRenderer(TimelimitClass.class, new TimelimitRenderer());
-		TableMain.setDefaultRenderer(HourClass.class, new HourRenderer());
-		TableMain.setDefaultRenderer(StationClass.class, new StationRenderer());
-		TableMain.setDefaultRenderer(TagClass.class, new TagRenderer());
+		
+		TableMain.setDefaultRenderer(TrackDataClass.class, new TrackDataRenderer());
 
 		TableMain.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
 		TableMain.setRowHeight(20);
@@ -3133,336 +3067,16 @@ public class frmMain extends javax.swing.JFrame {
 		jPanelAnalyze.add(TabbedPaneAnalysis,java.awt.BorderLayout.CENTER);
 		
 		//-- Tab Analysis : Time/Dist
-		jPanelTimeDist = new javax.swing.JPanel();
-		jPanelTimeDist.setLayout(new java.awt.BorderLayout());
+		jPanelTimeDist = new JPanelAnalysisTimeDist();
 		addTab(TabbedPaneAnalysis, jPanelTimeDist, bundle.getString("frmMain.TabTimeDist.tabTitle"),null);
-		//-- Left - Toolbar
-		Create_TimeDist_Toolbar();
-		jPanelTimeDist.add(ToolBarTimeDist, java.awt.BorderLayout.WEST);
-		//-- Bottom - Info
-		jPanelTimeDistInfo = new javax.swing.JPanel();
-		jPanelTimeDistInfo.setOpaque(true);
-		jPanelTimeDistInfo.setBackground(Color.WHITE);
-		jPanelTimeDistInfo.setLayout(new GridBagLayout());
-		jPanelTimeDist.add(jPanelTimeDistInfo, java.awt.BorderLayout.SOUTH);
-
-		//-- Distance/Elevation/Time/Hour/Slope
-		lbTimeDistInfoDistance = new javax.swing.JLabel();
-		lbTimeDistInfoDistance.setOpaque(true);
-		lbTimeDistInfoDistance.setBackground(Color.WHITE);		
-		lbTimeDistInfoDistance.setText(" " + bundle.getString("frmMain.lbTimeDistInfoDistance.text") + "=0.000km ");
-		lbTimeDistInfoDistance.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		Utils.addComponent(jPanelTimeDistInfo, lbTimeDistInfoDistance, 
-				0, 0, 
-				1, 1, 
-				0, 0, 
-				0, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
-
-		// -- Elevation
-		lbTimeDistInfoElevation = new javax.swing.JLabel();
-		lbTimeDistInfoElevation.setOpaque(true);
-		lbTimeDistInfoElevation.setBackground(Color.WHITE);		
-		lbTimeDistInfoElevation.setText(" " + bundle.getString("frmMain.lbTimeDistInfoElevation.text") + "=0m ");
-		lbTimeDistInfoElevation.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		Utils.addComponent(jPanelTimeDistInfo, lbTimeDistInfoElevation, 
-				1, 0, 
-				1, 1, 
-				0, 0, 
-				0, 0, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH);
-		
-		// -- Time
-		lbTimeDistInfoTime = new javax.swing.JLabel();
-		lbTimeDistInfoTime.setOpaque(true);
-		lbTimeDistInfoTime.setBackground(Color.WHITE);		
-		lbTimeDistInfoTime.setText(" " + bundle.getString("frmMain.lbTimeDistInfoTime.text") + "=00:00:00 ");
-		lbTimeDistInfoTime.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		Utils.addComponent(jPanelTimeDistInfo, lbTimeDistInfoTime, 
-				2, 0, 
-				1, 1, 
-				0, 0, 
-				0, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
-
-		// -- Hour
-		lbTimeDistInfoHour = new javax.swing.JLabel();
-		lbTimeDistInfoHour.setOpaque(true);
-		lbTimeDistInfoHour.setBackground(Color.WHITE);		
-		lbTimeDistInfoHour.setText(" " + bundle.getString("frmMain.lbTimeDistInfoHour.text") + "=00:00:00 ");
-		lbTimeDistInfoHour.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		Utils.addComponent(jPanelTimeDistInfo, lbTimeDistInfoHour, 
-				3, 0, 
-				1, 1, 
-				0, 0, 
-				0, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
-		
-		// -- Slope
-		lbTimeDistSlope = new javax.swing.JLabel();
-		lbTimeDistSlope.setOpaque(true);
-		lbTimeDistSlope.setBackground(Color.WHITE);		
-		lbTimeDistSlope.setText(" " + bundle.getString("frmMain.lbTimeDistSlope.text") + "=0.0% ");
-		lbTimeDistSlope.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		Utils.addComponent(jPanelTimeDistInfo, lbTimeDistSlope, 
-				4, 0, 
-				1, 1, 
-				1, 0, 
-				0, 0, 0, 0, GridBagConstraints.WEST, GridBagConstraints.VERTICAL);
-		
-		
-		//-- Chart Time/Dist
-		ChartPanelTimeDist = new ChartPanel(chartTimeDist);
-	
-//		CrosshairOverlay crosshairOverlay = new CrosshairOverlay();
-//
-//		xCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
-//		xCrosshair.setLabelBackgroundPaint(Color.WHITE);
-//
-//		yCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
-//		yCrosshair.setLabelBackgroundPaint(Color.WHITE);
-//
-//		crosshairOverlay.addDomainCrosshair(xCrosshair);
-//		crosshairOverlay.addRangeCrosshair(yCrosshair);
-
-//		ChartPanelTimeDist.addOverlay(crosshairOverlay);
-		ChartPanelTimeDist.setBackground(new java.awt.Color(255, 0, 51));
-//		ChartPanelTimeDist.addChartMouseListener(new ChartMouseListener() {
-//			@Override
-//			public void chartMouseClicked(ChartMouseEvent event) {
-//
-//				ChartEntity chartentity = event.getEntity();
-//				if (chartentity instanceof XYItemEntity) {
-//					XYItemEntity e = (XYItemEntity) chartentity;
-//					XYDataset d = e.getDataset();
-//					int s = e.getSeriesIndex();
-//					int i = e.getItem();
-//					double x = d.getXValue(s, i);
-//					double y = d.getYValue(s, i);
-//					xCrosshair.setValue(x);
-//					yCrosshair.setValue(y);
-//					RefreshProfilInfo(i);
-//					//Refresh the position on the data grid
-//					TableMain.setRowSelectionInterval(i, i);
-//					Rectangle rect = TableMain.getCellRect(i, 0, true);
-//					TableMain.scrollRectToVisible(rect);
-//					//Refresh the marker position on the map
-//					RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
-//				}
-//			}
-//
-//			@Override
-//			public void chartMouseMoved(ChartMouseEvent event) {
-//			}
-//		});
-		jPanelTimeDist.add(ChartPanelTimeDist, java.awt.BorderLayout.CENTER);
 		
 		//-- Tab Analysis : Speed
-		jPanelSpeed = new javax.swing.JPanel();
-		jPanelSpeed.setLayout(new java.awt.BorderLayout());
+		jPanelSpeed = new JPanelAnalysisSpeed();
 		addTab(TabbedPaneAnalysis, jPanelSpeed, bundle.getString("frmMain.TabSpeed.tabTitle"),null);
 		
-		//-- Left - Toolbar
-		Create_Speed_Toolbar();
-		jPanelSpeed.add(ToolBarSpeed, java.awt.BorderLayout.WEST);
-		//-- Bottom - Info
-		jPanelSpeedInfo = new javax.swing.JPanel();
-		jPanelSpeedInfo.setOpaque(true);
-		jPanelSpeedInfo.setBackground(Color.WHITE);
-		jPanelSpeedInfo.setLayout(new GridBagLayout());
-		jPanelSpeed.add(jPanelSpeedInfo, java.awt.BorderLayout.SOUTH);
-
-		//-- Start speed/End speed/Speed/Distance
-
-		// -- Start speed
-		lbSpeedInfoStartSpeed = new javax.swing.JLabel();
-		lbSpeedInfoStartSpeed.setOpaque(true);
-		lbSpeedInfoStartSpeed.setBackground(Color.WHITE);		
-		lbSpeedInfoStartSpeed.setText(" " + bundle.getString("frmMain.lbSpeedInfoStartSpeed.text") + "=0km/h ");
-		lbSpeedInfoStartSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoStartSpeed, 
-				0, 0, 
-				1, 1, 
-				0, 0, 
-				0, 0, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH);
-		
-		// -- End speed
-		lbSpeedInfoEndSpeed = new javax.swing.JLabel();
-		lbSpeedInfoEndSpeed.setOpaque(true);
-		lbSpeedInfoEndSpeed.setBackground(Color.WHITE);		
-		lbSpeedInfoEndSpeed.setText(" " + bundle.getString("frmMain.lbSpeedInfoEndSpeed.text") + "=0km/h ");
-		lbSpeedInfoEndSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoEndSpeed, 
-				1, 0, 
-				1, 1, 
-				0, 0, 
-				0, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
-
-		// -- Speed
-		lbSpeedInfoSpeed = new javax.swing.JLabel();
-		lbSpeedInfoSpeed.setOpaque(true);
-		lbSpeedInfoSpeed.setBackground(Color.WHITE);		
-		lbSpeedInfoSpeed.setText(" " + bundle.getString("frmMain.lbSpeedInfoSpeed.text") + "=0km/h ");
-		lbSpeedInfoSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoSpeed, 
-				2, 0, 
-				1, 1, 
-				0, 0, 
-				0, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
-		
-		//-- Distance
-		lbSpeedInfoDistance = new javax.swing.JLabel();
-		lbSpeedInfoDistance.setOpaque(true);
-		lbSpeedInfoDistance.setBackground(Color.WHITE);		
-		lbSpeedInfoDistance.setText(" " + bundle.getString("frmMain.lbSpeedInfoDistance.text") + "=0.000km ");
-		lbSpeedInfoDistance.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoDistance, 
-				3, 0, 
-				1, 1, 
-				1, 0, 
-				0, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.VERTICAL);
-
-
-		//-- Chart Speed/Dist & Time/Dist
-		ChartPanelSpeed = new ChartPanel(chartTimeDist);
-	
-//		CrosshairOverlay crosshairOverlay = new CrosshairOverlay();
-//
-//		xCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
-//		xCrosshair.setLabelBackgroundPaint(Color.WHITE);
-//
-//		yCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
-//		yCrosshair.setLabelBackgroundPaint(Color.WHITE);
-//
-//		crosshairOverlay.addDomainCrosshair(xCrosshair);
-//		crosshairOverlay.addRangeCrosshair(yCrosshair);
-
-//		ChartPanelTimeDist.addOverlay(crosshairOverlay);
-		ChartPanelSpeed.setBackground(new java.awt.Color(255, 0, 51));
-//		ChartPanelTimeDist.addChartMouseListener(new ChartMouseListener() {
-//			@Override
-//			public void chartMouseClicked(ChartMouseEvent event) {
-//
-//				ChartEntity chartentity = event.getEntity();
-//				if (chartentity instanceof XYItemEntity) {
-//					XYItemEntity e = (XYItemEntity) chartentity;
-//					XYDataset d = e.getDataset();
-//					int s = e.getSeriesIndex();
-//					int i = e.getItem();
-//					double x = d.getXValue(s, i);
-//					double y = d.getYValue(s, i);
-//					xCrosshair.setValue(x);
-//					yCrosshair.setValue(y);
-//					RefreshProfilInfo(i);
-//					//Refresh the position on the data grid
-//					TableMain.setRowSelectionInterval(i, i);
-//					Rectangle rect = TableMain.getCellRect(i, 0, true);
-//					TableMain.scrollRectToVisible(rect);
-//					//Refresh the marker position on the map
-//					RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
-//				}
-//			}
-//
-//			@Override
-//			public void chartMouseMoved(ChartMouseEvent event) {
-//			}
-//		});
-		jPanelSpeed.add(ChartPanelSpeed, java.awt.BorderLayout.CENTER);
-		
 		//-- Tab Analysis : Speed/slope
-		jPanelSpeedSlope = new javax.swing.JPanel();
-		jPanelSpeedSlope.setLayout(new java.awt.BorderLayout());
+		jPanelSpeedSlope = new JPanelAnalysisSpeedSlope();
 		addTab(TabbedPaneAnalysis, jPanelSpeedSlope, bundle.getString("frmMain.TabSpeedSlope.tabTitle"),null);
-
-		//-- Left - Toolbar
-		Create_SpeedSlope_Toolbar();
-		jPanelSpeedSlope.add(ToolBarSpeedSlope, java.awt.BorderLayout.WEST);
-		//-- Bottom - Info
-		jPanelSpeedSlopeInfo = new javax.swing.JPanel();
-		jPanelSpeedSlopeInfo.setOpaque(true);
-		jPanelSpeedSlopeInfo.setBackground(Color.WHITE);
-		jPanelSpeedSlopeInfo.setLayout(new GridBagLayout());
-		jPanelSpeedSlope.add(jPanelSpeedSlopeInfo, java.awt.BorderLayout.SOUTH);
-
-		//-- Speed/Slope
-
-		// -- Speed
-		lbSpeedSlopeInfoSpeed = new javax.swing.JLabel();
-		lbSpeedSlopeInfoSpeed.setOpaque(true);
-		lbSpeedSlopeInfoSpeed.setBackground(Color.WHITE);		
-		lbSpeedSlopeInfoSpeed.setText(" " + bundle.getString("frmMain.lbSpeedSlopeInfoSpeed.text") + "=0km/h ");
-		lbSpeedSlopeInfoSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		Utils.addComponent(jPanelSpeedSlopeInfo, lbSpeedSlopeInfoSpeed, 
-				0, 0, 
-				1, 1, 
-				0, 0, 
-				0, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
-		
-		//-- Slope
-		lbSpeedSlopeInfoSlope = new javax.swing.JLabel();
-		lbSpeedSlopeInfoSlope.setOpaque(true);
-		lbSpeedSlopeInfoSlope.setBackground(Color.WHITE);		
-		lbSpeedSlopeInfoSlope.setText(" " + bundle.getString("frmMain.lbSpeedSlopeInfoSlope.text") + "=0.0% ");
-		lbSpeedSlopeInfoSlope.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		Utils.addComponent(jPanelSpeedSlopeInfo, lbSpeedSlopeInfoSlope, 
-				1, 0, 
-				1, 1, 
-				1, 0, 
-				0, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.VERTICAL);
-
-
-		//-- Chart Speed/Dist & Time/Dist
-		ChartPanelSpeedSlope = new ChartPanel(chartTimeDist);
-	
-//		CrosshairOverlay crosshairOverlay = new CrosshairOverlay();
-//
-//		xCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
-//		xCrosshair.setLabelBackgroundPaint(Color.WHITE);
-//
-//		yCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
-//		yCrosshair.setLabelBackgroundPaint(Color.WHITE);
-//
-//		crosshairOverlay.addDomainCrosshair(xCrosshair);
-//		crosshairOverlay.addRangeCrosshair(yCrosshair);
-
-//		ChartPanelTimeDist.addOverlay(crosshairOverlay);
-		ChartPanelSpeedSlope.setBackground(new java.awt.Color(255, 0, 51));
-//		ChartPanelTimeDist.addChartMouseListener(new ChartMouseListener() {
-//			@Override
-//			public void chartMouseClicked(ChartMouseEvent event) {
-//
-//				ChartEntity chartentity = event.getEntity();
-//				if (chartentity instanceof XYItemEntity) {
-//					XYItemEntity e = (XYItemEntity) chartentity;
-//					XYDataset d = e.getDataset();
-//					int s = e.getSeriesIndex();
-//					int i = e.getItem();
-//					double x = d.getXValue(s, i);
-//					double y = d.getYValue(s, i);
-//					xCrosshair.setValue(x);
-//					yCrosshair.setValue(y);
-//					RefreshProfilInfo(i);
-//					//Refresh the position on the data grid
-//					TableMain.setRowSelectionInterval(i, i);
-//					Rectangle rect = TableMain.getCellRect(i, 0, true);
-//					TableMain.scrollRectToVisible(rect);
-//					//Refresh the marker position on the map
-//					RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
-//				}
-//			}
-//
-//			@Override
-//			public void chartMouseMoved(ChartMouseEvent event) {
-//			}
-//		});
-		jPanelSpeedSlope.add(ChartPanelSpeedSlope, java.awt.BorderLayout.CENTER);
-
-		
-		
 		
 		
 		// -- Tab - Resume
@@ -3485,27 +3099,7 @@ public class frmMain extends javax.swing.JFrame {
 		TableResume.getTableHeader()
 				.setDefaultRenderer(new ResumeHeaderRenderer(TableResume.getTableHeader().getDefaultRenderer()));
 
-		TableResume.setDefaultRenderer(ResumeNumClass.class, new ResumeNumRenderer());
-		TableResume.setDefaultRenderer(ResumeNameClass.class, new ResumeNameRenderer());
-		TableResume.setDefaultRenderer(ResumeLineClass.class, new ResumeLineRenderer());
-		TableResume.setDefaultRenderer(ResumeElevationClass.class, new ResumeElevationRenderer());
-		TableResume.setDefaultRenderer(ResumeClimbPClass.class, new ResumeClimbPRenderer());
-		TableResume.setDefaultRenderer(ResumeClimbNClass.class, new ResumeClimbNRenderer());
-		TableResume.setDefaultRenderer(ResumeDistanceClass.class, new ResumeDistanceRenderer());
-		TableResume.setDefaultRenderer(ResumeTimeClass.class, new ResumeTimeRenderer());
-		TableResume.setDefaultRenderer(ResumeHourClass.class, new ResumeHourRenderer());
-		TableResume.setDefaultRenderer(ResumedtTimeClass.class, new ResumedtTimeRenderer());
-		TableResume.setDefaultRenderer(ResumeTimeLimitClass.class, new ResumeTimeLimitRenderer());
-		TableResume.setDefaultRenderer(ResumeStationTimeClass.class, new ResumeStationTimeRenderer());
-		TableResume.setDefaultRenderer(ResumedtDistanceClass.class, new ResumedtDistanceRenderer());
-		TableResume.setDefaultRenderer(ResumedtClimbPClass.class, new ResumedtClimbPRenderer());
-		TableResume.setDefaultRenderer(ResumedtClimbNClass.class, new ResumedtClimbNRenderer());
-		TableResume.setDefaultRenderer(ResumeSpeedPClass.class, new ResumeSpeedPRenderer());
-		TableResume.setDefaultRenderer(ResumeSpeedNClass.class, new ResumeSpeedNRenderer());
-		TableResume.setDefaultRenderer(ResumeAvgSlopePClass.class, new ResumeAvgSlopePRenderer());
-		TableResume.setDefaultRenderer(ResumeAvgSlopeMClass.class, new ResumeAvgSlopeMRenderer());
-		TableResume.setDefaultRenderer(ResumeAvgSpeedClass.class, new ResumeAvgSpeedRenderer());
-		TableResume.setDefaultRenderer(ResumeCommentClass.class, new ResumeCommentRenderer());
+		TableResume.setDefaultRenderer(ResumeClass.class, new ResumeRenderer());
 
 		TableResume.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -3590,48 +3184,7 @@ public class frmMain extends javax.swing.JFrame {
 		ToolBarTimeDist.add(btTimeDistSave);
 	}
 
-
-	private void Create_Speed_Toolbar() {
-		ToolBarSpeed = new javax.swing.JToolBar();
-		ToolBarSpeed.setOrientation(javax.swing.SwingConstants.VERTICAL);
-		ToolBarSpeed.setFloatable(false);
-		ToolBarSpeed.setRollover(true);
-		
-		// -- Save
-		// --------------------------------------------------------------
-		btSpeedSave = new javax.swing.JButton();
-		btSpeedSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/save.png")));
-		btSpeedSave.setToolTipText(bundle.getString("frmMain.btSpeedSave.toolTipText"));
-		btSpeedSave.setFocusable(false);
-		btSpeedSave.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//TODO
-			}
-		});
-		ToolBarSpeed.add(btSpeedSave);
-	}
 	
-	private void Create_SpeedSlope_Toolbar() {
-		ToolBarSpeedSlope = new javax.swing.JToolBar();
-		ToolBarSpeedSlope.setOrientation(javax.swing.SwingConstants.VERTICAL);
-		ToolBarSpeedSlope.setFloatable(false);
-		ToolBarSpeedSlope.setRollover(true);
-
-		// -- Save
-		// --------------------------------------------------------------
-		btSpeedSlopeSave = new javax.swing.JButton();
-		btSpeedSlopeSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/save.png")));
-		btSpeedSlopeSave.setToolTipText(bundle.getString("frmMain.btSpeedSlopeSave.toolTipText"));
-		btSpeedSlopeSave.setFocusable(false);
-		btSpeedSlopeSave.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//TODO
-			}
-		});
-		ToolBarSpeedSlope.add(btSpeedSlopeSave);
-	}
-
-
 	private void TableResumeKeyReleased(KeyEvent evt) {
 		int row = TableResume.getSelectedRow();
 		int col = TableResume.getSelectedColumn();
@@ -3696,33 +3249,33 @@ public class frmMain extends javax.swing.JFrame {
 		return chart;
 	}
 
-	private JFreeChart CreateChartTimeDist(XYDataset dataset) {
-		JFreeChart chart = ChartFactory.createXYAreaChart("", 
-				"Distance", // x axis label
-				"Elevation", // y axis label
-				dataset, // data
-				PlotOrientation.VERTICAL, false, // include legend
-				true, // tooltips
-				false // urls
-		);
-
-		chart.setBackgroundPaint(Color.white); // Panel background color
-		XYPlot plot = chart.getXYPlot();
-		plot.setBackgroundPaint(Color.white);
-		plot.setDomainGridlinePaint(Color.gray);
-		plot.setRangeGridlinePaint(Color.gray);
-
-		XYAreaRenderer renderer = new XYAreaRenderer();
-		renderer.setSeriesPaint(0, new Color(0x99, 0xff, 0x00));
-		renderer.setOutline(true);
-		renderer.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
-		plot.setRenderer(renderer);
-
-		// NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-		// rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-
-		return chart;
-	}
+//	private JFreeChart CreateChartTimeDist(XYDataset dataset) {
+//		JFreeChart chart = ChartFactory.createXYAreaChart("", 
+//				"Distance", // x axis label
+//				"Elevation", // y axis label
+//				dataset, // data
+//				PlotOrientation.VERTICAL, false, // include legend
+//				true, // tooltips
+//				false // urls
+//		);
+//
+//		chart.setBackgroundPaint(Color.white); // Panel background color
+//		XYPlot plot = chart.getXYPlot();
+//		plot.setBackgroundPaint(Color.white);
+//		plot.setDomainGridlinePaint(Color.gray);
+//		plot.setRangeGridlinePaint(Color.gray);
+//
+//		XYAreaRenderer renderer = new XYAreaRenderer();
+//		renderer.setSeriesPaint(0, new Color(0x99, 0xff, 0x00));
+//		renderer.setOutline(true);
+//		renderer.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
+//		plot.setRenderer(renderer);
+//
+//		// NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+//		// rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+//
+//		return chart;
+//	}
 	
 	/**
 	 * Go to the next tag
@@ -3849,49 +3402,49 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 
-	/**
-	 * Update the Time/Distance chart
-	 */
-	private void RefreshTimeDistanceChart() {
-		if (Track.data.isEmpty())
-			return;
-
-		// -- Clear all series
-		if (datasetTimeDist.getSeriesCount() > 0)
-			datasetTimeDist.removeAllSeries();
-
-		XYPlot plot = chartTimeDist.getXYPlot();
-		plot.clearDomainMarkers();
-		
-		// -- Populate the serie
-		XYSeries serie1 = new XYSeries("Elevation/Distance");
-		int cmpt=1;
-		for (CgData r : Track.data) {
-			double x=r.getTotal(Settings.Unit) / 1000;
-			double y=r.getElevation(Settings.Unit);
-			serie1.add(x, y);
-
-//			if ( ((r.getTag() & CgConst.TAG_MARK) !=0) & showProfilMarker)
-//			{
-//				Marker m = new ValueMarker(x);
-//			    m.setPaint(Color.GRAY);
-//		        m.setLabelFont(new Font("SansSerif", Font.PLAIN, 10));
-//			    m.setLabel(String.valueOf(cmpt));
-//			    m.setLabelOffset(new RectangleInsets(5, 0, 0, 2));
-//			    m.setLabelAnchor(RectangleAnchor.TOP_RIGHT);
-//			    m.setLabelTextAnchor(TextAnchor.TOP_LEFT);
-//			    plot.addDomainMarker(m);
-//				cmpt++;
-//			}
-		}
-		datasetTimeDist.addSeries(serie1);
-
-		if (Track.getMaxElev(Settings.Unit) > Track.getMinElev(Settings.Unit)) {
-			//XYPlot plot = chart.getXYPlot();
-			ValueAxis axisY = plot.getRangeAxis();
-			axisY.setRange(Math.floor(Track.getMinElev(Settings.Unit) / 100.0) * 100.0, Math.ceil(Track.getMaxElev(Settings.Unit) / 100.0) * 100.0);
-		}
-	}
+//	/**
+//	 * Update the Time/Distance chart
+//	 */
+//	private void RefreshTimeDistanceChart() {
+//		if (Track.data.isEmpty())
+//			return;
+//
+//		// -- Clear all series
+//		if (datasetTimeDist.getSeriesCount() > 0)
+//			datasetTimeDist.removeAllSeries();
+//
+//		XYPlot plot = chartTimeDist.getXYPlot();
+//		plot.clearDomainMarkers();
+//		
+//		// -- Populate the serie
+//		XYSeries serie1 = new XYSeries("Elevation/Distance");
+//		int cmpt=1;
+//		for (CgData r : Track.data) {
+//			double x=r.getTotal(Settings.Unit) / 1000;
+//			double y=r.getElevation(Settings.Unit);
+//			serie1.add(x, y);
+//
+////			if ( ((r.getTag() & CgConst.TAG_MARK) !=0) & showProfilMarker)
+////			{
+////				Marker m = new ValueMarker(x);
+////			    m.setPaint(Color.GRAY);
+////		        m.setLabelFont(new Font("SansSerif", Font.PLAIN, 10));
+////			    m.setLabel(String.valueOf(cmpt));
+////			    m.setLabelOffset(new RectangleInsets(5, 0, 0, 2));
+////			    m.setLabelAnchor(RectangleAnchor.TOP_RIGHT);
+////			    m.setLabelTextAnchor(TextAnchor.TOP_LEFT);
+////			    plot.addDomainMarker(m);
+////				cmpt++;
+////			}
+//		}
+//		datasetTimeDist.addSeries(serie1);
+//
+//		if (Track.getMaxElev(Settings.Unit) > Track.getMinElev(Settings.Unit)) {
+//			//XYPlot plot = chart.getXYPlot();
+//			ValueAxis axisY = plot.getRangeAxis();
+//			axisY.setRange(Math.floor(Track.getMinElev(Settings.Unit) / 100.0) * 100.0, Math.ceil(Track.getMaxElev(Settings.Unit) / 100.0) * 100.0);
+//		}
+//	}
 
 	
 	
@@ -3921,7 +3474,8 @@ public class frmMain extends javax.swing.JFrame {
 	        		RefreshStatusbar(Track);
 	        		RefreshTitle();
 	        		RefreshProfilChart();
-	        		RefreshTimeDistanceChart();
+	        		jPanelTimeDist.Refresh(Track, Settings);
+//	        		RefreshTimeDistanceChart();
 	        		RefreshTrack(Track,true);
 	        		RefreshResume();
 	        		RefreshStat(false);
@@ -3980,7 +3534,6 @@ public class frmMain extends javax.swing.JFrame {
 		// StatusBar.Refresh();
 
 		int i = 0;
-		int j = -1;
 		int k = 0;
 		int old = 0;
 		CgData OldData;
@@ -3998,7 +3551,6 @@ public class frmMain extends javax.swing.JFrame {
 
 		for (CgData src : Track.data) {
 			if ((src.getTag() & 32) != 0) {
-				j++;
 				k++;
 				CgResume dst = new CgResume();
 				// ResGrid.Rows.Add();
@@ -4129,7 +3681,8 @@ public class frmMain extends javax.swing.JFrame {
 
 		RefreshMruGPX();
 		RefreshProfilChart();
-		RefreshTimeDistanceChart();
+		jPanelTimeDist.Refresh(Track, Settings);
+//		RefreshTimeDistanceChart();
 		// -- Refresh the form title
 		RefreshTitle();
 
@@ -4141,7 +3694,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * Save the track in GPX format
 	 */
 	private void SaveGPX() {
-		String s, ext;
+		String s;
 
 		if (Track.data.isEmpty())
 			return;
@@ -4206,7 +3759,8 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshResume();
 		// -- Refresh profil tab
 		RefreshProfilChart();
-		RefreshTimeDistanceChart();
+		jPanelTimeDist.Refresh(Track, Settings);
+//		RefreshTimeDistanceChart();
 		// -- Refresh the form title 
 		RefreshTitle();
 		// -- Refresh statistic 
@@ -4221,7 +3775,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * Save the track in CGX format
 	 */
 	private void SaveCGX() {
-		String s, ext;
+		String s;
 
 		if (Track.data.isEmpty())
 			return;
@@ -4250,7 +3804,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * Save the statistics in TXT format
 	 */
 	private void SaveStat() {
-		String s, ext;
+		String s;
 
 		if (Track.data.isEmpty())
 			return;
@@ -4280,7 +3834,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * Export tags as waypoints
 	 */
 	private void ExportTagsAsWaypoints() {
-		String s, ext;
+		String s;
 
 		if (Track.data.isEmpty())
 			return;

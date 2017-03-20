@@ -22,7 +22,6 @@ import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 
 import javax.swing.table.AbstractTableModel;
-import org.joda.time.DateTime;
 
 /**
  *
@@ -30,7 +29,6 @@ import org.joda.time.DateTime;
  */
 public class TrackDataModel extends AbstractTableModel {
     
-//	private final String [] header = {"N°", "Lat", "Lon", "Elev", "Tag", "Dist (m)", "Total (km)", "Diff", "Coeff", "Récup", "Temps", "BH", "Heure", "Ravito", "Nom", "Commentaire"};
     private final String header[];
     private TrackData track;
     private CgSettings settings;
@@ -83,54 +81,26 @@ public class TrackDataModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
-            case 0: 
-                //N°
-                return track.data.get(rowIndex).getNum();
-            case 1: 
-                //Lat
+            case 0: //N°
+            case 1: //Lat
+            case 2: //Lon
+            case 3: //Elev
+            case 4: //Tag
+            case 5: //Dist (m)
+            case 6: //Total (km)
+            case 7: //Diff
+            case 8: //Coeff
+            case 9: //Recovery
+            case 10: //Time
+            case 11: //Timelimit
+            case 13: //Station
+            case 14: //Name
+            case 15: //Comment
                 return track.data.get(rowIndex);
-            case 2: 
-                //Lon
-                return track.data.get(rowIndex);
-            case 3: 
-                //Elev
-                return track.data.get(rowIndex);
-            case 4: 
-                //Tag
-                return track.data.get(rowIndex);
-            case 5: 
-                //Dist (m)
-                return track.data.get(rowIndex);
-            case 6: 
-                //Total (km)
-                return track.data.get(rowIndex);
-            case 7: 
-                //Diff
-                return track.data.get(rowIndex);
-            case 8: 
-                //Coeff
-                return track.data.get(rowIndex);
-            case 9: 
-                //Récup
-                return track.data.get(rowIndex);
-            case 10: 
-                //Temps
-                return track.data.get(rowIndex);
-            case 11: 
-                //Timelimit
-                return track.data.get(rowIndex);
-            case 12: 
-                //Hour
-                return track; //track.ClassHour.track;
-            case 13: 
-                //Station
-                return track.data.get(rowIndex); //track.ClassStation.track.data.get(rowIndex);
-            case 14: 
-                //Nom
-                return track.data.get(rowIndex).getName();
-            case 15: 
-                //Commentaire
-                return track.data.get(rowIndex).getComment();
+            case 12: //Hour
+            	//This is normal to return the complete track object
+            	//because we need several info for the rendering
+                return track; 
             default:
                 throw new IllegalArgumentException();
         }
@@ -138,59 +108,7 @@ public class TrackDataModel extends AbstractTableModel {
     
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0: 
-                //N°
-                return Double.class;
-            case 1: 
-                //Lat
-                return LatClass.class;
-            case 2: 
-                //Lon
-                return LonClass.class;
-            case 3: 
-                //Elev
-                return ElevationClass.class;
-            case 4: 
-                //Tag
-                return TagClass.class;
-            case 5: 
-                //Dist (m)
-                return DistClass.class;
-            case 6: 
-                //Total (km)
-                return TotalClass.class;
-            case 7: 
-                //Diff
-                return DiffClass.class;
-            case 8: 
-                //Coeff
-                return CoeffClass.class;
-            case 9: 
-                //Récup
-                return RecupClass.class;
-            case 10: 
-                //Temps
-                return TimeClass.class;
-            case 11: 
-                //Time limit
-                return TimelimitClass.class;
-            case 12: 
-                //Hour
-                return HourClass.class;
-            case 13: 
-                //Station
-                return StationClass.class;
-            case 14: 
-                //Nom
-                return String.class;
-            case 15: 
-                //Commentaire
-                return String.class;
-            default:
-                return Object.class;
-
-        }
+    	return TrackDataClass.class;
     }
     
 

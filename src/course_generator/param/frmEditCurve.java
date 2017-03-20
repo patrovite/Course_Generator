@@ -335,11 +335,13 @@ public class frmEditCurve extends javax.swing.JDialog {
 		TablePoints.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 //				TableMainMouseClicked(evt);
+				//TODO
 			}
 		});
 		TablePoints.addKeyListener(new java.awt.event.KeyAdapter() {
 			public void keyReleased(java.awt.event.KeyEvent evt) {
 //				TableMainKeyReleased(evt);
+				//TODO
 			}
 		});
 		
