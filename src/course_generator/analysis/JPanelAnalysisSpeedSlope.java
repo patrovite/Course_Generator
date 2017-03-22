@@ -1,3 +1,5 @@
+
+//private void RefreshAnalyseSpeedSlope()
 package course_generator.analysis;
 
 import java.awt.BasicStroke;
@@ -233,6 +235,4 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 			axisY.setRange(Math.floor(track.getMinElev(settings.Unit) / 100.0) * 100.0, Math.ceil(track.getMaxElev(settings.Unit) / 100.0) * 100.0);
 		}
 	}
-
-	
 }

@@ -190,8 +190,6 @@ public class frmMain extends javax.swing.JFrame {
 	private int old_row_resume = -1;
 	private JFreeChart chartProfil = null;
 	private XYSeriesCollection datasetProfil = null;
-//	private JFreeChart chartTimeDist = null;
-//	private XYSeriesCollection datasetTimeDist = null;
 	private java.util.ResourceBundle bundle = null;
 	private int cmptInternetConnexion = 0;
 	private int cmptMinute = 0;
@@ -1284,6 +1282,7 @@ public class frmMain extends javax.swing.JFrame {
 					Track.Invert();
 					RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
+					jPanelSpeed.Refresh(Track, Settings);
 //					RefreshTimeDistanceChart();
 					RefreshStatusbar(Track);
 					RefreshTableMain();
@@ -1401,6 +1400,7 @@ public class frmMain extends javax.swing.JFrame {
 				RefreshResume();
 				RefreshProfilChart();
 				jPanelTimeDist.Refresh(Track, Settings);
+				jPanelSpeed.Refresh(Track, Settings);
 //				RefreshTimeDistanceChart();
 				RefreshStat(true);
 				
@@ -1501,6 +1501,7 @@ public class frmMain extends javax.swing.JFrame {
 	        		RefreshTitle();
 	        		RefreshProfilChart();
 	        		jPanelTimeDist.Refresh(Track, Settings);
+	        		jPanelSpeed.Refresh(Track, Settings);
 //	        		RefreshTimeDistanceChart();
 	        		RefreshTrack(Track,true);
 	        		RefreshResume();
@@ -1998,6 +1999,7 @@ public class frmMain extends javax.swing.JFrame {
 					RefreshTableMain();
 					RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
+					jPanelSpeed.Refresh(Track, Settings);
 //					RefreshTimeDistanceChart();
 					RefreshStatusbar(Track);
 				}
@@ -2060,6 +2062,7 @@ public class frmMain extends javax.swing.JFrame {
 					RefreshTableMain();
 					RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
+					jPanelSpeed.Refresh(Track, Settings);
 //					RefreshTimeDistanceChart();
 					RefreshStatusbar(Track);
 				}
@@ -2111,6 +2114,7 @@ public class frmMain extends javax.swing.JFrame {
 	        RefreshTableMain();
 	        RefreshProfilChart();
 	        jPanelTimeDist.Refresh(Track, Settings);
+	        jPanelSpeed.Refresh(Track, Settings);
 //	        RefreshTimeDistanceChart();
 			RefreshTitle();
 			RefreshStatusbar(Track);
@@ -3063,7 +3067,7 @@ public class frmMain extends javax.swing.JFrame {
 				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/search.png")));
 
 		//-- Create the tab bar
-		TabbedPaneAnalysis = new javax.swing.JTabbedPane();
+		TabbedPaneAnalysis = new javax.swing.JTabbedPane(JTabbedPane.LEFT);
 		jPanelAnalyze.add(TabbedPaneAnalysis,java.awt.BorderLayout.CENTER);
 		
 		//-- Tab Analysis : Time/Dist
@@ -3475,6 +3479,7 @@ public class frmMain extends javax.swing.JFrame {
 	        		RefreshTitle();
 	        		RefreshProfilChart();
 	        		jPanelTimeDist.Refresh(Track, Settings);
+	        		jPanelSpeed.Refresh(Track, Settings);
 //	        		RefreshTimeDistanceChart();
 	        		RefreshTrack(Track,true);
 	        		RefreshResume();
@@ -3682,6 +3687,7 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshMruGPX();
 		RefreshProfilChart();
 		jPanelTimeDist.Refresh(Track, Settings);
+		jPanelSpeed.Refresh(Track, Settings);
 //		RefreshTimeDistanceChart();
 		// -- Refresh the form title
 		RefreshTitle();
@@ -3760,6 +3766,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Refresh profil tab
 		RefreshProfilChart();
 		jPanelTimeDist.Refresh(Track, Settings);
+		jPanelSpeed.Refresh(Track, Settings);
 //		RefreshTimeDistanceChart();
 		// -- Refresh the form title 
 		RefreshTitle();
