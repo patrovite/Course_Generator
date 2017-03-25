@@ -316,6 +316,9 @@ public class SaxConfigHandler extends DefaultHandler{
             else if (qName.equalsIgnoreCase("MRBSPLITPOSITION")) {
                 Settings.MRB_SplitPosition = ManageInt(220, ERR_READ_INT);
             }
+            else if (qName.equalsIgnoreCase("MAP")) {
+                Settings.map = ManageInt(0, ERR_READ_INT);
+            }
 
             else if (qName.equalsIgnoreCase("CONFIG")) {
                 level--;

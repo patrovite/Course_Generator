@@ -1,10 +1,27 @@
+/*
+ * Course Generator
+ * Copyright (C) 2016 Pierre Delore
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package course_generator.analysis;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
@@ -27,11 +44,8 @@ import org.jfree.chart.plot.Crosshair;
 import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYAreaRenderer;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -204,10 +218,11 @@ public class JPanelAnalysisTimeDist extends JPanel {
 
 
 	private JFreeChart CreateChart(XYDataset dataset1, XYDataset dataset2) {
-		JFreeChart chart = ChartFactory.createXYAreaChart("", "Distance", // x
-																			// axis
-																			// label
-				"Elevation", // y axis label
+		JFreeChart chart = ChartFactory.createXYAreaChart("", 
+				// x  axis label
+				bundle.getString("JPanelAnalysisTimeDist.labelX"), //"Distance" 
+				// y axis label
+				bundle.getString("JPanelAnalysisTimeDist.labelY1"), //"Elevation" 
 				dataset1, // data
 				PlotOrientation.VERTICAL, false, // include legend
 				true, // tooltips
@@ -230,7 +245,7 @@ public class JPanelAnalysisTimeDist extends JPanel {
 		renderer.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
 		plot.setRenderer(0, renderer);
 
-		NumberAxis rangeAxis2 = new NumberAxis("Time");
+		NumberAxis rangeAxis2 = new NumberAxis(bundle.getString("JPanelAnalysisTimeDist.labelY2")); //"Time"
 		plot.setRangeAxis(1, rangeAxis2);
 		plot.setDataset(1, dataset2);
 		plot.setRangeAxis(1, rangeAxis2);

@@ -26,19 +26,14 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.InputMap;
-import javax.swing.InputVerifier;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import course_generator.utils.CgConst;
@@ -97,6 +92,8 @@ public class frmSettings extends javax.swing.JDialog {
 		if (ok) {
 			// Copy fields
 
+			String old_language=s.Language;
+			
 			// -- Language
 			switch (cbLanguage.getSelectedIndex()) {
 			case 0: // Default
@@ -112,6 +109,9 @@ public class frmSettings extends javax.swing.JDialog {
 				s.Language = "";
 			}
 
+			if (!old_language.equalsIgnoreCase(s.Language))
+				JOptionPane.showMessageDialog(this, bundle.getString("frmSettings.MsgRestart"));
+			
 			// -- Units
 			switch (cbUnit.getSelectedIndex()) {
 			case 0: // Kilometer / Feet

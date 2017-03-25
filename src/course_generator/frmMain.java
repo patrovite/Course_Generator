@@ -48,6 +48,7 @@
  * - Dialog to display the tile directory size and a button to empty the directory
  * - Add a library to log all the message
  * - Statistic: Add the highest ascend and descend
+ * - Crosshair on curve editor => it select the line on the grid 
  * 
  * Notes:
  * http://stackoverflow.com/questions/10657239/jmapviewer-add-tiles-for-offline-view
@@ -131,6 +132,7 @@ import org.jfree.ui.TextAnchor;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.OsmFileCacheTileLoader;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
+import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
 
 import course_generator.TrackData.CalcAvrSlopeResult;
 import course_generator.TrackData.CalcAvrSpeedResult;
@@ -140,6 +142,7 @@ import course_generator.analysis.JPanelAnalysisSpeedSlope;
 import course_generator.analysis.JPanelAnalysisTimeDist;
 import course_generator.dialogs.FrmExportWaypoints;
 import course_generator.dialogs.FrmImportChoice;
+import course_generator.dialogs.FrmSelectMap;
 import course_generator.dialogs.frmEditPosition;
 import course_generator.dialogs.frmFillCoeff;
 import course_generator.dialogs.frmFillCoeff.EditCoeffResult;
@@ -155,6 +158,7 @@ import course_generator.resume_table.ResumeModel;
 import course_generator.resume_table.ResumeRenderer;
 import course_generator.settings.CgSettings;
 import course_generator.settings.frmSettings;
+import course_generator.tiles.openstreetmap.OpenStreetMap;
 import course_generator.tiles.opentopomap.OpenTopoMap;
 import course_generator.trackdata_table.MainHeaderRenderer;
 import course_generator.trackdata_table.TrackDataClass;
@@ -173,7 +177,7 @@ import course_generator.utils.Utils.CalcLineResult;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.ALPHA 11";
+	private final String Version = "4.0.0.ALPHA 12";
 
 	public static boolean inEclipse=false;
 	public static CgLog log=null;
@@ -204,6 +208,7 @@ public class frmMain extends javax.swing.JFrame {
 	/**
 	 * Creates new form frmMain
 	 */
+	OsmFileCacheTileLoader offlineTileCache;
 	DefaultTableModel model;
 	private JMenuItem mnuSaveCGX;
 	private JMenuItem mnuSaveGPX;
@@ -250,13 +255,9 @@ public class frmMain extends javax.swing.JFrame {
 	private JButton btGotoPreviousMark;
 	private JButton btGotoNextMark;
 	private JButton btDisplaySSCurves;
-	private JButton btTirednessSettings;
 	private JButton btTrackSettings;
 	private JButton btCalculateTrackTime;
 	private JButton btProfilMarker;
-	private JButton btProfilZoomX;
-	private JButton btProfilZoomY;
-	private JButton btProfilSettings;
 	private JLabel lbProfilDistance;
 	private JLabel lbProfilTime;
 	private JLabel lbProfilSlope;
@@ -319,41 +320,9 @@ public class frmMain extends javax.swing.JFrame {
 	private JPanelAnalysisSpeedSlope jPanelSpeedSlope;
 	private JToolBar ToolBarTimeDist;
 	private JButton btTimeDistSave;
-	private JPanel jPanelTimeDistInfo;
-	private JLabel lbTimeDistInfoDistance;
-	private JLabel lbTimeDistInfoElevation;
-	private JLabel lbTimeDistInfoTime;
-	private JLabel lbTimeDistInfoHour;
-	private JLabel lbTimeDistSlope;
-	private ChartPanel ChartPanelTimeDist;
+	private JButton btMapSelect;
 
-	private JToolBar ToolBarSpeed;
-
-	private JButton btSpeedSave;
-
-	private JPanel jPanelSpeedInfo;
-
-	private JLabel lbSpeedInfoDistance;
-
-	private JLabel lbSpeedInfoStartSpeed;
-
-	private ChartPanel ChartPanelSpeed;
-
-	private JLabel lbSpeedInfoEndSpeed;
-
-	private JLabel lbSpeedInfoSpeed;
-
-	private JToolBar ToolBarSpeedSlope;
-
-	private JButton btSpeedSlopeSave;
-
-	private JPanel jPanelSpeedSlopeInfo;
-
-	private JLabel lbSpeedSlopeInfoSpeed;
-
-	private JLabel lbSpeedSlopeInfoSlope;
-
-	private ChartPanel ChartPanelSpeedSlope;
+	private JButton btMapOfflineSelection;
 	
 
 	// -- Called every second
@@ -485,7 +454,10 @@ public class frmMain extends javax.swing.JFrame {
 		SplitPaneMain.setDividerLocation(0);
 		
 		// -- Configure the tile source for the map
-		MapViewer.setTileSource(new OpenTopoMap());
+//		MapViewer.setTileSource(new OpenTopoMap());
+//		MapViewer.setTileSource(new OpenStreetMap()); //TODO Still ok?
+		RefreshMapType();
+		
 		
 		// -- Set the counter in order near the end in order to start the
 		// connection test
@@ -1283,6 +1255,7 @@ public class frmMain extends javax.swing.JFrame {
 					RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
 					jPanelSpeed.Refresh(Track, Settings);
+					jPanelSpeedSlope.Refresh(Track, Settings);
 //					RefreshTimeDistanceChart();
 					RefreshStatusbar(Track);
 					RefreshTableMain();
@@ -1401,6 +1374,7 @@ public class frmMain extends javax.swing.JFrame {
 				RefreshProfilChart();
 				jPanelTimeDist.Refresh(Track, Settings);
 				jPanelSpeed.Refresh(Track, Settings);
+				jPanelSpeedSlope.Refresh(Track, Settings);
 //				RefreshTimeDistanceChart();
 				RefreshStat(true);
 				
@@ -1502,6 +1476,7 @@ public class frmMain extends javax.swing.JFrame {
 	        		RefreshProfilChart();
 	        		jPanelTimeDist.Refresh(Track, Settings);
 	        		jPanelSpeed.Refresh(Track, Settings);
+	        		jPanelSpeedSlope.Refresh(Track, Settings);
 //	        		RefreshTimeDistanceChart();
 	        		RefreshTrack(Track,true);
 	        		RefreshResume();
@@ -2000,6 +1975,7 @@ public class frmMain extends javax.swing.JFrame {
 					RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
 					jPanelSpeed.Refresh(Track, Settings);
+					jPanelSpeedSlope.Refresh(Track, Settings);
 //					RefreshTimeDistanceChart();
 					RefreshStatusbar(Track);
 				}
@@ -2063,6 +2039,7 @@ public class frmMain extends javax.swing.JFrame {
 					RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
 					jPanelSpeed.Refresh(Track, Settings);
+					jPanelSpeedSlope.Refresh(Track, Settings);
 //					RefreshTimeDistanceChart();
 					RefreshStatusbar(Track);
 				}
@@ -2115,6 +2092,7 @@ public class frmMain extends javax.swing.JFrame {
 	        RefreshProfilChart();
 	        jPanelTimeDist.Refresh(Track, Settings);
 	        jPanelSpeed.Refresh(Track, Settings);
+	        jPanelSpeedSlope.Refresh(Track, Settings);
 //	        RefreshTimeDistanceChart();
 			RefreshTitle();
 			RefreshStatusbar(Track);
@@ -2465,7 +2443,54 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		jToolBarMapViewer.add(btMapDrink);
+		
+		// -- Separator
+		jToolBarMapViewer.add(new javax.swing.JToolBar.Separator());
+
+		// -- Select the type of map
+		btMapSelect = new javax.swing.JButton();
+		btMapSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/select_map.png")));
+		btMapSelect.setToolTipText(bundle.getString("frmMain.btMapSelect.toolTipText"));
+		btMapSelect.setFocusable(false);
+		btMapSelect.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				SelectMap();
+			}
+		});
+		jToolBarMapViewer.add(btMapSelect);
+		
 	}
+
+
+	private void SelectMap() {
+		FrmSelectMap dlg = new FrmSelectMap();
+		int ret=dlg.showDialog(Settings.map);
+		if (ret>=0) {
+			Settings.map=ret;
+			RefreshMapType();
+		}
+	}
+
+
+
+
+	private void RefreshMapType() {
+		switch (Settings.map) {
+			case 0 : 
+				MapViewer.setTileSource(new OpenStreetMap());
+				break;
+			case 1 :
+				MapViewer.setTileSource(new OpenTopoMap());
+				break;
+			case 2 :
+				MapViewer.setTileSource(new BingAerialTileSource());
+				break;
+			default :
+				MapViewer.setTileSource(new OpenStreetMap());
+		}
+	}
+
+
 
 
 	private void MapTrackDifficulty(double diff) {
@@ -3135,18 +3160,18 @@ public class frmMain extends javax.swing.JFrame {
 		jPanelMap.add(jToolBarMapViewer, java.awt.BorderLayout.WEST);
 
 		MapViewer = new org.openstreetmap.gui.jmapviewer.JMapViewer();
-		OsmFileCacheTileLoader ofctl;
+		//-- Tile cache definition
 		try {
-		    File cacheDir = new File(DataDir + "/"+CgConst.CG_DIR, "OpenStreetMapTileCache");
-		    CgLog.info("Config Directory = " + DataDir + "/"+CgConst.CG_DIR + ", cacheDir=" + cacheDir);
-		    cacheDir.mkdirs();
-		    ofctl = new OsmFileCacheTileLoader(MapViewer, cacheDir);
-		    MapViewer.setTileLoader(ofctl);
+			File cacheDir = new File(DataDir + "/"+CgConst.CG_DIR, "OpenStreetMapTileCache");
+			CgLog.info("Config Directory = " + DataDir + "/"+CgConst.CG_DIR + ", cacheDir=" + cacheDir);
+			cacheDir.mkdirs();
+			offlineTileCache = new OsmFileCacheTileLoader(MapViewer, cacheDir);
+			MapViewer.setTileLoader(offlineTileCache);
 		} catch (IOException ex) {
 			CgLog.error("Exception creating OsmFileCacheTileLoader");
 			ex.printStackTrace();
 		}
-		
+
 		MapViewer.setMapMarkerVisible(true);
 		MapViewer.setScrollWrapEnabled(true);
 		MapViewer.setZoomButtonStyle(org.openstreetmap.gui.jmapviewer.JMapViewer.ZOOM_BUTTON_STYLE.VERTICAL);
@@ -3166,6 +3191,7 @@ public class frmMain extends javax.swing.JFrame {
 		// ---------------------------------------------------
 		pack();
 	}
+
 
 
 	private void Create_TimeDist_Toolbar() {
@@ -3480,6 +3506,7 @@ public class frmMain extends javax.swing.JFrame {
 	        		RefreshProfilChart();
 	        		jPanelTimeDist.Refresh(Track, Settings);
 	        		jPanelSpeed.Refresh(Track, Settings);
+	        		jPanelSpeedSlope.Refresh(Track, Settings);
 //	        		RefreshTimeDistanceChart();
 	        		RefreshTrack(Track,true);
 	        		RefreshResume();
@@ -3688,6 +3715,7 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshProfilChart();
 		jPanelTimeDist.Refresh(Track, Settings);
 		jPanelSpeed.Refresh(Track, Settings);
+		jPanelSpeedSlope.Refresh(Track, Settings);
 //		RefreshTimeDistanceChart();
 		// -- Refresh the form title
 		RefreshTitle();
@@ -3767,6 +3795,7 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshProfilChart();
 		jPanelTimeDist.Refresh(Track, Settings);
 		jPanelSpeed.Refresh(Track, Settings);
+		jPanelSpeedSlope.Refresh(Track, Settings);
 //		RefreshTimeDistanceChart();
 		// -- Refresh the form title 
 		RefreshTitle();
@@ -3935,7 +3964,8 @@ public class frmMain extends javax.swing.JFrame {
 		// MapViewer.setTileSource(new Thunderforest_Landscape());
 		
 		//MapViewer.setTileSource(new Thunderforest_Outdoors());
-		MapViewer.setTileSource(new OpenTopoMap());
+		RefreshMapType();
+		//MapViewer.setTileSource(new OpenTopoMap());
 		
 		// MapViewer.setTileSource(new Thunderforest_Transport());
 

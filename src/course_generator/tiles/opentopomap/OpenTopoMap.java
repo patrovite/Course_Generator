@@ -27,7 +27,7 @@ import org.openstreetmap.gui.jmapviewer.tilesources.AbstractOsmTileSource;
  */
 
 public class OpenTopoMap extends AbstractOsmTileSource {
-	//private static final String PATTERN = "https://%s.tile.opentopomap.org";
+//	private static final String PATTERN = "http://%s.tile.opentopomap.org";
 	private static final String PATTERN = "https://%s.tile.opentopomap.org";
 	private static final String[] SERVER = { "a", "b", "c" };
 

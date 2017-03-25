@@ -32,6 +32,7 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.util.Arrays;
 
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -1158,6 +1159,97 @@ public class Utils {
 		return new File(fname).isFile();
 	}
 
+	
+	/**
+	 * Returns true if the given name is a valid resource name on this operating
+	 * system, and false otherwise.
+	 */
+	public static boolean isFilenameValid(String name) {
+		String INVALID_RESOURCE_CHARACTERS;
+		String[] INVALID_RESOURCE_BASENAMES;
+		String[] INVALID_RESOURCE_FULLNAMES;
+
+		name=name.trim();
+		
+		OsCheck.OSType ostype = OsCheck.getOperatingSystemType();
+		if (ostype==OsCheck.OSType.Windows) {
+			// valid names and characters taken from
+			// http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/naming_a_file.asp
+			INVALID_RESOURCE_CHARACTERS = "\\/:*\"?<>|\0";
+			INVALID_RESOURCE_BASENAMES = new String[] { "aux", "com1", "com2", "com3", "com4",
+					"com5", "com6", "com7", "com8", "com9", "con", "lpt1", "lpt2",
+					"lpt3", "lpt4", "lpt5", "lpt6", "lpt7", "lpt8", "lpt9", "nul", "prn" };
+			Arrays.sort(INVALID_RESOURCE_BASENAMES);
+			// CLOCK$ may be used if an extension is provided
+			INVALID_RESOURCE_FULLNAMES = new String[] { "clock$" }; //$NON-NLS-1$
+		} else {
+			// only front slash and null char are invalid on UNIXes
+			// taken from
+			// http://www.faqs.org/faqs/unix-faq/faq/part2/section-2.html
+			INVALID_RESOURCE_CHARACTERS = "\\/:*\"?<>|\0";
+			INVALID_RESOURCE_BASENAMES = null;
+			INVALID_RESOURCE_FULLNAMES = null;
+		}
+		
+		// . and .. have special meaning on all platforms
+		if (name.equals(".") || name.equals("..")) //$NON-NLS-1$ //$NON-NLS-2$
+			return false;
+		
+		for (int i=0; i<INVALID_RESOURCE_CHARACTERS.length(); i++) {
+			char c=INVALID_RESOURCE_CHARACTERS.charAt(i);
+			if (name.indexOf(INVALID_RESOURCE_CHARACTERS.charAt(i))!=-1) 
+				return false;
+		}
+
+		if (ostype==OsCheck.OSType.Windows) {
+			// empty names are not valid
+			final int length = name.length();
+			if (length == 0)
+				return false;
+		
+			final char lastChar = name.charAt(length - 1);
+			// filenames ending in dot are not valid
+			if (lastChar == '.')
+				return false;
+			
+			// file names ending with whitespace are truncated (bug 118997)
+			if (Character.isWhitespace(lastChar))
+				return false;
+			
+			int dot = name.indexOf('.');
+			// on windows, filename suffixes are not relevant to name
+			// validity
+			String basename = dot == -1 ? name : name.substring(0, dot);
+					
+			if (Arrays.binarySearch(INVALID_RESOURCE_BASENAMES, basename.toLowerCase()) >= 0)
+				return false;
+			return Arrays.binarySearch(INVALID_RESOURCE_FULLNAMES, name.toLowerCase()) < 0;
+		}
+		return true;
+	}
+
+	
+	/**
+	 * Return the size of a folder
+	 * @param directory
+	 * @return 
+	 * 	Size of the directory
+	 */
+	public static long folderSize(File directory) {
+	    long length = 0;
+	    for (File file : directory.listFiles()) {
+	    	if (file==null) return 0;
+	   
+	        if (file.isFile())
+	            length += file.length();
+	        else
+	            length += folderSize(file);
+	    }
+	    return length;
+	}
+	
+	
+	
 	/**
 	 * Search and replace all strings in a stringbuilder object
 	 * @param sb 

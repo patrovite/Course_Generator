@@ -43,7 +43,14 @@ public class CgSettings {
     public String ParamFile = "";
     public boolean bNoConnectOnStartup = true;
     public int ConnectionTimeout = 10; //Time in second between internet test
-
+    /** Map selected 
+     * 0 : OpenStreetMap
+     * 1 : OpenTopoMap
+     * 2 : BingAreal
+     * **/
+    public int map = 0;
+    public boolean offlineMap = true;
+    
     public String MemoFormat[] = new String[5];
     public String mruGPX[] = new String[5];
     public String mruCGX[] = new String[5];
@@ -96,6 +103,9 @@ public class CgSettings {
             TableMainColWidth[i] = 60;
         }
         LastDir="";
+        
+        offlineMap = true;
+        map = 0;
         
     }
     
@@ -174,6 +184,7 @@ public class CgSettings {
                     Utils.WriteIntToXML(writer, "VERTSPLITPOSITION",VertSplitPosition);
                     Utils.WriteIntToXML(writer, "HORIZSPLITPOSITION",HorizSplitPosition);
                     Utils.WriteIntToXML(writer, "MRBSPLITPOSITION",MRB_SplitPosition);
+                    Utils.WriteIntToXML(writer, "MAP",map);
                     
                 writer.writeEndElement();
             writer.writeEndDocument();

@@ -1,3 +1,20 @@
+/*
+ * Course Generator
+ * Copyright (C) 2016 Pierre Delore
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package course_generator.analysis;
 
 import java.awt.BasicStroke;
@@ -53,9 +70,8 @@ public class JPanelAnalysisSpeed extends JPanel {
 	private Crosshair xCrosshair;
 	private TrackData track = null;
 	private CgSettings settings = null;
-	private double startSpeed=0.0;
-	private double endSpeed=0.0;
-	
+	private double startSpeed = 0.0;
+	private double endSpeed = 0.0;
 
 
 	public JPanelAnalysisSpeed() {
@@ -125,8 +141,8 @@ public class JPanelAnalysisSpeed extends JPanel {
 				GridBagConstraints.VERTICAL);
 
 		// -- Chart Speed/Dist & Time/Dist
-		ChartPanelSpeed = new ChartPanel(chart, true /*Properties*/, true /*save*/, true /*print*/, false /*zoom*/,
-				true /*tooltips*/);
+		ChartPanelSpeed = new ChartPanel(chart, true /* Properties */, true /* save */, true /* print */,
+				false /* zoom */, true /* tooltips */);
 		ChartPanelSpeed.setDomainZoomable(false);
 		ChartPanelSpeed.setRangeZoomable(false);
 
@@ -153,13 +169,6 @@ public class JPanelAnalysisSpeed extends JPanel {
 					double x = d.getXValue(s, i);
 					xCrosshair.setValue(x);
 					RefreshInfo(i);
-					// //Refresh the position on the data grid
-					// TableMain.setRowSelectionInterval(i, i);
-					// Rectangle rect = TableMain.getCellRect(i, 0, true);
-					// TableMain.scrollRectToVisible(rect);
-					// //Refresh the marker position on the map
-					// RefreshCurrentPosMarker(Track.data.get(i).getLatitude(),
-					// Track.data.get(i).getLongitude());
 				}
 			}
 
@@ -174,10 +183,11 @@ public class JPanelAnalysisSpeed extends JPanel {
 
 
 	private JFreeChart CreateChart(XYDataset dataset1, XYDataset dataset2) {
-		JFreeChart chart = ChartFactory.createXYAreaChart("", "Distance", // x
-																			// axis
-																			// label
-				"Speed", // y axis label
+		JFreeChart chart = ChartFactory.createXYAreaChart("",
+				// x axis label
+				bundle.getString("JPanelAnalysisSpeed.labelX"), //"Distance",
+				// y axis label
+				bundle.getString("JPanelAnalysisSpeed.labelY"), //"Speed"
 				dataset1, // data
 				PlotOrientation.VERTICAL, false, // include legend
 				true, // tooltips
@@ -197,9 +207,9 @@ public class JPanelAnalysisSpeed extends JPanel {
 		renderer.setSeriesPaint(0, new Color(0x99, 0xff, 0x00));
 		renderer.setOutline(true);
 		renderer.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
-		plot.setRenderer(0,renderer);
+		plot.setRenderer(0, renderer);
 
-		NumberAxis rangeAxis2 = new NumberAxis("Speed");
+		NumberAxis rangeAxis2 = new NumberAxis();
 		plot.setRangeAxis(1, rangeAxis2);
 		plot.setDataset(1, dataset2);
 		plot.setRangeAxis(1, rangeAxis2);
@@ -208,10 +218,10 @@ public class JPanelAnalysisSpeed extends JPanel {
 		StandardXYItemRenderer renderer2 = new StandardXYItemRenderer();
 		renderer2.setSeriesPaint(0, Color.red);
 		plot.setRenderer(1, renderer2);
-		
-		//-- Select the display order
+
+		// -- Select the display order
 		plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
-		
+
 		return chart;
 	}
 
@@ -223,11 +233,11 @@ public class JPanelAnalysisSpeed extends JPanel {
 		// -- Get the data
 		CgData d = track.data.get(i);
 
-		lbSpeedInfoStartSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoStartSpeed.text") 
-				+ "="+String.format("%2.1f", startSpeed)+"km/h ");
+		lbSpeedInfoStartSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoStartSpeed.text") + "="
+				+ String.format("%2.1f", startSpeed) + "km/h ");
 
-		lbSpeedInfoEndSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoEndSpeed.text") 
-				+ "="+String.format("%2.1f", endSpeed)+"km/h ");
+		lbSpeedInfoEndSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoEndSpeed.text") + "="
+				+ String.format("%2.1f", endSpeed) + "km/h ");
 
 		lbSpeedInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoSpeed.text") + "="
 				+ d.getSpeedString(settings.Unit, true) + " ");
@@ -244,14 +254,13 @@ public class JPanelAnalysisSpeed extends JPanel {
 		if (track.data.isEmpty())
 			return;
 
-		this.track=track;
-		this.settings=settings;
+		this.track = track;
+		this.settings = settings;
 
 		// -- Calculate the speed regression
 		/*
-		 * y = ax + b
-		 * a = the slope of the trend line.
-		 * b = the intercept of the trend line.
+		 * y = ax + b a = the slope of the trend line. b = the intercept of the
+		 * trend line.
 		 */
 		double xAvg = 0;
 		double yAvg = 0;
@@ -301,45 +310,30 @@ public class JPanelAnalysisSpeed extends JPanel {
 			double x = d.getTotal(settings.Unit) / 1000;
 			double y = d.getSpeed(settings.Unit);
 
-			// foreach (cgData r in cd.data)
-			// {
-			 if (x < 0.001) x = 0;
-			 if (y > maxspeed) maxspeed = y;
-			 
-			 if (cmpt == 0) startSpeed = (b / (100 / d.getDiff())) / (100 / d.getCoeff());
-			 if (cmpt == track.data.size()-1) endSpeed = ((a * x + b)/ (100 / d.getDiff())) / (100 / d.getCoeff());
-			 
-//			 ChartAnalyseSpeed.Series["Series1"].Points.AddXY(x, a*x+b);
-//			 ChartAnalyseSpeed.Series["Series2"].Points.AddXY(x, (r.Speed / (100 /r.Diff)) / (100 / r.Coeff));
-			
-			 cmpt++;
-			
-			serie1.add(x, y / (100.0 /d.getDiff()) / (100.0 / d.getCoeff()));
-			serie2.add(x, a*cmpt+b);
+			if (x < 0.001)
+				x = 0;
+			if (y > maxspeed)
+				maxspeed = y;
 
-			// if ( ((r.getTag() & CgConst.TAG_MARK) !=0) & showProfilMarker)
-			// {
-			// Marker m = new ValueMarker(x);
-			// m.setPaint(Color.GRAY);
-			// m.setLabelFont(new Font("SansSerif", Font.PLAIN, 10));
-			// m.setLabel(String.valueOf(cmpt));
-			// m.setLabelOffset(new RectangleInsets(5, 0, 0, 2));
-			// m.setLabelAnchor(RectangleAnchor.TOP_RIGHT);
-			// m.setLabelTextAnchor(TextAnchor.TOP_LEFT);
-			// plot.addDomainMarker(m);
-			// cmpt++;
-			// }
+			if (cmpt == 0)
+				startSpeed = (b / (100 / d.getDiff())) / (100 / d.getCoeff());
+			if (cmpt == track.data.size() - 1)
+				endSpeed = ((a * x + b) / (100 / d.getDiff())) / (100 / d.getCoeff());
+
+			cmpt++;
+
+			serie1.add(x, y / (100.0 / d.getDiff()) / (100.0 / d.getCoeff()));
+			serie2.add(x, a * cmpt + b);
+
 		}
 		datasetSpeedReg.addSeries(serie2);
 		datasetSpeed.addSeries(serie1);
-		
-		ValueAxis axisY = plot.getRangeAxis();
-		axisY.setRange(0.0, Math.ceil(maxspeed / 5.0 * 5.0));
 
-		// ChartAnalyseSpeed.ChartAreas["ChartArea1"].Axes[1].Maximum =
-		// Math.Ceiling(maxspeed / 5.0) * 5.0;
-		// ChartAnalyseSpeed.ChartAreas["ChartArea1"].Axes[3].Maximum =
-		// Math.Ceiling(maxspeed / 5.0) * 5.0;
+		ValueAxis axisY = plot.getRangeAxis(0);
+		axisY.setRange(0.0, Math.ceil(maxspeed / 5.0) * 5.0);
+
+		axisY = plot.getRangeAxis(1);
+		axisY.setRange(0.0, Math.ceil(maxspeed / 5.0) * 5.0);
 
 		chart = CreateChart(datasetSpeedReg, datasetSpeed);
 		RefreshInfo(0);
