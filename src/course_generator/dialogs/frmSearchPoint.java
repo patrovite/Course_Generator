@@ -43,6 +43,7 @@ import javax.swing.KeyStroke;
 import course_generator.TrackData;
 import course_generator.TrackData.SearchPointResult;
 import course_generator.frmMain;
+import course_generator.profil.JPanelProfil;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.CustomFocusTraversalPolicy;
@@ -72,6 +73,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 	private JButton btClose;
 	//static MyOwnFocusTraversalPolicy newPolicy;
 	CustomFocusTraversalPolicy newPolicy;
+	private JPanelProfil profil;
 	
 	/**
 	 * Creates new form frmSettings
@@ -83,9 +85,12 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		// setModal(true);
 	}
 
-	public boolean showDialog(CgSettings s, TrackData td, frmMain mainwin) {
-		settings = s;
-		track = td;
+	public boolean showDialog(CgSettings settings, TrackData track, frmMain mainwin, JPanelProfil profil) {
+		if ((track==null) || (settings==null) || (profil==null)) return false;
+		
+		this.settings = settings;
+		this.track = track;
+		this.profil = profil;
 		main = mainwin;
 		setVisible(true);
 		return ok;
@@ -165,12 +170,8 @@ public class frmSearchPoint extends javax.swing.JDialog {
 					track.data.get(result.Point).getLongitude());
 			
 			//-- Refresh the profil cursor position
-			main.RefreshProfilInfo(result.Point);
-			main.xCrosshair.setValue(main.Track.data.get(result.Point).getTotal(main.Settings.Unit) / 1000.0);
-			main.yCrosshair.setValue(main.Track.data.get(result.Point).getElevation(main.Settings.Unit));
-
-			
-
+			profil.RefreshProfilInfo(result.Point);
+			profil.setCrosshairPosition(main.Track.data.get(result.Point).getTotal(main.Settings.Unit) / 1000.0, main.Track.data.get(result.Point).getElevation(main.Settings.Unit));
 		}
 	}
 
