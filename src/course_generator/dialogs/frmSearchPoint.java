@@ -45,6 +45,7 @@ import course_generator.TrackData.SearchPointResult;
 import course_generator.frmMain;
 import course_generator.profil.JPanelProfil;
 import course_generator.settings.CgSettings;
+import course_generator.trackdata.JPanelTrackData;
 import course_generator.utils.CgConst;
 import course_generator.utils.CustomFocusTraversalPolicy;
 import course_generator.utils.JTextFieldLimit;
@@ -74,6 +75,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 	//static MyOwnFocusTraversalPolicy newPolicy;
 	CustomFocusTraversalPolicy newPolicy;
 	private JPanelProfil profil;
+	private JPanelTrackData trackDataTable;
 	
 	/**
 	 * Creates new form frmSettings
@@ -85,12 +87,13 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		// setModal(true);
 	}
 
-	public boolean showDialog(CgSettings settings, TrackData track, frmMain mainwin, JPanelProfil profil) {
+	public boolean showDialog(CgSettings settings, TrackData track, frmMain mainwin, JPanelProfil profil, JPanelTrackData paneltrack) {
 		if ((track==null) || (settings==null) || (profil==null)) return false;
 		
 		this.settings = settings;
 		this.track = track;
 		this.profil = profil;
+		this.trackDataTable=paneltrack;
 		main = mainwin;
 		setVisible(true);
 		return ok;
@@ -162,8 +165,9 @@ public class frmSearchPoint extends javax.swing.JDialog {
 			lbDistanceFromPointVal.setText(String.format("%1.0f", dist));
 
 			// -- Scroll to the position in the data table
-			main.TableMain.setRowSelectionInterval(result.Point, result.Point);
-			main.TableMain.scrollRectToVisible(new Rectangle(main.TableMain.getCellRect(result.Point, 0, true)));
+			trackDataTable.setSelectedRow(result.Point);
+//			main.TableMain.setRowSelectionInterval(result.Point, result.Point);
+//			main.TableMain.scrollRectToVisible(new Rectangle(main.TableMain.getCellRect(result.Point, 0, true)));
 
 			//-- Refresh the position of the map marker
 			main.RefreshCurrentPosMarker(track.data.get(result.Point).getLatitude(),

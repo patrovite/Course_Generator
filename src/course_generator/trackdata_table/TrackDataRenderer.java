@@ -72,8 +72,8 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 				Double lat = data.getLatitude();
 
 				// -- Set the value
-				setText(String.format("%1.7f ", lat));
-				setHorizontalAlignment(RIGHT);
+				setText(String.format("%1.7f", lat));
+				setHorizontalAlignment(CENTER);
 
 				// -- Set the background
 				if (isSelected)
@@ -89,8 +89,8 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 				Double lon = data.getLongitude();
 
 				// -- Set the value
-				setText(String.format("%1.7f ", lon));
-				setHorizontalAlignment(RIGHT);
+				setText(String.format("%1.7f", lon));
+				setHorizontalAlignment(CENTER);
 
 				// -- Set the background
 				if (isSelected)
@@ -106,7 +106,8 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 				Double slope = data.getSlope();
 
 				setText(data.getElevationString(settings.Unit, false));
-
+				setHorizontalAlignment(CENTER);
+				
 				// -- Set the icon next to the elevation value
 				if (slope > 1.0) {
 					setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/up_elev.png")));
@@ -246,6 +247,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 
 				// -- Set the value
 				setText("");
+				setHorizontalAlignment(LEFT);
 
 				// -- Set the background
 				if (isSelected)
@@ -258,8 +260,8 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			case 5: // Distance
 				data = (CgData) value;
 				
-				setText(data.getDistString(settings.Unit, false) + " ");
-				setHorizontalAlignment(RIGHT);
+				setText(data.getDistString(settings.Unit, false));
+				setHorizontalAlignment(CENTER);
 
 				// -- Set the background
 				if (isSelected)
@@ -275,8 +277,8 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 				Double total = data.getTotal(settings.Unit);
 
 				// -- Set the value
-				setText(String.format("%1.3f ", total / 1000.0));
-				setHorizontalAlignment(RIGHT);
+				setText(String.format("%1.3f", total / 1000.0));
+				setHorizontalAlignment(CENTER);
 
 				// -- Set the background
 				if (isSelected)
@@ -293,7 +295,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 
 				// -- Set the value
 				setText(String.format("%1.0f ", diff));
-				setHorizontalAlignment(RIGHT);
+				setHorizontalAlignment(CENTER);
 
 				// -- Set the background color
 				Color clDiff = Color.WHITE;
@@ -329,7 +331,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 
 				// -- Set the value
 				setText(String.format("%1.1f ", coeff));
-				setHorizontalAlignment(RIGHT);
+				setHorizontalAlignment(CENTER);
 
 				// -- Set the background
 				if (isSelected)
@@ -351,7 +353,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 					setText(output + " ");
 				} else
 					setText("");
-				setHorizontalAlignment(RIGHT);
+				setHorizontalAlignment(CENTER);
 
 				// -- Set the background
 				if (isSelected)
@@ -366,7 +368,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 				
 				// -- Set the value
 				setText(data.getTimeString());				
-				setHorizontalAlignment(RIGHT);
+				setHorizontalAlignment(CENTER);
 
 				// -- Set the background
 				if (isSelected)
@@ -383,7 +385,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 
 		        //-- Set the value
 		        setText(data.getTimeLimitString(true));
-		        setHorizontalAlignment(RIGHT);
+		        setHorizontalAlignment(CENTER);
 		        
 		        //-- Set the background
 		        if (isSelected)
@@ -433,7 +435,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 
 				// -- Set the value
 				setText(data.getStationString(true));
-				setHorizontalAlignment(RIGHT);
+				setHorizontalAlignment(CENTER);
 
 				// -- Set the background
 				if (isSelected)

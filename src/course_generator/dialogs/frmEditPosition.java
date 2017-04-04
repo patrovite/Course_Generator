@@ -65,10 +65,9 @@ public class frmEditPosition  extends javax.swing.JDialog {
 	private TrackData track;
 	private CgData data;
 	private int line;
-	private int col;
-	private Color ColorValNotEditable = new java.awt.Color(255, 253, 240);
-	private Color ColorValEditable = new java.awt.Color(255, 255, 255);
-	private Color ColorLabel = new java.awt.Color(200, 200, 200);
+//	private Color ColorValNotEditable = new java.awt.Color(255, 253, 240);
+//	private Color ColorValEditable = new java.awt.Color(255, 255, 255);
+//	private Color ColorLabel = new java.awt.Color(200, 200, 200);
 //	private SpinnerModel model;
 	private JLabel lbLine;
 	private JLabel lbLineVal;
@@ -143,11 +142,10 @@ public class frmEditPosition  extends javax.swing.JDialog {
 		setModal(true);
 	}
 
-	public boolean showDialog(CgSettings _settings, TrackData _track, int _line, int _col) {
+	public boolean showDialog(CgSettings _settings, TrackData _track, int _line) {
 		settings = _settings;
 		track = _track;
 		line = _line;
-		col = _col;
 		data = track.data.get(line);
 		// Set field
 
