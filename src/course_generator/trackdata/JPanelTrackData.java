@@ -164,7 +164,8 @@ public class JPanelTrackData extends JPanel {
 
 
 	public int getSelectedRow() {
-		return selectedRow;
+//		return selectedRow;
+		return TableMain.getSelectedRow();
 	}
 
 

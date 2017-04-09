@@ -131,6 +131,7 @@ import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
 //import course_generator.TrackData.CalcAvrSlopeResult;
 //import course_generator.TrackData.CalcAvrSpeedResult;
 import course_generator.TrackData.CalcClimbResult;
+import course_generator.TrackData.SearchPointResult;
 import course_generator.analysis.JPanelAnalysisSpeed;
 import course_generator.analysis.JPanelAnalysisSpeedSlope;
 import course_generator.analysis.JPanelAnalysisTimeDist;
@@ -143,7 +144,10 @@ import course_generator.dialogs.frmFillCoeff.EditCoeffResult;
 import course_generator.dialogs.frmFillDiff;
 import course_generator.dialogs.frmFillDiff.EditDiffResult;
 import course_generator.dialogs.frmSearchPoint;
+import course_generator.dialogs.frmSearchPointListener;
 import course_generator.dialogs.frmTrackSettings;
+import course_generator.maps.JPanelMaps;
+import course_generator.maps.JPanelMapsListener;
 import course_generator.mrb.FrmMiniroadbook;
 import course_generator.param.frmEditCurve;
 import course_generator.profil.JPanelProfil;
@@ -185,17 +189,11 @@ public class frmMain extends javax.swing.JFrame {
 	private final TrackDataModel ModelTableMain;
 	public CgSettings Settings;
 	public String DataDir;
-	private MapMarker CurrentPosMarker = null;
-	private MapMarker MapMarker = null;
 	private java.util.ResourceBundle bundle = null;
 	private int cmptInternetConnexion = 0;
 	private int cmptMinute = 0;
 	private boolean InternetConnectionActive = false;
 	private Timer timer1s; // 1 second timer object
-	private int IndexMarker = -1;
-	private int Old_MarkerStart = -1;
-	private int Old_MarkerEnd = -1;
-	private ArrayList<Double> UndoDiff;
 //	private boolean showProfilMarker = true;
 	
 	/**
@@ -250,17 +248,6 @@ public class frmMain extends javax.swing.JFrame {
 	private JButton btDisplaySSCurves;
 	private JButton btTrackSettings;
 	private JButton btCalculateTrackTime;
-	private JButton btMapHideMarker;
-	private JButton btMapAddMarker;
-	private JButton btMapUndo;
-	private JButton btMapTrackEasy;
-	private JButton btMapTrackAverage;
-	private JButton btMapTrackVeryEasy;
-	private JButton btMapTrackHard;
-	private JButton btMapTrackVeryHard;
-	private JButton btMapMark;
-	private JButton btMapEat;
-	private JButton btMapDrink;
 	private JLabel LbInfoUnit;
 	private JLabel LbInfoTotalDistVal;
 	private JLabel LbInfoDpVal;
@@ -269,7 +256,6 @@ public class frmMain extends javax.swing.JFrame {
 	private JLabel LbInfoCalculateVal;
 	private JLabel LbInfoInternetVal;
 	private JLabel LbInfoUnitVal;
-	private JScrollPane jScrollPanelMap;
 
 	private JPanel StatusBar;
 	private JLabel LbInfoCurve;
@@ -288,11 +274,11 @@ public class frmMain extends javax.swing.JFrame {
 	private JPanelAnalysisTimeDist jPanelTimeDist;
 	private JPanelAnalysisSpeed jPanelSpeed;
 	private JPanelAnalysisSpeedSlope jPanelSpeedSlope;
-	private JToolBar ToolBarTimeDist;
-	private JButton btTimeDistSave;
-	private JButton btMapSelect;
+//	private JToolBar ToolBarTimeDist;
+//	private JButton btTimeDistSave;
+//	private JButton btMapSelect;
 
-	private JButton btMapOfflineSelection;
+//	private JButton btMapOfflineSelection;
 
 	private JPanelResume PanelResume;
 
@@ -301,6 +287,8 @@ public class frmMain extends javax.swing.JFrame {
 	private JPanelProfil panelProfil;
 
 	private JPanelTrackData panelTrackData;
+
+	private JPanelMaps panelMap;
 	
 
 	// -- Called every second
@@ -338,7 +326,6 @@ public class frmMain extends javax.swing.JFrame {
 		Resume = new ResumeData();
 		Settings = new CgSettings();
 		ModelTableMain = new TrackDataModel(Track, Settings);
-		UndoDiff = new ArrayList<Double>();
 //		showProfilMarker=true;
 
 		// -- Load configuration
@@ -423,7 +410,7 @@ public class frmMain extends javax.swing.JFrame {
 		SplitPaneMain.setDividerLocation(0);
 		
 		// -- Configure the tile source for the map
-		RefreshMapType();
+		panelMap.RefreshMapType();
 		
 		
 		// -- Set the counter in order near the end in order to start the
@@ -438,7 +425,7 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshMruCGX();
 		RefreshMruGPX();
 		RefreshStatusbar(Track);
-		RefreshMapButtons();
+		panelMap.RefreshMapButtons();
 		panelProfil.RefreshProfilButtons();
 		
 		//-- Display the splash screen
@@ -830,15 +817,15 @@ public class frmMain extends javax.swing.JFrame {
 		mnuEdit.add(mnuCopy);
 
 		// -- Select lines...
-		mnuSelectLines = new javax.swing.JMenuItem();
-		mnuSelectLines.setText(bundle.getString("frmMain.mnuSelectLines.text"));
-		mnuSelectLines.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
-			}
-		});
-		mnuSelectLines.setEnabled(false);
-		mnuEdit.add(mnuSelectLines);
+//		mnuSelectLines = new javax.swing.JMenuItem();
+//		mnuSelectLines.setText(bundle.getString("frmMain.mnuSelectLines.text"));
+//		mnuSelectLines.addActionListener(new java.awt.event.ActionListener() {
+//			public void actionPerformed(java.awt.event.ActionEvent evt) {
+//				// mnuSaveCGXActionPerformed(evt); //TODO
+//			}
+//		});
+//		mnuSelectLines.setEnabled(false);
+//		mnuEdit.add(mnuSelectLines);
 
 		// -- Separator
 		mnuEdit.add(new javax.swing.JPopupMenu.Separator());
@@ -1248,7 +1235,7 @@ public class frmMain extends javax.swing.JFrame {
 	        		jPanelTimeDist.Refresh(Track, Settings);
 	        		jPanelSpeed.Refresh(Track, Settings);
 	        		jPanelSpeedSlope.Refresh(Track, Settings);
-	        		RefreshTrack(Track,true);
+	        		panelMap.RefreshTrack(Track,true);
 	        		PanelResume.refresh();
 	        		panelStatistics.refresh();
 	        		//bAutorUpdatePos = true;	            		
@@ -1302,7 +1289,7 @@ public class frmMain extends javax.swing.JFrame {
 			panelStatistics.refresh();
 
 	        //Refresh the marker position on the map
-			RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
+			panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
 		}
 	}
 
@@ -1644,7 +1631,7 @@ public class frmMain extends javax.swing.JFrame {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				int p = GotoPrevTag();
 				if ((p >= 0) && (p < Track.data.size()))
-					RefreshCurrentPosMarker(Track.data.get(p).getLatitude(), Track.data.get(p).getLongitude());
+					panelMap.RefreshCurrentPosMarker(Track.data.get(p).getLatitude(), Track.data.get(p).getLongitude());
 			}
 		});
 		ToolBarMain.add(btGotoPreviousMark);
@@ -1659,7 +1646,7 @@ public class frmMain extends javax.swing.JFrame {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				int p = GotoNextTag();
 				if ((p >= 0) && (p < Track.data.size()))
-					RefreshCurrentPosMarker(Track.data.get(p).getLatitude(), Track.data.get(p).getLongitude());
+					panelMap.RefreshCurrentPosMarker(Track.data.get(p).getLatitude(), Track.data.get(p).getLongitude());
 			}
 		});
 		ToolBarMain.add(btGotoNextMark);
@@ -1875,412 +1862,6 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 
-
-	/**
-	 * Create the map toolbar
-	 */
-	private void Create_Map_Toolbar() {
-		jToolBarMapViewer = new javax.swing.JToolBar();
-		jToolBarMapViewer.setFloatable(false);
-		jToolBarMapViewer.setOrientation(javax.swing.SwingConstants.VERTICAL);
-		jToolBarMapViewer.setRollover(true);
-
-		// -- Add marker
-		btMapAddMarker = new javax.swing.JButton();
-		btMapAddMarker
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/marker.png")));
-		btMapAddMarker.setToolTipText(bundle.getString("frmMain.btMapAddMarker.toolTipText"));
-		btMapAddMarker.setFocusable(false);
-		btMapAddMarker.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ShowMapMarker();
-			}
-		});
-		jToolBarMapViewer.add(btMapAddMarker);
-
-		// -- Hide marker
-		btMapHideMarker = new javax.swing.JButton();
-		btMapHideMarker
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/hide_marker.png")));
-		btMapHideMarker.setToolTipText(bundle.getString("frmMain.btMapHideMarker.toolTipText"));
-		btMapHideMarker.setFocusable(false);
-		btMapHideMarker.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				HideMapMarker();
-			}
-		});
-		jToolBarMapViewer.add(btMapHideMarker);
-
-		// -- Separator
-		jToolBarMapViewer.add(new javax.swing.JToolBar.Separator());
-
-		// -- Undo
-		btMapUndo = new javax.swing.JButton();
-		btMapUndo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/undo.png")));
-		btMapUndo.setToolTipText(bundle.getString("frmMain.btMapUndo.toolTipText"));
-		btMapUndo.setFocusable(false);
-		btMapUndo.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				UndoMapFillDiff();
-			}
-		});
-		jToolBarMapViewer.add(btMapUndo);
-
-		// -- Separator
-		jToolBarMapViewer.add(new javax.swing.JToolBar.Separator());
-
-		// -- Track very easy
-		btMapTrackVeryEasy = new javax.swing.JButton();
-		btMapTrackVeryEasy.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/track_very_easy.png")));
-		btMapTrackVeryEasy.setToolTipText(bundle.getString("frmMain.btMapTrackVeryEasy.toolTipText"));
-		btMapTrackVeryEasy.setFocusable(false);
-		btMapTrackVeryEasy.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MapTrackDifficulty(CgConst.DIFF_VERYEASY);
-			}
-		});
-		jToolBarMapViewer.add(btMapTrackVeryEasy);
-
-		// -- Track easy
-		btMapTrackEasy = new javax.swing.JButton();
-		btMapTrackEasy
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/track_easy.png")));
-		btMapTrackEasy.setToolTipText(bundle.getString("frmMain.btMapTrackEasy.toolTipText"));
-		btMapTrackEasy.setFocusable(false);
-		btMapTrackEasy.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MapTrackDifficulty(CgConst.DIFF_EASY);
-			}
-		});
-		jToolBarMapViewer.add(btMapTrackEasy);
-
-		// -- Track average
-		btMapTrackAverage = new javax.swing.JButton();
-		btMapTrackAverage.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/track_average.png")));
-		btMapTrackAverage.setToolTipText(bundle.getString("frmMain.btMapTrackAverage.toolTipText"));
-		btMapTrackAverage.setFocusable(false);
-		btMapTrackAverage.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MapTrackDifficulty(CgConst.DIFF_AVERAGE);
-			}
-		});
-		jToolBarMapViewer.add(btMapTrackAverage);
-
-		// -- Track hard
-		btMapTrackHard = new javax.swing.JButton();
-		btMapTrackHard
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/track_hard.png")));
-		btMapTrackHard.setToolTipText(bundle.getString("frmMain.btMapTrackHard.toolTipText"));
-		btMapTrackHard.setFocusable(false);
-		btMapTrackHard.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MapTrackDifficulty(CgConst.DIFF_HARD);
-			}
-		});
-		jToolBarMapViewer.add(btMapTrackHard);
-
-		// -- Track average
-		btMapTrackVeryHard = new javax.swing.JButton();
-		btMapTrackVeryHard.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/track_very_hard.png")));
-		btMapTrackVeryHard.setToolTipText(bundle.getString("frmMain.btMapTrackVeryHard.toolTipText"));
-		btMapTrackVeryHard.setFocusable(false);
-		btMapTrackVeryHard.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				MapTrackDifficulty(CgConst.DIFF_VERYHARD);
-			}
-		});
-		jToolBarMapViewer.add(btMapTrackVeryHard);
-
-		// -- Separator
-		jToolBarMapViewer.add(new javax.swing.JToolBar.Separator());
-
-		// -- Mark
-		btMapMark = new javax.swing.JButton();
-		btMapMark.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/flag.png")));
-		btMapMark.setToolTipText(bundle.getString("frmMain.btMapMark.toolTipText"));
-		btMapMark.setFocusable(false);
-		btMapMark.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SetMarkMapMarker();
-			}
-		});
-		jToolBarMapViewer.add(btMapMark);
-
-		// -- Eat
-		btMapEat = new javax.swing.JButton();
-		btMapEat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/eat.png")));
-		btMapEat.setToolTipText(bundle.getString("frmMain.btMapEat.toolTipText"));
-		btMapEat.setFocusable(false);
-		btMapEat.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SetEatMapMarker();
-			}
-		});
-		jToolBarMapViewer.add(btMapEat);
-
-		// -- Drink
-		btMapDrink = new javax.swing.JButton();
-		btMapDrink.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/drink.png")));
-		btMapDrink.setToolTipText(bundle.getString("frmMain.btMapDrink.toolTipText"));
-		btMapDrink.setFocusable(false);
-		btMapDrink.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SetDrinkMapMarker();
-			}
-		});
-		jToolBarMapViewer.add(btMapDrink);
-		
-		// -- Separator
-		jToolBarMapViewer.add(new javax.swing.JToolBar.Separator());
-
-		// -- Select the type of map
-		btMapSelect = new javax.swing.JButton();
-		btMapSelect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/select_map.png")));
-		btMapSelect.setToolTipText(bundle.getString("frmMain.btMapSelect.toolTipText"));
-		btMapSelect.setFocusable(false);
-		btMapSelect.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SelectMap();
-			}
-		});
-		jToolBarMapViewer.add(btMapSelect);
-		
-	}
-
-
-	private void SelectMap() {
-		FrmSelectMap dlg = new FrmSelectMap();
-		int ret=dlg.showDialog(Settings.map);
-		if (ret>=0) {
-			Settings.map=ret;
-			RefreshMapType();
-		}
-	}
-
-
-
-
-	private void RefreshMapType() {
-		switch (Settings.map) {
-			case 0 : 
-				MapViewer.setTileSource(new OpenStreetMap());
-				break;
-			case 1 :
-				MapViewer.setTileSource(new OpenTopoMap());
-				break;
-			case 2 :
-				MapViewer.setTileSource(new BingAerialTileSource());
-				break;
-			default :
-				MapViewer.setTileSource(new OpenStreetMap());
-		}
-	}
-
-
-
-
-	private void MapTrackDifficulty(double diff) {
-		if ((Track.data.size() > 0) && (IndexMarker >= 0)) {
-			int row = panelTrackData.getSelectedRow();
-		
-			if (row < 0) return;
-	    	
-			Old_MarkerStart = IndexMarker;
-			Old_MarkerEnd = row;
-	        
-			//-- Check the start line is after the end line
-			int start=IndexMarker;
-			int end=row;				
-			if (IndexMarker>row) {
-				start=row;
-				end=IndexMarker;
-			}
-
-			//-- Clear the undo array
-			UndoDiff.clear();
-			
-			//-- Fill the table
-			for(int i=start; i<=end;i++) {
-				UndoDiff.add(Track.data.get(i).getDiff());
-				Track.data.get(i).setDiff(diff);
-			}
-			
-			IndexMarker = row;
-
-			//-- Set the flags
-	        Track.isCalculated = false;
-	        Track.isModified = true;
-
-			//-- Refresh the table and map
-	        panelTrackData.refresh();
-			RefreshTrack(Track,false);
-			ShowMapMarker();
-		}
-	}
-
-
-
-	private void HideMapMarker() {
-		if (Track.data.size() > 0) {
-	        IndexMarker = -1;
-	        if (MapMarker!=null) {
-		        MapViewer.removeMapMarker(MapMarker);
-		        MapMarker=null;
-	        }
-	        RefreshMapButtons();
-	      }
-	}
-
-
-
-	private void ShowMapMarker() {
-		if (Track.data.size() > 0) {
-			int row = panelTrackData.getSelectedRow();
-			if (row < 0) return;
-
-			IndexMarker = row;
-
-			double lat = Track.data.get(row).getLatitude();
-			double lon = Track.data.get(row).getLongitude();
-	        
-	        //-- Display the marker at "lat,lon" position
-			RefreshMapMarker(lat, lon);
-	        RefreshMapButtons();
-	      }
-	}
-
-
-	private void SetEatMapMarker() {
-		if (Track.data.size() > 0) {
-			int row = panelTrackData.getSelectedRow();
-			if (row < 0) return;
-			
-			int tag = Track.data.get(row).getTag();
-			
-			if ((tag & CgConst.TAG_EAT_PT) == 0) {
-				tag = tag | CgConst.TAG_EAT_PT;
-				tag = tag & (~CgConst.TAG_WATER_PT);
-			}
-			else
-				tag = tag & (~CgConst.TAG_EAT_PT);
-			
-			Track.data.get(row).setTag(tag);
-			
-			//-- Set the flags
-			Track.isCalculated = false;
-			Track.isModified = true;
-			
-			//-- Refresh the table and map
-			panelTrackData.refresh();
-			RefreshTrack(Track,false);
-			ShowMapMarker();
-		}
-	}
-	
-	
-	private void SetDrinkMapMarker() {
-		if (Track.data.size() > 0) {
-			int row = panelTrackData.getSelectedRow();
-			if (row < 0) return;
-			
-			int tag = Track.data.get(row).getTag();
-			
-			if ((tag & CgConst.TAG_WATER_PT) == 0) {
-				tag = tag | CgConst.TAG_WATER_PT;
-				tag = tag & (~CgConst.TAG_EAT_PT);
-			}
-			else
-				tag = tag & (~CgConst.TAG_WATER_PT);
-			
-			Track.data.get(row).setTag(tag);
-			
-			//-- Set the flags
-			Track.isCalculated = false;
-			Track.isModified = true;
-			
-			//-- Refresh the table and map
-			panelTrackData.refresh();
-			RefreshTrack(Track,false);
-			ShowMapMarker();
-		}
-	}
-	
-	
-	 private void SetMarkMapMarker() {
-		 if (Track.data.size() > 0) {
-			 int row = panelTrackData.getSelectedRow();
-			 if (row < 0) return;
-				
-			 int tag = Track.data.get(row).getTag();
-
-			 if ((tag & CgConst.TAG_MARK) == 0)
-				 tag = tag | CgConst.TAG_MARK;
-			 else
-				 tag = tag & (~CgConst.TAG_MARK);
-
-			 Track.data.get(row).setTag(tag);
-
-			 //-- Set the flags
-			 Track.isCalculated = false;
-			 Track.isModified = true;
-
-			 //-- Refresh the table and map
-			 panelTrackData.refresh();
-			 RefreshTrack(Track,false);
-			 ShowMapMarker();
-		 }
-	 }
-
-
-	 private void UndoMapFillDiff() {
-		 if ((Old_MarkerStart >= 0) && (Old_MarkerEnd >= 0) && (UndoDiff.size()>0)) {
-			 int i1 = Old_MarkerStart;
-			 int i2 = Old_MarkerEnd;
-			 if (Old_MarkerStart > Old_MarkerEnd) {
-				 i1 = Old_MarkerEnd;
-				 i2 = Old_MarkerStart;
-			 }
-			 if (i1 != 0) i1++;
-
-			 for (int i = i1; i <= i2; i++) {
-				 Track.data.get(i).setDiff(UndoDiff.get(i-i1));
-			 }
-
-			 Old_MarkerStart = -1;
-			 Old_MarkerEnd = -1;
-	        
-			 UndoDiff.clear();
-
-			 //-- Set the flags
-			 Track.isCalculated = false;
-			 Track.isModified = true;
-
-			 //-- Refresh the table and map
-			 panelTrackData.refresh();
-			 RefreshTrack(Track,false);
-			 ShowMapMarker();
-		 }
-	}
-	 
-	private void RefreshMapButtons() {
-		btMapDrink.setEnabled(true); //IndexMarker != -1);
-		btMapEat.setEnabled(true); //IndexMarker != -1);
-		btMapMark.setEnabled(true); //IndexMarker != -1);
-		
-		btMapTrackVeryHard.setEnabled(IndexMarker != -1);
-		btMapTrackHard.setEnabled(IndexMarker != -1);
-		btMapTrackAverage.setEnabled(IndexMarker != -1);
-		btMapTrackEasy.setEnabled(IndexMarker != -1);
-		btMapTrackVeryEasy.setEnabled(IndexMarker != -1);
-		btMapHideMarker.setEnabled(IndexMarker != -1);
-//		btMapAddMarker.setEnabled(IndexMarker != -1);
-		btMapUndo.setEnabled(Old_MarkerStart != -1);
-	}
-
-
 	/**
 	 * Add a tab to JTabbedPane. The icon is at the left of the text and there
 	 * some space between the icon and the label
@@ -2476,7 +2057,7 @@ public class frmMain extends javax.swing.JFrame {
 				if (Track.data.size() > 0) {
 					int row =panelTrackData.getSelectedRow();
 					// -- Refresh marker position on the map
-					RefreshCurrentPosMarker(Track.data.get(row).getLatitude(), Track.data.get(row).getLongitude());
+					panelMap.RefreshCurrentPosMarker(Track.data.get(row).getLatitude(), Track.data.get(row).getLongitude());
 					// -- Refresh profil crooshair position and profil info
 					panelProfil.RefreshProfilInfo(row);
 					panelProfil.setCrosshairPosition(Track.data.get(row).getTotal(Settings.Unit) / 1000.0, Track.data.get(row).getElevation(Settings.Unit));
@@ -2487,7 +2068,7 @@ public class frmMain extends javax.swing.JFrame {
 			public void keyRealeasedEvent() {
 				if (Track.data.size() > 0) {
 					int row =panelTrackData.getSelectedRow();
-					RefreshCurrentPosMarker(Track.data.get(row).getLatitude(), Track.data.get(row).getLongitude());
+					panelMap.RefreshCurrentPosMarker(Track.data.get(row).getLatitude(), Track.data.get(row).getLongitude());
 				}
 			}
 		});
@@ -2505,13 +2086,10 @@ public class frmMain extends javax.swing.JFrame {
 				 //Refresh the position on the data grid
 				 panelTrackData.setSelectedRow(i);
 				 //Refresh the marker position on the map
-				 RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
+				 panelMap.RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
 			 }
 		});
-		
 
-		// -- Add the panel to the tabbed panel
-		// ---------------------------------
 		addTab(TabbedPaneMain, panelProfil, bundle.getString("frmMain.TabProfil.tabTitle"),
 				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/profil.png")));
 
@@ -2560,39 +2138,33 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Map panel
 		// ---------------------------------------------------------
-		jPanelMap = new javax.swing.JPanel();
-		jPanelMap.setLayout(new java.awt.BorderLayout());
+		panelMap = new JPanelMaps(Settings);
+		panelMap.addListener(new JPanelMapsListener() {
+			@Override
+			public void requestPositionIndexEvent() {
+				panelMap.setRow(panelTrackData.getSelectedRow());
+			}
 
-		Create_Map_Toolbar();
-		jPanelMap.add(jToolBarMapViewer, java.awt.BorderLayout.WEST);
+			@Override
+			public void changeEvent() {
+				panelTrackData.refresh();
+			}
 
-		MapViewer = new org.openstreetmap.gui.jmapviewer.JMapViewer();
-		//-- Tile cache definition
-		try {
-			File cacheDir = new File(DataDir + "/"+CgConst.CG_DIR, "OpenStreetMapTileCache");
-			CgLog.info("Config Directory = " + DataDir + "/"+CgConst.CG_DIR + ", cacheDir=" + cacheDir);
-			cacheDir.mkdirs();
-			offlineTileCache = new OsmFileCacheTileLoader(MapViewer, cacheDir);
-			MapViewer.setTileLoader(offlineTileCache);
-		} catch (IOException ex) {
-			CgLog.error("Exception creating OsmFileCacheTileLoader");
-			ex.printStackTrace();
-		}
+			@Override
+			public void mouseClicked(MouseEvent evt) {
+				Coordinate c = panelMap.getSelectedPosition();
+				
+				int i = Track.FindNearestPoint(c.getLat(), c.getLon());
+				//Selection the position on the data grid
+				panelTrackData.setSelectedRow(i);
 
-		MapViewer.setMapMarkerVisible(true);
-		MapViewer.setScrollWrapEnabled(true);
-		MapViewer.setZoomButtonStyle(org.openstreetmap.gui.jmapviewer.JMapViewer.ZOOM_BUTTON_STYLE.VERTICAL);
-		MapViewer.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				MapViewerMouseClicked(evt);
+				//Refresh profil position
+				panelProfil.RefreshProfilInfo(i);
+				panelProfil.setCrosshairPosition(Track.data.get(i).getTotal(Settings.Unit) / 1000.0, Track.data.get(i).getElevation(Settings.Unit));				
 			}
 		});
-		jPanelMap.add(MapViewer, java.awt.BorderLayout.CENTER);
-
-		jScrollPanelMap = new javax.swing.JScrollPane();
-		jScrollPanelMap.setViewportView(jPanelMap);
-
-		SplitPaneMainRight.setRightComponent(jScrollPanelMap);
+		
+		SplitPaneMainRight.setRightComponent(panelMap);
 
 		// -- Finished - Pack
 		// ---------------------------------------------------
@@ -2607,7 +2179,7 @@ public class frmMain extends javax.swing.JFrame {
 			//-- Set table main selection
 			panelTrackData.setSelectedRow(r);
 			// -- Refresh marker position on the map
-			RefreshCurrentPosMarker(Track.data.get(r).getLatitude(), Track.data.get(r).getLongitude());
+			panelMap.RefreshCurrentPosMarker(Track.data.get(r).getLatitude(), Track.data.get(r).getLongitude());
 			// -- Refresh profil crosshair position and profil info
 			panelProfil.RefreshProfilInfo(r);
 			panelProfil.setCrosshairPosition(Track.data.get(r).getTotal(Settings.Unit) / 1000.0, Track.data.get(r).getElevation(Settings.Unit));
@@ -2615,29 +2187,6 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 
-
-
-//	private void Create_TimeDist_Toolbar() {
-//		ToolBarTimeDist = new javax.swing.JToolBar();
-//		ToolBarTimeDist.setOrientation(javax.swing.SwingConstants.VERTICAL);
-//		ToolBarTimeDist.setFloatable(false);
-//		ToolBarTimeDist.setRollover(true);
-//
-//		// -- Save
-//		// --------------------------------------------------------------
-//		btTimeDistSave = new javax.swing.JButton();
-//		btTimeDistSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/save.png")));
-//		btTimeDistSave.setToolTipText(bundle.getString("frmMain.btTimeDistSave.toolTipText"));
-//		btTimeDistSave.setFocusable(false);
-//		btTimeDistSave.addActionListener(new java.awt.event.ActionListener() {
-//			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//				//TODO
-//			}
-//		});
-//		ToolBarTimeDist.add(btTimeDistSave);
-//	}
-
-	
 	/**
 	 * Go to the next tag
 	 */
@@ -2715,6 +2264,21 @@ public class frmMain extends javax.swing.JFrame {
 			return;
 
 		frmSearchPoint frm = new frmSearchPoint();
+		frm.addListener(new frmSearchPointListener() {
+			
+			@Override
+			public void UpdateUIEvent() {
+				//-- Refresh the position of the map marker
+				
+				SearchPointResult result = frm.getResult();
+				panelMap.RefreshCurrentPosMarker(Track.data.get(result.Point).getLatitude(),
+						Track.data.get(result.Point).getLongitude());
+				
+				//-- Refresh the profil cursor position
+				panelProfil.RefreshProfilInfo(result.Point);
+				panelProfil.setCrosshairPosition(Track.data.get(result.Point).getTotal(Settings.Unit) / 1000.0, Track.data.get(result.Point).getElevation(Settings.Unit));				
+			}
+		});
 		frm.showDialog(Settings, Track, this, panelProfil, panelTrackData);
 	}
 
@@ -2748,7 +2312,7 @@ public class frmMain extends javax.swing.JFrame {
 	        		jPanelTimeDist.Refresh(Track, Settings);
 	        		jPanelSpeed.Refresh(Track, Settings);
 	        		jPanelSpeedSlope.Refresh(Track, Settings);
-	        		RefreshTrack(Track,true);
+	        		panelMap.RefreshTrack(Track,true);
 	        		PanelResume.refresh();
 	        		panelStatistics.refresh();
 	        		//bAutorUpdatePos = true;	            		
@@ -2761,23 +2325,6 @@ public class frmMain extends javax.swing.JFrame {
 	}
 	
 	
-
-//	class GPX_Filter extends javax.swing.filechooser.FileFilter {
-//
-//		@Override
-//		public boolean accept(File file) {
-//			// Allow only directories, or files with ".txt" extension
-//			return file.isDirectory() || file.getAbsolutePath().endsWith(".gpx");
-//		}
-//
-//		@Override
-//		public String getDescription() {
-//			// This description will be displayed in the dialog,
-//			// hard-coded = ugly, should be done via I18N
-//			return "Text documents (*.gpx)";
-//		}
-//	}
-
 	/** Returns an ImageIcon, or null if the path was invalid. */
 	protected ImageIcon createImageIcon(String path, String description) {
 		java.net.URL imgURL = getClass().getResource(path);
@@ -2822,8 +2369,7 @@ public class frmMain extends javax.swing.JFrame {
 		}
 
 		// -- Update the viewer
-		MapViewer.removeAllMapMarkers();
-		RefreshTrack(Track,true);
+		panelMap.setTrack(Track);
 		// -- Refresh the track information
 		RefreshStatusbar(Track);
 
@@ -2848,7 +2394,7 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshTitle();
 
 		if (Track.data.size() > 0)
-			RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
+			panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
 	}
 
 	/**
@@ -2913,7 +2459,7 @@ public class frmMain extends javax.swing.JFrame {
 		}
 
 		// -- Update the viewer
-		RefreshTrack(Track,true);
+		panelMap.setTrack(Track);
 		// -- Refresh the track information
 		RefreshStatusbar(Track);
 		// -- Refresh resume grid
@@ -3143,109 +2689,6 @@ public class frmMain extends javax.swing.JFrame {
 			LoadCGX(Settings.mruCGX[4]);
 	}
 
-
-	private void MapViewerMouseClicked(java.awt.event.MouseEvent evt) {
-		if (Track.data.size() <= 0)
-			return;
-		
-		//Find the nearest point
-		Coordinate c = MapViewer.getPosition(evt.getX(), evt.getY());
-		int i = Track.FindNearestPoint(c.getLat(), c.getLon());
-		//Selection the position on the data grid
-		panelTrackData.setSelectedRow(i);
-
-		//Refresh profil position
-		panelProfil.RefreshProfilInfo(i);
-		panelProfil.setCrosshairPosition(Track.data.get(i).getTotal(Settings.Unit) / 1000.0, Track.data.get(i).getElevation(Settings.Unit));
-
-		//Refresh position marker on the map
-		RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
-	}
-
-	/**
-	 * Display track stored in a TrackData class
-	 * 
-	 * @param tdata
-	 *            TrackData object to display
-	 * @param zoom2fit
-	 *            If true the zoom is set have the complete display of the track
-	 *            
-	 */
-	private void RefreshTrack(TrackData tdata, boolean zoom2fit) {
-		// -- Remove the previous track
-		MapViewer.removeAllMapPolygons();
-		MapViewer.removeAllMapMarkers();
-
-		MapMarker = null;
-		CurrentPosMarker = null;
-
-		// -- Create the route
-		List<Coordinate> route1 = new ArrayList<Coordinate>();
-		double last_diff = tdata.data.get(0).getDiff();
-		for (CgData r : tdata.data) {
-			if (r.getDiff() == last_diff) {
-				route1.add(new Coordinate(r.getLatitude(), r.getLongitude()));
-			} else {
-				route1.add(new Coordinate(r.getLatitude(), r.getLongitude()));
-				MapPolyLine polyLine1 = new MapPolyLine(route1);
-				// -- Set the line color
-				if (last_diff==100.0)
-					polyLine1.setColor(CgConst.CL_MAP_DIFF_VERYEASY);
-				else if (last_diff >= 98.0)
-					polyLine1.setColor(CgConst.CL_MAP_DIFF_EASY);
-				else if (last_diff >= 95.0)
-					polyLine1.setColor(CgConst.CL_MAP_DIFF_AVERAGE);
-				else if (last_diff >= 88)
-					polyLine1.setColor(CgConst.CL_MAP_DIFF_HARD);
-				else
-					polyLine1.setColor(CgConst.CL_MAP_DIFF_VERYHARD);
-
-				//-- Track width
-				polyLine1.setStroke(new BasicStroke(CgConst.TRACK_TICKNESS));
-
-				// -- Upddate the viewer
-				MapViewer.addMapPolygon(polyLine1);
-
-				route1 = new ArrayList<Coordinate>();
-				route1.add(new Coordinate(r.getLatitude(), r.getLongitude()));
-			}
-			last_diff = r.getDiff();
-		}
-		// -- Add the last polyline
-		MapPolyLine polyLine1 = new MapPolyLine(route1);
-		// -- Set the line color
-		if (last_diff >= 98.0)
-			polyLine1.setColor(Color.GREEN);
-		else if (last_diff >= 95.0)
-			polyLine1.setColor(Color.BLUE);
-		else if (last_diff >= 88)
-			polyLine1.setColor(Color.RED);
-		else
-			polyLine1.setColor(Color.BLACK);
-		// -- Set the stroke
-		polyLine1.setStroke(new BasicStroke(3));
-		// -- Upddate the viewer
-		MapViewer.addMapPolygon(polyLine1);
-
-		// -- Zoom to display the track
-		if (zoom2fit)
-			MapViewer.setDisplayToFitMapPolygons();
-		
-		for (CgData r : tdata.data) {
-			int t=r.getTag();
-			int v=0;
-			if ((t & CgConst.TAG_MARK)!=0)
-				v=v+1;
-			if ((t & CgConst.TAG_EAT_PT)!=0)
-				v=v+2;
-			if ((t & CgConst.TAG_WATER_PT)!=0)
-				v=v+4;
-			
-			if (v!=0) 
-				MapViewer.addMapMarker(new MapMarkerImg(new Coordinate(r.getLatitude(), r.getLongitude()), createImageIcon("images/markers_"+v+".png", "").getImage()));
-		}		
-	}
-
 	
 	/**
 	 * Refresh the statusbar
@@ -3317,49 +2760,7 @@ public class frmMain extends javax.swing.JFrame {
 			LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMeter.text"));
 		}
 	}
-
 	
-	/**
-	 * Refresh the position of the marker on the map
-	 * @param lat
-	 *            latitude of the position of the marker
-	 * @param lon
-	 *            longitude of the position of the marker
-	 */
-	public void RefreshCurrentPosMarker(double lat, double lon) {
-		if (CurrentPosMarker == null) {
-			// -- Define the current position marker
-			CurrentPosMarker = new MapMarkerImg(new Coordinate(lat, lon),
-					createImageIcon("images/current_marker.png", "").getImage());
-			MapViewer.addMapMarker(CurrentPosMarker);
-		} else {
-			CurrentPosMarker.setLat(lat);
-			CurrentPosMarker.setLon(lon);
-			MapViewer.setDisplayPosition(new Coordinate(lat, lon), MapViewer.getZoom());
-		}
-	}
-
-
-	/**
-	 * Refresh the marker on the map
-	 * @param lat
-	 *            latitude of the position of the marker
-	 * @param lon
-	 *            longitude of the position of the marker
-	 */
-	public void RefreshMapMarker(double lat, double lon) {
-		if (MapMarker == null) {
-			// -- Define the current position marker
-			MapMarker = new MapMarkerImg(new Coordinate(lat, lon),
-					createImageIcon("images/marker1.png", "").getImage());
-			MapViewer.addMapMarker(MapMarker);
-		} else {
-			MapMarker.setLat(lat);
-			MapMarker.setLon(lon);
-			MapViewer.setDisplayPosition(new Coordinate(lat, lon), MapViewer.getZoom());
-		}
-	}
-
 	
 	/**
 	 * Refresh the GPX most recent used files menu
@@ -3612,7 +3013,6 @@ public class frmMain extends javax.swing.JFrame {
 	private javax.swing.JLabel LbInfoInternet;
 	private javax.swing.JLabel LbInfoTime;
 	private javax.swing.JLabel LbInfoTotalDist;
-	private org.openstreetmap.gui.jmapviewer.JMapViewer MapViewer;
 	private javax.swing.JSplitPane SplitPaneMain;
 	private javax.swing.JSplitPane SplitPaneMainRight;
 	private javax.swing.JTabbedPane TabbedPaneMain;
@@ -3623,9 +3023,8 @@ public class frmMain extends javax.swing.JFrame {
 	private javax.swing.JMenu mnuEdit;
 	private javax.swing.JPanel jPanelAnalyze;
 	private javax.swing.JPanel jPanelLeft;
-	private javax.swing.JPanel jPanelMap;
-	private javax.swing.JScrollPane jScrollPaneData;
-	private javax.swing.JToolBar jToolBarMapViewer;
+//	private javax.swing.JScrollPane jScrollPaneData;
+//	private javax.swing.JToolBar jToolBarMapViewer;
 	private javax.swing.JTree jTreeMain;
 	private javax.swing.JMenu mnuLastCGX;
 	private javax.swing.JMenu mnuLastGPX;

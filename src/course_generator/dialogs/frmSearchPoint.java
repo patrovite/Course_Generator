@@ -26,6 +26,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.AbstractAction;
@@ -42,6 +44,7 @@ import javax.swing.KeyStroke;
 
 import course_generator.TrackData;
 import course_generator.TrackData.SearchPointResult;
+import course_generator.maps.JPanelMapsListener;
 import course_generator.frmMain;
 import course_generator.profil.JPanelProfil;
 import course_generator.settings.CgSettings;
@@ -76,7 +79,9 @@ public class frmSearchPoint extends javax.swing.JDialog {
 	CustomFocusTraversalPolicy newPolicy;
 	private JPanelProfil profil;
 	private JPanelTrackData trackDataTable;
-	
+	private List<frmSearchPointListener> listeners = new ArrayList<frmSearchPointListener>();
+	private SearchPointResult result=null;
+	 
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -86,6 +91,17 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		initComponents();
 		// setModal(true);
 	}
+	
+	public void addListener(frmSearchPointListener toAdd) {
+		listeners.add(toAdd);
+	}
+
+
+	public void notifyUpdateUI() {
+		for (frmSearchPointListener hl : listeners)
+			hl.UpdateUIEvent();
+	}
+
 
 	public boolean showDialog(CgSettings settings, TrackData track, frmMain mainwin, JPanelProfil profil, JPanelTrackData paneltrack) {
 		if ((track==null) || (settings==null) || (profil==null)) return false;
@@ -94,6 +110,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		this.track = track;
 		this.profil = profil;
 		this.trackDataTable=paneltrack;
+		this.result=null;
 		main = mainwin;
 		setVisible(true);
 		return ok;
@@ -152,7 +169,8 @@ public class frmSearchPoint extends javax.swing.JDialog {
 
 		// -- Display the result
 		lbPointFoundVal.setText(bundle.getString("frmSearchPoint.Searching"));
-		SearchPointResult result = track.SearchPoint(lat, lon);
+//		SearchPointResult result = track.SearchPoint(lat, lon);
+		result = track.SearchPoint(lat, lon);
 		if (result.Point > -1) {
 			lbPointFoundVal.setText(String.valueOf(result.Point + 1));
 
@@ -164,18 +182,20 @@ public class frmSearchPoint extends javax.swing.JDialog {
 
 			lbDistanceFromPointVal.setText(String.format("%1.0f", dist));
 
-			// -- Scroll to the position in the data table
-			trackDataTable.setSelectedRow(result.Point);
-//			main.TableMain.setRowSelectionInterval(result.Point, result.Point);
-//			main.TableMain.scrollRectToVisible(new Rectangle(main.TableMain.getCellRect(result.Point, 0, true)));
-
-			//-- Refresh the position of the map marker
-			main.RefreshCurrentPosMarker(track.data.get(result.Point).getLatitude(),
-					track.data.get(result.Point).getLongitude());
+			notifyUpdateUI();
 			
-			//-- Refresh the profil cursor position
-			profil.RefreshProfilInfo(result.Point);
-			profil.setCrosshairPosition(main.Track.data.get(result.Point).getTotal(main.Settings.Unit) / 1000.0, main.Track.data.get(result.Point).getElevation(main.Settings.Unit));
+//			// -- Scroll to the position in the data table
+//			trackDataTable.setSelectedRow(result.Point);
+////			main.TableMain.setRowSelectionInterval(result.Point, result.Point);
+////			main.TableMain.scrollRectToVisible(new Rectangle(main.TableMain.getCellRect(result.Point, 0, true)));
+//
+//			//-- Refresh the position of the map marker
+//			main.RefreshCurrentPosMarker(track.data.get(result.Point).getLatitude(),
+//					track.data.get(result.Point).getLongitude());
+//			
+//			//-- Refresh the profil cursor position
+//			profil.RefreshProfilInfo(result.Point);
+//			profil.setCrosshairPosition(main.Track.data.get(result.Point).getTotal(main.Settings.Unit) / 1000.0, main.Track.data.get(result.Point).getElevation(main.Settings.Unit));
 		}
 	}
 
@@ -318,6 +338,10 @@ public class frmSearchPoint extends javax.swing.JDialog {
 
 		//-- Center the windows
 		setLocationRelativeTo(null);
+	}
+
+	public SearchPointResult getResult() {
+		return result;
 	}
 
 }
