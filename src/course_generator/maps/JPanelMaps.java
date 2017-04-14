@@ -42,8 +42,6 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
 
 import course_generator.CgData;
-import course_generator.MapMarkerImg;
-import course_generator.MapPolyLine;
 import course_generator.ResumeData;
 import course_generator.TrackData;
 import course_generator.dialogs.FrmSelectMap;

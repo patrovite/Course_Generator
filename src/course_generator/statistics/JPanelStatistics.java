@@ -32,7 +32,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
-
 import course_generator.TrackData;
 import course_generator.TrackData.CalcAvrSlopeResult;
 import course_generator.TrackData.CalcAvrSpeedResult;
@@ -330,7 +329,7 @@ public class JPanelStatistics extends JPanel {
 
 		if (!s.isEmpty()) {
 			// -- Save the statistics
-			track.SaveCGX(s, 0, track.data.size() - 1);
+//			track.SaveCGX(s, 0, track.data.size() - 1);
 			try {
 				FileWriter out = new FileWriter(s);
 				out.write(editorStat.getText());

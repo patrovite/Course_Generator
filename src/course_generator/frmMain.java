@@ -36,7 +36,7 @@
  * Maps :
  * - Openstreetmap : http://www.openstreetmap.org/
  * - OpenTopoMap : https://opentopomap.org/
- * 
+ * - Bing map : (c) Microsoft
  */
 
 /*
@@ -46,19 +46,20 @@
  *
  * TODO:
  * - Dialog to display the tile directory size and a button to empty the directory
- * - Add a library to log all the message
  * - Statistic: Add the highest ascend and descend
+ * - Analyze : bar chart speed/km or miles
+ * - Analyze : Click in charts sometime doesn't works. Probably due to "find the nearest point" function
  * - Crosshair on curve editor => it select the line on the grid 
  * 
  * Notes:
- * http://stackoverflow.com/questions/10657239/jmapviewer-add-tiles-for-offline-view
+ * Ctrl+C shortcut doesn't work because it probably managed directly by the JTable. Currently there is no shortcut.
+ * 
  */
 
 package course_generator;
 
 import static course_generator.dialogs.frmAbout.showDialogAbout;
 
-import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -66,8 +67,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -75,9 +74,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.swing.Icon;
@@ -90,11 +86,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
-//import javax.swing.JTable;
-import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
@@ -102,34 +95,9 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartMouseEvent;
-import org.jfree.chart.ChartMouseListener;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.entity.ChartEntity;
-import org.jfree.chart.entity.XYItemEntity;
-import org.jfree.chart.panel.CrosshairOverlay;
-import org.jfree.chart.plot.Crosshair;
-import org.jfree.chart.plot.Marker;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.ValueMarker;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYAreaRenderer;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.TextAnchor;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.OsmFileCacheTileLoader;
-import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
-import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
 
-//import course_generator.TrackData.CalcAvrSlopeResult;
-//import course_generator.TrackData.CalcAvrSpeedResult;
 import course_generator.TrackData.CalcClimbResult;
 import course_generator.TrackData.SearchPointResult;
 import course_generator.analysis.JPanelAnalysisSpeed;
@@ -137,7 +105,6 @@ import course_generator.analysis.JPanelAnalysisSpeedSlope;
 import course_generator.analysis.JPanelAnalysisTimeDist;
 import course_generator.dialogs.FrmExportWaypoints;
 import course_generator.dialogs.FrmImportChoice;
-import course_generator.dialogs.FrmSelectMap;
 import course_generator.dialogs.frmEditPosition;
 import course_generator.dialogs.frmFillCoeff;
 import course_generator.dialogs.frmFillCoeff.EditCoeffResult;
@@ -158,14 +125,9 @@ import course_generator.resume.JPanelResumeListener;
 import course_generator.settings.CgSettings;
 import course_generator.settings.frmSettings;
 import course_generator.statistics.JPanelStatistics;
-import course_generator.tiles.openstreetmap.OpenStreetMap;
-import course_generator.tiles.opentopomap.OpenTopoMap;
 import course_generator.trackdata.JPanelTrackData;
 import course_generator.trackdata.JPanelTrackDataListener;
-import course_generator.trackdata_table.MainHeaderRenderer;
-import course_generator.trackdata_table.TrackDataClass;
 import course_generator.trackdata_table.TrackDataModel;
-import course_generator.trackdata_table.TrackDataRenderer;
 import course_generator.utils.CgConst;
 import course_generator.utils.CgLog;
 import course_generator.utils.FileTypeFilter;
@@ -179,11 +141,11 @@ import course_generator.utils.Utils.CalcLineResult;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.ALPHA 12";
+	private final String Version = "4.0.0.ALPHA 13";
 
-	public static boolean inEclipse=false;
-	public static CgLog log=null;
-	
+	public static boolean inEclipse = false;
+	public static CgLog log = null;
+
 	public TrackData Track;
 	private ResumeData Resume;
 	private final TrackDataModel ModelTableMain;
@@ -194,8 +156,10 @@ public class frmMain extends javax.swing.JFrame {
 	private int cmptMinute = 0;
 	private boolean InternetConnectionActive = false;
 	private Timer timer1s; // 1 second timer object
-//	private boolean showProfilMarker = true;
-	
+	private boolean bNoBackup = true;
+	private String StrMapsDirSize = "";
+	// private boolean showProfilMarker = true;
+
 	/**
 	 * Creates new form frmMain
 	 */
@@ -274,11 +238,7 @@ public class frmMain extends javax.swing.JFrame {
 	private JPanelAnalysisTimeDist jPanelTimeDist;
 	private JPanelAnalysisSpeed jPanelSpeed;
 	private JPanelAnalysisSpeedSlope jPanelSpeedSlope;
-//	private JToolBar ToolBarTimeDist;
-//	private JButton btTimeDistSave;
-//	private JButton btMapSelect;
-
-//	private JButton btMapOfflineSelection;
+	// private JButton btMapOfflineSelection;
 
 	private JPanelResume PanelResume;
 
@@ -289,7 +249,8 @@ public class frmMain extends javax.swing.JFrame {
 	private JPanelTrackData panelTrackData;
 
 	private JPanelMaps panelMap;
-	
+
+	private JLabel LbInfoMapDirSize;
 
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
@@ -304,81 +265,80 @@ public class frmMain extends javax.swing.JFrame {
 			cmptMinute++;
 			if (cmptMinute > 60) {
 				cmptMinute = 0;
-				//-- Check every minute if we need to switch log file
+				// -- Check every minute if we need to switch log file
 				CgLog.checkFileSize();
+				CheckOfflineMapsSize();
 			}
-			
+
 		}
 	}
 
+
 	/**
-	 * Creates new form frmMain 
-	 * ------------------------------- 
-	 * !!!! Everything start here !!!! 
-	 * ------------------------
+	 * Creates new form frmMain ------------------------------- !!!! Everything
+	 * start here !!!! ------------------------
 	 */
 	public frmMain(String args[]) {
 		// Initialize data
 		DataDir = Utils.GetHomeDir();
-		
-		//-- Initialize data
+
+		// -- Initialize data
 		Track = new TrackData();
 		Resume = new ResumeData();
 		Settings = new CgSettings();
 		ModelTableMain = new TrackDataModel(Track, Settings);
-//		showProfilMarker=true;
+		// showProfilMarker=true;
 
 		// -- Load configuration
 		LoadConfig();
 
-		CgLog.info("Start Course Generator version "+Version);
-		CgLog.info("Java version : "+System.getProperty("java.version"));
-		CgLog.info("java.runtime.name : "+System.getProperty("java.runtime.name"));
-		CgLog.info("java.vm.version : "+System.getProperty("java.vm.version"));
-		CgLog.info("java.vm.vendor : "+System.getProperty("java.vm.vendor"));
-		CgLog.info("path.separator : "+System.getProperty("path.separator"));
-		CgLog.info("user.country : "+System.getProperty("user.country"));
-		CgLog.info("java.runtime.version : "+System.getProperty("java.runtime.version"));
-		CgLog.info("os.arch : "+System.getProperty("os.arch"));
-		CgLog.info("os.name : "+System.getProperty("os.name"));
-		CgLog.info("user.timezone : "+System.getProperty("user.timezone"));
-		CgLog.info("file.encoding : "+System.getProperty("file.encoding"));
-		CgLog.info("java.specification.version : "+System.getProperty("java.specification.version"));
-		CgLog.info("java.vm.specification.version : "+System.getProperty("java.vm.specification.version"));
-		CgLog.info("sun.arch.data.model : "+System.getProperty("sun.arch.data.model"));
-		CgLog.info("user.language : "+System.getProperty("user.language"));
-		CgLog.info("java.version : "+System.getProperty("java.version"));
-		CgLog.info("java.vendor : "+System.getProperty("java.vendor"));
-		CgLog.info("file.separator : "+System.getProperty("file.separator"));
-		CgLog.info("sun.cpu.endian : "+System.getProperty("sun.cpu.endian"));
-		CgLog.info("sun.desktop : "+System.getProperty("sun.desktop"));
-		CgLog.info("sun.cpu.isalist : "+System.getProperty("sun.cpu.isalist"));
-		
-		//-- List the java properties
-		//-- To activate only if necessary. It talks a lot!
-		//System.getProperties().list(System.out);
-		
-		//-- Set the language
+		CgLog.info("Start Course Generator version " + Version);
+		CgLog.info("Java version : " + System.getProperty("java.version"));
+		CgLog.info("java.runtime.name : " + System.getProperty("java.runtime.name"));
+		CgLog.info("java.vm.version : " + System.getProperty("java.vm.version"));
+		CgLog.info("java.vm.vendor : " + System.getProperty("java.vm.vendor"));
+		CgLog.info("path.separator : " + System.getProperty("path.separator"));
+		CgLog.info("user.country : " + System.getProperty("user.country"));
+		CgLog.info("java.runtime.version : " + System.getProperty("java.runtime.version"));
+		CgLog.info("os.arch : " + System.getProperty("os.arch"));
+		CgLog.info("os.name : " + System.getProperty("os.name"));
+		CgLog.info("user.timezone : " + System.getProperty("user.timezone"));
+		CgLog.info("file.encoding : " + System.getProperty("file.encoding"));
+		CgLog.info("java.specification.version : " + System.getProperty("java.specification.version"));
+		CgLog.info("java.vm.specification.version : " + System.getProperty("java.vm.specification.version"));
+		CgLog.info("sun.arch.data.model : " + System.getProperty("sun.arch.data.model"));
+		CgLog.info("user.language : " + System.getProperty("user.language"));
+		CgLog.info("java.version : " + System.getProperty("java.version"));
+		CgLog.info("java.vendor : " + System.getProperty("java.vendor"));
+		CgLog.info("file.separator : " + System.getProperty("file.separator"));
+		CgLog.info("sun.cpu.endian : " + System.getProperty("sun.cpu.endian"));
+		CgLog.info("sun.desktop : " + System.getProperty("sun.desktop"));
+		CgLog.info("sun.cpu.isalist : " + System.getProperty("sun.cpu.isalist"));
+
+		// -- List the java properties
+		// -- To activate only if necessary. It talks a lot!
+		// System.getProperties().list(System.out);
+
+		// -- Set the language
 		CgLog.info("System language : " + Locale.getDefault().toString());
 		// -- Set the language
 		if (Settings.Language.isEmpty()) {
-			//-- System language
-			CgLog.info("Configured language : System");			
-		}
-		else {
-			CgLog.info("Configured language : "+Settings.Language);			
+			// -- System language
+			CgLog.info("Configured language : System");
+		} else {
+			CgLog.info("Configured language : " + Settings.Language);
 			if (Settings.Language.equalsIgnoreCase("FR")) {
 				Locale.setDefault(Locale.FRANCE);
 			} else if (Settings.Language.equalsIgnoreCase("EN")) {
 				Locale.setDefault(Locale.US);
-			}
-			else Locale.setDefault(Locale.US);
+			} else
+				Locale.setDefault(Locale.US);
 		}
 
 		CgLog.info("Selected language : " + Locale.getDefault().toString());
-		
+
 		// -- Set default font
-		setUIFont(new javax.swing.plaf.FontUIResource("Tahoma",	Font.PLAIN,	14));
+		setUIFont(new javax.swing.plaf.FontUIResource("Tahoma", Font.PLAIN, 14));
 
 		// -- Initialize the string resource for internationalization
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
@@ -402,17 +362,20 @@ public class frmMain extends javax.swing.JFrame {
 		r.y = (screensize.height - r.height) / 2;
 		setBounds(r);
 
-		//-- Set the horizontal splitter position
+		//-- Check the maps dir size
+		CheckOfflineMapsSize();
+
+		// -- Set the horizontal splitter position
 		SplitPaneMainRight.setDividerLocation(Settings.HorizSplitPosition);
-		
-		// -- Set the vertical splitter position (currently because the feature is not implemented)
-//		SplitPaneMain.setDividerLocation(Settings.VertSplitPosition);
+
+		// -- Set the vertical splitter position (currently because the feature
+		// is not implemented)
+		// SplitPaneMain.setDividerLocation(Settings.VertSplitPosition);
 		SplitPaneMain.setDividerLocation(0);
-		
+
 		// -- Configure the tile source for the map
 		panelMap.RefreshMapType();
-		
-		
+
 		// -- Set the counter in order near the end in order to start the
 		// connection test
 		cmptInternetConnexion = Settings.ConnectionTimeout - 1;
@@ -427,46 +390,48 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshStatusbar(Track);
 		panelMap.RefreshMapButtons();
 		panelProfil.RefreshProfilButtons();
+
 		
-		//-- Display the splash screen
-        showDialogAbout(this, true, false, Version);
+		// -- Display the splash screen
+		showDialogAbout(this, true, false, Version);
 	}
-	
+
 
 	/**
 	 * Launch the calculation on the track
 	 */
-    private void CalcTrackTime() {
-    	if (Track.data.isEmpty()) return;
+	private void CalcTrackTime() {
+		if (Track.data.isEmpty())
+			return;
 
-        Track.Calculate();
+		Track.Calculate();
 
-        RefreshStatusbar(Track);
-        
-		CalcClimbResult ccr = new CalcClimbResult();	
-		ccr = Track.CalcClimb(0, Track.data.size()-1, ccr);
+		RefreshStatusbar(Track);
+
+		CalcClimbResult ccr = new CalcClimbResult();
+		ccr = Track.CalcClimb(0, Track.data.size() - 1, ccr);
 		Track.setClimbP(ccr.cp);
 		Track.setClimbM(ccr.cm);
-		Track.AscTime=ccr.tp;
-		Track.DescTime=ccr.tm;
-		
+		Track.AscTime = ccr.tp;
+		Track.DescTime = ccr.tm;
+
 		Track.CheckTimeLimit();
 
-        Track.isCalculated = true;
-        Track.isModified = true;
-        
-        //-- Refresh statusbar
-        RefreshStatusbar(Track);
-        panelTrackData.refresh();
-        PanelResume.refresh();
-        panelStatistics.refresh();
-    }
-    
+		Track.isCalculated = true;
+		Track.isModified = true;
+
+		// -- Refresh statusbar
+		RefreshStatusbar(Track);
+		panelTrackData.refresh();
+		PanelResume.refresh();
+		panelStatistics.refresh();
+	}
+
 
 	/**
 	 * Create the main menu
 	 */
-	
+
 	private void Create_MenuBarMain() {
 		// Create the menu
 		mnuMain = new javax.swing.JMenuBar();
@@ -650,16 +615,14 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSaveCSV.setText(bundle.getString("frmMain.mnuSaveCSV.text"));
 		mnuSaveCSV.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveGPXActionPerformed(evt); //TODO
+				SaveCSV();
 			}
 		});
-		mnuSaveCSV.setEnabled(false);
 		mnuFile.add(mnuSaveCSV);
 
 		// -- Separator
 		mnuFile.add(new javax.swing.JPopupMenu.Separator());
 
-		
 		// -- Import GPX
 		mnuImportGPX = new javax.swing.JMenuItem();
 		mnuImportGPX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/openGPX.png")));
@@ -682,8 +645,6 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuFile.add(mnuImportCGX);
 
-		
-		
 		// -- Save a part of the track in CGX
 		mnuSavePartCGX = new javax.swing.JMenuItem();
 		mnuSavePartCGX
@@ -715,10 +676,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSavePartCSV.setText(bundle.getString("frmMain.mnuSavePartCSV.text"));
 		mnuSavePartCSV.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveGPXActionPerformed(evt); //TODO
+				SavePartCSV();
 			}
 		});
-		mnuSavePartCSV.setEnabled(false);
 		mnuFile.add(mnuSavePartCSV);
 
 		// -- Separator
@@ -731,6 +691,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuImportPoints.setText(bundle.getString("frmMain.mnuImportPoints.text"));
 		mnuImportPoints.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				BackupInCGX();
 				// mnuSaveGPXActionPerformed(evt); //TODO
 			}
 		});
@@ -769,18 +730,18 @@ public class frmMain extends javax.swing.JFrame {
 		mnuFile.add(new javax.swing.JPopupMenu.Separator());
 
 		// -- Offline
-//		mnuOffLine = new javax.swing.JMenuItem();
-//		mnuOffLine.setText(bundle.getString("frmMain.mnuOffLine.text"));
-//		mnuOffLine.addActionListener(new java.awt.event.ActionListener() {
-//			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//				// mnuSaveGPXActionPerformed(evt); //TODO
-//			}
-//		});
-//		mnuOffLine.setEnabled(false);
-//		mnuFile.add(mnuOffLine);
+		// mnuOffLine = new javax.swing.JMenuItem();
+		// mnuOffLine.setText(bundle.getString("frmMain.mnuOffLine.text"));
+		// mnuOffLine.addActionListener(new java.awt.event.ActionListener() {
+		// public void actionPerformed(java.awt.event.ActionEvent evt) {
+		// // mnuSaveGPXActionPerformed(evt); //TODO
+		// }
+		// });
+		// mnuOffLine.setEnabled(false);
+		// mnuFile.add(mnuOffLine);
 
 		// -- Separator
-//		mnuFile.add(new javax.swing.JPopupMenu.Separator());
+		// mnuFile.add(new javax.swing.JPopupMenu.Separator());
 
 		// -- Quit
 		mnuQuit = new javax.swing.JMenuItem();
@@ -804,28 +765,28 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Copy
 		mnuCopy = new javax.swing.JMenuItem();
-		mnuCopy.setAccelerator(
-				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+		// mnuCopy.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C,
+		// java.awt.event.InputEvent.CTRL_MASK));
 		mnuCopy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/copy.png")));
 		mnuCopy.setText(bundle.getString("frmMain.mnuCopy.text"));
 		mnuCopy.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				panelTrackData.Copy2Clipboard();
 			}
 		});
-		mnuCopy.setEnabled(false);
 		mnuEdit.add(mnuCopy);
 
 		// -- Select lines...
-//		mnuSelectLines = new javax.swing.JMenuItem();
-//		mnuSelectLines.setText(bundle.getString("frmMain.mnuSelectLines.text"));
-//		mnuSelectLines.addActionListener(new java.awt.event.ActionListener() {
-//			public void actionPerformed(java.awt.event.ActionEvent evt) {
-//				// mnuSaveCGXActionPerformed(evt); //TODO
-//			}
-//		});
-//		mnuSelectLines.setEnabled(false);
-//		mnuEdit.add(mnuSelectLines);
+		// mnuSelectLines = new javax.swing.JMenuItem();
+		// mnuSelectLines.setText(bundle.getString("frmMain.mnuSelectLines.text"));
+		// mnuSelectLines.addActionListener(new java.awt.event.ActionListener()
+		// {
+		// public void actionPerformed(java.awt.event.ActionEvent evt) {
+		// // mnuSaveCGXActionPerformed(evt); //TODO
+		// }
+		// });
+		// mnuSelectLines.setEnabled(false);
+		// mnuEdit.add(mnuSelectLines);
 
 		// -- Separator
 		mnuEdit.add(new javax.swing.JPopupMenu.Separator());
@@ -935,7 +896,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuGenerateRoadbook.setText(bundle.getString("frmMain.mnuGenerateRoadbook.text"));
 		mnuGenerateRoadbook.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//TODO
+				// TODO
 			}
 		});
 		mnuGenerateRoadbook.setEnabled(false);
@@ -998,6 +959,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuFindMinMax.setText(bundle.getString("frmMain.mnuFindMinMax.text"));
 		mnuFindMinMax.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				BackupInCGX();
 				Track.CalcMinMax();
 			}
 		});
@@ -1012,7 +974,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuInvertTrack.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				if (Track.data.size() > 0) {
-					// BackupInCGX(); TODO BackupCGX
+					BackupInCGX();
 					Track.Invert();
 					panelProfil.RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
@@ -1137,10 +1099,11 @@ public class frmMain extends javax.swing.JFrame {
 				jPanelSpeed.Refresh(Track, Settings);
 				jPanelSpeedSlope.Refresh(Track, Settings);
 				panelStatistics.refresh();
-				
+
 				int row = panelTrackData.getSelectedRow();
-				if (row>= 0) panelProfil.RefreshProfilInfo(row);
-				
+				if (row >= 0)
+					panelProfil.RefreshProfilInfo(row);
+
 				panelTrackData.refresh();
 				PanelResume.RefreshTableResume();
 			}
@@ -1201,57 +1164,142 @@ public class frmMain extends javax.swing.JFrame {
 		setJMenuBar(mnuMain);
 
 		// TODO check why it's necessary
-		mnuMain.getAccessibleContext().setAccessibleParent(this); 
+		mnuMain.getAccessibleContext().setAccessibleParent(this);
 	}
 
+
 	/**
-	 * Import a CGX file 
+	 * Save a part of the data in a CSV file
+	 */
+	private void SavePartCSV() {
+		String s;
+
+		if (Track.data.isEmpty())
+			return;
+
+		s = Utils.SaveDialog(this, Settings.LastDir, "", ".csv", bundle.getString("frmMain.CSVFile"), true,
+				bundle.getString("frmMain.FileExist"));
+
+		if (!s.isEmpty()) {
+			// -- Save track
+			int start = panelTrackData.getSelectedRow();
+			int end = start + panelTrackData.getSelectedRowCount();
+
+			Track.SaveCSV(s, start, end, Settings.Unit);
+			// -- Store the directory
+			Settings.LastDir = Utils.GetDirFromFilename(s);
+		}
+	}
+
+
+	/**
+	 * Save data in a CSV file
+	 */
+	private void SaveCSV() {
+		String s;
+
+		if (Track.data.isEmpty())
+			return;
+
+		s = Utils.SaveDialog(this, Settings.LastDir, "", ".csv", bundle.getString("frmMain.CSVFile"), true,
+				bundle.getString("frmMain.FileExist"));
+
+		if (!s.isEmpty()) {
+			// -- Save track
+			Track.SaveCSV(s, 0, Track.data.size() - 1, Settings.Unit);
+			// -- Store the directory
+			Settings.LastDir = Utils.GetDirFromFilename(s);
+		}
+	}
+
+
+	/**
+	 * Import a CGX file
 	 */
 	protected void ImportCGX() {
 		if (Track.data.isEmpty())
 			return;
 
-	    FrmImportChoice frm = new FrmImportChoice();
+		FrmImportChoice frm = new FrmImportChoice();
 
-	    int res=frm.showDialog();
-	    
-	    if (res!=FrmImportChoice.RESULT_CANCEL) {
-		    String s = Utils.LoadDialog(this, Settings.LastDir, ".cgx", bundle.getString("frmMain.CGXFile"));
-	        if (!s.isEmpty()) {
-        		int mode = FrmImportChoice.RESULT_AT_END;
-        		if (res==FrmImportChoice.RESULT_AT_END)
-        			mode = 1;
-        		else
-        			mode = 2;
-        			
-        		//BackupInCGX();
-        		//bAutorUpdatePos = false;
-        		try {
-					Track.OpenCGX(this, s, mode);
+		int res = frm.showDialog();
+
+		if (res != FrmImportChoice.RESULT_CANCEL) {
+			String s = Utils.LoadDialog(this, Settings.LastDir, ".cgx", bundle.getString("frmMain.CGXFile"));
+			if (!s.isEmpty()) {
+				int mode = FrmImportChoice.RESULT_AT_END;
+				if (res == FrmImportChoice.RESULT_AT_END)
+					mode = 1;
+				else
+					mode = 2;
+
+				BackupInCGX();
+				// bAutorUpdatePos = false;
+				try {
+					Track.OpenCGX(this, s, mode, false);
 					panelTrackData.refresh();
-	        		RefreshStatusbar(Track);
-	        		RefreshTitle();
-	        		panelProfil.RefreshProfilChart();
-	        		jPanelTimeDist.Refresh(Track, Settings);
-	        		jPanelSpeed.Refresh(Track, Settings);
-	        		jPanelSpeedSlope.Refresh(Track, Settings);
-	        		panelMap.RefreshTrack(Track,true);
-	        		PanelResume.refresh();
-	        		panelStatistics.refresh();
-	        		//bAutorUpdatePos = true;	            		
+					RefreshStatusbar(Track);
+					RefreshTitle();
+					panelProfil.RefreshProfilChart();
+					jPanelTimeDist.Refresh(Track, Settings);
+					jPanelSpeed.Refresh(Track, Settings);
+					jPanelSpeedSlope.Refresh(Track, Settings);
+					panelMap.RefreshTrack(Track, true);
+					PanelResume.refresh();
+					panelStatistics.refresh();
+					// bAutorUpdatePos = true;
 				} catch (Exception e) {
 					CgLog.error("ImportCGX : Impossible to import the CGX file");
 					e.printStackTrace();
-				}        		
-	        }
-	    }
+				}
+			}
+		}
 	}
 
 
-
-
 	private void mnuAbout() {
-		showDialogAbout(this, false, true,  Version);
+		showDialogAbout(this, false, true, Version);
+	}
+
+
+	private void BackupInCGX() {
+		Track.SaveCGX(DataDir + "/" + CgConst.CG_DIR + "/backup.cgx", 0, Track.data.size() - 1, true);
+		bNoBackup = false;
+	}
+
+
+	private void RestoreInCGX() {
+		if ((Track.data.size() <= 0) || (bNoBackup))
+			return;
+		// bAutorUpdatePos = false;
+
+		Track.OpenCGX(this, DataDir + "/" + CgConst.CG_DIR + "/backup.cgx", CgConst.IMPORT_MODE_LOAD, true);
+
+		// -- Update the viewer
+		panelMap.setTrack(Track);
+		// -- Refresh the track information
+		RefreshStatusbar(Track);
+		// -- Refresh resume grid
+		PanelResume.setTrack(Track);
+
+		// -- Refresh profil tab
+		panelProfil.setTrack(Track);
+		panelProfil.setSettings(Settings);
+		panelProfil.RefreshProfilChart();
+		// -- Refresh analysis tab
+		jPanelTimeDist.Refresh(Track, Settings);
+		jPanelSpeed.Refresh(Track, Settings);
+		jPanelSpeedSlope.Refresh(Track, Settings);
+		// -- Refresh the form title
+		RefreshTitle();
+		// -- Refresh statistic
+		panelStatistics.setTrack(Track);
+
+		// -- Force the update of the main table
+		panelTrackData.setTrack(Track);
+
+		// bAutorUpdatePos = true;
+		bNoBackup = true;
 	}
 
 
@@ -1263,37 +1311,38 @@ public class frmMain extends javax.swing.JFrame {
 			return;
 
 		int start = panelTrackData.getSelectedRow();
-		if (start<0) return;
+		if (start < 0)
+			return;
 
-		//-- Confirmation dialog
+		// -- Confirmation dialog
 		Object[] options = { " " + bundle.getString("frmMain.NewStartYes") + " ",
 				" " + bundle.getString("frmMain.NewStartNo") + " " };
 		int ret = JOptionPane.showOptionDialog(this, bundle.getString("frmMain.NewStartMessage"),
-				bundle.getString("frmMain.NewStartTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
-				null, options, options[1]);
+				bundle.getString("frmMain.NewStartTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null,
+				options, options[1]);
 
-		//-- Ok! Let's go
+		// -- Ok! Let's go
 		if (ret == JOptionPane.YES_OPTION) {
+			BackupInCGX();
+
 			Track.NewStartingPoint(start);
-			
-			//-- Move the cursor to the first line of the data table
+
+			// -- Move the cursor to the first line of the data table
 			panelTrackData.setSelectedRow(0);
-			
-	        Track.isCalculated = false;
-	        Track.isModified = true;
-	        
-	        //-- Refresh
-	        RefreshStatusbar(Track);
-	        panelTrackData.refresh();
+
+			Track.isCalculated = false;
+			Track.isModified = true;
+
+			// -- Refresh
+			RefreshStatusbar(Track);
+			panelTrackData.refresh();
 			PanelResume.refresh();
 			panelStatistics.refresh();
 
-	        //Refresh the marker position on the map
+			// Refresh the marker position on the map
 			panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
 		}
 	}
-
-
 
 
 	/**
@@ -1307,13 +1356,13 @@ public class frmMain extends javax.swing.JFrame {
 
 		s = Utils.SaveDialog(this, Settings.LastDir, "", ".gpx", bundle.getString("frmMain.GPXFile"), true,
 				bundle.getString("frmMain.FileExist"));
-						
+
 		if (!s.isEmpty()) {
 			// -- Save track
-    		int start = panelTrackData.getSelectedRow();
-    		int end = start+panelTrackData.getSelectedRowCount();
+			int start = panelTrackData.getSelectedRow();
+			int end = start + panelTrackData.getSelectedRowCount();
 
-    		Track.SaveGPX(s, start, end);
+			Track.SaveGPX(s, start, end);
 			// -- Store the directory
 			Settings.LastDir = Utils.GetDirFromFilename(s);
 
@@ -1321,15 +1370,14 @@ public class frmMain extends javax.swing.JFrame {
 			AddMruGPX(s);
 			RefreshMruGPX();
 
-			// -- We don't reset the track modified flag because we save only a part of the track!
+			// -- We don't reset the track modified flag because we save only a
+			// part of the track!
 			Track.isModified = false;
 
 			// -- Refresh info panel
 			RefreshStatusbar(Track);
 		}
 	}
-
-
 
 
 	/**
@@ -1343,13 +1391,13 @@ public class frmMain extends javax.swing.JFrame {
 
 		s = Utils.SaveDialog(this, Settings.LastDir, "", ".cgx", bundle.getString("frmMain.CGXFile"), true,
 				bundle.getString("frmMain.FileExist"));
-						
+
 		if (!s.isEmpty()) {
 			// -- Save track
-    		int start = panelTrackData.getSelectedRow();
-    		int end = start+panelTrackData.getSelectedRowCount();
+			int start = panelTrackData.getSelectedRow();
+			int end = start + panelTrackData.getSelectedRowCount();
 
-			Track.SaveCGX(s, start, end);
+			Track.SaveCGX(s, start, end, false);
 			// -- Store the directory
 			Settings.LastDir = Utils.GetDirFromFilename(s);
 
@@ -1357,7 +1405,8 @@ public class frmMain extends javax.swing.JFrame {
 			AddMruCGX(s);
 			RefreshMruCGX();
 
-			// -- We don't reset the track modified flag because we save only a part of the track!
+			// -- We don't reset the track modified flag because we save only a
+			// part of the track!
 			Track.isModified = false;
 
 			// -- Refresh info panel
@@ -1366,19 +1415,18 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 
-
-
 	/**
 	 * Separator for the status bar
+	 * 
 	 * @return Separator object
 	 */
 	static JComponent createStatusbarSeparator() {
-        JSeparator x = new JSeparator(SwingConstants.VERTICAL);
-        x.setPreferredSize(new Dimension(3,20));
-        return x;
-    }
-	
-	
+		JSeparator x = new JSeparator(SwingConstants.VERTICAL);
+		x.setPreferredSize(new Dimension(3, 20));
+		return x;
+	}
+
+
 	/**
 	 * Create the status bar
 	 */
@@ -1388,25 +1436,24 @@ public class frmMain extends javax.swing.JFrame {
 		fl.setVgap(0);
 		StatusBar.setLayout(fl);
 
-		//-- Separator
+		// -- Separator
 		StatusBar.add(createStatusbarSeparator());
-				
+
 		// -- Total distance
 		// ----------------------------------------------------
 		LbInfoTotalDist = new javax.swing.JLabel();
 		LbInfoTotalDist
 				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/distance.png")));
 		StatusBar.add(LbInfoTotalDist);
-		
 
 		// -- Total distance - value
 		// ----------------------------------------------------
 		LbInfoTotalDistVal = new javax.swing.JLabel();
 		StatusBar.add(LbInfoTotalDistVal);
 
-		//-- Separator
+		// -- Separator
 		StatusBar.add(createStatusbarSeparator());
-		
+
 		// -- Ascent
 		// ------------------------------------------------------
 		LbInfoDp = new javax.swing.JLabel();
@@ -1418,122 +1465,129 @@ public class frmMain extends javax.swing.JFrame {
 		LbInfoDpVal = new javax.swing.JLabel();
 		StatusBar.add(LbInfoDpVal);
 
-		//-- Separator
+		// -- Separator
 		StatusBar.add(createStatusbarSeparator());
-		
+
 		// -- Descent
 		// -----------------------------------------------------
 		LbInfoDm = new javax.swing.JLabel();
 		LbInfoDm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/dm.png")));
 		StatusBar.add(LbInfoDm);
-		
+
 		// -- Descent value
 		// -----------------------------------------------------
 		LbInfoDmVal = new javax.swing.JLabel();
 		StatusBar.add(LbInfoDmVal);
 
-		//-- Separator
+		// -- Separator
 		StatusBar.add(createStatusbarSeparator());
-		
+
 		// -- Total time
 		// --------------------------------------------------------
 		LbInfoTime = new javax.swing.JLabel();
 		LbInfoTime
 				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chronometer.png")));
 		StatusBar.add(LbInfoTime);
-		
+
 		// -- Total time value
 		// --------------------------------------------------------
 		LbInfoTimeVal = new javax.swing.JLabel();
 		StatusBar.add(LbInfoTimeVal);
-		
-		//-- Separator
+
+		// -- Separator
 		StatusBar.add(createStatusbarSeparator());
 
 		// -- Curve
 		// --------------------------------------------------------
 		LbInfoCurve = new javax.swing.JLabel();
-		LbInfoCurve
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/curve.png")));
+		LbInfoCurve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/curve.png")));
 		StatusBar.add(LbInfoCurve);
-		
+
 		// -- Curve value
 		// --------------------------------------------------------
 		LbInfoCurveVal = new javax.swing.JLabel();
 		StatusBar.add(LbInfoCurveVal);
-		
-		//-- Separator
+
+		// -- Separator
 		StatusBar.add(createStatusbarSeparator());
 
 		// -- Time limit
 		// --------------------------------------------------------
-		LbTimeLimit = new javax.swing.JLabel(" "+bundle.getString("frmMain.LbTimeLimit.text")+" ");
+		LbTimeLimit = new javax.swing.JLabel(" " + bundle.getString("frmMain.LbTimeLimit.text") + " ");
 		LbTimeLimit.setOpaque(true);
 		LbTimeLimit.setBackground(Color.RED);
 		LbTimeLimit.setForeground(Color.WHITE);
 		StatusBar.add(LbTimeLimit);
-		
-		//-- Separator
-		sepTimeLimit=createStatusbarSeparator();
+
+		// -- Separator
+		sepTimeLimit = createStatusbarSeparator();
 		StatusBar.add(sepTimeLimit);
 
 		// -- Modified
 		// --------------------------------------------------------
 		LbModified = new javax.swing.JLabel();
-		LbModified
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/edit.png")));
+		LbModified.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/edit.png")));
 		StatusBar.add(LbModified);
-		
+
 		// -- Modified status
 		// --------------------------------------------------------
 		LbModifiedVal = new javax.swing.JLabel();
 		StatusBar.add(LbModifiedVal);
-		
-		//-- Separator
+
+		// -- Separator
 		StatusBar.add(createStatusbarSeparator());
-		
+
 		// -- Calculation needed
 		// ------------------------------------------------
 		LbInfoCalculate = new javax.swing.JLabel();
 		LbInfoCalculate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/calc.png")));
 		StatusBar.add(LbInfoCalculate);
-		
+
 		// -- Calculation needed value
 		// ------------------------------------------------
 		LbInfoCalculateVal = new javax.swing.JLabel();
 		StatusBar.add(LbInfoCalculateVal);
 
-		//-- Separator
+		// -- Separator
 		StatusBar.add(createStatusbarSeparator());
-		
+
 		// -- Internet connection present
 		// ----------------------------------------
 		LbInfoInternet = new javax.swing.JLabel();
 		LbInfoInternet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/earth.png")));
 		StatusBar.add(LbInfoInternet);
-		
+
 		// -- Internet connection present value
 		// ----------------------------------------
 		LbInfoInternetVal = new javax.swing.JLabel();
 
 		StatusBar.add(LbInfoInternetVal);
-		
-		//-- Separator
+
+		// -- Separator
 		StatusBar.add(createStatusbarSeparator());
-		
+
 		// -- Unit
 		// ----------------------------------------
 		LbInfoUnit = new javax.swing.JLabel();
 		LbInfoUnit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/unit.png")));
 		StatusBar.add(LbInfoUnit);
-		
+
 		// -- Unit value
 		// ----------------------------------------
 		LbInfoUnitVal = new javax.swing.JLabel();
 		StatusBar.add(LbInfoUnitVal);
-		
+
+		// -- Separator
+		StatusBar.add(createStatusbarSeparator());
+
+		// -- Map dir size
+		// ----------------------------------------
+		LbInfoMapDirSize = new javax.swing.JLabel();
+		LbInfoMapDirSize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/earth_bw.png")));
+		StatusBar.add(LbInfoMapDirSize);
 	}
-	
+
+
 	/**
 	 * Create the Main toolbar
 	 */
@@ -1597,10 +1651,9 @@ public class frmMain extends javax.swing.JFrame {
 		btUndo.setFocusable(false);
 		btUndo.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// btOpenCGXActionPerformed(evt); //TODO
+				RestoreInCGX();
 			}
 		});
-		btUndo.setEnabled(false);
 		ToolBarMain.add(btUndo);
 
 		// -- Separator
@@ -1704,27 +1757,28 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Fill difficulty
 		// ----------------------------------------------------
 		btFillDiff = new javax.swing.JButton();
-		btFillDiff
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/fill_diff.png")));
+		btFillDiff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/fill_diff.png")));
 		btFillDiff.setToolTipText(bundle.getString("frmMain.btFillDiff.toolTipText"));
 		btFillDiff.setFocusable(false);
 		btFillDiff.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				if (Track.data.isEmpty())
 					return;
-				
-	    		int start = panelTrackData.getSelectedRow();
-	    		int end = start+panelTrackData.getSelectedRowCount();
+
+				int start = panelTrackData.getSelectedRow();
+				int end = start + panelTrackData.getSelectedRowCount();
 
 				frmFillDiff frm = new frmFillDiff();
-				EditDiffResult res=frm.showDialog(Settings, Track, start, end);
+				EditDiffResult res = frm.showDialog(Settings, Track, start, end);
 				if (res.Valid) {
-					for(int i=res.Start; i<=res.End;i++) {
+					BackupInCGX();
+
+					for (int i = res.Start; i <= res.End; i++) {
 						Track.data.get(i).setDiff(res.Difficulty);
 					}
 
-					Track.isCalculated=false;
-					Track.isModified=true;
+					Track.isCalculated = false;
+					Track.isModified = true;
 					panelTrackData.refresh();
 					panelProfil.RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
@@ -1747,47 +1801,50 @@ public class frmMain extends javax.swing.JFrame {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				if (Track.data.size() <= 0)
 					return;
-				
-	    		int start = panelTrackData.getSelectedRow();
-	    		int end = start+panelTrackData.getSelectedRowCount();
+
+				int start = panelTrackData.getSelectedRow();
+				int end = start + panelTrackData.getSelectedRowCount();
 
 				frmFillCoeff frm = new frmFillCoeff();
-				EditCoeffResult res=frm.showDialog(Settings, Track, start, end);
+				EditCoeffResult res = frm.showDialog(Settings, Track, start, end);
 				if (res.Valid) {
-			        if (res.Start == res.End) {
-			        	Track.data.get(res.Start).setCoeff(res.Start_Coeff);
-			        }
-			        else {
-			        	double x1 = Track.data.get(res.Start).getTotal(CgConst.UNIT_METER);//   cd.data[frm.start].Total;
-			        	double y1 = res.Start_Coeff; //frm.startval;
+					BackupInCGX();
 
-			        	double x2 =  Track.data.get(res.End).getTotal(CgConst.UNIT_METER); //cd.data[frm.end].Total;
-			        	double y2 = res.End_Coeff; //frm.endval;
+					if (res.Start == res.End) {
+						Track.data.get(res.Start).setCoeff(res.Start_Coeff);
+					} else {
+						double x1 = Track.data.get(res.Start).getTotal(CgConst.UNIT_METER);// cd.data[frm.start].Total;
+						double y1 = res.Start_Coeff; // frm.startval;
 
-			        	CalcLineResult rc = new CalcLineResult(); 
-			        	rc=Utils.CalcLine(x1, y1, x2, y2, rc);
-			        
-			        	// Line equation calc with "Y"=distance and "X"=Coeff
-			        	double x = 0.0;
-			        	double offset = 0.0;
-			        	double coeff=0; 
-			        	
-			        	for ( int i= res.Start; i<= res.End; i++) {
-			        		x = Track.data.get(i).getTotal(CgConst.UNIT_METER);
-			        		offset = offset + Track.data.get(i).getRecovery();
-			        		
-			        		coeff=(rc.a * x + rc.b)+offset;
-			          
-			        		//Validity tests
-			        		if (coeff > CgConst.MAX_COEFF) coeff=CgConst.MAX_COEFF;
-			        		if (coeff < 0) coeff=0;
-			        		
-			        		Track.data.get(i).setCoeff(coeff);
-			        	}
-			        }
-			        
-					Track.isCalculated=false;
-					Track.isModified=true;
+						double x2 = Track.data.get(res.End).getTotal(CgConst.UNIT_METER); // cd.data[frm.end].Total;
+						double y2 = res.End_Coeff; // frm.endval;
+
+						CalcLineResult rc = new CalcLineResult();
+						rc = Utils.CalcLine(x1, y1, x2, y2, rc);
+
+						// Line equation calc with "Y"=distance and "X"=Coeff
+						double x = 0.0;
+						double offset = 0.0;
+						double coeff = 0;
+
+						for (int i = res.Start; i <= res.End; i++) {
+							x = Track.data.get(i).getTotal(CgConst.UNIT_METER);
+							offset = offset + Track.data.get(i).getRecovery();
+
+							coeff = (rc.a * x + rc.b) + offset;
+
+							// Validity tests
+							if (coeff > CgConst.MAX_COEFF)
+								coeff = CgConst.MAX_COEFF;
+							if (coeff < 0)
+								coeff = 0;
+
+							Track.data.get(i).setCoeff(coeff);
+						}
+					}
+
+					Track.isCalculated = false;
+					Track.isModified = true;
 					panelTrackData.refresh();
 					panelProfil.RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
@@ -1798,11 +1855,11 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		ToolBarMain.add(btFillCoeff);
-		
+
 		// -- Separator
 		// ---------------------------------------------------------
 		ToolBarMain.add(new javax.swing.JToolBar.Separator());
-		
+
 		// -- Calculate track time
 		// ----------------------------------------------
 		btCalculateTrackTime = new javax.swing.JButton();
@@ -1819,44 +1876,40 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
-	
+
 	/**
 	 * Display the mini roadbook
 	 */
 	protected void ShowMRB() {
 		if (Track.data.isEmpty())
 			return;
-		
+
 		FrmMiniroadbook frm = new FrmMiniroadbook(Settings);
 		frm.showDialog(Track);
 	}
-
-
 
 
 	protected void TrackSettings() {
 		if (Track.data.size() <= 0)
 			return;
 
-		frmTrackSettings frm= new frmTrackSettings();
-		if (frm.showDialog(Settings,Track)) {
+		frmTrackSettings frm = new frmTrackSettings();
+		if (frm.showDialog(Settings, Track)) {
 			panelTrackData.refresh();
-	        panelProfil.RefreshProfilChart();
-	        jPanelTimeDist.Refresh(Track, Settings);
-	        jPanelSpeed.Refresh(Track, Settings);
-	        jPanelSpeedSlope.Refresh(Track, Settings);
+			panelProfil.RefreshProfilChart();
+			jPanelTimeDist.Refresh(Track, Settings);
+			jPanelSpeed.Refresh(Track, Settings);
+			jPanelSpeedSlope.Refresh(Track, Settings);
 			RefreshTitle();
 			RefreshStatusbar(Track);
-			Track.isModified=true;
-			Track.isCalculated=false;
+			Track.isModified = true;
+			Track.isCalculated = false;
 		}
 	}
 
 
-
-
 	private void EditSSCurves() {
-		frmEditCurve frm= new frmEditCurve();
+		frmEditCurve frm = new frmEditCurve();
 		frm.showDialog(Track);
 		RefreshStatusbar(Track);
 	}
@@ -1880,7 +1933,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// Create bespoke component for rendering the tab.
 		javax.swing.JLabel lbl = new javax.swing.JLabel(title);
-		if (icon!=null)
+		if (icon != null)
 			lbl.setIcon(icon);
 
 		// Add some spacing between text and icon, and position text to the RHS.
@@ -1889,6 +1942,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 	}
+
 
 	/**
 	 * This method is called to initialize the form.
@@ -1924,7 +1978,7 @@ public class frmMain extends javax.swing.JFrame {
 		// ------------------------------------------------------
 		Create_Statusbar();
 		paneGlobal.add(StatusBar, BorderLayout.SOUTH);
-		
+
 		// -- Main split bar (vertical)
 		// -----------------------------------------
 		SplitPaneMain = new javax.swing.JSplitPane();
@@ -1934,84 +1988,90 @@ public class frmMain extends javax.swing.JFrame {
 		// ----------------------------------------
 		jPanelLeft = new javax.swing.JPanel();
 		jPanelLeft.setLayout(new java.awt.BorderLayout());
-		
+
 		// -- Add the left panel to the main split panel
 		// ------------------------
 		SplitPaneMain.setLeftComponent(jPanelLeft);
 		SplitPaneMain.setDividerLocation(0);
-		
-//		// -- Content of the tree
-//		javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode(
-//				"Course Generator");
-//		javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Parcours");
-//		javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Utmb 2011");
-//		javax.swing.tree.DefaultMutableTreeNode treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-//		treeNode3.add(treeNode4);
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-//		treeNode3.add(treeNode4);
-//		treeNode2.add(treeNode3);
-//		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Montagnard");
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-//		treeNode3.add(treeNode4);
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-//		treeNode3.add(treeNode4);
-//		treeNode2.add(treeNode3);
-//		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2008");
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-//		treeNode3.add(treeNode4);
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-//		treeNode3.add(treeNode4);
-//		treeNode2.add(treeNode3);
-//		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2009");
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-//		treeNode3.add(treeNode4);
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-//		treeNode3.add(treeNode4);
-//		treeNode2.add(treeNode3);
-//		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2010");
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-//		treeNode3.add(treeNode4);
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-//		treeNode3.add(treeNode4);
-//		treeNode2.add(treeNode3);
-//		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2011");
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-//		treeNode3.add(treeNode4);
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-//		treeNode3.add(treeNode4);
-//		treeNode2.add(treeNode3);
-//		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2012");
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-//		treeNode3.add(treeNode4);
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-//		treeNode3.add(treeNode4);
-//		treeNode2.add(treeNode3);
-//		treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2013");
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
-//		treeNode3.add(treeNode4);
-//		treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
-//		treeNode3.add(treeNode4);
-//		treeNode2.add(treeNode3);
-//		treeNode1.add(treeNode2);
-//		treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Configuration");
-//		treeNode1.add(treeNode2);
-//
-//		// -- Tree
-//		// --------------------------------------------------------------
-//		jTreeMain = new javax.swing.JTree();
-//		jTreeMain.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-//		jTreeMain.setPreferredSize(new java.awt.Dimension(109, 25));
-//
-//		// -- Add the tree to a scroll panel
-//		// ------------------------------------
-//		jScrollPaneTree = new javax.swing.JScrollPane();
-//		jScrollPaneTree.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-//		jScrollPaneTree.setViewportView(jTreeMain);
-//		jScrollPaneTree.setMaximumSize(new Dimension(0,0));
-//
-//		// -- Add the scroll panel to the left panel
-//		// ----------------------------
-//		jPanelLeft.add(jScrollPaneTree, java.awt.BorderLayout.CENTER);
+
+		// // -- Content of the tree
+		// javax.swing.tree.DefaultMutableTreeNode treeNode1 = new
+		// javax.swing.tree.DefaultMutableTreeNode(
+		// "Course Generator");
+		// javax.swing.tree.DefaultMutableTreeNode treeNode2 = new
+		// javax.swing.tree.DefaultMutableTreeNode("Parcours");
+		// javax.swing.tree.DefaultMutableTreeNode treeNode3 = new
+		// javax.swing.tree.DefaultMutableTreeNode("Utmb 2011");
+		// javax.swing.tree.DefaultMutableTreeNode treeNode4 = new
+		// javax.swing.tree.DefaultMutableTreeNode("Prévu");
+		// treeNode3.add(treeNode4);
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+		// treeNode3.add(treeNode4);
+		// treeNode2.add(treeNode3);
+		// treeNode3 = new
+		// javax.swing.tree.DefaultMutableTreeNode("Montagnard");
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+		// treeNode3.add(treeNode4);
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+		// treeNode3.add(treeNode4);
+		// treeNode2.add(treeNode3);
+		// treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2008");
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+		// treeNode3.add(treeNode4);
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+		// treeNode3.add(treeNode4);
+		// treeNode2.add(treeNode3);
+		// treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2009");
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+		// treeNode3.add(treeNode4);
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+		// treeNode3.add(treeNode4);
+		// treeNode2.add(treeNode3);
+		// treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2010");
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+		// treeNode3.add(treeNode4);
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+		// treeNode3.add(treeNode4);
+		// treeNode2.add(treeNode3);
+		// treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2011");
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+		// treeNode3.add(treeNode4);
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+		// treeNode3.add(treeNode4);
+		// treeNode2.add(treeNode3);
+		// treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2012");
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+		// treeNode3.add(treeNode4);
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+		// treeNode3.add(treeNode4);
+		// treeNode2.add(treeNode3);
+		// treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("UCDHL2013");
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Prévu");
+		// treeNode3.add(treeNode4);
+		// treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Fait");
+		// treeNode3.add(treeNode4);
+		// treeNode2.add(treeNode3);
+		// treeNode1.add(treeNode2);
+		// treeNode2 = new
+		// javax.swing.tree.DefaultMutableTreeNode("Configuration");
+		// treeNode1.add(treeNode2);
+		//
+		// // -- Tree
+		// // --------------------------------------------------------------
+		// jTreeMain = new javax.swing.JTree();
+		// jTreeMain.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+		// jTreeMain.setPreferredSize(new java.awt.Dimension(109, 25));
+		//
+		// // -- Add the tree to a scroll panel
+		// // ------------------------------------
+		// jScrollPaneTree = new javax.swing.JScrollPane();
+		// jScrollPaneTree.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		// jScrollPaneTree.setViewportView(jTreeMain);
+		// jScrollPaneTree.setMaximumSize(new Dimension(0,0));
+		//
+		// // -- Add the scroll panel to the left panel
+		// // ----------------------------
+		// jPanelLeft.add(jScrollPaneTree, java.awt.BorderLayout.CENTER);
 
 		// -- Right split pane
 		// --------------------------------------------------
@@ -2037,42 +2097,48 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Tab - data (grid)
 		// -------------------------------------------------
-		
+
 		panelTrackData = new JPanelTrackData(ModelTableMain, Settings);
 		panelTrackData.addListener(new JPanelTrackDataListener() {
 
 			@Override
 			public void doubleClickEvent() {
+				BackupInCGX();
 				frmEditPosition frm = new frmEditPosition();
 				if (frm.showDialog(Settings, Track, panelTrackData.getSelectedRow())) {
-					Track.isModified=true;
+					Track.isModified = true;
 					panelTrackData.refresh();
 					panelProfil.RefreshProfilChart();
 					RefreshStatusbar(Track);
 				}
 			}
 
+
 			@Override
 			public void simpleClickEvent() {
 				if (Track.data.size() > 0) {
-					int row =panelTrackData.getSelectedRow();
+					int row = panelTrackData.getSelectedRow();
 					// -- Refresh marker position on the map
-					panelMap.RefreshCurrentPosMarker(Track.data.get(row).getLatitude(), Track.data.get(row).getLongitude());
+					panelMap.RefreshCurrentPosMarker(Track.data.get(row).getLatitude(),
+							Track.data.get(row).getLongitude());
 					// -- Refresh profil crooshair position and profil info
 					panelProfil.RefreshProfilInfo(row);
-					panelProfil.setCrosshairPosition(Track.data.get(row).getTotal(Settings.Unit) / 1000.0, Track.data.get(row).getElevation(Settings.Unit));
-				}			
+					panelProfil.setCrosshairPosition(Track.data.get(row).getTotal(Settings.Unit) / 1000.0,
+							Track.data.get(row).getElevation(Settings.Unit));
+				}
 			}
+
 
 			@Override
 			public void keyRealeasedEvent() {
 				if (Track.data.size() > 0) {
-					int row =panelTrackData.getSelectedRow();
-					panelMap.RefreshCurrentPosMarker(Track.data.get(row).getLatitude(), Track.data.get(row).getLongitude());
+					int row = panelTrackData.getSelectedRow();
+					panelMap.RefreshCurrentPosMarker(Track.data.get(row).getLatitude(),
+							Track.data.get(row).getLongitude());
 				}
 			}
 		});
-		
+
 		addTab(TabbedPaneMain, panelTrackData, bundle.getString("frmMain.TabData.tabTitle"),
 				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/satellite16.png")));
 
@@ -2080,14 +2146,14 @@ public class frmMain extends javax.swing.JFrame {
 		// ------------------------------------------------------
 		panelProfil = new JPanelProfil(Settings);
 		panelProfil.addListener(new JPanelProfilListener() {
-			 @Override
-			 public void profilSelectionEvent() {
-				 int i=panelProfil.getIndex();
-				 //Refresh the position on the data grid
-				 panelTrackData.setSelectedRow(i);
-				 //Refresh the marker position on the map
-				 panelMap.RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
-			 }
+			@Override
+			public void profilSelectionEvent() {
+				int i = panelProfil.getIndex();
+				// Refresh the position on the data grid
+				panelTrackData.setSelectedRow(i);
+				// Refresh the marker position on the map
+				panelMap.RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
+			}
 		});
 
 		addTab(TabbedPaneMain, panelProfil, bundle.getString("frmMain.TabProfil.tabTitle"),
@@ -2096,10 +2162,9 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Tab - Statistic
 		// ---------------------------------------------------
 		panelStatistics = new JPanelStatistics(Settings);
-        addTab(TabbedPaneMain, panelStatistics, bundle.getString("frmMain.TabStatistic.tabTitle"),
+		addTab(TabbedPaneMain, panelStatistics, bundle.getString("frmMain.TabStatistic.tabTitle"),
 				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/stat.png")));
 
-        
 		// -- Tab - Analysis
 		// ----------------------------------------------------
 		jPanelAnalyze = new javax.swing.JPanel();
@@ -2107,31 +2172,30 @@ public class frmMain extends javax.swing.JFrame {
 		addTab(TabbedPaneMain, jPanelAnalyze, bundle.getString("frmMain.TabAnalyze.tabTitle"),
 				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/search.png")));
 
-		//-- Create the tab bar
+		// -- Create the tab bar
 		TabbedPaneAnalysis = new javax.swing.JTabbedPane(JTabbedPane.LEFT);
-		jPanelAnalyze.add(TabbedPaneAnalysis,java.awt.BorderLayout.CENTER);
-		
-		//-- Tab Analysis : Time/Dist
+		jPanelAnalyze.add(TabbedPaneAnalysis, java.awt.BorderLayout.CENTER);
+
+		// -- Tab Analysis : Time/Dist
 		jPanelTimeDist = new JPanelAnalysisTimeDist();
-		addTab(TabbedPaneAnalysis, jPanelTimeDist, bundle.getString("frmMain.TabTimeDist.tabTitle"),null);
-		
-		//-- Tab Analysis : Speed
+		addTab(TabbedPaneAnalysis, jPanelTimeDist, bundle.getString("frmMain.TabTimeDist.tabTitle"), null);
+
+		// -- Tab Analysis : Speed
 		jPanelSpeed = new JPanelAnalysisSpeed();
-		addTab(TabbedPaneAnalysis, jPanelSpeed, bundle.getString("frmMain.TabSpeed.tabTitle"),null);
-		
-		//-- Tab Analysis : Speed/slope
+		addTab(TabbedPaneAnalysis, jPanelSpeed, bundle.getString("frmMain.TabSpeed.tabTitle"), null);
+
+		// -- Tab Analysis : Speed/slope
 		jPanelSpeedSlope = new JPanelAnalysisSpeedSlope();
-		addTab(TabbedPaneAnalysis, jPanelSpeedSlope, bundle.getString("frmMain.TabSpeedSlope.tabTitle"),null);
-		
-		
+		addTab(TabbedPaneAnalysis, jPanelSpeedSlope, bundle.getString("frmMain.TabSpeedSlope.tabTitle"), null);
+
 		// -- Tab - Resume
 		// ------------------------------------------------------
 		PanelResume = new JPanelResume(Resume, Settings);
 		PanelResume.addListener(new JPanelResumeListener() {
-			 @Override
-			 public void lineChangeEvent() {
-				 SelectPositionFromResume(PanelResume.getSelectedLine());
-			 }
+			@Override
+			public void lineChangeEvent() {
+				SelectPositionFromResume(PanelResume.getSelectedLine());
+			}
 		});
 		addTab(TabbedPaneMain, PanelResume, bundle.getString("frmMain.TabResume.tabTitle"),
 				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/grid.png")));
@@ -2145,25 +2209,28 @@ public class frmMain extends javax.swing.JFrame {
 				panelMap.setRow(panelTrackData.getSelectedRow());
 			}
 
+
 			@Override
 			public void changeEvent() {
 				panelTrackData.refresh();
 			}
 
+
 			@Override
 			public void mouseClicked(MouseEvent evt) {
 				Coordinate c = panelMap.getSelectedPosition();
-				
+
 				int i = Track.FindNearestPoint(c.getLat(), c.getLon());
-				//Selection the position on the data grid
+				// Selection the position on the data grid
 				panelTrackData.setSelectedRow(i);
 
-				//Refresh profil position
+				// Refresh profil position
 				panelProfil.RefreshProfilInfo(i);
-				panelProfil.setCrosshairPosition(Track.data.get(i).getTotal(Settings.Unit) / 1000.0, Track.data.get(i).getElevation(Settings.Unit));				
+				panelProfil.setCrosshairPosition(Track.data.get(i).getTotal(Settings.Unit) / 1000.0,
+						Track.data.get(i).getElevation(Settings.Unit));
 			}
 		});
-		
+
 		SplitPaneMainRight.setRightComponent(panelMap);
 
 		// -- Finished - Pack
@@ -2172,18 +2239,18 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 
-
 	protected void SelectPositionFromResume(int selectedLine) {
 		if (Resume.data.size() > 0) {
-			int r=(int)(Resume.data.get(selectedLine).getLine())-1;
-			//-- Set table main selection
+			int r = (int) (Resume.data.get(selectedLine).getLine()) - 1;
+			// -- Set table main selection
 			panelTrackData.setSelectedRow(r);
 			// -- Refresh marker position on the map
 			panelMap.RefreshCurrentPosMarker(Track.data.get(r).getLatitude(), Track.data.get(r).getLongitude());
 			// -- Refresh profil crosshair position and profil info
 			panelProfil.RefreshProfilInfo(r);
-			panelProfil.setCrosshairPosition(Track.data.get(r).getTotal(Settings.Unit) / 1000.0, Track.data.get(r).getElevation(Settings.Unit));
-		}					
+			panelProfil.setCrosshairPosition(Track.data.get(r).getTotal(Settings.Unit) / 1000.0,
+					Track.data.get(r).getElevation(Settings.Unit));
+		}
 	}
 
 
@@ -2212,8 +2279,9 @@ public class frmMain extends javax.swing.JFrame {
 				if (d.getTag() != 0) {
 					// -- Select the line and scroll to it
 					panelTrackData.setSelectedRow(p);
-					//-- Update the profil position
-					panelProfil.setCrosshairPosition(Track.data.get(p).getTotal(Settings.Unit) / 1000.0, Track.data.get(p).getElevation(Settings.Unit));
+					// -- Update the profil position
+					panelProfil.setCrosshairPosition(Track.data.get(p).getTotal(Settings.Unit) / 1000.0,
+							Track.data.get(p).getElevation(Settings.Unit));
 					panelProfil.RefreshProfilInfo(p);
 				}
 
@@ -2221,6 +2289,7 @@ public class frmMain extends javax.swing.JFrame {
 		}
 		return p;
 	}
+
 
 	/**
 	 * Go to the previous tag
@@ -2247,14 +2316,16 @@ public class frmMain extends javax.swing.JFrame {
 				if (d.getTag() != 0) {
 					// -- Select the line and scroll to it
 					panelTrackData.setSelectedRow(p);
-					//-- Update the profil position
-					panelProfil.setCrosshairPosition(Track.data.get(p).getTotal(Settings.Unit) / 1000.0, Track.data.get(p).getElevation(Settings.Unit));
+					// -- Update the profil position
+					panelProfil.setCrosshairPosition(Track.data.get(p).getTotal(Settings.Unit) / 1000.0,
+							Track.data.get(p).getElevation(Settings.Unit));
 					panelProfil.RefreshProfilInfo(p);
 				}
 			}
 		}
 		return p;
 	}
+
 
 	/**
 	 * Display the search dialog
@@ -2263,68 +2334,70 @@ public class frmMain extends javax.swing.JFrame {
 		if (Track.data.size() <= 0)
 			return;
 
-		frmSearchPoint frm = new frmSearchPoint();
+		final frmSearchPoint frm = new frmSearchPoint();
 		frm.addListener(new frmSearchPointListener() {
-			
+
 			@Override
 			public void UpdateUIEvent() {
-				//-- Refresh the position of the map marker
-				
+				// -- Refresh the position of the map marker
 				SearchPointResult result = frm.getResult();
 				panelMap.RefreshCurrentPosMarker(Track.data.get(result.Point).getLatitude(),
 						Track.data.get(result.Point).getLongitude());
-				
-				//-- Refresh the profil cursor position
+
+				panelTrackData.setSelectedRow(result.Point);
+
+				// -- Refresh the profil cursor position
 				panelProfil.RefreshProfilInfo(result.Point);
-				panelProfil.setCrosshairPosition(Track.data.get(result.Point).getTotal(Settings.Unit) / 1000.0, Track.data.get(result.Point).getElevation(Settings.Unit));				
+				panelProfil.setCrosshairPosition(Track.data.get(result.Point).getTotal(Settings.Unit) / 1000.0,
+						Track.data.get(result.Point).getElevation(Settings.Unit));
 			}
 		});
-		frm.showDialog(Settings, Track, this, panelProfil, panelTrackData);
+		frm.showDialog(Settings, Track);
 	}
 
-	
+
 	public void ImportGPX() {
 		if (Track.data.isEmpty())
 			return;
 
-	    FrmImportChoice frm = new FrmImportChoice();
+		FrmImportChoice frm = new FrmImportChoice();
 
-	    int res=frm.showDialog();
-	    
-	    if (res!=FrmImportChoice.RESULT_CANCEL) {
-		    String s = Utils.LoadDialog(this, Settings.LastDir, ".gpx", bundle.getString("frmMain.GPXFile"));
-	        if (!s.isEmpty()) {
-        		int mode = FrmImportChoice.RESULT_AT_END;
-        		if (res==FrmImportChoice.RESULT_AT_END)
-        			mode = 1;
-        		else
-        			mode = 2;
-        			
-        		//BackupInCGX();
-        		//bAutorUpdatePos = false;
-        		try {
+		int res = frm.showDialog();
+
+		if (res != FrmImportChoice.RESULT_CANCEL) {
+			String s = Utils.LoadDialog(this, Settings.LastDir, ".gpx", bundle.getString("frmMain.GPXFile"));
+			if (!s.isEmpty()) {
+				int mode = FrmImportChoice.RESULT_AT_END;
+				if (res == FrmImportChoice.RESULT_AT_END)
+					mode = 1;
+				else
+					mode = 2;
+
+				BackupInCGX();
+				// bAutorUpdatePos = false;
+				try {
 					if (Track.OpenGPX(s, mode))
 						JOptionPane.showMessageDialog(this, bundle.getString("frmMain.NoTimeData"));
 					panelTrackData.refresh();
-	        		RefreshStatusbar(Track);
-	        		RefreshTitle();
-	        		panelProfil.RefreshProfilChart();
-	        		jPanelTimeDist.Refresh(Track, Settings);
-	        		jPanelSpeed.Refresh(Track, Settings);
-	        		jPanelSpeedSlope.Refresh(Track, Settings);
-	        		panelMap.RefreshTrack(Track,true);
-	        		PanelResume.refresh();
-	        		panelStatistics.refresh();
-	        		//bAutorUpdatePos = true;	            		
+					RefreshStatusbar(Track);
+					RefreshTitle();
+					panelProfil.RefreshProfilChart();
+					jPanelTimeDist.Refresh(Track, Settings);
+					jPanelSpeed.Refresh(Track, Settings);
+					jPanelSpeedSlope.Refresh(Track, Settings);
+					panelMap.RefreshTrack(Track, true);
+					PanelResume.refresh();
+					panelStatistics.refresh();
+					// bAutorUpdatePos = true;
 				} catch (Exception e) {
 					CgLog.error("ImportGPX : Impossible to import the GPX file");
 					e.printStackTrace();
-				}        		
-	        }
-	    }
+				}
+			}
+		}
 	}
-	
-	
+
+
 	/** Returns an ImageIcon, or null if the path was invalid. */
 	protected ImageIcon createImageIcon(String path, String description) {
 		java.net.URL imgURL = getClass().getResource(path);
@@ -2336,6 +2409,7 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
+
 	/**
 	 * Display a dialog box to open a GPX file
 	 */
@@ -2344,7 +2418,8 @@ public class frmMain extends javax.swing.JFrame {
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-		FileFilter gpxFilter = new FileTypeFilter(".gpx", bundle.getString("frmMain.GPXFile")); //"GPX file");
+		FileFilter gpxFilter = new FileTypeFilter(".gpx", bundle.getString("frmMain.GPXFile")); // "GPX
+																								// file");
 		fileChooser.addChoosableFileFilter(gpxFilter);
 		fileChooser.setFileFilter(gpxFilter);
 
@@ -2354,6 +2429,7 @@ public class frmMain extends javax.swing.JFrame {
 			LoadGPX(selectedFile.getAbsolutePath());
 		}
 	}
+
 
 	/**
 	 * Load a GPX file
@@ -2382,20 +2458,23 @@ public class frmMain extends javax.swing.JFrame {
 		panelStatistics.setTrack(Track);
 
 		RefreshMruGPX();
-		//-- Refresh profil tab
+		// -- Refresh profil tab
 		panelProfil.setTrack(Track);
 		panelProfil.setSettings(Settings);
 		panelProfil.RefreshProfilChart();
-		//-- Refresh analysis tab
+		// -- Refresh analysis tab
 		jPanelTimeDist.Refresh(Track, Settings);
 		jPanelSpeed.Refresh(Track, Settings);
 		jPanelSpeedSlope.Refresh(Track, Settings);
 		// -- Refresh the form title
 		RefreshTitle();
 
+		bNoBackup = true;
+
 		if (Track.data.size() > 0)
 			panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
 	}
+
 
 	/**
 	 * Save the track in GPX format
@@ -2408,7 +2487,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		s = Utils.SaveDialog(this, Settings.LastDir, "", ".gpx", bundle.getString("frmMain.GPXFile"), true,
 				bundle.getString("frmMain.FileExist"));
-						
+
 		if (!s.isEmpty()) {
 			// -- Save track
 			Track.SaveGPX(s, 0, Track.data.size() - 1);
@@ -2426,6 +2505,7 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
+
 	/**
 	 * Display a dialog box to open a CGX file
 	 */
@@ -2434,7 +2514,8 @@ public class frmMain extends javax.swing.JFrame {
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
-		FileFilter cgxFilter = new FileTypeFilter(".cgx", bundle.getString("frmMain.CGXFile")); //"CGX file");
+		FileFilter cgxFilter = new FileTypeFilter(".cgx", bundle.getString("frmMain.CGXFile")); // "CGX
+																								// file");
 		fileChooser.addChoosableFileFilter(cgxFilter);
 		fileChooser.setFileFilter(cgxFilter);
 
@@ -2445,6 +2526,7 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
+
 	/**
 	 * Load a CGX file
 	 * 
@@ -2453,7 +2535,7 @@ public class frmMain extends javax.swing.JFrame {
 	 */
 	private void LoadCGX(String filename) {
 		try {
-			Track.OpenCGX(this, filename, 0);
+			Track.OpenCGX(this, filename, 0, false);
 			AddMruCGX(filename);
 		} catch (Exception e) {
 		}
@@ -2464,24 +2546,27 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshStatusbar(Track);
 		// -- Refresh resume grid
 		PanelResume.setTrack(Track);
-		
+
 		// -- Refresh profil tab
 		panelProfil.setTrack(Track);
 		panelProfil.setSettings(Settings);
 		panelProfil.RefreshProfilChart();
-		//-- Refresh analysis tab
+		// -- Refresh analysis tab
 		jPanelTimeDist.Refresh(Track, Settings);
 		jPanelSpeed.Refresh(Track, Settings);
 		jPanelSpeedSlope.Refresh(Track, Settings);
-		// -- Refresh the form title 
+		// -- Refresh the form title
 		RefreshTitle();
-		// -- Refresh statistic 
+		// -- Refresh statistic
 		panelStatistics.setTrack(Track);
-		
+
 		// -- Force the update of the main table
 		panelTrackData.setTrack(Track);
 		RefreshMruCGX();
+
+		bNoBackup = true;
 	}
+
 
 	/**
 	 * Save the track in CGX format
@@ -2494,10 +2579,10 @@ public class frmMain extends javax.swing.JFrame {
 
 		s = Utils.SaveDialog(this, Settings.LastDir, "", ".cgx", bundle.getString("frmMain.CGXFile"), true,
 				bundle.getString("frmMain.FileExist"));
-						
+
 		if (!s.isEmpty()) {
 			// -- Save track
-			Track.SaveCGX(s, 0, Track.data.size() - 1);
+			Track.SaveCGX(s, 0, Track.data.size() - 1, false);
 			// -- Store the directory
 			Settings.LastDir = Utils.GetDirFromFilename(s);
 
@@ -2524,7 +2609,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		s = Utils.SaveDialog(this, Settings.LastDir, "", ".gpx", bundle.getString("frmMain.GPXFile"), true,
 				bundle.getString("frmMain.FileExist"));
-						
+
 		if (!s.isEmpty()) {
 			FrmExportWaypoints frm = new FrmExportWaypoints();
 			if (frm.showDialog()) {
@@ -2533,13 +2618,18 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
+
+	private void CheckOfflineMapsSize() {
+		StrMapsDirSize = Utils.humanReadableByteCount(Utils.folderSize(new File(DataDir + "/" + CgConst.CG_DIR + "/OpenStreetMapTileCache")),true);
+	}
 	
 	/**
 	 * Load the configuration file
 	 */
 	private void LoadConfig() {
-		Settings.Load(DataDir + "/"+CgConst.CG_DIR);
+		Settings.Load(DataDir + "/" + CgConst.CG_DIR);
 	}
+
 
 	/**
 	 * Save the settings in a configuration file
@@ -2555,9 +2645,10 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Update the column width in the settings
 		panelTrackData.updateColumnWidth();
-		
-		Settings.Save(DataDir + "/"+CgConst.CG_DIR);
+
+		Settings.Save(DataDir + "/" + CgConst.CG_DIR);
 	}
+
 
 	/**
 	 * Called by the quit application menu
@@ -2568,62 +2659,63 @@ public class frmMain extends javax.swing.JFrame {
 		this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
 
-//	private void btTestActionPerformed(java.awt.event.ActionEvent evt) {
-//		// Bouge la carte de 100 pixel
-//		// MapViewer.moveMap(100, 100);
-//
-//		// Essai lecture ressource image
-//		ImageIcon icon = createImageIcon("images/save.png", "a pretty but meaningless splat");
-//		// jLabelFooterTotalTime1.setIcon(icon);
-//		// jLabelFooterTotalTime1.setText("");
-//		// Fin essai lecture ressource image
-//
-//		// Met un marqueur au coordonnée indiqué
-//		Coordinate paris = new Coordinate(48.8567, 2.3508);
-//		MapViewer.addMapMarker(new MapMarkerImg(paris, icon.getImage()));
-//
-//		// Coordinate one = new Coordinate(48.8567, 2.3508);
-//		// Coordinate two = new Coordinate(48.8567, 2.4508);
-//		// Coordinate three = new Coordinate(48.9567, 2.4508);
-//		// List<Coordinate> route = new ArrayList<Coordinate>(Arrays.asList(one,
-//		// two, two));
-//		List<Coordinate> route = new ArrayList<Coordinate>();
-//		route.add(new Coordinate(48.8567, 2.3508));
-//		route.add(new Coordinate(48.8567, 2.4508));
-//		route.add(new Coordinate(48.9567, 2.4508));
-//		route.add(new Coordinate(48.9668, 2.4518));
-//		MapPolyLine polyLine = new MapPolyLine(route);
-//		polyLine.setColor(Color.red);
-//		MapViewer.addMapPolygon(polyLine);
-//
-//		List<Coordinate> route1 = new ArrayList<Coordinate>();
-//		route1.add(new Coordinate(48.9668, 2.4518));
-//		route1.add(new Coordinate(48.9669, 2.4510));
-//		route1.add(new Coordinate(48.9670, 2.4508));
-//		route1.add(new Coordinate(48.9668, 2.4518));
-//		MapPolyLine polyLine1 = new MapPolyLine(route1);
-//		polyLine1.setColor(Color.green);
-//		MapViewer.addMapPolygon(polyLine1);
-//
-//		// MapPolygonImpl polyLine = new MapPolygonImpl(route);
-//
-//		// MapViewer.setTileSource(new Thunderforest_Landscape());
-//		
-//		//MapViewer.setTileSource(new Thunderforest_Outdoors());
-//		RefreshMapType();
-//		//MapViewer.setTileSource(new OpenTopoMap());
-//		
-//		// MapViewer.setTileSource(new Thunderforest_Transport());
-//
-//		// MapViewer.setTileSource(new OsmTileSource.Mapnik());
-//		// MapViewer.setTileSource(new OsmTileSource.CycleMap());
-//		// MapViewer.setTileSource(new BingAerialTileSource());
-//		// MapViewer.setTileSource(new MapQuestOsmTileSource());
-//		// MapViewer.setTileSource(new MapQuestOpenAerialTileSource());
-//
-//	}
+	// private void btTestActionPerformed(java.awt.event.ActionEvent evt) {
+	// // Bouge la carte de 100 pixel
+	// // MapViewer.moveMap(100, 100);
+	//
+	// // Essai lecture ressource image
+	// ImageIcon icon = createImageIcon("images/save.png", "a pretty but
+	// meaningless splat");
+	// // jLabelFooterTotalTime1.setIcon(icon);
+	// // jLabelFooterTotalTime1.setText("");
+	// // Fin essai lecture ressource image
+	//
+	// // Met un marqueur au coordonnée indiqué
+	// Coordinate paris = new Coordinate(48.8567, 2.3508);
+	// MapViewer.addMapMarker(new MapMarkerImg(paris, icon.getImage()));
+	//
+	// // Coordinate one = new Coordinate(48.8567, 2.3508);
+	// // Coordinate two = new Coordinate(48.8567, 2.4508);
+	// // Coordinate three = new Coordinate(48.9567, 2.4508);
+	// // List<Coordinate> route = new ArrayList<Coordinate>(Arrays.asList(one,
+	// // two, two));
+	// List<Coordinate> route = new ArrayList<Coordinate>();
+	// route.add(new Coordinate(48.8567, 2.3508));
+	// route.add(new Coordinate(48.8567, 2.4508));
+	// route.add(new Coordinate(48.9567, 2.4508));
+	// route.add(new Coordinate(48.9668, 2.4518));
+	// MapPolyLine polyLine = new MapPolyLine(route);
+	// polyLine.setColor(Color.red);
+	// MapViewer.addMapPolygon(polyLine);
+	//
+	// List<Coordinate> route1 = new ArrayList<Coordinate>();
+	// route1.add(new Coordinate(48.9668, 2.4518));
+	// route1.add(new Coordinate(48.9669, 2.4510));
+	// route1.add(new Coordinate(48.9670, 2.4508));
+	// route1.add(new Coordinate(48.9668, 2.4518));
+	// MapPolyLine polyLine1 = new MapPolyLine(route1);
+	// polyLine1.setColor(Color.green);
+	// MapViewer.addMapPolygon(polyLine1);
+	//
+	// // MapPolygonImpl polyLine = new MapPolygonImpl(route);
+	//
+	// // MapViewer.setTileSource(new Thunderforest_Landscape());
+	//
+	// //MapViewer.setTileSource(new Thunderforest_Outdoors());
+	// RefreshMapType();
+	// //MapViewer.setTileSource(new OpenTopoMap());
+	//
+	// // MapViewer.setTileSource(new Thunderforest_Transport());
+	//
+	// // MapViewer.setTileSource(new OsmTileSource.Mapnik());
+	// // MapViewer.setTileSource(new OsmTileSource.CycleMap());
+	// // MapViewer.setTileSource(new BingAerialTileSource());
+	// // MapViewer.setTileSource(new MapQuestOsmTileSource());
+	// // MapViewer.setTileSource(new MapQuestOpenAerialTileSource());
+	//
+	// }
 
-	
+
 	/**
 	 * Called when the main form is closing
 	 * 
@@ -2650,16 +2742,18 @@ public class frmMain extends javax.swing.JFrame {
 			CgLog.info("End of the application! Bye :(");
 		}
 	}
-	
+
+
 	/**
 	 * Set form title
 	 */
 	private void RefreshTitle() {
-		String s="Course Generator "+Version;
+		String s = "Course Generator " + Version;
 		if (!Track.Name.isEmpty())
-			s=s+" - "+Track.Name;
+			s = s + " - " + Track.Name;
 		setTitle(s);
 	}
+
 
 	private void mnuMruGPXActionPerformed(java.awt.event.ActionEvent evt) {
 		JMenuItem m = (JMenuItem) evt.getSource();
@@ -2675,6 +2769,7 @@ public class frmMain extends javax.swing.JFrame {
 			LoadGPX(Settings.mruGPX[4]);
 	}
 
+
 	private void mnuMruCGXActionPerformed(java.awt.event.ActionEvent evt) {
 		JMenuItem m = (JMenuItem) evt.getSource();
 		if (m == mnuMruCGX1)
@@ -2689,7 +2784,7 @@ public class frmMain extends javax.swing.JFrame {
 			LoadCGX(Settings.mruCGX[4]);
 	}
 
-	
+
 	/**
 	 * Refresh the statusbar
 	 * 
@@ -2697,16 +2792,18 @@ public class frmMain extends javax.swing.JFrame {
 	 *            Track data object
 	 */
 	private void RefreshStatusbar(TrackData tdata) {
-				
+
 		// -- Distance
 		LbInfoTotalDistVal.setText(String.format("%1.3f ", tdata.getTotalDistance(Settings.Unit) / 1000.0)
 				+ Settings.getDistanceUnitString());
 
 		// -- Ascent
-		LbInfoDpVal.setText(String.format("%1.0f ", tdata.getClimbP(Settings.Unit)) + Settings.getElevationUnitString());
+		LbInfoDpVal
+				.setText(String.format("%1.0f ", tdata.getClimbP(Settings.Unit)) + Settings.getElevationUnitString());
 
 		// -- Descent
-		LbInfoDmVal.setText(String.format("%1.0f ", tdata.getClimbM(Settings.Unit)) + Settings.getElevationUnitString());
+		LbInfoDmVal
+				.setText(String.format("%1.0f ", tdata.getClimbM(Settings.Unit)) + Settings.getElevationUnitString());
 
 		// -- Time
 		int nbh = tdata.TotalTime / 3600;
@@ -2716,20 +2813,18 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Curve
 		LbInfoCurveVal.setText(tdata.Paramfile);
-		
+
 		// -- Time limit
 		LbTimeLimit.setVisible(Track.isTimeLimit);
 		sepTimeLimit.setVisible(Track.isTimeLimit);
-		
+
 		// -- Modified
 		if (Track.isModified) {
 			LbModifiedVal.setText(bundle.getString("frmMain.LbModified_Modified.text"));
-		}
-		else {
+		} else {
 			LbModifiedVal.setText(bundle.getString("frmMain.LbModified_Ok.text"));
 		}
-			
-		
+
 		// -- Calculation
 		if (Track.isCalculated) {
 			LbInfoCalculateVal.setText(bundle.getString("frmMain.LbInfoCalculateOk.text"));
@@ -2750,18 +2845,21 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Unit
 		switch (Settings.Unit) {
-		case CgConst.UNIT_METER:
-			LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMeter.text"));
-			break;
-		case CgConst.UNIT_MILES_FEET:
-			LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMilesFeet.text"));
-			break;
-		default:
-			LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMeter.text"));
+			case CgConst.UNIT_METER:
+				LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMeter.text"));
+				break;
+			case CgConst.UNIT_MILES_FEET:
+				LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMilesFeet.text"));
+				break;
+			default:
+				LbInfoUnitVal.setText(bundle.getString("frmMain.LbInfoUnitMeter.text"));
 		}
+		
+		//-- Map dir size
+		LbInfoMapDirSize.setText(StrMapsDirSize);
 	}
-	
-	
+
+
 	/**
 	 * Refresh the GPX most recent used files menu
 	 */
@@ -2808,9 +2906,10 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
-	
+
 	/**
 	 * Add "filename" to the CGX mru menu
+	 * 
 	 * @param filename
 	 *            name of the file to add
 	 */
@@ -2825,7 +2924,7 @@ public class frmMain extends javax.swing.JFrame {
 		Settings.mruGPX[0] = filename;
 	}
 
-	
+
 	/**
 	 * Refresh the CGX most recent used files menu
 	 */
@@ -2872,8 +2971,10 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
+
 	/**
 	 * Add "filename" to the CGX mru menu
+	 * 
 	 * @param filename
 	 *            name of the file to add
 	 */
@@ -2887,6 +2988,7 @@ public class frmMain extends javax.swing.JFrame {
 			Settings.mruCGX[i] = Settings.mruCGX[i - 1];
 		Settings.mruCGX[0] = filename;
 	}
+
 
 	/**
 	 * Set the default font
@@ -2905,8 +3007,7 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-	
-	
+
 	/**
 	 * Everything start here!!!
 	 * 
@@ -2914,59 +3015,61 @@ public class frmMain extends javax.swing.JFrame {
 	 *            the command line arguments
 	 */
 	public static void main(final String args[]) {
-		//-- Get the VM parameters
+		// -- Get the VM parameters
 		String inEclipseStr = System.getProperty("runInEclipse");
-        inEclipse = "true".equalsIgnoreCase(inEclipseStr);
+		inEclipse = "true".equalsIgnoreCase(inEclipseStr);
 
-        //-- Set the data dir
+		// -- Set the data dir
 		String DataDir = Utils.GetHomeDir();
-		
-		//-- ensure log directory exists
+
+		// -- ensure log directory exists
 		new File(new File(DataDir + "/" + CgConst.CG_DIR), "logs").mkdirs();
 
-		//-- Initialize the log directory
-		log = new CgLog(DataDir + "/" + CgConst.CG_DIR + "/logs/logs.txt", 10*1024*1024, !inEclipse); //10Mb file
-		
-		//-- Set the look and feel
+		// -- Initialize the log directory
+		log = new CgLog(DataDir + "/" + CgConst.CG_DIR + "/logs/logs.txt", 10 * 1024 * 1024, !inEclipse); // 10Mb
+																											// file
+
+		// -- Set the look and feel
 		try {
 			// Set System L&F
 			OsCheck.OSType ostype = OsCheck.getOperatingSystemType();
 			switch (ostype) {
-			case Windows:
-				for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-					if ("Windows".equals(info.getName())) {
-						javax.swing.UIManager.setLookAndFeel(info.getClassName());
-						break;
-					} else {
-						javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+				case Windows:
+					for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
+							.getInstalledLookAndFeels()) {
+						if ("Windows".equals(info.getName())) {
+							javax.swing.UIManager.setLookAndFeel(info.getClassName());
+							break;
+						} else {
+							javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+						}
 					}
-				}
-				break;
-			case MacOS:
-				javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-				break;
-			case Linux:
-				// Toolkit.getDefaultToolkit().setDynamicLayout(true);
-				// System.setProperty("sun.awt.noerasebackground", "true");
-				// //JFrame.setDefaultLookAndFeelDecorated(true);
-				// //JDialog.setDefaultLookAndFeelDecorated(true);
+					break;
+				case MacOS:
+					javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+					break;
+				case Linux:
+					// Toolkit.getDefaultToolkit().setDynamicLayout(true);
+					// System.setProperty("sun.awt.noerasebackground", "true");
+					// //JFrame.setDefaultLookAndFeelDecorated(true);
+					// //JDialog.setDefaultLookAndFeelDecorated(true);
 
-				try {
-					javax.swing.UIManager.setLookAndFeel("de.muntjak.tinylookandfeel.TinyLookAndFeel");
-					// continuous layout on frame resize
-					Toolkit.getDefaultToolkit().setDynamicLayout(true);
-					// no flickering on resize
-					System.setProperty("sun.awt.noerasebackground", "true");
-					// Theme.loadTheme(de.muntjak.tinylookandfeel.TinyLookAndFeel.class.getResource("/themes/CG_Gray.theme"));
-					// Theme.loadTheme(course_generator.class().getResource("/course_generator/CG_Gray.theme"));
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					javax.swing.UIManager.getSystemLookAndFeelClassName();
-				}
-				break;
-			case Other:
-				javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-				break;
+					try {
+						javax.swing.UIManager.setLookAndFeel("de.muntjak.tinylookandfeel.TinyLookAndFeel");
+						// continuous layout on frame resize
+						Toolkit.getDefaultToolkit().setDynamicLayout(true);
+						// no flickering on resize
+						System.setProperty("sun.awt.noerasebackground", "true");
+						// Theme.loadTheme(de.muntjak.tinylookandfeel.TinyLookAndFeel.class.getResource("/themes/CG_Gray.theme"));
+						// Theme.loadTheme(course_generator.class().getResource("/course_generator/CG_Gray.theme"));
+					} catch (Exception ex) {
+						ex.printStackTrace();
+						javax.swing.UIManager.getSystemLookAndFeelClassName();
+					}
+					break;
+				case Other:
+					javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+					break;
 			}
 		} catch (ClassNotFoundException ex) {
 			ex.printStackTrace();
@@ -2981,22 +3084,22 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Set things according to the OS
 		OsCheck.OSType ostype = OsCheck.getOperatingSystemType();
 		switch (ostype) {
-		case Windows:
-			// setUIFont(new javax.swing.plaf.FontUIResource("Tahoma",
-			// Font.PLAIN, 12));
-			break;
-		case MacOS:
-			// setUIFont(new javax.swing.plaf.FontUIResource("Arial",
-			// Font.PLAIN, 12));
-			break;
-		case Linux:
-			// setUIFont(new javax.swing.plaf.FontUIResource("Arial",
-			// Font.PLAIN, 12));
-			break;
-		default :
-			// setUIFont(new javax.swing.plaf.FontUIResource("Arial",
-			// Font.PLAIN, 12));
-			break;
+			case Windows:
+				// setUIFont(new javax.swing.plaf.FontUIResource("Tahoma",
+				// Font.PLAIN, 12));
+				break;
+			case MacOS:
+				// setUIFont(new javax.swing.plaf.FontUIResource("Arial",
+				// Font.PLAIN, 12));
+				break;
+			case Linux:
+				// setUIFont(new javax.swing.plaf.FontUIResource("Arial",
+				// Font.PLAIN, 12));
+				break;
+			default:
+				// setUIFont(new javax.swing.plaf.FontUIResource("Arial",
+				// Font.PLAIN, 12));
+				break;
 		}
 
 		/* Create and display the form */
@@ -3023,8 +3126,8 @@ public class frmMain extends javax.swing.JFrame {
 	private javax.swing.JMenu mnuEdit;
 	private javax.swing.JPanel jPanelAnalyze;
 	private javax.swing.JPanel jPanelLeft;
-//	private javax.swing.JScrollPane jScrollPaneData;
-//	private javax.swing.JToolBar jToolBarMapViewer;
+	// private javax.swing.JScrollPane jScrollPaneData;
+	// private javax.swing.JToolBar jToolBarMapViewer;
 	private javax.swing.JTree jTreeMain;
 	private javax.swing.JMenu mnuLastCGX;
 	private javax.swing.JMenu mnuLastGPX;

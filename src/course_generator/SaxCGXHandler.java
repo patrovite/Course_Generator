@@ -340,7 +340,6 @@ public class SaxCGXHandler extends DefaultHandler{
                 if (cgx_version>CgConst.MAX_CGX_VERSION_TO_READ) {
                     errcode=ERR_READ_VERSION;
                     errline=locator.getLineNumber();
-                    //TODO Afficher message de défaut car version non lisible
                 }
             }
             else if (qName.equalsIgnoreCase("TOTALDISTANCE")) {

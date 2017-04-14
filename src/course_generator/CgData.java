@@ -180,6 +180,10 @@ public class CgData {
 		return Latitude;
 	}
 
+	public String getLatitudeString() {
+		return String.format("%1.7f", Latitude);
+	}
+	
 	public void setLatitude(double latitude) {
 		Latitude = latitude;
 	}
@@ -187,6 +191,10 @@ public class CgData {
 	//-------------------------------
 	public double getLongitude() {
 		return Longitude;
+	}
+
+	public String getLongitudeString() {
+		return String.format("%1.7f", Longitude);
 	}
 
 	public void setLongitude(double longitude) {

@@ -20,6 +20,7 @@ package course_generator.resume_table;
 
 import java.awt.Color;
 import java.awt.Component;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -102,7 +103,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 				return this;
 
 			case 4: // Positive climb
-				setText(data.getdClimbPString(settings.Unit, false));
+				setText(data.getClimbPString(settings.Unit, false));
 				setHorizontalAlignment(CENTER);
 
 				// -- Set the background
@@ -114,7 +115,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 				return this;
 
 			case 5: // Negative climb
-				setText(data.getdClimbMString(settings.Unit, false));
+				setText(data.getClimbMString(settings.Unit, false));
 				setHorizontalAlignment(CENTER);
 
 				// -- Set the background

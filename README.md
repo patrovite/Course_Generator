@@ -1,8 +1,8 @@
 # Course Generator
 
-Course Generator is a software which can estimate your time in trail races. 
+Course Generator is a software which can estimate your time in road running races, trails, ultra trails or treks. 
 
-STATUS : Version 4.0.0 alpha 12 - Usable but not all the features has been rewritten from the C# version.
+STATUS : Version 4.0.0 alpha 13 - Usable but not all the features has been rewritten from the C# version.
 
 I created Course Generator in 2008 for my first 100 km ultra trail. Since then, I added a lot of features and it has been used by a lot of french ultra-runner. Up to the version 3.88 it has been written in C# and now java is used in order to be cross platform (Windows, Mac OS and Linux) and multilingual. 
 
@@ -30,7 +30,7 @@ With Course Generator you can :
 * Insert an external track at the beginning or the end of a track
 * Extract and save a part of the track
 * Save all your specific settings in a CGX file (a Course Generator specific format)
-* Offline maps
+* Have offline maps (OpenStreetMap)
 
   
 How to run Course Generator : 

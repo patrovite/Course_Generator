@@ -28,7 +28,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -102,6 +101,7 @@ l     */
 	    	sb.append(" Maps :\n");
 	    	sb.append(" - Openstreetmap : http://www.openstreetmap.org\n");
 	    	sb.append(" - OpenTopoMap : https://opentopomap.org\n");
+	    	sb.append(" - Bing map : (C)Microsoft\n");
 	    	taCopyright.setText(sb.toString());
 	    	jScrollPaneCopyright.setPreferredSize(new Dimension(400, 100));
 	    	jScrollPaneCopyright.setVisible(true);

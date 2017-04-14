@@ -19,30 +19,24 @@
 package course_generator.trackdata;
 
 import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JToolBar;
-
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.Crosshair;
-import org.jfree.data.xy.XYSeriesCollection;
 
 import course_generator.TrackData;
-import course_generator.dialogs.frmEditPosition;
 import course_generator.settings.CgSettings;
 import course_generator.trackdata_table.MainHeaderRenderer;
 import course_generator.trackdata_table.TrackDataClass;
 import course_generator.trackdata_table.TrackDataModel;
 import course_generator.trackdata_table.TrackDataRenderer;
+import course_generator.utils.CgConst;
 
 public class JPanelTrackData extends JPanel {
 	private TrackData track = null;
@@ -164,7 +158,7 @@ public class JPanelTrackData extends JPanel {
 
 
 	public int getSelectedRow() {
-//		return selectedRow;
+		// return selectedRow;
 		return TableMain.getSelectedRow();
 	}
 
@@ -174,24 +168,123 @@ public class JPanelTrackData extends JPanel {
 	}
 
 
-	public void setColumnWidth(){
+	public void setColumnWidth() {
 		// -- Set the preferred column width
 		for (int i = 0; i < 15; i++) {
 			TableMain.getColumnModel().getColumn(i).setPreferredWidth(settings.TableMainColWidth[i]);
 		}
 		refresh();
 	}
-	
+
+
 	public void updateColumnWidth() {
 		// -- Update the column width in the settings
 		for (int i = 0; i < 16; i++)
 			settings.TableMainColWidth[i] = TableMain.getColumnModel().getColumn(i).getWidth();
 	}
-	
+
+
 	public void setSelectedRow(int row) {
 		TableMain.setRowSelectionInterval(row, row);
 		Rectangle rect = TableMain.getCellRect(row, 0, true);
 		TableMain.scrollRectToVisible(rect);
+	}
+
+
+	/**
+	 * Copy of the current cell in the clipboard --
+	 */
+	public void Copy2Clipboard() {
+		if (track == null)
+			return;
+		if (track.data.size() <= 0)
+			return;
+
+		int row = TableMain.getSelectedRow();
+		int col = TableMain.getSelectedColumn();
+
+		if ((row >= 0) && (col >= 0)) {
+			String s = "";
+
+			switch (col) {
+				case 0: // Num
+					s = track.data.get(row).getNumString();
+					break;
+				case 1: // Latitude
+					s = track.data.get(row).getLatitudeString();
+					break;
+				case 2: // Longitude
+					s = track.data.get(row).getLongitudeString();
+					break;
+				case 3: // Elevation
+					s = track.data.get(row).getElevationString(settings.Unit, false);
+					break;
+				case 4: // Tags
+					int tag = track.data.get(row).getTag();
+
+					// High and low point
+					if ((tag & CgConst.TAG_HIGH_PT) != 0)
+						s = s + "High ";
+					if ((tag & CgConst.TAG_LOW_PT) != 0)
+						s = s + "Low ";
+
+					// Eat and drink station
+					if ((tag & CgConst.TAG_EAT_PT) != 0)
+						s = s + "Eat ";
+					if ((tag & CgConst.TAG_WATER_PT) != 0)
+						s = s + "Drink";
+
+					// Photo
+					if ((tag & CgConst.TAG_COOL_PT) != 0)
+						s = s + "Photo ";
+
+					// Mark
+					if ((tag & CgConst.TAG_MARK) != 0)
+						s = s + "Mark ";
+
+					// Note
+					if ((tag & CgConst.TAG_NOTE) != 0)
+						s = s + "Note ";
+					break;
+				case 5: // Distance
+					s = track.data.get(row).getDistString(settings.Unit, false);
+					break;
+				case 6: // Total distance
+					s = track.data.get(row).getTotalString(settings.Unit, false);
+					break;
+				case 7: // Difficulty
+					s = String.format("%1.1f", track.data.get(row).getDiff());
+					break;
+				case 8: // Coeff
+					s = String.format("%1.1f", track.data.get(row).getCoeff());
+					break;
+				case 9: // Recovery
+					s = String.format("%1.2f", track.data.get(row).getRecovery());
+					break;
+				case 10: // Time
+					s = track.data.get(row).getTimeString();
+					break;
+				case 11: // Time limit
+					s = track.data.get(row).getTimeLimitString(false);
+					break;
+				case 12: // Hour
+					s = track.data.get(row).getHourString();
+					break;
+				case 13: // Station time
+					s = track.data.get(row).getStationString(false);
+					break;
+				case 14: // Name
+					s = track.data.get(row).getName();
+					break;
+				case 15: // Comment
+					s = track.data.get(row).getComment();
+					break;
+			} // switch
+
+			StringSelection selection = new StringSelection(s);
+			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+			clipboard.setContents(selection, selection);
+		}
 	}
 
 }

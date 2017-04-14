@@ -28,6 +28,7 @@ import java.awt.Component;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
@@ -65,130 +66,130 @@ import course_generator.utils.Utils.CalcLineResult;
  */
 public class TrackData {
 
-	private static TrackData	instance;
+	private static TrackData instance;
 
 	/** Slope/Speed parameters **/
-	public ParamData			param					= null;
+	public ParamData param = null;
 	/** Parameters file name **/
-	public String				Paramfile				= "";
+	public String Paramfile = "";
 
 	/** Arraylist containing the main data **/
-	public ArrayList<CgData>	data;
+	public ArrayList<CgData> data;
 
 	/** Statistics data for 'in night' **/
-	public StatData				tInNight;
+	public StatData tInNight;
 	/** Statistics data for 'in day' **/
-	public StatData				tInDay;
+	public StatData tInDay;
 
 	/** Statistics data for 'slope' **/
-	public StatData[]			StatSlope;
+	public StatData[] StatSlope;
 	/** Statistics data for 'elevation' **/
-	public StatData[]			StatElev;
+	public StatData[] StatElev;
 	/** Statistics data for 'elevation during night' **/
-	public StatData[]			StatElevNight;
+	public StatData[] StatElevNight;
 	/** Statistics data for 'elevation during day' **/
-	public StatData[]			StatElevDay;
+	public StatData[] StatElevDay;
 
 	/** Track name **/
-	public String				Name;										// Track
-																			// name
+	public String Name; // Track
+						// name
 	/** Name of the track that appear in the track setting **/
-	public String				CourseName				= "";
+	public String CourseName = "";
 	/** Total distance in meters **/
-	private double				TotalDistance			= 0.0;
+	private double TotalDistance = 0.0;
 	/** Total time in seconde **/
-	public int					TotalTime				= 0;
+	public int TotalTime = 0;
 	/** Indicate if during the last loading the time field as been loaded **/
-	public boolean				isTimeLoaded			= false;
+	public boolean isTimeLoaded = false;
 	/**
 	 * Indicate if the data has been calculated. false=They must be calculate
 	 **/
-	public boolean				isCalculated			= false;
+	public boolean isCalculated = false;
 	/** If 'true' this indicate that the data has been modified **/
-	public boolean				isModified				= false;
+	public boolean isModified = false;
 	/** Contain the ascent climb of the whole track (in m) **/
-	private double				ClimbP					= 0.0;
+	private double ClimbP = 0.0;
 	/** Contain the descent climb of the whole track (in m) **/
-	private double				ClimbM					= 0.0;
+	private double ClimbM = 0.0;
 	/** Contain the ascent time of the whole track (in s) **/
-	public int					AscTime					= 0;
+	public int AscTime = 0;
 	/** Contain the descent time of the whole track (in s) **/
-	public int					DescTime				= 0;
+	public int DescTime = 0;
 	/** Description of the track **/
-	public String				Description				= "";
+	public String Description = "";
 	/** Indicate if the autocalc function is active **/
-	public boolean				isAutoCalc				= false;
+	public boolean isAutoCalc = false;
 	/** Start time of the track **/
-	public DateTime				StartTime				= new DateTime();
+	public DateTime StartTime = new DateTime();
 	/** Minimum elevation of the track (in m) **/
-	private double				MinElev					= -1;
+	private double MinElev = -1;
 	/** Maximum elevation of the track (in m) **/
-	private double				MaxElev					= -1;
+	private double MaxElev = -1;
 	/** Global start health coefficient **/
-	public double				StartGlobalCoeff		= 100;
+	public double StartGlobalCoeff = 100;
 	/** Global end health coefficient **/
-	public double				EndGlobalCoeff			= 100;
+	public double EndGlobalCoeff = 100;
 	/** If 'true' this indicate that the time limit has been reached **/
-	public boolean				isTimeLimit				= false;
+	public boolean isTimeLimit = false;
 	/** Indicate where the timelimit has been reached (-1 if none) **/
-	public int					TimeLimit_Line			= -1;
+	public int TimeLimit_Line = -1;
 	/** Timezone for the sunrise/sunset calculation **/
-	public Double				TrackTimeZone			= 0.0;
+	public Double TrackTimeZone = 0.0;
 	/** Are we using the summer time for the sunrise/sunset calculation **/
-	public boolean				TrackUseSumerTime		= false;
-	public double				StartSpeed				= 0.0;
-	public double				EndSpeed				= 0.0;
+	public boolean TrackUseSumerTime = false;
+	public double StartSpeed = 0.0;
+	public double EndSpeed = 0.0;
 	/** Number of meter of road in the track **/
-	private double				DistRoad				= 0.0;
+	private double DistRoad = 0.0;
 	/** Indicate the type of error during the file reading **/
-	public int					ReadError				= 0;
+	public int ReadError = 0;
 	/** Indicate the at which line the error appear **/
-	public int					ReadLineError			= 0;
+	public int ReadLineError = 0;
 
 	// -- Night Coeff --
 	/** Start night time **/
-	public DateTime				StartNightTime;
+	public DateTime StartNightTime;
 	/** End night time **/
-	public DateTime				EndNightTime;
+	public DateTime EndNightTime;
 	/** If 'true' this indicate that the night coefficients are used ***/
-	public boolean				bNightCoeff				= false;
+	public boolean bNightCoeff = false;
 	/** Ascent nigth coefficient (100%=normal) **/
-	public double				NightCoeffAsc			= 100.0;
+	public double NightCoeffAsc = 100.0;
 	/** Descent nigth coefficient (100%=normal) **/
-	public double				NightCoeffDesc			= 100.0;
+	public double NightCoeffDesc = 100.0;
 
 	// -- Elevation coeff
 	/** Indicate that the elevation effect is used during the calculation **/
-	public boolean				bElevEffect				= false;
+	public boolean bElevEffect = false;
 
 	// -- Profil mini-roadbook
 	/** Width of the mini roadbook (in pixels) **/
-	public int					MrbSizeW				= 640;
+	public int MrbSizeW = 640;
 	/** Height of the mini roadbook (in pixels) **/
-	public int					MrbSizeH				= 480;
+	public int MrbSizeH = 480;
 	/** Curve filter in the mini roadbook **/
-	public int					CurveFilter				= 1;
+	public int CurveFilter = 1;
 	/** Number of characters before the line is word wrapped **/
-	public int					WordWrapLength			= 25;
+	public int WordWrapLength = 25;
 	/** Position of the label. 'true'=bottom **/
-	public boolean				LabelToBottom			= false;
+	public boolean LabelToBottom = false;
 	/** Type of profil in the mini roadbook **/
-	public int					MRBType					= 0;
+	public int MRBType = 0;
 	/** Top margin size in pixels in the mini roadbook **/
-	public int					TopMargin				= 100;
+	public int TopMargin = 100;
 
 	// -- Profil colors
-	public Color				clProfil_Simple_Fill	= Color.BLACK;
-	public Color				clProfil_Simple_Border	= Color.BLACK;
-	public Color				clProfil_RS_Road		= Color.BLACK;
-	public Color				clProfil_RS_Path		= Color.BLACK;
-	public Color				clProfil_RS_Border		= Color.BLACK;
+	public Color clProfil_Simple_Fill = Color.BLACK;
+	public Color clProfil_Simple_Border = Color.BLACK;
+	public Color clProfil_RS_Road = Color.BLACK;
+	public Color clProfil_RS_Path = Color.BLACK;
+	public Color clProfil_RS_Border = Color.BLACK;
 
-	public Color				clProfil_SlopeInf5		= Color.BLACK;
-	public Color				clProfil_SlopeInf10		= Color.BLACK;
-	public Color				clProfil_SlopeInf15		= Color.BLACK;
-	public Color				clProfil_SlopeSup15		= Color.BLACK;
-	public Color				clProfil_SlopeBorder	= Color.BLACK;
+	public Color clProfil_SlopeInf5 = Color.BLACK;
+	public Color clProfil_SlopeInf10 = Color.BLACK;
+	public Color clProfil_SlopeInf15 = Color.BLACK;
+	public Color clProfil_SlopeSup15 = Color.BLACK;
+	public Color clProfil_SlopeBorder = Color.BLACK;
 
 
 	// -- Constructor --
@@ -320,7 +321,7 @@ public class TrackData {
 
 		int ret = GPXhandler.readDataFromGPX(name, this, mode);
 		if (ret != 0)
-			CgLog.error("TrackData.OpenGPX : Error while reading '"+name+"'. Line =" + GPXhandler.getErrLine());
+			CgLog.error("TrackData.OpenGPX : Error while reading '" + name + "'. Line =" + GPXhandler.getErrLine());
 
 		int cmpt = 1;
 
@@ -357,16 +358,16 @@ public class TrackData {
 		Name = new File(name).getName();
 
 		switch (mode) {
-			case 1 : 
-				CgLog.info("TrackData.OpenGPX : '"+name+"' imported at the end of the data");
+			case 1:
+				CgLog.info("TrackData.OpenGPX : '" + name + "' imported at the end of the data");
 				break;
-			case 2 :	
-				CgLog.info("TrackData.OpenGPX : '"+name+"' imported at the start of the data");
+			case 2:
+				CgLog.info("TrackData.OpenGPX : '" + name + "' imported at the start of the data");
 				break;
-			default :
-				CgLog.info("TrackData.OpenGPX : '"+name+"' loaded");
+			default:
+				CgLog.info("TrackData.OpenGPX : '" + name + "' loaded");
 		}
-		
+
 		return isTimeLoaded;
 	} // -- OpenGPX
 
@@ -415,79 +416,102 @@ public class TrackData {
 
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("gpx");
-				writer.writeAttribute("creator", "Course Generator http://www.techandrun.com");
-				writer.writeAttribute("version", "1.1");
-				writer.writeAttribute("xsi:schemaLocation","http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/ActivityExtension/v1 http://www8.garmin.com/xmlschemas/ActivityExtensionv1.xsd http://www.garmin.com/xmlschemas/AdventuresExtensions/v1 http://www8.garmin.com/xmlschemas/AdventuresExtensionv1.xsd http://www.garmin.com/xmlschemas/PressureExtension/v1 http://www.garmin.com/xmlschemas/PressureExtensionv1.xsd http://www.garmin.com/xmlschemas/TripExtensions/v1 http://www.garmin.com/xmlschemas/TripExtensionsv1.xsd http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1 http://www.garmin.com/xmlschemas/TripMetaDataExtensionsv1.xsd http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1 http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensionsv1.xsd http://www.garmin.com/xmlschemas/CreationTimeExtension/v1 http://www.garmin.com/xmlschemas/CreationTimeExtensionsv1.xsd http://www.garmin.com/xmlschemas/AccelerationExtension/v1 http://www.garmin.com/xmlschemas/AccelerationExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.garmin.com/xmlschemas/VideoExtension/v1 http://www.garmin.com/xmlschemas/VideoExtensionv1.xsd");
-				writer.writeAttribute("xmlns","http://www.topografix.com/GPX/1/1"); 
-				writer.writeAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance"); 
-				writer.writeAttribute("xmlns:wptx1","http://www.garmin.com/xmlschemas/WaypointExtension/v1"); 
-				writer.writeAttribute("xmlns:gpxtrx","http://www.garmin.com/xmlschemas/GpxExtensions/v3");
-				writer.writeAttribute("xmlns:gpxtpx","http://www.garmin.com/xmlschemas/TrackPointExtension/v1"); 
-				writer.writeAttribute("xmlns:gpxx","http://www.garmin.com/xmlschemas/GpxExtensions/v3"); 
-				writer.writeAttribute("xmlns:trp","http://www.garmin.com/xmlschemas/TripExtensions/v1"); 
-				writer.writeAttribute("xmlns:adv","http://www.garmin.com/xmlschemas/AdventuresExtensions/v1"); 
-				writer.writeAttribute("xmlns:prs","http://www.garmin.com/xmlschemas/PressureExtension/v1"); 
-				writer.writeAttribute("xmlns:tmd","http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1"); 
-				writer.writeAttribute("xmlns:vptm","http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1"); 
-				writer.writeAttribute("xmlns:ctx","http://www.garmin.com/xmlschemas/CreationTimeExtension/v1"); 
-				writer.writeAttribute("xmlns:gpxacc","http://www.garmin.com/xmlschemas/AccelerationExtension/v1"); 
-				writer.writeAttribute("xmlns:gpxpx","http://www.garmin.com/xmlschemas/PowerExtension/v1"); 
-				writer.writeAttribute("xmlns:vidx1","http://www.garmin.com/xmlschemas/VideoExtension/v1");
+			writer.writeAttribute("creator", "Course Generator http://www.techandrun.com");
+			writer.writeAttribute("version", "1.1");
+			writer.writeAttribute("xsi:schemaLocation",
+					"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/ActivityExtension/v1 http://www8.garmin.com/xmlschemas/ActivityExtensionv1.xsd http://www.garmin.com/xmlschemas/AdventuresExtensions/v1 http://www8.garmin.com/xmlschemas/AdventuresExtensionv1.xsd http://www.garmin.com/xmlschemas/PressureExtension/v1 http://www.garmin.com/xmlschemas/PressureExtensionv1.xsd http://www.garmin.com/xmlschemas/TripExtensions/v1 http://www.garmin.com/xmlschemas/TripExtensionsv1.xsd http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1 http://www.garmin.com/xmlschemas/TripMetaDataExtensionsv1.xsd http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1 http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensionsv1.xsd http://www.garmin.com/xmlschemas/CreationTimeExtension/v1 http://www.garmin.com/xmlschemas/CreationTimeExtensionsv1.xsd http://www.garmin.com/xmlschemas/AccelerationExtension/v1 http://www.garmin.com/xmlschemas/AccelerationExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.garmin.com/xmlschemas/VideoExtension/v1 http://www.garmin.com/xmlschemas/VideoExtensionv1.xsd");
+			writer.writeAttribute("xmlns", "http://www.topografix.com/GPX/1/1");
+			writer.writeAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+			writer.writeAttribute("xmlns:wptx1", "http://www.garmin.com/xmlschemas/WaypointExtension/v1");
+			writer.writeAttribute("xmlns:gpxtrx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+			writer.writeAttribute("xmlns:gpxtpx", "http://www.garmin.com/xmlschemas/TrackPointExtension/v1");
+			writer.writeAttribute("xmlns:gpxx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+			writer.writeAttribute("xmlns:trp", "http://www.garmin.com/xmlschemas/TripExtensions/v1");
+			writer.writeAttribute("xmlns:adv", "http://www.garmin.com/xmlschemas/AdventuresExtensions/v1");
+			writer.writeAttribute("xmlns:prs", "http://www.garmin.com/xmlschemas/PressureExtension/v1");
+			writer.writeAttribute("xmlns:tmd", "http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1");
+			writer.writeAttribute("xmlns:vptm",
+					"http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1");
+			writer.writeAttribute("xmlns:ctx", "http://www.garmin.com/xmlschemas/CreationTimeExtension/v1");
+			writer.writeAttribute("xmlns:gpxacc", "http://www.garmin.com/xmlschemas/AccelerationExtension/v1");
+			writer.writeAttribute("xmlns:gpxpx", "http://www.garmin.com/xmlschemas/PowerExtension/v1");
+			writer.writeAttribute("xmlns:vidx1", "http://www.garmin.com/xmlschemas/VideoExtension/v1");
 
-//			Utils.WriteStringToXML(writer, "creator", "Course Generator http://www.techandrun.com");
-//			Utils.WriteStringToXML(writer, "version", "1.1");
-//
-//			Utils.WriteStringToXML(writer, "xsi:schemaLocation",
-//					"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/ActivityExtension/v1 http://www8.garmin.com/xmlschemas/ActivityExtensionv1.xsd http://www.garmin.com/xmlschemas/AdventuresExtensions/v1 http://www8.garmin.com/xmlschemas/AdventuresExtensionv1.xsd");
-//			Utils.WriteStringToXML(writer, "xmlns", "http://www.topografix.com/GPX/1/1");
-//			Utils.WriteStringToXML(writer, "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-//			Utils.WriteStringToXML(writer, "xmlns:wptx1", "http://www.garmin.com/xmlschemas/WaypointExtension/v1");
-//			Utils.WriteStringToXML(writer, "xmlns:gpxtrx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
-//			Utils.WriteStringToXML(writer, "xmlns:gpxtpx", "http://www.garmin.com/xmlschemas/TrackPointExtension/v1");
-//			Utils.WriteStringToXML(writer, "xmlns:gpxx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
-//			Utils.WriteStringToXML(writer, "xmlns:trp", "http://www.garmin.com/xmlschemas/TripExtensions/v1");
-//			Utils.WriteStringToXML(writer, "xmlns:adv", "http://www.garmin.com/xmlschemas/AdventuresExtensions/v1");
+			// Utils.WriteStringToXML(writer, "creator", "Course Generator
+			// http://www.techandrun.com");
+			// Utils.WriteStringToXML(writer, "version", "1.1");
+			//
+			// Utils.WriteStringToXML(writer, "xsi:schemaLocation",
+			// "http://www.topografix.com/GPX/1/1
+			// http://www.topografix.com/GPX/1/1/gpx.xsd
+			// http://www.garmin.com/xmlschemas/WaypointExtension/v1
+			// http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd
+			// http://www.garmin.com/xmlschemas/TrackPointExtension/v1
+			// http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd
+			// http://www.garmin.com/xmlschemas/GpxExtensions/v3
+			// http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd
+			// http://www.garmin.com/xmlschemas/ActivityExtension/v1
+			// http://www8.garmin.com/xmlschemas/ActivityExtensionv1.xsd
+			// http://www.garmin.com/xmlschemas/AdventuresExtensions/v1
+			// http://www8.garmin.com/xmlschemas/AdventuresExtensionv1.xsd");
+			// Utils.WriteStringToXML(writer, "xmlns",
+			// "http://www.topografix.com/GPX/1/1");
+			// Utils.WriteStringToXML(writer, "xmlns:xsi",
+			// "http://www.w3.org/2001/XMLSchema-instance");
+			// Utils.WriteStringToXML(writer, "xmlns:wptx1",
+			// "http://www.garmin.com/xmlschemas/WaypointExtension/v1");
+			// Utils.WriteStringToXML(writer, "xmlns:gpxtrx",
+			// "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+			// Utils.WriteStringToXML(writer, "xmlns:gpxtpx",
+			// "http://www.garmin.com/xmlschemas/TrackPointExtension/v1");
+			// Utils.WriteStringToXML(writer, "xmlns:gpxx",
+			// "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+			// Utils.WriteStringToXML(writer, "xmlns:trp",
+			// "http://www.garmin.com/xmlschemas/TripExtensions/v1");
+			// Utils.WriteStringToXML(writer, "xmlns:adv",
+			// "http://www.garmin.com/xmlschemas/AdventuresExtensions/v1");
 
-				// <trk> node
-				writer.writeStartElement("trk");
+			// <trk> node
+			writer.writeStartElement("trk");
 
-					// <name> node
-					Utils.WriteStringToXML(writer, "name", CourseName);
+			// <name> node
+			Utils.WriteStringToXML(writer, "name", CourseName);
 
-					// <trkseg> node
-					writer.writeStartElement("trkseg");
+			// <trkseg> node
+			writer.writeStartElement("trkseg");
 
-						for (int i = start; i <= end; i++) {
-							CgData r = data.get(i);
-			
-							// <trkpt>
-							// <trkpt lat="45.8547528" lon="6.7226378">
-							writer.writeStartElement("trkpt");
-							writer.writeAttribute("lat", String.format(Locale.ROOT, "%1.14f", r.getLatitude()));
-							writer.writeAttribute("lon", String.format(Locale.ROOT, "%1.14f", r.getLongitude()));
-			
-							// <ele>1180.4</ele>
-							Utils.WriteStringToXML(writer, "ele", String.format(Locale.ROOT, "%1.7f", r.getElevation(CgConst.UNIT_METER)));
-			
-							// <time>2010-08-18T07:57:07.000Z</time>
-							// dt = r.getHour().ToUniversalTime();
-							Utils.WriteStringToXML(writer, "time", r.getHour().toString());
-			
-							// <name>toto</name>
-							Utils.WriteStringToXML(writer, "name", String.valueOf(i));
-			
-							writer.writeEndElement();// Trkpt
-						} // for
-					writer.writeEndElement();// Trkseg
-				writer.writeEndElement();// trk
+			for (int i = start; i <= end; i++) {
+				CgData r = data.get(i);
+
+				// <trkpt>
+				// <trkpt lat="45.8547528" lon="6.7226378">
+				writer.writeStartElement("trkpt");
+				writer.writeAttribute("lat", String.format(Locale.ROOT, "%1.14f", r.getLatitude()));
+				writer.writeAttribute("lon", String.format(Locale.ROOT, "%1.14f", r.getLongitude()));
+
+				// <ele>1180.4</ele>
+				Utils.WriteStringToXML(writer, "ele",
+						String.format(Locale.ROOT, "%1.7f", r.getElevation(CgConst.UNIT_METER)));
+
+				// <time>2010-08-18T07:57:07.000Z</time>
+				// dt = r.getHour().ToUniversalTime();
+				Utils.WriteStringToXML(writer, "time", r.getHour().toString());
+
+				// <name>toto</name>
+				Utils.WriteStringToXML(writer, "name", String.valueOf(i));
+
+				writer.writeEndElement();// Trkpt
+			} // for
+			writer.writeEndElement();// Trkseg
+			writer.writeEndElement();// trk
 			writer.writeEndElement();// gpx
 			writer.writeEndDocument();
 			writer.flush();
 			writer.close();
 			isModified = false;
 			Name = new File(name).getName();
-			
-			CgLog.info("TrackData.SaveGPX : '"+name+"' saved");
+
+			CgLog.info("TrackData.SaveGPX : '" + name + "' saved");
 		} catch (XMLStreamException | IOException e) {
 			e.printStackTrace();
 		}
@@ -501,79 +525,77 @@ public class TrackData {
 		}
 
 		DateTime dt = new DateTime();
-		
+
 		// -- Save the data in the home directory
-		
-//		XMLOutputFactory xmlof = XMLOutputFactory.newInstance();
-//		XMLStreamWriter writer = new IndentingXMLStreamWriter(xmlof.createXMLStreamWriter(out));
-		
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
 			XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream(name), "UTF-8");
-			
+
 			writer.writeStartDocument("UTF-8", "1.0");
-			writer.writeStartElement("gpx"); 
-				writer.writeAttribute("creator", "Course Generator http://www.techandrun.com");
-				writer.writeAttribute("version", "1.1");
-				writer.writeAttribute("xsi:schemaLocation","http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/ActivityExtension/v1 http://www8.garmin.com/xmlschemas/ActivityExtensionv1.xsd http://www.garmin.com/xmlschemas/AdventuresExtensions/v1 http://www8.garmin.com/xmlschemas/AdventuresExtensionv1.xsd http://www.garmin.com/xmlschemas/PressureExtension/v1 http://www.garmin.com/xmlschemas/PressureExtensionv1.xsd http://www.garmin.com/xmlschemas/TripExtensions/v1 http://www.garmin.com/xmlschemas/TripExtensionsv1.xsd http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1 http://www.garmin.com/xmlschemas/TripMetaDataExtensionsv1.xsd http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1 http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensionsv1.xsd http://www.garmin.com/xmlschemas/CreationTimeExtension/v1 http://www.garmin.com/xmlschemas/CreationTimeExtensionsv1.xsd http://www.garmin.com/xmlschemas/AccelerationExtension/v1 http://www.garmin.com/xmlschemas/AccelerationExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.garmin.com/xmlschemas/VideoExtension/v1 http://www.garmin.com/xmlschemas/VideoExtensionv1.xsd");
-				writer.writeAttribute("xmlns","http://www.topografix.com/GPX/1/1"); 
-				writer.writeAttribute("xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance"); 
-				writer.writeAttribute("xmlns:wptx1","http://www.garmin.com/xmlschemas/WaypointExtension/v1"); 
-				writer.writeAttribute("xmlns:gpxtrx","http://www.garmin.com/xmlschemas/GpxExtensions/v3");
-				writer.writeAttribute("xmlns:gpxtpx","http://www.garmin.com/xmlschemas/TrackPointExtension/v1"); 
-				writer.writeAttribute("xmlns:gpxx","http://www.garmin.com/xmlschemas/GpxExtensions/v3"); 
-				writer.writeAttribute("xmlns:trp","http://www.garmin.com/xmlschemas/TripExtensions/v1"); 
-				writer.writeAttribute("xmlns:adv","http://www.garmin.com/xmlschemas/AdventuresExtensions/v1"); 
-				writer.writeAttribute("xmlns:prs","http://www.garmin.com/xmlschemas/PressureExtension/v1"); 
-				writer.writeAttribute("xmlns:tmd","http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1"); 
-				writer.writeAttribute("xmlns:vptm","http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1"); 
-				writer.writeAttribute("xmlns:ctx","http://www.garmin.com/xmlschemas/CreationTimeExtension/v1"); 
-				writer.writeAttribute("xmlns:gpxacc","http://www.garmin.com/xmlschemas/AccelerationExtension/v1"); 
-				writer.writeAttribute("xmlns:gpxpx","http://www.garmin.com/xmlschemas/PowerExtension/v1"); 
-				writer.writeAttribute("xmlns:vidx1","http://www.garmin.com/xmlschemas/VideoExtension/v1");
-			
-			    int i = 1;
-			    String s;
-			    for (CgData r : data) {
-			    	if ((r.getTag() != 0) && ((r.getTag() & mask)!=0)) {
-			          // <wpt>
-			          writer.writeStartElement("wpt");
-			          	writer.writeAttribute("lat", String.format(Locale.ROOT,"%1.14f", r.getLatitude()));
-			          	writer.writeAttribute("lon", String.format(Locale.ROOT,"%1.14f", r.getLongitude()));
+			writer.writeStartElement("gpx");
+			writer.writeAttribute("creator", "Course Generator http://www.techandrun.com");
+			writer.writeAttribute("version", "1.1");
+			writer.writeAttribute("xsi:schemaLocation",
+					"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/WaypointExtension/v1 http://www8.garmin.com/xmlschemas/WaypointExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www8.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/ActivityExtension/v1 http://www8.garmin.com/xmlschemas/ActivityExtensionv1.xsd http://www.garmin.com/xmlschemas/AdventuresExtensions/v1 http://www8.garmin.com/xmlschemas/AdventuresExtensionv1.xsd http://www.garmin.com/xmlschemas/PressureExtension/v1 http://www.garmin.com/xmlschemas/PressureExtensionv1.xsd http://www.garmin.com/xmlschemas/TripExtensions/v1 http://www.garmin.com/xmlschemas/TripExtensionsv1.xsd http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1 http://www.garmin.com/xmlschemas/TripMetaDataExtensionsv1.xsd http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1 http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensionsv1.xsd http://www.garmin.com/xmlschemas/CreationTimeExtension/v1 http://www.garmin.com/xmlschemas/CreationTimeExtensionsv1.xsd http://www.garmin.com/xmlschemas/AccelerationExtension/v1 http://www.garmin.com/xmlschemas/AccelerationExtensionv1.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 http://www.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.garmin.com/xmlschemas/VideoExtension/v1 http://www.garmin.com/xmlschemas/VideoExtensionv1.xsd");
+			writer.writeAttribute("xmlns", "http://www.topografix.com/GPX/1/1");
+			writer.writeAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+			writer.writeAttribute("xmlns:wptx1", "http://www.garmin.com/xmlschemas/WaypointExtension/v1");
+			writer.writeAttribute("xmlns:gpxtrx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+			writer.writeAttribute("xmlns:gpxtpx", "http://www.garmin.com/xmlschemas/TrackPointExtension/v1");
+			writer.writeAttribute("xmlns:gpxx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+			writer.writeAttribute("xmlns:trp", "http://www.garmin.com/xmlschemas/TripExtensions/v1");
+			writer.writeAttribute("xmlns:adv", "http://www.garmin.com/xmlschemas/AdventuresExtensions/v1");
+			writer.writeAttribute("xmlns:prs", "http://www.garmin.com/xmlschemas/PressureExtension/v1");
+			writer.writeAttribute("xmlns:tmd", "http://www.garmin.com/xmlschemas/TripMetaDataExtensions/v1");
+			writer.writeAttribute("xmlns:vptm",
+					"http://www.garmin.com/xmlschemas/ViaPointTransportationModeExtensions/v1");
+			writer.writeAttribute("xmlns:ctx", "http://www.garmin.com/xmlschemas/CreationTimeExtension/v1");
+			writer.writeAttribute("xmlns:gpxacc", "http://www.garmin.com/xmlschemas/AccelerationExtension/v1");
+			writer.writeAttribute("xmlns:gpxpx", "http://www.garmin.com/xmlschemas/PowerExtension/v1");
+			writer.writeAttribute("xmlns:vidx1", "http://www.garmin.com/xmlschemas/VideoExtension/v1");
 
-			          	// <time>2010-08-18T07:57:07.000Z</time>
-			          	//Utils.WriteStringToXML(writer,"time", r.getHour().toString()+"Z");
+			int i = 1;
+			String s;
+			for (CgData r : data) {
+				if ((r.getTag() != 0) && ((r.getTag() & mask) != 0)) {
+					// <wpt>
+					writer.writeStartElement("wpt");
+					writer.writeAttribute("lat", String.format(Locale.ROOT, "%1.14f", r.getLatitude()));
+					writer.writeAttribute("lon", String.format(Locale.ROOT, "%1.14f", r.getLongitude()));
 
-			          	//<name>toto</name>
-			          	if (r.getName().isEmpty()) {
-			          		Utils.WriteStringToXML(writer,"name", String.format("NoName%d", i));
-			          		i++;
-			          	}
-			          	else
-			          		Utils.WriteStringToXML(writer,"name", r.getName());
-			          	
-			          	//<sym>Flag, Green</sym>
-			          	s = "Flag, Green"; //Par defaut
-			          	if ((r.getTag() & CgConst.TAG_HIGH_PT) != 0)
-			          		s = "Summit";
-			          	if ((r.getTag() & CgConst.TAG_WATER_PT) != 0)
-			          		s = "Bar";
-			          	if ((r.getTag() & CgConst.TAG_EAT_PT) != 0)
-			          		s = "Restaurant";
+					// <time>2010-08-18T07:57:07.000Z</time>
+					// Utils.WriteStringToXML(writer,"time",
+					// r.getHour().toString()+"Z");
 
-			          	Utils.WriteStringToXML(writer,"sym", s);
+					// <name>toto</name>
+					if (r.getName().isEmpty()) {
+						Utils.WriteStringToXML(writer, "name", String.format("NoName%d", i));
+						i++;
+					} else
+						Utils.WriteStringToXML(writer, "name", r.getName());
 
-			          	//<type>user</type>
-			          	Utils.WriteStringToXML(writer,"type", "user");
+					// <sym>Flag, Green</sym>
+					s = "Flag, Green"; // Par defaut
+					if ((r.getTag() & CgConst.TAG_HIGH_PT) != 0)
+						s = "Summit";
+					if ((r.getTag() & CgConst.TAG_WATER_PT) != 0)
+						s = "Bar";
+					if ((r.getTag() & CgConst.TAG_EAT_PT) != 0)
+						s = "Restaurant";
 
-			          writer.writeEndElement();//wpt
-			        } //if
-			      }//for
-			writer.writeEndElement();//gpx
+					Utils.WriteStringToXML(writer, "sym", s);
+
+					// <type>user</type>
+					Utils.WriteStringToXML(writer, "type", "user");
+
+					writer.writeEndElement();// wpt
+				} // if
+			} // for
+			writer.writeEndElement();// gpx
 			writer.writeEndDocument();
 			writer.flush();
 			writer.close();
-			CgLog.info("TrackData.SaveWaypoint : '"+name+"' saved");
+			CgLog.info("TrackData.SaveWaypoint : '" + name + "' saved");
 		} catch (XMLStreamException | IOException e) {
 			e.printStackTrace();
 		}
@@ -587,8 +609,8 @@ public class TrackData {
 	 */
 	public static class SearchPointResult {
 
-		public double	Distance;	// Distance in meter
-		public int		Point;		// -1= no point
+		public double Distance; // Distance in meter
+		public int Point; // -1= no point
 
 
 		public SearchPointResult(int _point, double _distance) {
@@ -633,8 +655,8 @@ public class TrackData {
 	// -- Calculate Distance ---
 
 	/**
-	 * Calculate the distance of each portion of the track and the total distance
-	 * The calculation take into account the elevation
+	 * Calculate the distance of each portion of the track and the total
+	 * distance The calculation take into account the elevation
 	 */
 	public void CalcDist() {
 		double dist = 0.0;
@@ -654,11 +676,12 @@ public class TrackData {
 			Lon = r.getLongitude();
 			Ele = r.getElevation(CgConst.UNIT_METER);
 			if (b) {
-				//-- Calculate the "flat" distance
+				// -- Calculate the "flat" distance
 				dist = CalcDistance(mLat, mLon, Lat, Lon);
-				//-- A lit bit of Pythagoras theorem in order to include the difference of elevation between the points
+				// -- A lit bit of Pythagoras theorem in order to include the
+				// difference of elevation between the points
 				v = Math.sqrt(dist * dist + (Ele - mEle) * (Ele - mEle));
-				
+
 				TotalDistance = TotalDistance + v;
 				r.setDist(v);
 				r.setTotal(TotalDistance);
@@ -736,19 +759,19 @@ public class TrackData {
 
 	public static class CalcAvrSlopeResult {
 
-		/** Average positive slope **/ 
+		/** Average positive slope **/
 		public double AvrSlopeP;
 		/** Average negative slope **/
 		public double AvrSlopeM;
-		
+
 		/** Total distance with positive climb (stored in m) **/
 		private double TotClimbP;
 		/** Totale distance with flat (stored in m) **/
 		private double TotFlat;
 		/** Total distance with negative climb (stored in m) **/
 		private double TotClimbM;
-		
-		
+
+
 		public double getTotClimbP(int unit) {
 			switch (unit) {
 				case CgConst.UNIT_METER:
@@ -760,44 +783,48 @@ public class TrackData {
 					return TotClimbP;
 			}
 		}
-		
+
+
 		public void setTotClimbP(double totClimbP) {
 			TotClimbP = totClimbP;
 		}
-		
+
+
 		public double getTotFlat(int unit) {
 			switch (unit) {
-			case CgConst.UNIT_METER:
-				return TotFlat;
-			case CgConst.UNIT_MILES_FEET:
-				// meter to miles
-				return Utils.Meter2uMiles(TotFlat);
-			default:
-				return TotFlat;
+				case CgConst.UNIT_METER:
+					return TotFlat;
+				case CgConst.UNIT_MILES_FEET:
+					// meter to miles
+					return Utils.Meter2uMiles(TotFlat);
+				default:
+					return TotFlat;
 			}
 		}
+
 
 		public void setTotFlat(double totFlat) {
 			TotFlat = totFlat;
 		}
-		
+
+
 		public double getTotClimbM(int unit) {
 			switch (unit) {
-			case CgConst.UNIT_METER:
-				return TotClimbM;
-			case CgConst.UNIT_MILES_FEET:
-				// meter to miles
-				return Utils.Meter2uMiles(TotClimbM);
-			default:
-				return TotClimbM;
+				case CgConst.UNIT_METER:
+					return TotClimbM;
+				case CgConst.UNIT_MILES_FEET:
+					// meter to miles
+					return Utils.Meter2uMiles(TotClimbM);
+				default:
+					return TotClimbM;
 			}
 		}
-		
+
+
 		public void setTotClimbM(double totClimbM) {
 			TotClimbM = totClimbM;
 		}
-		
-		
+
 	}
 
 
@@ -842,8 +869,8 @@ public class TrackData {
 	} // CalcAvrSlope
 
 	public static class CalcClimbResult {
-		public double	cp, cm;
-		public int		tp, tm;
+		public double cp, cm;
+		public int tp, tm;
 	}
 
 
@@ -903,23 +930,24 @@ public class TrackData {
 		/** Average speed (km/h) **/
 		private double avrspeed;
 
+
 		public double getAvrspeed(int unit) {
 			switch (unit) {
-			case CgConst.UNIT_METER:
-				return avrspeed;
-			case CgConst.UNIT_MILES_FEET:
-				// meter to miles
-				return Utils.Meter2uMiles(avrspeed);
-			default:
-				return avrspeed;
+				case CgConst.UNIT_METER:
+					return avrspeed;
+				case CgConst.UNIT_MILES_FEET:
+					// meter to miles
+					return Utils.Meter2uMiles(avrspeed);
+				default:
+					return avrspeed;
 			}
 		}
+
 
 		public void setAvrspeed(double avrspeed) {
 			this.avrspeed = avrspeed;
 		}
-		
-		
+
 	}
 
 
@@ -930,7 +958,8 @@ public class TrackData {
 		if (data.size() > 0) {
 			t = (data.get(EndLine).getTime() - data.get(StartLine).getTime());
 			if (t != 0) {
-				r.avrspeed = (data.get(EndLine).getTotal(CgConst.UNIT_METER) - data.get(StartLine).getTotal(CgConst.UNIT_METER)) * 3.600 / t;
+				r.avrspeed = (data.get(EndLine).getTotal(CgConst.UNIT_METER)
+						- data.get(StartLine).getTotal(CgConst.UNIT_METER)) * 3.600 / t;
 			} else {
 				r.avrspeed = 0.0;
 			}
@@ -973,14 +1002,14 @@ public class TrackData {
 
 	/**
 	 * Search the minmimum and maximum elevation of the track betwwen two points
+	 * 
 	 * @param start
-	 * 	Starting point
+	 *            Starting point
 	 * @param end
-	 * 	Ending point
+	 *            Ending point
 	 * @param r
-	 * 	SearchMinMaxElevationResult object
-	 * @return
-	 * 	Result in a SearchMinMaxElevationResult object 
+	 *            SearchMinMaxElevationResult object
+	 * @return Result in a SearchMinMaxElevationResult object
 	 */
 	private SearchMinMaxElevationResult SearchMinMaxElevation(int start, int end, SearchMinMaxElevationResult r) {
 		r.min = 9999.0;
@@ -1051,7 +1080,7 @@ public class TrackData {
 
 		isTimeLoaded = false;
 
-		String sParamfile = Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/" + Paramfile + ".par";
+		String sParamfile = Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + Paramfile + ".par";
 
 		try {
 			param.Load(sParamfile);
@@ -1227,10 +1256,12 @@ public class TrackData {
 			if ((r1 == null) || (r2 == null)) {
 				return;
 			}
-			if (maxm && (findmax || (Math.abs(r2.getElevation(CgConst.UNIT_METER) - valmax) < CgConst.MIN_ELEV_MINMAX))) {
+			if (maxm && (findmax
+					|| (Math.abs(r2.getElevation(CgConst.UNIT_METER) - valmax) < CgConst.MIN_ELEV_MINMAX))) {
 				maxm = false;
 			}
-			if (minm && (findmin || (Math.abs(r2.getElevation(CgConst.UNIT_METER) - valmin) < CgConst.MIN_ELEV_MINMAX))) {
+			if (minm && (findmin
+					|| (Math.abs(r2.getElevation(CgConst.UNIT_METER) - valmin) < CgConst.MIN_ELEV_MINMAX))) {
 				minm = false;
 			}
 
@@ -1328,18 +1359,25 @@ public class TrackData {
 				datatmp.add(new CgData((double) (nb + 1), // Num - double
 						data.get(n).getLatitude(), // Latitude - double
 						data.get(n).getLongitude(), // Longitude - double
-						data.get(n).getElevation(CgConst.UNIT_METER), // Elevation - double
+						data.get(n).getElevation(CgConst.UNIT_METER), // Elevation
+																		// -
+																		// double
 						data.get(n).getElevationMemo(), // ElevationMemo -
 														// double
 						data.get(n).getTag(), // Tag - int
-						data.get(n).getDist(CgConst.UNIT_METER), // Dist - double
-						data.get(n).getTotal(CgConst.UNIT_METER), // Total - double
+						data.get(n).getDist(CgConst.UNIT_METER), // Dist -
+																	// double
+						data.get(n).getTotal(CgConst.UNIT_METER), // Total -
+																	// double
 						data.get(n).getDiff(), // Diff - double
 						data.get(n).getCoeff(), // Coeff - double
 						0.0, // Recup - double
 						data.get(n).getSlope(), // Slope - double
-						data.get(n).getSpeed(CgConst.UNIT_METER), // Speed - double
-						data.get(n).getdElevation(CgConst.UNIT_METER), // dElevation - double
+						data.get(n).getSpeed(CgConst.UNIT_METER), // Speed -
+																	// double
+						data.get(n).getdElevation(CgConst.UNIT_METER), // dElevation
+																		// -
+																		// double
 						data.get(n).getTime(), // Time - int
 						data.get(n).getdTime_f(), // dTime_f - double
 						data.get(n).getTimeLimit(), // TimeLimit - int
@@ -1353,7 +1391,8 @@ public class TrackData {
 						data.get(n).OptionMiniRoadbook, // int
 						data.get(n).VPosMiniRoadbook, // int
 						data.get(n).CommentMiniRoadbook, // String
-						data.get(n).FontSizeMiniRoadbook // FontSizeMiniRoadbook //int
+						data.get(n).FontSizeMiniRoadbook // FontSizeMiniRoadbook
+															// //int
 				));
 				nb++;
 				n++;
@@ -1423,8 +1462,11 @@ public class TrackData {
 	 *            name of the file
 	 * @param mode
 	 *            reading mode (0=complet 1=partial)
+	 * @param backup
+	 *            Indicate if the load is a backup or not. If it's a backup the
+	 *            name will not be updated
 	 */
-	public void OpenCGX(Component parent, String name, int mode) {
+	public void OpenCGX(Component parent, String name, int mode, boolean backup) {
 		SaxCGXHandler CGXhandler = new SaxCGXHandler();
 
 		int ret = 0;
@@ -1434,7 +1476,7 @@ public class TrackData {
 		}
 
 		if (ret != 0)
-			CgLog.error("TrackData.OpenCGX : Error while reading '"+name+"'. Line =" + CGXhandler.getErrLine());
+			CgLog.error("TrackData.OpenCGX : Error while reading '" + name + "'. Line =" + CGXhandler.getErrLine());
 
 		int cmpt = 1;
 
@@ -1445,7 +1487,9 @@ public class TrackData {
 
 		isCalculated = false;
 		isModified = false;
-		Name = new File(name).getName();
+
+//		if (!backup)
+//			Name = new File(name).getName();
 
 		CalcDist();
 		CalcSpeed();
@@ -1467,18 +1511,21 @@ public class TrackData {
 
 		CheckTimeLimit();
 		isCalculated = true;
-		
-		switch (mode) {
-			case 1 : 
-				CgLog.info("TrackData.OpenCGX : '"+name+"' imported at the end of the data");
-				break;
-			case 2 :	
-				CgLog.info("TrackData.OpenCGX : '"+name+"' imported at the start of the data");
-				break;
-			default :
-				CgLog.info("TrackData.OpenCGX : '"+name+"' loaded");
+
+		if (!backup) {
+			Name = new File(name).getName();
+			switch (mode) {
+				case 1:
+					CgLog.info("TrackData.OpenCGX : '" + name + "' imported at the end of the data");
+					break;
+				case 2:
+					CgLog.info("TrackData.OpenCGX : '" + name + "' imported at the start of the data");
+					break;
+				default:
+					CgLog.info("TrackData.OpenCGX : '" + name + "' loaded");
+			}
 		}
-		
+
 		// return isTimeLoaded;
 	}// LoadCGX
 
@@ -1493,7 +1540,7 @@ public class TrackData {
 	 * @param end
 	 *            last line to save
 	 */
-	public void SaveCGX(String name, int start, int end) {
+	public void SaveCGX(String name, int start, int end, boolean backup) {
 		if (data.isEmpty()) {
 			return;
 		}
@@ -1554,9 +1601,12 @@ public class TrackData {
 				writer.writeStartElement("TRACKPOINT");
 				Utils.WriteStringToXML(writer, "LATITUDEDEGREES", String.format(Locale.ROOT, "%f", r.getLatitude()));
 				Utils.WriteStringToXML(writer, "LONGITUDEDEGREES", String.format(Locale.ROOT, "%f", r.getLongitude()));
-				Utils.WriteStringToXML(writer, "ALTITUDEMETERS", String.format(Locale.ROOT, "%f", r.getElevation(CgConst.UNIT_METER)));
-				Utils.WriteStringToXML(writer, "DISTANCEMETERS", String.format(Locale.ROOT, "%f", r.getDist(CgConst.UNIT_METER)));
-				Utils.WriteStringToXML(writer, "DISTANCEMETERSCUMUL", String.format(Locale.ROOT, "%f", r.getTotal(CgConst.UNIT_METER)));
+				Utils.WriteStringToXML(writer, "ALTITUDEMETERS",
+						String.format(Locale.ROOT, "%f", r.getElevation(CgConst.UNIT_METER)));
+				Utils.WriteStringToXML(writer, "DISTANCEMETERS",
+						String.format(Locale.ROOT, "%f", r.getDist(CgConst.UNIT_METER)));
+				Utils.WriteStringToXML(writer, "DISTANCEMETERSCUMUL",
+						String.format(Locale.ROOT, "%f", r.getTotal(CgConst.UNIT_METER)));
 				Utils.WriteStringToXML(writer, "DIFF", String.format(Locale.ROOT, "%f", r.getDiff()));
 				Utils.WriteStringToXML(writer, "COEFF", String.format(Locale.ROOT, "%f", r.getCoeff()));
 				Utils.WriteStringToXML(writer, "RECUP", String.format(Locale.ROOT, "%f", r.getRecovery()));
@@ -1578,10 +1628,12 @@ public class TrackData {
 			writer.writeEndDocument();
 			writer.flush();
 			writer.close();
-			isModified = false;
-			Name = new File(name).getName();
-			
-			CgLog.info("TrackData.SaveCGX : '"+name+"' saved");
+
+			if (!backup) {
+				isModified = false;
+				Name = new File(name).getName();
+				CgLog.info("TrackData.SaveCGX : '" + name + "' saved");
+			}
 		} catch (XMLStreamException | IOException e) {
 			e.printStackTrace();
 		}
@@ -1598,31 +1650,67 @@ public class TrackData {
 	 * @param end
 	 *            last line of the data to save
 	 */
-	public void SaveCSV(String name, int start, int end) {
-		/*
-		 * if (data.Count <= 0) { return; }
-		 * 
-		 * StreamWriter sw = new StreamWriter(name, false,
-		 * System.Text.Encoding.UTF8); sw.WriteLine(
-		 * "N°;LAT;LON;ELEV;DIST;DIST CUMUL;DIFF;COEFF;RECUP;TIME(s);EATTIME;COMMENT;CLIMB;SPEED;NAME;HOUR;TAG;TIMELIMIT(s)"
-		 * );
-		 * 
-		 * for (int i = start; i <= end; i++) { cgData r = data[i];
-		 * sw.WriteLine( String.Format("{0:0};", r.Num) +
-		 * String.Format("{0:0.0000000000};", r.Latitude) +
-		 * String.Format("{0:0.0000000000};", r.Longitude) +
-		 * String.Format("{0:0.000};", r.Elevation) +
-		 * String.Format("{0:0.000};", r.Dist) + String.Format("{0:0.000};",
-		 * r.Total) + String.Format("{0:0};", r.Diff) + String.Format("{0:0};",
-		 * r.Coeff) + String.Format("{0:0};", r.Recup) + String.Format("{0:0};",
-		 * r.Time) + String.Format("{0:0.0};", r.Station) + r.Comment + ";" +
-		 * String.Format("{0:0.0};", r.Slope) + String.Format("{0:0.000};",
-		 * r.Speed) + r.Name + ";" + r.Hour.ToString("g") + ";" +
-		 * String.Format("{0:0};", r.Tag) + String.Format("{0:0}", r.TimeLimit)
-		 * );
-		 * 
-		 * }//foreach sw.Close(); isModified = false;
-		 */
+	public void SaveCSV(String name, int start, int end, int unit) {
+		if (data.size() <= 0)
+			return;
+
+		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		StringBuilder s = new StringBuilder();
+
+		try {
+			PrintWriter writer = new PrintWriter(name, "UTF-8");
+
+			s.append(bundle.getString("frmMain.HeaderNum.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderLat.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderLon.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderElev.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderTag.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderDist.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderTotal.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderDiff.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderCoeff.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderRecovery.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderTime.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderTimeLimit.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderHour.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderStation.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderName.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderComment.text") + ";");
+			writer.println(s);
+			s.setLength(0);
+
+			for (int i = start; i <= end; i++) {
+				CgData d = data.get(i);
+				s.append(d.getNumString() + ";");
+				s.append(d.getLatitudeString() + ";");
+				s.append(d.getLongitudeString() + ";");
+				s.append(d.getElevationString(unit, false) + ";");
+				s.append(d.getTag() + ";");
+				s.append(d.getDistString(unit, false) + ";");
+				s.append(d.getTotalString(unit, false) + ";");
+				s.append(d.getDiff() + ";");
+				s.append(d.getCoeff() + ";");
+				s.append(d.getRecovery() + ";");
+				s.append(d.getTimeString() + ";");
+				s.append(d.getTimeLimitString(false) + ";");
+				s.append(d.getHourString() + ";");
+				s.append(d.getStationString(false) + ";");
+
+				String str = d.getName();
+				str = str.replace("\n", "").replace("\r", "").trim();
+				s.append(str + ";");
+
+				str = d.getComment();
+				str = str.replace("\n", "").replace("\r", "").trim();
+				s.append(str);
+
+				writer.println(s);
+				s.setLength(0);
+			}
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -1797,17 +1885,22 @@ public class TrackData {
 					if (bNightCoeff && ((r.getHour().getSecondOfDay() >= StartNightTime.getSecondOfDay())
 							|| (r.getHour().getSecondOfDay() <= EndNightTime.getSecondOfDay()))) {
 						StatElevNight[j].Time = StatElevNight[j].Time + r.getdTime_f();
-						StatElevNight[j].setSpeed(StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
-						StatElevNight[j].setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
+						StatElevNight[j].setSpeed(
+								StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevNight[j]
+								.setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevNight[j].Cmpt++;
 					} else // Day
 					{
 						StatElevDay[j].Time = StatElevDay[j].Time + r.getdTime_f();
-						StatElevDay[j].setSpeed(StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
-						StatElevDay[j].setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
+						StatElevDay[j]
+								.setSpeed(StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevDay[j]
+								.setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevDay[j].Cmpt++;
 					}
-				} else if ((r.getElevation(CgConst.UNIT_METER) >= 1000) && (r.getElevation(CgConst.UNIT_METER) < 1500)) {
+				} else if ((r.getElevation(CgConst.UNIT_METER) >= 1000)
+						&& (r.getElevation(CgConst.UNIT_METER) < 1500)) {
 					j = 1;
 					StatElev[j].setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
 					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
@@ -1817,19 +1910,24 @@ public class TrackData {
 					if (bNightCoeff && ((r.getHour().getSecondOfDay() >= StartNightTime.getSecondOfDay())
 							|| (r.getHour().getSecondOfDay() <= EndNightTime.getSecondOfDay()))) {
 						StatElevNight[j].Time = StatElevNight[j].Time + r.getdTime_f();
-						StatElevNight[j].setSpeed(StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
-						StatElevNight[j].setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
+						StatElevNight[j].setSpeed(
+								StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevNight[j]
+								.setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevNight[j].Cmpt++;
 					} else // Day
 					{
 						StatElevDay[j].Time = StatElevDay[j].Time + r.getdTime_f();
-						StatElevDay[j].setSpeed( StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
-						StatElevDay[j].setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
+						StatElevDay[j]
+								.setSpeed(StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevDay[j]
+								.setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevDay[j].Cmpt++;
 					}
-				} else if ((r.getElevation(CgConst.UNIT_METER) >= 1500) && (r.getElevation(CgConst.UNIT_METER) < 2000)) {
+				} else if ((r.getElevation(CgConst.UNIT_METER) >= 1500)
+						&& (r.getElevation(CgConst.UNIT_METER) < 2000)) {
 					j = 2;
-					StatElev[j].setSpeed( StatElev[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatElev[j].setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
 					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatElev[j].Time = StatElev[j].Time + r.getdTime_f();
 					StatElev[j].Cmpt++;
@@ -1837,17 +1935,22 @@ public class TrackData {
 					if (bNightCoeff && ((r.getHour().getSecondOfDay() >= StartNightTime.getSecondOfDay())
 							|| (r.getHour().getSecondOfDay() <= EndNightTime.getSecondOfDay()))) {
 						StatElevNight[j].Time = StatElevNight[j].Time + r.getdTime_f();
-						StatElevNight[j].setSpeed( StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
-						StatElevNight[j].setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
+						StatElevNight[j].setSpeed(
+								StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevNight[j]
+								.setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevNight[j].Cmpt++;
 					} else // Day
 					{
 						StatElevDay[j].Time = StatElevDay[j].Time + r.getdTime_f();
-						StatElevDay[j].setSpeed(StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
-						StatElevDay[j].setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
+						StatElevDay[j]
+								.setSpeed(StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevDay[j]
+								.setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevDay[j].Cmpt++;
 					}
-				} else if ((r.getElevation(CgConst.UNIT_METER) >= 2000) && (r.getElevation(CgConst.UNIT_METER) < 2500)) {
+				} else if ((r.getElevation(CgConst.UNIT_METER) >= 2000)
+						&& (r.getElevation(CgConst.UNIT_METER) < 2500)) {
 					j = 3;
 					StatElev[j].setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
 					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
@@ -1857,17 +1960,22 @@ public class TrackData {
 					if (bNightCoeff && ((r.getHour().getSecondOfDay() >= StartNightTime.getSecondOfDay())
 							|| (r.getHour().getSecondOfDay() <= EndNightTime.getSecondOfDay()))) {
 						StatElevNight[j].Time = StatElevNight[j].Time + r.getdTime_f();
-						StatElevNight[j].setSpeed(StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
-						StatElevNight[j].setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
+						StatElevNight[j].setSpeed(
+								StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevNight[j]
+								.setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevNight[j].Cmpt++;
 					} else // Day
 					{
 						StatElevDay[j].Time = StatElevDay[j].Time + r.getdTime_f();
-						StatElevDay[j].setSpeed(StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
-						StatElevDay[j].setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
+						StatElevDay[j]
+								.setSpeed(StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevDay[j]
+								.setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevDay[j].Cmpt++;
 					}
-				} else if ((r.getElevation(CgConst.UNIT_METER) >= 2500) && (r.getElevation(CgConst.UNIT_METER) < 3000)) {
+				} else if ((r.getElevation(CgConst.UNIT_METER) >= 2500)
+						&& (r.getElevation(CgConst.UNIT_METER) < 3000)) {
 					j = 4;
 					StatElev[j].setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
 					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
@@ -1877,19 +1985,23 @@ public class TrackData {
 					if (bNightCoeff && ((r.getHour().getSecondOfDay() >= StartNightTime.getSecondOfDay())
 							|| (r.getHour().getSecondOfDay() <= EndNightTime.getSecondOfDay()))) {
 						StatElevNight[j].Time = StatElevNight[j].Time + r.getdTime_f();
-						StatElevNight[j].setSpeed(StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
-						StatElevNight[j].setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
+						StatElevNight[j].setSpeed(
+								StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevNight[j]
+								.setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevNight[j].Cmpt++;
 					} else // Day
 					{
 						StatElevDay[j].Time = StatElevDay[j].Time + r.getdTime_f();
-						StatElevDay[j].setSpeed( StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
-						StatElevDay[j].setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
+						StatElevDay[j]
+								.setSpeed(StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevDay[j]
+								.setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevDay[j].Cmpt++;
 					}
 				} else if ((r.getElevation(CgConst.UNIT_METER) >= 3000)) {
 					j = 5;
-					StatElev[j].setSpeed( StatElev[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+					StatElev[j].setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
 					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 					StatElev[j].Time = StatElev[j].Time + r.getdTime_f();
 					StatElev[j].Cmpt++;
@@ -1897,14 +2009,18 @@ public class TrackData {
 					if (bNightCoeff && ((r.getHour().getSecondOfDay() >= StartNightTime.getSecondOfDay())
 							|| (r.getHour().getSecondOfDay() <= EndNightTime.getSecondOfDay()))) {
 						StatElevNight[j].Time = StatElevNight[j].Time + r.getdTime_f();
-						StatElevNight[j].setSpeed(StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
-						StatElevNight[j].setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
+						StatElevNight[j].setSpeed(
+								StatElevNight[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevNight[j]
+								.setDist(StatElevNight[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevNight[j].Cmpt++;
 					} else // Day
 					{
 						StatElevDay[j].Time = StatElevDay[j].Time + r.getdTime_f();
-						StatElevDay[j].setSpeed(StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
-						StatElevDay[j].setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
+						StatElevDay[j]
+								.setSpeed(StatElevDay[j].getSpeed(CgConst.UNIT_METER) + r.getSpeed(CgConst.UNIT_METER));
+						StatElevDay[j]
+								.setDist(StatElevDay[j].getDist(CgConst.UNIT_METER) + r.getDist(CgConst.UNIT_METER));
 						StatElevDay[j].Cmpt++;
 					}
 				}
@@ -2010,24 +2126,24 @@ public class TrackData {
 	}
 
 
-	
 	public double getClimbP(int unit) {
 		switch (unit) {
-		case CgConst.UNIT_METER:
-			return ClimbP;
-		case CgConst.UNIT_MILES_FEET:
-			// meter to miles
-			return Utils.Meter2Feet(ClimbP);
-		default:
-			return ClimbP;
+			case CgConst.UNIT_METER:
+				return ClimbP;
+			case CgConst.UNIT_MILES_FEET:
+				// meter to miles
+				return Utils.Meter2Feet(ClimbP);
+			default:
+				return ClimbP;
 		}
 	}
 
 
 	/**
 	 * Set climbP variable
-	 * @param climbP 
-	 * 	Value in meter
+	 * 
+	 * @param climbP
+	 *            Value in meter
 	 */
 	public void setClimbP(double climbP) {
 		ClimbP = climbP;
@@ -2036,20 +2152,22 @@ public class TrackData {
 
 	public double getClimbM(int unit) {
 		switch (unit) {
-		case CgConst.UNIT_METER:
-			return ClimbM;
-		case CgConst.UNIT_MILES_FEET:
-			// meter to miles
-			return Utils.Meter2Feet(ClimbM);
-		default:
-			return ClimbM;
+			case CgConst.UNIT_METER:
+				return ClimbM;
+			case CgConst.UNIT_MILES_FEET:
+				// meter to miles
+				return Utils.Meter2Feet(ClimbM);
+			default:
+				return ClimbM;
 		}
 	}
 
+
 	/**
 	 * Set climbM variable
-	 * @param climbM 
-	 * 	Value in meter
+	 * 
+	 * @param climbM
+	 *            Value in meter
 	 */
 	public void setClimbM(double climbM) {
 		ClimbM = climbM;
@@ -2058,21 +2176,22 @@ public class TrackData {
 
 	public double getDistRoad(int unit) {
 		switch (unit) {
-		case CgConst.UNIT_METER:
-			return DistRoad;
-		case CgConst.UNIT_MILES_FEET:
-			// meter to miles
-			return Utils.Meter2uMiles(DistRoad);
-		default:
-			return DistRoad;
+			case CgConst.UNIT_METER:
+				return DistRoad;
+			case CgConst.UNIT_MILES_FEET:
+				// meter to miles
+				return Utils.Meter2uMiles(DistRoad);
+			default:
+				return DistRoad;
 		}
 	}
 
 
 	/**
 	 * Set distRoad variable
-	 * @param distRoad 
-	 * 	Value in meter
+	 * 
+	 * @param distRoad
+	 *            Value in meter
 	 */
 	public void setDistRoad(double distRoad) {
 		DistRoad = distRoad;
