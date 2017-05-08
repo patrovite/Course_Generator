@@ -331,6 +331,10 @@ public class JPanelMaps extends JPanel {
 
 	
 	private void MapViewerMouseClicked(java.awt.event.MouseEvent evt) {
+		if (Track==null) 
+			return;
+		if (Track.data==null) 
+			return;
 		if (Track.data.size() <= 0)
 			return;
 

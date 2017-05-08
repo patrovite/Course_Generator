@@ -601,6 +601,79 @@ public class TrackData {
 		}
 	}
 
+	
+	
+	public void ExportCGP(String name, int mask)
+	{
+		if (data.size() <= 0) {
+			return;
+		}
+
+		// -- Save the data in the home directory
+		XMLOutputFactory factory = XMLOutputFactory.newInstance();
+		try {
+			XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream(name), "UTF-8");
+			
+			writer.writeStartDocument("UTF-8", "1.0");
+			writer.writeStartElement("COURSEGENERATOR");
+			writer.writeAttribute("VERSION", "1");
+
+			// <Points> node
+			writer.writeStartElement("Points");
+			for(CgData r : data) {
+				if  ( 
+					    ( ((mask & CgConst.TAG_HIGH_PT)!=0) && ((r.getTag() & CgConst.TAG_HIGH_PT)!=0) )
+					 || ( ((mask & CgConst.TAG_LOW_PT)!=0) && ((r.getTag() & CgConst.TAG_LOW_PT)!=0) )
+					 || ( ((mask & CgConst.TAG_EAT_PT)!=0) && ((r.getTag() & CgConst.TAG_EAT_PT)!=0) )
+					 || ( ((mask & CgConst.TAG_WATER_PT)!=0) && ((r.getTag() & CgConst.TAG_WATER_PT)!=0) )
+					 || ( ((mask & CgConst.TAG_MARK)!=0) && ((r.getTag() & CgConst.TAG_MARK)!=0) )
+					 || ( ((mask & CgConst.TAG_COOL_PT)!=0) && ((r.getTag() & CgConst.TAG_COOL_PT)!=0) )
+					 || ( ((mask & CgConst.TAG_NOTE)!=0) && ((r.getTag() & CgConst.TAG_NOTE)!=0) )
+					 || ( ((mask & CgConst.TAG_ROADBOOK)!=0) && ((r.getTag() & CgConst.TAG_ROADBOOK)!=0) )
+					 || ( ((mask & CgConst.TAG_INFO)!=0) && ((r.getTag() & CgConst.TAG_INFO)!=0) )
+					){
+						// <Pt>
+						writer.writeStartElement("Pt");
+
+							//  <LatitudeDegrees>123.456</LatitudeDegrees>
+							Utils.WriteStringToXML(writer,"LatitudeDegrees",String.format(Locale.ROOT, "%1.14f", r.getLatitude()));
+
+							// <LongitudeDegrees>12345.678</LongitudeDegrees>
+							Utils.WriteStringToXML(writer,"LongitudeDegrees",String.format(Locale.ROOT, "%1.14f", r.getLongitude()));
+
+							// <AltitudeMeters>625.03515</AltitudeMeters>
+							Utils.WriteStringToXML(writer,"AltitudeMeters",String.format(Locale.ROOT, "%1.1f", r.getElevation(CgConst.UNIT_METER)));
+
+							//  <Comment>AAA<Comment>
+							String s=r.getComment().trim();
+							if (s=="") s=" ";
+							Utils.WriteStringToXML(writer,"Comment",s);
+
+							//  <Name>AAA<Namet>
+							s=r.getName().trim();
+							if (s=="") s=" ";
+							Utils.WriteStringToXML(writer,"Name",s);
+
+							//  <Tag>1234<Tag>
+							Utils.WriteStringToXML(writer,"Tag",String.format("%d", r.getTag()));
+        
+							writer.writeEndElement(); //Pt
+				} //if
+
+			} //for
+			
+			writer.writeEndElement(); //Points
+			writer.writeEndElement(); //COURSEGENERATOR
+			
+			writer.writeEndDocument();
+			writer.flush();
+			writer.close();
+		} catch (XMLStreamException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	/**
 	 * Class used to store the result of a point search
 	 * 

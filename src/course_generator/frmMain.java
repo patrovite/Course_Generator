@@ -106,6 +106,7 @@ import course_generator.analysis.JPanelAnalysisTimeDist;
 import course_generator.dialogs.FrmExportWaypoints;
 import course_generator.dialogs.FrmImportChoice;
 import course_generator.dialogs.frmEditPosition;
+import course_generator.dialogs.frmExportPoints;
 import course_generator.dialogs.frmFillCoeff;
 import course_generator.dialogs.frmFillCoeff.EditCoeffResult;
 import course_generator.dialogs.frmFillDiff;
@@ -113,6 +114,7 @@ import course_generator.dialogs.frmFillDiff.EditDiffResult;
 import course_generator.dialogs.frmSearchPoint;
 import course_generator.dialogs.frmSearchPointListener;
 import course_generator.dialogs.frmTrackSettings;
+import course_generator.import_points.frmImportPoints;
 import course_generator.maps.JPanelMaps;
 import course_generator.maps.JPanelMapsListener;
 import course_generator.mrb.FrmMiniroadbook;
@@ -692,10 +694,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuImportPoints.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				BackupInCGX();
-				// mnuSaveGPXActionPerformed(evt); //TODO
+				ImportPoints();
 			}
 		});
-		mnuImportPoints.setEnabled(false);
 		mnuFile.add(mnuImportPoints);
 
 		// -- Export points
@@ -705,10 +706,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuExportPoints.setText(bundle.getString("frmMain.mnuExportPoints.text"));
 		mnuExportPoints.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveGPXActionPerformed(evt); //TODO
+				ExportPoints();
 			}
 		});
-		mnuExportPoints.setEnabled(false);
 		mnuFile.add(mnuExportPoints);
 
 		// -- Separator
@@ -1165,6 +1165,51 @@ public class frmMain extends javax.swing.JFrame {
 
 		// TODO check why it's necessary
 		mnuMain.getAccessibleContext().setAccessibleParent(this);
+	}
+
+
+	protected void ImportPoints() {
+		if (Track==null) return;
+		if (Track.data.isEmpty())
+			return;
+		
+		String s = Utils.LoadDialog(this, Settings.LastDir, ".cgp", bundle.getString("frmMain.CGPFile"));
+		if (!s.isEmpty()) {
+			frmImportPoints frm = new frmImportPoints(Settings);
+			frm.showDialog(s);
+			
+			panelTrackData.refresh();
+			RefreshStatusbar(Track);
+			RefreshTitle();
+			panelProfil.RefreshProfilChart();
+			jPanelTimeDist.Refresh(Track, Settings);
+			jPanelSpeed.Refresh(Track, Settings);
+			jPanelSpeedSlope.Refresh(Track, Settings);
+			panelMap.RefreshTrack(Track, true);
+			PanelResume.refresh();
+			panelStatistics.refresh();
+		}
+	}
+
+
+	/**
+	 * Open a dialog to export a selection of points 
+	 */
+	private void ExportPoints() {
+		if (Track==null) return;
+		if (Track.data.isEmpty())
+			return;
+		
+		frmExportPoints frm = new frmExportPoints();
+		int mask=frm.showDialog(); 
+		if (mask!=-1) {
+			String s = Utils.SaveDialog(this, Settings.LastDir, "", ".cgp", bundle.getString("frmMain.CGPFile"), true,
+					bundle.getString("frmMain.FileExist"));
+
+			if (!s.isEmpty()) {
+				Track.ExportCGP(s, mask);
+			}
+		}
 	}
 
 
