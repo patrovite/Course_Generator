@@ -2,8 +2,10 @@
 
 Course Generator is a software which can estimate your time in road running races, trails, ultra trails or treks. 
 
-STATUS : Version 4.0.0 alpha 13 - Usable but not all the features has been rewritten from the C# version.
+## Status : Version 4.0.0 beta 1
+All features for this version has been implemented. The documentation is missing and some controls must be done in the translation.
 
+## History
 I created Course Generator in 2008 for my first 100 km ultra trail. Since then, I added a lot of features and it has been used by a lot of french ultra-runner. Up to the version 3.88 it has been written in C# and now java is used in order to be cross platform (Windows, Mac OS and Linux) and multilingual. 
 
 Course Generator is free (donation are welcome ;) ) and open source under GPL V3.
@@ -33,17 +35,24 @@ With Course Generator you can :
 * Have offline maps (OpenStreetMap)
 
   
-How to run Course Generator : 
+## How to run Course Generator - WINDOWS
 
-* Currently (alpha version) there no installer.
+* You need a version 7 (minimum) of the java runtime environment (JRE) 
+* Copy "course_generator.exe" in a folder (where you want).
+* Execute "course_generator.exe"
+* The first time you execute the program it will ask you if you want to install the standard curves. Answer "yes"
+* That's all. Enjoy ;)
+
+## How to run Course Generator - LINUX
 * You need a version 7 (minimum) of the java runtime environment (JRE) 
 * Copy the "course_generator.jar" in a folder (where you want).
 * Execute "course_generator.jar"
-* Once the main window is displayed exit from CG
-* A ".course_generator" folder has been created in your home/user directory. Inside a "config.xml" file is present
-* Download the ".par" file from the github "default_curves" directory and put them next to the "config.xml" file.
-* Restart CG
+* The first time you execute the program it will ask you if you want to install the standard curves. Answer "yes"
 * That's all. Enjoy ;)
+
+## How to run Course Generator - MacOS
+I have no MacOS system but the installation is probably the same as LINUX.
+
 
 Note:
 Since version alpha 5, the course generator directory has been changed from "Course Generator" to ".course_generator".
