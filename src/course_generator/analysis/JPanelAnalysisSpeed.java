@@ -251,6 +251,8 @@ public class JPanelAnalysisSpeed extends JPanel {
 	 * Update the Time/Distance chart
 	 */
 	public void Refresh(TrackData track, CgSettings settings) {
+		if (track==null) return;
+		
 		if (track.data.isEmpty())
 			return;
 

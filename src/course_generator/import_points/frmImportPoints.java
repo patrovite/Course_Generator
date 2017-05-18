@@ -19,10 +19,12 @@
 package course_generator.import_points;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
 
@@ -37,48 +39,87 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 
+import course_generator.TrackData;
+import course_generator.TrackData.SearchPointResult;
 import course_generator.settings.CgSettings;
+import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
-
 
 public class frmImportPoints extends javax.swing.JDialog {
 	private ResourceBundle bundle;
 	private CgSettings settings;
+	private TrackData track;
 	private String name;
 	private boolean ok;
 	private JTable TableImport;
 	private ImportPtsDataModel Model;
+	private ImportPtsData list;
 	private JScrollPane jScrollPaneImport;
 	private JPanel jPanelButtons;
 	private JButton btCancel;
-	private JButton btOk;
-	private JPanel panelHelp;
-	
+	private JButton btImport;
+	private JPanel panelSmallButtons;
+	private JButton btSelAll;
+	private JButton btUnselAll;
+	private JButton btHelp;
+
+
 	/**
 	 * Creates new form frmImportPoints
 	 */
 	public frmImportPoints(CgSettings settings) {
-		this.settings=settings;
-		this.name="";
-		Model = new ImportPtsDataModel(settings);
+		this.settings = settings;
+		this.name = "";
+		list = new ImportPtsData();
+		Model = new ImportPtsDataModel(settings, list);
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
 	}
 
-	public int showDialog(String name) {
-		this.name=name;
+
+	public int showDialog(String name, TrackData track) {
+		this.name = name;
+		this.track=track;
+
+		//-- read the CGP file
+		SaxCGPHandler CGPhandler = new SaxCGPHandler();
+
+		int ret = 0;
+		try {
+			ret = CGPhandler.readDataFromCGP(name, list);
+		} catch (Exception e) {
+		}
+
+		if (ret != 0)
+			CgLog.error("frmImportPoints.showDialog : Error while reading '" + name + "'. Line =" + CGPhandler.getErrLine());
+
+		//-- Calculate distance
+		SearchPointResult result = null;
+		for(CgImportPts d : list.data) {
+			result = track.SearchPoint(d.getLatitude(), d.getLongitude());
+			if (result.Point > -1) {
+				d.setDist(result.Distance);
+				d.setLine(result.Point);
+			} else {
+				d.setDist(result.Distance);
+				d.setLine(0);
+			}
+		}
+		
+		//-- Update the table
+		//RefreshTable();
 		
 		// End set field
 		ok = false;
 
-		//-- Show the dialog
+		// -- Show the dialog
 		setVisible(true);
 
 		if (ok) {
 			return 0;
-		}
-		else return -1;
+		} else
+			return -1;
 	}
 
 
@@ -114,7 +155,7 @@ public class frmImportPoints extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-	
+
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -125,45 +166,40 @@ public class frmImportPoints extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-	
-	
+
+
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmImportPoints.title"));
+		setMinimumSize(new Dimension(800,400));
 		setAlwaysOnTop(true);
-		setResizable(false);
 		setType(java.awt.Window.Type.UTILITY);
-		
+
 		// -- Layout
 		// ------------------------------------------------------------
 		Container paneGlobal = getContentPane();
 		paneGlobal.setLayout(new GridBagLayout());
-	
+
 		TableImport = new javax.swing.JTable();
 		TableImport.setModel(Model);
-//		TableImport.getTableHeader()
-//				.setDefaultRenderer(new MainHeaderRenderer(TableImport.getTableHeader().getDefaultRenderer()));
+		TableImport.getTableHeader().setDefaultRenderer(new
+				ImportPtsHeaderRenderer(TableImport.getTableHeader().getDefaultRenderer()));
 		TableImport.getTableHeader().setReorderingAllowed(false);
 
 		TableImport.setDefaultRenderer(ImportPtsDataClass.class, new ImportPtsRenderer());
 
 		TableImport.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
 		TableImport.setRowHeight(20);
-//		TableImport.addMouseListener(new java.awt.event.MouseAdapter() {
-//			public void mouseClicked(java.awt.event.MouseEvent evt) {
-//				if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() >= 2 && !evt.isConsumed()) {
-//					evt.consume();
-//					selectedRow = TableMain.rowAtPoint(evt.getPoint());
-//					notifyDoubleClick();
-//				} else
-//					TableMainMouseClicked(evt);
-//			}
-//		});
-//		TableImport.addKeyListener(new java.awt.event.KeyAdapter() {
-//			public void keyReleased(java.awt.event.KeyEvent evt) {
-//				TableMainKeyReleased(evt);
-//			}
-//		});
+		TableImport.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				TableMouseClicked(evt);
+			}
+		 });
+		 TableImport.addKeyListener(new java.awt.event.KeyAdapter() {
+			 public void keyReleased(java.awt.event.KeyEvent evt) {
+				 TableKeyReleased(evt);
+			 }
+		 });
 
 		// -- Add the grid to a scroll panel
 		// ------------------------------------
@@ -174,15 +210,57 @@ public class frmImportPoints extends javax.swing.JDialog {
 				GridBagConstraints.REMAINDER, 1, 
 				1, 1, 
 				10, 10, 10, 10,
-				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
-		
-		panelHelp = new JPanel();
-		Utils.addComponent(paneGlobal, jScrollPaneImport, 
+				GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH);
+
+		panelSmallButtons = new JPanel();
+		panelSmallButtons.setLayout(new GridBagLayout());
+		Utils.addComponent(paneGlobal, panelSmallButtons, 
 				0, 1, 
 				GridBagConstraints.REMAINDER, 1, 
 				1, 0, 
-				10, 10, 10, 10,
-				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
+				0, 10, 0, 0,
+				GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH);
+		
+		btSelAll = new javax.swing.JButton();
+		btSelAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/select_all.png")));
+		btSelAll.setToolTipText(bundle.getString("frmImportPoints.btSelAll.toolTipText"));
+		btSelAll.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				SelectAll();
+			}
+		});
+		Utils.addComponent(panelSmallButtons, btSelAll, 
+				0, 0, 
+				1, 1,
+				0, 0, 
+				0, 0, 0, 0,
+				GridBagConstraints.NORTHWEST, GridBagConstraints.VERTICAL);
+
+		btUnselAll = new javax.swing.JButton();
+		btUnselAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/unselect_all.png")));
+		btUnselAll.setToolTipText(bundle.getString("frmImportPoints.btUnselAll.toolTipText"));
+		btUnselAll.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				UnselectAll();
+			}
+		});
+		Utils.addComponent(panelSmallButtons, btUnselAll, 
+				1, 0, 
+				1, 1,
+				0, 0, 
+				0, 0, 0, 0,
+				GridBagConstraints.NORTHWEST, GridBagConstraints.VERTICAL);
+
+		btHelp = new javax.swing.JButton();
+		btHelp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/help_dialog.png")));
+		btHelp.setToolTipText(bundle.getString("frmImportPoints.btHelp.toolTipText"));
+		Utils.addComponent(panelSmallButtons, btHelp, 
+				2, 0, 
+				1, 1,
+				1, 0, 
+				0, 0, 0, 0,
+				GridBagConstraints.NORTHWEST, GridBagConstraints.VERTICAL);
+		
 		
 		
 		// == BUTTONS
@@ -190,11 +268,11 @@ public class frmImportPoints extends javax.swing.JDialog {
 		jPanelButtons = new javax.swing.JPanel();
 		jPanelButtons.setLayout(new FlowLayout());
 		Utils.addComponent(paneGlobal, jPanelButtons, 
-			0, 2, 
-			GridBagConstraints.REMAINDER, 1, 
-			1, 1, 
-			0, 0, 0, 0,
-			GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
+				0, 2, 
+				GridBagConstraints.REMAINDER, 1, 
+				0, 0, 
+				0, 0, 0, 0,
+				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
 		btCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
@@ -205,19 +283,20 @@ public class frmImportPoints extends javax.swing.JDialog {
 			}
 		});
 
-		btOk = new javax.swing.JButton();
-		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
-		btOk.setText(bundle.getString("Global.btOk.text"));
-		btOk.setMinimumSize(btCancel.getMinimumSize());
-		btOk.setPreferredSize(btCancel.getPreferredSize());
-		btOk.addActionListener(new java.awt.event.ActionListener() {
+		btImport = new javax.swing.JButton();
+		btImport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/import.png")));
+		btImport.setText(bundle.getString("frmImportPoints.btImport.text"));
+//		btImport.setMinimumSize(btCancel.getMinimumSize());
+//		btImport.setPreferredSize(btCancel.getPreferredSize());
+		btImport.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ImportPoints();
 				RequestToClose();
 			}
 		});
 
 		// -- Add buttons
-		jPanelButtons.add(btOk);
+		jPanelButtons.add(btImport);
 		jPanelButtons.add(btCancel);
 
 		// --
@@ -227,4 +306,97 @@ public class frmImportPoints extends javax.swing.JDialog {
 	}
 
 	
+	/**
+	 * Import the points in the track
+	 */
+	private void ImportPoints() {
+	      if (track.data.size()<0) return;
+	      if (list.data.size()<0) return;
+	      
+	      for(CgImportPts r : list.data)
+	      {
+	        if (r.getSel())
+	        {
+	            track.data.get((int)r.getLine()).setTag(r.getTag());
+	            track.data.get((int)r.getLine()).setName(r.getName());
+	            track.data.get((int)r.getLine()).setComment(r.getComment());
+	            
+	            track.isModified=true;
+	        }   
+	      }
+	}
+
+
+	/**
+	 * Unselect every line
+	 */
+	private void UnselectAll() {
+		if (list.data.size()<=0) return;
+
+		for (CgImportPts p : list.data) {
+			p.setSel(false);
+		}
+		RefreshTable();
+	}
+
+
+	/**
+	 * Select every line
+	 */
+	private void SelectAll() {
+		if (list.data.size()<=0) return;
+
+		for (CgImportPts p : list.data) {
+			p.setSel(true);
+		}
+		RefreshTable();
+	}
+
+
+	/**
+	 * Table key release managment
+	 * SPACE key invert the selection
+	 * @param evt event
+	 */
+	protected void TableKeyReleased(KeyEvent evt) {
+		if (list.data.size()<=0) return;
+		
+		int row = TableImport.getSelectedRow();
+		int col = TableImport.getSelectedColumn();
+		
+		if ((col==0) && (evt.getKeyCode()==KeyEvent.VK_SPACE)) {
+			list.data.get(row).invSel();
+			RefreshTable();
+		}
+	}
+
+
+	/**
+	 * Table mouse click managment
+	 * A click in the first column invert the selection
+	 * @param evt event
+	 */
+	protected void TableMouseClicked(MouseEvent evt) {
+		if (list.data.size()<=0) return;
+		
+		int row = TableImport.rowAtPoint(evt.getPoint());
+		int col = TableImport.columnAtPoint(evt.getPoint());
+		
+		if (col==0) {
+			list.data.get(row).invSel();
+			RefreshTable();
+		}
+	}
+
+
+	/**
+	 * Refresh the table
+	 */
+	private void RefreshTable() {
+		int r = TableImport.getSelectedRow();
+		Model.fireTableDataChanged();
+		if (r >= 0)
+			TableImport.setRowSelectionInterval(r, r);
+	}
+
 }

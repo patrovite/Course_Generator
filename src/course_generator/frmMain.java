@@ -45,6 +45,7 @@
  * Hot:
  *
  * TODO:
+ * - DistNear & DistFar in frmSettings
  * - Dialog to display the tile directory size and a button to empty the directory
  * - Statistic: Add the highest ascend and descend
  * - Analyze : bar chart speed/km or miles
@@ -64,6 +65,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -74,6 +76,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Locale;
 
 import javax.swing.Icon;
@@ -143,7 +148,7 @@ import course_generator.utils.Utils.CalcLineResult;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.ALPHA 13";
+	private final String Version = "4.0.0.BETA 1";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -254,6 +259,8 @@ public class frmMain extends javax.swing.JFrame {
 
 	private JLabel LbInfoMapDirSize;
 
+	private JMenuItem mnuCGWebsite;
+
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
 
@@ -277,8 +284,8 @@ public class frmMain extends javax.swing.JFrame {
 
 
 	/**
-	 * Creates new form frmMain ------------------------------- !!!! Everything
-	 * start here !!!! ------------------------
+	 * Creates new form frmMain 
+	 * !!!! Everything start here !!!!
 	 */
 	public frmMain(String args[]) {
 		// Initialize data
@@ -393,9 +400,58 @@ public class frmMain extends javax.swing.JFrame {
 		panelMap.RefreshMapButtons();
 		panelProfil.RefreshProfilButtons();
 
+		ExportCurvesFromResource();
 		
 		// -- Display the splash screen
 		showDialogAbout(this, true, false, Version);
+	}
+
+
+	/**
+	 * If the "default.par" file is missing copy the curves files from the resource to the config directory
+	 */
+	private void ExportCurvesFromResource() {
+		String dst = DataDir + "/" + CgConst.CG_DIR + "/";
+		if (!Utils.FileExist(DataDir + "/" + CgConst.CG_DIR + "/" + "Default.par")) {
+			if (JOptionPane.showConfirmDialog(this, bundle.getString("frmMain.QuestionInstallCurves"), "",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				try {
+					Utils.ExportResource(this, "/course_generator/curves/Default.par", dst + "Default.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_10_5km_h.par", dst + "Run_10_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_10km_h.par", dst + "Run_10km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_11_5km_h.par", dst + "Run_11_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_11km_h.par", dst + "Run_11km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_12_5km_h.par", dst + "Run_12_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_12km_h.par", dst + "Run_12km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_13_5km_h.par", dst + "Run_13_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_13km_h.par", dst + "Run_13km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_14_5km_h.par", dst + "Run_14_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_14km_h.par", dst + "Run_14km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_15_5km_h.par", dst + "Run_15_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_15km_h.par", dst + "Run_15km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_16_5km_h.par", dst + "Run_16_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_16km_h.par", dst + "Run_16km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_17_5km_h.par", dst + "Run_17_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_17km_h.par", dst + "Run_17km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_18km_h.par", dst + "Run_18km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_4_5km_h.par", dst + "Run_4_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_4km_h.par", dst + "Run_4km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_5_5km_h.par", dst + "Run_5_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_5km_h.par", dst + "Run_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_6_5km_h.par", dst + "Run_6_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_6km_h.par", dst + "Run_6km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_7_5km_h.par", dst + "Run_7_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_7km_h.par", dst + "Run_7km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_8_5km_h.par", dst + "Run_8_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_8km_h.par", dst + "Run_8km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_9_5km_h.par", dst + "Run_9_5km_h.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_9km_h.par", dst + "Run_9km_h.par");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 	}
 
 
@@ -865,11 +921,12 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuHTMLReport.setEnabled(false);
+		mnuHTMLReport.setVisible(false);
 		mnuDisplay.add(mnuHTMLReport);
 
 		// -- Separator
 		// ---------------------------------------------------------
-		mnuDisplay.add(new javax.swing.JPopupMenu.Separator());
+//		mnuDisplay.add(new javax.swing.JPopupMenu.Separator());
 
 		// -- Generate KML file (Google earth)
 		// ----------------------------------
@@ -882,11 +939,12 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuGenerateKML.setEnabled(false);
+		mnuGenerateKML.setVisible(false);
 		mnuDisplay.add(mnuGenerateKML);
 
 		// -- Separator
 		// ---------------------------------------------------------
-		mnuDisplay.add(new javax.swing.JPopupMenu.Separator());
+//		mnuDisplay.add(new javax.swing.JPopupMenu.Separator());
 
 		// -- Generate a roadbook
 		// -----------------------------------------------
@@ -900,6 +958,7 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuGenerateRoadbook.setEnabled(false);
+		mnuGenerateRoadbook.setVisible(false);
 		mnuDisplay.add(mnuGenerateRoadbook);
 
 		// -- Mini roadbook
@@ -918,7 +977,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Separator
 		// ---------------------------------------------------------
-		mnuDisplay.add(new javax.swing.JPopupMenu.Separator());
+//		mnuDisplay.add(new javax.swing.JPopupMenu.Separator());
 
 		// -- Display the speed in the data grid
 		// --------------------------------
@@ -930,6 +989,7 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuDisplaySpeed.setEnabled(false);
+		mnuDisplaySpeed.setVisible(false);
 		mnuDisplay.add(mnuDisplaySpeed);
 
 		// -- Display the slope in the data grid
@@ -942,6 +1002,7 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuDisplaySlope.setEnabled(false);
+		mnuDisplaySlope.setVisible(false);
 		mnuDisplay.add(mnuDisplaySlope);
 
 		// --
@@ -1027,6 +1088,7 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuInternetTools.setEnabled(false);
+		mnuInternetTools.setVisible(false);		
 		mnuTools.add(mnuInternetTools);
 
 		// -- Display the directory containing the speed/slope files
@@ -1035,10 +1097,13 @@ public class frmMain extends javax.swing.JFrame {
 		mnuDisplaySSDir.setText(bundle.getString("frmMain.mnuDisplaySSDir.text"));
 		mnuDisplaySSDir.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				try {
+					Desktop.getDesktop().open(new File(DataDir + "/" + CgConst.CG_DIR));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		});
-		mnuDisplaySSDir.setEnabled(false);
 		mnuTools.add(mnuDisplaySSDir);
 
 		// --
@@ -1139,11 +1204,30 @@ public class frmMain extends javax.swing.JFrame {
 		mnuReward.setText(bundle.getString("frmMain.mnuReward.text"));
 		mnuReward.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				try {
+					Desktop.getDesktop().browse(new URI("http://www.techandrun.com/dons/"));
+				} catch (IOException | URISyntaxException e) {
+					e.printStackTrace();
+				}
 			}
 		});
-		mnuReward.setEnabled(false);
 		mnuHelp.add(mnuReward);
+		
+		// -- Course Generator web site
+		// -------------------------------------------------
+		mnuCGWebsite = new javax.swing.JMenuItem();
+		mnuCGWebsite.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/earth.png")));
+		mnuCGWebsite.setText(bundle.getString("frmMain.mnuCGWebsite.text"));
+		mnuCGWebsite.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				try {
+					Desktop.getDesktop().browse(new URI("http://www.techandrun.com/"));
+				} catch (IOException | URISyntaxException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		mnuHelp.add(mnuCGWebsite);
 
 		// -- About
 		// -------------------------------------------------------------
@@ -1176,7 +1260,7 @@ public class frmMain extends javax.swing.JFrame {
 		String s = Utils.LoadDialog(this, Settings.LastDir, ".cgp", bundle.getString("frmMain.CGPFile"));
 		if (!s.isEmpty()) {
 			frmImportPoints frm = new frmImportPoints(Settings);
-			frm.showDialog(s);
+			frm.showDialog(s, Track);
 			
 			panelTrackData.refresh();
 			RefreshStatusbar(Track);
@@ -3034,7 +3118,7 @@ public class frmMain extends javax.swing.JFrame {
 		Settings.mruCGX[0] = filename;
 	}
 
-
+	
 	/**
 	 * Set the default font
 	 * 

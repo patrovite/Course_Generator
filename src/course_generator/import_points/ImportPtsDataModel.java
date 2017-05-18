@@ -20,18 +20,18 @@ package course_generator.import_points;
 
 import javax.swing.table.AbstractTableModel;
 
-import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 
 public class ImportPtsDataModel extends AbstractTableModel {
     
     private final String header[];
-    private TrackData importPts;
+    private ImportPtsData importPts;
     private CgSettings settings;
 
-    public ImportPtsDataModel(CgSettings settings) {
+    public ImportPtsDataModel(CgSettings settings, ImportPtsData datalist) {
     	super();
     	java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+    	importPts=datalist;
     	
     	header = new String[9];
 		header[0]=bundle.getString("ImportsPts.HeaderSelection.text");
@@ -83,8 +83,26 @@ public class ImportPtsDataModel extends AbstractTableModel {
         }
     }
     
+//    @Override
+//    public void setValueAt(Object aValue, int row, int column) {
+//      if (aValue instanceof Boolean && column == 0) {
+//    	importPts.data.get(row).setSel(!(boolean)aValue);
+//        fireTableCellUpdated(row, column);
+//      }
+//    }
+    
+//    @Override
+//    public boolean isCellEditable(int row, int column) {
+//      return column == 0;
+//    }
+    
+    
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-    	return ImportPtsDataClass.class;
+//    	if (columnIndex==0) {
+//    		return boolean.class;
+//    	}
+//    	else
+    		return ImportPtsDataClass.class;
     }
 }

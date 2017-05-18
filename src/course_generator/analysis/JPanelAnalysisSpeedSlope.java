@@ -346,6 +346,8 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 	 * Update the Slope/Speed chart
 	 */
 	public void Refresh(TrackData track, CgSettings settings) {
+		if (track==null) return;
+		
 		if (track.data.isEmpty())
 			return;
 

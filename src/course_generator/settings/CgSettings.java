@@ -61,7 +61,11 @@ public class CgSettings {
     public int VertSplitPosition;
     public int HorizSplitPosition;
     /** Mini roadbook split position **/
-    public int MRB_SplitPosition; 
+    public int MRB_SplitPosition;
+    /** Below this distance we consider the distance short (in m) **/
+    public double DistNear=100.0;
+    /** Over this distance we consider the distance far (in m) **/
+    public double DistFar=1000.0;
     
     public int Unit = CgConst.UNIT_METER; //Unit for the display 0=meter 1=Miles/feet
     
@@ -82,7 +86,10 @@ public class CgSettings {
         VertSplitPosition=200;
         HorizSplitPosition=50;
         MRB_SplitPosition=220;
-        
+
+        DistNear=100.0;
+        DistFar=1000.0;
+
         MemoFormat = new String[5];
         mruGPX = new String[5];
         mruCGX = new String[5];
@@ -185,6 +192,9 @@ public class CgSettings {
                     Utils.WriteIntToXML(writer, "HORIZSPLITPOSITION",HorizSplitPosition);
                     Utils.WriteIntToXML(writer, "MRBSPLITPOSITION",MRB_SplitPosition);
                     Utils.WriteIntToXML(writer, "MAP",map);
+                    
+                    Utils.WriteDoubleToXML(writer, "DISTNEAR", DistNear);
+                    Utils.WriteDoubleToXML(writer, "DISTFAR", DistFar);
                     
                 writer.writeEndElement();
             writer.writeEndDocument();

@@ -67,7 +67,7 @@ public class CgImportPts {
 	}
 	
 	// -- Selection
-	public boolean getNum() {
+	public boolean getSel() {
 		return Sel;
 	}
 
@@ -84,6 +84,9 @@ public class CgImportPts {
 		this.Sel = sel;
 	}
 
+	public void invSel() {
+		Sel = !Sel;
+	}
 
 	// -- Line number
 	public double getLine() {
@@ -91,8 +94,13 @@ public class CgImportPts {
 	}
 
 
+	/**
+	 * Return the line as string
+	 * @return 
+	 * 	Line number + 1 as string
+	 */
 	public String getLineString() {
-		return String.format("%1.0f", Line);
+		return String.format("%1.0f", Line+1);
 	}
 
 

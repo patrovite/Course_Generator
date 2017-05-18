@@ -22,10 +22,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import course_generator.CgData;
+
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 
@@ -36,20 +37,26 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 			int row, int column) {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-		CgData data=null;
+		CgImportPts data=null;
 		
 		CgSettings settings = ((ImportPtsDataModel) table.getModel()).getSettings();
 		setIcon(null);
 
+		data = (CgImportPts) value;
+
 		//Depending of the column number return the rendered label
 		switch (column) {
+//			case 0:
+//				JCheckBox b=new JCheckBox();
+//				b.setSelected(data.getSel());
+//				return b;
 			case 0: // Selection
-				data = (CgData) value;
-
-				Double num = data.getNum();
-
 				// -- Set the value
-				setText(String.format("%1.0f ", num));
+				if (data.getSel())
+					setText("X");
+				else
+					setText("");
+				
 				setHorizontalAlignment(CENTER);
 
 				// -- Set the background
@@ -59,14 +66,9 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 					setBackground(Color.WHITE);
 
 				return this;
-
 			case 1: // Line
-				data = (CgData) value;
-
-				Double line = data.getNum();
-
 				// -- Set the value
-				setText(String.format("%1.0f ", line));
+				setText(data.getLineString());
 				setHorizontalAlignment(CENTER);
 
 				// -- Set the background
@@ -78,26 +80,27 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 				return this;
 
 			case 2: // Distance
-					data = (CgData) value;
-					
 					setText(data.getDistString(settings.Unit, false));
 					setHorizontalAlignment(CENTER);
 
 					// -- Set the background
 					if (isSelected)
 						setBackground(CgConst.CL_LINE_SELECTION);
-					else
-						setBackground(Color.WHITE);
-
+					else {
+						double dist = data.getDist();
+						if (dist<=settings.DistNear)
+							setBackground(Color.GREEN);
+						else if (dist<=settings.DistFar)
+							setBackground(Color.ORANGE);
+						else 
+							setBackground(Color.RED);
+					}
+					
 					return this;
 
 			case 3: // Latitude
-				data = (CgData) value;
-				
-				Double lat = data.getLatitude();
-
 				// -- Set the value
-				setText(String.format("%1.7f", lat));
+				setText(data.getLatitudeString());
 				setHorizontalAlignment(CENTER);
 
 				// -- Set the background
@@ -109,12 +112,8 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 				return this;
 
 			case 4: // Longitude
-				data = (CgData) value;
-				
-				Double lon = data.getLongitude();
-
 				// -- Set the value
-				setText(String.format("%1.7f", lon));
+				setText(data.getLongitudeString());
 				setHorizontalAlignment(CENTER);
 
 				// -- Set the background
@@ -126,10 +125,6 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 				return this;
 
 			case 5: // Elevation
-				data = (CgData) value;
-				
-				Double slope = data.getSlope();
-
 				setText(data.getElevationString(settings.Unit, false));
 				setHorizontalAlignment(CENTER);
 				
@@ -141,8 +136,6 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 				return this;
 
 			case 6: // Tags
-				data = (CgData) value;
-				
 				int tag = data.getTag();
 
 				// -- Count the number of active tag
@@ -250,8 +243,6 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 				return this;
 
 			case 7: //Name
-				data = (CgData) value;
-
 		        //-- Set the value
 		        setText(data.getName());
 		        setHorizontalAlignment(LEFT);
@@ -265,8 +256,6 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 		        return this;
 		        
 			case 8: //Comment
-				data = (CgData) value;
-
 		        //-- Set the value
 		        setText(data.getComment());
 		        setHorizontalAlignment(LEFT);

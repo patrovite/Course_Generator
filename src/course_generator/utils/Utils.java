@@ -26,13 +26,17 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Locale;
 
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -615,7 +619,7 @@ public class Utils {
 	public static void WriteDoubleToXML(XMLStreamWriter writer, String Element, double Data) {
 		try {
 			writer.writeStartElement(Element);
-			writer.writeCharacters(Double.toString(Data));
+			writer.writeCharacters(String.format(Locale.ROOT, "%f", Data));
 			writer.writeEndElement();
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
@@ -1279,5 +1283,32 @@ public class Utils {
 		return sb;
 	}
 	
+	
+	public static boolean ExportResource(Object obj, String resourceName, String dst) throws Exception {
+		InputStream stream = null;
+		OutputStream resStreamOut = null;
+		boolean ok=false;
+		String jarFolder;
+		try {
+			stream = obj.getClass().getResourceAsStream(resourceName);
+			if (stream == null) {
+				throw new Exception ("Cannot get resource \"" + resourceName + "\" from jar file");
+			}
+			int readBytes;
+			byte[] buffer = new byte[4096];
+			jarFolder = new File(obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getPath().replace('\\', '/');
+			resStreamOut = new FileOutputStream(dst);
+			while ((readBytes = stream.read(buffer)) >0 ) {
+				resStreamOut.write(buffer, 0, readBytes);
+			}
+			ok=true;
+		} catch (Exception ex) {
+			throw ex;
+		} finally {
+			if (stream!=null) stream.close();
+			if (resStreamOut!=null) resStreamOut.close();
+		}
+		return ok;
+	}
 	
 } // Class

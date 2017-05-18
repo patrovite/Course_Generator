@@ -317,9 +317,16 @@ public class SaxConfigHandler extends DefaultHandler{
                 Settings.MRB_SplitPosition = ManageInt(220, ERR_READ_INT);
             }
             else if (qName.equalsIgnoreCase("MAP")) {
-                Settings.map = ManageInt(0, ERR_READ_INT);
+            	Settings.map = ManageInt(0, ERR_READ_INT);
+            }
+            else if (qName.equalsIgnoreCase("DISTNEAR")) {
+            	Settings.DistNear = ManageDouble(100.0, ERR_READ_DOUBLE);
+            }
+            else if (qName.equalsIgnoreCase("DISTFAR")) {
+                Settings.DistFar = ManageDouble(1000.0, ERR_READ_DOUBLE);
             }
 
+            
             else if (qName.equalsIgnoreCase("CONFIG")) {
                 level--;
             }        

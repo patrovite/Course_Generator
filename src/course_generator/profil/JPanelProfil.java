@@ -23,7 +23,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -57,7 +56,6 @@ import org.jfree.ui.TextAnchor;
 
 import course_generator.CgData;
 import course_generator.TrackData;
-import course_generator.resume.JPanelResumeListener;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
@@ -353,6 +351,7 @@ public class JPanelProfil  extends JPanel {
 	 * Update the profil chart
 	 */
 	public void RefreshProfilChart() {
+		if (track==null) return;
 		if (track.data.isEmpty())
 			return;
 
