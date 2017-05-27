@@ -55,9 +55,22 @@ With Course Generator you can :
 ## How to run Course Generator - MacOS
 I have no MacOS system but the installation is probably the same as LINUX.
 
+## Some screenshoots
+Mini roadbook - Simple view
+![Mini roadbook - simple view](http://i.imgur.com/QqeVisc.png)
 
-Note:
+Mini roadbook - Road/track view
+![Mini roadbook - Road/track view](http://i.imgur.com/z7fwq7o.png)
+
+Mini roadbook - Slope view
+![Mini roadbook - Road/track view](http://i.imgur.com/UjOEtSH.png)
+
+Curves editor
+![Curves editor](http://i.imgur.com/6YnDFUz.png)
+
+## Note
 Since version alpha 5, the course generator directory has been changed from "Course Generator" to ".course_generator".
 
-More information at [www.techandrun.com](http://www.techandrun.com)
+
+#### More information at [www.techandrun.com](http://www.techandrun.com)
 
