@@ -10,9 +10,9 @@ All features for this version has been implemented. The documentation is missing
 ## History
 I created Course Generator in 2008 for my first 100 km ultra trail. Since then, I added a lot of features and it has been used by a lot of french ultra-runner. Up to the version 3.88 it has been written in C# and now java is used in order to be cross platform (Windows, Mac OS and Linux) and multilingual. 
 
-Course Generator is free (donation are welcome ;) ) and open source under GPL V3.
+Course Generator is free (donation are welcome ;) ), multi platform (Windows, Mac and Linux), multi-language (currently English and French) and open source under GPL V3.
 
-In order to works, Course Generator (also called CG) need a GPS file and some extra informations.
+In order to works, Course Generator (also called CG) need a GPS file (GPX file) and some extra informations.
 
 With Course Generator you can :
 
@@ -25,12 +25,12 @@ With Course Generator you can :
 * Set a name and a comment for each position of the track
 * Take into account the effect of the night during
 * Take into account the effect of the elevation (over 1500m)
-* See your track on an Openstreet map
+* See your track on an OpenStreetMap map
 * Generate a mini road book where you will see the track profile and all the most important information of your race (position name, time, hour, elevation, ascend...)
 * Get statistics of your race
 * Analyze a race
 * Invert the track direction
-* Define a new start point for "loop track"
+* Define a new start point for "looping track"
 * Insert an external track at the beginning or the end of a track
 * Extract and save a part of the track
 * Save all your specific settings in a CGX file (a Course Generator specific format)
