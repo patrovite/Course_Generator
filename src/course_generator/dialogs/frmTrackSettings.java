@@ -114,7 +114,10 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		// Set field
 		tfTrackName.setText(this.track.CourseName);
 		tfDescription.setText(this.track.Description);
+		
 		jMonthView.setSelectionDate(this.track.StartTime.toDate()); 
+		jMonthView.ensureDateVisible(this.track.StartTime.toDate());
+		
 		spinStartTimeModel.setValue(this.track.StartTime.toDate());
 		chkElevationEffect.setSelected(this.track.bElevEffect);
 		chkNightEffect.setSelected(this.track.bNightCoeff);
@@ -139,7 +142,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 			DateTime std=new DateTime(jMonthView.getSelectionDate()); 
 			DateTime stt=new DateTime(spinStartTimeModel.getValue());
 			std=std.withTime(stt.getHourOfDay(), stt.getMinuteOfHour(), 0, 0);
-			track.StartTime=std;
+			//track.StartTime=std;
+			track.StartTime = new DateTime(std.getYear(), std.getMonthOfYear(), std.getDayOfMonth(), stt.getHourOfDay(), stt.getMinuteOfHour());
 			
 			track.bElevEffect=chkElevationEffect.isSelected();
 			track.bNightCoeff=chkNightEffect.isSelected();
@@ -274,8 +278,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		jMonthView.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 		jMonthView.setBoxPaddingX(1);
 		jMonthView.setBoxPaddingY(1);
-//		jMonthView.setShowingWeekNumber(true);
-//		jMonthView.setTraversable(true);		
+		jMonthView.setShowingWeekNumber(true);
+		jMonthView.setTraversable(true);		
 		Utils.addComponent(panelDateTime, jMonthView, 
 				0, 0, 
 				1, 1, 
