@@ -33,6 +33,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -1285,6 +1286,18 @@ public class Utils {
 	
 	
 	public static boolean ExportResource(Object obj, String resourceName, String dst) throws Exception {
+		boolean ok=false;
+		
+		File file = new File(dst);
+		if (!file.exists()) {
+		     InputStream link = (obj.getClass().getResourceAsStream(resourceName));
+		     Files.copy(link, file.getAbsoluteFile().toPath());
+		     ok=true;
+		     System.out.println(resourceName+" exported to " + dst);
+		}
+		return ok;
+		
+		/*
 		InputStream stream = null;
 		OutputStream resStreamOut = null;
 		boolean ok=false;
@@ -1296,7 +1309,11 @@ public class Utils {
 			}
 			int readBytes;
 			byte[] buffer = new byte[4096];
-			jarFolder = new File(obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getPath().replace('\\', '/');
+			String s=obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+			System.out.println("resourceName="+resourceName);
+			System.out.println("s="+s);
+			//jarFolder = new File(obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getPath().replace('\\', '/');
+			jarFolder = new File(s).getParentFile().getPath().replace('\\', '/');
 			resStreamOut = new FileOutputStream(dst);
 			while ((readBytes = stream.read(buffer)) >0 ) {
 				resStreamOut.write(buffer, 0, readBytes);
@@ -1309,6 +1326,7 @@ public class Utils {
 			if (resStreamOut!=null) resStreamOut.close();
 		}
 		return ok;
+		*/
 	}
 	
 } // Class

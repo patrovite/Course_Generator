@@ -1,6 +1,6 @@
 /*
  * Course Generator - Main form
- * Copyright (C) 2016 Pierre Delore
+ * Copyright (C) 2008-2017 Pierre Delore
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -148,7 +148,7 @@ import course_generator.utils.Utils.CalcLineResult;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.BETA 2";
+	private final String Version = "4.0.0.BETA 3";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -411,10 +411,14 @@ public class frmMain extends javax.swing.JFrame {
 	 * If the "default.par" file is missing copy the curves files from the resource to the config directory
 	 */
 	private void ExportCurvesFromResource() {
+
 		String dst = DataDir + "/" + CgConst.CG_DIR + "/";
 		if (!Utils.FileExist(DataDir + "/" + CgConst.CG_DIR + "/" + "Default.par")) {
 			if (JOptionPane.showConfirmDialog(this, bundle.getString("frmMain.QuestionInstallCurves"), "",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				
+				CgLog.info("Export curves from resource");
+				
 				try {
 					Utils.ExportResource(this, "/course_generator/curves/Default.par", dst + "Default.par");
 					Utils.ExportResource(this, "/course_generator/curves/Run_10_5km_h.par", dst + "Run_10_5km_h.par");
