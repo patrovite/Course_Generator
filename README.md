@@ -4,8 +4,9 @@ Course Generator is a software which can estimate your time in road running race
 
 ![Course Generator Main window](http://i.imgur.com/7vHiVvo.png)
 
-## Status : Version 4.0.0 beta 3
+## Status : Version 4.0.0 beta 4
 All features for this version has been implemented. The documentation is missing and some controls must be done in the translation.
+In this version the undo feature has been temporarily disabled.
 
 ## History
 I created Course Generator in 2008 for my first 100 km ultra trail. Since then, I added a lot of features and it has been used by a lot of french ultra-runner. Up to the version 3.88 it has been written in C# and now java is used in order to be cross platform (Windows, Mac OS and Linux) and multilingual. 

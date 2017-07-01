@@ -148,12 +148,12 @@ import course_generator.utils.Utils.CalcLineResult;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.BETA 3";
+	private final String Version = "4.0.0.BETA 4";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
 
-	public TrackData Track;
+	public TrackData Track, Backup_Track;
 	private ResumeData Resume;
 	private final TrackDataModel ModelTableMain;
 	public CgSettings Settings;
@@ -1396,8 +1396,8 @@ public class frmMain extends javax.swing.JFrame {
 
 
 	private void BackupInCGX() {
-		Track.SaveCGX(DataDir + "/" + CgConst.CG_DIR + "/backup.cgx", 0, Track.data.size() - 1, true);
-		bNoBackup = false;
+//		Track.SaveCGX(DataDir + "/" + CgConst.CG_DIR + "/backup.cgx", 0, Track.data.size() - 1, true);
+//		bNoBackup = false;
 	}
 
 
@@ -1787,6 +1787,7 @@ public class frmMain extends javax.swing.JFrame {
 				RestoreInCGX();
 			}
 		});
+		btUndo.setEnabled(false); //TODO To remove 
 		ToolBarMain.add(btUndo);
 
 		// -- Separator
