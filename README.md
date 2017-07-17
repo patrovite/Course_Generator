@@ -4,7 +4,7 @@ Course Generator is a software which can estimate your time in road running race
 
 ![Course Generator Main window](http://i.imgur.com/7vHiVvo.png)
 
-## Status : Version 4.0.0 beta 4
+## Status : Version 4.0.0 beta 5
 All features for this version has been implemented. The documentation is missing and some controls must be done in the translation.
 In this version the undo feature has been temporarily disabled.
 

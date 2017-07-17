@@ -35,6 +35,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import org.joda.time.DateTime;
+
 import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
@@ -283,7 +285,7 @@ public class PanelProfilMRB extends JPanel {
 			return;
 		if (track.data.isEmpty())
 			return;
-
+		
 		// -- Vertical axis drawing
 		// Position of the arrow compare to the top of the profile
 		int YPosArrow = 15;
@@ -399,6 +401,55 @@ public class PanelProfilMRB extends JPanel {
 		resx = wp / (xmax - xmin);
 		resy = hp / (ymax - ymin);
 
+		
+		
+		// -- Night background
+		if (track.bNightCoeff && track.bShowNightDay) {
+			g2d.setStroke(PenBlackS);
+			g2d.setPaint(Color.LIGHT_GRAY);
+			
+			int fs=0;
+			DateTime hour=new DateTime();
+			Double total=0.0;
+			
+			for (CgData r : track.data) {
+		        hour = r.getHour();
+		        total = r.getTotal(settings.Unit);
+		        
+		        int ts_val = hour.getSecondOfDay();
+		        int ts_start = track.StartNightTime.getSecondOfDay();
+		        int ts_end = track.EndNightTime.getSecondOfDay();
+		        if (
+		                (ts_val>ts_start)
+		                || (ts_val<ts_end)
+		            )
+		            {
+		        		if (fs==0) 
+		        			fs=(int) Math.round((offx + 1 + ((total - xmin) * resx)));
+		            }
+		        else {
+		        	if (fs!=0) {
+		        		int tx= (int) Math.round((offx + 1 + ((total - xmin) * resx)));
+		        		int ty = height - offy;
+		        		g2d.fillRect(fs, 0, tx-fs, ty);
+		        		fs=0;
+		        	}
+		        }
+			} // for
+
+			if (fs!=0) {
+        		int tx= (int) Math.round((offx + 1 + ((total - xmin) * resx)));
+        		int ty = height - offy;
+        		g2d.fillRect(fs, 0, tx-fs, ty);
+        		fs=0;
+        	}
+			
+			
+		}
+		
+		
+		
+		
 		// -- Horizontal line --
 
 		// -- Vertical grid drawing --

@@ -43,35 +43,35 @@ public class SaxCGXHandler extends DefaultHandler{
 	private java.util.ResourceBundle bundle = null;
 	private Component Parent;
 	private double cgx_version=0.0;
-    private double totaldistance=0.0;
-    private int totalsecond=0;
-    private String coursename="";
-    private String description="";
-    private DateTime start_time=new DateTime(1970,1,1,0,0,0);
-    private boolean use_elev_effect=false;
-    private boolean use_night_coeff=false;
-    private DateTime night_starttime=new DateTime(1970,1,1,0,0,0);
-    private DateTime night_endtime=new DateTime(1970,1,1,0,0,0);
-    private double night_coeff=0.0;
-    private double night_coeff_desc=0.0;
-    private double start_globalcoeff=100.0;
-    private double end_globalcoeff=100.0;
-    private double timezone=0.0;
-    private boolean use_summertime=false;
+//    private double totaldistance=0.0;
+//    private int totalsecond=0;
+//    private String coursename="";
+//    private String description="";
+//    private DateTime start_time=new DateTime(1970,1,1,0,0,0);
+//    private boolean use_elev_effect=false;
+//    private boolean use_night_coeff=false;
+//    private DateTime night_starttime=new DateTime(1970,1,1,0,0,0);
+//    private DateTime night_endtime=new DateTime(1970,1,1,0,0,0);
+//    private double night_coeff=0.0;
+//    private double night_coeff_desc=0.0;
+//    private double start_globalcoeff=100.0;
+//    private double end_globalcoeff=100.0;
+//    private double timezone=0.0;
+//    private boolean use_summertime=false;
     private String curve="Run_10km_h";
-    private int mrb_sizew=800;
-    private int mrb_sizeh=300;
+//    private int mrb_sizew=800;
+//    private int mrb_sizeh=300;
      
-    private Color clProfil_Simple_Fill;
-    private Color clProfil_Simple_Border;
-    private Color clProfil_RS_Road;
-    private Color clProfil_RS_Path;
-    private Color clProfil_RS_Border;
-    private Color clProfil_SlopeInf5;
-    private Color clProfil_SlopeInf10;
-    private Color clProfil_SlopeInf15;
-    private Color clProfil_SlopeSup15;
-    private Color clProfil_SlopeBorder;
+//    private Color clProfil_Simple_Fill;
+//    private Color clProfil_Simple_Border;
+//    private Color clProfil_RS_Road;
+//    private Color clProfil_RS_Path;
+//    private Color clProfil_RS_Border;
+//    private Color clProfil_SlopeInf5;
+//    private Color clProfil_SlopeInf10;
+//    private Color clProfil_SlopeInf15;
+//    private Color clProfil_SlopeSup15;
+//    private Color clProfil_SlopeBorder;
     
     private double trkpt_lat=0.0;
     private double trkpt_lon=0.0;
@@ -95,8 +95,8 @@ public class SaxCGXHandler extends DefaultHandler{
     private String trkpt_fmtmrb="";
     private int trkpt_FontSizemrb=0;        
     
-    private int trk_nb=0;
-    private int trkseg_nb=0;
+//    private int trk_nb=0;
+//    private int trkseg_nb=0;
     private String characters="";
     private int old_time=0;
     
@@ -134,7 +134,7 @@ public class SaxCGXHandler extends DefaultHandler{
      * Read the CGX file from disc
      * @param filename Name of the cgx file to read
      * @return The error code
-     *   Erroce explanation:
+     *   Error explanation:
      *   ERR_READ_NO = No problem during the reading of the file
      *   ERR_READ_DOUBLE = Parsing error during the read of a double element 
      *   ERR_READ_INT = Parsing error during the read of a integer element
@@ -155,33 +155,33 @@ public class SaxCGXHandler extends DefaultHandler{
         trkdata=TData;
         cgx_version=0.0;
         errline=0;
-        totaldistance=0.0;
-        totalsecond=0;
-        coursename="";
-        description="";
-        start_time=new DateTime(1970,1,1,0,0,0);
-        use_elev_effect=false;
-        use_night_coeff=false;
-        night_starttime=new DateTime(1970,1,1,0,0,0);
-        night_endtime=new DateTime(1970,1,1,0,0,0);
-        night_coeff=0.0;
-        night_coeff_desc=0.0;
-        start_globalcoeff=100.0;
-        end_globalcoeff=100.0;
-        timezone=0.0;
-        use_summertime=false;
+//        totaldistance=0.0;
+//        totalsecond=0;
+//        coursename="";
+//        description="";
+//        start_time=new DateTime(1970,1,1,0,0,0);
+//        use_elev_effect=false;
+//        use_night_coeff=false;
+//        night_starttime=new DateTime(1970,1,1,0,0,0);
+//        night_endtime=new DateTime(1970,1,1,0,0,0);
+//        night_coeff=0.0;
+//        night_coeff_desc=0.0;
+//        start_globalcoeff=100.0;
+//        end_globalcoeff=100.0;
+//        timezone=0.0;
+//        use_summertime=false;
         curve="Run_10km_h";
-        mrb_sizew=640;
-        mrb_sizeh=480;
-        trk_nb=0;
-        trkseg_nb=0;
+//        mrb_sizew=640;
+//        mrb_sizeh=480;
+//        trk_nb=0;
+//        trkseg_nb=0;
         characters="";
         trkpt_lat=0.0;
         trkpt_lon=0.0;
         trkpt_ele=0.0;
         trkpt_name="";
         level=0;
-        errcode=ERR_READ_NO;
+//        errcode=ERR_READ_NO;
         Cmpt=0;
         old_time=0;
         
@@ -377,7 +377,10 @@ public class SaxCGXHandler extends DefaultHandler{
             }        
             else if (qName.equalsIgnoreCase("USENIGHTCOEFF")) {
                 trkdata.bNightCoeff=ManageBoolean(false, ERR_READ_BOOL);
-            }        
+            }      
+            else if (qName.equalsIgnoreCase("MRBSHOWDAYNIGHT")) {
+                trkdata.bShowNightDay=ManageBoolean(false, ERR_READ_BOOL);
+            }      
             else if (qName.equalsIgnoreCase("NIGHTSTARTTIME")) {
                 try {
                     trkdata.StartNightTime=DateTime.parse(characters,fmt);
@@ -562,7 +565,7 @@ public class SaxCGXHandler extends DefaultHandler{
             else if (qName.equalsIgnoreCase("TRACKPOINT")) {
                 level--;
                 if ((mode == 0) || (mode == 2)) {
-                    // Add data at the of the array
+                    // Add data at the end of the array
                     Cmpt++;
                     trkdata.data.add(new CgData(
                             Cmpt, //double Num
@@ -597,6 +600,7 @@ public class SaxCGXHandler extends DefaultHandler{
                     );
                 }
                 else {
+                	// Add data at the beginning of the array
                     trkdata.data.add(Cmpt,new CgData(
                             Cmpt, //double Num
                             trkpt_lat, //double Latitude
@@ -628,8 +632,8 @@ public class SaxCGXHandler extends DefaultHandler{
                             trkpt_FontSizemrb //int FontSizeMiniRoadbook
                         ) 
                     );
+                    Cmpt++;    
                 } //else
-                Cmpt++;
                 old_time=trkpt_timesecond;
             } 
         } //End LEVEL_TRACKPOINT

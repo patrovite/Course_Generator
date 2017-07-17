@@ -107,6 +107,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 	private MrbDataList datalist;
 	private JToolBar ToolBarMRB;
 	private String[] memoFormat;
+	private JButton btNightAndDayHighlight;
 
 
 	/**
@@ -190,6 +191,8 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		RefreshBtLabel();
 		RefreshTooltips();
+		
+		btNightAndDayHighlight.setSelected(track.bShowNightDay);
 
 		// End set field
 		ok = false;
@@ -400,6 +403,28 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Separator
 		ToolBarMRB.add(new javax.swing.JToolBar.Separator());
+
+		// -- Night and day highlight
+		btNightAndDayHighlight = new javax.swing.JButton();
+		btNightAndDayHighlight.setIcon(
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/night_day.png")));
+		btNightAndDayHighlight
+				.setToolTipText(bundle.getString("FrmMiniroadbook.btNightAndDayHighlight.toolTipText"));
+		btNightAndDayHighlight.setPreferredSize(new Dimension(btw, bth));
+		btNightAndDayHighlight.setFocusable(false);
+		btNightAndDayHighlight.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				track.bShowNightDay=!track.bShowNightDay;
+				btNightAndDayHighlight.setSelected(track.bShowNightDay);
+				repaint();
+			}
+		});
+		ToolBarMRB.add(btNightAndDayHighlight);
+
+		
+		// -- Separator
+		ToolBarMRB.add(new javax.swing.JToolBar.Separator());
+		
 
 		// -- Label "Profil type"
 		lbProfilType = new javax.swing.JLabel(" "+bundle.getString("FrmMiniroadbook.lbProfilType.Text")+" ");

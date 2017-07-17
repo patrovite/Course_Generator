@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
@@ -177,6 +178,8 @@ public class TrackData {
 	public int MRBType = 0;
 	/** Top margin size in pixels in the mini roadbook **/
 	public int TopMargin = 100;
+	/** Show the night and day on the mrb profil **/
+	public boolean bShowNightDay = true;
 
 	// -- Profil colors
 	public Color clProfil_Simple_Fill = Color.BLACK;
@@ -191,10 +194,8 @@ public class TrackData {
 	public Color clProfil_SlopeSup15 = Color.BLACK;
 	public Color clProfil_SlopeBorder = Color.BLACK;
 
-
 	// -- Constructor --
 	public TrackData() {
-
 		Name = "";
 		param = new ParamData();
 		Paramfile = "Default";
@@ -329,6 +330,7 @@ public class TrackData {
 			r.setNum(cmpt);
 			cmpt++;
 		}
+		CgLog.info((cmpt-1) + " positions loaded.");
 
 		isCalculated = false;
 		isModified = false;
@@ -402,6 +404,8 @@ public class TrackData {
 			return;
 		}
 
+		long ts=System.currentTimeMillis();
+		
 		// -- Save the data in the home directory
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
@@ -480,18 +484,28 @@ public class TrackData {
 			// <trkseg> node
 			writer.writeStartElement("trkseg");
 
+			NumberFormat nf = NumberFormat.getNumberInstance(Locale.ROOT);
+			nf.setGroupingUsed(false);
+			nf.setMaximumFractionDigits(7);
+			
+			int cmpt=0;
 			for (int i = start; i <= end; i++) {
 				CgData r = data.get(i);
 
 				// <trkpt>
 				// <trkpt lat="45.8547528" lon="6.7226378">
 				writer.writeStartElement("trkpt");
-				writer.writeAttribute("lat", String.format(Locale.ROOT, "%1.14f", r.getLatitude()));
-				writer.writeAttribute("lon", String.format(Locale.ROOT, "%1.14f", r.getLongitude()));
+//				writer.writeAttribute("lat", String.format(Locale.ROOT, "%1.14f", r.getLatitude()));
+//				writer.writeAttribute("lon", String.format(Locale.ROOT, "%1.14f", r.getLongitude()));
+				nf.setMaximumFractionDigits(14);				
+				writer.writeAttribute("lat", nf.format(r.getLatitude()));
+				writer.writeAttribute("lon", nf.format(r.getLongitude()));
 
 				// <ele>1180.4</ele>
-				Utils.WriteStringToXML(writer, "ele",
-						String.format(Locale.ROOT, "%1.7f", r.getElevation(CgConst.UNIT_METER)));
+//				Utils.WriteStringToXML(writer, "ele",
+//						String.format(Locale.ROOT, "%1.7f", r.getElevation(CgConst.UNIT_METER)));
+				nf.setMaximumFractionDigits(7);
+				Utils.WriteStringToXML(writer, "ele", nf.format(r.getElevation(CgConst.UNIT_METER)));
 
 				// <time>2010-08-18T07:57:07.000Z</time>
 				// dt = r.getHour().ToUniversalTime();
@@ -501,6 +515,8 @@ public class TrackData {
 				Utils.WriteStringToXML(writer, "name", String.valueOf(i));
 
 				writer.writeEndElement();// Trkpt
+				
+				cmpt++;
 			} // for
 			writer.writeEndElement();// Trkseg
 			writer.writeEndElement();// trk
@@ -512,9 +528,12 @@ public class TrackData {
 			Name = new File(name).getName();
 
 			CgLog.info("TrackData.SaveGPX : '" + name + "' saved");
+			CgLog.info(cmpt + " positions saved.");
 		} catch (XMLStreamException | IOException e) {
 			e.printStackTrace();
 		}
+		
+		CgLog.info("Save time : "+ (System.currentTimeMillis()-ts) + "ms");
 	}
 
 
@@ -1557,6 +1576,7 @@ public class TrackData {
 			r.setNum(cmpt);
 			cmpt++;
 		}
+		CgLog.info((cmpt-1) + " positions loaded.");
 
 		isCalculated = false;
 		isModified = false;
@@ -1617,7 +1637,9 @@ public class TrackData {
 		if (data.isEmpty()) {
 			return;
 		}
-
+		
+		long ts=System.currentTimeMillis();
+		
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
 			XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream(name), "UTF-8");
@@ -1648,6 +1670,7 @@ public class TrackData {
 			Utils.WriteStringToXML(writer, "CURVE", Paramfile);
 			Utils.WriteIntToXML(writer, "MRBSIZEW", MrbSizeW);
 			Utils.WriteIntToXML(writer, "MRBSIZEH", MrbSizeH);
+			Utils.WriteStringToXML(writer, "MRBSHOWDAYNIGHT", (bShowNightDay ? "1" : "0"));
 
 			Utils.WriteIntToXML(writer, "CLPROFILSIMPLEFILL", clProfil_Simple_Fill.getRGB());
 			Utils.WriteIntToXML(writer, "CLPROFILSIMPLEBORDER", clProfil_Simple_Border.getRGB());
@@ -1668,21 +1691,47 @@ public class TrackData {
 			Utils.WriteIntToXML(writer, "MRBTYPE", MRBType);
 			Utils.WriteIntToXML(writer, "TOPMARGIN", TopMargin);
 
+			NumberFormat nf = NumberFormat.getNumberInstance(Locale.ROOT);
+			nf.setGroupingUsed(false);
+			nf.setMaximumFractionDigits(7);
+		    
+			int cmpt=0;
 			for (int i = start; i <= end; i++) {
 				CgData r = data.get(i);
-
+				
+//				writer.writeStartElement("TRACKPOINT");
+//				Utils.WriteStringToXML(writer, "LATITUDEDEGREES", String.format(Locale.ROOT, "%f", r.getLatitude()));
+//				Utils.WriteStringToXML(writer, "LONGITUDEDEGREES", String.format(Locale.ROOT, "%f", r.getLongitude()));
+//				Utils.WriteStringToXML(writer, "ALTITUDEMETERS",
+//						String.format(Locale.ROOT, "%f", r.getElevation(CgConst.UNIT_METER)));
+//				Utils.WriteStringToXML(writer, "DISTANCEMETERS",
+//						String.format(Locale.ROOT, "%f", r.getDist(CgConst.UNIT_METER)));
+//				Utils.WriteStringToXML(writer, "DISTANCEMETERSCUMUL",
+//						String.format(Locale.ROOT, "%f", r.getTotal(CgConst.UNIT_METER)));
+//				Utils.WriteStringToXML(writer, "DIFF", String.format(Locale.ROOT, "%f", r.getDiff()));
+//				Utils.WriteStringToXML(writer, "COEFF", String.format(Locale.ROOT, "%f", r.getCoeff()));
+//				Utils.WriteStringToXML(writer, "RECUP", String.format(Locale.ROOT, "%f", r.getRecovery()));
+//				Utils.WriteIntToXML(writer, "TIMESECONDE", r.getTime());
+//				Utils.WriteIntToXML(writer, "EATTIME", r.getStation());
+//				Utils.WriteIntToXML(writer, "TIMELIMIT", r.getTimeLimit());
+//				Utils.WriteStringToXML(writer, "COMMENT", r.getComment());
+//				Utils.WriteStringToXML(writer, "NAME", r.getName());
+//				Utils.WriteIntToXML(writer, "TAG", r.getTag());
+//				Utils.WriteStringToXML(writer, "FMTLBMINIROADBOOK", r.FmtLbMiniRoadbook);
+//				Utils.WriteIntToXML(writer, "OPTMINIROADBOOK", r.OptionMiniRoadbook);
+//				Utils.WriteIntToXML(writer, "VPOSMINIROADBOOK", r.VPosMiniRoadbook);
+//				Utils.WriteStringToXML(writer, "COMMENTMINIROADBOOK", r.CommentMiniRoadbook);
+//				Utils.WriteIntToXML(writer, "FONTSIZEMINIROADBOOK", r.FontSizeMiniRoadbook);
+//				
 				writer.writeStartElement("TRACKPOINT");
-				Utils.WriteStringToXML(writer, "LATITUDEDEGREES", String.format(Locale.ROOT, "%f", r.getLatitude()));
-				Utils.WriteStringToXML(writer, "LONGITUDEDEGREES", String.format(Locale.ROOT, "%f", r.getLongitude()));
-				Utils.WriteStringToXML(writer, "ALTITUDEMETERS",
-						String.format(Locale.ROOT, "%f", r.getElevation(CgConst.UNIT_METER)));
-				Utils.WriteStringToXML(writer, "DISTANCEMETERS",
-						String.format(Locale.ROOT, "%f", r.getDist(CgConst.UNIT_METER)));
-				Utils.WriteStringToXML(writer, "DISTANCEMETERSCUMUL",
-						String.format(Locale.ROOT, "%f", r.getTotal(CgConst.UNIT_METER)));
-				Utils.WriteStringToXML(writer, "DIFF", String.format(Locale.ROOT, "%f", r.getDiff()));
-				Utils.WriteStringToXML(writer, "COEFF", String.format(Locale.ROOT, "%f", r.getCoeff()));
-				Utils.WriteStringToXML(writer, "RECUP", String.format(Locale.ROOT, "%f", r.getRecovery()));
+				Utils.WriteStringToXML(writer, "LATITUDEDEGREES", nf.format(r.getLatitude()));
+				Utils.WriteStringToXML(writer, "LONGITUDEDEGREES", nf.format(r.getLongitude()));
+				Utils.WriteStringToXML(writer, "ALTITUDEMETERS", nf.format(r.getElevation(CgConst.UNIT_METER)));
+				Utils.WriteStringToXML(writer, "DISTANCEMETERS", nf.format(r.getDist(CgConst.UNIT_METER)));
+				Utils.WriteStringToXML(writer, "DISTANCEMETERSCUMUL", nf.format(r.getTotal(CgConst.UNIT_METER)));
+				Utils.WriteStringToXML(writer, "DIFF", nf.format(r.getDiff()));
+				Utils.WriteStringToXML(writer, "COEFF", nf.format(r.getCoeff()));
+				Utils.WriteStringToXML(writer, "RECUP", nf.format(r.getRecovery()));
 				Utils.WriteIntToXML(writer, "TIMESECONDE", r.getTime());
 				Utils.WriteIntToXML(writer, "EATTIME", r.getStation());
 				Utils.WriteIntToXML(writer, "TIMELIMIT", r.getTimeLimit());
@@ -1694,7 +1743,9 @@ public class TrackData {
 				Utils.WriteIntToXML(writer, "VPOSMINIROADBOOK", r.VPosMiniRoadbook);
 				Utils.WriteStringToXML(writer, "COMMENTMINIROADBOOK", r.CommentMiniRoadbook);
 				Utils.WriteIntToXML(writer, "FONTSIZEMINIROADBOOK", r.FontSizeMiniRoadbook);
+
 				writer.writeEndElement();
+				cmpt++;
 			} // for
 			writer.writeEndElement();
 
@@ -1706,10 +1757,14 @@ public class TrackData {
 				isModified = false;
 				Name = new File(name).getName();
 				CgLog.info("TrackData.SaveCGX : '" + name + "' saved");
+				CgLog.info(cmpt + " positions saved.");
 			}
 		} catch (XMLStreamException | IOException e) {
 			e.printStackTrace();
 		}
+
+		
+		CgLog.info("Save time : "+ (System.currentTimeMillis()-ts) + "ms");
 	}
 
 
@@ -1730,6 +1785,8 @@ public class TrackData {
 		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		StringBuilder s = new StringBuilder();
 
+		long ts=System.currentTimeMillis();
+		
 		try {
 			PrintWriter writer = new PrintWriter(name, "UTF-8");
 
@@ -1784,6 +1841,8 @@ public class TrackData {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		CgLog.info("Save time : "+ (System.currentTimeMillis()-ts) + "ms");
 	}
 
 
