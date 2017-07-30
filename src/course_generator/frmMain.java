@@ -149,7 +149,7 @@ import course_generator.utils.Utils.CalcLineResult;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.BETA 5";
+	private final String Version = "4.0.0.BETA 6";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -327,7 +327,10 @@ public class frmMain extends javax.swing.JFrame {
 		CgLog.info("sun.cpu.endian : " + System.getProperty("sun.cpu.endian"));
 		CgLog.info("sun.desktop : " + System.getProperty("sun.desktop"));
 		CgLog.info("sun.cpu.isalist : " + System.getProperty("sun.cpu.isalist"));
+		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+		CgLog.info("Screen size : " + screen.width + "x" + screen.height);
 
+		
 		// -- List the java properties
 		// -- To activate only if necessary. It talks a lot!
 		// System.getProperties().list(System.out);

@@ -20,7 +20,6 @@ package course_generator.maps;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JToolBar;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
@@ -42,11 +40,8 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
 
 import course_generator.CgData;
-import course_generator.ResumeData;
 import course_generator.TrackData;
 import course_generator.dialogs.FrmSelectMap;
-import course_generator.resume.JPanelResumeListener;
-import course_generator.resume_table.ResumeModel;
 import course_generator.settings.CgSettings;
 import course_generator.tiles.openstreetmap.OpenStreetMap;
 import course_generator.tiles.opentopomap.OpenTopoMap;
@@ -125,7 +120,11 @@ public class JPanelMaps extends JPanel {
 		create_Toolbar();
 		panelMain.add(jToolBarMapViewer, java.awt.BorderLayout.WEST);
 
-		MapViewer = new org.openstreetmap.gui.jmapviewer.JMapViewer();
+		//MapViewer = new org.openstreetmap.gui.jmapviewer.JMapViewer();
+		MapViewer = new JMapViewerCG();
+		
+		//DefaultMapController mapc = new DefaultMapController(MapViewer);
+		//mapc.setMovementMouseButton(MouseEvent.BUTTON1);
 		//-- Tile cache definition
 		try {
 			File cacheDir = new File(DataDir + "/"+CgConst.CG_DIR, "OpenStreetMapTileCache");
