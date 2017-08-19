@@ -574,4 +574,37 @@ public class CgData {
 	public void setElevationMemo(double elevationMemo) {
 		ElevationMemo = elevationMemo;
 	}
+	
+	public CgData CopyTo(CgData d) {
+		d.Num = Num;
+		d.Latitude = Latitude;
+		d.Longitude = Longitude;
+		d.Elevation = Elevation;
+		d.ElevationMemo = ElevationMemo;
+		d.Tag = Tag;
+		d.Dist = Dist;
+		d.Total = Total;
+		d.Diff = Diff;
+		d.Coeff = Coeff;
+		d.Recovery = Recovery;
+		d.Slope = Slope;
+		d.Speed = Speed;
+		d.dElevation = dElevation;
+		d.Time = Time;
+		d.dTime_f = dTime_f;
+		d.TimeLimit = TimeLimit;
+		d.Hour = Hour;
+		d.Station = Station;
+		d.Name = Name;
+		d.Comment = Comment;
+		d.tmp1 = tmp1;
+		d.tmp2 = tmp2;
+		d.FmtLbMiniRoadbook = FmtLbMiniRoadbook;
+		d.OptionMiniRoadbook = OptionMiniRoadbook;
+		d.VPosMiniRoadbook = VPosMiniRoadbook;
+		d.CommentMiniRoadbook = CommentMiniRoadbook;
+		d.FontSizeMiniRoadbook = FontSizeMiniRoadbook;
+		return d;
+	}
+	
 }

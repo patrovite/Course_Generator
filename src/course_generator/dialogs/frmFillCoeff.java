@@ -396,7 +396,7 @@ public class frmFillCoeff  extends javax.swing.JDialog {
 				5, 5, 0, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.NONE);
 
-		spinHour = new CgSpinner(0,0,23,1);
+		spinHour = new CgSpinner(0,0,999,1);
 		Utils.addComponent(panelEstimateTime, spinHour, 
 				1, 1, 
 				1, 1, 
@@ -539,6 +539,9 @@ public class frmFillCoeff  extends javax.swing.JDialog {
 	    	estimatedCoeff = (-0.00000315 * t + 1.01701) * 100;
 	    else 
 	    	estimatedCoeff = 100;
+
+	    if (estimatedCoeff < 0) 
+	    	estimatedCoeff = 0;
 	}
 	
 	protected void Refresh() {

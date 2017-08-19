@@ -1,15 +1,15 @@
 # Course Generator
 
-Course Generator is a software which can estimate your time in road running races, trails, ultra trails or treks. 
+Course Generator is a software which can estimate your time in road running races, trails, ultra trails or treks.
 
 ![Course Generator Main window](http://i.imgur.com/7vHiVvo.png)
 
-## Status : Version 4.0.0 beta 6
+## Status : Version 4.0.0 beta 7
 All features for this version has been implemented. The documentation is missing and some controls must be done in the translation.
 In this version the undo feature has been temporarily disabled.
 
 ## History
-I created Course Generator in 2008 for my first 100 km ultra trail. Since then, I added a lot of features and it has been used by a lot of french ultra-runner. Up to the version 3.88 it has been written in C# and now java is used in order to be cross platform (Windows, Mac OS and Linux) and multilingual. 
+I created Course Generator in 2008 for my first 100 km ultra trail. Since then, I added a lot of features and it has been used by a lot of french ultra-runner. Up to the version 3.88 it has been written in C# and now java is used in order to be cross platform (Windows, Mac OS and Linux) and multilingual.
 
 Course Generator is free (donation are welcome ;) ), multi platform (Windows, Mac and Linux), multi-language (currently English and French) and open source under GPL V3.
 
@@ -17,7 +17,7 @@ In order to works, Course Generator (also called CG) need a GPS file (GPX file) 
 
 With Course Generator you can :
 
-* Estimate your time on each point of the track. 
+* Estimate your time on each point of the track.
 * Set field type (the difficulty to the track: road, track...) of each point of the track
 * Set your health status and how it will evolve during the race
 * Set the station time (to eat, to drink, to sleep...)
@@ -37,19 +37,30 @@ With Course Generator you can :
 * Save all your specific settings in a CGX file (a Course Generator specific format)
 * Have offline maps (OpenStreetMap)
 
-  
+
 ## How to run Course Generator - WINDOWS
 
-* You need a version 7 (minimum) of the java runtime environment (JRE) 
-* Copy "course_generator.exe" in a folder (where you want).
+* You need a version 7 (minimum) of the java runtime environment (JRE)
+* Download the latest version from the [TechAndRun website](http://techandrun.com/course-generator/telechargement/)
+* Uncompress the archive in a directory (where you want),
+    * Content of the archive :
+        * \Help => Directory containing the manual
+        * course_generator.exe => Runtime for Windows
+        * course_generator.jar => Java runtime file. Necessary under Windows, Linux et MacOS
 * Execute "course_generator.exe"
 * The first time you execute the program it will ask you if you want to install the standard curves. Answer "yes"
 * That's all. Enjoy ;)
 
 ## How to run Course Generator - LINUX
-* You need a version 7 (minimum) of the java runtime environment (JRE) 
-* Copy the "course_generator.jar" in a folder (where you want).
-* Execute "course_generator.jar"
+* You need a version 7 (minimum) of the java runtime environment (JRE)
+* Download the latest version from the [TechAndRun website](http://techandrun.com/course-generator/telechargement/)
+* Uncompress the archive in a directory (where you want),
+    * Content of the archive :
+        * \Help => Directory containing the manual
+        * course_generator.exe => Runtime for Windows
+        * course_generator.jar => Java runtime file. Necessary under Windows, Linux et MacOS
+* Execute "course_generator.jar". "java -jarcourse_generator.jar" if the "jar" extension isn't associated to ja,
+
 * The first time you execute the program it will ask you if you want to install the standard curves. Answer "yes"
 * That's all. Enjoy ;)
 
@@ -74,4 +85,3 @@ Since version alpha 5, the course generator directory has been changed from "Cou
 
 
 #### More information at [www.techandrun.com](http://www.techandrun.com)
-

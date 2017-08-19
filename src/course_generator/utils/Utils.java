@@ -670,6 +670,15 @@ public class Utils {
 
 
 	/**
+	 * Return the application directory path. Cross platform
+	 * 
+	 * @return Home directory path
+	 */
+	public static String GetAppDir() {
+		return System.getProperty("user.dir");
+	}
+
+	/**
 	 * Return the home directory path. Cross platform
 	 * 
 	 * @return Home directory path
@@ -1164,6 +1173,16 @@ public class Utils {
 		return new File(fname).isFile();
 	}
 
+	/**
+	 * Return if a directory exist
+	 * 
+	 * @param fname
+	 *            file with the full path to test
+	 * @return Return 'true' if the directory exist
+	 */
+	public static boolean DirExist(String fname) {
+		return new File(fname).isDirectory();
+	}
 	
 	/**
 	 * Returns true if the given name is a valid resource name on this operating

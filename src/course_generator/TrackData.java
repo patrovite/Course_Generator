@@ -2329,4 +2329,103 @@ public class TrackData {
 		DistRoad = distRoad;
 	}
 
+	
+	public TrackData CopyTo(TrackData d) {
+		int i=0;
+		
+		d.param = param;
+		d.Paramfile = Paramfile;
+		
+		d.data.clear();
+		for (CgData r : data) {
+			CgData n = new CgData();
+			n = r.CopyTo(n);
+			
+			d.data.add(n);
+		}
+		
+		d.tInNight = tInNight.CopyTo(d.tInNight);
+		d.tInDay = tInDay.CopyTo(d.tInDay);
+
+		int n=StatSlope.length;
+		d.StatSlope = new StatData[StatSlope.length];
+		if (n>=0) {
+			for(i=0; i<n; i++) {
+				d.StatSlope[i] = new StatData();
+				d.StatSlope[i] = StatSlope[i].CopyTo(d.StatSlope[i]);
+			}
+		}
+		
+		n=StatElev.length;
+		d.StatElev = new StatData[StatElev.length];
+		if (n>=0) {
+			for(i=0; i<n; i++) {
+				d.StatElev[i] = new StatData();
+				d.StatElev[i] = StatElev[i].CopyTo(d.StatElev[i]);
+			}
+		}
+		
+		n=StatElevNight.length;
+		d.StatElevNight = new StatData[StatElevNight.length];
+		if (n>=0) {
+			for(i=0; i<n; i++) {
+				d.StatElevNight[i] = new StatData();
+				d.StatElevNight[i] = StatElevNight[i].CopyTo(d.StatElevNight[i]);
+			}
+		}
+		
+		n=StatElevDay.length;
+		d.StatElevDay = new StatData[StatElevDay.length];
+		if (n>=0) {
+			for(i=0; i<n; i++) {
+				d.StatElevDay[i] = new StatData();
+				d.StatElevDay[i] = StatElevDay[i].CopyTo(d.StatElevDay[i]);
+			}
+		}
+		
+		d.Name = d.Name;
+		d.CourseName = CourseName;
+		d.TotalDistance = TotalDistance;
+		d.TotalTime = TotalTime;
+		d.isTimeLoaded = isTimeLoaded;
+		d.isCalculated = isCalculated;
+		d.isModified = isModified;
+		d.ClimbP = ClimbP;
+		d.ClimbM = ClimbM;
+		d.AscTime = AscTime;
+		d.DescTime = DescTime;
+		d.Description = Description;
+		d.isAutoCalc = isAutoCalc;
+		d.StartTime = StartTime;
+		d.MinElev = MinElev;
+		d.MaxElev = MaxElev;
+		d.StartGlobalCoeff = StartGlobalCoeff;
+		d.EndGlobalCoeff = EndGlobalCoeff;
+		d.isTimeLimit = isTimeLimit;
+		d.TimeLimit_Line = TimeLimit_Line;
+		d.TrackTimeZone = TrackTimeZone;
+		d.TrackUseSumerTime = TrackUseSumerTime ;
+		d.StartSpeed = StartSpeed;
+		d.EndSpeed = EndSpeed;
+		d.DistRoad = DistRoad;
+		d.ReadError = ReadError;
+		d.ReadLineError = ReadLineError;
+		d.StartNightTime = StartNightTime;
+		d.EndNightTime = EndNightTime;
+		d.bNightCoeff = bNightCoeff;
+		d.NightCoeffAsc = NightCoeffAsc;
+		d.NightCoeffDesc = NightCoeffDesc;
+		d.bElevEffect = bElevEffect;
+		d.MrbSizeW = MrbSizeW;
+		d.MrbSizeH = MrbSizeH;
+		d.CurveFilter = CurveFilter;
+		d.WordWrapLength = WordWrapLength;
+		d.LabelToBottom = LabelToBottom;
+		d.MRBType = MRBType;
+		d.TopMargin = TopMargin;
+		d.bShowNightDay = bShowNightDay;
+		return d;
+	}
+	
+	
 } // TrackData

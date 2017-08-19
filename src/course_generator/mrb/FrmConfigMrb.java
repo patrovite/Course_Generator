@@ -108,6 +108,9 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 	private Color ColorSlopeInf15;
 	private Color ColorSlopeSup15;
 	private Color ColorSlopeBorder;
+	private JButton btSimpleDefaultColor;
+	private JButton btRTDefaultColor;
+	private JButton btSlopeDefaultColor;
 
 	/**
 	 * Creates new form frmSettings
@@ -379,17 +382,34 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 				0, 0, 
 				10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
+
+		//--
+		btSimpleDefaultColor = new JButton(bundle.getString("FrmConfigMrb.btDefaultColors.text")); 
+		btSimpleDefaultColor.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ColorSimpleFill = CgConst.CL_PROFIL_SIMPLE_FILL;
+				ColorSimpleBorder = CgConst.CL_PROFIL_SIMPLE_BORDER;
+				Refresh();
+			}
+		});
+		Utils.addComponent(panelSimple, btSimpleDefaultColor, 
+				0, 2, 
+				GridBagConstraints.REMAINDER, 1, 
+				0, 0, 
+				10, 10, 0, 10, 
+				GridBagConstraints.EAST,
+				GridBagConstraints.VERTICAL);
+
 		//-- Empty line for resize purpose (not the best solution but it's simple ;) )
 		lbSimpleEmpty = new JLabel();		
 		Utils.addComponent(panelSimple, lbSimpleEmpty, 
-				0, 2, 
+				0, 3, 
 				1, 1, 
 				0, 1, 
 				10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		
+	
+			
 		//== TAB :  panel road/track graph config
 		panelRoadTrack = new JPanel();
 		panelRoadTrack.setLayout(new GridBagLayout());
@@ -493,11 +513,29 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 				0, 0, 
 				10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
+
+		//--
+		btRTDefaultColor = new JButton(bundle.getString("FrmConfigMrb.btDefaultColors.text")); 
+		btRTDefaultColor.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ColorRSPath = CgConst.CL_PROFIL_RS_PATH;
+				ColorRSRoad = CgConst.CL_PROFIL_RS_ROAD;
+				ColorRSBorder = CgConst.CL_PROFIL_RS_BORDER;
+				Refresh();
+			}
+		});
+		Utils.addComponent(panelRoadTrack, btRTDefaultColor, 
+				0, 3, 
+				GridBagConstraints.REMAINDER, 1, 
+				0, 0, 
+				10, 10, 0, 10, 
+				GridBagConstraints.EAST,
+				GridBagConstraints.VERTICAL);
 		
 		//-- Empty line for resize purpose (not the best solution but it's simple ;) )
 		lbRTEmpty = new JLabel();		
 		Utils.addComponent(panelRoadTrack, lbRTEmpty, 
-				0, 3, 
+				0, 4, 
 				1, 1, 
 				0, 1, 
 				10, 10, 0, 0, GridBagConstraints.WEST,
@@ -673,11 +711,32 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 				0, 0, 
 				10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
+
+		//--
+		btSlopeDefaultColor = new JButton(bundle.getString("FrmConfigMrb.btDefaultColors.text")); 
+		btSlopeDefaultColor.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ColorSlopeInf5 = CgConst.CL_PROFIL_SLOPE_INF5; 
+				ColorSlopeInf10 = CgConst.CL_PROFIL_SLOPE_INF10;
+				ColorSlopeInf15 = CgConst.CL_PROFIL_SLOPE_INF15;
+				ColorSlopeSup15 = CgConst.CL_PROFIL_SLOPE_SUP15;
+				ColorSlopeBorder = CgConst.CL_PROFIL_SLOPE_BORDER;
+				Refresh();
+			}
+		});
+		Utils.addComponent(panelSlope, btSlopeDefaultColor, 
+				0, 5, 
+				GridBagConstraints.REMAINDER, 1, 
+				0, 0, 
+				10, 10, 0, 10, 
+				GridBagConstraints.EAST,
+				GridBagConstraints.VERTICAL);
 		
+
 		//-- Empty line for resize purpose (not the best solution but it's simple ;) )
 		lbRTEmpty = new JLabel();		
 		Utils.addComponent(panelSlope, lbRTEmpty, 
-				0, 5, 
+				0, 6, 
 				1, 1, 
 				0, 1, 
 				10, 10, 0, 0, GridBagConstraints.WEST,

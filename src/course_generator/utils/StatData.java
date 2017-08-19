@@ -157,5 +157,18 @@ public class StatData {
 		return s;
 	}
 
-    
+	/**
+	 * Copy the content of the object to another object
+	 * @param d 
+	 * 	Destination object
+	 * @return
+	 * 	Copied object
+	 */
+    public StatData CopyTo(StatData d) {
+    	d.Speed = Speed;
+        d.Dist = Dist;
+        d.Time = Time;
+        d.Cmpt = Cmpt;
+    	return d;
+    }
 }

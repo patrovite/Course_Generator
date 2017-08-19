@@ -149,7 +149,7 @@ import course_generator.utils.Utils.CalcLineResult;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.BETA 6";
+	private final String Version = "4.0.0.BETA 7";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -159,6 +159,7 @@ public class frmMain extends javax.swing.JFrame {
 	private final TrackDataModel ModelTableMain;
 	public CgSettings Settings;
 	public String DataDir;
+	public String ProgDir;
 	private java.util.ResourceBundle bundle = null;
 	private int cmptInternetConnexion = 0;
 	private int cmptMinute = 0;
@@ -166,6 +167,7 @@ public class frmMain extends javax.swing.JFrame {
 	private Timer timer1s; // 1 second timer object
 	private boolean bNoBackup = true;
 	private String StrMapsDirSize = "";
+	private String Lang4Help = "";
 	// private boolean showProfilMarker = true;
 
 	/**
@@ -292,11 +294,19 @@ public class frmMain extends javax.swing.JFrame {
 		//-- Get the current time to measure the initialization time
 		long ts=System.currentTimeMillis();
 		
-		// Initialize data
+		//-- Initialize data dir
 		DataDir = Utils.GetHomeDir();
 
+		//-- Initialize program dir
+	    ProgDir = new File(".").getAbsolutePath();
+	    ProgDir = ProgDir.replaceAll("\\\\", "/");
+	    if (ProgDir.endsWith("/."))
+	    	ProgDir=ProgDir.substring(0, ProgDir.length()-2);
+	    
+		
 		// -- Initialize data
 		Track = new TrackData();
+		Backup_Track = new TrackData();		
 		Resume = new ResumeData();
 		Settings = new CgSettings();
 		ModelTableMain = new TrackDataModel(Track, Settings);
@@ -329,7 +339,8 @@ public class frmMain extends javax.swing.JFrame {
 		CgLog.info("sun.cpu.isalist : " + System.getProperty("sun.cpu.isalist"));
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		CgLog.info("Screen size : " + screen.width + "x" + screen.height);
-
+		CgLog.info("AppDir = " + ProgDir);
+		
 		
 		// -- List the java properties
 		// -- To activate only if necessary. It talks a lot!
@@ -347,12 +358,20 @@ public class frmMain extends javax.swing.JFrame {
 				Locale.setDefault(Locale.FRANCE);
 			} else if (Settings.Language.equalsIgnoreCase("EN")) {
 				Locale.setDefault(Locale.US);
-			} else
+			} else {
 				Locale.setDefault(Locale.US);
+			}
 		}
 
 		CgLog.info("Selected language : " + Locale.getDefault().toString());
-
+		
+		//-- Select the language for help
+		String tmpLang = Locale.getDefault().getLanguage();
+		if (tmpLang.equalsIgnoreCase("fr"))
+			Lang4Help = "fr";
+		else
+			Lang4Help = "en";
+		
 		// -- Set default font
 		setUIFont(new javax.swing.plaf.FontUIResource("Tahoma", Font.PLAIN, 14));
 
@@ -370,6 +389,8 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Set the windows size and center it in the screen - Not tested on
 		// multi-screen configuration
+		// -- Not currently but I leave the code for the moment
+		/*
 		Rectangle r = getBounds();
 		r.width = Settings.MainWindowWidth;
 		r.height = Settings.MainWindowHeight;
@@ -377,6 +398,10 @@ public class frmMain extends javax.swing.JFrame {
 		r.x = (screensize.width - r.width) / 2;
 		r.y = (screensize.height - r.height) / 2;
 		setBounds(r);
+		*/
+		
+		//-- Maximize the window
+	    setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
 
 		//-- Check the maps dir size
 		CheckOfflineMapsSize();
@@ -1204,10 +1229,21 @@ public class frmMain extends javax.swing.JFrame {
 		mnuCGHelp.setText(bundle.getString("frmMain.mnuCGHelp.text"));
 		mnuCGHelp.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				if (Utils.DirExist(ProgDir + "/help")) {
+					try {
+						Desktop.getDesktop().browse(new URI("file://"+ProgDir + "/help/" + Lang4Help +"/cg_doc_4.00.html"));
+					} catch (IOException | URISyntaxException e) {
+						try {
+							CgLog.info("Fail to open help for language "+ Settings.Language + ". Default language loaded.");
+							Desktop.getDesktop().browse(new URI("file://"+ProgDir + "/help/en/cg_doc_4.00.html"));
+						} catch (IOException | URISyntaxException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+				//TODO link to website (when ready) 
 			}
 		});
-		mnuCGHelp.setEnabled(false);
 		mnuHelp.add(mnuCGHelp);
 
 		// -- Reward the author
@@ -1409,6 +1445,9 @@ public class frmMain extends javax.swing.JFrame {
 
 
 	private void BackupInCGX() {
+		Backup_Track = Track.CopyTo(Backup_Track);
+		bNoBackup = false;
+		
 //		Track.SaveCGX(DataDir + "/" + CgConst.CG_DIR + "/backup.cgx", 0, Track.data.size() - 1, true);
 //		bNoBackup = false;
 	}
@@ -1419,8 +1458,9 @@ public class frmMain extends javax.swing.JFrame {
 			return;
 		// bAutorUpdatePos = false;
 
-		Track.OpenCGX(this, DataDir + "/" + CgConst.CG_DIR + "/backup.cgx", CgConst.IMPORT_MODE_LOAD, true);
-
+//		Track.OpenCGX(this, DataDir + "/" + CgConst.CG_DIR + "/backup.cgx", CgConst.IMPORT_MODE_LOAD, true);
+		Track = Backup_Track.CopyTo(Track);
+		
 		// -- Update the viewer
 		panelMap.setTrack(Track);
 		// -- Refresh the track information
@@ -1681,6 +1721,11 @@ public class frmMain extends javax.swing.JFrame {
 		LbTimeLimit.setBackground(Color.RED);
 		LbTimeLimit.setForeground(Color.WHITE);
 		LbTimeLimit.setToolTipText(bundle.getString("frmMain.LbTimeLimit.toolTipText")); //Time limit reached in a part of the track
+		LbTimeLimit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JumpToTimelimitLine();
+            }
+		});
 		StatusBar.add(LbTimeLimit);
 
 		// -- Separator
@@ -1760,6 +1805,8 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 
+
+
 	/**
 	 * Create the Main toolbar
 	 */
@@ -1826,7 +1873,6 @@ public class frmMain extends javax.swing.JFrame {
 				RestoreInCGX();
 			}
 		});
-		btUndo.setEnabled(false); //TODO To remove 
 		ToolBarMain.add(btUndo);
 
 		// -- Separator
@@ -2080,7 +2126,9 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
+	/**
+	 * Display the edition curves dialog
+	 */
 	private void EditSSCurves() {
 		frmEditCurve frm = new frmEditCurve();
 		frm.showDialog(Track);
@@ -2088,6 +2136,19 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 
+	private void JumpToTimelimitLine() {
+
+		if (Track.TimeLimit_Line!=-1) {
+			// -- Select the line and scroll to it
+			panelTrackData.setSelectedRow(Track.TimeLimit_Line);
+			// -- Update the profil position
+			panelProfil.setCrosshairPosition(Track.data.get(Track.TimeLimit_Line).getTotal(Settings.Unit) / 1000.0,
+					Track.data.get(Track.TimeLimit_Line).getElevation(Settings.Unit));
+			panelProfil.RefreshProfilInfo(Track.TimeLimit_Line);
+		}
+	}
+
+	
 	/**
 	 * Add a tab to JTabbedPane. The icon is at the left of the text and there
 	 * some space between the icon and the label
@@ -2282,6 +2343,7 @@ public class frmMain extends javax.swing.JFrame {
 					Track.isModified = true;
 					panelTrackData.refresh();
 					panelProfil.RefreshProfilChart();
+					Track.CheckTimeLimit();
 					RefreshStatusbar(Track);
 				}
 			}
@@ -3206,7 +3268,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Get the VM parameters
 		String inEclipseStr = System.getProperty("runInEclipse");
 		inEclipse = "true".equalsIgnoreCase(inEclipseStr);
-
+		
 		// -- Set the data dir
 		String DataDir = Utils.GetHomeDir();
 

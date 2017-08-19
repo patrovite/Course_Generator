@@ -115,7 +115,8 @@ public class frmEditPosition  extends javax.swing.JDialog {
 	private JCheckBox chkRoadbook;
 	private JLabel lbTimelimit;
 	private JLabel lbStation;
-	private JHourSetting hsStation;
+	//private JHourSetting hsStation;
+	private JTimeSetting hsStation;
 	private JTimeSetting hsTimelimit;
 	private JPanel panelLeft;
 	private JPanel panelRight;
@@ -964,7 +965,7 @@ public class frmEditPosition  extends javax.swing.JDialog {
 				5, 0, 0, 5, 
 				GridBagConstraints.WEST, GridBagConstraints.BOTH);
 
-		hsStation = new JHourSetting();
+		hsStation = new JTimeSetting(999); //new JHourSetting();
 		Utils.addComponent(panelRight, hsStation, 
 				1, line, 
 				3, 1, 

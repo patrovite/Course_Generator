@@ -539,7 +539,7 @@ public class SaxCGXHandler extends DefaultHandler{
                 trkpt_eattime=ManageInt(0, ERR_READ_INT);
             }
             else if (qName.equalsIgnoreCase("COMMENT")) {
-                trkpt_name=ManageString();
+                trkpt_comment=ManageString();
             }
             else if (qName.equalsIgnoreCase("NAME")) {
                 trkpt_name=ManageString();
