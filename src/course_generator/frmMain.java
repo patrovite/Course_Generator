@@ -154,6 +154,10 @@ public class frmMain extends javax.swing.JFrame
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
+	private static String previousGPXDirectory = System
+			.getProperty("user.home");
+	private static String previousCGXDirectory = System
+			.getProperty("user.home");
 
 	public TrackData Track, Backup_Track;
 	private ResumeData Resume;
@@ -3199,8 +3203,7 @@ public class frmMain extends javax.swing.JFrame
 	private void OpenGPXDialog()
 	{
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser
-				.setCurrentDirectory(new File(System.getProperty("user.home")));
+		fileChooser.setCurrentDirectory(new File(previousGPXDirectory));
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
 		FileFilter gpxFilter = new FileTypeFilter(".gpx",
@@ -3213,6 +3216,8 @@ public class frmMain extends javax.swing.JFrame
 		if (result == JFileChooser.APPROVE_OPTION)
 		{
 			File selectedFile = fileChooser.getSelectedFile();
+			previousGPXDirectory = selectedFile.getAbsoluteFile()
+					.getParentFile().getAbsolutePath();
 			LoadGPX(selectedFile.getAbsolutePath());
 		}
 	}
@@ -3312,8 +3317,7 @@ public class frmMain extends javax.swing.JFrame
 	private void OpenCGXDialog()
 	{
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser
-				.setCurrentDirectory(new File(System.getProperty("user.home")));
+		fileChooser.setCurrentDirectory(new File(previousCGXDirectory));
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
 		FileFilter cgxFilter = new FileTypeFilter(".cgx",
@@ -3326,6 +3330,8 @@ public class frmMain extends javax.swing.JFrame
 		if (result == JFileChooser.APPROVE_OPTION)
 		{
 			File selectedFile = fileChooser.getSelectedFile();
+			previousCGXDirectory = selectedFile.getAbsoluteFile()
+					.getParentFile().getAbsolutePath();
 			LoadCGX(selectedFile.getAbsolutePath());
 		}
 	}
