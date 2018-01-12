@@ -1,7 +1,9 @@
 /*
  * Course Generator - Main form
- * Copyright (C) 2008-2017 Pierre Delore
+ * Copyright (C) 2008-2018 Pierre Delore
  *
+ * Contributor(s) :
+ * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -1642,7 +1644,7 @@ public class frmMain extends javax.swing.JFrame
 		if (Track.data.isEmpty())
 			return;
 
-		s = Utils.SaveDialog(this, Settings.LastDir, "", ".csv",
+		s = Utils.SaveDialog(this, Settings.previousCSVDirectory, "", ".csv",
 				bundle.getString("frmMain.CSVFile"), true,
 				bundle.getString("frmMain.FileExist"));
 
@@ -1656,7 +1658,7 @@ public class frmMain extends javax.swing.JFrame
 
 			Track.SaveCSV(s, start, end, Settings.Unit);
 			// -- Store the directory
-			Settings.LastDir = Utils.GetDirFromFilename(s);
+			Settings.previousCSVDirectory = Utils.GetDirFromFilename(s);
 
 			setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		}
@@ -1672,7 +1674,7 @@ public class frmMain extends javax.swing.JFrame
 		if (Track.data.isEmpty())
 			return;
 
-		s = Utils.SaveDialog(this, Settings.LastDir, "", ".csv",
+		s = Utils.SaveDialog(this, Settings.previousCSVDirectory, "", ".csv",
 				bundle.getString("frmMain.CSVFile"), true,
 				bundle.getString("frmMain.FileExist"));
 
@@ -1681,7 +1683,7 @@ public class frmMain extends javax.swing.JFrame
 			// -- Save track
 			Track.SaveCSV(s, 0, Track.data.size() - 1, Settings.Unit);
 			// -- Store the directory
-			Settings.LastDir = Utils.GetDirFromFilename(s);
+			Settings.previousCSVDirectory = Utils.GetDirFromFilename(s);
 		}
 	}
 
@@ -1699,7 +1701,7 @@ public class frmMain extends javax.swing.JFrame
 
 		if (res != FrmImportChoice.RESULT_CANCEL)
 		{
-			String s = Utils.LoadDialog(this, Settings.LastDir, ".cgx",
+			String s = Utils.LoadDialog(this, Settings.previousCGXDirectory, ".cgx",
 					bundle.getString("frmMain.CGXFile"));
 			if (!s.isEmpty())
 			{
@@ -1724,6 +1726,8 @@ public class frmMain extends javax.swing.JFrame
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
+					
+					Settings.previousCGXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
 				}
 				catch (Exception e)
@@ -1845,7 +1849,7 @@ public class frmMain extends javax.swing.JFrame
 		if (Track.data.isEmpty())
 			return;
 
-		s = Utils.SaveDialog(this, Settings.LastDir, "", ".gpx",
+		s = Utils.SaveDialog(this, Settings.previousGPXDirectory, "", ".gpx",
 				bundle.getString("frmMain.GPXFile"), true,
 				bundle.getString("frmMain.FileExist"));
 
@@ -1859,7 +1863,7 @@ public class frmMain extends javax.swing.JFrame
 
 			Track.SaveGPX(s, start, end);
 			// -- Store the directory
-			Settings.LastDir = Utils.GetDirFromFilename(s);
+			Settings.previousGPXDirectory = Utils.GetDirFromFilename(s);
 
 			// -- Update GPX MRU
 			AddMruGPX(s);
@@ -1886,7 +1890,7 @@ public class frmMain extends javax.swing.JFrame
 		if (Track.data.isEmpty())
 			return;
 
-		s = Utils.SaveDialog(this, Settings.LastDir, "", ".cgx",
+		s = Utils.SaveDialog(this, Settings.previousCGXDirectory, "", ".cgx",
 				bundle.getString("frmMain.CGXFile"), true,
 				bundle.getString("frmMain.FileExist"));
 
@@ -1900,7 +1904,7 @@ public class frmMain extends javax.swing.JFrame
 
 			Track.SaveCGX(s, start, end, false);
 			// -- Store the directory
-			Settings.LastDir = Utils.GetDirFromFilename(s);
+			Settings.previousCGXDirectory = Utils.GetDirFromFilename(s);
 
 			// -- Update GPX MRU
 			AddMruCGX(s);
@@ -3139,7 +3143,7 @@ public class frmMain extends javax.swing.JFrame
 
 		if (res != FrmImportChoice.RESULT_CANCEL)
 		{
-			String s = Utils.LoadDialog(this, Settings.LastDir, ".gpx",
+			String s = Utils.LoadDialog(this, Settings.previousGPXDirectory, ".gpx",
 					bundle.getString("frmMain.GPXFile"));
 			if (!s.isEmpty())
 			{
@@ -3166,6 +3170,7 @@ public class frmMain extends javax.swing.JFrame
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
+					Settings.previousGPXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
 				}
 				catch (Exception e)
@@ -3200,7 +3205,7 @@ public class frmMain extends javax.swing.JFrame
 	{
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser
-				.setCurrentDirectory(new File(System.getProperty("user.home")));
+				.setCurrentDirectory(new File(Settings.previousGPXDirectory)); //System.getProperty("user.home")));
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
 		FileFilter gpxFilter = new FileTypeFilter(".gpx",
@@ -3214,6 +3219,7 @@ public class frmMain extends javax.swing.JFrame
 		{
 			File selectedFile = fileChooser.getSelectedFile();
 			LoadGPX(selectedFile.getAbsolutePath());
+			Settings.previousGPXDirectory = Utils.GetDirFromFilename(selectedFile.getAbsolutePath());
 		}
 	}
 
@@ -3280,7 +3286,7 @@ public class frmMain extends javax.swing.JFrame
 		if (Track.data.isEmpty())
 			return;
 
-		s = Utils.SaveDialog(this, Settings.LastDir, "", ".gpx",
+		s = Utils.SaveDialog(this, Settings.previousGPXDirectory, "", ".gpx",
 				bundle.getString("frmMain.GPXFile"), true,
 				bundle.getString("frmMain.FileExist"));
 
@@ -3291,7 +3297,7 @@ public class frmMain extends javax.swing.JFrame
 			// -- Save track
 			Track.SaveGPX(s, 0, Track.data.size() - 1);
 			// -- Store the directory
-			Settings.LastDir = Utils.GetDirFromFilename(s);
+			Settings.previousGPXDirectory = Utils.GetDirFromFilename(s);
 
 			// -- Update GPX MRU
 			AddMruGPX(s);
@@ -3313,7 +3319,7 @@ public class frmMain extends javax.swing.JFrame
 	{
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser
-				.setCurrentDirectory(new File(System.getProperty("user.home")));
+				.setCurrentDirectory(new File(Settings.previousCGXDirectory)); //System.getProperty("user.home")));
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
 		FileFilter cgxFilter = new FileTypeFilter(".cgx",
@@ -3327,6 +3333,7 @@ public class frmMain extends javax.swing.JFrame
 		{
 			File selectedFile = fileChooser.getSelectedFile();
 			LoadCGX(selectedFile.getAbsolutePath());
+			Settings.previousCGXDirectory = Utils.GetDirFromFilename(selectedFile.getAbsolutePath());
 		}
 	}
 
@@ -3387,7 +3394,7 @@ public class frmMain extends javax.swing.JFrame
 		if (Track.data.isEmpty())
 			return;
 
-		s = Utils.SaveDialog(this, Settings.LastDir, "", ".cgx",
+		s = Utils.SaveDialog(this, Settings.previousCGXDirectory, "", ".cgx",
 				bundle.getString("frmMain.CGXFile"), true,
 				bundle.getString("frmMain.FileExist"));
 
@@ -3398,7 +3405,7 @@ public class frmMain extends javax.swing.JFrame
 			// -- Save track
 			Track.SaveCGX(s, 0, Track.data.size() - 1, false);
 			// -- Store the directory
-			Settings.LastDir = Utils.GetDirFromFilename(s);
+			Settings.previousCGXDirectory = Utils.GetDirFromFilename(s);
 
 			// -- Update GPX MRU
 			AddMruCGX(s);

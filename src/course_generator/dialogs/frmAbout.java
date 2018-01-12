@@ -88,6 +88,8 @@ l     */
     private void Refresh(boolean withcopyrights) {
     	if (withcopyrights) {
 	    	StringBuilder sb = new StringBuilder();
+	    	sb.append(" Thanks to the contributors :\n");
+	    	sb.append(" - \n\n");
 	    	sb.append(" .oO Copyrights Oo.\n");
 	    	sb.append(" Used libraries:\n");
 	    	sb.append(" - Joda-time - http://www.joda.org/joda-time\n");

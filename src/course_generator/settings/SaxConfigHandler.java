@@ -30,6 +30,8 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import course_generator.utils.Utils;
+
 /**
  *
  * @author pierre.delore
@@ -201,7 +203,16 @@ public class SaxConfigHandler extends DefaultHandler{
             }        
             else if (qName.equalsIgnoreCase("LASTDIR")) {
                 Settings.LastDir = ManageString();
-            }        
+            }
+            else if (qName.equalsIgnoreCase("PREVIOUSCGXDIR")) {
+                Settings.previousCGXDirectory = ManageString();
+            }
+            else if (qName.equalsIgnoreCase("PREVIOUSGPXDIR")) {
+                Settings.previousGPXDirectory = ManageString();
+            }
+            else if (qName.equalsIgnoreCase("PREVIOUSCSVDIR")) {
+                Settings.previousCSVDirectory = ManageString();
+            }            
             else if (qName.equalsIgnoreCase("MEMOFORMAT1")) {
                 Settings.MemoFormat[0] = ManageString();
             }        
