@@ -382,7 +382,6 @@ public class TrackData
 			CgLog.info("TrackData.OpenGPX : '" + name + "' loaded");
 		}
 
-		frmMain.courseIsLoaded(true);
 		return isTimeLoaded;
 	} // -- OpenGPX
 

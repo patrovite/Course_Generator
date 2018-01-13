@@ -153,7 +153,7 @@ import course_generator.utils.Utils.CalcLineResult;
  */
 public class frmMain extends javax.swing.JFrame
 {
-	private final String Version = "4.0.0.BETA 7";
+	private final String Version = "4.0.0.BETA 8";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -3267,7 +3267,11 @@ public class frmMain extends javax.swing.JFrame
 		jPanelSpeedSlope.Refresh(Track, Settings);
 		// -- Refresh the form title
 		RefreshTitle();
-
+		//Refresh the main toolbar
+		RefreshMainToolbar();
+		//Refresh the main menu
+		RefreshMainMenu();
+		
 		bNoBackup = true;
 
 		if (Track.data.size() > 0)
@@ -3374,6 +3378,11 @@ public class frmMain extends javax.swing.JFrame
 		jPanelSpeedSlope.Refresh(Track, Settings);
 		// -- Refresh the form title
 		RefreshTitle();
+		//Refresh the main toolbar
+		RefreshMainToolbar();
+		//Refresh the main menu
+		RefreshMainMenu();
+
 		// -- Refresh statistic
 		panelStatistics.setTrack(Track);
 
@@ -3624,6 +3633,59 @@ public class frmMain extends javax.swing.JFrame
 			LoadCGX(Settings.mruCGX[4]);
 	}
 
+	
+	/**
+	 * Refresh the main toolbar
+	 */
+	private void RefreshMainToolbar() {
+		if (Track==null) return;
+		
+		boolean isLoaded= !Track.Name.isEmpty();
+		
+		btSaveCGX.setEnabled(isLoaded);
+		btUndo.setEnabled(isLoaded);
+		btSearch.setEnabled(isLoaded);
+		btGotoPreviousMark.setEnabled(isLoaded);
+		btGotoNextMark.setEnabled(isLoaded);
+		btDisplaySSCurves.setEnabled(isLoaded);
+		btTrackSettings.setEnabled(isLoaded);
+		btFillCoeff.setEnabled(isLoaded);
+		btFillDiff.setEnabled(isLoaded);
+		btCalculateTrackTime.setEnabled(isLoaded);
+		btMiniRoadbook.setEnabled(isLoaded);
+	}
+	
+
+	/**
+	 * Refresh the main menu
+	 */
+	private void RefreshMainMenu() {
+		if (Track==null) return;
+		
+		boolean isLoaded= !Track.Name.isEmpty();
+		
+		mnuSaveCGX.setEnabled(isLoaded);
+		mnuSaveGPX.setEnabled(isLoaded);
+		mnuSaveCSV.setEnabled(isLoaded);
+		mnuSavePartCGX.setEnabled(isLoaded);
+		mnuSavePartGPX.setEnabled(isLoaded);
+		mnuSavePartCSV.setEnabled(isLoaded);
+		mnuExportPoints.setEnabled(isLoaded);
+		mnuExportTagAsWaypoints.setEnabled(isLoaded);
+		mnuCopy.setEnabled(isLoaded);
+		mnuSearchPoint.setEnabled(isLoaded);
+		mnuMarkPosition.setEnabled(isLoaded);
+		mnuGotoNextMark.setEnabled(isLoaded);
+		mnuGotoPrevMark.setEnabled(isLoaded);
+		mnuGenerateMiniRoadbook.setEnabled(isLoaded);
+		mnuFindMinMax.setEnabled(isLoaded);
+		mnuInvertTrack.setEnabled(isLoaded);
+		mnuDefineNewStart.setEnabled(isLoaded);
+		mnuCalculateTrackTime.setEnabled(isLoaded);
+		mnuTrackSettings.setEnabled(isLoaded);
+		mnuSpeedSlopeCurves.setEnabled(isLoaded);
+	}
+	
 	/**
 	 * Refresh the statusbar
 	 * 
@@ -4034,47 +4096,6 @@ public class frmMain extends javax.swing.JFrame
 		});
 	}
 
-	/**
-	 * When a course is loaded (CGX or GPX), we need to make some GUI
-	 * adjustments
-	 * 
-	 */
-	public static void courseIsLoaded(boolean isLoaded)
-	{
-		btSaveCGX.setEnabled(isLoaded);
-		btUndo.setEnabled(isLoaded);
-		btSearch.setEnabled(isLoaded);
-		btGotoPreviousMark.setEnabled(isLoaded);
-		btGotoNextMark.setEnabled(isLoaded);
-		btDisplaySSCurves.setEnabled(isLoaded);
-		btTrackSettings.setEnabled(isLoaded);
-		btFillCoeff.setEnabled(isLoaded);
-		btFillDiff.setEnabled(isLoaded);
-		btCalculateTrackTime.setEnabled(isLoaded);
-
-		mnuSaveCGX.setEnabled(isLoaded);
-		mnuSaveGPX.setEnabled(isLoaded);
-		mnuSaveCSV.setEnabled(isLoaded);
-		mnuSavePartCGX.setEnabled(isLoaded);
-		mnuSavePartGPX.setEnabled(isLoaded);
-		mnuSavePartCSV.setEnabled(isLoaded);
-		mnuExportPoints.setEnabled(isLoaded);
-		mnuExportTagAsWaypoints.setEnabled(isLoaded);
-		mnuCopy.setEnabled(isLoaded);
-		mnuSearchPoint.setEnabled(isLoaded);
-		mnuMarkPosition.setEnabled(isLoaded);
-		mnuGotoNextMark.setEnabled(isLoaded);
-		mnuGotoPrevMark.setEnabled(isLoaded);
-		mnuGenerateMiniRoadbook.setEnabled(isLoaded);
-		mnuFindMinMax.setEnabled(isLoaded);
-		mnuInvertTrack.setEnabled(isLoaded);
-		mnuDefineNewStart.setEnabled(isLoaded);
-		mnuCalculateTrackTime.setEnabled(isLoaded);
-		mnuTrackSettings.setEnabled(isLoaded);
-		mnuSpeedSlopeCurves.setEnabled(isLoaded);
-
-		btMiniRoadbook.setEnabled(isLoaded);
-	}
 
 	private javax.swing.JLabel LbInfoCalculate;
 	private javax.swing.JLabel LbInfoDm;
@@ -4092,8 +4113,6 @@ public class frmMain extends javax.swing.JFrame
 	private javax.swing.JMenu mnuEdit;
 	private javax.swing.JPanel jPanelAnalyze;
 	private javax.swing.JPanel jPanelLeft;
-	// private javax.swing.JScrollPane jScrollPaneData;
-	// private javax.swing.JToolBar jToolBarMapViewer;
 	private javax.swing.JTree jTreeMain;
 	private javax.swing.JMenu mnuLastCGX;
 	private javax.swing.JMenu mnuLastGPX;
