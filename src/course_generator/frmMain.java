@@ -1702,8 +1702,8 @@ public class frmMain extends javax.swing.JFrame
 
 		if (res != FrmImportChoice.RESULT_CANCEL)
 		{
-			String s = Utils.LoadDialog(this, Settings.previousCGXDirectory, ".cgx",
-					bundle.getString("frmMain.CGXFile"));
+			String s = Utils.LoadDialog(this, Settings.previousCGXDirectory,
+					".cgx", bundle.getString("frmMain.CGXFile"));
 			if (!s.isEmpty())
 			{
 				int mode = FrmImportChoice.RESULT_AT_END;
@@ -1727,7 +1727,7 @@ public class frmMain extends javax.swing.JFrame
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
-					
+
 					Settings.previousCGXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
 				}
@@ -3027,7 +3027,7 @@ public class frmMain extends javax.swing.JFrame
 
 			int row = panelTrackData.getSelectedRow();
 			if (row < 0)
-				return p;
+				row = 0;
 
 			p = row + 1;
 
@@ -3069,7 +3069,7 @@ public class frmMain extends javax.swing.JFrame
 
 			int row = panelTrackData.getSelectedRow();
 			if (row < 0)
-				return p;
+				row = 0;
 
 			p = row - 1;
 
@@ -3144,8 +3144,8 @@ public class frmMain extends javax.swing.JFrame
 
 		if (res != FrmImportChoice.RESULT_CANCEL)
 		{
-			String s = Utils.LoadDialog(this, Settings.previousGPXDirectory, ".gpx",
-					bundle.getString("frmMain.GPXFile"));
+			String s = Utils.LoadDialog(this, Settings.previousGPXDirectory,
+					".gpx", bundle.getString("frmMain.GPXFile"));
 			if (!s.isEmpty())
 			{
 				int mode = FrmImportChoice.RESULT_AT_END;
@@ -3206,7 +3206,7 @@ public class frmMain extends javax.swing.JFrame
 	{
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser
-				.setCurrentDirectory(new File(Settings.previousGPXDirectory)); //System.getProperty("user.home")));
+				.setCurrentDirectory(new File(Settings.previousGPXDirectory)); // System.getProperty("user.home")));
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
 		FileFilter gpxFilter = new FileTypeFilter(".gpx",
@@ -3220,7 +3220,8 @@ public class frmMain extends javax.swing.JFrame
 		{
 			File selectedFile = fileChooser.getSelectedFile();
 			LoadGPX(selectedFile.getAbsolutePath());
-			Settings.previousGPXDirectory = Utils.GetDirFromFilename(selectedFile.getAbsolutePath());
+			Settings.previousGPXDirectory = Utils
+					.GetDirFromFilename(selectedFile.getAbsolutePath());
 		}
 	}
 
@@ -3267,11 +3268,11 @@ public class frmMain extends javax.swing.JFrame
 		jPanelSpeedSlope.Refresh(Track, Settings);
 		// -- Refresh the form title
 		RefreshTitle();
-		//Refresh the main toolbar
+		// Refresh the main toolbar
 		RefreshMainToolbar();
-		//Refresh the main menu
+		// Refresh the main menu
 		RefreshMainMenu();
-		
+
 		bNoBackup = true;
 
 		if (Track.data.size() > 0)
@@ -3324,7 +3325,7 @@ public class frmMain extends javax.swing.JFrame
 	{
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser
-				.setCurrentDirectory(new File(Settings.previousCGXDirectory)); //System.getProperty("user.home")));
+				.setCurrentDirectory(new File(Settings.previousCGXDirectory)); // System.getProperty("user.home")));
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
 		FileFilter cgxFilter = new FileTypeFilter(".cgx",
@@ -3338,7 +3339,8 @@ public class frmMain extends javax.swing.JFrame
 		{
 			File selectedFile = fileChooser.getSelectedFile();
 			LoadCGX(selectedFile.getAbsolutePath());
-			Settings.previousCGXDirectory = Utils.GetDirFromFilename(selectedFile.getAbsolutePath());
+			Settings.previousCGXDirectory = Utils
+					.GetDirFromFilename(selectedFile.getAbsolutePath());
 		}
 	}
 
@@ -3378,9 +3380,9 @@ public class frmMain extends javax.swing.JFrame
 		jPanelSpeedSlope.Refresh(Track, Settings);
 		// -- Refresh the form title
 		RefreshTitle();
-		//Refresh the main toolbar
+		// Refresh the main toolbar
 		RefreshMainToolbar();
-		//Refresh the main menu
+		// Refresh the main menu
 		RefreshMainMenu();
 
 		// -- Refresh statistic
@@ -3633,15 +3635,16 @@ public class frmMain extends javax.swing.JFrame
 			LoadCGX(Settings.mruCGX[4]);
 	}
 
-	
 	/**
 	 * Refresh the main toolbar
 	 */
-	private void RefreshMainToolbar() {
-		if (Track==null) return;
-		
-		boolean isLoaded= !Track.Name.isEmpty();
-		
+	private void RefreshMainToolbar()
+	{
+		if (Track == null)
+			return;
+
+		boolean isLoaded = !Track.Name.isEmpty();
+
 		btSaveCGX.setEnabled(isLoaded);
 		btUndo.setEnabled(isLoaded);
 		btSearch.setEnabled(isLoaded);
@@ -3654,16 +3657,17 @@ public class frmMain extends javax.swing.JFrame
 		btCalculateTrackTime.setEnabled(isLoaded);
 		btMiniRoadbook.setEnabled(isLoaded);
 	}
-	
 
 	/**
 	 * Refresh the main menu
 	 */
-	private void RefreshMainMenu() {
-		if (Track==null) return;
-		
-		boolean isLoaded= !Track.Name.isEmpty();
-		
+	private void RefreshMainMenu()
+	{
+		if (Track == null)
+			return;
+
+		boolean isLoaded = !Track.Name.isEmpty();
+
 		mnuSaveCGX.setEnabled(isLoaded);
 		mnuSaveGPX.setEnabled(isLoaded);
 		mnuSaveCSV.setEnabled(isLoaded);
@@ -3685,7 +3689,7 @@ public class frmMain extends javax.swing.JFrame
 		mnuTrackSettings.setEnabled(isLoaded);
 		mnuSpeedSlopeCurves.setEnabled(isLoaded);
 	}
-	
+
 	/**
 	 * Refresh the statusbar
 	 * 
@@ -4095,7 +4099,6 @@ public class frmMain extends javax.swing.JFrame
 			}
 		});
 	}
-
 
 	private javax.swing.JLabel LbInfoCalculate;
 	private javax.swing.JLabel LbInfoDm;
