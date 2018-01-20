@@ -3027,7 +3027,7 @@ public class frmMain extends javax.swing.JFrame
 
 			int row = panelTrackData.getSelectedRow();
 			if (row < 0)
-				row = 0;
+				return p;
 
 			p = row + 1;
 
@@ -3069,7 +3069,7 @@ public class frmMain extends javax.swing.JFrame
 
 			int row = panelTrackData.getSelectedRow();
 			if (row < 0)
-				row = 0;
+				return p;
 
 			p = row - 1;
 
@@ -3390,6 +3390,7 @@ public class frmMain extends javax.swing.JFrame
 
 		// -- Force the update of the main table
 		panelTrackData.setTrack(Track);
+		panelTrackData.setSelectedRow(0);
 		RefreshMruCGX();
 		bNoBackup = true;
 
