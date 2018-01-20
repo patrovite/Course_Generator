@@ -77,6 +77,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -97,6 +98,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
@@ -1085,7 +1087,7 @@ public class frmMain extends javax.swing.JFrame
 		{
 			public void actionPerformed(java.awt.event.ActionEvent evt)
 			{
-				// mnuSaveCGXActionPerformed(evt); //TODO
+				SetMapMarker();
 			}
 		});
 		mnuEdit.add(mnuMarkPosition);
@@ -2704,6 +2706,10 @@ public class frmMain extends javax.swing.JFrame
 		// -- Main split bar (vertical)
 		// -----------------------------------------
 		SplitPaneMain = new javax.swing.JSplitPane();
+		//-- Disable the default management of F6
+		SplitPaneMain.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
+		  .put(KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0), "none");
+		
 		paneGlobal.add(SplitPaneMain, BorderLayout.CENTER);
 
 		// -- Left side of the split bar
@@ -2800,6 +2806,9 @@ public class frmMain extends javax.swing.JFrame
 		SplitPaneMainRight = new javax.swing.JSplitPane();
 		SplitPaneMainRight
 				.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+		//-- Disable the default management of F6
+		SplitPaneMainRight.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
+		  .put(KeyStroke.getKeyStroke(KeyEvent.VK_F6, 0), "none");
 		SplitPaneMain.setRightComponent(SplitPaneMainRight);
 
 		// -- Tabbed panel
@@ -3015,6 +3024,36 @@ public class frmMain extends javax.swing.JFrame
 		}
 	}
 
+	
+	private void SetMapMarker() {
+		int p = -1;
+		if (Track.data.size() > 0)
+		{
+			int row = panelTrackData.getSelectedRow();
+			if (row < 0)
+				return;
+				
+			int tag = Track.data.get(row).getTag();
+
+			if ((tag & CgConst.TAG_MARK) == 0)
+				tag = tag | CgConst.TAG_MARK;
+			else
+				tag = tag & (~CgConst.TAG_MARK);
+
+			Track.data.get(row).setTag(tag);
+
+			//-- Set the flags
+			Track.isCalculated = false; //Necessary?
+			Track.isModified = true;
+
+			//-- Refresh the table and map
+			panelTrackData.refresh();
+			panelMap.RefreshTrack(Track, false);
+			// ShowMapMarker();
+		 }
+	 }
+	
+	
 	/**
 	 * Go to the next tag
 	 */
