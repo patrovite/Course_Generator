@@ -3251,6 +3251,7 @@ public class frmMain extends javax.swing.JFrame
 
 		// -- Force the update of the main table
 		panelTrackData.setTrack(Track);
+		panelTrackData.setSelectedRow(0);
 
 		// -- Refresh resume grid
 		PanelResume.setTrack(Track);
