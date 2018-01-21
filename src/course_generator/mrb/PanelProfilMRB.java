@@ -704,8 +704,8 @@ public class PanelProfilMRB extends JPanel {
 	
 		CgData oldr = new CgData();
 	
-		oldr.setElevation(track.data.get(0).getElevation(settings.Unit));
-		oldr.setTotal(track.data.get(0).getTotal(settings.Unit));
+		oldr.setElevation(track.data.get(0).getElevation(CgConst.UNIT_METER));
+		oldr.setTotal(track.data.get(0).getTotal(CgConst.UNIT_METER));
 	
 		g2d.setPaint(track.clProfil_Simple_Fill);
 	
@@ -726,12 +726,12 @@ public class PanelProfilMRB extends JPanel {
 			// Point on bottom right (new point)
 			xCurvePts[3] = (int) Math.round((offx + 1 + ((r.getTotal(settings.Unit) - xmin) * resx)));
 			yCurvePts[3] = height - offy;
-	
+
 			// Filter
 			if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) {
 				//-- Draw the polygon
 				g2d.fillPolygon(xCurvePts, yCurvePts, 4);
-	
+				
 				res = Utils.CalcLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2], res);
 				for (int tf = xCurvePts[1]; tf < xCurvePts[2]; tf++) {
 					TabY[(int) tf] = (int) (res.a * tf + res.b);
@@ -741,14 +741,15 @@ public class PanelProfilMRB extends JPanel {
 						first = false;
 					}
 				}
-				oldr.setElevation(r.getElevation(settings.Unit));
-				oldr.setTotal(r.getTotal(settings.Unit));
+
+				oldr.setElevation(r.getElevation(CgConst.UNIT_METER));
+				oldr.setTotal(r.getTotal(CgConst.UNIT_METER));
 			}
 		} // for
 	
 		// -- Draw the line on the profile
-		oldr.setElevation(track.data.get(0).getElevation(settings.Unit));
-		oldr.setTotal(track.data.get(0).getTotal(settings.Unit));
+		oldr.setElevation(track.data.get(0).getElevation(CgConst.UNIT_METER));
+		oldr.setTotal(track.data.get(0).getTotal(CgConst.UNIT_METER));
 	
 		g2d.setColor(track.clProfil_Simple_Border);
 		g2d.setStroke(PenSimpleBorder);
@@ -772,8 +773,8 @@ public class PanelProfilMRB extends JPanel {
 			if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) // Filter
 			{
 				g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
-				oldr.setElevation(r.getElevation(settings.Unit));
-				oldr.setTotal(r.getTotal(settings.Unit));
+				oldr.setElevation(r.getElevation(CgConst.UNIT_METER));
+				oldr.setTotal(r.getTotal(CgConst.UNIT_METER));
 			}
 		} // for
 	
@@ -806,8 +807,8 @@ public class PanelProfilMRB extends JPanel {
 		CalcLineResult res = new CalcLineResult();
 		CgData oldr = new CgData();
 	
-		oldr.setElevation(track.data.get(0).getElevation(settings.Unit));
-		oldr.setTotal(track.data.get(0).getTotal(settings.Unit));
+		oldr.setElevation(track.data.get(0).getElevation(CgConst.UNIT_METER));
+		oldr.setTotal(track.data.get(0).getTotal(CgConst.UNIT_METER));
 	
 		// -- Draw the profile with a color for the road and a color for the
 		// path
@@ -850,16 +851,16 @@ public class PanelProfilMRB extends JPanel {
 					}
 				}
 	
-				oldr.setElevation(r.getElevation(settings.Unit));
-				oldr.setTotal(r.getTotal(settings.Unit));
+				oldr.setElevation(r.getElevation(CgConst.UNIT_METER));
+				oldr.setTotal(r.getTotal(CgConst.UNIT_METER));
 				cmpt = 0;
 			}
 	
 		} // for
 	
 		// -- Draw the line on the profile
-		oldr.setElevation(track.data.get(0).getElevation(settings.Unit));
-		oldr.setTotal(track.data.get(0).getTotal(settings.Unit));
+		oldr.setElevation(track.data.get(0).getElevation(CgConst.UNIT_METER));
+		oldr.setTotal(track.data.get(0).getTotal(CgConst.UNIT_METER));
 	
 		for (CgData r : track.data) {
 			// Point on bottom left (old point)
@@ -886,8 +887,8 @@ public class PanelProfilMRB extends JPanel {
 			if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) // Filtre
 			{
 				g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
-				oldr.setElevation(r.getElevation(settings.Unit));
-				oldr.setTotal(r.getTotal(settings.Unit));
+				oldr.setElevation(r.getElevation(CgConst.UNIT_METER));
+				oldr.setTotal(r.getTotal(CgConst.UNIT_METER));
 			}
 	
 		} // for
@@ -924,8 +925,8 @@ public class PanelProfilMRB extends JPanel {
 		CalcLineResult res = new CalcLineResult();
 		CgData oldr = new CgData();
 
-		oldr.setElevation(track.data.get(0).getElevation(settings.Unit));
-		oldr.setTotal(track.data.get(0).getTotal(settings.Unit));
+		oldr.setElevation(track.data.get(0).getElevation(CgConst.UNIT_METER));
+		oldr.setTotal(track.data.get(0).getTotal(CgConst.UNIT_METER));
 
 		// -- Draw the slope profile
 		for (CgData r : track.data) {
@@ -968,16 +969,16 @@ public class PanelProfilMRB extends JPanel {
 					}
 				}
 
-				oldr.setElevation(r.getElevation(settings.Unit));
-				oldr.setTotal(r.getTotal(settings.Unit));
+				oldr.setElevation(r.getElevation(CgConst.UNIT_METER));
+				oldr.setTotal(r.getTotal(CgConst.UNIT_METER));
 				avrSlope = 0.0;
 				nbSlope = 0;
 			}
 		}
 
 		// -- Draw the line on the profile
-		oldr.setElevation(track.data.get(0).getElevation(settings.Unit));
-		oldr.setTotal(track.data.get(0).getTotal(settings.Unit));
+		oldr.setElevation(track.data.get(0).getElevation(CgConst.UNIT_METER));
+		oldr.setTotal(track.data.get(0).getTotal(CgConst.UNIT_METER));
 
 		g2d.setColor(track.clProfil_SlopeBorder);
 		g2d.setStroke(PenSlopeBorder);
@@ -1003,8 +1004,8 @@ public class PanelProfilMRB extends JPanel {
 			if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) {
 				g2d.drawLine(xCurvePts[1], yCurvePts[1], (int) xCurvePts[2], (int) yCurvePts[2]);
 
-				oldr.setElevation(r.getElevation(settings.Unit));
-				oldr.setTotal(r.getTotal(settings.Unit));
+				oldr.setElevation(r.getElevation(CgConst.UNIT_METER));
+				oldr.setTotal(r.getTotal(CgConst.UNIT_METER));
 			}
 		} // for
 
