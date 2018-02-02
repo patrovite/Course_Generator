@@ -1509,6 +1509,7 @@ public class frmMain extends javax.swing.JFrame
 						}
 					}
 				}
+				else CgLog.info("mnuCGHelp : <"+ ProgDir + "/help> doesn't exist!");
 				// TODO link to website (when ready)
 			}
 		});
