@@ -49,7 +49,6 @@ import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.CgSpinner;
 import course_generator.utils.CgSpinnerDouble;
-import course_generator.utils.JHourSetting;
 import course_generator.utils.JTextFieldLimit;
 import course_generator.utils.JTimeSetting;
 import course_generator.utils.Utils;
@@ -215,7 +214,8 @@ public class frmEditPosition  extends javax.swing.JDialog {
 				tag=tag | CgConst.TAG_INFO;
 			track.data.get(line).setTag(tag);
 			
-			track.data.get(line).setElevation(spinElevation.getValueAsDouble());
+			track.data.get(line).setElevation(
+					spinElevation.getValueAsDouble(settings.Unit));
 			track.data.get(line).setDiff(spinDiff.getValueAsDouble());
 			track.data.get(line).setCoeff(spinCoeff.getValueAsDouble());
 			track.data.get(line).setRecovery(spinRecovery.getValueAsDouble());
