@@ -215,7 +215,7 @@ public class frmEditPosition  extends javax.swing.JDialog {
 			track.data.get(line).setTag(tag);
 			
 			track.data.get(line).setElevation(
-					spinElevation.getValueAsDouble(CgConst.UNIT_METER));
+					spinElevation.getValueAsDouble(settings.Unit)); //CgConst.UNIT_METER));
 			track.data.get(line).setDiff(spinDiff.getValueAsDouble());
 			track.data.get(line).setCoeff(spinCoeff.getValueAsDouble());
 			track.data.get(line).setRecovery(spinRecovery.getValueAsDouble());
@@ -1055,7 +1055,7 @@ public class frmEditPosition  extends javax.swing.JDialog {
         lbTimeVal.setText(" : "+data.getTimeString());        
         lbHourVal.setText(" : "+data.getHourString());
         
-        spinElevation.setValue((int)data.getElevation(settings.Unit));
+        spinElevation.setValue(Math.round(data.getElevation(settings.Unit)));
         spinDiff.setValue((int)data.getDiff());
         spinCoeff.setValue(data.getCoeff());
         spinRecovery.setValue(data.getRecovery());
