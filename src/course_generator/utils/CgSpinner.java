@@ -92,4 +92,15 @@ public class CgSpinner extends JSpinner {
 		return (double)v;
 	}
 	
+	public double getValueAsDouble(int unit) {
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			return (double) getValueAsDouble();
+		case CgConst.UNIT_MILES_FEET:
+			return (double) Utils.Feet2Meter(getValueAsDouble());
+		default:
+			throw new IllegalArgumentException(
+					"The unit " + unit + " was not recognized.");
+		}
+	}
 }
