@@ -215,7 +215,7 @@ public class frmEditPosition  extends javax.swing.JDialog {
 			track.data.get(line).setTag(tag);
 			
 			track.data.get(line).setElevation(
-					spinElevation.getValueAsDouble(settings.Unit));
+					spinElevation.getValueAsDouble(CgConst.UNIT_METER));
 			track.data.get(line).setDiff(spinDiff.getValueAsDouble());
 			track.data.get(line).setCoeff(spinCoeff.getValueAsDouble());
 			track.data.get(line).setRecovery(spinRecovery.getValueAsDouble());
