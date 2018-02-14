@@ -143,6 +143,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		DupLine=-1;
 		
 		// -- Set the content of the model
+		// We add here the roadbook points after filtering them
 		datalist.data.clear();
 		for (CgData r : track.data) {
 			if ((r.getTag() & CgConst.TAG_ROADBOOK) != 0) {
