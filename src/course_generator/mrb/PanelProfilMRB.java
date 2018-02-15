@@ -447,9 +447,6 @@ public class PanelProfilMRB extends JPanel {
 			
 		}
 		
-		
-		
-		
 		// -- Horizontal line --
 
 		// -- Vertical grid drawing --
@@ -519,9 +516,6 @@ public class PanelProfilMRB extends JPanel {
 		g2d.setColor(Color.BLACK);
 
 		for (CgData r : data.data) {
-			if ((((r.getTag() & CgConst.TAG_HIGH_PT) != 0) || ((r.getTag() & CgConst.TAG_LOW_PT) != 0)
-					|| ((r.getTag() & CgConst.TAG_EAT_PT) != 0) || ((r.getTag() & CgConst.TAG_WATER_PT) != 0)
-					|| ((r.getTag() & CgConst.TAG_MARK) != 0)) && ((r.OptionMiniRoadbook & CgConst.MRBOPT_SEL) != 0)) {
 				dist = r.getTotal(settings.Unit);
 				posx = (int) (dist * resx);
 				posy = height - offy - (hp + track.TopMargin - 7 - r.VPosMiniRoadbook);
@@ -531,16 +525,12 @@ public class PanelProfilMRB extends JPanel {
 					posy_s = TabY[offx + posx];
 
 				g2d.drawLine(offx + posx, posy_s, offx + posx, posy);
-			}
 		}
 
 		// -- Text box drawing --
-		int ii = 0;
+		int miniRoadBookGridIndex = 0;
 		DrawStringMultiLine drawStringMulti = new DrawStringMultiLine();
 		for (CgData r : data.data) {
-			if ((((r.getTag() & CgConst.TAG_HIGH_PT) != 0) || ((r.getTag() & CgConst.TAG_LOW_PT) != 0)
-					|| ((r.getTag() & CgConst.TAG_EAT_PT) != 0) || ((r.getTag() & CgConst.TAG_WATER_PT) != 0)
-					|| ((r.getTag() & CgConst.TAG_MARK) != 0)) && ((r.OptionMiniRoadbook & CgConst.MRBOPT_SEL) != 0)) {
 				// -- Calc the number of tag
 				nbtag = NbTag(r.getTag());
 
@@ -584,7 +574,7 @@ public class PanelProfilMRB extends JPanel {
 					htags = 0;
 
 				// -- Draw rectangle With or without selection
-				if ((ii == SelLine) && (WithHighlight)) {
+				if ((miniRoadBookGridIndex == SelLine) && (WithHighlight)) {
 					g2d.setColor(new Color(0xFF, 0xEF, 0xBB));
 					g2d.fillRect(offx + posx, height - offy - posy, w, drawStringMulti.getHeight() + htags + 4);
 				} else {
@@ -596,7 +586,7 @@ public class PanelProfilMRB extends JPanel {
 				g2d.drawRect(offx + posx, height - offy - posy, w, drawStringMulti.getHeight() + htags + 4);
 				g2d.setClip(offx + posx, height - offy - posy, w, drawStringMulti.getHeight() + htags + 4);
 
-				if (ii == SelLine) {
+				if (miniRoadBookGridIndex == SelLine) {
 					xSel1 = offx + posx;
 					ySel1 = height - offy - posy;
 					xSel2 = xSel1 + w;
@@ -664,12 +654,7 @@ public class PanelProfilMRB extends JPanel {
 						m += 18;
 					}
 				}
-				// ii++;
-			}
-			if ((((r.getTag() & CgConst.TAG_HIGH_PT) != 0) || ((r.getTag() & CgConst.TAG_LOW_PT) != 0)
-					|| ((r.getTag() & CgConst.TAG_EAT_PT) != 0) || ((r.getTag() & CgConst.TAG_WATER_PT) != 0)
-					|| ((r.getTag() & CgConst.TAG_MARK) != 0)))
-				ii++;
+				miniRoadBookGridIndex++;
 		}
 
 		// -- Copyright --
