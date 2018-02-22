@@ -516,21 +516,25 @@ public class PanelProfilMRB extends JPanel {
 		g2d.setColor(Color.BLACK);
 
 		for (CgData r : data.data) {
+			if ((r.OptionMiniRoadbook & CgConst.MRBOPT_SEL) != 0) {
 				dist = r.getTotal(settings.Unit);
 				posx = (int) (dist * resx);
-				posy = height - offy - (hp + track.TopMargin - 7 - r.VPosMiniRoadbook);
+				posy = height - offy - 
+						(hp + track.TopMargin - 7 - r.VPosMiniRoadbook);
 				if (track.LabelToBottom)
 					posy_s = height - offy;
 				else
 					posy_s = TabY[offx + posx];
 
 				g2d.drawLine(offx + posx, posy_s, offx + posx, posy);
+			}
 		}
 
 		// -- Text box drawing --
 		int miniRoadBookGridIndex = 0;
 		DrawStringMultiLine drawStringMulti = new DrawStringMultiLine();
 		for (CgData r : data.data) {
+			if ((r.OptionMiniRoadbook & CgConst.MRBOPT_SEL) != 0) {
 				// -- Calc the number of tag
 				nbtag = NbTag(r.getTag());
 
@@ -654,7 +658,8 @@ public class PanelProfilMRB extends JPanel {
 						m += 18;
 					}
 				}
-				miniRoadBookGridIndex++;
+			}
+			miniRoadBookGridIndex++;
 		}
 
 		// -- Copyright --
