@@ -20,6 +20,7 @@ package course_generator.utils;
 
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.text.ParseException;
 
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -55,7 +56,7 @@ public class CgSpinner extends JSpinner {
 	}
 	
 	private void MouseWheelAction(int wheelRotation) {
-    	int value = (int)getValue();
+    	int value = (int)getSpinnerValue();
     	int n=Math.abs(wheelRotation);
     	if (wheelRotation>0) {
     		value=value+step*n;
@@ -84,12 +85,27 @@ public class CgSpinner extends JSpinner {
 	}
 
 	public int getValueAsInt() {
-		return (int)this.getValue();
+		return (int)this.getSpinnerValue();
 	}
 	
+	// To make sure the model has the same value as the editor use the 
+	// commitEdit method, eg:
+	// spinner.commitEdit();
+	// Source : https://docs.oracle.com/javase/7/docs/api/javax/swing/JSpinner.html
 	public double getValueAsDouble() {
-		int v=(int)this.getValue();
+		int v=(int)this.getSpinnerValue();
 		return (double)v;
+	}
+	
+	private Object getSpinnerValue() {
+		try {
+		       this.commitEdit();
+		}
+		catch (ParseException ex) {
+		   	ex.printStackTrace();
+		}
+		
+		return this.getValue();
 	}
 	
 	public double getValueAsDouble(int unit) {
