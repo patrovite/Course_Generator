@@ -192,6 +192,8 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		RefreshBtLabel();
 		RefreshTooltips();
+		RefreshTableData();
+		RefreshProperties();
 		
 		btNightAndDayHighlight.setSelected(track.bShowNightDay);
 
@@ -1197,10 +1199,14 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 	}
 
 	private void RefreshTableData() {
-		int r=TableData.getSelectedRow();
+		if(TableData.getRowCount() == 0) return;
+		
+		int r = TableData.getSelectedRow();
 		modelTableData.fireTableDataChanged();
-		if (r>=0)
+		if (r >= 0)
 			TableData.setRowSelectionInterval(r, r);
+		else 
+			TableData.setRowSelectionInterval(0, 0);
 	}
 
 }
