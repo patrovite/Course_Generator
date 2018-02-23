@@ -1107,7 +1107,7 @@ public class frmMain extends javax.swing.JFrame
 		{
 			public void actionPerformed(java.awt.event.ActionEvent evt)
 			{
-				GotoNextTag();
+				GoToNextMark();
 			}
 		});
 		mnuEdit.add(mnuGotoNextMark);
@@ -1126,7 +1126,7 @@ public class frmMain extends javax.swing.JFrame
 		{
 			public void actionPerformed(java.awt.event.ActionEvent evt)
 			{
-				GotoPrevTag();
+				GoToPreviousMark();
 			}
 		});
 		mnuEdit.add(mnuGotoPrevMark);
@@ -2339,11 +2339,13 @@ public class frmMain extends javax.swing.JFrame
 		{
 			public void actionPerformed(java.awt.event.ActionEvent evt)
 			{
-				int p = GotoPrevTag();
+				int p = GoToPreviousMark();
 				if ((p >= 0) && (p < Track.data.size()))
+				{
 					panelMap.RefreshCurrentPosMarker(
-							Track.data.get(p).getLatitude(),
-							Track.data.get(p).getLongitude());
+						Track.data.get(p).getLatitude(),
+						Track.data.get(p).getLongitude());
+				}
 			}
 		});
 		ToolBarMain.add(btGotoPreviousMark);
@@ -2361,11 +2363,13 @@ public class frmMain extends javax.swing.JFrame
 		{
 			public void actionPerformed(java.awt.event.ActionEvent evt)
 			{
-				int p = GotoNextTag();
+				int p = GoToNextMark();
 				if ((p >= 0) && (p < Track.data.size()))
+				{
 					panelMap.RefreshCurrentPosMarker(
 							Track.data.get(p).getLatitude(),
 							Track.data.get(p).getLongitude());
+				}
 			}
 		});
 		ToolBarMain.add(btGotoNextMark);
@@ -3056,88 +3060,94 @@ public class frmMain extends javax.swing.JFrame
 		 }
 	 }
 	
+	/**
+	 * Go to the next mark.
+	 */
+	private int GoToNextMark()
+	{
+		int indexNextMark = FindMark(panelTrackData.getSelectedRow(), "forward");
+			
+		// -- Select the line and scroll to it
+		panelTrackData.setSelectedRow(indexNextMark);
+		// -- Update the profil position
+		panelProfil.setCrosshairPosition(
+			Track.data.get(indexNextMark)
+				.getTotal(Settings.Unit) / 1000.0,
+			Track.data.get(indexNextMark)
+				.getElevation(Settings.Unit));
+		panelProfil.RefreshProfilInfo(indexNextMark);
+		
+		return indexNextMark;
+	}
 	
 	/**
-	 * Go to the next tag
-	 */
-	private int GotoNextTag()
+     * Find the previous or next mark from the current position.
+     * @param currentPosition The index of the current position in the table.
+     * @param direction The direction that should be used to find the next mark
+     * 		  : "forward", "backward"
+     * @return The position of the previous or next mark.
+     */
+	private int FindMark(int currentPosition, String direction)
 	{
-		int p = -1;
-		if (Track.data.size() > 0)
+		// We save the original given position as we need to avoid going into
+		// an infinite loop.
+		int originalPosition = currentPosition;
+		
+		currentPosition = direction == "forward" ? 
+				currentPosition + 1 : currentPosition - 1 ;
+		
+		int trackDataSize = Track.data.size();
+		
+		if(currentPosition == -1 && direction == "backward")
 		{
-			CgData d;
+			currentPosition = trackDataSize - 1;
+		}
+		
+		CgData positionData = Track.data.get(currentPosition);
+		while (currentPosition != originalPosition &&
+				positionData.getTag() == 0)
+		{
+			positionData = Track.data.get(currentPosition);
 
-			int row = panelTrackData.getSelectedRow();
-			if (row < 0)
-				return p;
-
-			p = row + 1;
-
-			if (p < Track.data.size())
+			if(positionData.getTag() != 0)
 			{
-				d = Track.data.get(p);
+				return currentPosition;
+			}
 
-				while ((p < Track.data.size() - 1) && (d.getTag() == 0))
-				{
-					p++;
-					d = Track.data.get(p);
-				}
-
-				if (d.getTag() != 0)
-				{
-					// -- Select the line and scroll to it
-					panelTrackData.setSelectedRow(p);
-					// -- Update the profil position
-					panelProfil.setCrosshairPosition(
-							Track.data.get(p).getTotal(Settings.Unit) / 1000.0,
-							Track.data.get(p).getElevation(Settings.Unit));
-					panelProfil.RefreshProfilInfo(p);
-				}
-
+			currentPosition = direction == "forward" ? 
+					currentPosition + 1 : currentPosition - 1 ;
+			
+			if(currentPosition >= trackDataSize)
+			{
+				currentPosition = 0;
 			}
 		}
-		return p;
+		
+		return -1;
 	}
 
 	/**
-	 * Go to the previous tag
+	 * Go to the previous mark.
 	 */
-	private int GotoPrevTag()
+	private int GoToPreviousMark()
 	{
-		int p = -1;
-		if (Track.data.size() > 0)
-		{
-			CgData d;
-
-			int row = panelTrackData.getSelectedRow();
-			if (row < 0)
-				return p;
-
-			p = row - 1;
-
-			if (p >= 0)
-			{
-				d = Track.data.get(p);
-
-				while ((p > 0) && (d.getTag() == 0))
-				{
-					p--;
-					d = Track.data.get(p);
-				}
-
-				if (d.getTag() != 0)
-				{
-					// -- Select the line and scroll to it
-					panelTrackData.setSelectedRow(p);
-					// -- Update the profil position
-					panelProfil.setCrosshairPosition(
-							Track.data.get(p).getTotal(Settings.Unit) / 1000.0,
-							Track.data.get(p).getElevation(Settings.Unit));
-					panelProfil.RefreshProfilInfo(p);
-				}
-			}
+		int indexPreviousMark = 
+				FindMark(panelTrackData.getSelectedRow(), "backward");
+		
+		if(indexPreviousMark != -1)
+		{	
+			// -- Select the line and scroll to it
+			panelTrackData.setSelectedRow(indexPreviousMark);
+			// -- Update the profil position
+			panelProfil.setCrosshairPosition(
+					Track.data.get(indexPreviousMark)
+					.getTotal(Settings.Unit) / 1000.0,
+					Track.data.get(indexPreviousMark)
+					.getElevation(Settings.Unit));
+			panelProfil.RefreshProfilInfo(indexPreviousMark);
 		}
-		return p;
+		
+		return indexPreviousMark;
 	}
 
 	/**
