@@ -328,6 +328,9 @@ public class JPanelAnalysisSpeed extends JPanel {
 			serie2.add(x, a * cmpt + b);
 
 		}
+		// -- If there is no speed the exit (not already calculated)
+		if (maxspeed==0.0) return;
+		
 		datasetSpeedReg.addSeries(serie2);
 		datasetSpeed.addSeries(serie1);
 

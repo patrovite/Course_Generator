@@ -526,6 +526,9 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 				serie2.add(j - 50, m);
 			}
 		}
+		// -- If there is no speed the exit (not already calculated)
+		if (maxspeed==0) return;
+		
 		datasetSpeedSlopeLine.addSeries(serie2);
 
 		// -- Set the range of the X axis

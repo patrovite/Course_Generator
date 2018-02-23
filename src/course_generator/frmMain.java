@@ -613,6 +613,8 @@ public class frmMain extends javax.swing.JFrame
 		panelTrackData.refresh();
 		PanelResume.refresh();
 		panelStatistics.refresh();
+		jPanelSpeed.Refresh(Track, Settings);
+		jPanelSpeedSlope.Refresh(Track, Settings);
 	}
 
 	/**
