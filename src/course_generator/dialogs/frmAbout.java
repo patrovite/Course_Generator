@@ -89,7 +89,7 @@ l     */
     	if (withcopyrights) {
 	    	StringBuilder sb = new StringBuilder();
 	    	sb.append(" Thanks to the contributors :\n");
-	    	sb.append(" - Frédéric (frederic@freemovin.com)\n\n");
+	    	sb.append(" - Frédéric Bard (frederic@freemovin.com)\n\n");
 	    	sb.append(" .oO Copyrights Oo.\n");
 	    	sb.append(" Used libraries:\n");
 	    	sb.append(" - Joda-time - http://www.joda.org/joda-time\n");
