@@ -248,9 +248,6 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 	private void SaveCurve(String name, String comment) {
 		int n = datasetSpeedSlopeLine.getSeries(0).getItemCount();
 
-		double x = 0;
-		double y = 0;
-
 		// -- Save the data in the home directory
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
@@ -263,6 +260,8 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 			writer.writeStartElement("Param");
 			for (int i = 0; i < n; i++) {
 				writer.writeStartElement("Item");
+				double toto = (double)datasetSpeedSlopeLine.getSeries(0).getX(i);
+				double tatt = (double)datasetSpeedSlopeLine.getSeries(0).getY(i);
 				Utils.WriteStringToXML(writer, "Slope",
 						String.format(Locale.ROOT, "%f", datasetSpeedSlopeLine.getSeries(0).getX(i)));
 				Utils.WriteStringToXML(writer, "Speed",
