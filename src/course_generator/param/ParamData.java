@@ -27,6 +27,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 /**
@@ -62,7 +63,7 @@ public class ParamData {
 	 * Save parameters on disk
 	 * @param fname Name of the file
 	 */
-	public void Save(String fname) {
+	public void Save(String fname,int unit) {
 		if (data.size() <= 0) {
 			return;
 		}
@@ -79,7 +80,11 @@ public class ParamData {
 			for (CgParam r : data) {
 				writer.writeStartElement("Item");
 				Utils.WriteStringToXML(writer, "Slope", String.format(Locale.ROOT, "%f", r.Slope));
-				Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", r.Speed));
+				
+				if (unit==CgConst.UNIT_MILES_FEET)
+					Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", Utils.Miles2Km(r.Speed)));
+				else
+					Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", r.Speed));
 				writer.writeEndElement(); // Item
 			}
 			writer.writeEndElement(); // Param

@@ -200,6 +200,9 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 				if (track.data.isEmpty())
 					return;
 
+				if (datasetSpeedSlopeLine.getSeriesCount()<=0)
+					return;
+				
 				frmSaveSSCurve dlg = new frmSaveSSCurve();
 				if (dlg.showDialog()) {
 					SaveCurve(dlg.getName(), dlg.getComment());
@@ -248,9 +251,6 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 	private void SaveCurve(String name, String comment) {
 		int n = datasetSpeedSlopeLine.getSeries(0).getItemCount();
 
-		double x = 0;
-		double y = 0;
-
 		// -- Save the data in the home directory
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
@@ -265,8 +265,14 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 				writer.writeStartElement("Item");
 				Utils.WriteStringToXML(writer, "Slope",
 						String.format(Locale.ROOT, "%f", datasetSpeedSlopeLine.getSeries(0).getX(i)));
-				Utils.WriteStringToXML(writer, "Speed",
-						String.format(Locale.ROOT, "%f", datasetSpeedSlopeLine.getSeries(0).getY(i)));
+				
+				if (settings.Unit==CgConst.UNIT_MILES_FEET)
+					Utils.WriteStringToXML(writer, "Speed",
+							String.format(Locale.ROOT, "%f", Utils.Miles2Km(datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue()) ));
+				else
+					Utils.WriteStringToXML(writer, "Speed",
+							String.format(Locale.ROOT, "%f", datasetSpeedSlopeLine.getSeries(0).getY(i)));
+				
 				writer.writeEndElement(); // Item
 			}
 			writer.writeEndElement(); // Param

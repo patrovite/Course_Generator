@@ -57,6 +57,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import course_generator.TrackData;
+import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
@@ -98,6 +99,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 	private String Old_Paramfile;
 	private Crosshair xCrosshair;
 	private Crosshair yCrosshair;
+	private CgSettings settings;
 	
 	/**
 	 * Creates new form frmSettings
@@ -119,11 +121,13 @@ public class frmEditCurve extends javax.swing.JDialog {
 	 * @param s Setting object
 	 * @return
 	 */
-	public boolean showDialog(TrackData t) {
+	public boolean showDialog(TrackData t, CgSettings settings) {
 		track = t;	
 		Paramfile=track.Paramfile;
 		Old_Paramfile=Paramfile;
 		bEditMode=false;
+		this.settings=settings;
+		tablemodel.setSettings(settings);
 
 		LoadCurve(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/"+Paramfile+".par");
         ChangeEditStatus();
@@ -539,7 +543,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 				if (bEditMode) {
 					param.comment = tfComment.getText();
 					param.name = lbNameVal.getText();
-			        param.Save(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/"+Paramfile+".par");
+			        param.Save(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/"+Paramfile+".par", settings.Unit);
 			        bEditMode = false;
 			        ChangeEditStatus();
 			        RefreshView();
@@ -591,7 +595,11 @@ public class frmEditCurve extends javax.swing.JDialog {
 		// -- Populate the serie
 		XYSeries serie1 = new XYSeries("Slope/Speed");
 		for (CgParam p : param.data) {
-			serie1.add(p.Slope, p.Speed); // TODO miles/km
+			if (settings.Unit==CgConst.UNIT_MILES_FEET)
+				serie1.add(p.Slope, Utils.Km2Miles(p.Speed));
+			else
+				serie1.add(p.Slope, p.Speed);
+			
 		}
 		dataset.addSeries(serie1);
 	}
@@ -768,7 +776,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 				}
 				param.name = tfName.getText();
 				Paramfile = param.name;
-				param.Save(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/" + param.name + ".par");
+				param.Save(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/" + param.name + ".par", settings.Unit);
 				ChangeEditStatus();
 				RefreshCurveList();
 				RefreshView();
