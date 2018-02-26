@@ -1290,8 +1290,10 @@ public class TrackData
 
 	/**
 	 * Calculate the time for each position of the track
+	 * @param unit
+	 *        Unit wanted (To get from the settings)
 	 */
-	public void Calculate()
+	public void Calculate(int unit)
 	{
 		int j = 0;
 		int k = 0;
@@ -1354,9 +1356,11 @@ public class TrackData
 						k = 0;
 					}
 					x1 = param.data.get(k).Slope;
-					y1 = param.data.get(k).Speed;
+					y1 = unit == CgConst.UNIT_MILES_FEET ? Utils.Km2Miles(param.data.get(k).Speed) 
+							: param.data.get(k).Speed;
 					x2 = param.data.get(j).Slope;
-					y2 = param.data.get(j).Speed;
+					y2 = unit == CgConst.UNIT_MILES_FEET ? Utils.Km2Miles(param.data.get(j).Speed) 
+							: param.data.get(j).Speed;
 					ok = true;
 					break;
 				}
@@ -1381,7 +1385,9 @@ public class TrackData
 			}
 			else
 			{
-				y = (double) param.data.get(param.data.size() - 2).Speed;
+				y = unit == CgConst.UNIT_MILES_FEET ? 
+						Utils.Km2Miles( param.data.get(param.data.size() - 2).Speed) 
+						: param.data.get(param.data.size() - 2).Speed;
 			}
 
 			// --Night coeff --

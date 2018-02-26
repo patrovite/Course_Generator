@@ -592,7 +592,7 @@ public class frmMain extends javax.swing.JFrame
 		if (Track.data.isEmpty())
 			return;
 
-		Track.Calculate();
+		Track.Calculate(Settings.Unit);
 
 		RefreshStatusbar(Track);
 
@@ -2620,8 +2620,8 @@ public class frmMain extends javax.swing.JFrame
 	 */
 	private void EditSSCurves()
 	{
-		frmEditCurve frm = new frmEditCurve();
-		frm.showDialog(Track, Settings);
+		frmEditCurve frm = new frmEditCurve(Settings);
+		frm.showDialog(Track);
 		RefreshStatusbar(Track);
 	}
 
@@ -3110,7 +3110,7 @@ public class frmMain extends javax.swing.JFrame
 		//-- Next position contain a tag => Exit
 		if (positionData.getTag() != 0) return currentPosition;
 		
-		//-- Seacrh the next position
+		//-- Search the next position
 		while (currentPosition != originalPosition &&
 				positionData.getTag() == 0)
 		{
