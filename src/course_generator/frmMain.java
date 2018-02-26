@@ -2620,8 +2620,8 @@ public class frmMain extends javax.swing.JFrame
 	 */
 	private void EditSSCurves()
 	{
-		frmEditCurve frm = new frmEditCurve();
-		frm.showDialog(Track, Settings);
+		frmEditCurve frm = new frmEditCurve(Settings);
+		frm.showDialog(Track);
 		RefreshStatusbar(Track);
 	}
 

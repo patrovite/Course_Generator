@@ -103,13 +103,15 @@ public class frmEditCurve extends javax.swing.JDialog {
 	
 	/**
 	 * Creates new form frmSettings
+	 * @param s Setting object
 	 */
-	public frmEditCurve() {
+	public frmEditCurve(CgSettings settings) {
 		super();
+		this.settings = settings;
 		bEditMode=false;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		dataset = new XYSeriesCollection();
-		chart = CreateChartProfil(dataset);
+		chart = CreateChartProfile(dataset);
 		param = new ParamData();
 		tablemodel=new ParamPointsModel(param);
 		initComponents();
@@ -118,15 +120,13 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 	/**
 	 * Show the dialog
-	 * @param s Setting object
 	 * @return
 	 */
-	public boolean showDialog(TrackData t, CgSettings settings) {
+	public boolean showDialog(TrackData t) {
 		track = t;	
 		Paramfile=track.Paramfile;
 		Old_Paramfile=Paramfile;
 		bEditMode=false;
-		this.settings=settings;
 		tablemodel.setSettings(settings);
 
 		LoadCurve(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/"+Paramfile+".par");
@@ -166,10 +166,14 @@ public class frmEditCurve extends javax.swing.JDialog {
 	 * @param dataset Dataset to display
 	 * @return Return a JFreeChart object
 	 */
-	private JFreeChart CreateChartProfil(XYDataset dataset) {
+	private JFreeChart CreateChartProfile(XYDataset dataset) {
+		String speedAxis = settings.Unit == CgConst.UNIT_METER ? 
+				bundle.getString("frmEditCurve.chart.speed") :
+				"Speed (min/mile)";
+				
 		JFreeChart chart = ChartFactory.createXYAreaChart("",
-				bundle.getString("frmEditCurve.chart.slope"), //"Slope"  x axis label
-				bundle.getString("frmEditCurve.chart.speed"), //"speed"  y axis label
+				bundle.getString("frmEditCurve.chart.slope"), //"Slope" x axis label
+				speedAxis, //"speed" y axis label
 				dataset, // data
 				PlotOrientation.VERTICAL, false, // include legend
 				true, // tooltips
