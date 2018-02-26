@@ -20,9 +20,14 @@ package course_generator.param;
 
 import javax.swing.table.AbstractTableModel;
 
+import course_generator.settings.CgSettings;
+import course_generator.utils.CgConst;
+import course_generator.utils.Utils;
+
 public class ParamPointsModel extends AbstractTableModel {
 	private java.util.ResourceBundle bundle;
 	private ParamData param;
+	private CgSettings settings;
 	
 	private final String[] header; // = { "Slope", "Speed" };	
 
@@ -31,6 +36,7 @@ public class ParamPointsModel extends AbstractTableModel {
 	 */
 	public ParamPointsModel(ParamData p) {
 		param=p;
+		this.settings=null;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		header = new String[2];
 		header[0]=bundle.getString("ParamPointsModel.slope");
@@ -41,6 +47,9 @@ public class ParamPointsModel extends AbstractTableModel {
 		param=p;
 	}
 
+	public void setSettings(CgSettings settings) {
+		this.settings=settings;
+	}
 	
 	
 	@Override
@@ -69,7 +78,10 @@ public class ParamPointsModel extends AbstractTableModel {
 
 		case 1:
 			// Speed
-			return param.data.get(rowIndex).Speed;
+			if (settings.Unit==CgConst.UNIT_MILES_FEET)
+				return Utils.Km2Miles(param.data.get(rowIndex).Speed);
+			else
+				return param.data.get(rowIndex).Speed;
 
 		default:
 			throw new IllegalArgumentException();
