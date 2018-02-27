@@ -84,6 +84,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Enumeration;
 import java.util.Locale;
 
 import javax.swing.Icon;
@@ -190,10 +191,8 @@ public class frmMain extends javax.swing.JFrame
 	private JMenuItem mnuImportPoints;
 	private static JMenuItem mnuExportPoints;
 	private static JMenuItem mnuExportTagAsWaypoints;
-	private JMenuItem mnuOffLine;
 	private JMenuItem mnuQuit;
 	private static JMenuItem mnuCopy;
-	private JMenuItem mnuSelectLines;
 	private static JMenuItem mnuSearchPoint;
 	private static JMenuItem mnuMarkPosition;
 	private static JMenuItem mnuGotoNextMark;
@@ -1488,30 +1487,15 @@ public class frmMain extends javax.swing.JFrame
 		{
 			public void actionPerformed(java.awt.event.ActionEvent evt)
 			{
-				if (Utils.DirExist(ProgDir + "/help"))
-				{
-					try
-					{
-						Desktop.getDesktop().browse(new URI("file://" + ProgDir
-								+ "/help/" + Lang4Help + "/cg_doc_4.00.html"));
-					}
-					catch (IOException | URISyntaxException e)
-					{
-						try
-						{
-							CgLog.info("Fail to open help for language "
-									+ Settings.Language
-									+ ". Default language loaded.");
-							Desktop.getDesktop().browse(new URI("file://"
-									+ ProgDir + "/help/en/cg_doc_4.00.html"));
-						}
-						catch (IOException | URISyntaxException e1)
-						{
-							e1.printStackTrace();
-						}
+				if (!Utils.OpenHelp(Lang4Help)) {
+					CgLog.info("Failed to open help for language '" +
+							Lang4Help + "'. Default language loaded.");
+					if(!Utils.OpenHelp(Settings.Language)) {
+						CgLog.info("Failed to open help for language '" +
+								Settings.Language + "'.");
 					}
 				}
-				else CgLog.info("mnuCGHelp : <"+ ProgDir + "/help> doesn't exist!");
+				
 				// TODO link to website (when ready)
 			}
 		});
@@ -3033,7 +3017,6 @@ public class frmMain extends javax.swing.JFrame
 
 	
 	private void SetMapMarker() {
-		int p = -1;
 		if (Track.data.size() > 0)
 		{
 			int row = panelTrackData.getSelectedRow();
@@ -4018,7 +4001,7 @@ public class frmMain extends javax.swing.JFrame
 	 */
 	public static void setUIFont(javax.swing.plaf.FontUIResource f)
 	{
-		java.util.Enumeration keys = javax.swing.UIManager.getDefaults().keys();
+		Enumeration<Object> keys = javax.swing.UIManager.getDefaults().keys();
 		while (keys.hasMoreElements())
 		{
 			Object key = keys.nextElement();
@@ -4177,7 +4160,6 @@ public class frmMain extends javax.swing.JFrame
 	private javax.swing.JMenu mnuEdit;
 	private javax.swing.JPanel jPanelAnalyze;
 	private javax.swing.JPanel jPanelLeft;
-	private javax.swing.JTree jTreeMain;
 	private javax.swing.JMenu mnuLastCGX;
 	private javax.swing.JMenu mnuLastGPX;
 	private javax.swing.JMenuBar mnuMain;
