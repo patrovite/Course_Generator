@@ -84,7 +84,7 @@ public class CgSettings {
         ParamFile = "Default";
         bNoConnectOnStartup = true;
         ConnectionTimeout = 10;
-        Language="fr";
+        Language="";
         
         MainWindowWidth=800;
         MainWindowHeight=600;

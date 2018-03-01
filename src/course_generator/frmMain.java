@@ -1490,9 +1490,10 @@ public class frmMain extends javax.swing.JFrame
 				if (!Utils.OpenHelp(Lang4Help)) {
 					CgLog.info("Failed to open help for language '" +
 							Lang4Help + "'. Default language loaded.");
-					if(!Utils.OpenHelp(Settings.Language)) {
-						CgLog.info("Failed to open help for language '" +
-								Settings.Language + "'.");
+					
+					// By default, we should be able to open the french help.
+					if(!Utils.OpenHelp("fr")) {
+						CgLog.info("Failed to open help for language 'fr'.");
 					}
 				}
 				
