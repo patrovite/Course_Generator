@@ -226,8 +226,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 	 * This method is called to initialize the form.
 	 */
 	private void initComponents() {
-		int line = 0;
-
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmEditCurve.title"));
 		setPreferredSize(new Dimension(1200,600));
@@ -474,8 +472,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 	 * @param filename Curve file name
 	 */
 	protected void LoadCurve(String filename) {
-		 File f = new File(filename);
-		 String sname=Utils.getFileNameWithoutExtension(f.getName());
 		
 		if (Utils.FileExist(filename)) {
 			
@@ -609,7 +605,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 	 */
 	protected void AddLine() {
 		CgParam p=new CgParam(0,0);
-		frmEditPoint frm=new frmEditPoint();
+		frmEditPoint frm=new frmEditPoint(settings);
 		if (frm.showDialog(p)) {
 			param.data.add(p);
 			Collections.sort(param.data);
@@ -626,7 +622,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		int r=TablePoints.getSelectedRow();
 		if (r>=0) {
 			CgParam p=new CgParam(param.data.get(r).Slope,param.data.get(r).Speed);
-			frmEditPoint frm=new frmEditPoint();
+			frmEditPoint frm=new frmEditPoint(settings);
 			if (frm.showDialog(p)) {
 				param.data.set(r, p);
 				Collections.sort(param.data);
