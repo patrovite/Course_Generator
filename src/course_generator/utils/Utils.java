@@ -59,6 +59,8 @@ import course_generator.settings.CgSettings;
  * @author pierre.delore
  */
 public class Utils {
+	
+	public static final String htmlDocFile = "cg_doc_4.00.html";
 
 	/**
 	 * Display a load dialog
@@ -1354,7 +1356,7 @@ public class Utils {
 				environmentVariables.get("CGInstallFolder");
 		
 		String helpFilePath = helpFolder + "help\\" + language +
-				"\\cg_doc_4.00.html";
+				"\\" + htmlDocFile;
 		File helpFile = new File(helpFilePath);
 		if(helpFile.exists() && !helpFile.isDirectory())
 		{
