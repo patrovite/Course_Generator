@@ -68,6 +68,7 @@ public class CgSettings {
     public double DistFar=1000.0;
     
     public int Unit = CgConst.UNIT_METER; //Unit for the display 0=meter 1=Miles/feet
+    public boolean isPace = false; //'true' the speed is display as pace otherwise it's a speed
     
     public int ReadError = 0;
     public int LineError = 0;
@@ -101,6 +102,7 @@ public class CgSettings {
         TableMainColWidth = new int[16];
     
         Unit = CgConst.UNIT_METER;
+        isPace = false;
         		
         ReadError = 0;
         LineError = 0;
@@ -197,6 +199,7 @@ public class CgSettings {
                     Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH16", TableMainColWidth[15]);
                     
                     Utils.WriteIntToXML(writer, "UNIT", Unit);
+                    Utils.WriteBooleanToXML(writer, "ISPACE", isPace);
                     Utils.WriteStringToXML(writer, "LANGUAGE", Language);
                     Utils.WriteIntToXML(writer, "MAINWINDOWSWIDTH",MainWindowWidth);
                     Utils.WriteIntToXML(writer, "MAINWINDOWSHEIGHT",MainWindowHeight);

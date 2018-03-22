@@ -39,6 +39,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartMouseEvent;
@@ -104,9 +106,10 @@ public class frmEditCurve extends javax.swing.JDialog {
 	/**
 	 * Creates new form frmSettings
 	 */
-	public frmEditCurve() {
+	public frmEditCurve(CgSettings settings) {
 		super();
 		bEditMode=false;
+		this.settings=settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		dataset = new XYSeriesCollection();
 		chart = CreateChartProfil(dataset);
@@ -169,7 +172,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 	private JFreeChart CreateChartProfil(XYDataset dataset) {
 		JFreeChart chart = ChartFactory.createXYAreaChart("",
 				bundle.getString("frmEditCurve.chart.slope"), //"Slope"  x axis label
-				bundle.getString("frmEditCurve.chart.speed"), //"speed"  y axis label
+				bundle.getString("frmEditCurve.chart.speed")+" ("+Utils.uSpeed2String(settings.Unit, settings.isPace)+")", //"speed"  y axis label
 				dataset, // data
 				PlotOrientation.VERTICAL, false, // include legend
 				true, // tooltips
@@ -226,8 +229,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 	 * This method is called to initialize the form.
 	 */
 	private void initComponents() {
-		int line = 0;
-
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmEditCurve.title"));
 		setPreferredSize(new Dimension(1200,600));
@@ -348,6 +349,13 @@ public class frmEditCurve extends javax.swing.JDialog {
 				//TODO
 			}
 		});
+		TablePoints.getSelectionModel()
+			.addListSelectionListener( new ListSelectionListener() {
+				@Override
+				public void valueChanged(ListSelectionEvent event) {
+					btEditLine.setEnabled(TablePoints.getSelectedRow() > 0);
+				}
+			});
 		
         jScrollPanePoint = new javax.swing.JScrollPane();
         jScrollPanePoint.setViewportView(TablePoints);
@@ -474,8 +482,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 	 * @param filename Curve file name
 	 */
 	protected void LoadCurve(String filename) {
-		 File f = new File(filename);
-		 String sname=Utils.getFileNameWithoutExtension(f.getName());
 		
 		if (Utils.FileExist(filename)) {
 			
@@ -543,7 +549,9 @@ public class frmEditCurve extends javax.swing.JDialog {
 				if (bEditMode) {
 					param.comment = tfComment.getText();
 					param.name = lbNameVal.getText();
-			        param.Save(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/"+Paramfile+".par", settings.Unit);
+			        param.SaveCurve(Utils.GetHomeDir() + "/" + 
+			        		CgConst.CG_DIR + "/"+ Paramfile +".par", 
+			        		settings.Unit);
 			        bEditMode = false;
 			        ChangeEditStatus();
 			        RefreshView();
@@ -609,7 +617,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 	 */
 	protected void AddLine() {
 		CgParam p=new CgParam(0,0);
-		frmEditPoint frm=new frmEditPoint();
+		frmEditPoint frm=new frmEditPoint(settings);
 		if (frm.showDialog(p)) {
 			param.data.add(p);
 			Collections.sort(param.data);
@@ -626,7 +634,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		int r=TablePoints.getSelectedRow();
 		if (r>=0) {
 			CgParam p=new CgParam(param.data.get(r).Slope,param.data.get(r).Speed);
-			frmEditPoint frm=new frmEditPoint();
+			frmEditPoint frm=new frmEditPoint(settings);
 			if (frm.showDialog(p)) {
 				param.data.set(r, p);
 				Collections.sort(param.data);
@@ -684,6 +692,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		btEditCurve.setToolTipText(bundle.getString("frmEditCurve.btEditCurve.toolTipText"));
 		btEditCurve.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				TablePoints.setRowSelectionInterval(0, 0);
 				bEditMode = true;
 			    ChangeEditStatus();
 			    Old_Paramfile = Paramfile;
@@ -776,7 +785,10 @@ public class frmEditCurve extends javax.swing.JDialog {
 				}
 				param.name = tfName.getText();
 				Paramfile = param.name;
-				param.Save(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/" + param.name + ".par", settings.Unit);
+				param.SaveCurve(
+						Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" +
+								param.name + ".par", 
+						settings.Unit);
 				ChangeEditStatus();
 				RefreshCurveList();
 				RefreshView();

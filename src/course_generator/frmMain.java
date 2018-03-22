@@ -462,6 +462,7 @@ public class frmMain extends javax.swing.JFrame
 		// -- Log the initialization time
 		CgLog.info("Application initialization time : "
 				+ (System.currentTimeMillis() - ts) + "ms");
+		System.out.println("isPace:"+Settings.isPace);
 	}
 
 	/**
@@ -2620,7 +2621,7 @@ public class frmMain extends javax.swing.JFrame
 	 */
 	private void EditSSCurves()
 	{
-		frmEditCurve frm = new frmEditCurve();
+		frmEditCurve frm = new frmEditCurve(Settings);
 		frm.showDialog(Track, Settings);
 		RefreshStatusbar(Track);
 	}

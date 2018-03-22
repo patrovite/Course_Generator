@@ -36,6 +36,8 @@ import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
+import course_generator.settings.CgSettings;
+import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class frmEditPoint extends javax.swing.JDialog {
@@ -51,12 +53,14 @@ public class frmEditPoint extends javax.swing.JDialog {
 	private JButton btOk;
 	private double slope;
 	private double speed;
+	private CgSettings settings;
 	
 	/**
 	 * Creates new form frmSettings
 	 */
-	public frmEditPoint() {
+	public frmEditPoint(CgSettings settings) {
 		super();
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
@@ -170,9 +174,11 @@ public class frmEditPoint extends javax.swing.JDialog {
 		slope=p.Slope;
 		speed=p.Speed;
 		
+		double convertedSpeed = settings.Unit == CgConst.UNIT_MILES_FEET ? Utils.Km2Miles(p.Speed): p.Speed;
+		
 		// Set field
-		tfSlope.setText(String.valueOf(param.Slope));
-		tfSpeed.setText(String.valueOf(param.Speed));
+		tfSlope.setText(String.valueOf(slope));
+		tfSpeed.setText(String.valueOf(convertedSpeed));
 		// End set field
 		ok = false;
 
@@ -181,7 +187,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 		if (ok) {
 			// Copy fields
 			p.Slope=slope;
-			p.Speed=speed;
+			p.Speed=settings.Unit == CgConst.UNIT_MILES_FEET ? Utils.Miles2Km(speed) : speed;
 		}
 		return ok;
 	}
