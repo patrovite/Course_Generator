@@ -186,7 +186,7 @@ public class JPanelStatistics extends JPanel {
 		sb = Utils.sbReplace(sb, "@510",
 				String.format("%1.3f " + Utils.uLDist2String(unit), casr.getTotClimbM(unit) / 1000));
 		sb = Utils.sbReplace(sb, "@511",
-				String.format("%1.1f " + Utils.uSpeed2String(unit), speedResult.getAvrspeed(unit)));
+				String.format("%1.1f " + Utils.uSpeed2String(unit,settings.isPace), speedResult.getAvrspeed(unit)));
 
 		double tmpdbl = (track.getDistRoad(unit) * 100 / track.getTotalDistance(unit));
 		sb = Utils.sbReplace(sb, "@512",
@@ -307,9 +307,9 @@ public class JPanelStatistics extends JPanel {
 
 	private String CalcVMoy(double d, double t, int unit) {
 		if (t != 0) {
-			return String.format("%1.1f " + Utils.uSpeed2String(unit), d / t * 3.6);
+			return String.format("%1.1f " + Utils.uSpeed2String(unit,settings.isPace), d / t * 3.6);
 		} else
-			return "0.0 " + Utils.uSpeed2String(unit);
+			return "0.0 " + Utils.uSpeed2String(unit,settings.isPace);
 	}
 
 

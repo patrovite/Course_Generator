@@ -40,266 +40,269 @@ import course_generator.utils.Utils;
  * @author pierre.delore
  */
 public class CgSettings {
-    public String ParamFile = "";
-    public boolean bNoConnectOnStartup = true;
-    public int ConnectionTimeout = 10; //Time in second between internet test
-    /** Map selected 
-     * 0 : OpenStreetMap
-     * 1 : OpenTopoMap
-     * 2 : BingAreal
-     * **/
-    public int map = 0;
-    public boolean offlineMap = true;
-    
-    public String MemoFormat[] = new String[5];
-    public String mruGPX[] = new String[5];
-    public String mruCGX[] = new String[5];
-    public int TableMainColWidth[] = new int[16];
-    public String Language;
-    public int MainWindowWidth;
-    public int MainWindowHeight;
-    public int VertSplitPosition;
-    public int HorizSplitPosition;
-    /** Mini roadbook split position **/
-    public int MRB_SplitPosition;
-    /** Below this distance we consider the distance short (in m) **/
-    public double DistNear=100.0;
-    /** Over this distance we consider the distance far (in m) **/
-    public double DistFar=1000.0;
-    
-    public int Unit = CgConst.UNIT_METER; //Unit for the display 0=meter 1=Miles/feet
-    
-    public int ReadError = 0;
-    public int LineError = 0;
-    public String LastDir; //Store the last directory
-    public String previousGPXDirectory;
-    public String previousCGXDirectory;
-    public String previousCSVDirectory;
-    
-    
-    
-    public CgSettings() {
-        int i=0;
-        
-        ParamFile = "Default";
-        bNoConnectOnStartup = true;
-        ConnectionTimeout = 10;
-        Language="";
-        
-        MainWindowWidth=800;
-        MainWindowHeight=600;
-        VertSplitPosition=200;
-        HorizSplitPosition=50;
-        MRB_SplitPosition=220;
+	public String ParamFile = "";
+	public boolean bNoConnectOnStartup = true;
+	public int ConnectionTimeout = 10; // Time in second between internet test
+	/** Map selected 
+	 * 0 : OpenStreetMap
+	 * 1 : OpenTopoMap
+	 * 2 : BingAreal
+	 * **/
+	public int map = 0;
+	public boolean offlineMap = true;
 
-        DistNear=100.0;
-        DistFar=1000.0;
+	public String MemoFormat[] = new String[5];
+	public String mruGPX[] = new String[5];
+	public String mruCGX[] = new String[5];
+	public int TableMainColWidth[] = new int[16];
+	public String Language;
+	public int MainWindowWidth;
+	public int MainWindowHeight;
+	public int VertSplitPosition;
+	public int HorizSplitPosition;
+	/** Mini roadbook split position **/
+	public int MRB_SplitPosition;
+	/** Below this distance we consider the distance short (in m) **/
+	public double DistNear = 100.0;
+	/** Over this distance we consider the distance far (in m) **/
+	public double DistFar = 1000.0;
 
-        MemoFormat = new String[5];
-        mruGPX = new String[5];
-        mruCGX = new String[5];
-        TableMainColWidth = new int[16];
-    
-        Unit = CgConst.UNIT_METER;
-        		
-        ReadError = 0;
-        LineError = 0;
-        
-        for (i=0;i<5;i++) {
-            MemoFormat[i]="";
-            mruGPX[i]="";
-            mruCGX[i]="";
-        }
-    
-        for (i=0; i<16;i++) {
-            TableMainColWidth[i] = 60;
-        }
-        LastDir="";
-        previousCGXDirectory="";
-        previousGPXDirectory="";
-        previousCSVDirectory="";
-        
-        offlineMap = true;
-        map = 0;
-        
-    }
-    
-    
-    /**
-     * Save the settings to the disk
-     * @param _Path Path where the setting file is stored
-     */
-    public void Save(String _Path) {
-        //-- Check if the data directory exist. If not! creation
-        Path DataFolder = Paths.get(_Path);
-        if (Files.notExists(DataFolder))
-        {
-            boolean result = false;
+	public int Unit = CgConst.UNIT_METER; // Unit for the display 0=meter
+											// 1=Miles/feet
+	public boolean isPace = false; // 'true' the speed is display as pace
+									// otherwise it's a speed
 
-            try{
-                Files.createDirectory(DataFolder);
-                result = true;
-            } catch(IOException e){
-                System.out.println("CgSettings.Save : Impossible to create the data/config directory"); 
-                return;
-            }
-        }
-        
-        //-- Save the data in the home directory
-        XMLOutputFactory factory      = XMLOutputFactory.newInstance();
-        try {
-            XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream(_Path+"/config.xml"), "UTF-8");
-            
-            writer.writeStartDocument("UTF-8", "1.0");
-            writer.writeComment("Course Generator (C) Pierre DELORE");
-                writer.writeStartElement("CONFIG");
-                    Utils.WriteStringToXML(writer, "PARAMFILE", ParamFile);
-                    Utils.WriteBooleanToXML(writer, "NOCONNECTIONONSTARTUP", bNoConnectOnStartup);
-                    Utils.WriteIntToXML(writer, "CONNECTIONTIMEOUT", ConnectionTimeout);
-                    Utils.WriteStringToXML(writer, "LASTDIR", LastDir);
-                    Utils.WriteStringToXML(writer, "PREVIOUSCGXDIR", previousCGXDirectory);
-                    Utils.WriteStringToXML(writer, "PREVIOUSGPXDIR", previousGPXDirectory);
-                    Utils.WriteStringToXML(writer, "PREVIOUSCSVDIR", previousCSVDirectory);
-                    
-                    Utils.WriteStringToXML(writer, "MEMOFORMAT1", MemoFormat[0]);
-                    Utils.WriteStringToXML(writer, "MEMOFORMAT2", MemoFormat[1]);
-                    Utils.WriteStringToXML(writer, "MEMOFORMAT3", MemoFormat[2]);
-                    Utils.WriteStringToXML(writer, "MEMOFORMAT4", MemoFormat[3]);
-                    Utils.WriteStringToXML(writer, "MEMOFORMAT5", MemoFormat[4]);
-                    
-                    Utils.WriteStringToXML(writer, "MRUGPX1", mruGPX[0]);
-                    Utils.WriteStringToXML(writer, "MRUGPX2", mruGPX[1]);
-                    Utils.WriteStringToXML(writer, "MRUGPX3", mruGPX[2]);
-                    Utils.WriteStringToXML(writer, "MRUGPX4", mruGPX[3]);
-                    Utils.WriteStringToXML(writer, "MRUGPX5", mruGPX[4]);
+	public int ReadError = 0;
+	public int LineError = 0;
+	public String LastDir; // Store the last directory
+	public String previousGPXDirectory;
+	public String previousCGXDirectory;
+	public String previousCSVDirectory;
 
-                    Utils.WriteStringToXML(writer, "MRUCGX1", mruCGX[0]);
-                    Utils.WriteStringToXML(writer, "MRUCGX2", mruCGX[1]);
-                    Utils.WriteStringToXML(writer, "MRUCGX3", mruCGX[2]);
-                    Utils.WriteStringToXML(writer, "MRUCGX4", mruCGX[3]);
-                    Utils.WriteStringToXML(writer, "MRUCGX5", mruCGX[4]);
-                    
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH01", TableMainColWidth[0]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH02", TableMainColWidth[1]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH03", TableMainColWidth[2]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH04", TableMainColWidth[3]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH05", TableMainColWidth[4]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH06", TableMainColWidth[5]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH07", TableMainColWidth[6]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH08", TableMainColWidth[7]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH09", TableMainColWidth[8]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH10", TableMainColWidth[9]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH11", TableMainColWidth[10]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH12", TableMainColWidth[11]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH13", TableMainColWidth[12]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH14", TableMainColWidth[13]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH15", TableMainColWidth[14]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH16", TableMainColWidth[15]);
-                    
-                    Utils.WriteIntToXML(writer, "UNIT", Unit);
-                    Utils.WriteStringToXML(writer, "LANGUAGE", Language);
-                    Utils.WriteIntToXML(writer, "MAINWINDOWSWIDTH",MainWindowWidth);
-                    Utils.WriteIntToXML(writer, "MAINWINDOWSHEIGHT",MainWindowHeight);
-                    Utils.WriteIntToXML(writer, "VERTSPLITPOSITION",VertSplitPosition);
-                    Utils.WriteIntToXML(writer, "HORIZSPLITPOSITION",HorizSplitPosition);
-                    Utils.WriteIntToXML(writer, "MRBSPLITPOSITION",MRB_SplitPosition);
-                    Utils.WriteIntToXML(writer, "MAP",map);
-                    
-                    Utils.WriteDoubleToXML(writer, "DISTNEAR", DistNear);
-                    Utils.WriteDoubleToXML(writer, "DISTFAR", DistFar);
-                    
-                writer.writeEndElement();
-            writer.writeEndDocument();
 
-            writer.flush();
-            writer.close();
+	public CgSettings() {
+		int i = 0;
 
-        } catch (XMLStreamException | IOException e) {
-            e.printStackTrace();	
-        }
-    }
+		ParamFile = "Default";
+		bNoConnectOnStartup = true;
+		ConnectionTimeout = 10;
+		Language = "en";
 
-    /**
-     * Load the settings from disk
-     * @param _Path Path where the setting file is stored
-     */
-    public void Load(String _Path) {
-        //-- Test if the config file exist
-        if (!(new File(_Path+"/config.xml").isFile())) return;
-        
-        SaxConfigHandler Confighandler = new SaxConfigHandler();
-        
-        int ret=0;
-        try{
-            ret=Confighandler.readDataFromConfig(_Path+"/config.xml", this);
-        }
-        catch (SAXException | IOException | ParserConfigurationException e)
-        {
-            e.printStackTrace();
-        }
-        if (ret!=0)
-            System.out.println("CgSettings.Load : Error while loading config file '" + _Path + "'- line ="+Confighandler.getErrLine());
-    }
-    
-    /**
-     * Return the distance unit as string
-     * @return string with the unit
-     */
-    public String getDistanceUnitString() {
-    	switch (Unit) {
-    	case CgConst.UNIT_METER:
-    		return "km";
-    	case CgConst.UNIT_MILES_FEET:
-    		return "miles";
-    	default:
-    		return "Km";    		
-    	}
-    }
+		MainWindowWidth = 800;
+		MainWindowHeight = 600;
+		VertSplitPosition = 200;
+		HorizSplitPosition = 50;
+		MRB_SplitPosition = 220;
 
-    /**
-     * Return the distance unit as string (abbreviation)
-     * @return string with the unit
-     */
-    public String getShortDistanceUnitString() {
-    	switch (Unit) {
-    	case CgConst.UNIT_METER:
-    		return "km";
-    	case CgConst.UNIT_MILES_FEET:
-    		return "mi";
-    	default:
-    		return "km";    		
-    	}
-    }
-    
-    
-    /**
-     * Return the elevation unit as string
-     * @return string with the unit
-     */
-    public String getElevationUnitString() {
-    	switch (Unit) {
-    	case CgConst.UNIT_METER:
-    		return "m";
-    	case CgConst.UNIT_MILES_FEET:
-    		return "feet";
-    	default:
-    		return "m";    		
-    	}
-    }
+		DistNear = 100.0;
+		DistFar = 1000.0;
 
-    /**
-     * Return the elevation unit as string (abbreviation)
-     * @return string with the unit
-     */
-    public String getShortElevationUnitString() {
-    	switch (Unit) {
-    	case CgConst.UNIT_METER:
-    		return "m";
-    	case CgConst.UNIT_MILES_FEET:
-    		return "ft";
-    	default:
-    		return "m";    		
-    	}
-    }
-    
+		MemoFormat = new String[5];
+		mruGPX = new String[5];
+		mruCGX = new String[5];
+		TableMainColWidth = new int[16];
+
+		Unit = CgConst.UNIT_METER;
+		isPace = false;
+
+		ReadError = 0;
+		LineError = 0;
+
+		for (i = 0; i < 5; i++) {
+			MemoFormat[i] = "";
+			mruGPX[i] = "";
+			mruCGX[i] = "";
+		}
+
+		for (i = 0; i < 16; i++) {
+			TableMainColWidth[i] = 60;
+		}
+		LastDir = "";
+		previousCGXDirectory = "";
+		previousGPXDirectory = "";
+		previousCSVDirectory = "";
+
+		offlineMap = true;
+		map = 0;
+
+	}
+
+
+	/**
+	 * Save the settings to the disk
+	 * @param path Path where the setting file is stored
+	 */
+	public void Save(String path) {
+		// -- Check if the data directory exist. If not! creation
+		Path DataFolder = Paths.get(path);
+		if (Files.notExists(DataFolder)) {
+			try {
+				Files.createDirectory(DataFolder);
+			} catch (IOException e) {
+				System.out.println("CgSettings.Save : Impossible to create " + "the data/config directory");
+				return;
+			}
+		}
+
+		// -- Save the data in the home directory
+		XMLOutputFactory factory = XMLOutputFactory.newInstance();
+		try {
+			XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream(path + "/config.xml"), "UTF-8");
+
+			writer.writeStartDocument("UTF-8", "1.0");
+			writer.writeComment("Course Generator (C) Pierre DELORE");
+			writer.writeStartElement("CONFIG");
+			Utils.WriteStringToXML(writer, "PARAMFILE", ParamFile);
+			Utils.WriteBooleanToXML(writer, "NOCONNECTIONONSTARTUP", bNoConnectOnStartup);
+			Utils.WriteIntToXML(writer, "CONNECTIONTIMEOUT", ConnectionTimeout);
+			Utils.WriteStringToXML(writer, "LASTDIR", LastDir);
+			Utils.WriteStringToXML(writer, "PREVIOUSCGXDIR", previousCGXDirectory);
+			Utils.WriteStringToXML(writer, "PREVIOUSGPXDIR", previousGPXDirectory);
+			Utils.WriteStringToXML(writer, "PREVIOUSCSVDIR", previousCSVDirectory);
+
+			Utils.WriteStringToXML(writer, "MEMOFORMAT1", MemoFormat[0]);
+			Utils.WriteStringToXML(writer, "MEMOFORMAT2", MemoFormat[1]);
+			Utils.WriteStringToXML(writer, "MEMOFORMAT3", MemoFormat[2]);
+			Utils.WriteStringToXML(writer, "MEMOFORMAT4", MemoFormat[3]);
+			Utils.WriteStringToXML(writer, "MEMOFORMAT5", MemoFormat[4]);
+
+			Utils.WriteStringToXML(writer, "MRUGPX1", mruGPX[0]);
+			Utils.WriteStringToXML(writer, "MRUGPX2", mruGPX[1]);
+			Utils.WriteStringToXML(writer, "MRUGPX3", mruGPX[2]);
+			Utils.WriteStringToXML(writer, "MRUGPX4", mruGPX[3]);
+			Utils.WriteStringToXML(writer, "MRUGPX5", mruGPX[4]);
+
+			Utils.WriteStringToXML(writer, "MRUCGX1", mruCGX[0]);
+			Utils.WriteStringToXML(writer, "MRUCGX2", mruCGX[1]);
+			Utils.WriteStringToXML(writer, "MRUCGX3", mruCGX[2]);
+			Utils.WriteStringToXML(writer, "MRUCGX4", mruCGX[3]);
+			Utils.WriteStringToXML(writer, "MRUCGX5", mruCGX[4]);
+
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH01", TableMainColWidth[0]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH02", TableMainColWidth[1]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH03", TableMainColWidth[2]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH04", TableMainColWidth[3]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH05", TableMainColWidth[4]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH06", TableMainColWidth[5]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH07", TableMainColWidth[6]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH08", TableMainColWidth[7]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH09", TableMainColWidth[8]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH10", TableMainColWidth[9]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH11", TableMainColWidth[10]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH12", TableMainColWidth[11]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH13", TableMainColWidth[12]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH14", TableMainColWidth[13]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH15", TableMainColWidth[14]);
+			Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH16", TableMainColWidth[15]);
+
+			Utils.WriteIntToXML(writer, "UNIT", Unit);
+			Utils.WriteBooleanToXML(writer, "ISPACE", isPace);
+			Utils.WriteStringToXML(writer, "LANGUAGE", Language);
+			Utils.WriteIntToXML(writer, "MAINWINDOWSWIDTH", MainWindowWidth);
+			Utils.WriteIntToXML(writer, "MAINWINDOWSHEIGHT", MainWindowHeight);
+			Utils.WriteIntToXML(writer, "VERTSPLITPOSITION", VertSplitPosition);
+			Utils.WriteIntToXML(writer, "HORIZSPLITPOSITION", HorizSplitPosition);
+			Utils.WriteIntToXML(writer, "MRBSPLITPOSITION", MRB_SplitPosition);
+			Utils.WriteIntToXML(writer, "MAP", map);
+
+			Utils.WriteDoubleToXML(writer, "DISTNEAR", DistNear);
+			Utils.WriteDoubleToXML(writer, "DISTFAR", DistFar);
+
+			writer.writeEndElement();
+			writer.writeEndDocument();
+
+			writer.flush();
+			writer.close();
+		} catch (XMLStreamException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	/**
+	 * Load the settings from disk
+	 * @param _Path Path where the setting file is stored
+	 */
+	public void Load(String _Path) {
+		// -- Test if the config file exist
+		if (!(new File(_Path + "/config.xml").isFile()))
+			return;
+
+		SaxConfigHandler Confighandler = new SaxConfigHandler();
+
+		int ret = 0;
+		try {
+			ret = Confighandler.readDataFromConfig(_Path + "/config.xml", this);
+		} catch (SAXException | IOException | ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+		if (ret != 0)
+			System.out.println("CgSettings.Load : Error while loading config file '" + _Path + "'- line ="
+					+ Confighandler.getErrLine());
+	}
+
+
+	/**
+	 * Return the distance unit as string
+	 * @return string with the unit
+	 */
+	public String getDistanceUnitString() {
+		switch (Unit) {
+			case CgConst.UNIT_METER:
+				return "km";
+			case CgConst.UNIT_MILES_FEET:
+				return "miles";
+			default:
+				return "Km";
+		}
+	}
+
+
+	/**
+	 * Return the distance unit as string (abbreviation)
+	 * @return string with the unit
+	 */
+	public String getShortDistanceUnitString() {
+		switch (Unit) {
+			case CgConst.UNIT_METER:
+				return "km";
+			case CgConst.UNIT_MILES_FEET:
+				return "mi";
+			default:
+				return "km";
+		}
+	}
+
+
+	/**
+	 * Return the elevation unit as string
+	 * @return string with the unit
+	 */
+	public String getElevationUnitString() {
+		switch (Unit) {
+			case CgConst.UNIT_METER:
+				return "m";
+			case CgConst.UNIT_MILES_FEET:
+				return "feet";
+			default:
+				return "m";
+		}
+	}
+
+
+	/**
+	 * Return the elevation unit as string (abbreviation)
+	 * @return string with the unit
+	 */
+	public String getShortElevationUnitString() {
+		switch (Unit) {
+			case CgConst.UNIT_METER:
+				return "m";
+			case CgConst.UNIT_MILES_FEET:
+				return "ft";
+			default:
+				return "m";
+		}
+	}
+
 }
