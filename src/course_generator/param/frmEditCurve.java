@@ -106,9 +106,10 @@ public class frmEditCurve extends javax.swing.JDialog {
 	/**
 	 * Creates new form frmSettings
 	 */
-	public frmEditCurve() {
+	public frmEditCurve(CgSettings settings) {
 		super();
 		bEditMode=false;
+		this.settings=settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		dataset = new XYSeriesCollection();
 		chart = CreateChartProfil(dataset);
@@ -171,7 +172,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 	private JFreeChart CreateChartProfil(XYDataset dataset) {
 		JFreeChart chart = ChartFactory.createXYAreaChart("",
 				bundle.getString("frmEditCurve.chart.slope"), //"Slope"  x axis label
-				bundle.getString("frmEditCurve.chart.speed"), //"speed"  y axis label
+				bundle.getString("frmEditCurve.chart.speed")+" ("+Utils.uSpeed2String(settings.Unit, settings.isPace)+")", //"speed"  y axis label
 				dataset, // data
 				PlotOrientation.VERTICAL, false, // include legend
 				true, // tooltips

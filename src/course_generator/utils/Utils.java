@@ -394,20 +394,34 @@ public class Utils {
 	}
 	
 	/**
-	 * Return the speed unit as string (km/h or miles/h)
+	 * Return the speed unit as string (km/h, miles/h, min/km or min/miles)
 	 * @param unit
 	 * 	Unit
+	 * @param pace
+	 *  if "true" the speed type is pace (min/km or min/miles) otherwise it's a speed (km/h or miles/h)
 	 * @return
 	 * 	String with the unit
 	 */
-	public static String uSpeed2String(int unit) {
-		switch (unit) {
-			case CgConst.UNIT_METER:
-				return "km/h";
-			case CgConst.UNIT_MILES_FEET:
-				return "miles/h";
-			default:
-				return "km/h";
+	public static String uSpeed2String(int unit, boolean pace) {
+		if (!pace) {
+			switch (unit) {
+				case CgConst.UNIT_METER:
+					return "km/h";
+				case CgConst.UNIT_MILES_FEET:
+					return "miles/h";
+				default:
+					return "km/h";
+			}
+		}
+		else {
+			switch (unit) {
+				case CgConst.UNIT_METER:
+					return "min/km";
+				case CgConst.UNIT_MILES_FEET:
+					return "min/miles";
+				default:
+					return "min/km";
+			}			
 		}
 	}
 
@@ -631,7 +645,7 @@ public class Utils {
 	public static void WriteBooleanToXML(XMLStreamWriter writer, String Element, boolean Data) {
 		try {
 			writer.writeStartElement(Element);
-			writer.writeCharacters((Data ? "1" : "0"));
+			writer.writeCharacters((Data ? "true" : "false"));
 			writer.writeEndElement();
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
