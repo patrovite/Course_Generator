@@ -27,7 +27,6 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 /**
@@ -63,7 +62,7 @@ public class ParamData {
 	 * Save parameters on disk
 	 * @param fname Name of the file
 	 */
-	public void Save(String fname,int unit) {
+	public void SaveCurve(String fname,int unit) {
 		if (data.size() <= 0) {
 			return;
 		}
@@ -71,20 +70,24 @@ public class ParamData {
 		// -- Save the data in the home directory
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
-			XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream(fname), "UTF-8");
+			XMLStreamWriter writer = factory.createXMLStreamWriter(
+					new FileOutputStream(fname), "UTF-8");
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("Project");
 			Utils.WriteStringToXML(writer, "Name", name);
 			Utils.WriteStringToXML(writer, "Comment", comment);
 			writer.writeStartElement("Param");
-			for (CgParam r : data) {
+			for (CgParam curvePoint : data) {
 				writer.writeStartElement("Item");
-				Utils.WriteStringToXML(writer, "Slope", String.format(Locale.ROOT, "%f", r.Slope));
-				
-				if (unit==CgConst.UNIT_MILES_FEET)
-					Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", Utils.Miles2Km(r.Speed)));
-				else
-					Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", r.Speed));
+				Utils.WriteStringToXML(
+						writer, 
+						"Slope", 
+						String.format(Locale.ROOT, "%f", curvePoint.Slope));
+				// Saving the curve speeds using the metric system.
+				Utils.WriteStringToXML(
+						writer, 
+						"Speed",
+						String.format(Locale.ROOT, "%f", curvePoint.Speed));
 				writer.writeEndElement(); // Item
 			}
 			writer.writeEndElement(); // Param
