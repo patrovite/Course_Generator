@@ -4163,6 +4163,7 @@ public class frmMain extends javax.swing.JFrame
 	private javax.swing.JMenu mnuEdit;
 	private javax.swing.JPanel jPanelAnalyze;
 	private javax.swing.JPanel jPanelLeft;
+	private javax.swing.JTree jTreeMain; //Don't remove!!! May be one day I'll use it ;) (see comment block in "initcomponent")
 	private javax.swing.JMenu mnuLastCGX;
 	private javax.swing.JMenu mnuLastGPX;
 	private javax.swing.JMenuBar mnuMain;
