@@ -20,16 +20,15 @@ package course_generator.utils;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -38,6 +37,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -59,6 +59,8 @@ import course_generator.settings.CgSettings;
  * @author pierre.delore
  */
 public class Utils {
+	
+	public static final String htmlDocFile = "cg_doc_4.00.html";
 
 	/**
 	 * Display a load dialog
@@ -1234,7 +1236,6 @@ public class Utils {
 			return false;
 		
 		for (int i=0; i<INVALID_RESOURCE_CHARACTERS.length(); i++) {
-			char c=INVALID_RESOURCE_CHARACTERS.charAt(i);
 			if (name.indexOf(INVALID_RESOURCE_CHARACTERS.charAt(i))!=-1) 
 				return false;
 		}
@@ -1360,6 +1361,33 @@ public class Utils {
 		}
 		return ok;
 		*/
+	}
+	
+	public static boolean OpenHelp(String language) {
+		boolean success = false;
+		Map<String, String> environmentVariables = System.getenv();
+		String helpFolder = 
+				environmentVariables.get("CGInstallFolder");
+		
+		String helpFilePath = helpFolder + "help\\" + language +
+				"\\" + htmlDocFile;
+		File helpFile = new File(helpFilePath);
+		if(helpFile.exists() && !helpFile.isDirectory())
+		{
+			try {
+				Desktop.getDesktop().browse(helpFile.toURI());
+				success = true;
+			}
+			catch (IOException ex) {
+				CgLog.info("mnuCGHelp : Error when loading : " +
+						helpFilePath + ".");
+				ex.printStackTrace();
+			}
+		}
+		else {
+			CgLog.info("The help file '" + helpFilePath + "' was not found.");
+		}
+		return success;
 	}
 	
 } // Class
