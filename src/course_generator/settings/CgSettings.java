@@ -84,7 +84,7 @@ public class CgSettings {
         ParamFile = "Default";
         bNoConnectOnStartup = true;
         ConnectionTimeout = 10;
-        Language="";
+        Language="en";
         
         MainWindowWidth=800;
         MainWindowHeight=600;
@@ -127,94 +127,157 @@ public class CgSettings {
     
     /**
      * Save the settings to the disk
-     * @param _Path Path where the setting file is stored
+     * @param path Path where the setting file is stored
      */
-    public void Save(String _Path) {
+    public void Save(String path) {
         //-- Check if the data directory exist. If not! creation
-        Path DataFolder = Paths.get(_Path);
+        Path DataFolder = Paths.get(path);
         if (Files.notExists(DataFolder))
         {
-            boolean result = false;
-
-            try{
+            try {
                 Files.createDirectory(DataFolder);
-                result = true;
-            } catch(IOException e){
-                System.out.println("CgSettings.Save : Impossible to create the data/config directory"); 
+            } 
+            catch(IOException e) {
+                System.out.println("CgSettings.Save : Impossible to create " +
+                		"the data/config directory"); 
                 return;
             }
         }
         
         //-- Save the data in the home directory
-        XMLOutputFactory factory      = XMLOutputFactory.newInstance();
+        XMLOutputFactory factory = XMLOutputFactory.newInstance();
         try {
-            XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream(_Path+"/config.xml"), "UTF-8");
+            XMLStreamWriter writer = factory.createXMLStreamWriter(
+            		new FileOutputStream(path+"/config.xml"), "UTF-8");
             
             writer.writeStartDocument("UTF-8", "1.0");
             writer.writeComment("Course Generator (C) Pierre DELORE");
-                writer.writeStartElement("CONFIG");
-                    Utils.WriteStringToXML(writer, "PARAMFILE", ParamFile);
-                    Utils.WriteBooleanToXML(writer, "NOCONNECTIONONSTARTUP", bNoConnectOnStartup);
-                    Utils.WriteIntToXML(writer, "CONNECTIONTIMEOUT", ConnectionTimeout);
-                    Utils.WriteStringToXML(writer, "LASTDIR", LastDir);
-                    Utils.WriteStringToXML(writer, "PREVIOUSCGXDIR", previousCGXDirectory);
-                    Utils.WriteStringToXML(writer, "PREVIOUSGPXDIR", previousGPXDirectory);
-                    Utils.WriteStringToXML(writer, "PREVIOUSCSVDIR", previousCSVDirectory);
+            writer.writeStartElement("CONFIG");
+            Utils.WriteStringToXML(writer, "PARAMFILE", ParamFile);
+            Utils.WriteBooleanToXML(
+            		writer, 
+            		"NOCONNECTIONONSTARTUP",
+            		bNoConnectOnStartup);
+            Utils.WriteIntToXML(
+            		writer, 
+            		"CONNECTIONTIMEOUT",
+            		ConnectionTimeout);
+            Utils.WriteStringToXML(writer, "LASTDIR", LastDir);
+            Utils.WriteStringToXML(
+            		writer, 
+            		"PREVIOUSCGXDIR", 
+            		previousCGXDirectory);
+            Utils.WriteStringToXML(
+            		writer, 
+            		"PREVIOUSGPXDIR",
+            		previousGPXDirectory);
+            Utils.WriteStringToXML(
+            		writer, 
+            		"PREVIOUSCSVDIR", 
+            		previousCSVDirectory);
+            	
+            Utils.WriteStringToXML(writer, "MEMOFORMAT1", MemoFormat[0]);
+            Utils.WriteStringToXML(writer, "MEMOFORMAT2", MemoFormat[1]);
+            Utils.WriteStringToXML(writer, "MEMOFORMAT3", MemoFormat[2]);
+            Utils.WriteStringToXML(writer, "MEMOFORMAT4", MemoFormat[3]);
+            Utils.WriteStringToXML(writer, "MEMOFORMAT5", MemoFormat[4]);
                     
-                    Utils.WriteStringToXML(writer, "MEMOFORMAT1", MemoFormat[0]);
-                    Utils.WriteStringToXML(writer, "MEMOFORMAT2", MemoFormat[1]);
-                    Utils.WriteStringToXML(writer, "MEMOFORMAT3", MemoFormat[2]);
-                    Utils.WriteStringToXML(writer, "MEMOFORMAT4", MemoFormat[3]);
-                    Utils.WriteStringToXML(writer, "MEMOFORMAT5", MemoFormat[4]);
+            Utils.WriteStringToXML(writer, "MRUGPX1", mruGPX[0]);
+            Utils.WriteStringToXML(writer, "MRUGPX2", mruGPX[1]);
+            Utils.WriteStringToXML(writer, "MRUGPX3", mruGPX[2]);
+            Utils.WriteStringToXML(writer, "MRUGPX4", mruGPX[3]);
+            Utils.WriteStringToXML(writer, "MRUGPX5", mruGPX[4]);
+            
+            Utils.WriteStringToXML(writer, "MRUCGX1", mruCGX[0]);
+            Utils.WriteStringToXML(writer, "MRUCGX2", mruCGX[1]);
+            Utils.WriteStringToXML(writer, "MRUCGX3", mruCGX[2]);
+            Utils.WriteStringToXML(writer, "MRUCGX4", mruCGX[3]);
+            Utils.WriteStringToXML(writer, "MRUCGX5", mruCGX[4]);
                     
-                    Utils.WriteStringToXML(writer, "MRUGPX1", mruGPX[0]);
-                    Utils.WriteStringToXML(writer, "MRUGPX2", mruGPX[1]);
-                    Utils.WriteStringToXML(writer, "MRUGPX3", mruGPX[2]);
-                    Utils.WriteStringToXML(writer, "MRUGPX4", mruGPX[3]);
-                    Utils.WriteStringToXML(writer, "MRUGPX5", mruGPX[4]);
-
-                    Utils.WriteStringToXML(writer, "MRUCGX1", mruCGX[0]);
-                    Utils.WriteStringToXML(writer, "MRUCGX2", mruCGX[1]);
-                    Utils.WriteStringToXML(writer, "MRUCGX3", mruCGX[2]);
-                    Utils.WriteStringToXML(writer, "MRUCGX4", mruCGX[3]);
-                    Utils.WriteStringToXML(writer, "MRUCGX5", mruCGX[4]);
-                    
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH01", TableMainColWidth[0]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH02", TableMainColWidth[1]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH03", TableMainColWidth[2]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH04", TableMainColWidth[3]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH05", TableMainColWidth[4]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH06", TableMainColWidth[5]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH07", TableMainColWidth[6]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH08", TableMainColWidth[7]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH09", TableMainColWidth[8]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH10", TableMainColWidth[9]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH11", TableMainColWidth[10]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH12", TableMainColWidth[11]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH13", TableMainColWidth[12]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH14", TableMainColWidth[13]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH15", TableMainColWidth[14]);
-                    Utils.WriteIntToXML(writer, "TABLEMAINCOLWIDTH16", TableMainColWidth[15]);
-                    
-                    Utils.WriteIntToXML(writer, "UNIT", Unit);
-                    Utils.WriteStringToXML(writer, "LANGUAGE", Language);
-                    Utils.WriteIntToXML(writer, "MAINWINDOWSWIDTH",MainWindowWidth);
-                    Utils.WriteIntToXML(writer, "MAINWINDOWSHEIGHT",MainWindowHeight);
-                    Utils.WriteIntToXML(writer, "VERTSPLITPOSITION",VertSplitPosition);
-                    Utils.WriteIntToXML(writer, "HORIZSPLITPOSITION",HorizSplitPosition);
-                    Utils.WriteIntToXML(writer, "MRBSPLITPOSITION",MRB_SplitPosition);
-                    Utils.WriteIntToXML(writer, "MAP",map);
-                    
-                    Utils.WriteDoubleToXML(writer, "DISTNEAR", DistNear);
-                    Utils.WriteDoubleToXML(writer, "DISTFAR", DistFar);
-                    
-                writer.writeEndElement();
+            Utils.WriteIntToXML(
+            		writer,
+            		"TABLEMAINCOLWIDTH01", 
+            		TableMainColWidth[0]);
+            Utils.WriteIntToXML(
+            		writer, 
+            		"TABLEMAINCOLWIDTH02", 
+            		TableMainColWidth[1]);
+            Utils.WriteIntToXML(
+            		writer, 
+            		"TABLEMAINCOLWIDTH03", 
+            		TableMainColWidth[2]);
+            Utils.WriteIntToXML(
+            		writer, 
+            		"TABLEMAINCOLWIDTH04", 
+            		TableMainColWidth[3]);
+            Utils.WriteIntToXML(
+            		writer, 
+            		"TABLEMAINCOLWIDTH05", 
+            		TableMainColWidth[4]);
+            Utils.WriteIntToXML(
+            		writer, 
+            		"TABLEMAINCOLWIDTH06", 
+            		TableMainColWidth[5]);
+            Utils.WriteIntToXML(
+            		writer,
+            		"TABLEMAINCOLWIDTH07", 
+            		TableMainColWidth[6]);
+            Utils.WriteIntToXML(
+            		writer, 
+            		"TABLEMAINCOLWIDTH08", 
+            		TableMainColWidth[7]);
+            Utils.WriteIntToXML(
+            		writer, 
+            		"TABLEMAINCOLWIDTH09",
+            		TableMainColWidth[8]);
+            Utils.WriteIntToXML(
+            		writer, 
+            		"TABLEMAINCOLWIDTH10", 
+            		TableMainColWidth[9]);
+            Utils.WriteIntToXML(
+            		writer, 
+            		"TABLEMAINCOLWIDTH11",
+            		TableMainColWidth[10]);
+            Utils.WriteIntToXML(
+            		writer, 
+            		"TABLEMAINCOLWIDTH12", 
+            		TableMainColWidth[11]);
+            Utils.WriteIntToXML(
+            		writer,
+            		"TABLEMAINCOLWIDTH13", 
+            		TableMainColWidth[12]);
+            Utils.WriteIntToXML(
+            		writer, 
+            		"TABLEMAINCOLWIDTH14",
+            		TableMainColWidth[13]);
+            Utils.WriteIntToXML(
+            		writer,
+            		"TABLEMAINCOLWIDTH15", 
+            		TableMainColWidth[14]);
+            Utils.WriteIntToXML(
+            		writer,
+            		"TABLEMAINCOLWIDTH16", 
+            		TableMainColWidth[15]);
+            	
+            Utils.WriteIntToXML(writer, "UNIT", Unit);
+            Utils.WriteStringToXML(writer, "LANGUAGE", Language);
+            Utils.WriteIntToXML(writer, "MAINWINDOWSWIDTH",MainWindowWidth);
+            Utils.WriteIntToXML(writer, "MAINWINDOWSHEIGHT",MainWindowHeight);
+            Utils.WriteIntToXML(writer, "VERTSPLITPOSITION",VertSplitPosition);
+            Utils.WriteIntToXML(writer, "HORIZSPLITPOSITION",HorizSplitPosition);
+            Utils.WriteIntToXML(writer, "MRBSPLITPOSITION",MRB_SplitPosition);
+            Utils.WriteIntToXML(writer, "MAP",map);
+            
+            Utils.WriteDoubleToXML(writer, "DISTNEAR", DistNear);
+            Utils.WriteDoubleToXML(writer, "DISTFAR", DistFar);
+            
+            writer.writeEndElement();
             writer.writeEndDocument();
 
             writer.flush();
             writer.close();
-
-        } catch (XMLStreamException | IOException e) {
+        } 	
+        catch (XMLStreamException | IOException e) {
             e.printStackTrace();	
         }
     }

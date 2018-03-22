@@ -169,12 +169,9 @@ public class frmEditCurve extends javax.swing.JDialog {
 	 * @return Return a JFreeChart object
 	 */
 	private JFreeChart CreateChartProfile(XYDataset dataset) {
-		String speedAxis = settings.Unit == CgConst.UNIT_METER ? 
-				bundle.getString("frmEditCurve.chart.speed") :
-					"Speed (mph)";
 		JFreeChart chart = ChartFactory.createXYAreaChart("",
 				bundle.getString("frmEditCurve.chart.slope"), //"Slope"  x axis label
-				speedAxis, //"speed"  y axis label
+				bundle.getString("frmEditCurve.chart.speed"), //"speed"  y axis label
 				dataset, // data
 				PlotOrientation.VERTICAL, false, // include legend
 				true, // tooltips
