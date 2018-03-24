@@ -461,7 +461,7 @@ public class frmMain extends javax.swing.JFrame
 		// -- Log the initialization time
 		CgLog.info("Application initialization time : "
 				+ (System.currentTimeMillis() - ts) + "ms");
-		System.out.println("isPace:"+Settings.isPace);
+
 	}
 
 	/**
