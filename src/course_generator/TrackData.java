@@ -25,6 +25,7 @@ import static course_generator.utils.Utils.CalcDistance;
 //import static course_generator.utils.Utils.ReadXMLString;
 import java.awt.Color;
 import java.awt.Component;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -1867,8 +1868,10 @@ public class TrackData
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try
 		{
+			BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(
+					new FileOutputStream(name));
 			XMLStreamWriter writer = factory
-					.createXMLStreamWriter(new FileOutputStream(name), "UTF-8");
+					.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
 
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("COURSEGENERATOR");
