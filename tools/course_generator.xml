@@ -2,7 +2,7 @@
 <launch4jConfig>
   <dontWrapJar>true</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>.\course_generator.jar</jar>
+  <jar>course_generator.jar</jar>
   <outfile>..\build\course_generator.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
