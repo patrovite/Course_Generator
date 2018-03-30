@@ -169,6 +169,7 @@ public class JPanelMaps extends JPanel {
 				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/marker.png")));
 		btMapAddMarker.setToolTipText(bundle.getString("frmMain.btMapAddMarker.toolTipText"));
 		btMapAddMarker.setFocusable(false);
+		btMapAddMarker.setEnabled(false);
 		btMapAddMarker.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ShowMapMarker();
@@ -280,6 +281,7 @@ public class JPanelMaps extends JPanel {
 		btMapMark.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/flag.png")));
 		btMapMark.setToolTipText(bundle.getString("frmMain.btMapMark.toolTipText"));
 		btMapMark.setFocusable(false);
+		btMapMark.setEnabled(false);
 		btMapMark.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SetMarkMapMarker();
@@ -292,6 +294,7 @@ public class JPanelMaps extends JPanel {
 		btMapEat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/eat.png")));
 		btMapEat.setToolTipText(bundle.getString("frmMain.btMapEat.toolTipText"));
 		btMapEat.setFocusable(false);
+		btMapEat.setEnabled(false);
 		btMapEat.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SetEatMapMarker();
@@ -304,6 +307,7 @@ public class JPanelMaps extends JPanel {
 		btMapDrink.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/drink.png")));
 		btMapDrink.setToolTipText(bundle.getString("frmMain.btMapDrink.toolTipText"));
 		btMapDrink.setFocusable(false);
+		btMapDrink.setEnabled(false);
 		btMapDrink.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SetDrinkMapMarker();
@@ -371,6 +375,12 @@ public class JPanelMaps extends JPanel {
 	 */
 	public void RefreshTrack(TrackData tdata, boolean zoom2fit) {
 		if (tdata==null) return;
+		
+		// Enabling the map tools
+		btMapAddMarker.setEnabled(true);
+		btMapMark.setEnabled(true);
+		btMapEat.setEnabled(true);
+		btMapDrink.setEnabled(true);
 		
 		// -- Remove the previous track
 		MapViewer.removeAllMapPolygons();
@@ -715,17 +725,12 @@ public class JPanelMaps extends JPanel {
 		}
 
 		public void RefreshMapButtons() {
-			btMapDrink.setEnabled(true); //IndexMarker != -1);
-			btMapEat.setEnabled(true); //IndexMarker != -1);
-			btMapMark.setEnabled(true); //IndexMarker != -1);
-			
 			btMapTrackVeryHard.setEnabled(IndexMarker != -1);
 			btMapTrackHard.setEnabled(IndexMarker != -1);
 			btMapTrackAverage.setEnabled(IndexMarker != -1);
 			btMapTrackEasy.setEnabled(IndexMarker != -1);
 			btMapTrackVeryEasy.setEnabled(IndexMarker != -1);
 			btMapHideMarker.setEnabled(IndexMarker != -1);
-//			btMapAddMarker.setEnabled(IndexMarker != -1);
 			btMapUndo.setEnabled(Old_MarkerStart != -1);
 		}
 
