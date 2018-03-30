@@ -22,6 +22,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Locale;
@@ -254,8 +255,12 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		// -- Save the data in the home directory
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
-			XMLStreamWriter writer = factory.createXMLStreamWriter(
-					new FileOutputStream(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + name + ".par"), "UTF-8");
+			BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(
+					new FileOutputStream(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + name + ".par"));
+			XMLStreamWriter writer = factory
+					.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
+
+			
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("Project");
 			Utils.WriteStringToXML(writer, "Name", name);
