@@ -18,6 +18,7 @@
 
 package course_generator.settings;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -147,7 +148,11 @@ public class CgSettings {
 		// -- Save the data in the home directory
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
-			XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream(path + "/config.xml"), "UTF-8");
+			BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(
+					new FileOutputStream(path + "/config.xml"));
+			XMLStreamWriter writer = factory
+					.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
+
 
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeComment("Course Generator (C) Pierre DELORE");

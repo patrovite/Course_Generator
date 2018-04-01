@@ -18,6 +18,7 @@
 
 package course_generator.param;
 
+import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -70,8 +71,11 @@ public class ParamData {
 		// -- Save the data in the home directory
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
-			XMLStreamWriter writer = factory.createXMLStreamWriter(
-					new FileOutputStream(fname), "UTF-8");
+			BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(
+					new FileOutputStream(fname));
+			XMLStreamWriter writer = factory
+					.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
+
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("Project");
 			Utils.WriteStringToXML(writer, "Name", name);

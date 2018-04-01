@@ -424,9 +424,13 @@ public class TrackData
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try
 		{
+			BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(
+					new FileOutputStream(name));
 			XMLStreamWriter writer = factory
-					.createXMLStreamWriter(new FileOutputStream(name), "UTF-8");
+					.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
 
+			
+			
 			// writer.writeStartDocument("UTF-8", "1.0");
 			// writer.writeComment("Course Generator (C) Pierre DELORE");
 			// writer.writeStartElement("CONFIG");
@@ -587,8 +591,10 @@ public class TrackData
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try
 		{
+			BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(
+					new FileOutputStream(name));
 			XMLStreamWriter writer = factory
-					.createXMLStreamWriter(new FileOutputStream(name), "UTF-8");
+					.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
 
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("gpx");
