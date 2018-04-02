@@ -40,7 +40,6 @@ public class SaxCGPHandler extends DefaultHandler {
 	private String tmp_comment = "";
 
 	private int level = 0;
-	private final int LEVEL_CG = 1;
 	private final int LEVEL_PTS = 2;
 	private final int LEVEL_PT = 3;
 

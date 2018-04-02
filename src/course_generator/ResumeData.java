@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import org.joda.time.DateTime;
-
 public class ResumeData {
 	private static ResumeData instance;
 

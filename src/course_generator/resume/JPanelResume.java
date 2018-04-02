@@ -18,7 +18,6 @@
 
 package course_generator.resume;
 
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;

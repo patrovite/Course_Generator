@@ -699,7 +699,7 @@ public class Utils {
 
 			// trying to retrieve data from the source. If there
 			// is no connection, this line will fail
-			Object objData = urlConnect.getContent();
+			urlConnect.getContent();
 
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block

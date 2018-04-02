@@ -159,7 +159,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 					int s = e.getSeriesIndex();
 					int i = e.getItem();
 					double x = d.getXValue(s, i);
-					double y = d.getYValue(s, i);
+					//double y = d.getYValue(s, i);
 					xCrosshair.setValue(x);
 					// yCrosshair.setValue(y);
 					RefreshInfo(i);

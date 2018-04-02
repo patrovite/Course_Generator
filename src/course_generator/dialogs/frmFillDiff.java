@@ -214,8 +214,6 @@ public class frmFillDiff  extends javax.swing.JDialog {
 
 	
 	private void initComponents() {
-		int line = 0;
-
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmFillDiff.title"));
 		setAlwaysOnTop(true);
