@@ -30,8 +30,6 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import course_generator.utils.Utils;
-
 /**
  *
  * @author pierre.delore

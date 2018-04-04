@@ -585,8 +585,6 @@ public class TrackData
 			return;
 		}
 
-		DateTime dt = new DateTime();
-
 		// -- Save the data in the home directory
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try
@@ -2664,7 +2662,7 @@ public class TrackData
 		double a, c, dDistance, dLat1InRad, dLong1InRad, dLat2InRad,
 				dLong2InRad, dLongitude, dLatitude;
 		double kEarthRadiusKms;
-		double lat1, lon1, min;
+		double min;
 		int index = -1;
 		int i = 0;
 

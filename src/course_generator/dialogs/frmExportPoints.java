@@ -18,21 +18,15 @@
 
 package course_generator.dialogs;
 
-import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
-import java.awt.font.TextAttribute;
-import java.util.Collections;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -40,18 +34,9 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
-import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import course_generator.CgData;
-import course_generator.TrackData;
-import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
-import course_generator.utils.CgSpinner;
-import course_generator.utils.CgSpinnerDouble;
-import course_generator.utils.JHourSetting;
-import course_generator.utils.JTextFieldLimit;
-import course_generator.utils.JTimeSetting;
 import course_generator.utils.Utils;
 
 public class frmExportPoints extends javax.swing.JDialog {

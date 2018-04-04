@@ -206,8 +206,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 
 	
 	private void initComponents() {
-		int line = 0;
-
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmTrackSettings.title"));
 		setAlwaysOnTop(true);

@@ -671,7 +671,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 
 	protected void SaveProfile() {
-		String s, ext;
+		String s;
 
 		if (track.data.isEmpty())
 			return;

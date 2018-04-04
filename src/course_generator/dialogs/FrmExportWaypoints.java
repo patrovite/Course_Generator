@@ -38,8 +38,6 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
-import course_generator.TrackData;
-import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
@@ -179,8 +177,6 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 	}
 
 	private void initComponents() {
-		int line = 0;
-
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("FrmExportWaypoints.title"));
 		setAlwaysOnTop(true);
