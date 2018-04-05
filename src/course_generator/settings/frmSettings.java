@@ -54,6 +54,8 @@ public class frmSettings extends javax.swing.JDialog {
 	private JButton btOk;
 	private JLabel lbUnit;
 	private JComboBox cbUnit;
+	private JLabel lbSpeed;
+	private JComboBox cbSpeed;
 
 	/**
 	 * Creates new form frmSettings
@@ -84,6 +86,13 @@ public class frmSettings extends javax.swing.JDialog {
 		else
 			cbUnit.setSelectedIndex(0);
 
+		// -- Speed format
+		if (s.isPace)
+			cbSpeed.setSelectedIndex(1);
+		else
+			cbSpeed.setSelectedIndex(0);
+
+		
 		// End set field
 		ok = false;
 
@@ -124,6 +133,18 @@ public class frmSettings extends javax.swing.JDialog {
 				s.Unit = CgConst.UNIT_METER;
 			}
 
+			// -- Speed format
+			switch (cbSpeed.getSelectedIndex()) {
+			case 0: // Speed
+				s.isPace = false;
+				break;
+			case 1: // Miles / Feet
+				s.isPace = true;
+				break;
+			default: // Default
+				s.isPace = false;
+			}
+			
 		}
 		return ok;
 	}
@@ -234,6 +255,27 @@ public class frmSettings extends javax.swing.JDialog {
 				GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
+		// -- Speed/Pace
+		lbSpeed = new javax.swing.JLabel();
+		lbSpeed.setText(bundle.getString("frmSettings.lbSpeed.text"));
+		Utils.addComponent(paneGlobal, lbSpeed, 
+				0, line, 
+				1, 1, 
+				1, 0, 
+				2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		cbSpeed = new javax.swing.JComboBox<>();
+		String speeddisplay[] = { bundle.getString("frmSettings.SpeedDisplay.Speed"), bundle.getString("frmSettings.SpeedDisplay.Pace") };
+		cbSpeed.setModel(new javax.swing.DefaultComboBoxModel<>(speeddisplay));
+		Utils.addComponent(paneGlobal, cbSpeed, 
+				1, line++, 
+				1, 1, 
+				0, 0, 
+				2, 5, 0, 10, 
+				GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+		
 		// -- Separator
 		// -- NOCONNECTIONONSTARTUP - Boolean -bNoConnectOnStartup
 		// -- CONNECTIONTIMEOUT - int - ConnectionTimeout

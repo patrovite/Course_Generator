@@ -47,7 +47,7 @@ public class ResumeData {
 	 * @param unit
 	 *            unit constant
 	 */
-	public void SaveAsCSV(String filename, int unit) {
+	public void SaveAsCSV(String filename, int unit, boolean pace) {
 		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		StringBuilder s = new StringBuilder();
 		
@@ -98,7 +98,7 @@ public class ResumeData {
 				s.append(d.getSpeedMString(unit, false) + ";");
 				s.append(d.getAvgSlopePString() + ";");
 				s.append(d.getAvgSlopeMString() + ";");
-				s.append(d.getAvgSpeedString(unit, false) + ";");
+				s.append(d.getAvgSpeedString(unit, false, pace) + ";");
 				s.append(d.getComment());
 				writer.println(s);
 				s.setLength(0);

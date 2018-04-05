@@ -400,39 +400,33 @@ public class CgData {
 		return Speed;
 	}
 
-	public double getSpeed(int unit) {
+	
+	public double getSpeed(int unit, boolean pace) {
 		switch (unit) {
-		case CgConst.UNIT_METER:
-			return Speed;
-		case CgConst.UNIT_MILES_FEET:
-			// meter to miles
-			return Utils.Meter2uMiles(Speed);
-		default:
-			return Speed;
+			case CgConst.UNIT_METER:
+				if (pace) 
+					return Utils.Speed2Pace(Speed);
+				else
+					return Speed;
+			case CgConst.UNIT_MILES_FEET:
+				if (pace)
+					return Utils.Speed2Pace(Utils.Meter2uMiles(Speed));
+				else
+					return Utils.Meter2uMiles(Speed);
+			default:
+				return Speed;
 		}
 	}
 
-	public String getSpeedString(int unit, boolean withunit) {
-		double v = getSpeed(unit);
+	public String getSpeedString(int unit, boolean withunit, boolean pace) {
+		double v = getSpeed(unit,pace);
 
+		
+		
 		String s = "";
-		switch (unit) {
-		case CgConst.UNIT_METER:
-			s = String.format("%1.1f ", v);
-			if (withunit)
-				s = s + "km/h";
-			break;
-		case CgConst.UNIT_MILES_FEET:
-			s = String.format("%1.1f ", v);
-			if (withunit)
-				s = s + "miles/h";
-			break;
-		default:
-			s = String.format("%1.1f ", v);
-			if (withunit)
-				s = s + "km/h";
-			break;
-		}
+		s = String.format("%1.1f ", v);
+		if (withunit)
+			s = s + Utils.uSpeed2String(unit, pace);
 		return s;
 	}
 

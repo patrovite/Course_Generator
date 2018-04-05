@@ -717,42 +717,31 @@ public class CgResume {
 		return AvgSpeed;
 	}
 
-	public double getAvgSpeed(int unit) {
+	public double getAvgSpeed(int unit, boolean pace) {
 		switch (unit) {
-		case CgConst.UNIT_METER:
-			return AvgSpeed;
-		case CgConst.UNIT_MILES_FEET:
-			// meter to miles
-			return Utils.Km2Miles(AvgSpeed);
-		default:
-			return AvgSpeed;
+			case CgConst.UNIT_METER:
+				if (pace)
+					return Utils.Speed2Pace(AvgSpeed);
+				else
+					return AvgSpeed;
+			case CgConst.UNIT_MILES_FEET:
+				if (pace)
+					return Utils.Speed2Pace(Utils.Km2Miles(AvgSpeed));
+				else
+					return Utils.Km2Miles(AvgSpeed);
+			default:
+				return AvgSpeed;
 		}
 	}
 
-	public String getAvgSpeedString(int unit, boolean withunit) {
+	public String getAvgSpeedString(int unit, boolean withunit, boolean pace) {
 
-		Double d = getAvgSpeed(unit);
+		Double d = getAvgSpeed(unit,pace);
 
 		String s = "";
-
-		// -- Set the value
-		switch (unit) {
-		case CgConst.UNIT_METER:
-			s = String.format("%1.1f ", d);
-			if (withunit)
-				s = s + "km/h";
-			break;
-		case CgConst.UNIT_MILES_FEET:
-			s = String.format("%1.2f ", d);
-			if (withunit)
-				s = s + "miles/h";
-			break;
-		default:
-			s = String.format("%1.1f ", d);
-			if (withunit)
-				s = s + "km/h";
-			break;
-		}
+		s = String.format("%1.1f ", d);
+		if (withunit)
+			s = s + Utils.uSpeed2String(unit, pace);
 		return s;
 	}
 	

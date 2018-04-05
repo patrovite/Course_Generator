@@ -492,6 +492,23 @@ public class Utils {
 		return String.format("%1.0f.%02.0f", min,sec);
 	}
 	
+	
+	/**
+	 * Calculate the speed from a pace
+	 * @param pace Pace in min/km or min/miles (8.30min/miles =>8.3)
+	 * @return speed in km/h or miles/h 
+	 */
+	public static double Pace2Speed(double pace) {
+		if (pace==0.0) return 0.0;
+		
+		double min=(long) pace;
+		double sec60=pace-min;
+		double sec100=sec60/0.6;
+
+		return 60/(min+sec100);
+	}
+	
+	
 	/**
 	 * Convert the seconds in string. Format hh:mm:ss
 	 * 

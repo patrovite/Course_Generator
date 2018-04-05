@@ -343,7 +343,7 @@ public class JPanelProfil  extends JPanel {
 				+ d.getElevationString(settings.Unit, true) + " ");
 		lbProfilHour.setText(" " + bundle.getString("frmMain.lbProfilHour.text") + "= " + d.getHourString() + " ");
 		lbProfilSpeed.setText(" " + bundle.getString("frmMain.lbProfilSpeed.text") + "= "
-				+ d.getSpeedString(settings.Unit, true) + " ");
+				+ d.getSpeedString(settings.Unit, true, settings.isPace) + " ");
 		lbProfilComment.setText(" " + bundle.getString("frmMain.lbProfilComment.text") + "= " + d.getComment() + " ");
 	}
 

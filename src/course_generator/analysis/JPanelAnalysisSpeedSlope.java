@@ -271,11 +271,20 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 				Utils.WriteStringToXML(writer, "Slope",
 						String.format(Locale.ROOT, "%f", datasetSpeedSlopeLine.getSeries(0).getX(i)));
 				
-				if (settings.Unit==CgConst.UNIT_MILES_FEET)
-					Utils.WriteStringToXML(writer, "Speed",
+				if (settings.Unit==CgConst.UNIT_MILES_FEET) {
+					if (settings.isPace)
+						Utils.WriteStringToXML(writer, "Speed",
+								String.format(Locale.ROOT, "%f", Utils.Miles2Km( Utils.Pace2Speed(datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue()) )));
+					else
+						Utils.WriteStringToXML(writer, "Speed",
 							String.format(Locale.ROOT, "%f", Utils.Miles2Km(datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue()) ));
+				}
 				else
-					Utils.WriteStringToXML(writer, "Speed",
+					if (settings.isPace)
+						Utils.WriteStringToXML(writer, "Speed",
+								String.format(Locale.ROOT, "%f", Utils.Pace2Speed(datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue())));
+					else
+						Utils.WriteStringToXML(writer, "Speed",
 							String.format(Locale.ROOT, "%f", datasetSpeedSlopeLine.getSeries(0).getY(i)));
 				
 				writer.writeEndElement(); // Item
@@ -346,7 +355,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		CgData d = track.data.get(i);
 
 		lbSpeedSlopeInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSpeed.text")
-				+ "=" + d.getSpeedString(settings.Unit, true) + " ");
+				+ "=" + d.getSpeedString(settings.Unit, true, settings.isPace) + " ");
 
 		lbSpeedSlopeInfoSlope.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSlope.text")
 				+ "=" + d.getSlopeString(true) + " ");
@@ -415,7 +424,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 			if (btSpeedSlopeFilter.isSelected())
 				s = r.tmp1;
 			else
-				s = r.getSpeed(settings.Unit);
+				s = r.getSpeed(settings.Unit, settings.isPace);
 
 			if (btSpeedSlopeCorr.isSelected()) {
 				coeff = r.getCoeff() / 100.0;
@@ -472,7 +481,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 				if (btSpeedSlopeFilter.isSelected())
 					s = r.tmp1;
 				else
-					s = r.getSpeed(settings.Unit);
+					s = r.getSpeed(settings.Unit, settings.isPace);
 
 				if (btSpeedSlopeCorr.isSelected()) {
 					coeff = r.getCoeff() / 100.0;
@@ -516,7 +525,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 			if (btSpeedSlopeFilter.isSelected())
 				s = r.tmp1;
 			else
-				s = r.getSpeed(settings.Unit);
+				s = r.getSpeed(settings.Unit, settings.isPace);
 
 			if (s > maxspeed)
 				maxspeed = s;
@@ -564,19 +573,19 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 
 		for (i = 0; i < track.data.size(); i++) {
 			if (i == 0)
-				avr = track.data.get(0).getSpeed(settings.Unit);
+				avr = track.data.get(0).getSpeed(settings.Unit, settings.isPace);
 			else if (i == 1)
-				avr = (track.data.get(1).getSpeed(settings.Unit) + track.data.get(0).getSpeed(settings.Unit)) / 2;
+				avr = (track.data.get(1).getSpeed(settings.Unit, settings.isPace) + track.data.get(0).getSpeed(settings.Unit, settings.isPace)) / 2;
 			else if (i == 2)
-				avr = (track.data.get(2).getSpeed(settings.Unit) + track.data.get(1).getSpeed(settings.Unit)
-						+ track.data.get(0).getSpeed(settings.Unit)) / 3;
+				avr = (track.data.get(2).getSpeed(settings.Unit, settings.isPace) + track.data.get(1).getSpeed(settings.Unit, settings.isPace)
+						+ track.data.get(0).getSpeed(settings.Unit, settings.isPace)) / 3;
 			else if (i == 3)
-				avr = (track.data.get(3).getSpeed(settings.Unit) + track.data.get(2).getSpeed(settings.Unit)
-						+ track.data.get(1).getSpeed(settings.Unit) + track.data.get(0).getSpeed(settings.Unit)) / 4;
+				avr = (track.data.get(3).getSpeed(settings.Unit, settings.isPace) + track.data.get(2).getSpeed(settings.Unit, settings.isPace)
+						+ track.data.get(1).getSpeed(settings.Unit, settings.isPace) + track.data.get(0).getSpeed(settings.Unit, settings.isPace)) / 4;
 			else
-				avr = (track.data.get(i).getSpeed(settings.Unit) + track.data.get(i - 1).getSpeed(settings.Unit)
-						+ track.data.get(i - 2).getSpeed(settings.Unit) + track.data.get(i - 3).getSpeed(settings.Unit)
-						+ track.data.get(i - 4).getSpeed(settings.Unit)) / 5;
+				avr = (track.data.get(i).getSpeed(settings.Unit, settings.isPace) + track.data.get(i - 1).getSpeed(settings.Unit, settings.isPace)
+						+ track.data.get(i - 2).getSpeed(settings.Unit, settings.isPace) + track.data.get(i - 3).getSpeed(settings.Unit, settings.isPace)
+						+ track.data.get(i - 4).getSpeed(settings.Unit, settings.isPace)) / 5;
 
 			track.data.get(i).tmp1 = avr;
 		}

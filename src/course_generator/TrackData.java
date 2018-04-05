@@ -1679,7 +1679,7 @@ public class TrackData
 						data.get(n).getCoeff(), // Coeff - double
 						0.0, // Recup - double
 						data.get(n).getSlope(), // Slope - double
-						data.get(n).getSpeed(CgConst.UNIT_METER), // Speed -
+						data.get(n).getSpeed(CgConst.UNIT_METER,false), // Speed -
 																	// double
 						data.get(n).getdElevation(CgConst.UNIT_METER), // dElevation
 																		// -
@@ -1722,7 +1722,7 @@ public class TrackData
 				r.setDiff(datatmp.get(n).getDiff()); // Diff
 				r.setCoeff(datatmp.get(n).getCoeff()); // Coeff
 				r.setSlope(datatmp.get(n).getSlope()); // Slope
-				r.setSpeed(datatmp.get(n).getSpeed(CgConst.UNIT_METER)); // Speed
+				r.setSpeed(datatmp.get(n).getSpeed(CgConst.UNIT_METER,false)); // Speed
 				r.setdElevation(
 						datatmp.get(n).getdElevation(CgConst.UNIT_METER)); // dElevation
 				r.setTime(datatmp.get(n).getTime()); // Time
@@ -2165,7 +2165,7 @@ public class TrackData
 				{
 					tInNight.Time = tInNight.Time + r.getdTime_f();
 					tInNight.setSpeed(tInNight.getSpeed(CgConst.UNIT_METER)
-							+ r.getSpeed(CgConst.UNIT_METER));
+							+ r.getSpeed(CgConst.UNIT_METER,false));
 					tInNight.setDist(tInNight.getDist(CgConst.UNIT_METER)
 							+ r.getDist(CgConst.UNIT_METER));
 					tInNight.Cmpt++;
@@ -2174,7 +2174,7 @@ public class TrackData
 				{
 					tInDay.Time = tInDay.Time + r.getdTime_f();
 					tInDay.setSpeed(tInDay.getSpeed(CgConst.UNIT_METER)
-							+ r.getSpeed(CgConst.UNIT_METER));
+							+ r.getSpeed(CgConst.UNIT_METER,false));
 					tInDay.setDist(tInDay.getDist(CgConst.UNIT_METER)
 							+ r.getDist(CgConst.UNIT_METER));
 					tInDay.Cmpt++;
@@ -2211,7 +2211,7 @@ public class TrackData
 					j = 0;
 					StatSlope[j]
 							.setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatSlope[j]
 							.setDist(StatSlope[j].getDist(CgConst.UNIT_METER)
 									+ r.getDist(CgConst.UNIT_METER));
@@ -2223,7 +2223,7 @@ public class TrackData
 					j = 1;
 					StatSlope[j]
 							.setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatSlope[j]
 							.setDist(StatSlope[j].getDist(CgConst.UNIT_METER)
 									+ r.getDist(CgConst.UNIT_METER));
@@ -2235,7 +2235,7 @@ public class TrackData
 					j = 2;
 					StatSlope[j]
 							.setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatSlope[j]
 							.setDist(StatSlope[j].getDist(CgConst.UNIT_METER)
 									+ r.getDist(CgConst.UNIT_METER));
@@ -2247,7 +2247,7 @@ public class TrackData
 					j = 3;
 					StatSlope[j]
 							.setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatSlope[j]
 							.setDist(StatSlope[j].getDist(CgConst.UNIT_METER)
 									+ r.getDist(CgConst.UNIT_METER));
@@ -2259,7 +2259,7 @@ public class TrackData
 					j = 4;
 					StatSlope[j]
 							.setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatSlope[j]
 							.setDist(StatSlope[j].getDist(CgConst.UNIT_METER)
 									+ r.getDist(CgConst.UNIT_METER));
@@ -2271,7 +2271,7 @@ public class TrackData
 					j = 5;
 					StatSlope[j]
 							.setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatSlope[j]
 							.setDist(StatSlope[j].getDist(CgConst.UNIT_METER)
 									+ r.getDist(CgConst.UNIT_METER));
@@ -2283,7 +2283,7 @@ public class TrackData
 					j = 6;
 					StatSlope[j]
 							.setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatSlope[j]
 							.setDist(StatSlope[j].getDist(CgConst.UNIT_METER)
 									+ r.getDist(CgConst.UNIT_METER));
@@ -2295,7 +2295,7 @@ public class TrackData
 					j = 7;
 					StatSlope[j]
 							.setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatSlope[j]
 							.setDist(StatSlope[j].getDist(CgConst.UNIT_METER)
 									+ r.getDist(CgConst.UNIT_METER));
@@ -2307,7 +2307,7 @@ public class TrackData
 					j = 8;
 					StatSlope[j]
 							.setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatSlope[j]
 							.setDist(StatSlope[j].getDist(CgConst.UNIT_METER)
 									+ r.getDist(CgConst.UNIT_METER));
@@ -2319,7 +2319,7 @@ public class TrackData
 					j = 9;
 					StatSlope[j]
 							.setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatSlope[j]
 							.setDist(StatSlope[j].getDist(CgConst.UNIT_METER)
 									+ r.getDist(CgConst.UNIT_METER));
@@ -2331,7 +2331,7 @@ public class TrackData
 					j = 10;
 					StatSlope[j]
 							.setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatSlope[j]
 							.setDist(StatSlope[j].getDist(CgConst.UNIT_METER)
 									+ r.getDist(CgConst.UNIT_METER));
@@ -2343,7 +2343,7 @@ public class TrackData
 					j = 11;
 					StatSlope[j]
 							.setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatSlope[j]
 							.setDist(StatSlope[j].getDist(CgConst.UNIT_METER)
 									+ r.getDist(CgConst.UNIT_METER));
@@ -2355,7 +2355,7 @@ public class TrackData
 					j = 12;
 					StatSlope[j]
 							.setSpeed(StatSlope[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatSlope[j]
 							.setDist(StatSlope[j].getDist(CgConst.UNIT_METER)
 									+ r.getDist(CgConst.UNIT_METER));
@@ -2400,7 +2400,7 @@ public class TrackData
 					j = 0;
 					StatElev[j]
 							.setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER)
 							+ r.getDist(CgConst.UNIT_METER));
 					StatElev[j].Time = StatElev[j].Time + r.getdTime_f();
@@ -2417,7 +2417,7 @@ public class TrackData
 								+ r.getdTime_f();
 						StatElevNight[j].setSpeed(
 								StatElevNight[j].getSpeed(CgConst.UNIT_METER)
-										+ r.getSpeed(CgConst.UNIT_METER));
+										+ r.getSpeed(CgConst.UNIT_METER,false));
 						StatElevNight[j].setDist(
 								StatElevNight[j].getDist(CgConst.UNIT_METER)
 										+ r.getDist(CgConst.UNIT_METER));
@@ -2429,7 +2429,7 @@ public class TrackData
 								+ r.getdTime_f();
 						StatElevDay[j].setSpeed(
 								StatElevDay[j].getSpeed(CgConst.UNIT_METER)
-										+ r.getSpeed(CgConst.UNIT_METER));
+										+ r.getSpeed(CgConst.UNIT_METER,false));
 						StatElevDay[j].setDist(
 								StatElevDay[j].getDist(CgConst.UNIT_METER)
 										+ r.getDist(CgConst.UNIT_METER));
@@ -2442,7 +2442,7 @@ public class TrackData
 					j = 1;
 					StatElev[j]
 							.setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER)
 							+ r.getDist(CgConst.UNIT_METER));
 					StatElev[j].Time = StatElev[j].Time + r.getdTime_f();
@@ -2458,7 +2458,7 @@ public class TrackData
 								+ r.getdTime_f();
 						StatElevNight[j].setSpeed(
 								StatElevNight[j].getSpeed(CgConst.UNIT_METER)
-										+ r.getSpeed(CgConst.UNIT_METER));
+										+ r.getSpeed(CgConst.UNIT_METER,false));
 						StatElevNight[j].setDist(
 								StatElevNight[j].getDist(CgConst.UNIT_METER)
 										+ r.getDist(CgConst.UNIT_METER));
@@ -2470,7 +2470,7 @@ public class TrackData
 								+ r.getdTime_f();
 						StatElevDay[j].setSpeed(
 								StatElevDay[j].getSpeed(CgConst.UNIT_METER)
-										+ r.getSpeed(CgConst.UNIT_METER));
+										+ r.getSpeed(CgConst.UNIT_METER,false));
 						StatElevDay[j].setDist(
 								StatElevDay[j].getDist(CgConst.UNIT_METER)
 										+ r.getDist(CgConst.UNIT_METER));
@@ -2483,7 +2483,7 @@ public class TrackData
 					j = 2;
 					StatElev[j]
 							.setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER)
 							+ r.getDist(CgConst.UNIT_METER));
 					StatElev[j].Time = StatElev[j].Time + r.getdTime_f();
@@ -2499,7 +2499,7 @@ public class TrackData
 								+ r.getdTime_f();
 						StatElevNight[j].setSpeed(
 								StatElevNight[j].getSpeed(CgConst.UNIT_METER)
-										+ r.getSpeed(CgConst.UNIT_METER));
+										+ r.getSpeed(CgConst.UNIT_METER,false));
 						StatElevNight[j].setDist(
 								StatElevNight[j].getDist(CgConst.UNIT_METER)
 										+ r.getDist(CgConst.UNIT_METER));
@@ -2511,7 +2511,7 @@ public class TrackData
 								+ r.getdTime_f();
 						StatElevDay[j].setSpeed(
 								StatElevDay[j].getSpeed(CgConst.UNIT_METER)
-										+ r.getSpeed(CgConst.UNIT_METER));
+										+ r.getSpeed(CgConst.UNIT_METER,false));
 						StatElevDay[j].setDist(
 								StatElevDay[j].getDist(CgConst.UNIT_METER)
 										+ r.getDist(CgConst.UNIT_METER));
@@ -2524,7 +2524,7 @@ public class TrackData
 					j = 3;
 					StatElev[j]
 							.setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER)
 							+ r.getDist(CgConst.UNIT_METER));
 					StatElev[j].Time = StatElev[j].Time + r.getdTime_f();
@@ -2540,7 +2540,7 @@ public class TrackData
 								+ r.getdTime_f();
 						StatElevNight[j].setSpeed(
 								StatElevNight[j].getSpeed(CgConst.UNIT_METER)
-										+ r.getSpeed(CgConst.UNIT_METER));
+										+ r.getSpeed(CgConst.UNIT_METER,false));
 						StatElevNight[j].setDist(
 								StatElevNight[j].getDist(CgConst.UNIT_METER)
 										+ r.getDist(CgConst.UNIT_METER));
@@ -2552,7 +2552,7 @@ public class TrackData
 								+ r.getdTime_f();
 						StatElevDay[j].setSpeed(
 								StatElevDay[j].getSpeed(CgConst.UNIT_METER)
-										+ r.getSpeed(CgConst.UNIT_METER));
+										+ r.getSpeed(CgConst.UNIT_METER,false));
 						StatElevDay[j].setDist(
 								StatElevDay[j].getDist(CgConst.UNIT_METER)
 										+ r.getDist(CgConst.UNIT_METER));
@@ -2565,7 +2565,7 @@ public class TrackData
 					j = 4;
 					StatElev[j]
 							.setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER)
 							+ r.getDist(CgConst.UNIT_METER));
 					StatElev[j].Time = StatElev[j].Time + r.getdTime_f();
@@ -2581,7 +2581,7 @@ public class TrackData
 								+ r.getdTime_f();
 						StatElevNight[j].setSpeed(
 								StatElevNight[j].getSpeed(CgConst.UNIT_METER)
-										+ r.getSpeed(CgConst.UNIT_METER));
+										+ r.getSpeed(CgConst.UNIT_METER,false));
 						StatElevNight[j].setDist(
 								StatElevNight[j].getDist(CgConst.UNIT_METER)
 										+ r.getDist(CgConst.UNIT_METER));
@@ -2593,7 +2593,7 @@ public class TrackData
 								+ r.getdTime_f();
 						StatElevDay[j].setSpeed(
 								StatElevDay[j].getSpeed(CgConst.UNIT_METER)
-										+ r.getSpeed(CgConst.UNIT_METER));
+										+ r.getSpeed(CgConst.UNIT_METER,false));
 						StatElevDay[j].setDist(
 								StatElevDay[j].getDist(CgConst.UNIT_METER)
 										+ r.getDist(CgConst.UNIT_METER));
@@ -2605,7 +2605,7 @@ public class TrackData
 					j = 5;
 					StatElev[j]
 							.setSpeed(StatElev[j].getSpeed(CgConst.UNIT_METER)
-									+ r.getSpeed(CgConst.UNIT_METER));
+									+ r.getSpeed(CgConst.UNIT_METER,false));
 					StatElev[j].setDist(StatElev[j].getDist(CgConst.UNIT_METER)
 							+ r.getDist(CgConst.UNIT_METER));
 					StatElev[j].Time = StatElev[j].Time + r.getdTime_f();
@@ -2621,7 +2621,7 @@ public class TrackData
 								+ r.getdTime_f();
 						StatElevNight[j].setSpeed(
 								StatElevNight[j].getSpeed(CgConst.UNIT_METER)
-										+ r.getSpeed(CgConst.UNIT_METER));
+										+ r.getSpeed(CgConst.UNIT_METER,false));
 						StatElevNight[j].setDist(
 								StatElevNight[j].getDist(CgConst.UNIT_METER)
 										+ r.getDist(CgConst.UNIT_METER));
@@ -2633,7 +2633,7 @@ public class TrackData
 								+ r.getdTime_f();
 						StatElevDay[j].setSpeed(
 								StatElevDay[j].getSpeed(CgConst.UNIT_METER)
-										+ r.getSpeed(CgConst.UNIT_METER));
+										+ r.getSpeed(CgConst.UNIT_METER,false));
 						StatElevDay[j].setDist(
 								StatElevDay[j].getDist(CgConst.UNIT_METER)
 										+ r.getDist(CgConst.UNIT_METER));

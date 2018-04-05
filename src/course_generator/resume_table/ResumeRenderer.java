@@ -283,7 +283,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 				return this;
 
 			case 19: // Average speed
-				setText(data.getAvgSpeedString(settings.Unit, false));
+				setText(data.getAvgSpeedString(settings.Unit, false, settings.isPace));
 				setHorizontalAlignment(CENTER);
 				
 				// -- Set the background

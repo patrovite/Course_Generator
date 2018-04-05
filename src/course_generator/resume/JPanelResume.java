@@ -226,7 +226,7 @@ public class JPanelResume extends JPanel {
 					bundle.getString("frmMain.FileExist"));
 
 			if (!s.isEmpty()) {
-				Resume.SaveAsCSV(s, Settings.Unit);
+				Resume.SaveAsCSV(s, Settings.Unit, Settings.isPace);
 
 				// -- Store the directory
 				Settings.LastDir = Utils.GetDirFromFilename(s);
