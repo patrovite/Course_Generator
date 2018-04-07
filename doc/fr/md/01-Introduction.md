@@ -33,7 +33,7 @@ Des conventions d'écritures ont été adoptées dans ce manuel. Elles sont dét
 J'ai créé **Course Generator** en 2008 afin de m'aider à préparer mon premier 100km en Ultra-trail. Je l'ai complété au fur et à mesure de mes besoins. Un petit article dans Ultrafondu m'a permis de commencé à le faire connaître et je l'ai ensuite fait grandir avec le retour des utilisateurs.
 Il a énormement évolué et plusieurs fois, je l'ai réécris afin de l'adapter à mes besoins. A chaque fois cela été un défi et comme les courses que j'ai couru, cela été une aventure qui m'a fait grandir (connaissances, remise en cause, ouverture d'esprit...).
 
-**Course Generator** n'a pas le prétention de vous donner des résultats totalement justes. Trop de choses dépendent de vous et de conditions extérieures. Considérez ce logiciel comme une aide vous permettant de préparer vos prochaines aventures.
+**Course Generator** n'a pas la prétention de vous donner des résultats totalement justes. Trop de choses dépendent de vous et de conditions extérieures. Considérez ce logiciel comme une aide vous permettant de préparer vos prochaines aventures.
 
 Vous remarquerez que je n'emploie pas le terme "course" car pour moi l'approche "aventure" d'une course, aussi dure soi-elle, m'a toujours permis d'aller au bout grâce à son approche positive (sans oublier le chrono quand même:) ).
 
