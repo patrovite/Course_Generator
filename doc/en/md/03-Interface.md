@@ -1,11 +1,11 @@
 ﻿# L'interface
-Au lancement du logiciel vous obtenez la fenêtre suivante:  
+Upon starting the software, the following window is displayed : 
 ![Fenêtre principale](./images/CG40_Main.png)
 
-L'interface du logiciel est composée (de haut en bas):
+The software's GUI is made of (from top to bottom):
 
-* D'un menu situé en haut de la fenêtre
-* D'une barre d'outils où sont situées les commandes les plus utilisées.
-* D'une zone avec des onglets vous permettant de voir, pour le parcours, les données, le profil, un résumé, des statistiques et des analyses
-* D'une zone contenant la carte du parcours
-* D'une barre regroupant des informations utiles
+* A ribbon on top of the window.
+* A toolbar containing the most used tools.
+* Several tabs giving access, for a given course, to the profile, data, summary, statistics and analysis.
+* A map.
+* A footer showing quick important information.
