@@ -1,334 +1,335 @@
-# Utilisation avancé de Course Generator
+# Advanced use of Course Generator
 
-Ce chapitre va vous présenter des utilisations plus complèxe de **Course Generator**.
+This chapter will introduce you to more complete uses of **Course Generator**.
 
-## Rechercher un point GPS
+## Find a GPS point
 
-Il est possible de rechercher un point GPS sur le parcours via le menu "Edition>Recherche d'un point" ou avec le raccourci clavier [Ctrl+F].
+It is possible to search for a GPS point on the track via the "Edit>Search a point..." menu or with the keyboard shortcut [Ctrl + F].
 
-![](./images/CG40_Search.png)
+![Search dialog](./images/CG40_Search.png)
 
-Dans la boite de dialogue, il est nécessaire de saisir la latitude et la longitude du point puis d'appuyer sur le bouton recherche ![](./images/Toolbar/search.png).
+In the dialog box, it is necessary to enter the latitude and longitude of the point and then press the search button ![search button](./images/Toolbar/search.png).
 
-**Course Generator** va rechercher le point le plus proche des coordonnées saisies. Il indiquera la ligne correspondant au point trouvé ainsi que la distance entre le point trouvé et les coordonnées saisies. La ligne contenant le point trouvé est alors sélectionnée.
+**Course Generator** will search for the nearest point of the entered coordinates. It will indicate the line corresponding to the point found as well as the distance between the point found and the coordinates entered. The line containing the found point is then selected.
 
-## Déterminer les points hauts et bas du parcours
+## Find the high and low points of the track
 
-Le menu "Outils>Détermination du mini/maxi" permet de déterminer automatiquement les points haut et bas du parcours.  
-Chaque position trouvée est marquée avec un indicateur ![](./images/Tags/high_point.png) (point haut) ou ![](./images/Tags/low_point.png) (point bas).
+The "Tools>Find Min/Max" menu is used to automatically find the high and low points of the track.  
+Each found position is marked with an indicator ![high point indicator](./images/Tags/high_point.png) (high point) or ![low point indicator](./images/Tags/low_point.png) (low point).
 
-## Modifier l'altitude d'un point du parcours
+## Change the altitude of a point on the track
 
-Il peut arriver qu'une altitude du parcours soit incohérente. Cela peut arriver si vous, ou un site internet type Openrunner, avez fait une correction automatique des altitudes. La base de donnée SRTM sur lequel se base ces sites comporte des zones sans altitude. La base donnée renvoi alors une altitude de 32768m. Afin de palier à ce problème vous pouvez éditer l'altitude du ou des points concerné.
+It can happen that an altitude of the track is incoherent. This can happen if you, or an Openrunner type website, have made an automatic correction of altitudes. The SRTM database on which these sites are based has area without altitude. The given base then returns an altitude of 32768m. In order to overcome this problem you can edit the altitude of the concerned point(s).
 
-Pour cela mettez-vous sur la cellule concernée et ouvrez l'éditeur de ligne en faisant un double clique.
+To do this, go to the corresponding cell and open the line editor by double-clicking.
 
-La boite dialogue suivante s'affiche:  
-![](./images/CG40_Line_Editor.png)
+The following dialog box is displayed:
 
-Le champ "Altitude" permet de saisir la nouvelle altitude.
+![Line editor](./images/CG40_Line_Editor.png)
 
-Il sera nécessaire de relancer un calcul avec le bouton ![](./images/Toolbar/refresh_data.png) afin de prendre en compte la nouvelle altitude.
+The "Altitude" field is used to enter the new altitude.
 
-## Fusionner deux parcours
+It will be necessary to restart a calculation with the button ![refresh button](./images/Toolbar/refresh_data.png) to take into account the new altitude.
 
-**Course Generator** offre la possibilité de fusionner deux parcours.
+## Merge two track
 
-La procédure est la suivante:
+**Course Generator** offers the opportunity to merge two courses.
 
-* Chargez le premier parcours dans **Course Generator** (au format GPX ou CGX).
-* Importez le second parcours en utilisant "Fichier>Importer un fichier GPX" ou "Fichier>Importer un fichier CGX".
-* La boite de dialogue ci-dessous apparaît:  
-![](./images/CG40_Import_Track.png)
-* Sélectionnez "Insérer au début" si vous voulez insérer le parcours avant celui présent en mémoire sinon sélectionnez "Ajouter à la fin" et le parcours sera ajouté après celui présent en mémoire.
-* La boite de dialogue de sélection de fichier apparaît. Faite votre choix puis cliquez sur "Ouvrir"
-* La fusion est alors réalisée
+The procedure is as follows:
 
-Si vous avez d'autres parcours à fusionner au nouveau parcours, il vous suffit de recommencer la procédure.
+* Load the first track in **Course Generator** (GPX or CGX format).
+* Import the second track using "File>Import a GPX File" or "File>Import a CGX File".
+* The dialog box below appears:  
+![Import track dialog](./images/CG40_Import_Track.png)
+* Select "Insert at the beginning" if you want to insert the track before the one present in memory. If not select "Append" and the track will be added after the current track in memory.
+* The file selection dialog box appears. Make your choice then click on "Open"
+* The merge is then realized
 
-Après la fusion du ou des parcours vous faudra reprendre les réglages du coefficient de fatigue et relancer un calcul (bouton ![](./images/Toolbar/refresh_data.png) ou [F5]) car les données temporelles seront fausses.
+If you have other tracks to merge, simply repeat the process.
 
-Une fois que vous avez terminé la fusion et relancé un calcul, vous pourrez sauvegarder le parcours.
+After the merge of the tracks you will have to modify the settings of the fatigue coefficients and restart a computation (butotn ![refresh button](./images/Toolbar/refresh_data.png) or [F5]) because the time data will be wrong.
 
-## Sauver une partie du parcours
+Once you have completed the merge and restarted a calculation, you will be able to save the track.
 
-**Course Generator** offre la possibilité de sauver une partie d'un parcours. Cela permet, par exemple, de scinder un parcours en plusieurs parties.
+## Save part of the track
 
-La procédure est la suivante:
+**Course Generator** offers the opportunity to save part of a track.  
 
-* Dans le tableau sélectionnez la première ligne que vous souhaitez sauver,
-* En maintenant la touche SHIFT actionnée, sélectionnez la dernière ligne à sauver.
-* Sélectionnez "Fichier>Sauver une partie du parcours en xxx" (xxx correspond au format du fichier que vous désirez).
-* La boite de dialogue de sauvegarde de fichier apparaît. Saisissez le nom du fichier et valider.
-* C'est fini!
+The procedure is as follows:
 
-## Exporter les tags en waypoints
+* In the table select the first line you want to save,
+* While holding down the SHIFT key, select the last line to save.
+* Select "File>Save selection as xxx" (xxx corresponds to the file format you want).
+* The file save dialog box appears. Enter the file name and confirm.
+* It's finish!
 
-**Course Generator** offre la possibilité de sauver les points GPS contenant tags (ou indicateur) sous forme de waypoint. Ces waypoints pourront être ajouté à votre GPS afin d'avoir, par exemple, l'affichage du parcours avec des informations complémentaires comme les cols, les ravitaillements et les villes.
+## Export tags as waypoints
 
-La procédure est la suivante:
+**Course Generator** offers the ability to save GPS points containing tags (or indicator) as a waypoint. These waypoints can be added to your GPS to have, for example, the display of the track with additional information such as passes, aid stations and cities.
 
-* Sélectionnez "Fichier>Exporter les tags en waypoint".
-* La boite de dialogue ci-dessous apparaît:  
-![](./images/CG40_Export_Waypoints.png)
-* Sélectionnez les types de tags que vous voulez exporter.
-* La boite de dialogue de sauvegarde de fichier apparaît. Saisissez le nom du fichier et valider.
-* Les waypoints seront sauvés dans un fichier qui le nom saisi et comme extension GPX
+The procedure is as follows:
 
-L'exploitation de ce fichier pourra se faire, par exemple, avec le logiciel Basecamp de Garmin.
+* Select "File>Export tags as waypoint".
+* The dialog box below appears:  
+![Export as waypoints dialog](./images/CG40_Export_Waypoints.png)
+* Select the types of tags you want to export.
+* The save dialog box appears. 
+* Waypoints will be saved to a file that has the name entered and with a GPX extension.
 
-## Copier le contenu d'une cellule
+The operation of this file can be done, for example, with Garmin's Basecamp software.
 
-Le contenu d'une cellule du tableau de donnée peut être copié dans le presse papier afin d'être exploité dans un autre logiciel. Pour réaliser cette action il vous suffit de sélectionner "Edition>Copier". Le contenu de la cellule sélectionnée est copié dans le presse papier au fromat texte.
+## Copy the contents of a cell
 
-## Générer un mini roadbook
+The contents of a cell in the track table can be copied to the clipboard for use in other software. To perform this action simply select "Edit>Copy". The content of the selected cell is copied to the clipboard as text.
 
-**Course Generator** offre la possibilité de générer un mini roadbook. Celui contiendra le profil du parcours et des informations sur vos points de passage. Le mini roadbook est accessible via "Affichage>Mini roadbook".
+## Generate a mini roadbook
 
-Le mini-roadbook est au final une image. Cette image pourra être imprimée en utilisant un logiciel de dessin comme Paint, Photoshop ou The Gimp. Elle pourra aussi être exploitée dans d'autre logiciel comme Word, Excel, Inkscape, Illustrator...
+**Course Generator** offers the possibility to generate a mini roadbook. This will contain the profile of the track and informations on your way points. The mini roadbook is accessible via "Display>Generate mini roadbook".
 
-Les réglages effectués pour générer le mini roadbook sont sauvés dans le fichier CGX du parcours. Si vous échangez un parcours au format CGX, vous allez échanger le parcours avec tous ses renseignements (ravitaillements, qualité du terrain, barrières horaire...) et le mini roadbook.
+At the end of the process the mini-roadbook is an image. This image can be printed using drawing software such as Paint, Photoshop or The Gimp. It can also be used in other software like Word, Excel, Inkscape, Illustrator ...
 
-Pour pouvoir utiliser le mini roadbook il faut avoir préalablement renseigné votre parcours. Cela inclus:
+The settings made to generate the mini roadbook are saved in the CGX file of the track. If you exchange a track in CGX format, you will exchange the track with all its informations (refueling, field quality, cut-off times ...) and the mini roadbook.
 
-* Avoir renseigné la difficulté du terrain (utile pour le type "Route/Sentier").
-* Avoir renseigné le coefficient de fatigue, les temps de ravitaillements, les barrières horaires, les noms des points importants.
-* Avoir le calcul de vos temps de passage à jour (touche F5).
-* Avoir marqué les positions importantes avec l'indicateur ![](./images/Tags/roadbook.png).
-* Avoir marqué les points importants avec un ou plusieurs des indicateurs suivant: ![](./images/Tags/high_point.png) ![](./images/Tags/low_point.png) ![](./images/Tags/eat.png) ![](./images/Tags/drink.png) ![](./images/Tags/flag.png)
+To be able to use the mini roadbook it is necessary to have previously set the parameters of your track. This includes:
+
+* Have entered the field difficulty (useful for the type "Roads/Trails").
+* Fill in the fatigue coefficient, refueling times, cut-off times, names of important points.
+* Have the calculation updated (F5 key).
+* Have marked the important positions with the indicator ![mark indicator](./images/Tags/roadbook.png).
+* Have marked the important points with one or more of the following indicators: ![hight point](./images/Tags/high_point.png) ![low point](./images/Tags/low_point.png) ![eat](./images/Tags/eat.png) ![drink](./images/Tags/drink.png) ![flag](./images/Tags/flag.png)
 
 
-### Présentation
+### Presentation
 
-"Affichage>Mini roadbook" ou le bouton ![](./images/Toolbar/mrb.png) affiche la fenêtre suivante:  
-![](./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png)
+"Display>Generate mini roadbook" or the button ![mrb](./images/Toolbar/mrb.png)displays the following window:  
+![Mini raodbook dialog](./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png)
 
-Elle contient les éléments suivants:
+It contains the following elements:
 
-* En haut: la barre d'icônes permettant de réaliser des actions
-* Au milieu à droite: Contient un tableau avec toutes les lignes du tableau général qui contenaient l'indicateur ![](./images/Tags/roadbook.png) et un ou plusieurs des indicateurs suivant: ![](./images/Tags/high_point.png) ![](./images/Tags/low_point.png) ![](./images/Tags/eat.png) ![](./images/Tags/drink.png) ![](./images/Tags/flag.png). Chaque ligne génère une étiquette dans le mini roadbook
-* Au milieu à gauche: Cette zone permet de modifier le contenu de la ligne du tableau qui actuellement sélectionnée
-* En bas: Contient le mini roadbook avec les étiquettes
+* Top: the icon bar to perform actions
+* Middle right: Contains a table with all the rows of the track table that contained the indicator ![roadbook](./images/Tags/roadbook.png) and one or more of the following indicators: ![](./images/Tags/high_point.png) ![](./images/Tags/low_point.png) ![](./images/Tags/eat.png) ![](./images/Tags/drink.png) ![](./images/Tags/flag.png). Each line generates a label in the mini roadbook
+* Middle left: This area allows you to change the content of the currently selected table row
+* Bottom: Contains the mini roadbook with tags
 
-Lorsqu'une ligne est sélectionnée alors l'étiquette correspondante change de couleur (couleur saumon).
+When a line is selected then the corresponding label color change (salmon color).
 
-### Les types de mini roadbook
+### The types of mini roadbook
 
-Dans la barre du haut, la liste déroulante "Type de profil" permet de choisir parmi les 3 types de profil:
+In the top bar, the "Profile type" drop-down list allows you to choose among the 3 types of profile:
 
-Le type "Simple":  
-![](./images/MRB/CG40_MRB_Simple_Label.png)    
-Le profil du parcours ne contient aucune information supplémentaire.
+The type "Simple":  
+![Simple type](./images/MRB/CG40_MRB_Simple_Label.png)    
+The track profile does not contain any additional information.
 
-Le type "Route/sentier":  
-![](./images/MRB/CG40_MRB_Road_Track_Label.png)  
-Le profil met en évidence les portions de route et de sentier par un code de couleur.
-Les routes sont les points du tableau général dont le coefficient de terrain est égal à 100%. Les autres sont considérés comme des sentiers.
+The type "Roads/Trails":  
+![Road/trails type](./images/MRB/CG40_MRB_Road_Track_Label.png)  
+The profile highlights the portions of the roads and trails with a color code. The roads are the points of the track table whose field coefficient is equal to 100%. The others are considered as trails.
 
-Le type "Pente":  
-![](./images/MRB/CG40_MRB_Slope_Label.png)  
-Le profil met en évidence le degré de pente par un code de couleur.
+The type "Slope":  
+![Slope type](./images/MRB/CG40_MRB_Slope_Label.png)  
+The profile highlights the degree of slope by a color code.
 
-Les couleurs utilisées dans les mini roadbook sont paramétrable dans la fenêtre de configuration accessible via le bouton ![](./images/MRB/Toolbar/settings.png).
+The colors used in the mini roadbook can be set in the configuration window accessible with the button ![](./images/MRB/Toolbar/settings.png).
 
-### La barre d'icônes
+### The icon bar
 
 ![](./images/MRB/CG40_MRB_Toolbar.png)  
 
 
-* ![](./images/MRB/Toolbar/save.png) : Permet de sauver le mini roadbook sous forme d'image. Le format disponible est PNG.
-* ![](./images/MRB/Toolbar/settings.png) : Permet d'ouvrir la fenêtre de configuration du mini roadbook
-* ![](./images/MRB/Toolbar/pipette.png) : Permet de copier la mise en forme d'une étiquette afin de la reproduire sur une ou plusieurs autres étiquettes. Cette fonction est aussi accessible avec le raccourci clavier CTRL+C
-* ![](./images/MRB/Toolbar/replicate.png) :  Permet de coller la mise en forme sur l'étiquette sélectionnée. Seules les propriétés sélectionnées dans la fenêtre de configuration de la fonction seront collées. Cette fonction est aussi accessible avec le raccourci clavier CTRL+V
-* ![](./images/MRB/Toolbar/replicate_config.png) : Ouvre une fenêtre permettant de configurer la fonction de duplication de la mise en forme. Cela ouvre la fenêtre suivante:  
-![](./images/MRB/CG40_MRB_Replicate_Dlg.png)    
-Sélectionnez les paramètres que vous voulez utiliser lors de la copie.
+* ![save](./images/MRB/Toolbar/save.png) : Save the mini roadbook as an image. The available format is PNG.
+* ![settings](./images/MRB/Toolbar/settings.png) : Opens the mini roadbook configuration window
+* ![](./images/MRB/Toolbar/pipette.png) : Copy the current label format to reproduce it on one or more other labels. This function is also accessible with the keyboard shortcut CTRL + C
+* ![](./images/MRB/Toolbar/replicate.png) :  Paste the formatting on the selected label. Only properties selected in the function's configuration window will be pasted. This function is also accessible with the keyboard shortcut CTRL + V
+* ![](./images/MRB/Toolbar/replicate_config.png) : Opens a window for configuring the duplicate formatting feature. This opens the next window:  
+![Duplicate configuration dialog](./images/MRB/CG40_MRB_Replicate_Dlg.png)    
+Select the settings you want to use when copying.
 
-* ![](./images/MRB/Toolbar/label_to_bottom.png) : Permet de spécifier que les étiquettes doivent être connectées au bas du profil.
-* ![](./images/MRB/Toolbar/label_to_profil.png) : Permet de spécifier que les étiquettes doivent être connectées au profil.
-* ![](./images/MRB/Toolbar/night_day.png) : Permet de spécifier si on veut faire apparaître les zones de jour et de nuit sur le profil.
-* "Type de profil" : Permet de sélectionner le type de mini roadbook.
+* ![](./images/MRB/Toolbar/label_to_bottom.png) : Allows you to specify that labels must be connected at the bottom of the profile.
+* ![](./images/MRB/Toolbar/label_to_profil.png) : Allows you to specify that labels must be connected to the profile.
+* ![](./images/MRB/Toolbar/night_day.png) : Specify whether to show the day and night areas on the profile.
+* "Profile type" : Allows you to select the type of mini roadbook.
     * Simple
-    * Avec route/sentier
-    * Avec pente
+    * With roads/trails
+    * With slope
 * ![](./images/MRB/Toolbar/favoris1.png) ![](./images/MRB/Toolbar/favoris2.png) ![](./images/MRB/Toolbar/favoris3.png) ![](./images/MRB/Toolbar/favoris4.png)
-![](./images/MRB/Toolbar/favoris5.png) : Ces 5 boutons permettent de mémoriser des formats d'affichage.
-    * Un clique droit sur un  bouton mémorise dans le bouton le réglage affiché dans le champ format.
-    * Un clique gauche sur un bouton restitue dans le champ format, le format mémorisé dans le bouton.
-* "Largeur" : Permet de sélectionner la largeur du profil (Valeur maximum 4000).
-* "Hauteur" : Permet de sélectionner la hauteur du profil (Valeur maximum 2000).
+![](./images/MRB/Toolbar/favoris5.png) : These 5 buttons are used to store display formats.
+    * A right click on a button memorizes in the button the setting displayed in the current format field.
+    * A left click on a button restores the format stored in the button in the format field.
+* "Width" : Selects the width of the profile (Maximum value 4000).
+* "Height" : Allows you to select the height of the profile (Maximum value 2000).
 
 
-### Définir la taille du mini roadbook
+### Set the size of the mini roadbook
 
-La taille maximale du mini roadbook est de 4000x2000 pixels (Largeur x Hauteur). C'est aussi la taille de l'image finale.
+The maximum size of the mini roadbook is 4000x2000 pixels (Width x Height). It is also the size of the final image.
 
-Le réglage de la taille est faite par les champs "Largeur" et "Hauteur" situé dans la barre d'icône.
+The size setting is made by the "Width" and "Height" fields located in the icon bar.
 
-### Configurer le mini roadbook
+### Configure the mini roadbook
 
-L'icône ![](./images/MRB/Toolbar/settings.png) permet d'ouvrir la fenêtre de configuration.
+The icon ![](./images/MRB/Toolbar/settings.png) opens the configuration window.
 
-L'onglet "Général" permet de:  
-![](./images/MRB/CG40_MRB_Settings1.png)
+The "General" tab allows you to:  
+![General tab](./images/MRB/CG40_MRB_Settings1.png)
 
-* Régler la valeur du filtre à appliquer sur les données lors de l'affichage du profil
-* Régler la taille de zone haute du profil. Cette taille est en pixel.
+* Set the filter value to apply to the data when displaying the profile
+* Set the top area height of the profile. This size is in pixel.
 
-L'onglet "Simple" permet de régler les couleurs de la représentation "Simple" du profil.  
-![](./images/MRB/CG40_MRB_Settings2.png)  
-Le bouton "Couleurs par défaut" permet de remplacer les couleurs courantes par les couleurs par défaut.
+The "Simple" tab is used to adjust the colors of the "Simple" display of the profile.  
+![Simple tab](./images/MRB/CG40_MRB_Settings2.png)  
+The "Default Colors" button is used to replace the current colors with the default colors.
 
-L'onglet "Route/Sentier" permet de régler les couleurs de la représentation "Route/Sentier" du profil.  
-![](./images/MRB/CG40_MRB_Settings3.png)  
-Le bouton "Couleurs par défaut" permet de remplacer les couleurs courantes par les couleurs par défaut.
+The "Roads/Trails" tab is used to adjust the colors of the "Roads/Trails" display of the profile.  
+![Roads/trails tab](./images/MRB/CG40_MRB_Settings3.png)  
+The "Default Colors" button is used to replace the current colors with the default colors.
 
-L'onglet "Pente" permet de régler les couleurs de la représentation "Pente" du profil.  
-![](./images/MRB/CG40_MRB_Settings4.png)  
-Le bouton "Couleurs par défaut" permet de remplacer les couleurs courantes par les couleurs par défaut.
+The "Slope" tab is used to adjust the colors of the "Slope" display of the profile.  
+![Slope tab](./images/MRB/CG40_MRB_Settings4.png)  
+The "Default Colors" button is used to replace the current colors with the default colors.
 
-### Configurer chaque étiquette
+### Configure each label
 
-Chaque ligne du tableau représente une étiquette. Elle peut être paramétrée par les éléments de réglages situés à gauche du tableau.  
-![](./images/MRB/CG40_MRB_Editor.png)
+Each line of the table represents a label. It can be set by the setting items on the left of the table.  
+![MRB editor](./images/MRB/CG40_MRB_Editor.png)
 
-* Sélection : Permet d'indiquer si l'on veut prendre en compte cette étiquette dans le profil. Si la case est décochée alors la ligne du tableau est grisée et l'étiquette n'est pas affichée dans le mini roadbook.
-* Position : Permet de régler la position verticale de l'étiquette. Le chiffre indique le nombre de pixel par rapport à la position la plus haute de l'étiquette.
-* Alignement : Permet de définir la position de l'étiquette par rapport au trait la reliant au profil. A gauche du trait, centré sur le trait ou à droite du trait.
-* Format : Permet de spécifier le contenu de l'étiquette ([voir plus bas](#format)).
-* Taille : Permet de définir la taille de la police de caractère utilisée dans les étiquettes.
-* Étiquettes : Permet d'indiquer si l'on veut que les indicateurs soient affichés dans les étiquettes.
-* Commentaire : Permet de saisir un commentaire spécifique à l'étiquette. Ce commentaire est différent du commentaire du tableau principal.
+* Selected : Indicate if you want to take this label into account in the profile. If the box is unchecked then the table row is grayed out and the label is not displayed in the mini roadbook.
+* Position : Adjusts the vertical position of the label. The number indicates the number of pixels relative to the highest position of the label.
+* Alignment : Used to define the position of the label relative to the line connecting it to the profile. To the left of the line, centered on the line or on the right of the line.
+* Format : Allows you to specify the contents of the label ([see below](#format)).
+* Size : Sets the size of the font used in the labels.
+* Tags : Indicate if you want the indicators to be displayed in the labels.
+* Comment : Enter a specific comment for the label. This comment is different from the main table comment.
 
-### Configurer le format d'affichage des étiquettes {#format}
+### Set the display format for labels {#format}
 
-Afin d'assurer une flexibilité optimale le format des étiquettes utilise des balises. Ces balises représentées par le signe "%" plus un ou plusieurs caractères, permettent de spécifier le type de donnée à afficher. Par exemple "%N" représente le nom du point. Au moment de l'affichage de l'étiquette les balises sont remplacées par leurs significations.
+To ensure optimal flexibility the format of labels uses tags. These tags represented by the sign "%" plus one or more characters, allow to specify the type of data to display. For example, "% N" represents the name of the point. When the tag is displayed, the tags are replaced by their meanings.
 
-Les balises disponibles sont les suivantes:
+The following tags are available:
 
-* %N : Représente le nom du point.
-* %A : Représente l'altitude du point. L'unité est le mètre.
-* %D : Représente la distance depuis le départ. L'unité est le kilomètre.
-* %T : Représente le temps de parcours depuis le départ. Le format est "hh:mm".
-* %Tl : Représente le temps de parcours depuis le départ au format long "hh:mm:ss".
-* %Ts : Représente le temps de parcours depuis le départ au format court "hh:mm".
-* %H : Représente l'heure de passage au point. Le format est "ddd hh:mm" (ddd = Jour en abrégé).
-* %h : Représente l'heure de passage au point. Le format est "hh:mm".
-* %hl :Représente l'heure de passage au point au format long "hh:mm:ss".
-* %hs :Représente l'heure de passage au point au format court "hh:mm".
-* %B : Représente la barrière horaire au point (temps). Le format est "hh:mm".
-* %b : Représente la barrière horaire au point (heure). Le format est "hh:mm".
-* %C : Représente le commentaire spécifique à l'étiquette (Saisie dans le champ "Commentaire" de l'étiquette).
-* %c : Représente le commentaire venant du tableau principal.
-* %L : Insère un retour à la ligne.
-* %R : Représente le temps de ravitaillement au point. Le format est "hh:mm".
-* %Rl : Représente le temps de ravitaillement au point au format long "hh:mm:ss".
-* %Rs : Représente le temps de ravitaillement au point au format court "hh:mm".
-* %+ : Représente le cumul du D+ depuis le départ. L'unité est le mètre.
-* %- : Représente le cumul du D- depuis le départ. L'unité est le mètre.
+* %N : Represents the name of the point.
+* %A : Represents the altitude of the point. The unit is meter/feet.
+* %D : Represents the distance since the start. The unit is kilometer/miles.
+* %T : Represents travel time since the start. The format is "hh:mm".
+* %Tl : Represents the travel time since the start in long format "hh:mm:ss".
+* %Ts : Represents travel time since the start in short format "hh:mm".
+* %H : Represents the time at this point. The format is "ddd hh:mm" (ddd = abbreviated day).
+* %h : Represents the time at this point. The format is "hh:mm".
+* %hl :Represents the time at this point in long format "hh:mm:ss".
+* %hs :Represents the time at this point in short format "hh:mm".
+* %B : Represents the cut-off time at this point (time). The format is "hh:mm".
+* %b : Represents the cut-off time at this point (hour). The format is "hh:mm".
+* %C : Represents the specific comment on the label (Entered in the "Comment" field of the label).
+* %c : Represents the comment from the main table.
+* %L : Insert a line break.
+* %R : Represents refueling time this point. The format is "hh:mm".
+* %Rl : Represents refueling time this point in long format "hh:mm:ss".
+* %Rs : Represents refueling time this point in short format "hh:mm".
+* %+ : Represents the cumulative positive climb since the start. The unit is the meter/feet.
+* %- : Represents the cumulative negative climb since the start. The unit is the meter/feet. 
 
-Le bouton "...", à coté du champ "Format", permet d'ouvrir une fenêtre permettant de réaliser une saisie simplifiée du contenu de l'étiquette sélectionnée.
+The "..." button, next to the "Format" field, opens a window allowing you to simplify the content of the selected label.
 
-![](./images/MRB/CG40_MRB_Label_Editor.png)
+![Label editor dialog](./images/MRB/CG40_MRB_Label_Editor.png)
+
+### Showing days and nights zone
+
+If in the track settings, the night effect has been activated then the button ![](./images/MRB/Toolbar/night_day.png) select the display of days and Nights zones.
+
+![Days and nights zones](./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png)  
+The nights zones are displayed with a gray background.
+
+## Reverse track direction
+
+**Course Generator** offers is able to reverse the direction of the track. To perform this action select "Tools>Reverse track".
+After the operation, it is necessary to redefine the fatigue coefficients and cut-off time and then restart a calculation (button ![](./images/Toolbar/refresh_data.png) or [F5]).
+
+## Set a new starting point on a looped track
+
+**Course Generator** offers the possibility, if the track loaded in memory is a loop, to define a new starting point.
+
+The procedure is as follows:
+
+* Select the position that will become your new starting point.
+* Select "Tools>Define a new start".
+* A following dialog box will appear:  
+![Confirm new start dialog](./images/CG40_Dlg_Confirm_New_Start.png)
+* Confirm the order by clicking on "Yes".
+
+After the operation it is necessary to redefine the fatigue coefficients and cut-off times and then restart a calculation (button ![](./images/Toolbar/refresh_data.png) or [F5]).
+
+## The general parameters of Course Generator
+
+The "Settings>Course Generator Settings" menu displays the following window:  
+![Global settings dialog](./images/CG40_Settings.png)
+
+The possible settings are:
+
+* "language" : Selects the language used in the interface. "System" uses operating system settings to determine which language to use. If the system language is not managed by **Course Generator** then English is selected.
+* "Units" : Choose between "km/m" and "Miles/Pieds".
+* "Speed format" : Choose the type of speed for the display (speed or pace).
+
+## Import and export marked points
+
+In some cases it is necessary to save only the marked points of the current track in a file. This allows if you have a new version of the course to be able to import these points on this track.
+
+For example:  
+You have the track of the UTMB. You've spent time spotting each pass, aid station, and you've entered comments on parts of the track. Unfortunately, the tracke of the following year is slightly different but the main points are the same. The import/export function of marked points will save you a lot of time.
+
+The procedure is as follows:
+
+* Take the course of the previous year
+* Export marked points with "File>Export points"
+* Select the types of points to export in the following dialog box:    
+![Export points dialog](./images/CG40_Export_Points.png)
+* Validate your selection and enter the file name (extension '.CGP')
+* Open the course of the following year
+* Import points with "File>Import points"
+* Select the file (extension .CGP) to import.
+* The following dialog box appears:    
+![Import point dialog](./images/CG40_Import_Points.png)
+    * The column "Dist" indicates the distance in meter between the point found in the track and the point to be imported. The green background color indicates that the point found is at less than 100m, a yellow color indicates that the point is between 100m and 1000m and a red color indicates that the point is at more than 1000m. If the distance is high this indicates that the new course does not pass through this point. 
+    * The column "Line" indicates the line of the track where the found point is
+    * The column "Sel." select the points to import. "X" indicates that the line is selected.
+* Select the points to import and click on "Import"
+
+## Analyze data after a race
+
+**Course Generator** allows you to analyze the data after completing the track. Just open the file containing the GPS data (often a GPX file). You will find in the table all your data. Reports allow you to have information that data.
+
+The data will remain unchanged until you ask for a calculation of the travel time. A window will ask you if you want to overwrite the temporal data.
+
+## Use of the map features
+
+**Course Generator** show the course on an OpenStreetMap map.  
+![Map](./images/Map/CG40_Map_Area.png)
+
+On the right, a vertical bar of buttons allows actions on this map.
+
+* ![](./images/Map/marker.png) : Adds an start mark to the selected location
+* ![](./images/Map/hide_marker.png) : Delete the mark
+* ![](./images/Map/undo.png) : Cancel the last operation
+* ![](./images/Map/track_very_easy.png) : Indicates that the field between ![](./images/Map/marker.png) and the current point is "Very easy"
+* ![](./images/Map/track_easy.png) : Indicates that the field between ![](./images/Map/marker.png) and the current point is "Easy"
+* ![](./images/Map/track_average.png) : Indicates that the field between ![](./images/Map/marker.png) and the current point is "Average"
+* ![](./images/Map/track_hard.png) : Indicates that the field between ![](./images/Map/marker.png) and the current point is "Hard"
+* ![](./images/Map/track_very_hard.png) : Indicates that the field between ![](./images/Map/marker.png) and the current point is "Very hard".
+* ![](./images/Map/flag.png) : Adds a mark to the current point.
+* ![](./images/Map/eat.png) : Adds an aid station at the current point.
+* ![](./images/Map/drink.png) : Adds a water point to the current point.
+* ![](./images/Map/select_map.png) : Allows you to select the type of map to use.
+
+The mouse commands are as follows:
+
+* Left-click on the map set the marker on track (nearest position).
+* An holded left click move the map.
+* A double click on the map allows you to zoom on the selected point.
 
 
-### Affichage des zones de jours et de nuits
+To change the quality of the field for a part of the track, you must:
 
-Si dans les réglages du parcours, la prise en compte de la nuit a été activé alors le bouton ![](./images/MRB/Toolbar/night_day.png) sélectionner l'Affichage des zones de jours et de nuits.
+* Position the cursor at the beginning of the area to change
+* Click on the button ![](./images/Map/marker.png) to set the marker
+* Position the cursor at the end of the area to change
+* Click on the button corresponding to the required field quality (for example ![](./images/Map/track_average.png))
 
-![](./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png)  
-Les zones de nuits apparaissent grâce au fond grisé.
-
-## Inverser le sens du parcours
-
-**Course Generator** offre la possibilité d'inverser le sens du parcours. Afin de réaliser cette action il faut sélectionner "Outil>Inversion du parcours".
-Après l'opération, il est nécessaire de redéfinir les coefficients de fatigues et les barrières horaires puis de relancer un calcul (bouton ![](./images/Toolbar/refresh_data.png) ou [F5]).
-
-## Définir un nouveau point de départ sur un parcours en boucle
-
-**Course Generator** offre la possibilité, si le parcours chargé en mémoire est une boucle, de définir un nouveau point départ.
-La procédure est la suivante:
-
-* Sélectionnez la position qui va devenir votre nouveau point départ.
-* Sélectionnez "Outil>Définir un nouveau point départ".
-* Une boite de dialogue suivante va apparaître:  
-![](./images/CG40_Dlg_Confirm_New_Start.png)
-* Confirmer la commande en cliquant sur "Oui".
-
-Après l'opération il est nécessaire de redéfinir les coefficients de fatigues et les barrières horaires puis de relancer un calcul (bouton ![](./images/Toolbar/refresh_data.png) ou [F5]).
-
-## Les paramètres généraux de Course Generator
-
-Le menu "Paramètres>Paramètres de Course Generator" affiche la fenêtre suivante:  
-![](./images/CG40_Settings.png)
-
-Les réglages possibles sont les suivants:
-
-* "Langues" : Permet de sélectionner la langue utilisée dans l'interface. "Système" utilise les réglages du système d'exploitation pour déterminer la langue à utiliser. Si la langue système n'est pas géré par **Course Generator** alors l'anglais est sélectionné.
-* "Unité" : Permet de choisir entre "km/m" et "Miles/Pieds".
-
-## Importer et exporter les points marqués
-
-Il est nécessaire dans certain cas de devoir sauvegarder uniquement les points marqués du parcours actuel dans un fichier. Cela permet si vous avez une nouvelle version du parcours de pouvoir importer ces points sur ce parcours.
-
-Par exemple:  
-Vous avez récupéré le parcours de l'UTMB. Vous avez passez du temps à repérer chaque col, chaque ravitaillement et vous avez saisie des commentaires sur certaines partie du parcours. Malheureusement, le parcours de l'année suivante est légérement différent mais les points principaux sont les mêmes. La fonction d'import/export des points marqués va vous faire gagner beaucoup de temps.
-
-La procédure est la suivante:
-
-* Prendre le parcours de l'année précédente
-* Exporter les points marqués avec "Fichier>Exporter des points"
-* Sélectionnez les types de points à exporter dans la boite de dialogue suivante:    
-![](./images/CG40_Export_Points.png)
-* Validez votre sélection et saisissez le nom du fichier 'extension.CGP)'
-* Ouvrez le parcours de l'année suivante
-* Importez les importer les points avec "Fichier>Importer des points"
-* Sélectionnez le fichier de point (extension .CGP) à importer.
-* La boite de dialogue suivante apparaît:    
-![](./images/CG40_Import_Points.png)
-    * La colonne "Dist" indique la distance en mètre entre le point trouvé dans le parcours et le point à importer. La couleur de fond verte indique que le point trouvé est à moins de 100m, une couleur jaune indique que le point est entre 100m et 1000m et une couleur rouge indique que le point est à plus de 1000m. Si la distance est élevée cela indique que le nouveau parcours ne passe pas par ce point (au-delà de 100m il faut se poser des questions).  
-    * La colonne "Ligne" indique la ligne du parcours où se trouve le point trouvé
-    * La colonne "Sél." permet de sélectionner les points à importer. "X" indique que la ligne est sélectionné.
-* Sélectionnez les points à importer et cliquez sur "Importer"
-
-## Analyser les données après une course
-
-**Course Generator** permet d'analyser les données après avoir réalisé le parcours. Il suffit d'ouvrir le fichier contenant les données GPS (souvent un fichier GPX). Vous trouvez alors dans le tableau toutes vos données. Les rapports vous permettent d'avoir des informations ces données.
-
-Les données vont rester inchangées tant que vous ne demanderez pas un calcul du temps de parcours. Une fenêtre vous demandera alors si vous voulez écraser les données temporelles.
-
-## Utiliser les fonctionnalités de la partie carte
-
-**Course Generator** affiche le parcours sur une carte OpenStreetMap.  
-![](./images/Map/CG40_Map_Area.png)
-
-Sur la droite, une barre verticale de boutons permet de réaliser des actions sur cette carte.
-
-* ![](./images/Map/marker.png) : Permet d'ajouter une marque de début d'action à l'endroit sélectionné
-* ![](./images/Map/hide_marker.png) : Permet de supprimer la marque
-* ![](./images/Map/undo.png) : Permet d'annuler la dernière opération
-* ![](./images/Map/track_very_easy.png) : Indique que le terrain compris entre ![](./images/Map/marker.png) et le point courant est un "Terrain très facile"
-* ![](./images/Map/track_easy.png) : Indique que le terrain compris entre ![](./images/Map/marker.png) et le point courant est un "Terrain facile"
-* ![](./images/Map/track_average.png) : Indique que le terrain compris entre ![](./images/Map/marker.png) et le point courant est un "Terrain moyen"
-* ![](./images/Map/track_hard.png) : Indique que le terrain compris entre ![](./images/Map/marker.png) et le point courant est un "Terrain difficile"
-* ![](./images/Map/track_very_hard.png) : Indique que le terrain compris entre ![](./images/Map/marker.png) et le point courant est un "Terrain très difficile".
-* ![](./images/Map/flag.png) : Permet d'ajouter une marque au point courant.
-* ![](./images/Map/eat.png) : Permet d'ajouter un ravitaillement au point courant.
-* ![](./images/Map/drink.png) : Permet d'ajouter un point d'eau au point courant.
-* ![](./images/Map/select_map.png) : Permet de sélectionner le type de carte à utiliser.
-
-Les commandes à la souris sont les suivantes:
-
-* Un clic droit sur la carte position le marqueur de position au plus près.
-* Un clic droit maintenu permet de faire bouger la carte.
-* Un double clic sur la carte permet de zoomer sur le point sélectionné.
-
-
-Pour changer la qualité du terrain pour une partie de parcours il faut:
-
-* Positionner le curseur sur le début de la zone à changer
-* Cliquer sur le bouton ![](./images/Map/marker.png) pour mettre le marqueur
-* Positionner le curseur sur la fin de la zone à changer
-* Cliquer sur le bouton correspondant à la qualité de terrain requise (par exemple ![](./images/Map/track_average.png))
-
-Dans la barre d'état l'indicateur ![](./images/Statusbar/CG40_Statusbar_Map_Size.png) indique la taille disque utilisée par les cartes. Le menu "Outils>Afficher le répertoire contenant les fichiers courbes vitesse/pente" permet d'ouvrir le gestionnaire de fichier et d'afficher le contenu du répertoire contenant les courbes, les logs et le répertoire contenant les cartes. Le répertoire  "OpenStreetMapTileCache" contient les parties de carte. Si nécessaire vous pouvez effacer le contenu afin de gagner de la place.
+In the status bar the indicator ![](./images/Statusbar/CG40_Statusbar_Map_Size.png) indicates the disk size used by the cards. The menu "Tools>Open 'Speed/slope' folder" open the file manager and display the contents of the directory containing the curves, the logs and the directory containing the maps. The directory "OpenStreetMapTileCache" contains the map files. If necessary you can delete the content to save space.
