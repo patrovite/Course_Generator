@@ -1,19 +1,19 @@
 # Les menus
 
-## Menu "Fichier"
+## "File" Menu
 
 ![Menu Fichier](./images/Menu/CG40_Menu_File.png)
 
-* **Ouvrir un fichier GPX** : Permet de charger un fichier au format GPX. Raccourci clavier: [MAJ+CTRL+O].
+* **Open GPX** : Loads a GPX format file. Keyboard shortcut: [MAJ+CTRL+O].
 
-* **Ouvrir un fichier CGX** : Permet de charger un fichier au format CGX. Raccourci clavier: [CTRL+O].
+* **Open CGX** : Loads a CGX format file. Keyboard shortcut: [CTRL+O].
 
-* **Derniers fichiers GPX** : Permet l'affichage d'un sous-menu listant les 5 derniers fichiers GPX qui ont été ouvert. Un clic sur un de ces fichiers permet de l'ouvrir.
+* **Recent GPX files** : Displays a list of the last 5 GPX files that have been loaded. Clicking on one of those files will load them again.
 
-* **Derniers fichiers CGX** : Permet l'affichage d'un sous-menu listant les 5 derniers fichiers CGX qui ont été ouvert. Un clic sur un de ces fichiers permet de l'ouvrir.
+* **Recent CGX files** : Displays a list of the last 5 CGX files that have been loaded. Clicking on one of those files will load them again.
 
-* **Sauver CGX** : Permet de sauver les données du parcours au format CGX.
-Toutes les données du parcours (difficultés, coefficient de fatigue, temps de ravitaillement....) sont sauvegardées. Raccourci clavier: [CTRL+S].
+* **Save as CGX** : Saves the course data in CGX format.
+All the course data (difficulty, fatigue coefficient, aid station time...) will be asved. Keyboard shortcut: [CTRL+S].
 
 * **Sauver GPX** : Permet de sauver les données du parcours au format GPX.
 Attention! Seules les données de latitude, de longitude, d'altitude et de temps sont sauvées.

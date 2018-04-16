@@ -1,4 +1,4 @@
-﻿# L'interface
+﻿# The GUI
 Upon starting the software, the following window is displayed : 
 ![Fenêtre principale](./images/CG40_Main.png)
 
