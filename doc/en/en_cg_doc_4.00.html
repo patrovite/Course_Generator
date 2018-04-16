@@ -46,15 +46,15 @@
 </ul></li>
 <li><a href="#la-barre-doutils"><span class="toc-section-number">5</span> La barre d’outils</a></li>
 <li><a href="#la-barre-détats"><span class="toc-section-number">6</span> La barre d’états</a></li>
-<li><a href="#les-onglets"><span class="toc-section-number">7</span> Les onglets</a><ul>
-<li><a href="#longlet-données-gps"><span class="toc-section-number">7.1</span> L’onglet “Données GPS”</a></li>
-<li><a href="#longlet-profil"><span class="toc-section-number">7.2</span> L’onglet “Profil”</a></li>
-<li><a href="#longlet-statistiques"><span class="toc-section-number">7.3</span> L’onglet “Statistiques”</a></li>
-<li><a href="#longlet-analyse"><span class="toc-section-number">7.4</span> L’onglet “Analyse”</a><ul>
-<li><a href="#longlet-analyse-tempsdistance"><span class="toc-section-number">7.4.1</span> L’onglet “Analyse &gt; Temps/Distance”</a></li>
-<li><a href="#longlet-analyse-vitesse"><span class="toc-section-number">7.4.2</span> L’onglet “Analyse &gt; Vitesse”</a></li>
-<li><a href="#longlet-analyse-vitessepente"><span class="toc-section-number">7.4.3</span> L’onglet “Analyse &gt; Vitesse/Pente”</a></li>
-<li><a href="#longlet-résumé"><span class="toc-section-number">7.4.4</span> L’onglet “Résumé”</a></li>
+<li><a href="#tabs"><span class="toc-section-number">7</span> Tabs</a><ul>
+<li><a href="#gps-data-tab"><span class="toc-section-number">7.1</span> “GPS data” tab</a></li>
+<li><a href="#profile-tab"><span class="toc-section-number">7.2</span> “Profile” tab</a></li>
+<li><a href="#statistics-tab"><span class="toc-section-number">7.3</span> “Statistics” tab</a></li>
+<li><a href="#analysis-tab"><span class="toc-section-number">7.4</span> “Analysis” tab</a><ul>
+<li><a href="#analysistimedistance-tab"><span class="toc-section-number">7.4.1</span> “Analysis&gt;Time/Distance” tab</a></li>
+<li><a href="#analysisspeed-tab"><span class="toc-section-number">7.4.2</span> “Analysis&gt;Speed” tab</a></li>
+<li><a href="#analysisspeedslope-tab"><span class="toc-section-number">7.4.3</span> “Analysis&gt;Speed​​/Slope” tab</a></li>
+<li><a href="#summary-tab"><span class="toc-section-number">7.4.4</span> “Summary” tab</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#using-course-generator"><span class="toc-section-number">8</span> Using Course Generator</a><ul>
@@ -183,15 +183,14 @@ Wikipedia source</p>
 <p>No! But it’s a plus if you want to use the virtual partner feature. That’s what pushed me to create <strong>Course Generator</strong> (even though now I almost don’t use this feature anymore).</p>
 </blockquote>
 <h1 id="linterface"><span class="header-section-number">3</span> L’interface</h1>
-<p>Au lancement du logiciel vous obtenez la fenêtre suivante:<br />
-<img src="./images/CG40_Main.png" alt="Fenêtre principale" /></p>
-<p>L’interface du logiciel est composée (de haut en bas):</p>
+<p>Upon starting the software, the following window is displayed : <img src="./images/CG40_Main.png" alt="Fenêtre principale" /></p>
+<p>The software’s GUI is made of (from top to bottom):</p>
 <ul>
-<li>D’un menu situé en haut de la fenêtre</li>
-<li>D’une barre d’outils où sont situées les commandes les plus utilisées.</li>
-<li>D’une zone avec des onglets vous permettant de voir, pour le parcours, les données, le profil, un résumé, des statistiques et des analyses</li>
-<li>D’une zone contenant la carte du parcours</li>
-<li>D’une barre regroupant des informations utiles</li>
+<li>A ribbon on top of the window.</li>
+<li>A toolbar containing the most used tools.</li>
+<li>Several tabs giving access, for a given course, to the profile, data, summary, statistics and analysis.</li>
+<li>A map.</li>
+<li>A footer showing quick important information.</li>
 </ul>
 <h1 id="les-menus"><span class="header-section-number">4</span> Les menus</h1>
 <h2 id="menu-fichier"><span class="header-section-number">4.1</span> Menu “Fichier”</h2>
@@ -299,154 +298,155 @@ Wikipedia source</p>
 <li><img src="./images/Statusbar/CG40_Statusbar_Unit.png" /> : Indique les unités de mesures utilisées.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Map_Size.png" /> : Indique la taille disque utilisée par les cartes.</li>
 </ul>
-<h1 id="les-onglets"><span class="header-section-number">7</span> Les onglets</h1>
-<p>La zone haute contient une série d’onglet qui permet de choisir le type de donnée à afficher.</p>
-<h2 id="longlet-données-gps"><span class="header-section-number">7.1</span> L’onglet “Données GPS”</h2>
-<p>Cet onglet affiche toutes les données du parcours.<br />
-<img src="./images/Tabs/CG40_Tab_Data.png" /></p>
-<p>Un double clique sur une des ligne ouvre la fenêtre d’édition.</p>
-<p>Le détail des colonnes est décrit ci-dessous:</p>
+<h1 id="tabs"><span class="header-section-number">7</span> Tabs</h1>
+<p>The top area contains a series of tabs that allow you to choose the type of data to display.</p>
+<h2 id="gps-data-tab"><span class="header-section-number">7.1</span> “GPS data” tab</h2>
+<p>This tab displays all the data of the track.<br />
+<img src="./images/Tabs/CG40_Tab_Data.png" alt="GPS data tab" /></p>
+<p>A double click on one of the lines opens the edit window.</p>
+<p>The details of the columns are described below:</p>
 <ul>
-<li><strong>N°</strong> : C’est le numéro de la ligne du tableau. Il permet de se repérer rapidement dans le tableau.</li>
-<li><strong>Lat</strong> : Contient la latitude du point en degré.</li>
-<li><strong>Lon</strong> : Contient la longitude du point en degré.</li>
-<li><strong>Altitude</strong> : Contient l’altitude du point en mètre.
+<li><strong>N°</strong> : This is the row number of the table. It allows you to find quickly a line in the table.</li>
+<li><strong>Lat</strong> : Contains the latitude of the point in degree.</li>
+<li><strong>Lon</strong> : Contains the longitude of the point in degree.</li>
+<li><strong>Altitude</strong> : Contains the altitude of the point in meters/feet.
 <ul>
-<li>A gauche de l’altitude une flèche indique l’inclinaison du terrain.
+<li>On the left of the altitude an arrow indicates the inclination of the field.
 <ul>
-<li>Vers le haut, cela indique que l’on a monté depuis le dernier point.</li>
-<li>Vers le bas, cela indique que l’on a descendu depuis le dernier point.</li>
-<li>Vers la droite, cela indique que le terrain en plat.</li>
+<li>Upwards, this indicates that we have climbed since the last point.</li>
+<li>Dowwards, this indicates that we have descended from the last point.</li>
+<li>To the right, this indicates that the field is flat.</li>
 </ul></li>
-<li>La couleur de fond indique le degré de pente du terrain.
+<li>The background color indicates the degree of slope of the field.
 <ul>
-<li>Marron si on monte (pente positif). Plus la pente est élevée et plus la couleur est sombre.</li>
-<li>Blanc si on est sur du plat.</li>
-<li>Vert si on descend (pente négative). Plus la pente est élevée et plus la couleur est sombre.</li>
+<li>Brown if climbing (positive slope). The higher the slope, the darker the color.</li>
+<li>White if the field is flat.</li>
+<li>Green if going down (negative slope). The higher the slope, the darker the color.</li>
 </ul></li>
 </ul></li>
-<li><strong>Tag</strong> : Affiche les marques associées au point.
+<li><strong>Tag</strong> : Displays the marks associated with the point.
 <ul>
-<li><img src="./images/Tags/high_point.png" /> : Indique un point haut.</li>
-<li><img src="./images/Tags/low_point.png" /> : Indique un point bas.</li>
-<li><img src="./images/Tags/eat.png" /> : Indique un point de ravitaillement.</li>
-<li><img src="./images/Tags/drink.png" /> : Indique un point d’eau.</li>
-<li><img src="./images/Tags/flag.png" /> : Indique que le point a été marqué.</li>
-<li><img src="./images/Tags/photo.png" /> : Indique un lieu remarquable.</li>
-<li><img src="./images/Tags/note.png" /> : Indique une note.</li>
-<li><img src="./images/Tags/info.png" /> : Indique une information.</li>
-<li><img src="./images/Tags/roadbook.png" /> : Indique le début ou la fin d’une section de roadbook.</li>
+<li><img src="./images/Tags/high_point.png" /> : Indicates a high point.</li>
+<li><img src="./images/Tags/low_point.png" /> : Indicates a low point.</li>
+<li><img src="./images/Tags/eat.png" /> : Indicates a refueling point.</li>
+<li><img src="./images/Tags/drink.png" /> : Indicates a water point.</li>
+<li><img src="./images/Tags/flag.png" /> : Indicates that the point has been marked.</li>
+<li><img src="./images/Tags/photo.png" /> : Indicates a view place.</li>
+<li><img src="./images/Tags/note.png" /> : Indicates a note.</li>
+<li><img src="./images/Tags/info.png" /> : Indicates information.</li>
+<li><img src="./images/Tags/roadbook.png" /> : Indicates the beginning or the end of a roadbook section.</li>
 </ul></li>
-<li><strong>Dist</strong> : Contient la distance, en mètre, avec le point précédent.</li>
-<li><strong>Total</strong> : Contient la distance, en kilomètre, qui a été parcouru jusqu’à ce point.</li>
-<li><strong>Diff</strong> : Contient la difficulté du terrain entre le point précédent et ce point. La valeur initiale est de 100, cela correspond à une route plate goudronnée. Plus la valeur diminue, plus le terrain est accidenté. Si vous mettez 80, cela indique que par rapport à une route goudronnée plate vous allez mettre 20% de temps en plus pour parcourir la distance. Le bouton <img src="./images/Toolbar/fill_diff.png" /> permet de remplir rapidement un ensemble de position. Vous trouverez ci-dessous les valeurs utilisés par Softrun (www.softrun.fr). Merci à Rémi Poisvert pour ces informations.
+<li><strong>Dist</strong> : Contains the distance, in meters/miles, with the previous point.</li>
+<li><strong>Total</strong> : Contains the distance, in kilometers/miles, that has been traveled to this point.</li>
+<li><strong>Diff</strong> : Contains the field difficulty between the previous point and this point. The initial value is 100, this corresponds to a flat road. The lower the value, the more rugged field. If you enter 80, this indicates that compared to a flat road you will spend 20% more time to cover the distance. The button <img src="./images/Toolbar/fill_diff.png" /> allows you to quickly fill a set of position. You will find below the values ​​used by Softrun (www.softrun.fr). Thanks to Rémi Poisvert for these informations.
 <ul>
-<li>“Terrain facile” = 98</li>
-<li>“Terrain moyen” (chemin normal de montagne) = 95</li>
-<li>“Terrain difficile” = 88</li>
-<li>“Terrain très difficile” = 80</li>
-<li>“Terrains extrêmement difficiles” = en-dessous de 80</li>
+<li>“Easy field” = 98</li>
+<li>“Average field” (normal mountain path) = 95</li>
+<li>“Hard field” = 88</li>
+<li>“Very hard field” = 80</li>
+<li>“Extremely hard field” = below 80</li>
 </ul></li>
-<li><strong>Coeff</strong> : Contient le coefficient de fatigue à appliquer entre le point précédent et ce point. La valeur est comprise entre 1 et 200. La valeur initiale est de 100, cela correspond à votre état de départ (en principe en bonne forme). Si vous mettez 80, cela indique que vous allez mettre 20% de temps en plus pour parcourir la distance. Le bouton <img src="./images/Toolbar/fill_coeff.png" /> permet de définir une régle d’évolution globale du coefficient de fatigue.</li>
-<li><strong>Récup.</strong> : Contient le coefficient de récupération qui sera ajouté au coefficient de fatigue. C’est une valeur relative qui est comprise entre 0 et 100. La valeur initiale est de 0 (qui n’est pas affichée). La somme “Coeff”+“Récup” est plafonnée à 100%. Ce paramètre est utilisé pour indiquer la récupération suite à une pause (ravitaillement, sieste dans une base vie…). Une fois la valeur saisie, il faut relancer un calcul global du coefficient de fatigue avec le bouton <img src="./images/Toolbar/fill_coeff.png" />.</li>
-<li><strong>Temps</strong> : Contient le temps qu’il vous faut pour atteindre ce point depuis le départ.</li>
-<li><strong>B.H.</strong> : Contient la barrière horaire à ce point du parcours. C’est le temps depuis le départ et non l’heure de passage (cela permet d’éviter les problèmes liés au décalage des heures de départ). Si à un point du parcours le temps est supérieur à la barrière horaire alors un indicateur apparaît dans la barre de d’information située en bas de la fenêtre principale. Un clique sur l’indicateur positionne le tableau sur la première barrière horaire qui a été dépassée.</li>
-<li><strong>Heure</strong> : Contient le jour et l’heure de passage à ce point. La date et l’heure de départ sont réglables dans les paramètres de course. Si le fond est vert cela indique que le trajet se fait de jour. Si le fond est bleu alors le trajet se fait de nuit.</li>
-<li><strong>Ravito</strong> : Contient le temps de ravitaillement que vous prévoyez à ce point. Si aucun ravitaillement n’est prévu à ce point (temps égale à 00:00.00) alors la cellule est vide.</li>
-<li><strong>Nom</strong> : Contient le nom du point. Il est utilisé dans l’affichage du profil, les rapports et le mini roadbook.</li>
-<li><strong>Commentaire</strong> : Contient un commentaire sur le point. Il est utilisé dans les rapports et le mini roadbook.</li>
+<li><strong>Coeff</strong> : Contains the fatigue coefficient to be applied between the previous point and this point. The value is between 1 and 200. The initial value is 100, this corresponds to your initial state (in principle in good shape). If you enter 80, it indicates that you will spend 20% more time to travel the distance. The button <img src="./images/Toolbar/fill_coeff.png" /> allows to define a rule of global evolution of the fatigue coefficient.</li>
+<li><strong>Recovery</strong> : Contains the recovery coefficient that will be added to the fatigue coefficient. It is a relative value that is between 0 and 100. Initial value is 0 (not displayed). The sum “Coeff” + “Recovery” is limited to 100%. This parameter is used to indicate recovery after a break (refueling, nap in a aid station…). Once the value entered, it’s necessary to restart an overall calculation of the coefficient of fatigue with the button <img src="./images/Toolbar/fill_coeff.png" />.</li>
+<li><strong>Time</strong> : Contains the time needed to reach this point from the start.</li>
+<li><strong>Cut-off</strong> : Contains the cut-off time at this point of the track. This is the time since time and not the hour (this avoids the problems related to the departure times shift). If at a point in the track the time is greater than the cut-off time then an indicator appears in the information bar at the bottom of the main window. A click on the indicator select the first line with cut-off time.</li>
+<li><strong>Hours</strong> : Contains the day and time of passage at this point. Start date and time are adjustable in the track parameters. If the background is green it indicates that the travel is made during the dayligth. If the background is blue then the trip is done during the night.</li>
+<li><strong>Aid station</strong> : Contains the refueling time you expect at this point. If no refueling is planned for this point (time equal to 00: 00.00) then the cell is empty.</li>
+<li><strong>Name</strong> : Contains the name of the point. It is used in profile view, reports and mini roadbook.</li>
+<li><strong>Comment</strong> : Contains a comment on the point. It is used in reports and the mini roadbook.</li>
 </ul>
-<h2 id="longlet-profil"><span class="header-section-number">7.2</span> L’onglet “Profil”</h2>
-<p>Cet onglet affiche le profil du parcours.<br />
-<img src="./images/Tabs/CG40_Tab_Profil.png" /></p>
-<p>Si une marque a été positionnée dans le tableau alors un point apparaît sur la courbe ainsi que son numéro d’ordre. Ce numéro correspond à la ligne du tableau de l’onglet Résumé.</p>
-<p>Un clique gauche sur la courbe permet de positionner un curseur et d’obtenir des informations sur le point (issue du tableau).</p>
-<p>Un clique droit sur la courbe permet d’afficher un menu permettant de régler l’affichage de la courbe et de la sauvegarder sous forme d’image (format PNG).</p>
-<p>Le bouton <img src="./images/Tabs/profil_marker.png" /> permet d’afficher la position des lignes du tableau “Résumé”.</p>
-<h2 id="longlet-statistiques"><span class="header-section-number">7.3</span> L’onglet “Statistiques”</h2>
-<p>Cet onglet permet d’obtenir des statistiques sur le parcours.<br />
-<img src="./images/Tabs/CG40_Tab_Stat.png" /></p>
-<p>Les statistiques concernent entre autre:</p>
+<h2 id="profile-tab"><span class="header-section-number">7.2</span> “Profile” tab</h2>
+<p>This tab displays the track profile.<br />
+<img src="./images/Tabs/CG40_Tab_Profil.png" alt="Profile tab" /></p>
+<p>If a mark has been positioned in the table then a point appears on the curve as well as its serial number. This number corresponds to the table row of the Summary tab.</p>
+<p>A left click on the curve makes it possible to position a cursor and to obtain information on the point (issue from the data table).</p>
+<p>A right click on the curve displays a menu to adjust the display of the curve and save the display as an image (PNG format).</p>
+<p>The button <img src="./images/Tabs/profil_marker.png" /> displays the row position of the “Summary” table.</p>
+<h2 id="statistics-tab"><span class="header-section-number">7.3</span> “Statistics” tab</h2>
+<p>This tab provides statistics on the track.<br />
+<img src="./images/Tabs/CG40_Tab_Stat.png" alt="Statistics tab" /></p>
+<p>Statistics concern among other things:</p>
 <ul>
-<li>La vitesse moyenne, la distance et le temps pour diverses zones de pente</li>
-<li>La vitesse moyenne, la distance et le temps pour diverses zones d’altitude</li>
-<li>La vitesse moyenne, la distance et le temps pour les périodes de jour</li>
-<li>La vitesse moyenne, la distance et le temps pour les périodes de nuit</li>
-<li>Le pourcentage moyen de pente à la montée et la descente</li>
-<li>La distance parcourue en montée, sur le plat et en descente</li>
-<li>La différence de température entre le point bas du parcours et le point haut. Cette valeur est purement indicative et théorique. Elle ne prend pas en compte la température ressentie (du au vent) et les phénomènes locaux. La base de calcul est 0.6°C par 100m de dénivelé.</li>
+<li>Average speed, distance and time for various slope areas</li>
+<li>Average speed, distance and time for various altitude range</li>
+<li>Average speed, distance and time for daylight period</li>
+<li>Average speed, distance and time for night period</li>
+<li>The average percentage of slope on the ascent and descent</li>
+<li>The distance traveled uphill, on the flat and downhill</li>
+<li>The temperature difference between the low point of the course and the high point. This value is purely indicative and theoretical. It does not take into account the felt temperature (due to the wind) and local phenomena. The basis of calculation is 0.6°C per 100m of elevation gain.</li>
 </ul>
-<p>Le bouton <img src="./images/Tabs/save.png" /> permet de sauver ces données au format HTML.<br />
-Le bouton <img src="./images/Tabs/refresh.png" /> permet de rafraîchir les données.</p>
-<h2 id="longlet-analyse"><span class="header-section-number">7.4</span> L’onglet “Analyse”</h2>
-<p>Cet onglet permet d’obtenir une analyse de votre parcours. Il contient 3 sous-onglets qui sont détaillés ci-dessous.</p>
-<h3 id="longlet-analyse-tempsdistance"><span class="header-section-number">7.4.1</span> L’onglet “Analyse &gt; Temps/Distance”</h3>
-<p>Cet onglet pemret de faire une analyse de votre vitesse dans le temps. <img src="./images/Tabs/CG40_Tab_Analyze_Dist_Time.png" /></p>
-<p>Deux courbes sont présentes:</p>
+<p>The button <img src="./images/Tabs/save.png" /> save this data in HTML format.<br />
+The button <img src="./images/Tabs/refresh.png" /> refresh the data.</p>
+<h2 id="analysis-tab"><span class="header-section-number">7.4</span> “Analysis” tab</h2>
+<p>This tab allows to obtain an analysis of your track. It contains 3 sub-tabs which are detailed below.</p>
+<h3 id="analysistimedistance-tab"><span class="header-section-number">7.4.1</span> “Analysis&gt;Time/Distance” tab</h3>
+<p>This tab allows you to analyze your speed over time. <img src="./images/Tabs/CG40_Tab_Analyze_Dist_Time.png" alt="Time/Distance tab" /></p>
+<p>Two curves are displayed:</p>
 <ul>
-<li>Une courbe d’altitude par rapport à la distance</li>
-<li>Une courbe de temps (en seconde) par rapport à la distance</li>
+<li>A curve of the altitude over the distance</li>
+<li>A curve of the time (in seconde) over the distance</li>
 </ul>
-<p>L’étude de la courbe de temps/distance permet de voir son évolution sur le parcours (accélération ralentissement, arrêté). Le changement de pente de la courbe rouge indique une variation de vitesse.</p>
-<p>Les cas suivants sont possibles:</p>
+<p>The study of the curve of time/distance makes it possible to see its evolution on the track (acceleration, slowdown, stopped). The change of slope of the red curve indicates a variation of speed.</p>
+<p>The following cases are possible:</p>
 <ul>
-<li>La pente de la courbe devient plus raide. Cela indique un ralentissement (due au terrain ou à la fatigue).</li>
-<li>La pente de la courbe devient moins raide. Cela indique une accélération.</li>
-<li>La pente change brusquement. Cela indique un arrêt.</li>
+<li>The slope of the curve becomes steeper. This indicates a slowdown (due to the field or fatigue).</li>
+<li>The slope of the curve becomes less steep. This indicates an acceleration.</li>
+<li>The slope changes abruptly. This indicates a stop.</li>
 </ul>
-<h3 id="longlet-analyse-vitesse"><span class="header-section-number">7.4.2</span> L’onglet “Analyse &gt; Vitesse”</h3>
-<p>Cet onglet permet d’obtenir de faire une analyse de la vitesse sur votre parcours.<br />
-<img src="./images/Tabs/CG40_Tab_Analyze_Speed.png" /></p>
-<p>Deux courbes sont présentes:</p>
+<h3 id="analysisspeed-tab"><span class="header-section-number">7.4.2</span> “Analysis&gt;Speed” tab</h3>
+<p>This tab allows you to get an analysis of the speed on your track.<br />
+<img src="./images/Tabs/CG40_Tab_Analyze_Speed.png" alt="Speed tab" /></p>
+<p>Two curves are present:</p>
 <ul>
-<li>Une courbe de vitesse par rapport à la distance</li>
-<li>Une courbe de régression de la vitesse</li>
+<li>A curve of the speed over the distance</li>
+<li>A regression curve of speed</li>
 </ul>
-<p>Le bouton permet de sauver le profil sous forme d’image.</p>
-<h3 id="longlet-analyse-vitessepente"><span class="header-section-number">7.4.3</span> L’onglet “Analyse &gt; Vitesse/Pente”</h3>
-<p>Cet onglet permet d’extrapoler une courbe vitesse par rapport à la pente.<br />
-<img src="./images/Tabs/CG40_Tab_Analyze_Speed_Slope.png" /></p>
-<p>Cette courbe est utile pour créer ses propres courbes vitesse/pente en fonction d’un parcours réalisé. Deux courbes sont présentes:</p>
+<p>A right click on the curve display a menu allowing to save the curve as an image.</p>
+<h3 id="analysisspeedslope-tab"><span class="header-section-number">7.4.3</span> “Analysis&gt;Speed​​/Slope” tab</h3>
+<p>This tab is used to extrapolate a speed curve over the slope.<br />
+<img src="./images/Tabs/CG40_Tab_Analyze_Speed_Slope.png" alt="Speed/slope tab" /></p>
+<p>This curve is useful for creating its own speed/slope curves according to a runned track.</p>
+<p>Two curves are present:</p>
 <ul>
-<li>Un nuage de points qui regroupe tous les points acquis lors de votre parcours</li>
-<li>Une courbe vitesse/pente (extrapolé)</li>
+<li>A scatter plot that includes all the points acquired during your race</li>
+<li>A speed/slope curve (extrapolated)</li>
 </ul>
-<p>Le bouton <img src="./images/Tabs/save.png" /> permet de sauvegarder la courbe résultat (courbe rouge) dans la bibliothèque des courbes vitesse/pente. Elle sera exploitable dans la fenêtre courbe.</p>
-<p>La boite de dialogue suivante apparaît:<br />
+<p>The button <img src="./images/Tabs/save.png" /> saves the result curve (red curve) in the speed/slope curve library. It will be useable in the curves dialog.</p>
+<p>The following dialog appears:<br />
 <img src="./images/Tabs/CG40_Tab_Analyze_Speed_Slope_Save.png" /><br />
-Le champ de saisie “Nom” permet de saisir le nom de la courbe.<br />
-Le champ de saisie “Commentaire” permet de saisir un commentaire.</p>
-<p>Le bouton <img src="./images/Tabs/correction.png" /> permet de corriger la courbe vitesse/pente avec les paramètres du parcours (difficulté du terrain et fatigue).<br />
-Le bouton <img src="./images/Tabs/speed.png" /> permet de filtrer la vitesse de la courbe vitesse/pente.</p>
-<h3 id="longlet-résumé"><span class="header-section-number">7.4.4</span> L’onglet “Résumé”</h3>
-<p>Cet onglet affiche un tableau regroupant toutes les lignes du parcours contenant une marque.<br />
-<img src="./images/Tabs/CG40_Tab_Resume.png" /></p>
-<p>Pour chaque ligne vous avez:</p>
+The “Name” input field is used to enter the name of the curve.<br />
+The “Comment” input field is used to enter a comment.</p>
+<p>The button <img src="./images/Tabs/correction.png" /> corrects the speed/slope curve with the track parameters (field difficulty and fatigue).<br />
+The button <img src="./images/Tabs/speed.png" /> allows to filter the speed of the speed/slope curve.</p>
+<h3 id="summary-tab"><span class="header-section-number">7.4.4</span> “Summary” tab</h3>
+<p>This tab displays a table containing all the lines of the track containing a mark.<br />
+<img src="./images/Tabs/CG40_Tab_Resume.png" alt="Summary tab" /></p>
+<p>For each line you have:</p>
 <ul>
-<li>Un numéro.</li>
-<li>Le nom du point marqué.</li>
-<li>La ligne du tableau où se trouve le point marqué.</li>
-<li>L’altitude du point marqué.</li>
-<li>Le dénivelé positif réalisé jusqu’à ce point.</li>
-<li>Le dénivelé négatif réalisé jusqu’à ce point.</li>
-<li>La distance parcourue jusqu’au point marqué.</li>
-<li>Le temps de passage à ce point.</li>
-<li>L’heure de passage à ce point.</li>
-<li>Le temps de parcours depuis le dernier point.</li>
-<li>La barrière horaire exprimée en temps depuis le départ.</li>
-<li>Le temps de ravitaillement.</li>
-<li>La distance depuis le dernier point.</li>
-<li>Le dénivelé positif depuis le dernier point.</li>
-<li>Le dénivelé négatif depuis le dernier point.</li>
-<li>La vitesse de montée depuis le dernier point.</li>
-<li>La vitesse de descente depuis le dernier point.</li>
-<li>La pente moyenne des montées depuis le dernier point.</li>
-<li>La pente moyenne des descentes depuis le dernier point.</li>
-<li>La vitesse moyenne depuis le dernier point.</li>
-<li>Le commentaire sur le point marqué.</li>
+<li>A number.</li>
+<li>The name of this point.</li>
+<li>The line of the data table where is this point.</li>
+<li>The altitude of this point.</li>
+<li>The elevation gain achieved up to this point.</li>
+<li>The elevation loss achieved up to this point.</li>
+<li>The distance traveled to this point.</li>
+<li>The time at this point.</li>
+<li>The hour at this point.</li>
+<li>The travel time since the last point.</li>
+<li>The cut-off expressed in time since the start.</li>
+<li>The refueling time.</li>
+<li>The distance from the last point.</li>
+<li>The elevation gain since last point.</li>
+<li>The elevation loss since the last point.</li>
+<li>The climb speed since the last point.</li>
+<li>The descent speed since the last point.</li>
+<li>The average slope of the climbs since the last point.</li>
+<li>The average slope of the descents since the last point.</li>
+<li>The average speed since last point.</li>
+<li>The comment on this point.</li>
 </ul>
-<p>Le bouton <img src="./images/Tabs/save.png" /> permet de sauvegarder les données du tableau au format CSV afin de les exploiter dans un tableur (Excel, OpenOffice Calc…).<br />
-Le bouton <img src="./images/Tabs/refresh.png" /> permet de rafraîchir les données.</p>
+<p>The button <img src="./images/Tabs/save.png" /> saves the table data in CSV format in order to be used in a spreadsheet (Excel, OpenOffice Calc …).<br />
+The button <img src="./images/Tabs/refresh.png" /> allows you to refresh the data.</p>
 <h1 id="using-course-generator"><span class="header-section-number">8</span> Using Course Generator</h1>
 <p>The normal procedure for using <strong>Course Generator</strong> is:</p>
 <ul>
