@@ -95,9 +95,9 @@
 <li><a href="#analyze-data-after-a-race"><span class="toc-section-number">9.13</span> Analyze data after a race</a></li>
 <li><a href="#use-of-the-map-features"><span class="toc-section-number">9.14</span> Use of the map features</a></li>
 </ul></li>
-<li><a href="#les-outils-utiles"><span class="toc-section-number">10</span> Les outils utiles</a><ul>
-<li><a href="#la-correction-des-altitudes"><span class="toc-section-number">10.1</span> La correction des altitudes</a></li>
-<li><a href="#la-suppression-des-points-inutiles"><span class="toc-section-number">10.2</span> La suppression des points inutiles</a></li>
+<li><a href="#useful-tools"><span class="toc-section-number">10</span> Useful tools</a><ul>
+<li><a href="#altitude-correction"><span class="toc-section-number">10.1</span> Altitude correction</a></li>
+<li><a href="#removing-unnecessary-points"><span class="toc-section-number">10.2</span> Removing unnecessary points</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -852,19 +852,19 @@ You have the track of the UTMB. You’ve spent time spotting each pass, aid stat
 <li>Click on the button corresponding to the required field quality (for example <img src="./images/Map/track_average.png" />)</li>
 </ul>
 <p>In the status bar the indicator <img src="./images/Statusbar/CG40_Statusbar_Map_Size.png" /> indicates the disk size used by the cards. The menu “Tools&gt;Open ‘Speed/slope’ folder” open the file manager and display the contents of the directory containing the curves, the logs and the directory containing the maps. The directory “OpenStreetMapTileCache” contains the map files. If necessary you can delete the content to save space.</p>
-<h1 id="les-outils-utiles"><span class="header-section-number">10</span> Les outils utiles</h1>
-<h2 id="la-correction-des-altitudes"><span class="header-section-number">10.1</span> La correction des altitudes</h2>
-<p>Les mesures d’altitudes faites par un GPS sont basées, comme pour la position, sur une triangulation. Malheureusement cette triangulation est moins précise que pour la position. Sur de longue distance ces erreurs ne sont pas négligeables et peuvent provoquer des erreurs de calcul sur la distance parcouru et sur le dénivelé total.</p>
-<p>Il est alors nécessaire de réaliser une opération de calage des altitudes. Cette opération consiste à remplacer, pour chaque point GPS, l’altitude mesurée par la vraie altitude.</p>
-<p>Il y a plusieurs outils qui font cette opération. Parmi ceux-là, il y a GPSVisualizer qui à partir de votre fichier au format GPX corrige les altitudes et vous génére, en sortie, un fichier avec les valeurs corrigées.</p>
-<p>L’outil se trouve à l’adresse web suivante http://www.gpsvisualizer.com/elevation</p>
+<h1 id="useful-tools"><span class="header-section-number">10</span> Useful tools</h1>
+<h2 id="altitude-correction"><span class="header-section-number">10.1</span> Altitude correction</h2>
+<p>The altitude measurements made by a GPS are based, as for the position, on a triangulation. Unfortunately this triangulation is less precise than for the position. Over long distances these errors are not negligible and can cause calculation errors on total distance or the total climb.</p>
+<p>It is then necessary to carry out a calibration operation of the altitudes. This operation consists of replacing, for each GPS point, the altitude measured by the true altitude.</p>
+<p>There are several tools that do this operation. Among these, there is GPSVisualizer which from your GPX file corrects the altitudes and generate an output with the corrected values.</p>
+<p>The tool is at the following web address http://www.gpsvisualizer.com/elevation</p>
 <blockquote>
 <p>Note:<br />
-<strong>Course Generator</strong> ne contient pas d’algorithme élaboré permettant de filtrer les altitudes (comme dans SportTracks). Le seul filtre présent concerne le cumul des altitudes où le cumul ne fonctionne que s’il y a une variation d’altitude supérieure à un seuil déterminé (10m). Cela permet de masquer les petites aspérités du terrain comme un rocher ou un tronc d’arbre. Les GPS étant de plus en plus précis, ces aspérités sont prises en compte dans les calculs et viennent les fausser.</p>
+<strong>Course Generator</strong> does not contain an elaborate algorithm for filtering altitudes. The only filter present concerns the climb diiference where that only works if there is a variation of altitude higher than a certain threshold (10m). This makes it possible to hide the small asperities of the ground like a rock or a tree trunk. The GPS being more and more precise, these asperities are taken into account in the calculations and come to distort them.</p>
 </blockquote>
-<h2 id="la-suppression-des-points-inutiles"><span class="header-section-number">10.2</span> La suppression des points inutiles</h2>
-<p>Certain parcours, surtout quand ils ont été enregistré sur le terrain, contiennent plusieurs milliers de points. Cela peut poser des problèmes avec certains logiciels, sites internet ou GPS.</p>
-<p>Le site GPSVisualizer permet de réduire de maniére intelligente le nombre de points sans perte “d’informations” sur le parcours.</p>
-<p>L’outil se trouve à l’adresse web suivante http://www.gpsvisualizer.com/convert_input</p>
+<h2 id="removing-unnecessary-points"><span class="header-section-number">10.2</span> Removing unnecessary points</h2>
+<p>Some tracks, especially when they have been recorded in by GPS, contain several thousand points. This can cause problems with some software, websites or GPS.</p>
+<p>The GPSVisualizer site smartly reduces the number of points without loss of “information” on the track.</p>
+<p>The tool is at the following web address http://www.gpsvisualizer.com/convert_input</p>
 </body>
 </html>

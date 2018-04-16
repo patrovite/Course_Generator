@@ -1,23 +1,23 @@
-#  Les outils utiles
+#  Useful tools
 
-##  La correction des altitudes
+##  Altitude correction
 
-Les mesures d'altitudes faites par un GPS sont basées, comme pour la position, sur une triangulation. Malheureusement cette triangulation est moins précise que pour la position. Sur de longue distance ces erreurs ne sont pas négligeables et peuvent provoquer des erreurs de calcul sur la distance parcouru et sur le dénivelé total.
+The altitude measurements made by a GPS are based, as for the position, on a triangulation. Unfortunately this triangulation is less precise than for the position. Over long distances these errors are not negligible and can cause calculation errors on total distance or the total climb.
 
-Il est alors nécessaire de réaliser une opération de calage des altitudes. Cette opération consiste à remplacer, pour chaque point GPS, l'altitude mesurée par la vraie altitude.
+It is then necessary to carry out a calibration operation of the altitudes. This operation consists of replacing, for each GPS point, the altitude measured by the true altitude.
 
-Il y a plusieurs outils qui font cette opération. Parmi ceux-là, il y a GPSVisualizer qui à partir de votre fichier au format GPX corrige les altitudes et vous génére, en sortie, un fichier avec les valeurs corrigées.
+There are several tools that do this operation. Among these, there is GPSVisualizer which from your GPX file corrects the altitudes and generate an output with the corrected values.
 
-L'outil se trouve à l'adresse web suivante http://www.gpsvisualizer.com/elevation
+The tool is at the following web address http://www.gpsvisualizer.com/elevation
 
 
 > Note:  
-> **Course Generator** ne contient pas d'algorithme élaboré permettant de filtrer les altitudes (comme  dans SportTracks). Le seul filtre présent concerne le cumul des altitudes où le cumul ne fonctionne que s'il y a une variation d'altitude supérieure à un seuil déterminé (10m). Cela permet de masquer les petites aspérités du terrain comme un rocher ou un tronc d'arbre. Les GPS étant de plus en plus précis, ces aspérités sont prises en compte dans les calculs et viennent les fausser.
+> **Course Generator** does not contain an elaborate algorithm for filtering altitudes. The only filter present concerns the climb diiference where that only works if there is a variation of altitude higher than a certain threshold (10m). This makes it possible to hide the small asperities of the ground like a rock or a tree trunk. The GPS being more and more precise, these asperities are taken into account in the calculations and come to distort them.
 
-## La suppression des points inutiles
+## Removing unnecessary points
 
-Certain parcours, surtout quand ils ont été enregistré sur le terrain, contiennent plusieurs milliers de points. Cela peut poser des problèmes avec certains logiciels, sites internet ou GPS.
+Some tracks, especially when they have been recorded in by GPS, contain several thousand points. This can cause problems with some software, websites or GPS.
 
-Le site GPSVisualizer permet de réduire de maniére intelligente le nombre de points sans perte "d'informations" sur le parcours.
+The GPSVisualizer site smartly reduces the number of points without loss of "information" on the track.
 
-L'outil se trouve à l'adresse web suivante http://www.gpsvisualizer.com/convert_input
+The tool is at the following web address http://www.gpsvisualizer.com/convert_input
