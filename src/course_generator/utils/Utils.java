@@ -396,11 +396,11 @@ public class Utils {
 	}
 	
 	/**
-	 * Return the speed unit as string (km/h, miles/h, min/km or min/miles)
+	 * Return the speed unit as string (km/h, miles/h, min/km or min/mile)
 	 * @param unit
 	 * 	Unit
 	 * @param pace
-	 *  if "true" the speed type is pace (min/km or min/miles) otherwise it's a speed (km/h or miles/h)
+	 *  if "true" the speed type is pace (min/km or min/mile) otherwise it's a speed (km/h or miles/h)
 	 * @return
 	 * 	String with the unit
 	 */
@@ -420,7 +420,7 @@ public class Utils {
 				case CgConst.UNIT_METER:
 					return "min/km";
 				case CgConst.UNIT_MILES_FEET:
-					return "min/miles";
+					return "min/mile";
 				default:
 					return "min/km";
 			}			
@@ -467,7 +467,7 @@ public class Utils {
 	/**
 	 * Calculate the pace from a speed
 	 * @param speed Speed in km/h or miles/h
-	 * @return pace in min/km or min/miles (8.30min/miles =>8.3)
+	 * @return pace in min/km or min/mile (8.30min/mile =>8.3)
 	 */
 	public static double Speed2Pace(double speed) {
 		if (speed==0.0) return 0.0;
@@ -481,7 +481,7 @@ public class Utils {
 	/**
 	 * Calculate the pace from a speed and return the result as a string
 	 * @param speed Speed in km/h or miles/h
-	 * @return pace as string in min/km or min/miles (8.30min/miles =>"8.3")
+	 * @return pace as string in min/km or min/mile (8.30min/mile =>"8.3")
 	 */
 	public static String Speed2PaceString(double speed) {
 		if (speed==0.0) return "0.0";
@@ -495,7 +495,7 @@ public class Utils {
 	
 	/**
 	 * Calculate the speed from a pace
-	 * @param pace Pace in min/km or min/miles (8.30min/miles =>8.3)
+	 * @param pace Pace in min/km or min/mile (8.30min/mile =>8.3)
 	 * @return speed in km/h or miles/h 
 	 */
 	public static double Pace2Speed(double pace) {
