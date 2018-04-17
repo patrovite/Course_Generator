@@ -67,8 +67,8 @@ The button ![duplicate curve button](./images/Curve/chart_curve_duplicate.png) d
 The button ![delete curve button](./images/Curve/chart_curve_delete.png) deletes the selected curve.
 
 > **How to choose a speed curve?**
-> This will depend on you, your goals... You can base yourself on a percentage of your VMA.
-> For example for a long trail you can take 60% of your VMA. About 10km/h in my case, I then select the curve of 10km/h.
+> This will depend on you, your goals... You can base yourself on a percentage of your vVO2max.
+> For example for a long trail you can take 60% of your vVO2max. About 10km/h in my case, I then select the curve of 10km/h.
 > There is also the pratice. At the beginning you will surely underestimate or over-evaluate your speed. But over time your choice will become more and more precise.
 
 **Notes:**  
