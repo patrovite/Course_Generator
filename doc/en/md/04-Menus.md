@@ -1,99 +1,98 @@
-# Les menus
-
-## Menu "Fichier"
+# Menus
+## "File" Menu
 
 ![Menu Fichier](./images/Menu/CG40_Menu_File.png)
 
-* **Ouvrir un fichier GPX** : Permet de charger un fichier au format GPX. Raccourci clavier: [MAJ+CTRL+O].
+* **Open GPX** : Loads a GPX format file. Keyboard shortcut: [MAJ+CTRL+O].
 
-* **Ouvrir un fichier CGX** : Permet de charger un fichier au format CGX. Raccourci clavier: [CTRL+O].
+* **Open CGX** : Loads a CGX format file. Keyboard shortcut: [CTRL+O].
 
-* **Derniers fichiers GPX** : Permet l'affichage d'un sous-menu listant les 5 derniers fichiers GPX qui ont été ouvert. Un clic sur un de ces fichiers permet de l'ouvrir.
+* **Recent GPX files** : Displays a list of the last 5 GPX files that have been loaded. Clicking on one of those files will load them again.
 
-* **Derniers fichiers CGX** : Permet l'affichage d'un sous-menu listant les 5 derniers fichiers CGX qui ont été ouvert. Un clic sur un de ces fichiers permet de l'ouvrir.
+* **Recent CGX files** : Displays a list of the last 5 CGX files that have been loaded. Clicking on one of those files will load them again.
 
-* **Sauver CGX** : Permet de sauver les données du parcours au format CGX.
-Toutes les données du parcours (difficultés, coefficient de fatigue, temps de ravitaillement....) sont sauvegardées. Raccourci clavier: [CTRL+S].
+* **Save as CGX** : Saves the course data in CGX format.
+All the course data (difficulty, fatigue coefficient, aid station time...) will be asved. Keyboard shortcut: [CTRL+S].
 
-* **Sauver GPX** : Permet de sauver les données du parcours au format GPX.
-Attention! Seules les données de latitude, de longitude, d'altitude et de temps sont sauvées.
+* **Save as GPX** : Saves the course data in GPX format.
+Warning! Only latitude, longitude and altitude data will be saved.
 
-* **Sauver CSV** : Permet de sauver les données du parcours au format CSV.
-Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
+* **Save as CSV** : Saves the course data in CSV format.
+The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
-* **Importer un fichier GPX** : Permet d'insérer un fichier GPX au début ou à la fin du parcours actif.
+* **Import a GPX file** : Imports a GPX file at the beginning or end of the current course
 
-* **Importer un fichier CGX** : Permet d'insérer un fichier CGX au début ou à la fin du parcours actif.
+* **Import a CGX file** : Imports a CGX file at the beginning or end of the current course.
 
-* **Sauver une partie du parcours en CGX** : Permet de sauver les lignes sélectionnées du tableau au format CGX.
-Toutes les données du parcours (difficultés, coefficient de fatigue, temps de ravitaillement....) sont sauvegardées.
+* **Save selection as CGX** : Saves the selected line(s) in a CGX file.
+All the course data (difficulties, fatigue coefficient, aid station time....) will be saved.
 
-* **Sauver une partie du parcours en GPX** : Permet de sauver les lignes sélectionnées du tableau au format GPX.
-Attention! Seules les données de latitude, de longitude, d'altitude et de temps sont sauvés.
+* **Save selection as GPX** : Saves the selected lines in a GPX file.
+Warning! Only latitude, longitude and altitude data will be saved.
 
-* **Sauver une partie du parcours en CSV** : Permet de sauver les lignes sélectionnées du tableau au format CSV.
-Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
+* **Save selection as CSV** : Saves the selected lines in a CSV file.
+The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
-* **Importer des points** : Permet d'importer des points sauvegardés au format CGP.
+* **Import points** : Imports waypoints as CGP format.
 
-* **Exporter des points** : Permet de sauvegarder les points marqués dans un fichier au format CGP.
+* **Export points** : Saves the selected waypoints in a CGP file.
 
-* **Exporter des tags en waypoints** : Permet de sauvegarder les tags sélectionnés dans un fichier GPX sous forme de waypoints. Cela permet d'avoir, sur les GPS, des informations complémentaires en plus des traces.
+* **Export tags as waypoints** : Saves the selected tags as waypoints in a GPX file. This allows to benefitiate, when using a GPS device, additional information on top of the course.
 
-* **Quitter Course Generator** : Permet d'arrêter l'exécution de **Course Generator**. raccourci clavier: [Alt+F4].
+* **Exit Course Generator** : Exits **Course Generator**. Keyboard shortcut: [Alt+F4].
 
-## Menu "Edition"
+## "Edit" Menu 
 
 ![Menu Edition](./images/Menu/CG40_Menu_Edit.png)
 
-* **Copier** : Permet de copier la cellule courante dans le presse papier. Raccourci clavier: [CTRL+C].
+* **Copy** : Copies the selected line in the clipboard. Keyboard shortcut: [CTRL+C].
 
-* **Recherche d'un point...** : Permet de rechercher un point GPS par sa longitude et sa latitude. Le point le plus proche est sélectionné. Raccourci clavier: [CTRL+F].
+* **Search a point...** : Searches a GPS point using a longitude and a latitude. The closest point found will be returned. Keyboard shortcut: [CTRL+F].
 
-* **Marquer la position courante** : Permet de mettre une marque sur la ligne courante. Si la ligne contient déjà une marque, elle est alors supprimée. Raccourci clavier: [F6].
+* **Mark the current position** : Sets a mark on the selected line. If the line already has a mark, the mark will be deleted. Keyboard shortcut: [F6].
 
-* **Aller à la marque suivante** : Permet de sélectionner la ligne contenant le Tag suivant. Raccourci clavier: [F7].
+* **Go to the next mark** : Locates and selects the next mark. Keyboard shortcut: [F7].
 
-* **Aller à la marque précédente** : Permet de sélectionner la ligne contenant le Tag précédent. Raccourci clavier: [Ctrl+F7].
+* **Go to the previous mark** : Locates and selects the previous mark. Keyboard shortcut: [Ctrl+F7].
 
-## Menu "Affichage"
+## "Display" Menu 
 
 ![Menu Affichage](./images/Menu/CG40_Menu_Display.png)
 
-* **Générer un mini roadbook** : Permet d'ouvrir une fenêtre permettant de créer un mini roadbook.
+* **Generate mini roadbook** : Opens a window and displays the course's mini roadbook.
 
-## Menu "Outils"
+## "Tools" Menu
 
 ![Menu Outils](./images/Menu/CG40_Menu_Tools.png)
 
-* **Détermination des mini/maxi** : Permet de déterminer les points haut et bas du parcours.
+* **Find Min/Max** : Determines the highest and lowest course points.
 
-* **Inversion du parcours** : Permet d'inverser le sens du parcours.
+* **Reverse track** : Reverse the course direction.
 
-* **Définir un nouveau point de départ**: Permet, pour un circuit en boucle, de définir un nouveau point de départ.
+* **Define a new start**: For a given course as a loop, sets the selected point as the start of the course.
 
-* **Estimer le temps de parcours** : Permet de lancer le calcul afin de déterminer le temps de passage pour chaque point GPS du parcours. Raccourci clavier: [F5].
+* **Estimate track time** : Compute the estimated time for each of the course's points. Keyboard shortcut: [F5].
 
-* **Afficher le répertoire contenant les fichiers courbes vitesse/pente** : Ouvre l'explorateur de fichier et affiche le répertoire correspondant.
+* **Open the "Speed/Slope" folder** : Opens the folder containing the speed curve files in File Explorer.
 
-## Menu "Paramètres"
+## "Parameters" Menu 
 
 ![Menu Paramètres](./images/Menu/CG40_Menu_Settings.png)
 
-* **Paramètres du parcours...** : Permet d'ouvrir une fenêtre permettant de régler les paramètres de la course. Raccourci clavier: [F9].
+* **Track settings...** : Opens the dialog to configure the course settings. Keyboard shortcut: [F9].
 
-* **Courbes vitesses/pentes...** : Permet d'ouvrir une fenêtre permettant de choisir ou de créer une courbe de vitesse par rapport à la pente.
+* **Speed/Slope curves...** : Opens the dialog to choose or create a speed/slope cruve.
 
-* **Paramètres de Course Generator...** : Permet de régler les paramètres spécifique au logiciel **Course Generator**.
+* **Course Generator settings...** : Opens the dialog to change the main settings of **Course Generator**.
 
-## Menu "Aide"
+## "Help" Menu 
 
 ![Menu Aide](./images/Menu/CG40_Menu_Help.png)
 
-* **Aide** : Affiche ce document.
+* **Help** : Displays this current document.
 
-* **Encourager l'auteur...** : Ce menu ouvre votre navigateur internet et affiche la page internet permettant de faire un don à l'auteur afin de l'encourager dans le développement de **Course Generator**.
+* **Support the author...** : This menu opens your web browser and displays a webpage where a donation can be made to the author in order to support him continue developing **Course Generator**.
 
-* **Page internet de Course Generator...** : Ce menu ouvre votre navigateur internet et affiche la page internet sur les dernières nouvelles concernant **Course Generator**.
+* **Course Generator webpage...** : This menu opens your web browser onto the main webpage of **Course Generator**.
 
-* **A propos...** : Permet d'afficher les informations de copyright et de version du logiciel.
+* **About...** : Displays the copyright and version information of **Course Generator**.
