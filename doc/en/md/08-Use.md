@@ -1,197 +1,199 @@
-# Utilisation de Course Generator
+# Using Course Generator
 
-La procédure normale d'utilisation de **Course Generator** est:
+The normal procedure for using **Course Generator** is:
 
-* Chargez un fichier GPS
-* Paramétrez du parcours (Nom, date et heure de départ)
-* Choisissez la courbe "Vitesse/pente"
-* Paramétrez le parcours (qualité du terrain, coefficient de fatigue, ravitaillements...)
-* Lancez le calcul
-* Sauvez le parcours au format CGX ou GPX
+* Upload a GPS file
+* Set the global track parameters (Name, date and start time)
+* Choose the "Speed/Slope"curve
+* Set the track parameters (field difficulty, fatigue coefficient, aid stations...)
+* Start the calculation
+* Save the track in CGX or GPX format
 
-Les sous-chapitres vont décrire l'ensemble de ces manipulations (et bien plus encore).
+The subchapters will describe all these manipulations (And much more).
 
-## Charger d'un parcours
+## Load a track
 
-Deux types de fichier peuvent être ouverts par **Course Generator**.
+Two types of files can be opened by **Course Generator**.
 
-* Le format GPX contient une trace GPS issue d'un enregistrement fait avec un GPS, d'un logiciel de cartographie ou d'un site internet. Ce format ne contient pas les données spécifiques de **Course Generator**. Ce format est à utiliser si vous n'avez pas de fichier CGX de votre parcours.
-* Le format CGX, qui est le format de **Course Generator**, stocke toutes les données spécifiques du logiciel. Il est à privilégier si vous voulez conserver votre travail.
+* The GPX format contains a GPS track from a recording made with a GPS, a mapping software or a website. This format does not contain specific **Course Generator** data. This format is to use if you don't have a CGX file of your track.
+* The CGX format, which is the format of **Course Generator**, stores all the specific data of the software. It is preferred if you want to keep your work.
 
-Le chargement d'un parcours se fait par le menu "Fichier>Ouvrir un fichier GPX" ou "Fichier>Ouvrir un fichier CGX" en fonction du format choisi.
+The loading of a track is done by the menu "File> Open GPX" or "File> Open CGX" according to the chosen format.
 
-Lors de l'ouverture du fichier vous pourriez avoir le message suivant:
+When opening the file you may get the following message:
 ((image message))
 
-Ce message apparaît car certain fichiers ne contiennent pas de donnée temporelle ce qui empêche **Course Generator** d'afficher le temps et l'heure de passage pour chaque point. Ces colonnes sont alors mises à 0 et un réglage des paramètres du parcours puis l'exécution du calcul du parcours sont alors nécessaire.
+This message appears because some files do not contain time data, which prevents **Course Generator** from displaying the time and time of passage for each point. These columns are then set to 0. Setting of parameters of the track then the execution of the calculation of the track are then necessary.
 
-## Paramétrer un parcours
+## Set up a track
 
-Le paramétrage du parcours est réalisé avec "Paramètres>Paramètres du parcours" ou [F9].  
+The setting of the track is done with "Settings>Track settings..." or [F9].
 
-La fenêtre de configuration ci-dessous est alors affichée.  
-![](./images/CG40_Track_Param.png)
+The configuration window below is then displayed.
 
-Vous pouvez alors:
+![Track parameters dialog](./images/CG40_Track_Param.png)
 
-* Renseigner le nom de la course (maximum 15 caractères).
-* Ajouter un descriptif du parcours. Ce descriptif apparaîtra dans le roadbook.
-* Définir la date et l'heure de départ.
-* Sélectionner la prise en compte de l'altitude.
-* Sélectionner la prise en compte de la nuit. Il faut alors renseigner l'heure de début et de fin de nuit ainsi que le coefficient de correction à apporter à chaque position. Le bouton "Détermination automatique" permet d'ouvrir la boite de dialogue pour calculer automatiquement l'heure de couchée et de levée du soleil. Le calcul est fait à partir des informations du premier point GPS du tableau (coordonnées GPS, date et heure).
+You can then:
 
-La fenêtre suivante s'affiche:  
-![](./images/CG40_Track_Param_Sun_Dlg.png)
+* Enter the name of the track (maximum 15 characters).
+* Add a description of the track. This description will appear in the roadbook.
+* Set the date and time of start.
+* Select if you want to use the altitude effect feature.
+* Select if you want to use the night effect feature. You must then enter the times for the beginning and ending of the night and the correction factor to be applied to each position. The "Auto-adjustment" button opens the dialog box to automatically calculate the sunset and sunrise time. The calculation is made from the information of the first GPS point of the table(GPS coordinates, date and hours).
 
-Saisissez le fuseau horaire (1 pour la France). L'heure de levée et de couché du soleil sont alors affichées.
+The following window appears:
 
-Une fois le réglage terminé, appuyez sur "Valider" afin de valider votre saisie.    
-Si vous avez sélectionné la prise en compte de la nuit, vous pourrez constater que la colonne "Heure" à un fond bleu durant les périodes de nuit et vert durant les périodes de jour.
+![Sun dialog](./images/CG40_Track_Param_Sun_Dlg.png)
 
-## Paramètrer la courbe de vitesse/pente
+Enter the time zone (1 for France).
 
-Afin d'avoir une durée de parcours cohérente avec votre niveau, il faut choisir ou créer une courbe de vitesse par rapport à la pente. Cette courbe va de -50% de pente (descente) à +50% de pente (montée). Le choix de la courbe se fait par le choix de la vitesse que l'on veut "tenir" lorsque la pente est nulle (0%) sur un terrain goudronné. Un ensemble de courbes ont été créée afin de couvrir la plupart des utilisations en course à pied.
+Once the setting is completed, press "Ok" to validate.
+If you have chosen to take into account the night effect, you will see that the "Time" column shows a blue background during the night and green periods during the daytime periods.
 
-Le menu "Paramètres>Courbes Vitesse/Pente..." ou le bouton ![](./images/Toolbar/curve.png) permettent d'afficher la boite de dialogue permettant de séléectionner et gérer les courbes.  
-![](./images/Curve/CG40_Dlg_Curves.png)
+## Set the speed/slope curve
 
-Sur la gauche apparaît la liste des courbes déjà créée. Lors de la création, un nom explicite leur a été donné afin de les retrouver rapidement. Essayez de conserver ce principe si vous créez de nouvelles courbes.
+In order to have a track time consistent with your level, you have to choose or create a speed curve according to the slope. This curve goes from -50% slope (downhill) to + 50% slope (climb). The choice of the curve is made by the choice of the speed that one wants to "hold" when the slope is null (0%) on a road. A set of curves have been created to cover most running uses.
 
-Le bouton ![](./images/Curve/chart_curve_open.png) permet de charger les données du fichier courbe sélectionné dans la liste.  
-Le bouton ![](./images/Curve/chart_curve_edit.png) permet de modifier les données de la courbe sélectionnée.  
-Le bouton ![](./images/Curve/chart_curve_add.png) permet de créer une nouvelle courbe.  
-Le bouton ![](./images/Curve/chart_curve_duplicate.png) permet de dupliquer la courbe sélectionnée.  
-Le bouton ![](./images/Curve/chart_curve_delete.png) permet de supprimer la courbe sélectionnée.  
+The menu "Settings>Speed/Slope curves..." or the button ![curve button](./images/Toolbar/curve.png) to display the dialog box for selecting and managing curves.
 
-> **Comment choisir sa courbe de vitesse?**  
-> Cela va dépendre de vous, de vos objectifs... Vous pouvez vous baser sur un pourcentage de votre VMA.
-> Par exemple pour un trail long vous pouvez prendre 60% de votre VMA. Environ 10km/h dans mon cas, je sélectionne alors la courbe de 10km/h.
-> Vous pouvez aussi utiliser Softrun (www.softrun.fr) afin d'évaluer votre niveau et donc de pouvoir choisir votre courbe.  
-> Il y a aussi l'expérience. Au début vous allez sûrement sous-évaluer ou sur-évaluer votre vitesse. Mais avec le temps votre choix va devenir de plus en plus juste.
+![Curves dialog](./images/Curve/CG40_Dlg_Curves.png)
 
-Notes:
+On the left appears the list of curves already created. During the creation, an explicit name was given to them to find them quickly. Try to preserve this principle if you create new curves.
 
-* Si vous créez de nouvelles courbes qui vous semblent intêressantes, n'hésitez pas à me les envoyer afin que je puisse les rajouter sur le site internet ainsi que dans les prochaines versions.
-* Chaque courbe est un fichier dont l'extension est '.par'.  Ces fichiers sont accessible par le menu  "Outils>Afficher le répertoire contenant les fichiers courbes vitesse/pente". Cela va ouvrir le gestionnaire de fichier et afficher le contenu du répertoire.
+The button ![open curve button](./images/Curve/chart_curve_open.png) load the data from the selected curve file into the list.
+The button ![edit curve button](./images/Curve/chart_curve_edit.png) allows you to modify the data of the selected curve.
+The button ![add curve button](./images/Curve/chart_curve_add.png) allows you to create a new curve.
+The button ![duplicate curve button](./images/Curve/chart_curve_duplicate.png) duplicate the selected curve.
+The button ![delete curve button](./images/Curve/chart_curve_delete.png) deletes the selected curve.
 
-## Paramètrer la difficulté du terrain
+> **How to choose a speed curve?**
+> This will depend on you, your goals... You can base yourself on a percentage of your vVO2max.
+> For example for a long trail you can take 60% of your vVO2max. About 10km/h in my case, I then select the curve of 10km/h.
+> There is also the pratice. At the beginning you will surely underestimate or over-evaluate your speed. But over time your choice will become more and more precise.
 
-La colonne "Diff" permet de 'quantifier' la difficulté du terrain.
+**Notes:**  
+* If you create new curves that seem interesting to you, do not hesitate to send them to me so that I can add them on the website as well as in the next versions.
+* Each curve is a file whose extension is '.par'. These files are accessible through the menu "Tools>Open "Speed/Slope" folder". This will open the file manager and display the contents of the directory.
 
-Vous pouvez saisir rapidement la difficulté du terrain pour un ensemble de point. Il vous suffit de sélectionner la première ligne puis tout en maintenant la touche SHIFT enfoncé vous sélectionnez les lignes suivantes (à la souris ou au clavier). Le bouton ![](./images/Toolbar/fill_diff.png) permet d'afficher la boite de dialogue de remplissage automatique.
+## Enter the field difficulty
 
-![](./images/CG40_Dlg_Fill_Diff.png)
+The "Diff" column is used to 'quantify' the difficulty of the field.
 
-La zone "Début" permet de définir la ligne de départ (depuis le début ou depuis un numéro de ligne précis).  
-La zone "Fin" permet de définir la ligne de fin (jusqu'à la fin ou jusqu'à un numéro de ligne précis).  
-La zone "difficulté" permet de choisir la difficulté du terrain. Vous pouvez soit utiliser les valeurs pré-déterminées, soit saisir votre propre valeur de difficulté.
+You can quickly enter terrain difficulty for a set of points. Simply select the first line and then while holding down the SHIFT key you select the following lines (with mouse or keyboard). The button ![diff button](./images/Toolbar/fill_diff.png) to display the auto-fill dialog.
 
-Cette action peut aussi être faite sur la carte du parcours (voir plus bas).
+![Difficulty dialog](./images/CG40_Dlg_Fill_Diff.png)
+
+The "Start" area is used to define the start line (from the beginning or from a specific line number).
+The "End" area is used to define the end line (to the end or to a specific line number).
+The zone "Difficulty" makes it possible to choose the difficulty of the field. You can either use the pre-determined values ​​or enter your own difficulty value.
+
+This action can also be done on the tracke map (see below).
 
 **Note:**  
-Il est parfois impossible de déterminer la qualité du terrain à cause de la méconnaissance de celui-ci. Il peut alors être judicieux de fixer une qualité moyenne du terrain pour l'ensemble du parcours. Par exemple, la Montagn'hard 100 a été qualifiée en terrain moyen sur l'ensemble du parcours. Même si certains passages étaient trés difficile (pierriers, zones glissantes...) et d'autres trés roulants (routes ou pistes).  
-Il ne faut pas prendre en compte lors de votre choix la déclinivité du terrain car cela est pris en compte via la courbe "Vitesse/Pente" et le calcul de la pente fait automatiquement par **Course Generator**.
+It is sometimes impossible to determine the quality of the field because of the ignorance of it. It may be wise to set an average field quality for the entire track. For example, the "Montagn'hard 100" has been qualified in middle filed on the whole track. Even if some passages were very difficult (scree, slippery areas ...) and other very easy (roads or tracks).
+Don't try to take intop account the slope of the field because this is taken into account via the "Speed​​/Slope" curve and the calculation of the slope is automatically done by **Course Generator**.
 
-## Paramétrer le coefficient de fatigue
-La colonne "Coeff" permet de 'quantifier' la fatigue dans le temps.
+## Enter fatigue coefficient
 
-Vous pouvez saisir rapidement le coefficient de fatigue pour un ensemble de point (plus généralement pour l'ensemble du parcours). Il vous suffit de sélectionner la première ligne puis tout en maintenant la touche SHIFT enfoncé vous sélectionnez les lignes suivantes (à la souris ou au clavier). Le bouton ![](./images/Toolbar/fill_coeff.png) permet d'afficher la boite de dialogue de remplissage automatique.
+The "Coeff" column is used to 'quantify' fatigue over time.
 
-![](./images/CG40_Dlg_Fill_Coeff.png)
+You can quickly enter the fatigue coefficient for a set of points (more generally for the entire track). Simply select the first line and then while holding down the SHIFT key you select the following lines (with mouse or keyboard). The button ![coeff button](./images/Toolbar/fill_coeff.png) allows to display the auto-fill dialog.
 
-La zone "début" permet de sélectionner le début de la zone de prise en compte du coefficient. Le champ "Valeur initiale" permet de saisir la valeur correspondante.
+![Health coefficient dialog](./images/CG40_Dlg_Fill_Coeff.png)
 
-La zone "Fin" permet de sélectionner la fin de la zone de prise en compte du coefficient. Le champ "Valeur finale" permet de saisir la valeur correspondante.
+The "Start" area is used to define the start line (from the beginning or from a specific line number). The "Initial value" field is used to enter the corresponding value.
 
-Si la valeur de fin n'est pas égale à la valeur de début alors on aura, pour les lignes intermédiaires, une variation progressive et linéaire de la valeur.  
-Les éditions manuelles faites par l'intermédiaire de l'éditeur de ligne seront écrasées.  
+The "End" area is used to define the end line (to the end or to a specific line number). The "Ending value" field is used to enter the corresponding value.
 
-Les réglages fait dans cette fenêtre seront globaux et mémorisés dans le fichier CGX lors de la sauvegarde.
+If the ending value is not equal to the initial value then the intermediate lines will have a gradual and linear variation of the values. Manual edits made through the line editor will be overwritten.
 
-La zone "Aide" permet en fonction du temps que vous estimez réaliser de vous donner une valeur approximative du coefficient de fatigue. Cette valeur peut être recopiée dans les zones "> Début" et "> Fin" via les boutons correspondant.
+The settings made in this window will be global and stored in the CGX file.
 
+The area "Help" allows according to your estimated to give you an approximate value of the coefficient of fatigue. This value can be copied to in the "Initial value" and "Ending value" fields with the buttons "> Start" and "> End".
 
-## Saisir les temps de ravitaillement
+## Enter refueling times
 
-Afin de coller au mieux à la réalité, vous pouvez saisir pour un point donné le temps que vous prévoyez pour votre ravitaillement (ou votre repos). Pour cela mettez-vous sur la cellule concernée et ouvrez l'éditeur de ligne en faisant un double clique.
+In order to stick to reality, you can enter for a given point the time you plan for your refueling (or your rest).
 
-La boite dialogue suivante s'affiche:  
-![](./images/CG40_Line_Editor.png)
+The following dialog box is displayed:
 
-Les champs "Temps de ravitaillement" permettent de saisir le temps d'arrêt à cette emplacement (heures, minutes et secondes). Le bouton "0" permet de remettre le temps à 00h00mm00s.
+![Line editor](./images/CG40_Line_Editor.png)
 
+The "Aid station time" fields are used to enter the time at this location (hours, minutes and seconds). The "0" button allows you to reset the time to 00h00mm00s.
 
-> **Question fréquente!**  
-> Le temps ou l'heure affiché sur la ligne contenant un temps de ravitaillement est le temps ou l'heure à laquelle vous prévoyez de quitter cette position.  
-> C'est le mode fonctionnement de **Course Generator** qui impose cette méthode de calcul.
->  
-> Pour résumer:  
-> [Heure] = [Heure de la position précédente] + [Temps de parcours entre le 2 positions] + [Temps de ravitaillement]  
->  
-> [Temps] = [Temps de la position précédente] + [Temps de parcours entre le 2 positions] + [Temps de ravitaillement]  
+> **FAQ!**
+> The time or hour displayed on the line containing a refueling time is the time or hour you plan to leave this position.
+> It's the design of **Course Generator** which oblige this method of calculation.
+>
+> To summarize:
+> [Hour] = [Hour of the previous position] + [Travel time between 2 positions] + [Refueling time]
+>
+> [Time] = [Time of the previous position] + [Travel time between 2 positions] + [Refueling time]
 
+## Enter recovery times
 
-## Saisir les temps de récupération
+You can enter for a given point the recovery coefficient after refueling or rest. To do this, go to the corresponding cell and open the line editor by double-clicking.
 
-Vous pouvez saisir pour un point donné le coefficient de récupération suite à un ravitaillement ou à un repos. Pour cela mettez-vous sur la cellule concernée et ouvrez l'éditeur de ligne en faisant un double clique.
+The following dialog box is displayed:
 
-La boite dialogue suivante s'affiche:  
-![](./images/CG40_Line_Editor.png)
+![Line editor](./images/CG40_Line_Editor.png)
 
-Le champ "Récupération" permet de saisir le coefficient de récupération (entre 0 et 100). Cette valeur est relative. C'est-à-dire que si vous pensez récupérer 5% de coefficient de fatigue, il faut saisir 5 et non la valeur que vous pensez avoir (par exemple passer de 85% à 90%).
+The "Recovery" field is used to enter the recovery coefficient (between 0 and 100). This value is relative. If you think that you will recover 5% of fatigue coefficient, you must enter 5 and not the value you think you will have (eg from 85% to 90%).
 
-Note :  
-Après avoir modifié la colonne "Récup.", il est nécessaire de relancer un calcul global avec le bouton ![](./images/Toolbar/fill_coeff.png) afin que votre saisie soit prise en compte.
+**Note :**  
+After modifying the "Recovery" column, it is necessary to restart a global calculation with the button ![fill coeff](./images/Toolbar/fill_coeff.png) in order to have your input taken into account.
 
-## Renseigner les barrières horaires
+## Enter cut-off times
 
-Vous pouvez saisir pour un point donné la barrière horaire prévue. Cette barrière horaire est exprimée en temps depuis le départ et non en heure de passage. Cela permet de prendre en compte les décalages de départ (par exemple l'UTMB 2011 avec 5h de retard). Pour cela mettez-vous sur la cellule concernée et ouvrez l'éditeur de ligne en faisant un double clique.
+You can enter for a given point the scheduled time barrier. This time barrier is expressed in time since the start and not the time at the point. This makes it possible to take into account the departure delays (for example the UTMB 2011 with 5 hours delay). To do this, go to the corresponding cell and open the line editor by double-clicking.
 
-La boite dialogue suivante s'affiche:  
-![](./images/CG40_Line_Editor.png)
+The following dialog box is displayed:
 
-Les champs "Barrière horaire" permettent de saisir la barrière horaire (heures, minutes et secondes). Le bouton "0" permet de remettre le temps à 00h00mm00s.
+![Line editor](./images/CG40_Line_Editor.png)
 
-Afin de prendre en compte la saisie il est nécessaire de lancer un calcul avec le bouton  ![](./images/Toolbar/refresh_data.png). Après l'exécution du calcul si un des temps de passage dépasse une barrière horaire alors un indicateur rouge "Barrière horaire" apparaîtra dans la barre inférieure. Un clique sur l'indicateur sélectionnera la première ligne du parcours ayant un dépassement de temps.
+The "Cut-off time" fields are used to enter the cut-off time (hours, minutes and seconds). The "0" button allows you to reset the time to 00h00mm00s.
 
-## Les indicateurs ou tags
+In order to take into account the input it is necessary to run a calculation with the button  ![refresh button](./images/Toolbar/refresh_data.png). After the calculation if one of the position time exceeds a cut-off time then a red indicator "Cut-off time" will appear in the lower bar. A click on the indicator will select the first line of the track having a cut-off time.
 
-Pour chaque point vous pouvez avoir des indicateurs ou tags qui vous indique une particularité du point.
+## Indicators or tags
 
-Les différents indicateurs sont les suivants:
+For each point you can have indicators or tags that indicates a particularity of the point.
 
-* ![](./images/Tags/high_point.png) : Indique un point haut. Cet indicateur sélectionné manuellement ou automatiquement par la fonction "Détermination des mini/maxi".
-* ![](./images/Tags/low_point.png) : Indique un point bas. Cet indicateur sélectionné manuellement ou automatiquement par la fonction "Détermination des mini/maxi".
-* ![](./images/Tags/eat.png) : Indique un point de ravitaillement (solide et liquide)
-* ![](./images/Tags/drink.png) : Indique un point d'eau
-* ![](./images/Tags/photo.png) : Indique un point remarquable
-* ![](./images/Tags/flag.png) : Indique une étape. Cet indicateur est appelé "Marque" et permet de découper le parcours en étape. Chaque marque ajoute une ligne dans le tableau résumé.
-* ![](./images/Tags/note.png) : Indique une note.
-* ![](./images/Tags/info.png) : Indique une information
-* ![](./images/Tags/roadbook.png) : Indique le début d'une nouvelle étape du roadbook
+The different indicators are as follows:
 
-Pour sélectionner les indicateurs d'une position il faut sélectionner la cellule concernée et ouvrir l'éditeur de ligne en faisant un double clique.
+* ![high point indicator](./images/Tags/high_point.png) : Indicates a high point. This indicator selected manually or automatically by the function "Find Min/Max".
+* ![low point indicator](./images/Tags/low_point.png) : Indicates a low point. This indicator selected manually or automatically by the function "Find Min/Max".
+* ![eat indicator](./images/Tags/eat.png) : Indicates a refueling point (eat or drink)
+* ![drink indicator](./images/Tags/drink.png) : Indicates a water point
+* ![photo indicator](./images/Tags/photo.png) : Indicates a view point
+* ![mark indicator](./images/Tags/flag.png) : Indicates a special point. This indicator is called "Mark" and allows you to split the track into steps. Each mark adds a line in the summary table.
+* ![note indicator](./images/Tags/note.png) : Indicates a note.
+* ![info indicator](./images/Tags/info.png) : Indicates information.
+* ![roadbook indicator](./images/Tags/roadbook.png) : Indicates the beginning of a new part of the roadbook
 
-La boite dialogue suivante s'affiche:  
-![](./images/CG40_Line_Editor.png)
+To set the indicators for a position, select the corresponding cell concerned and open the line editor by double-clicking.
 
-Les indicateurs apparaissent en face de "Marques".
+The following dialog box is displayed:
 
-Afin de gagner du temps des raccourcis clavier sont disponibles:
+![Line editor](./images/CG40_Line_Editor.png)
 
-* [F6] permet de mettre ou d'enlever une "Marque" sur la ligne sélectionnée.
-* [F7] permet de se déplacer rapidement vers la prochaine ligne contenant un indicateur.
-* [Ctrl+F7] permet de se déplacer rapidement vers la précédente ligne contenant un indicateur.
+The indicators appear in front of "Tags".
 
-## Calculer le temps de parcours
+In order to save time, keyboard shortcuts are available:
 
-Une fois les paramètres du parcours saisis, il est nécessaire d'appuyer sur le bouton ![](./images/Toolbar/refresh_data.png) afin de lancer le calcul du temps de passage pour chaque point.
-Les colonnes 'Temps' et 'Heure' sont alors mises à jour en fonction des réglages que vous avez réalisés précédemment.
-Dans la barre d'état, située en bas de la fenêtre, le temps total est mis à jour.
+* [F6] allows to put or remove a "Mark" on the selected line.
+* [F7] allows you to move quickly to the next line containing an indicator.
+* [Ctrl+F7] allows you to move quickly to the previous line containing an indicator.
 
-## Sauver le parcours
-**Course Generator** offre la possibilité de sauver votre parcours dans plusieurs formats.
+## Calculate the track time
 
-* "Fichier>Sauver GPX" sauve le parcours au format GPX qui est le format standard d'échange de parcours. Le problème de ce format est qu'il ne stocke pas les données spécifiques à **Course Generator**.
-* "Fichier>Sauver CGX" sauve le parcours au format CGX qui est le format des fichiers **Course Generator**. Ce format devra être utilisé dès que l'on voudra conserver les paramètrages réalisés sur un parcours.
-* "Fichier>Sauver CSV" sauve le parcours au format CSV qui est un format standard permettant de sauver des données sous forme de texte séparé par des points virgules. Ces fichiers peuvent être ouverts par un tableur comme EXCEL, OpenOffice Calc ou Libre Office Calc.
+Once the track parameters have been entered, it is necessary to press the button ![refresh button](./images/Toolbar/refresh_data.png) to start the calculation of the time for each point.
+The columns 'Time' and 'Hours' are then updated according to the settings you have made previously.In the status bar at the bottom of the window, the total time is updated.
+
+## Save the track
+
+**Course Generator**offers the possibility to save your track in several formats.
+
+* "File>Save as GPX" save the track in GPX format which is the standard track exchange format. The problem with this format is that it does not store specific data of **Course Generator**.
+* "File>Save as CGX" saves the track in CGX format which is the standard file format of **Course Generator**. This format should be used as soon as you want to keep the settings made on a track.
+* "File>Save as CSV" saves the track in CSV format which is a standard format for saving data as semicolon-separated text. These files can be opened by a spreadsheet program such as EXCEL, OpenOffice Calc or Libre Office Calc.

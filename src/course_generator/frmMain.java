@@ -316,7 +316,7 @@ public class frmMain extends javax.swing.JFrame
 		Backup_Track = new TrackData();
 		Resume = new ResumeData();
 		Settings = new CgSettings();
-		ModelTableMain = new TrackDataModel(Track, Settings);
+
 		// showProfilMarker=true;
 
 		// -- Load configuration
@@ -397,6 +397,9 @@ public class frmMain extends javax.swing.JFrame
 		setUIFont(
 				new javax.swing.plaf.FontUIResource("Tahoma", Font.PLAIN, 14));
 
+		//-- Initialize the track data model (here because we need to know the current language
+		ModelTableMain = new TrackDataModel(Track, Settings);
+		
 		// -- Initialize the string resource for internationalization
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 
