@@ -25,12 +25,12 @@ Et beaucoup d'autres choses...
 
 Des conventions d'écritures ont été adoptées dans ce manuel. Elles sont détaillées ci-dessous.
 
-* *"Fichier>Chargement fichier GPX"* indique qu'il faut sélectionner le menu "Fichier" puis sélectionner, dans ce menu, "Chargement fichier GPX". Cela permet décrire simplement une suite de manipulation à faire à la souris.
-* *"[CTRL+O]"* indique une ou une série de touches à actionner afin de déclencher une action. Par exemple [CTRL+O] indique qu'il faut appuyer sur la touche CTRL et tout en la maintenant actionnée, il faut appuyer sur la touche O.
+* *"Fichier>Chargement fichier GPX"* indique qu'il faut sélectionner le menu "Fichier" puis sélectionner, dans ce menu, "Chargement fichier GPX". Cela permet de décrire simplement une suite de manipulation à faire à la souris.
+* *"[CTRL+O]"* indique une série de touches à actionner afin de déclencher une action. Par exemple [CTRL+O] indique qu'il faut appuyer sur la touche CTRL et tout en la maintenant actionnée, il faut appuyer sur la touche O.
 
 ## Mot de l'auteur
 
-J'ai créé **Course Generator** en 2008 afin de m'aider à préparer mon premier 100km en Ultra-trail. Je l'ai complété au fur et à mesure de mes besoins. Un petit article dans Ultrafondu m'a permis de commencé à le faire connaître et je l'ai ensuite fait grandir avec le retour des utilisateurs.
+J'ai créé **Course Generator** en 2008 afin de m'aider à préparer mon premier 100km en Ultra-trail. Je l'ai complété au fur et à mesure de mes besoins. Un petit article dans Ultrafondu m'a permis de commencer à le faire connaître et je l'ai ensuite fait grandir avec le retour des utilisateurs.
 Il a énormement évolué et plusieurs fois, je l'ai réécris afin de l'adapter à mes besoins. A chaque fois cela été un défi et comme les courses que j'ai couru, cela été une aventure qui m'a fait grandir (connaissances, remise en cause, ouverture d'esprit...).
 
 **Course Generator** n'a pas la prétention de vous donner des résultats totalement justes. Trop de choses dépendent de vous et de conditions extérieures. Considérez ce logiciel comme une aide vous permettant de préparer vos prochaines aventures.
