@@ -52,4 +52,4 @@ Pierre DELORE
 
 ## Personal data protection
 
-The software collects information about your hardware and software configuration in the logs. These data are in the 'logs' directory which can be accessed via the menu "Tools> Open the "Speed/Slope" folder". Nothing exit from your computer. It is only in case of problem that I will ask you to send me the 'logs' files.
+The software collects information about your hardware and software configuration in the logs. These data are in the 'logs' directory which can be accessed via the menu "Tools> Open the "Speed/Slope" folder". Nothing exits from your computer. It is only in case of problem that I will ask you to send me the 'logs' files.

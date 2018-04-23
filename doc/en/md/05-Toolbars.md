@@ -1,6 +1,6 @@
 # The Toolbar
 
-![La barre d'outils](./images/Toolbar/CG40_Main_Toolbar.png)
+![Main Toolbar](./images/Toolbar/CG40_Main_Toolbar.png)
 
 * ![](./images/Toolbar/openGPX.png) : Loads a GPX file format course
 * ![](./images/Toolbar/openCGX.png) : Loads a CGX file format course

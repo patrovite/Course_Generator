@@ -1,7 +1,7 @@
 # Menus
 ## "File" Menu
 
-![Menu Fichier](./images/Menu/CG40_Menu_File.png)
+![File Menu](./images/Menu/CG40_Menu_File.png)
 
 * **Open GPX** : Loads a GPX format file. Keyboard shortcut: [MAJ+CTRL+O].
 
@@ -43,7 +43,7 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 ## "Edit" Menu 
 
-![Menu Edition](./images/Menu/CG40_Menu_Edit.png)
+![Edit Menu](./images/Menu/CG40_Menu_Edit.png)
 
 * **Copy** : Copies the selected line in the clipboard. Keyboard shortcut: [CTRL+C].
 
@@ -57,7 +57,7 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 ## "Display" Menu 
 
-![Menu Affichage](./images/Menu/CG40_Menu_Display.png)
+![Display Menu](./images/Menu/CG40_Menu_Display.png)
 
 * **Generate mini roadbook** : Opens a window and displays the course's mini roadbook.
 
@@ -77,7 +77,7 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 ## "Parameters" Menu 
 
-![Menu Paramètres](./images/Menu/CG40_Menu_Settings.png)
+![Parameters Menu](./images/Menu/CG40_Menu_Settings.png)
 
 * **Track settings...** : Opens the dialog to configure the course settings. Keyboard shortcut: [F9].
 
@@ -87,7 +87,7 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 ## "Help" Menu 
 
-![Menu Aide](./images/Menu/CG40_Menu_Help.png)
+![Help Menu](./images/Menu/CG40_Menu_Help.png)
 
 * **Help** : Displays this current document.
 
