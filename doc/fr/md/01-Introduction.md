@@ -31,7 +31,7 @@ Des conventions d'écritures ont été adoptées dans ce manuel. Elles sont dét
 ## Mot de l'auteur
 
 J'ai créé **Course Generator** en 2008 afin de m'aider à préparer mon premier 100km en Ultra-trail. Je l'ai complété au fur et à mesure de mes besoins. Un petit article dans Ultrafondu m'a permis de commencer à le faire connaître et je l'ai ensuite fait grandir avec le retour des utilisateurs.
-Il a énormement évolué et plusieurs fois, je l'ai réécris afin de l'adapter à mes besoins. A chaque fois cela été un défi et comme les courses que j'ai couru, cela été une aventure qui m'a fait grandir (connaissances, remise en cause, ouverture d'esprit...).
+Il a énormément évolué et plusieurs fois, je l'ai réécris afin de l'adapter à mes besoins. A chaque fois cela été un défi et comme les courses que j'ai couru, cela été une aventure qui m'a fait grandir (connaissances, remise en cause, ouverture d'esprit...).
 
 **Course Generator** n'a pas la prétention de vous donner des résultats totalement justes. Trop de choses dépendent de vous et de conditions extérieures. Considérez ce logiciel comme une aide vous permettant de préparer vos prochaines aventures.
 
@@ -45,7 +45,7 @@ Si appréciez ce logiciel vous pouvez contribuer de différentes façons:
 * Par de la publicité. Par choix, je suis peu actif sur les forums et réseaux sociaux afin d'utiliser mon temps libre afin de faire grandir le logiciel. Si vous avez la possibilité, n'hésitez pas à parler de **Course Generator**. Twitter, Facebook, forums et aussi Reddit qui s'il est peu utilisé en France est un outil très utilisé dans les pays anglophones.
 * Par des retours sur le logiciel. Bugs, corrections de la documentation et demandes d'améliorations sont les bienvenus.
 * Par la participation à la traduction du logiciel dans une autre langue. C'est simple, je vous envoie un fichier texte avec les textes en anglais et vous les traduisez dans la langue cible en suivant quelques règles simples.
-* Par la participation au développement du logiciel. Rien de très complèxe, il faut connaître le langage Java, Git et Github. Depuis la version 4, j'ai mis **Course Generator** en Open source sur Github (github.com/patrovite/Course_Generator) afin que d'autres personnes puissent faire grandir le logiciel avec moi. Le sujet est vaste, il y a encore plein de chose à faire.
+* Par la participation au développement du logiciel. Rien de très complexe, il faut connaître le langage Java, Git et Github. Depuis la version 4, j'ai mis **Course Generator** en Open source sur Github (github.com/patrovite/Course_Generator) afin que d'autres personnes puissent faire grandir le logiciel avec moi. Le sujet est vaste, il y a encore plein de chose à faire.
 
 
 Partez à l'aventure avec **Course Generator**.

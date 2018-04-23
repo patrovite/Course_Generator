@@ -79,7 +79,7 @@ L'exploitation de ce fichier pourra se faire, par exemple, avec le logiciel Base
 
 ## Copier le contenu d'une cellule
 
-Le contenu d'une cellule du tableau de donnée peut être copié dans le presse papier afin d'être exploité dans un autre logiciel. Pour réaliser cette action il vous suffit de sélectionner "Edition>Copier". Le contenu de la cellule sélectionnée est copié dans le presse papier au fromat texte.
+Le contenu d'une cellule du tableau de donnée peut être copié dans le presse papier afin d'être exploité dans un autre logiciel. Pour réaliser cette action il vous suffit de sélectionner "Edition>Copier". Le contenu de la cellule sélectionnée est copié dans le presse papier au format texte.
 
 ## Générer un mini roadbook
 
@@ -234,7 +234,7 @@ Le bouton "...", à coté du champ "Format", permet d'ouvrir une fenêtre permet
 
 ### Affichage des zones de jours et de nuits
 
-Si dans les réglages du parcours, la prise en compte de la nuit a été activé alors le bouton ![](./images/MRB/Toolbar/night_day.png) sélectionner l'Affichage des zones de jours et de nuits.
+Si dans les réglages du parcours, la prise en compte de la nuit a été activé alors le bouton ![](./images/MRB/Toolbar/night_day.png) sélectionner l'affichage des zones de jours et de nuits.
 
 ![](./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png)  
 Les zones de nuits apparaissent grâce au fond grisé.
@@ -272,7 +272,7 @@ Les réglages possibles sont les suivants:
 Il est nécessaire dans certain cas de devoir sauvegarder uniquement les points marqués du parcours actuel dans un fichier. Cela permet si vous avez une nouvelle version du parcours de pouvoir importer ces points sur ce parcours.
 
 Par exemple:  
-Vous avez récupéré le parcours de l'UTMB. Vous avez passez du temps à repérer chaque col, chaque ravitaillement et vous avez saisie des commentaires sur certaines partie du parcours. Malheureusement, le parcours de l'année suivante est légérement différent mais les points principaux sont les mêmes. La fonction d'import/export des points marqués va vous faire gagner beaucoup de temps.
+Vous avez récupéré le parcours de l'UTMB. Vous avez passez du temps à repérer chaque col, chaque ravitaillement et vous avez saisie des commentaires sur certaines partie du parcours. Malheureusement, le parcours de l'année suivante est légèrement différent mais les points principaux sont les mêmes. La fonction d'import/export des points marqués va vous faire gagner beaucoup de temps.
 
 La procédure est la suivante:
 

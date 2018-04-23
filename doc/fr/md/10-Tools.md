@@ -18,6 +18,6 @@ L'outil se trouve à l'adresse web suivante http://www.gpsvisualizer.com/elevati
 
 Certain parcours, surtout quand ils ont été enregistré sur le terrain, contiennent plusieurs milliers de points. Cela peut poser des problèmes avec certains logiciels, sites internet ou GPS.
 
-Le site GPSVisualizer permet de réduire de maniére intelligente le nombre de points sans perte "d'informations" sur le parcours.
+Le site GPSVisualizer permet de réduire de manière intelligente le nombre de points sans perte "d'informations" sur le parcours.
 
 L'outil se trouve à l'adresse web suivante http://www.gpsvisualizer.com/convert_input

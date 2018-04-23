@@ -32,8 +32,8 @@ Le détail des colonnes est décrit ci-dessous:
     * ![](./images/Tags/note.png) : Indique une note.
     * ![](./images/Tags/info.png) : Indique une information.
     * ![](./images/Tags/roadbook.png) : Indique le début ou la fin d'une section de roadbook.
-* **Dist** : Contient la distance, en mètre, avec le point précédent.
-* **Total** : Contient la distance, en kilomètre, qui a été parcouru jusqu'à ce point.
+* **Dist** : Contient la distance, en mètre/miles, avec le point précédent.
+* **Total** : Contient la distance, en kilomètre/miles, qui a été parcouru jusqu'à ce point.
 * **Diff** : Contient la difficulté du terrain entre le point précédent et ce point. La valeur initiale est de 100, cela correspond à une route plate goudronnée. Plus la valeur diminue, plus le terrain est accidenté. Si vous mettez 80, cela indique que par rapport à une route goudronnée plate vous allez mettre 20% de temps en plus pour parcourir la distance. Le bouton ![](./images/Toolbar/fill_diff.png) permet de remplir rapidement un ensemble de position. Vous trouverez ci-dessous les valeurs utilisés par Softrun (www.softrun.fr). Merci à Rémi Poisvert pour ces informations.
     * "Terrain facile" = 98
     * "Terrain moyen" (chemin normal de montagne) = 95
@@ -41,7 +41,7 @@ Le détail des colonnes est décrit ci-dessous:
     * "Terrain très difficile" = 80
     * "Terrains extrêmement difficiles" = en-dessous de 80
 * **Coeff** : Contient le coefficient de fatigue à appliquer entre le point précédent et ce point. La valeur est comprise entre 1 et 200. La valeur initiale est de 100, cela correspond à votre état de départ (en principe en bonne forme). Si vous mettez 80, cela indique que vous allez mettre 20% de temps en plus pour parcourir la distance.
-Le bouton ![](./images/Toolbar/fill_coeff.png) permet de définir une régle d'évolution globale du coefficient de fatigue.
+Le bouton ![](./images/Toolbar/fill_coeff.png) permet de définir une règle d'évolution globale du coefficient de fatigue.
 * **Récup.** : Contient le coefficient de récupération qui sera ajouté au coefficient de fatigue. C'est une valeur relative qui est comprise entre 0 et 100. La valeur initiale est de 0 (qui n'est pas affichée). La somme "Coeff"+"Récup" est plafonnée à 100%.
 Ce paramètre est utilisé pour indiquer la récupération suite à une pause (ravitaillement, sieste dans une base vie...). Une fois la valeur saisie, il faut relancer un calcul global du coefficient de fatigue avec le bouton ![](./images/Toolbar/fill_coeff.png).
 * **Temps** : Contient le temps qu'il vous faut pour atteindre ce point depuis le départ.
@@ -88,7 +88,7 @@ Cet onglet permet d'obtenir une analyse de votre parcours. Il contient 3 sous-on
 
 ### L'onglet "Analyse > Temps/Distance"
 
-Cet onglet pemret de faire une analyse de votre vitesse dans le temps.
+Cet onglet permet de faire une analyse de votre vitesse dans le temps.
 ![](./images/Tabs/CG40_Tab_Analyze_Dist_Time.png)
 
 Deux courbes sont présentes:
@@ -114,7 +114,6 @@ Deux courbes sont présentes:
 * Une courbe de vitesse par rapport à la distance
 * Une courbe de régression de la vitesse
 
-Le bouton  permet de sauver le profil sous forme d'image.
 
 ### L'onglet "Analyse > Vitesse/Pente"
 Cet onglet permet d'extrapoler une courbe vitesse par rapport à la pente.  
