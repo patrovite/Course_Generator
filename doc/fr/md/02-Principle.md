@@ -4,7 +4,7 @@ Pour fonctionner **Course Generator** a besoin, en entrée, de données contenan
 
 Ces données peuvent être :
 
-* Un fichier au format GPX. Ce fichier contient les données d'un parcours qui a été créé ou récupéré sur des sites interent (par exemple: Openrunner, Skitour...),
+* Un fichier au format GPX. Ce fichier contient les données d'un parcours qui a été créé ou récupéré sur des sites internet (par exemple: Openrunner, Skitour...),
 * Un fichier au format CGX qui est le format d'enregistrement de **Course Generator**.
 
 ## Un fichier GPX c’est quoi ?
@@ -20,7 +20,7 @@ Il permet d’échanger :
 ![Image Wikipedia](./images/CG40_GPX.png)  
 Source Wikipédia
 
-Lors de l’ouverture d’un fichier GPX, **Course Generator** n’exploite que les traces. Les autres constituants sont ignorés.
+Lors de l'ouverture d’un fichier GPX, **Course Generator** n’exploite que les traces. Les autres constituants sont ignorés.
 
 ## Le format CGX
 
@@ -37,8 +37,8 @@ Le diagramme ci-dessous montre le principe de fonctionnement de **Course Generat
 
 Les cas d’utilisation suivant pourraient être envisagés (liste non exhaustive) :
 
-* Préparer une course. Après avoir téléchargé le parcours vous allez ajuster vos paramètres, ajuster la "qualité" du terrain, indiqué les lieux de ravitaillements et les temps d'arrêts prévu, ajouter des commentaires et bien d'autres choses. Au final, **Course Generator** va calculer votre temps de passage pour chaque point. Cela vous permettra d'avoir vos temps de passage, des statistiques (par exemple temps passé à plus de 2000m de nuit) et de générer un mini-roadbook.  
-* La diffusion par l'organisateur d'une course d'un parcours dans lequel il aurait indiqué pour la « qualité » du terrain, les ravitaillements, les cols ainsi que les barrières horaires.
+* Préparer une course. Après avoir téléchargé le parcours vous allez ajuster vos paramètres, ajuster la "qualité" du terrain, indiqué les lieux de ravitaillements et les temps d'arrêts prévus, ajouter des commentaires et bien d'autres choses. Au final, **Course Generator** va calculer votre temps de passage pour chaque point. Cela vous permettra d'avoir vos temps de passage, des statistiques (par exemple temps passé à plus de 2000m de nuit) et de générer un mini-roadbook.  
+* La diffusion par l'organisateur d'une course d'un parcours dans lequel il aurait indiqué la « qualité » du terrain, les ravitaillements, les cols ainsi que les barrières horaires.
 * La génération d’un fichier GPX avec les données temporelles pré-calculées afin d’utiliser le partenaire virtuel des GPS GARMIN. Cela permet d'avoir un partenaire virtuel qui court avec vous. Si vous avez choisi les bons paramètres, il vous sera possible de courir à ses côtés. Cette fonction permet aussi d'afficher votre position et celle partenaire sur le parcours et sur le profil du parcours. Elle vous donne le temps de parcours restant ainsi que le kilométrage restant. C'est très pratique pour gérer votre effort. La capture d’écran ci-dessous vous montre l’affichage du profil en mode partenaire virtuel sur un Forerunner 205/305. Le point foncé c'est vous et le point clair c'est le partenaire virtuel.
 
 ![](./images/CG40_Virtual_Partner.jpg)

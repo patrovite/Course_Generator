@@ -19,6 +19,7 @@
 package course_generator.mrb;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -147,10 +148,10 @@ public class FrmConfigMrbDuplicate  extends javax.swing.JDialog {
 	private void initComponents() {
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		setMinimumSize(new Dimension(300,100));
 		setAlwaysOnTop(true);
 		setResizable(false);
-		setType(java.awt.Window.Type.UTILITY);
-
+		
 		// -- Layout
 		// ------------------------------------------------------------
 		Container paneGlobal = getContentPane();

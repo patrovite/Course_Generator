@@ -48,11 +48,11 @@ Saisissez le fuseau horaire (1 pour la France). L'heure de levée et de couché 
 Une fois le réglage terminé, appuyez sur "Valider" afin de valider votre saisie.    
 Si vous avez sélectionné la prise en compte de la nuit, vous pourrez constater que la colonne "Heure" à un fond bleu durant les périodes de nuit et vert durant les périodes de jour.
 
-## Paramètrer la courbe de vitesse/pente
+## Paramétrer la courbe de vitesse/pente
 
 Afin d'avoir une durée de parcours cohérente avec votre niveau, il faut choisir ou créer une courbe de vitesse par rapport à la pente. Cette courbe va de -50% de pente (descente) à +50% de pente (montée). Le choix de la courbe se fait par le choix de la vitesse que l'on veut "tenir" lorsque la pente est nulle (0%) sur un terrain goudronné. Un ensemble de courbes ont été créée afin de couvrir la plupart des utilisations en course à pied.
 
-Le menu "Paramètres>Courbes Vitesse/Pente..." ou le bouton ![](./images/Toolbar/curve.png) permettent d'afficher la boite de dialogue permettant de séléectionner et gérer les courbes.  
+Le menu "Paramètres>Courbes Vitesse/Pente..." ou le bouton ![](./images/Toolbar/curve.png) permettent d'afficher la boite de dialogue permettant de sélectionner et gérer les courbes.  
 ![](./images/Curve/CG40_Dlg_Curves.png)
 
 Sur la gauche apparaît la liste des courbes déjà créée. Lors de la création, un nom explicite leur a été donné afin de les retrouver rapidement. Essayez de conserver ce principe si vous créez de nouvelles courbes.
@@ -71,10 +71,10 @@ Le bouton ![](./images/Curve/chart_curve_delete.png) permet de supprimer la cour
 
 Notes:
 
-* Si vous créez de nouvelles courbes qui vous semblent intêressantes, n'hésitez pas à me les envoyer afin que je puisse les rajouter sur le site internet ainsi que dans les prochaines versions.
+* Si vous créez de nouvelles courbes qui vous semblent intéressantes, n'hésitez pas à me les envoyer afin que je puisse les rajouter sur le site internet ainsi que dans les prochaines versions.
 * Chaque courbe est un fichier dont l'extension est '.par'.  Ces fichiers sont accessible par le menu  "Outils>Afficher le répertoire contenant les fichiers courbes vitesse/pente". Cela va ouvrir le gestionnaire de fichier et afficher le contenu du répertoire.
 
-## Paramètrer la difficulté du terrain
+## Paramétrer la difficulté du terrain
 
 La colonne "Diff" permet de 'quantifier' la difficulté du terrain.
 
@@ -89,7 +89,7 @@ La zone "difficulté" permet de choisir la difficulté du terrain. Vous pouvez s
 Cette action peut aussi être faite sur la carte du parcours (voir plus bas).
 
 **Note:**  
-Il est parfois impossible de déterminer la qualité du terrain à cause de la méconnaissance de celui-ci. Il peut alors être judicieux de fixer une qualité moyenne du terrain pour l'ensemble du parcours. Par exemple, la Montagn'hard 100 a été qualifiée en terrain moyen sur l'ensemble du parcours. Même si certains passages étaient trés difficile (pierriers, zones glissantes...) et d'autres trés roulants (routes ou pistes).  
+Il est parfois impossible de déterminer la qualité du terrain à cause de la méconnaissance de celui-ci. Il peut alors être judicieux de fixer une qualité moyenne du terrain pour l'ensemble du parcours. Par exemple, la Montagn'hard 100 a été qualifiée en terrain moyen sur l'ensemble du parcours. Même si certains passages étaient très difficile (pierriers, zones glissantes...) et d'autres très roulants (routes ou pistes).  
 Il ne faut pas prendre en compte lors de votre choix la déclinivité du terrain car cela est pris en compte via la courbe "Vitesse/Pente" et le calcul de la pente fait automatiquement par **Course Generator**.
 
 ## Paramétrer le coefficient de fatigue
@@ -193,5 +193,5 @@ Dans la barre d'état, située en bas de la fenêtre, le temps total est mis à 
 **Course Generator** offre la possibilité de sauver votre parcours dans plusieurs formats.
 
 * "Fichier>Sauver GPX" sauve le parcours au format GPX qui est le format standard d'échange de parcours. Le problème de ce format est qu'il ne stocke pas les données spécifiques à **Course Generator**.
-* "Fichier>Sauver CGX" sauve le parcours au format CGX qui est le format des fichiers **Course Generator**. Ce format devra être utilisé dès que l'on voudra conserver les paramètrages réalisés sur un parcours.
+* "Fichier>Sauver CGX" sauve le parcours au format CGX qui est le format des fichiers **Course Generator**. Ce format devra être utilisé dès que l'on voudra conserver les paramétrages réalisés sur un parcours.
 * "Fichier>Sauver CSV" sauve le parcours au format CSV qui est un format standard permettant de sauver des données sous forme de texte séparé par des points virgules. Ces fichiers peuvent être ouverts par un tableur comme EXCEL, OpenOffice Calc ou Libre Office Calc.
