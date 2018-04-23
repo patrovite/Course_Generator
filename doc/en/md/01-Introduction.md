@@ -27,7 +27,7 @@ Writing conventions have been adopted in this manual. They are detailed below.
 * *"File> Load GPX file"* indicates that it is necessary to select the "File" menu then select, in this menu, "Loading GPX file". This allows to simply describe a sequence of manipulation to be done with the mouse.
 * *"[CTRL + O]"* indicates one or a series of keys to activate to trigger an action. For example [CTRL + O] indicates that it is necessary to press the CTRL key and while maintaining it pressed, it is necessary to press the key O.
 
-## Word of the author
+## Author's Note
 
 I created **Course Generator** in 2008 to help me prepare for my first 100km Ultra-trail. I completed it following my needs. A small article in Ultrafondu (French magazin) allowed me to start making it known and I then made it grow with the user feedbacks.
 It has evolved enormously and many times, I have rewritten it to fit my needs. Each time it was a challenge and like the races that I ran, it was an adventure that made me grow (knowledge, questioning, open-mindedness ...).

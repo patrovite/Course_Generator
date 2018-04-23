@@ -35,17 +35,17 @@
 <li><a href="#the-operating-principle-of-course-generator"><span class="toc-section-number">2.3</span> The operating principle of Course Generator</a></li>
 <li><a href="#use-cases"><span class="toc-section-number">2.4</span> Use cases</a></li>
 </ul></li>
-<li><a href="#linterface"><span class="toc-section-number">3</span> L’interface</a></li>
-<li><a href="#les-menus"><span class="toc-section-number">4</span> Les menus</a><ul>
-<li><a href="#menu-fichier"><span class="toc-section-number">4.1</span> Menu “Fichier”</a></li>
-<li><a href="#menu-edition"><span class="toc-section-number">4.2</span> Menu “Edition”</a></li>
-<li><a href="#menu-affichage"><span class="toc-section-number">4.3</span> Menu “Affichage”</a></li>
-<li><a href="#menu-outils"><span class="toc-section-number">4.4</span> Menu “Outils”</a></li>
-<li><a href="#menu-paramètres"><span class="toc-section-number">4.5</span> Menu “Paramètres”</a></li>
-<li><a href="#menu-aide"><span class="toc-section-number">4.6</span> Menu “Aide”</a></li>
+<li><a href="#the-gui"><span class="toc-section-number">3</span> The GUI</a></li>
+<li><a href="#menus"><span class="toc-section-number">4</span> Menus</a><ul>
+<li><a href="#file-menu"><span class="toc-section-number">4.1</span> “File” Menu</a></li>
+<li><a href="#edit-menu"><span class="toc-section-number">4.2</span> “Edit” Menu</a></li>
+<li><a href="#display-menu"><span class="toc-section-number">4.3</span> “Display” Menu</a></li>
+<li><a href="#tools-menu"><span class="toc-section-number">4.4</span> “Tools” Menu</a></li>
+<li><a href="#parameters-menu"><span class="toc-section-number">4.5</span> “Parameters” Menu</a></li>
+<li><a href="#help-menu"><span class="toc-section-number">4.6</span> “Help” Menu</a></li>
 </ul></li>
-<li><a href="#la-barre-doutils"><span class="toc-section-number">5</span> La barre d’outils</a></li>
-<li><a href="#la-barre-détats"><span class="toc-section-number">6</span> La barre d’états</a></li>
+<li><a href="#the-toolbar"><span class="toc-section-number">5</span> The Toolbar</a></li>
+<li><a href="#the-status-bar"><span class="toc-section-number">6</span> The Status bar</a></li>
 <li><a href="#tabs"><span class="toc-section-number">7</span> Tabs</a><ul>
 <li><a href="#gps-data-tab"><span class="toc-section-number">7.1</span> “GPS data” tab</a></li>
 <li><a href="#profile-tab"><span class="toc-section-number">7.2</span> “Profile” tab</a></li>
@@ -182,7 +182,7 @@ Wikipedia source</p>
 <p><strong>Must I have Garmin GPS to use <strong>Course Generator</strong>?</strong></p>
 <p>No! But it’s a plus if you want to use the virtual partner feature. That’s what pushed me to create <strong>Course Generator</strong> (even though now I almost don’t use this feature anymore).</p>
 </blockquote>
-<h1 id="linterface"><span class="header-section-number">3</span> L’interface</h1>
+<h1 id="the-gui"><span class="header-section-number">3</span> The GUI</h1>
 <p>Upon starting the software, the following window is displayed : <img src="./images/CG40_Main.png" alt="Fenêtre principale" /></p>
 <p>The software’s GUI is made of (from top to bottom):</p>
 <ul>
@@ -192,111 +192,110 @@ Wikipedia source</p>
 <li>A map.</li>
 <li>A footer showing quick important information.</li>
 </ul>
-<h1 id="les-menus"><span class="header-section-number">4</span> Les menus</h1>
-<h2 id="menu-fichier"><span class="header-section-number">4.1</span> Menu “Fichier”</h2>
+<h1 id="menus"><span class="header-section-number">4</span> Menus</h1>
+<h2 id="file-menu"><span class="header-section-number">4.1</span> “File” Menu</h2>
 <figure>
 <img src="./images/Menu/CG40_Menu_File.png" alt="Menu Fichier" /><figcaption>Menu Fichier</figcaption>
 </figure>
 <ul>
-<li><p><strong>Ouvrir un fichier GPX</strong> : Permet de charger un fichier au format GPX. Raccourci clavier: [MAJ+CTRL+O].</p></li>
-<li><p><strong>Ouvrir un fichier CGX</strong> : Permet de charger un fichier au format CGX. Raccourci clavier: [CTRL+O].</p></li>
-<li><p><strong>Derniers fichiers GPX</strong> : Permet l’affichage d’un sous-menu listant les 5 derniers fichiers GPX qui ont été ouvert. Un clic sur un de ces fichiers permet de l’ouvrir.</p></li>
-<li><p><strong>Derniers fichiers CGX</strong> : Permet l’affichage d’un sous-menu listant les 5 derniers fichiers CGX qui ont été ouvert. Un clic sur un de ces fichiers permet de l’ouvrir.</p></li>
-<li><p><strong>Sauver CGX</strong> : Permet de sauver les données du parcours au format CGX. Toutes les données du parcours (difficultés, coefficient de fatigue, temps de ravitaillement….) sont sauvegardées. Raccourci clavier: [CTRL+S].</p></li>
-<li><p><strong>Sauver GPX</strong> : Permet de sauver les données du parcours au format GPX. Attention! Seules les données de latitude, de longitude, d’altitude et de temps sont sauvées.</p></li>
-<li><p><strong>Sauver CSV</strong> : Permet de sauver les données du parcours au format CSV. Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.</p></li>
-<li><p><strong>Importer un fichier GPX</strong> : Permet d’insérer un fichier GPX au début ou à la fin du parcours actif.</p></li>
-<li><p><strong>Importer un fichier CGX</strong> : Permet d’insérer un fichier CGX au début ou à la fin du parcours actif.</p></li>
-<li><p><strong>Sauver une partie du parcours en CGX</strong> : Permet de sauver les lignes sélectionnées du tableau au format CGX. Toutes les données du parcours (difficultés, coefficient de fatigue, temps de ravitaillement….) sont sauvegardées.</p></li>
-<li><p><strong>Sauver une partie du parcours en GPX</strong> : Permet de sauver les lignes sélectionnées du tableau au format GPX. Attention! Seules les données de latitude, de longitude, d’altitude et de temps sont sauvés.</p></li>
-<li><p><strong>Sauver une partie du parcours en CSV</strong> : Permet de sauver les lignes sélectionnées du tableau au format CSV. Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.</p></li>
-<li><p><strong>Importer des points</strong> : Permet d’importer des points sauvegardés au format CGP.</p></li>
-<li><p><strong>Exporter des points</strong> : Permet de sauvegarder les points marqués dans un fichier au format CGP.</p></li>
-<li><p><strong>Exporter des tags en waypoints</strong> : Permet de sauvegarder les tags sélectionnés dans un fichier GPX sous forme de waypoints. Cela permet d’avoir, sur les GPS, des informations complémentaires en plus des traces.</p></li>
-<li><p><strong>Quitter Course Generator</strong> : Permet d’arrêter l’exécution de <strong>Course Generator</strong>. raccourci clavier: [Alt+F4].</p></li>
+<li><p><strong>Open GPX</strong> : Loads a GPX format file. Keyboard shortcut: [MAJ+CTRL+O].</p></li>
+<li><p><strong>Open CGX</strong> : Loads a CGX format file. Keyboard shortcut: [CTRL+O].</p></li>
+<li><p><strong>Recent GPX files</strong> : Displays a list of the last 5 GPX files that have been loaded. Clicking on one of those files will load them again.</p></li>
+<li><p><strong>Recent CGX files</strong> : Displays a list of the last 5 CGX files that have been loaded. Clicking on one of those files will load them again.</p></li>
+<li><p><strong>Save as CGX</strong> : Saves the course data in CGX format. All the course data (difficulty, fatigue coefficient, aid station time…) will be asved. Keyboard shortcut: [CTRL+S].</p></li>
+<li><p><strong>Save as GPX</strong> : Saves the course data in GPX format. Warning! Only latitude, longitude and altitude data will be saved.</p></li>
+<li><p><strong>Save as CSV</strong> : Saves the course data in CSV format. The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.</p></li>
+<li><p><strong>Import a GPX file</strong> : Imports a GPX file at the beginning or end of the current course</p></li>
+<li><p><strong>Import a CGX file</strong> : Imports a CGX file at the beginning or end of the current course.</p></li>
+<li><p><strong>Save selection as CGX</strong> : Saves the selected line(s) in a CGX file. All the course data (difficulties, fatigue coefficient, aid station time….) will be saved.</p></li>
+<li><p><strong>Save selection as GPX</strong> : Saves the selected lines in a GPX file. Warning! Only latitude, longitude and altitude data will be saved.</p></li>
+<li><p><strong>Save selection as CSV</strong> : Saves the selected lines in a CSV file. The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.</p></li>
+<li><p><strong>Import points</strong> : Imports waypoints as CGP format.</p></li>
+<li><p><strong>Export points</strong> : Saves the selected waypoints in a CGP file.</p></li>
+<li><p><strong>Export tags as waypoints</strong> : Saves the selected tags as waypoints in a GPX file. This allows to benefitiate, when using a GPS device, additional information on top of the course.</p></li>
+<li><p><strong>Exit Course Generator</strong> : Exits <strong>Course Generator</strong>. Keyboard shortcut: [Alt+F4].</p></li>
 </ul>
-<h2 id="menu-edition"><span class="header-section-number">4.2</span> Menu “Edition”</h2>
+<h2 id="edit-menu"><span class="header-section-number">4.2</span> “Edit” Menu</h2>
 <figure>
 <img src="./images/Menu/CG40_Menu_Edit.png" alt="Menu Edition" /><figcaption>Menu Edition</figcaption>
 </figure>
 <ul>
-<li><p><strong>Copier</strong> : Permet de copier la cellule courante dans le presse papier. Raccourci clavier: [CTRL+C].</p></li>
-<li><p><strong>Recherche d’un point…</strong> : Permet de rechercher un point GPS par sa longitude et sa latitude. Le point le plus proche est sélectionné. Raccourci clavier: [CTRL+F].</p></li>
-<li><p><strong>Marquer la position courante</strong> : Permet de mettre une marque sur la ligne courante. Si la ligne contient déjà une marque, elle est alors supprimée. Raccourci clavier: [F6].</p></li>
-<li><p><strong>Aller à la marque suivante</strong> : Permet de sélectionner la ligne contenant le Tag suivant. Raccourci clavier: [F7].</p></li>
-<li><p><strong>Aller à la marque précédente</strong> : Permet de sélectionner la ligne contenant le Tag précédent. Raccourci clavier: [Ctrl+F7].</p></li>
+<li><p><strong>Copy</strong> : Copies the selected line in the clipboard. Keyboard shortcut: [CTRL+C].</p></li>
+<li><p><strong>Search a point…</strong> : Searches a GPS point using a longitude and a latitude. The closest point found will be returned. Keyboard shortcut: [CTRL+F].</p></li>
+<li><p><strong>Mark the current position</strong> : Sets a mark on the selected line. If the line already has a mark, the mark will be deleted. Keyboard shortcut: [F6].</p></li>
+<li><p><strong>Go to the next mark</strong> : Locates and selects the next mark. Keyboard shortcut: [F7].</p></li>
+<li><p><strong>Go to the previous mark</strong> : Locates and selects the previous mark. Keyboard shortcut: [Ctrl+F7].</p></li>
 </ul>
-<h2 id="menu-affichage"><span class="header-section-number">4.3</span> Menu “Affichage”</h2>
+<h2 id="display-menu"><span class="header-section-number">4.3</span> “Display” Menu</h2>
 <figure>
 <img src="./images/Menu/CG40_Menu_Display.png" alt="Menu Affichage" /><figcaption>Menu Affichage</figcaption>
 </figure>
 <ul>
-<li><strong>Générer un mini roadbook</strong> : Permet d’ouvrir une fenêtre permettant de créer un mini roadbook.</li>
+<li><strong>Generate mini roadbook</strong> : Opens a window and displays the course’s mini roadbook.</li>
 </ul>
-<h2 id="menu-outils"><span class="header-section-number">4.4</span> Menu “Outils”</h2>
+<h2 id="tools-menu"><span class="header-section-number">4.4</span> “Tools” Menu</h2>
 <figure>
 <img src="./images/Menu/CG40_Menu_Tools.png" alt="Menu Outils" /><figcaption>Menu Outils</figcaption>
 </figure>
 <ul>
-<li><p><strong>Détermination des mini/maxi</strong> : Permet de déterminer les points haut et bas du parcours.</p></li>
-<li><p><strong>Inversion du parcours</strong> : Permet d’inverser le sens du parcours.</p></li>
-<li><p><strong>Définir un nouveau point de départ</strong>: Permet, pour un circuit en boucle, de définir un nouveau point de départ.</p></li>
-<li><p><strong>Estimer le temps de parcours</strong> : Permet de lancer le calcul afin de déterminer le temps de passage pour chaque point GPS du parcours. Raccourci clavier: [F5].</p></li>
-<li><p><strong>Afficher le répertoire contenant les fichiers courbes vitesse/pente</strong> : Ouvre l’explorateur de fichier et affiche le répertoire correspondant.</p></li>
+<li><p><strong>Find Min/Max</strong> : Determines the highest and lowest course points.</p></li>
+<li><p><strong>Reverse track</strong> : Reverse the course direction.</p></li>
+<li><p><strong>Define a new start</strong>: For a given course as a loop, sets the selected point as the start of the course.</p></li>
+<li><p><strong>Estimate track time</strong> : Compute the estimated time for each of the course’s points. Keyboard shortcut: [F5].</p></li>
+<li><p><strong>Open the “Speed/Slope” folder</strong> : Opens the folder containing the speed curve files in File Explorer.</p></li>
 </ul>
-<h2 id="menu-paramètres"><span class="header-section-number">4.5</span> Menu “Paramètres”</h2>
+<h2 id="parameters-menu"><span class="header-section-number">4.5</span> “Parameters” Menu</h2>
 <figure>
 <img src="./images/Menu/CG40_Menu_Settings.png" alt="Menu Paramètres" /><figcaption>Menu Paramètres</figcaption>
 </figure>
 <ul>
-<li><p><strong>Paramètres du parcours…</strong> : Permet d’ouvrir une fenêtre permettant de régler les paramètres de la course. Raccourci clavier: [F9].</p></li>
-<li><p><strong>Courbes vitesses/pentes…</strong> : Permet d’ouvrir une fenêtre permettant de choisir ou de créer une courbe de vitesse par rapport à la pente.</p></li>
-<li><p><strong>Paramètres de Course Generator…</strong> : Permet de régler les paramètres spécifique au logiciel <strong>Course Generator</strong>.</p></li>
+<li><p><strong>Track settings…</strong> : Opens the dialog to configure the course settings. Keyboard shortcut: [F9].</p></li>
+<li><p><strong>Speed/Slope curves…</strong> : Opens the dialog to choose or create a speed/slope cruve.</p></li>
+<li><p><strong>Course Generator settings…</strong> : Opens the dialog to change the main settings of <strong>Course Generator</strong>.</p></li>
 </ul>
-<h2 id="menu-aide"><span class="header-section-number">4.6</span> Menu “Aide”</h2>
+<h2 id="help-menu"><span class="header-section-number">4.6</span> “Help” Menu</h2>
 <figure>
 <img src="./images/Menu/CG40_Menu_Help.png" alt="Menu Aide" /><figcaption>Menu Aide</figcaption>
 </figure>
 <ul>
-<li><p><strong>Aide</strong> : Affiche ce document.</p></li>
-<li><p><strong>Encourager l’auteur…</strong> : Ce menu ouvre votre navigateur internet et affiche la page internet permettant de faire un don à l’auteur afin de l’encourager dans le développement de <strong>Course Generator</strong>.</p></li>
-<li><p><strong>Page internet de Course Generator…</strong> : Ce menu ouvre votre navigateur internet et affiche la page internet sur les dernières nouvelles concernant <strong>Course Generator</strong>.</p></li>
-<li><p><strong>A propos…</strong> : Permet d’afficher les informations de copyright et de version du logiciel.</p></li>
+<li><p><strong>Help</strong> : Displays this current document.</p></li>
+<li><p><strong>Support the author…</strong> : This menu opens your web browser and displays a webpage where a donation can be made to the author in order to support him continue developing <strong>Course Generator</strong>.</p></li>
+<li><p><strong>Course Generator webpage…</strong> : This menu opens your web browser onto the main webpage of <strong>Course Generator</strong>.</p></li>
+<li><p><strong>About…</strong> : Displays the copyright and version information of <strong>Course Generator</strong>.</p></li>
 </ul>
-<h1 id="la-barre-doutils"><span class="header-section-number">5</span> La barre d’outils</h1>
+<h1 id="the-toolbar"><span class="header-section-number">5</span> The Toolbar</h1>
 <figure>
 <img src="./images/Toolbar/CG40_Main_Toolbar.png" alt="La barre d’outils" /><figcaption>La barre d’outils</figcaption>
 </figure>
 <ul>
-<li><img src="./images/Toolbar/openGPX.png" /> : Permet de charger un parcours au format GPX</li>
-<li><img src="./images/Toolbar/openCGX.png" /> : Permet de charger un parcours au format CGX</li>
-<li><img src="./images/Toolbar/saveCGX.png" /> : Permet de sauvegarder le parcours au format CGX</li>
-<li><img src="./images/Toolbar/undo.png" /> : Permet d’annuler la dernière commande</li>
-<li><img src="./images/Toolbar/search.png" /> : Permet de faire la recherche d’une position GPS</li>
-<li><img src="./images/Toolbar/prev_position.png" /> : Permet de rechercher la marque précédente</li>
-<li><img src="./images/Toolbar/next_position.png" /> : Permet de rechercher la marque suivante</li>
-<li><img src="./images/Toolbar/mrb.png" /> : Permet d’afficher le mini roadbook</li>
-<li><img src="./images/Toolbar/curve.png" /> : Permet d’afficher la fenêtre de choix de la courbe vitesse/pente</li>
-<li><img src="./images/Toolbar/settings.png" /> : Permet d’ouvrir la fenêtre de paramètres du parcours</li>
-<li><img src="./images/Toolbar/fill_diff.png" /> : Permet d’afficher la fenêtre de réglage global de la qualité du terrain</li>
-<li><img src="./images/Toolbar/fill_coeff.png" /> : Permet d’afficher la fenêtre de réglage global du coefficient de fatigue</li>
-<li><img src="./images/Toolbar/refresh_data.png" /> : Permet de calculer le temps de parcours</li>
+<li><img src="./images/Toolbar/openGPX.png" /> : Loads a GPX file format course</li>
+<li><img src="./images/Toolbar/openCGX.png" /> : Loads a CGX file format course</li>
+<li><img src="./images/Toolbar/saveCGX.png" /> : Saves a CGX file format course</li>
+<li><img src="./images/Toolbar/undo.png" /> : Undo the last command</li>
+<li><img src="./images/Toolbar/search.png" /> : Searches for a specific GPS location</li>
+<li><img src="./images/Toolbar/prev_position.png" /> : Searches the previous mark</li>
+<li><img src="./images/Toolbar/next_position.png" /> : Searches the next mark</li>
+<li><img src="./images/Toolbar/mrb.png" /> : Displays the mini road-book</li>
+<li><img src="./images/Toolbar/curve.png" /> : Displays the speed/slope curve</li>
+<li><img src="./images/Toolbar/settings.png" /> : Displays the course settings window</li>
+<li><img src="./images/Toolbar/fill_diff.png" /> : Displays the terrain difficulty global settings window</li>
+<li><img src="./images/Toolbar/fill_coeff.png" /> : Displays the fatigue coefficient global settings window</li>
+<li><img src="./images/Toolbar/refresh_data.png" /> : Computes the course estimated time</li>
 </ul>
-<h1 id="la-barre-détats"><span class="header-section-number">6</span> La barre d’états</h1>
-<p>Située sur le bas de la fenêtre elle affiche les informations sur l’application et le parcours.<br />
-<img src="./images/Statusbar/CG40_Statusbar.png" alt="La barre d’états" /></p>
+<h1 id="the-status-bar"><span class="header-section-number">6</span> The Status bar</h1>
+<p>Located at the bottom of the main GUI, it displays the general information related to the software status and the course. <img src="./images/Statusbar/CG40_Statusbar.png" alt="La barre d’états" /></p>
 <ul>
-<li><img src="./images/Statusbar/CG40_Statusbar_Dist.png" /> : Distance totale du parcours.</li>
-<li><img src="./images/Statusbar/CG40_Statusbar_Ascend.png" /> : Dénivelé positif total du parcours.</li>
-<li><img src="./images/Statusbar/CG40_Statusbar_Descend.png" /> : Dénivelé négatif total du parcours.</li>
-<li><img src="./images/Statusbar/CG40_Statusbar_Time.png" /> : Temps total pour réaliser le parcours.</li>
-<li><img src="./images/Statusbar/CG40_Statusbar_Curve.png" /> : Courbe ‘Vitesse/Pente’ sélectionnée.</li>
-<li><img src="./images/Statusbar/CG40_Statusbar_Timelimit.png" /> : Indique qu’une barrière horaire a été dépassé à un endroit du parcours. Un clic sur cet indicateur positionne la sélection du tableau sur la première ligne concernée.</li>
-<li><img src="./images/Statusbar/CG40_Statusbar_Modified.png" /> : Le parcours a été modifié. Il est nécessaire de le sauvegarder.</li>
-<li><img src="./images/Statusbar/CG40_Statusbar_Calc.png" /> : Le parcours a été modifié. Il est nécessaire de relancer le calcul (bouton <img src="./images/Toolbar/refresh_data.png" /> ou [F5]).</li>
-<li><img src="./images/Statusbar/CG40_Statusbar_Online.png" /> : Indique l’état de la connexion internet.</li>
-<li><img src="./images/Statusbar/CG40_Statusbar_Unit.png" /> : Indique les unités de mesures utilisées.</li>
-<li><img src="./images/Statusbar/CG40_Statusbar_Map_Size.png" /> : Indique la taille disque utilisée par les cartes.</li>
+<li><img src="./images/Statusbar/CG40_Statusbar_Dist.png" /> : Total distance.</li>
+<li><img src="./images/Statusbar/CG40_Statusbar_Ascend.png" /> : Total elevation gain.</li>
+<li><img src="./images/Statusbar/CG40_Statusbar_Descend.png" /> : Total elevation loss.</li>
+<li><img src="./images/Statusbar/CG40_Statusbar_Time.png" /> : Total estimated time.</li>
+<li><img src="./images/Statusbar/CG40_Statusbar_Curve.png" /> : Chosen ‘speed/slope’.</li>
+<li><img src="./images/Statusbar/CG40_Statusbar_Timelimit.png" /> : Indicates that a cut-off time has been exceeded for a specific course location. Clicking on it will bring the specific line into focus.</li>
+<li><img src="./images/Statusbar/CG40_Statusbar_Modified.png" /> : The couse has been modified. It is recommended to save it.</li>
+<li><img src="./images/Statusbar/CG40_Statusbar_Calc.png" /> : The course has been modified. It is recommended to re-compute the estimated time. (button <img src="./images/Toolbar/refresh_data.png" /> or [F5]).</li>
+<li><img src="./images/Statusbar/CG40_Statusbar_Online.png" /> : Displays the current internet connection status.</li>
+<li><img src="./images/Statusbar/CG40_Statusbar_Unit.png" /> : Shows the selected measuring units.</li>
+<li><img src="./images/Statusbar/CG40_Statusbar_Map_Size.png" /> : Displays the disk space used for the maps.</li>
 </ul>
 <h1 id="tabs"><span class="header-section-number">7</span> Tabs</h1>
 <p>The top area contains a series of tabs that allow you to choose the type of data to display.</p>
@@ -496,7 +495,7 @@ The button <img src="./images/Tabs/refresh.png" /> allows you to refresh the dat
 <p>On the left appears the list of curves already created. During the creation, an explicit name was given to them to find them quickly. Try to preserve this principle if you create new curves.</p>
 <p>The button <img src="./images/Curve/chart_curve_open.png" alt="open curve button" /> load the data from the selected curve file into the list. The button <img src="./images/Curve/chart_curve_edit.png" alt="edit curve button" /> allows you to modify the data of the selected curve. The button <img src="./images/Curve/chart_curve_add.png" alt="add curve button" /> allows you to create a new curve. The button <img src="./images/Curve/chart_curve_duplicate.png" alt="duplicate curve button" /> duplicate the selected curve. The button <img src="./images/Curve/chart_curve_delete.png" alt="delete curve button" /> deletes the selected curve.</p>
 <blockquote>
-<p><strong>How to choose a speed curve?</strong> This will depend on you, your goals… You can base yourself on a percentage of your VMA. For example for a long trail you can take 60% of your VMA. About 10km/h in my case, I then select the curve of 10km/h. There is also the pratice. At the beginning you will surely underestimate or over-evaluate your speed. But over time your choice will become more and more precise.</p>
+<p><strong>How to choose a speed curve?</strong> This will depend on you, your goals… You can base yourself on a percentage of your vVO2max. For example for a long trail you can take 60% of your vVO2max. About 10km/h in my case, I then select the curve of 10km/h. There is also the pratice. At the beginning you will surely underestimate or over-evaluate your speed. But over time your choice will become more and more precise.</p>
 </blockquote>
 <p><strong>Notes:</strong><br />
 * If you create new curves that seem interesting to you, do not hesitate to send them to me so that I can add them on the website as well as in the next versions. * Each curve is a file whose extension is ‘.par’. These files are accessible through the menu “Tools&gt;Open”Speed/Slope&quot; folder“. This will open the file manager and display the contents of the directory.</p>
