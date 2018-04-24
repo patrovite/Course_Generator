@@ -1,6 +1,6 @@
 # The principle
 
-To work **Course Generator** needs, as input, data containing a sequence of GPS points representing a track.
+To work, **Course Generator** needs, as input, data containing a sequence of GPS points representing a track.
 
 This data can be:
 
@@ -36,8 +36,8 @@ The diagram below shows the operating principle of **Course Generator**.
 
 The following use cases could be considered (non-exhaustive list):
 
-* Prepare a race. After downloading the race GPS track you will adjust your parameters, adjust the ground "quality", indicated the aid station and the planned downtime, add comments and many other things. Finally, **Course Generator** will calculate your time of passage for each point of the track. This will allow you to have your time at each point of the track, statistics (for example time spent at more than 2000m at night) and generate a mini-roadbook.
-* For a race direction to share the track in which they would have indicated for the ground "quality", the aid station, the cut-off times.
+* Prepare a race. After downloading the race GPS track you will adjust your parameters, adjust the terrain "quality", indicate the aid station and the planned downtime, add comments and many other things. Finally, **Course Generator** will calculate your time of passage for each point of the track. This will allow you to have your time at each point of the track, statistics (for example time spent at more than 2000m at night) and generate a mini-roadbook.
+* For a race direction to share the track in which they would have indicated for the terrain "quality", the aid station, the cut-off times.
 * Generation of a GPX file with pre-calculated time data to use the GARMIN GPS virtual partner. This allows to have a virtual partner running with you. If you have chosen the right parameters, you will be able to run at his side. This function also displays your position and the partner's position on the track and on the track profile. It gives you the remaining track time as well as the remaining distance. It's very convenient to manage your effort. The screenshot below shows you the profile view in virtual partner mode on a Forerunner 205/305. The dark point is you and the clear point is the virtual partner.
 
 ![](./images/CG40_Virtual_Partner.jpg)
