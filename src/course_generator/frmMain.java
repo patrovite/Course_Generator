@@ -24,7 +24,9 @@
  * - In order to have the log message in the eclipse console set in the 
  * run configuration "-DrunInEclipse=true" in Arguments/VM argument 
  * otherwise the message go to a log file 
- * 
+ * - Under Linux add "-Dgnu.java.awt.peer.gtk.Graphics=Graphics2D -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"  in Arguments/VM argument 
+ * This will allow to have the anti aliasing for the font.
+ *  
  * Used libraries:
  *  - Joda-time - http://www.joda.org/joda-time/
  *  - SwingX - LGPL 2.1 - https://swingx.java.net/
@@ -395,7 +397,7 @@ public class frmMain extends javax.swing.JFrame
 
 		// -- Set default font
 		setUIFont(
-				new javax.swing.plaf.FontUIResource("Tahoma", Font.PLAIN, 14));
+				new javax.swing.plaf.FontUIResource("Arial", Font.PLAIN, 14));
 
 		//-- Initialize the track data model (here because we need to know the current language
 		ModelTableMain = new TrackDataModel(Track, Settings);
@@ -4088,6 +4090,8 @@ public class frmMain extends javax.swing.JFrame
 					System.setProperty("sun.awt.noerasebackground", "true");
 					// Theme.loadTheme(de.muntjak.tinylookandfeel.TinyLookAndFeel.class.getResource("/themes/CG_Gray.theme"));
 					// Theme.loadTheme(course_generator.class().getResource("/course_generator/CG_Gray.theme"));
+					System.setProperty("awt.useSystemAAFontSettings","on");
+					System.setProperty("swing.aatext", "true");
 				}
 				catch (Exception ex)
 				{

@@ -1415,8 +1415,8 @@ public class Utils {
 		String helpFolder = 
 				environmentVariables.get("CGInstallFolder");
 		
-		String helpFilePath = helpFolder + "help\\" + language +
-				"\\" + language + "_" + htmlDocFile;
+		String helpFilePath = helpFolder + "/help/" + language +
+				"/" + language + "_" + htmlDocFile;
 		File helpFile = new File(helpFilePath);
 		if(helpFile.exists() && !helpFile.isDirectory())
 		{
