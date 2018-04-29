@@ -310,6 +310,9 @@ public class SaxConfigHandler extends DefaultHandler{
             else if (qName.equalsIgnoreCase("ISPACE")) {
                 Settings.isPace = ManageBoolean(false, ERR_READ_BOOL);
             } 
+            else if (qName.equalsIgnoreCase("CHECK4UPDATEATSTART")) {
+                Settings.Check4UpdateAtStart = ManageBoolean(false, ERR_READ_BOOL);
+            } 
             else if (qName.equalsIgnoreCase("LANGUAGE")) {
                 Settings.Language = ManageString();
             }  

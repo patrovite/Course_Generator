@@ -28,6 +28,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.InputMap;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -56,6 +57,8 @@ public class frmSettings extends javax.swing.JDialog {
 	private JComboBox cbUnit;
 	private JLabel lbSpeed;
 	private JComboBox cbSpeed;
+	private JLabel lbCheck;
+	private JCheckBox chkCheck;
 
 	/**
 	 * Creates new form frmSettings
@@ -91,8 +94,10 @@ public class frmSettings extends javax.swing.JDialog {
 			cbSpeed.setSelectedIndex(1);
 		else
 			cbSpeed.setSelectedIndex(0);
-
 		
+		// -- Check for update
+		chkCheck.setSelected(s.Check4UpdateAtStart);
+
 		// End set field
 		ok = false;
 
@@ -144,7 +149,10 @@ public class frmSettings extends javax.swing.JDialog {
 			default: // Default
 				s.isPace = false;
 			}
-			
+
+			// -- Check for update
+			s.Check4UpdateAtStart=chkCheck.isSelected();
+
 		}
 		return ok;
 	}
@@ -275,6 +283,26 @@ public class frmSettings extends javax.swing.JDialog {
 				2, 5, 0, 10, 
 				GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
+
+		// -- Check for update
+		lbCheck = new javax.swing.JLabel();
+		lbCheck.setText(bundle.getString("frmSettings.lbCheck.text"));
+		Utils.addComponent(paneGlobal, lbCheck, 
+				0, line, 
+				1, 1, 
+				1, 0, 
+				2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		chkCheck = new javax.swing.JCheckBox();
+		Utils.addComponent(paneGlobal, chkCheck, 
+				1, line++, 
+				1, 1, 
+				0, 0, 
+				2, 5, 0, 10, 
+				GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+		
 		
 		// -- Separator
 		// -- NOCONNECTIONONSTARTUP - Boolean -bNoConnectOnStartup

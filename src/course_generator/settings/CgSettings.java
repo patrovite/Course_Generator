@@ -72,7 +72,8 @@ public class CgSettings {
 											// 1=Miles/feet
 	public boolean isPace = false; // 'true' the speed is display as pace
 									// otherwise it's a speed
-
+	public boolean Check4UpdateAtStart=true;
+	
 	public int ReadError = 0;
 	public int LineError = 0;
 	public String LastDir; // Store the last directory
@@ -105,6 +106,7 @@ public class CgSettings {
 
 		Unit = CgConst.UNIT_METER;
 		isPace = false;
+		Check4UpdateAtStart=true;
 
 		ReadError = 0;
 		LineError = 0;
@@ -202,6 +204,7 @@ public class CgSettings {
 
 			Utils.WriteIntToXML(writer, "UNIT", Unit);
 			Utils.WriteBooleanToXML(writer, "ISPACE", isPace);
+			Utils.WriteBooleanToXML(writer, "CHECK4UPDATEATSTART", Check4UpdateAtStart);
 			Utils.WriteStringToXML(writer, "LANGUAGE", Language);
 			Utils.WriteIntToXML(writer, "MAINWINDOWSWIDTH", MainWindowWidth);
 			Utils.WriteIntToXML(writer, "MAINWINDOWSHEIGHT", MainWindowHeight);

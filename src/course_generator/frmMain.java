@@ -86,8 +86,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Enumeration;
 import java.util.Locale;
+import java.util.Scanner;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -270,6 +272,8 @@ public class frmMain extends javax.swing.JFrame
 	private JLabel LbInfoMapDirSize;
 
 	private JMenuItem mnuCGWebsite;
+
+	private JMenuItem mnuCheckUpdate;
 
 	// -- Called every second
 	class TimerActionListener implements ActionListener
@@ -466,7 +470,10 @@ public class frmMain extends javax.swing.JFrame
 		// -- Log the initialization time
 		CgLog.info("Application initialization time : "
 				+ (System.currentTimeMillis() - ts) + "ms");
-
+		
+		//-- Check for update
+		if (Settings.Check4UpdateAtStart) 
+			Check4Update();
 	}
 
 	/**
@@ -1507,6 +1514,23 @@ public class frmMain extends javax.swing.JFrame
 			}
 		});
 		mnuHelp.add(mnuCGHelp);
+		
+		// -- Check for update
+		// -------------------------------------------------
+		mnuCheckUpdate = new javax.swing.JMenuItem();
+		//mnuCheckUpdate.setIcon(new javax.swing.ImageIcon(
+		//		getClass().getResource("/course_generator/images/pouce.png")));
+		mnuCheckUpdate.setText(bundle.getString("frmMain.mnuCheckUpdate.text"));
+		mnuCheckUpdate.addActionListener(new java.awt.event.ActionListener()
+		{
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
+				Check4Update();
+			}
+		});
+		mnuHelp.add(mnuCheckUpdate);
+		
+		
 
 		// -- Reward the author
 		// -------------------------------------------------
@@ -4001,6 +4025,61 @@ public class frmMain extends javax.swing.JFrame
 		Settings.mruCGX[0] = filename;
 	}
 
+	
+	/***
+	 * Check if a new version exist
+	 */
+	public void Check4Update() {
+		boolean new_version=false;
+		String msg_version="";
+		String msg="";
+		String lang = Locale.getDefault().getLanguage();
+		
+		//Version = "4.0.0.BETA 8"
+		try {
+			String str;
+			URL url = new URL("https://www.techandrun.com/cg_version.txt");
+			Scanner s = new Scanner(url.openStream());
+			while (s.hasNext()) {
+				str=s.nextLine();
+				String[] part=str.split("=");
+				
+				if (part[0].equalsIgnoreCase("version")) {
+					if (!part[1].equalsIgnoreCase(Version)) {
+						msg_version=part[1];
+						new_version=true;
+					}
+				}
+				
+				if (new_version) {
+					if (lang.equalsIgnoreCase("en") && part[0].equalsIgnoreCase("text_en") )
+						msg=part[1];
+					else if (lang.equalsIgnoreCase("fr") && part[0].equalsIgnoreCase("text_fr") )
+						msg=part[1];
+				}
+							}
+			s.close();
+		}
+		catch(IOException ex) {
+			ex.printStackTrace(); // for now, simply output it.
+		}
+		
+		if (new_version) {
+			//-- Console message
+			System.out.println("Version="+msg_version);
+			System.out.println("Text="+msg);
+			
+			//-- GUI message
+			JOptionPane.showMessageDialog( this, 
+			bundle.getString("frmMain.Check4Update.Version")+ ": " + msg_version + "\n"+
+				bundle.getString("frmMain.Check4Update.MsgLabel") + ": " + msg, 
+			      bundle.getString("frmMain.Check4Update.Title"), 
+			      JOptionPane.INFORMATION_MESSAGE);
+			
+		}
+	}
+	
+	
 	/**
 	 * Set the default font
 	 * 
