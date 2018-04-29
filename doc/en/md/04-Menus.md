@@ -91,6 +91,8 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 * **Help** : Displays this current document.
 
+* **Check for update** : Check if a **Course Generator** update exists.
+
 * **Support the author...** : This menu opens your web browser and displays a webpage where a donation can be made to the author in order to support him continue developing **Course Generator**.
 
 * **Course Generator webpage...** : This menu opens your web browser onto the main webpage of **Course Generator**.

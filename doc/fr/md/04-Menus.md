@@ -92,6 +92,8 @@ Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
 
 * **Aide** : Affiche ce document.
 
+* **Contrôle mise à jour** : Permet de vérifier si une mise à jour de **Course Generator** existe.
+
 * **Encourager l'auteur...** : Ce menu ouvre votre navigateur internet et affiche la page internet permettant de faire un don à l'auteur afin de l'encourager dans le développement de **Course Generator**.
 
 * **Page internet de Course Generator...** : Ce menu ouvre votre navigateur internet et affiche la page internet sur les dernières nouvelles concernant **Course Generator**.
