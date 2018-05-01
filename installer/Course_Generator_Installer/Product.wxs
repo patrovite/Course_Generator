@@ -4,7 +4,7 @@
   <Product Id="*" Name="Course Generator" Language="1033" Version="4.0.0.0" Manufacturer="Course Generator" UpgradeCode="1eef5cdf-2657-4db9-bd4f-b88f2e254f91">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
     <Media Id="1" Cabinet="Course_Generator.cab" EmbedCab="yes" />
-    <Icon Id="icon.ico" SourceFile="Resources/CG.ico"/>
+    <Icon Id="icon.ico" SourceFile="..\..\build\CG.ico"/>
     <WixVariable Id="WixUIBannerBmp" Value="Resources/CGBanner.bmp" />
     <WixVariable Id="WixUIDialogBmp" Value="Resources/CGDialog.bmp" />
     <WixVariable Id="WixUILicenseRtf" Value="Resources/gpl-3.0.rtf" />
@@ -855,7 +855,7 @@
     <DirectoryRef Id="CourseGenerator4">
       <Component Id="ApplicationStartMenuShortcut" Guid="6cfb93d7-35ba-45d4-be30-149ff2958d80">
         <Shortcut Id="CourseGeneratorStartMenuShortcut" Name="Course Generator" Description="Course Generator" Target="[INSTALLDIR]\Course_Generator.exe" WorkingDirectory="INSTALLDIR">
-          <Icon Id="Icon" SourceFile="Resources/CG.ico" />
+          <Icon Id="Icon" SourceFile="..\..\build\CG.ico" />
         </Shortcut>
         <RemoveFolder Id="RemoveCourseGenerator4" Directory="CourseGenerator4" On="uninstall" />
         <RegistryValue Root="HKCU" Key="Software\CourseGenerator4" Name="installed" Type="integer" Value="1" KeyPath="yes" />

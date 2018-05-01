@@ -31,7 +31,6 @@
     </Content>
     <Content Include="Course_Generator_Installer.wax" />
     <Content Include="GenerateInstaller.bat" />
-    <Content Include="Resources\CG.ico" />
     <Content Include="Resources\CGBanner.bmp" />
     <Content Include="Resources\CGDialog.bmp" />
     <Content Include="Resources\gpl-3.0.rtf" />
