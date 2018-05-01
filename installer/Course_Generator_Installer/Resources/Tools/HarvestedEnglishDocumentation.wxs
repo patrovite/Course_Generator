@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="EnglishImages">
+            <Directory Id="dirFCC2F786703D248B706A0E3C29F96A4C" Name="Curve" />
+            <Directory Id="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Name="Map" />
+            <Directory Id="dirFE6C6994DC834507BB8866FA4634513C" Name="Menu" />
+            <Directory Id="dir3E4A7C33B21EB0FE0969205953A4F970" Name="MRB" />
+            <Directory Id="dir5E17D90885C820F95AD14882AFD84FBE" Name="Statusbar" />
+            <Directory Id="dirA6507408B27C35C82BE181F4F69507ED" Name="Tabs" />
+            <Directory Id="dirA5E931BFDF8F59A79F102799D35F36DF" Name="Tags" />
+            <Directory Id="dirBA83CC06CEA9D08B69CB5137A1699E89" Name="Toolbar" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="EnglishDocumentationFiles">
+            <Component Id="cmp6D2DB4B19D659A0B7841B492B59DE96D" Directory="EnglishImages" Guid="9D6CDC82-E4DE-453B-838F-CB7F5C829ECE">
+                <File Id="fil417EFF9C9A45793C194658991AB6A92A" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Dlg_Confirm_New_Start.png" />
+            </Component>
+            <Component Id="cmpD176DB5BA7A27B90D42DD2E468AB1EF2" Directory="EnglishImages" Guid="C31DDEE5-D0FF-454F-8619-79BCFD65CC7B">
+                <File Id="fil4A4172BD7BA0BCFE19D61A7EBB379927" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Dlg_Fill_Coeff.png" />
+            </Component>
+            <Component Id="cmpE876CD25E659D6179A7C75604A938DAA" Directory="EnglishImages" Guid="137C6B19-78A3-47CA-A590-AC83C952601C">
+                <File Id="fil2E19C301AB7362F68545C8F1D9872252" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Dlg_Fill_Diff.png" />
+            </Component>
+            <Component Id="cmp0DA60C4699C43C547E1FA881357A63E0" Directory="EnglishImages" Guid="4E29EB08-A20E-4C6B-BED4-FEDDC59D48DE">
+                <File Id="filC49A319595CA18F4C61D5EE3D6521BA3" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Export_Points.png" />
+            </Component>
+            <Component Id="cmp61C5ADC60A1F0594688B9306D8C19C06" Directory="EnglishImages" Guid="21248794-3B3C-4EC1-92A3-FA0D87021C3A">
+                <File Id="filA6889F704D3C55CFBE5B436171072DD9" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Export_Waypoints.png" />
+            </Component>
+            <Component Id="cmp5F4C8BF68360CA325A5C7C63456406DD" Directory="EnglishImages" Guid="4084B931-7650-472B-AA42-887D89CF3779">
+                <File Id="filF23C78BF8DD496647033E875A84311F7" KeyPath="yes" Source="$(var.EnglishImages)\CG40_GPX.png" />
+            </Component>
+            <Component Id="cmp5C65F0EE5753BEF66B5E772475F0306D" Directory="EnglishImages" Guid="65221FC4-855A-4193-80C0-9391BC088B93">
+                <File Id="fil061A1ABD8170C23AB8E643769F169027" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Image.png" />
+            </Component>
+            <Component Id="cmpDCADD32AB59B188E871ABB5A76CFDDDB" Directory="EnglishImages" Guid="E6297B3E-953A-402A-BD36-0EC514E15822">
+                <File Id="filB581524FE9D3B660146529ADC498160A" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Import_Points.png" />
+            </Component>
+            <Component Id="cmp98E305DA3C994254F59CB6E475AE26D1" Directory="EnglishImages" Guid="061FC453-55CE-4D09-B0A3-7045D5EA7BB4">
+                <File Id="filCE2BF7B601B405C231E6B454EC6974A7" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Import_Track.png" />
+            </Component>
+            <Component Id="cmpAA774EFF4C389792E113A8A1784FB8FA" Directory="EnglishImages" Guid="F43E0CE9-C09D-49CC-9E62-988F8F98244F">
+                <File Id="fil8D3CB4EFB8E38CC9D21167C2CE175FC5" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Line_Editor.png" />
+            </Component>
+            <Component Id="cmpE9781173A9685E48E2C5D8038D4073A9" Directory="EnglishImages" Guid="EF083716-304C-499D-8296-7036816DC2F6">
+                <File Id="fil8E82B2F1C7464574731E8EA23DD3ED79" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Main.png" />
+            </Component>
+            <Component Id="cmpBDCEE6FE73A3A174F644315920D9A602" Directory="EnglishImages" Guid="F1AE958F-2B1B-4CB4-8AB5-B59730E518E4">
+                <File Id="fil4F6D1E2379471475C1EAD895487FA723" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Principe.mm" />
+            </Component>
+            <Component Id="cmpEC037D3102F429A7D7750A28DF0D6D38" Directory="EnglishImages" Guid="2A493E3C-A82A-4365-99D8-B1F9B63E20FF">
+                <File Id="fil8C5D8BA1BE5A69B8C42067026087A687" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Principe.png" />
+            </Component>
+            <Component Id="cmp37DBA6221B3597717CC49AA2D2FF9172" Directory="EnglishImages" Guid="A6CA9EF8-7B96-4EEF-A555-016F21CC3E3F">
+                <File Id="fil9C27E16BCC4D09DEB268690864765F04" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Search.png" />
+            </Component>
+            <Component Id="cmpA8D3F0C804CEC02C38A3DA9BFF2E5AA9" Directory="EnglishImages" Guid="968AFFB5-F454-451F-92C4-99B68EE99070">
+                <File Id="fil142BF10D7CB7155379DC3FC55C60884D" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Settings.png" />
+            </Component>
+            <Component Id="cmp8B9737DE4E9BB0CDD4579BF4AC78E5A1" Directory="EnglishImages" Guid="ED655FB5-A47A-4FB6-B63F-E9D073F37D78">
+                <File Id="filCCA181ADF163F0B2C830E2824D789828" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Track_Param.png" />
+            </Component>
+            <Component Id="cmp773FE8E4BD8DEC0881C61C5C87D3D688" Directory="EnglishImages" Guid="730119A7-4613-421C-8544-7D8F9E1D6EDB">
+                <File Id="filA373CD33E6F5F5DF51EBEA989E28B14F" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Track_Param_Sun_Dlg.png" />
+            </Component>
+            <Component Id="cmpB47646C6CFF0A39D8217AE28DB0F14BA" Directory="EnglishImages" Guid="1689C6B6-4B0F-4846-A238-A7E264CF29DF">
+                <File Id="fil93C7BB8AC4DBA2842EB2172B49445972" KeyPath="yes" Source="$(var.EnglishImages)\CG40_Virtual_Partner.jpg" />
+            </Component>
+            <Component Id="cmpB143F060A7633B78E986B0E57816496D" Directory="dirFCC2F786703D248B706A0E3C29F96A4C" Guid="D22A89C9-B60D-46A5-BBB1-7CFCBCFC4A79">
+                <File Id="fil20F7D6C4B82DA8C91CF2B3C89F969554" KeyPath="yes" Source="$(var.EnglishImages)\Curve\CG40_Dlg_Curves.png" />
+            </Component>
+            <Component Id="cmpB02B3143EB9B308ACBD5B7F804B5A1A1" Directory="dirFCC2F786703D248B706A0E3C29F96A4C" Guid="4B9406E9-6513-4EB5-B927-A995FBF0A9C6">
+                <File Id="fil3D554BCA57B59AE3A96484DBE1244F0C" KeyPath="yes" Source="$(var.EnglishImages)\Curve\chart_curve.png" />
+            </Component>
+            <Component Id="cmp029E197FB9676208A19EA3F71D564309" Directory="dirFCC2F786703D248B706A0E3C29F96A4C" Guid="43DF61D9-8F62-45C9-A63C-415E1CAD7E59">
+                <File Id="filF082B56E2DB05906637C75587F645BE2" KeyPath="yes" Source="$(var.EnglishImages)\Curve\chart_curve_add.png" />
+            </Component>
+            <Component Id="cmpA13E666BBFEDE009910268FF477C23AB" Directory="dirFCC2F786703D248B706A0E3C29F96A4C" Guid="21874D3A-4D93-43D3-A025-D42384A1BAF7">
+                <File Id="fil7A816B5BD16BA3F7D80DFCCA2E51EA9D" KeyPath="yes" Source="$(var.EnglishImages)\Curve\chart_curve_delete.png" />
+            </Component>
+            <Component Id="cmp46A311DFAC78D9BB6452F5E6DBCEB387" Directory="dirFCC2F786703D248B706A0E3C29F96A4C" Guid="913A518C-FBBD-4622-BC1D-4B929A26AEEB">
+                <File Id="fil33C426FB801415D63ED806E989DBAB92" KeyPath="yes" Source="$(var.EnglishImages)\Curve\chart_curve_duplicate.png" />
+            </Component>
+            <Component Id="cmp4A778852EF8DEDCA9B9B97820016356C" Directory="dirFCC2F786703D248B706A0E3C29F96A4C" Guid="904056D5-049B-45B6-B936-4F5AB16BBB5C">
+                <File Id="filD1B8B75CF74E0405DD69731292DF8076" KeyPath="yes" Source="$(var.EnglishImages)\Curve\chart_curve_edit.png" />
+            </Component>
+            <Component Id="cmp0C3A04EC5EBF78CE225F40F69D5477F3" Directory="dirFCC2F786703D248B706A0E3C29F96A4C" Guid="8A5DB9CB-CE77-4EEE-9174-7C63A208E136">
+                <File Id="filAB9E64A79796C05F8E687685B933507A" KeyPath="yes" Source="$(var.EnglishImages)\Curve\chart_curve_open.png" />
+            </Component>
+            <Component Id="cmpED7BE21A3083ED885B32F628AE79CFBC" Directory="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Guid="6DF8927E-DE0C-4C39-A452-32B4028D738D">
+                <File Id="filC313BB70096FBEDC82CC218DDFC972B1" KeyPath="yes" Source="$(var.EnglishImages)\Map\CG40_Map_Area.png" />
+            </Component>
+            <Component Id="cmp1F9C05570177A4CE88749FE9C2CA2F34" Directory="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Guid="0D6089CB-08F4-46D5-9625-5DC70C56EA5D">
+                <File Id="filD05E0211A0603B25C2ED0D797AED7394" KeyPath="yes" Source="$(var.EnglishImages)\Map\CG40_Map_Toolbar.png" />
+            </Component>
+            <Component Id="cmp6A706DDB66D31CE4E2D0DB45CF0C3A2E" Directory="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Guid="8FFC017B-BB44-4D3C-B151-0037295F98D6">
+                <File Id="fil20BE70CE04E0EEBBB3FD1D3E828993B0" KeyPath="yes" Source="$(var.EnglishImages)\Map\drink.png" />
+            </Component>
+            <Component Id="cmpDE7E72A268CE397D8C351F29DEF42245" Directory="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Guid="64CDC02B-EA1F-4B36-95EF-2FA751E56E05">
+                <File Id="filA43162E977756F77447E46F7D09285C1" KeyPath="yes" Source="$(var.EnglishImages)\Map\eat.png" />
+            </Component>
+            <Component Id="cmpFDDB1D7171B05957B430303F85E98931" Directory="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Guid="57AD0C73-875E-4F49-9130-153D8E9FE3F0">
+                <File Id="filFEBA169CCC4609D248EB1E6FA98F46AF" KeyPath="yes" Source="$(var.EnglishImages)\Map\flag.png" />
+            </Component>
+            <Component Id="cmp9683141FDBB5986A5C0CCC6966DA6963" Directory="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Guid="370F2233-8FDF-4C2D-9D6E-AA285D9D985B">
+                <File Id="filC7804D84253459AEFAB11EDACF4886E0" KeyPath="yes" Source="$(var.EnglishImages)\Map\hide_marker.png" />
+            </Component>
+            <Component Id="cmp4AF58C375C96F21AF9DBF10D61E10635" Directory="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Guid="1915376A-2CF0-4B28-A1C8-9931D84BC176">
+                <File Id="fil4B7236D68D850984FD237414E6EE63E2" KeyPath="yes" Source="$(var.EnglishImages)\Map\marker.png" />
+            </Component>
+            <Component Id="cmp386C0F9A3462DA3BF885D22ADA87FBBE" Directory="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Guid="270BA9A7-2CDE-4DB0-AFB3-6FFE8EB63ADA">
+                <File Id="filCA3894450F2ED1F88A7D2B77EC5CB40F" KeyPath="yes" Source="$(var.EnglishImages)\Map\select_map.png" />
+            </Component>
+            <Component Id="cmp4768218485D635639A9127FFB290674B" Directory="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Guid="8F5D9FE7-1E0C-4960-9FBE-07D8112E2E35">
+                <File Id="fil98DDEE376F1B988D54C6F6387F9719AE" KeyPath="yes" Source="$(var.EnglishImages)\Map\track_average.png" />
+            </Component>
+            <Component Id="cmp95F4958DC08E14D04BCF86AE0C262B4E" Directory="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Guid="88C8DDB1-DF27-4356-9B0E-CAEA7230D15F">
+                <File Id="filCF3CFAB54CB116F0F6E04C052DC2AE66" KeyPath="yes" Source="$(var.EnglishImages)\Map\track_easy.png" />
+            </Component>
+            <Component Id="cmpED416BEF66CE0E27388BED6722E0BBF8" Directory="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Guid="F419A416-0EB2-448C-8C0F-4BE107F9BF06">
+                <File Id="fil4160F6F70A6752BC8CF67DF5BA40B47E" KeyPath="yes" Source="$(var.EnglishImages)\Map\track_hard.png" />
+            </Component>
+            <Component Id="cmpA3918191BF0810BA1A0DAE4A6A976A8C" Directory="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Guid="61A121E2-F499-488C-9CCE-2C43A5FD42A2">
+                <File Id="filCEAA875DB1344DCC3888C7D2D086B863" KeyPath="yes" Source="$(var.EnglishImages)\Map\track_very_easy.png" />
+            </Component>
+            <Component Id="cmpAB803FDBB2B6E4C3D04B400C845FFC48" Directory="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Guid="69C26999-5ADF-4D9A-9362-9C5E965558B7">
+                <File Id="fil56C059568837EE8A602EF25815423F43" KeyPath="yes" Source="$(var.EnglishImages)\Map\track_very_hard.png" />
+            </Component>
+            <Component Id="cmpAA17D327A5A70BAFDAA3DD7386924094" Directory="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Guid="929BD9DC-A5D7-4F5D-A66B-EDE0B6467CDF">
+                <File Id="fil92928831EC4137616FE7EAEAD88ED458" KeyPath="yes" Source="$(var.EnglishImages)\Map\undo.png" />
+            </Component>
+            <Component Id="cmp3A3B0A7EEDA55DC65465E3CAE5CB8313" Directory="dirFE6C6994DC834507BB8866FA4634513C" Guid="511ED7FE-34BD-4560-A1E2-F3AD13ADD938">
+                <File Id="filEC2B8F83A11CE5CBB4C2876781F90206" KeyPath="yes" Source="$(var.EnglishImages)\Menu\CG40_Menu_Display.png" />
+            </Component>
+            <Component Id="cmp43D7D8CFBD16F002E785D376942BC145" Directory="dirFE6C6994DC834507BB8866FA4634513C" Guid="897A4942-78CF-4570-B4BF-2E436F7A7694">
+                <File Id="fil2035CBBCFD4F7B3E6191A6EC4BBB4776" KeyPath="yes" Source="$(var.EnglishImages)\Menu\CG40_Menu_Edit.png" />
+            </Component>
+            <Component Id="cmpE0AB99EE48DC246E7D548CA5665A3698" Directory="dirFE6C6994DC834507BB8866FA4634513C" Guid="241ADD1A-5498-4E2E-A105-B86DAADB76B1">
+                <File Id="fil49EDF56C4DCC6EA6100A4F35A979D2F5" KeyPath="yes" Source="$(var.EnglishImages)\Menu\CG40_Menu_File.png" />
+            </Component>
+            <Component Id="cmp0AC46E20FC716ADE02D58A4478D54E29" Directory="dirFE6C6994DC834507BB8866FA4634513C" Guid="DF40B1A3-B1D3-4784-A65F-00CB97DF848F">
+                <File Id="fil63F2EBD4582DAAF42173EA99C2498442" KeyPath="yes" Source="$(var.EnglishImages)\Menu\CG40_Menu_Help.png" />
+            </Component>
+            <Component Id="cmpC871272418599858EA394A1971BD920E" Directory="dirFE6C6994DC834507BB8866FA4634513C" Guid="7A85AFCD-D70D-4395-A155-9AD5008CBB15">
+                <File Id="fil3E5CC2BB4014E4F8BA6A0E95A64579F8" KeyPath="yes" Source="$(var.EnglishImages)\Menu\CG40_Menu_Settings.png" />
+            </Component>
+            <Component Id="cmp897367650886A4900A7669D4A7277BB2" Directory="dirFE6C6994DC834507BB8866FA4634513C" Guid="EF7B3103-E3DD-4C09-A116-CC39EE267FC4">
+                <File Id="filC147BD9499C781AB5A1D18D252A6546A" KeyPath="yes" Source="$(var.EnglishImages)\Menu\CG40_Menu_Tools.png" />
+            </Component>
+            <Component Id="cmp07F12CFD48AAC681900BF242D613E438" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="22A1E99E-E996-475E-8C3D-5A8F554BBF9F">
+                <File Id="fil3A9C1553E3026A2220633FD4299114F1" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Editor.png" />
+            </Component>
+            <Component Id="cmp49F60AB92EA9B84CCC92CBBCDB5FE7A9" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="5025748C-05A8-420B-9B2C-797857D6D9AC">
+                <File Id="filAF0C6066FC4B08F6D1B0856BCCD3AC6B" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Global_Road_Track.png" />
+            </Component>
+            <Component Id="cmpBDBC30528F028AAA420F50514D9DDE11" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="EA5384A3-1704-4A44-891D-DA0EC4981CB8">
+                <File Id="fil814BC05C4344865771C01C63EA6ACF4F" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Global_Simple_Nigh_Day.png" />
+            </Component>
+            <Component Id="cmpA20AE9285EE8CD65549F1E47F5331B06" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="9892EB56-B9C2-4EF7-BFA4-E8AE68B7325E">
+                <File Id="filE9D83B69BBA9CB71957334B3F09F2D76" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Global_Slope.png" />
+            </Component>
+            <Component Id="cmp42BCC81E09E23DBA4B54699EBC57722F" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="EC6FC312-803C-45A8-91CC-6335C47AF72E">
+                <File Id="fil1BA65A8B6378460274B84052608113FD" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Label_Editor.png" />
+            </Component>
+            <Component Id="cmp0638F2B9D6C9BFD4989B5DD61BE6CD10" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="1284D73F-A0B7-4B86-A2A2-3E8F5C663947">
+                <File Id="filB5AF2F1C12AA000937129DF12A5CA36F" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Replicate_Dlg.png" />
+            </Component>
+            <Component Id="cmp5BC9F3E5CB02E4AC3928D2C9295F0C59" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="F5D5BAC2-B51D-4ED3-884D-181071D69EE8">
+                <File Id="fil994AB983CBE5B52B37ED6072CDC7456F" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Road_Track.png" />
+            </Component>
+            <Component Id="cmp3053401EADC511F1E2B210160D0CFE6B" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="2D147BE0-9ED3-43CB-A08A-81093D7BAA26">
+                <File Id="fil35DAE34787CA0A0546884927C46BC6F5" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Road_Track_Label.png" />
+            </Component>
+            <Component Id="cmpFB3A36222493AF7C7D3675C490FB470E" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="30590E81-48F9-4F60-BDCC-3AF8B73F4099">
+                <File Id="fil39447C10E2A25A8178DE4258EED184E8" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Settings1.png" />
+            </Component>
+            <Component Id="cmpA706E6367C690F1790B176BD6A561114" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="D33A7D74-F815-421C-9985-552106A465D0">
+                <File Id="fil30A5F8CFDA6FB8931D7C90756A24BA7E" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Settings2.png" />
+            </Component>
+            <Component Id="cmpFC5B514C8A0E1E82A4D8B001B71C41C1" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="C5A0FAD7-48A4-4A03-B42E-1E0676152A0A">
+                <File Id="filFB0BCF33F2BA0DE40DE5528E2616FBB2" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Settings3.png" />
+            </Component>
+            <Component Id="cmp727641E41D527BF5177EFA90CFECA194" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="77763C8F-6BA7-4DB7-AC76-46AA9B36973B">
+                <File Id="fil5B29CA3EE4E8A4F9E7EE9D81902881FB" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Settings4.png" />
+            </Component>
+            <Component Id="cmp25290E31C2B513A9752B06D4295A98DA" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="0449C77C-AFFF-44ED-B498-AC9702A6F3DC">
+                <File Id="fil1CEDACC670380C609E3039B1BECB63CD" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Simple.png" />
+            </Component>
+            <Component Id="cmp0BA496BF81293B627574CA994C75E7BC" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="EE659563-E039-4DB4-82DF-9FD5DDC72CEA">
+                <File Id="fil3C00B8FA1BBAE9657C5001C2E3C4B97C" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Simple_Label.png" />
+            </Component>
+            <Component Id="cmp7F83438240BDE446F7AF9EA9EAAB6828" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="F79D92EF-E672-48F8-9A3D-BCBA4B89C80E">
+                <File Id="filD827AE5EDA03E37B2AF2EB76016EF484" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Slope.png" />
+            </Component>
+            <Component Id="cmp579AFBF60F86C7BAA5F352B562C4585D" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="620E2EFD-84D2-464E-B52D-0B5899199D47">
+                <File Id="fil9D1859170DA4B1522E6C8C083A2ACAC8" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Slope_Label.png" />
+            </Component>
+            <Component Id="cmp61EDC7A9DCCD76DC18281EF106C868E7" Directory="dir3E4A7C33B21EB0FE0969205953A4F970" Guid="BEE33C7F-EEA4-4C4A-AE80-564D6FBAAFB4">
+                <File Id="fil05C1AD49FE408EDA7D0E5ECA9E22A9BF" KeyPath="yes" Source="$(var.EnglishImages)\MRB\CG40_MRB_Toolbar.png" />
+            </Component>
+            <Component Id="cmp5839D7F3EC6C9312526B20DF86058DA7" Directory="dirB2BF9254DB4FB3636BA251A057033AD9" Guid="B6F46C92-9704-4AC1-AF67-9CA02BC3132F">
+                <File Id="fil2C1D3ADBF566F88AAD63270B77022416" KeyPath="yes" Source="$(var.EnglishImages)\MRB\Toolbar\favoris1.png" />
+            </Component>
+            <Component Id="cmp8B15397309413CF5C52E1883A1C35D88" Directory="dirB2BF9254DB4FB3636BA251A057033AD9" Guid="0E27F857-ACAC-4681-9714-D83E7BB56E83">
+                <File Id="fil2DDF79EEAF7A84870248040687E10676" KeyPath="yes" Source="$(var.EnglishImages)\MRB\Toolbar\favoris2.png" />
+            </Component>
+            <Component Id="cmp55E474DA5503650653ECB44F0F7FE140" Directory="dirB2BF9254DB4FB3636BA251A057033AD9" Guid="A5246460-16EC-488B-A645-00210DADB7A1">
+                <File Id="fil352BBFBD7A826097F09C54F1F27F12BB" KeyPath="yes" Source="$(var.EnglishImages)\MRB\Toolbar\favoris3.png" />
+            </Component>
+            <Component Id="cmpDEAA5CDC4F3DC0325FA8E679A94A1CBC" Directory="dirB2BF9254DB4FB3636BA251A057033AD9" Guid="37592196-C480-4B4C-AFA3-238F76EF2B91">
+                <File Id="fil57349C8FC5188EC9DE1D02105F1283EB" KeyPath="yes" Source="$(var.EnglishImages)\MRB\Toolbar\favoris4.png" />
+            </Component>
+            <Component Id="cmp52ED631687AB4D37840F6E4BAE7E714E" Directory="dirB2BF9254DB4FB3636BA251A057033AD9" Guid="A3FEB014-91CD-4667-8D7D-F22296D8D0F9">
+                <File Id="fil11B936075BAE9C4F836932A118C2ADB5" KeyPath="yes" Source="$(var.EnglishImages)\MRB\Toolbar\favoris5.png" />
+            </Component>
+            <Component Id="cmp519BE168C0715C3C2A39DDBE37D182A7" Directory="dirB2BF9254DB4FB3636BA251A057033AD9" Guid="AB9B5048-E5EC-46A1-A275-ACD6CDC1C51F">
+                <File Id="fil5198F9B2C3FB4B901C9A0F7BDC641254" KeyPath="yes" Source="$(var.EnglishImages)\MRB\Toolbar\label_to_bottom.png" />
+            </Component>
+            <Component Id="cmp4D5DBBB598A9C14B8234D43598FDFC7C" Directory="dirB2BF9254DB4FB3636BA251A057033AD9" Guid="B9B74103-CCCD-4E3E-88D2-86A92E3AA5A0">
+                <File Id="filABD9DF1DF96DFEA70307A5ADD813B319" KeyPath="yes" Source="$(var.EnglishImages)\MRB\Toolbar\label_to_profil.png" />
+            </Component>
+            <Component Id="cmp65E8015B08404C0910118BC05F8879E4" Directory="dirB2BF9254DB4FB3636BA251A057033AD9" Guid="57C95342-4ABF-48E7-A2B4-127A783CBA44">
+                <File Id="fil597055F8C408C9B20E041C1CC0F17C75" KeyPath="yes" Source="$(var.EnglishImages)\MRB\Toolbar\night_day.png" />
+            </Component>
+            <Component Id="cmpD5BC7D54E2318F7CC611A667DA5A5AB7" Directory="dirB2BF9254DB4FB3636BA251A057033AD9" Guid="E2EE3C6F-7E68-4509-BA25-4DFAC1D3A745">
+                <File Id="filBD7F07414184C0FBA6BDA0F15A6CD748" KeyPath="yes" Source="$(var.EnglishImages)\MRB\Toolbar\pipette.png" />
+            </Component>
+            <Component Id="cmpC2CB3DFA6799B3017082C3C13EFB7945" Directory="dirB2BF9254DB4FB3636BA251A057033AD9" Guid="0A9A612C-3D5B-4B3B-BBC1-5D4A98E68A42">
+                <File Id="filB0831D85B8F1DC73A8C82F34AD25CC4D" KeyPath="yes" Source="$(var.EnglishImages)\MRB\Toolbar\replicate.png" />
+            </Component>
+            <Component Id="cmp04C7C5CD44581478F3E4410A9A124673" Directory="dirB2BF9254DB4FB3636BA251A057033AD9" Guid="8B4AA374-AB9F-486A-A356-3CF5F906C478">
+                <File Id="filD4E675AFBD5C8393CBD5E411C26F3E32" KeyPath="yes" Source="$(var.EnglishImages)\MRB\Toolbar\replicate_config.png" />
+            </Component>
+            <Component Id="cmp5C1AE9778D67B8E18C7B548F56CCB32F" Directory="dirB2BF9254DB4FB3636BA251A057033AD9" Guid="E359286C-661B-4834-921D-43AAA36ACB50">
+                <File Id="filF64F62367F817606C9E21296A5F32306" KeyPath="yes" Source="$(var.EnglishImages)\MRB\Toolbar\save.png" />
+            </Component>
+            <Component Id="cmp0E57B0E4C5CE482BC4D329522A4AA885" Directory="dirB2BF9254DB4FB3636BA251A057033AD9" Guid="0F708B3E-487E-4701-8EBE-3E952CA8BE35">
+                <File Id="fil34246D72B508BDC1574970C15FC93B76" KeyPath="yes" Source="$(var.EnglishImages)\MRB\Toolbar\settings.png" />
+            </Component>
+            <Component Id="cmpB231D84BE0D66571DA36033588DEE714" Directory="dir5E17D90885C820F95AD14882AFD84FBE" Guid="1856CB7E-A169-4556-8EDD-5B0BF8DE51B2">
+                <File Id="filB80F6831263AA3C232DD946A02321E1D" KeyPath="yes" Source="$(var.EnglishImages)\Statusbar\CG40_Statusbar.png" />
+            </Component>
+            <Component Id="cmp4EAEFF255BF79B7FEF27DA7CE023DDE9" Directory="dir5E17D90885C820F95AD14882AFD84FBE" Guid="41FE385F-323C-4E05-B33E-5DD69CA22258">
+                <File Id="fil0FC66ED0C35D9B31E5B1BC89D36F1282" KeyPath="yes" Source="$(var.EnglishImages)\Statusbar\CG40_Statusbar_Ascend.png" />
+            </Component>
+            <Component Id="cmp2E7F533584C8D71C5AEBAE4DC5AA70FB" Directory="dir5E17D90885C820F95AD14882AFD84FBE" Guid="120A5ABD-1A10-4AAF-A57A-E547653C8760">
+                <File Id="fil6F72CDD2BDBCF80FDC2C77E00FE5BEED" KeyPath="yes" Source="$(var.EnglishImages)\Statusbar\CG40_Statusbar_Calc.png" />
+            </Component>
+            <Component Id="cmp6ECC376A8815CE6EEF936FFBA70DFC3D" Directory="dir5E17D90885C820F95AD14882AFD84FBE" Guid="A73F9534-98CE-4BDE-9FEC-A75C0CCFAA3F">
+                <File Id="fil6202A54C699CF63065F83FAB63DD19FF" KeyPath="yes" Source="$(var.EnglishImages)\Statusbar\CG40_Statusbar_Curve.png" />
+            </Component>
+            <Component Id="cmp5D2A0FEC9EF6F69D0885AA679D269C32" Directory="dir5E17D90885C820F95AD14882AFD84FBE" Guid="43E02080-1AB1-4C3D-9177-E9966D7CCD25">
+                <File Id="fil22F0B8D86DACB0F4DDBE1789670BC54D" KeyPath="yes" Source="$(var.EnglishImages)\Statusbar\CG40_Statusbar_Descend.png" />
+            </Component>
+            <Component Id="cmpDC54BC1840F1D60E56F61D44EB529E27" Directory="dir5E17D90885C820F95AD14882AFD84FBE" Guid="F218DBCD-9909-4300-A62B-400F84D7973E">
+                <File Id="filD9A8484D75D711FB5286D9E6C6B85E85" KeyPath="yes" Source="$(var.EnglishImages)\Statusbar\CG40_Statusbar_Dist.png" />
+            </Component>
+            <Component Id="cmpDA659CE5B3F6DFC44D6571F70DA8F010" Directory="dir5E17D90885C820F95AD14882AFD84FBE" Guid="9070E74E-A318-4613-80AB-C31CE5DC8B8E">
+                <File Id="fil556498259715CBF4D6EFC858A3AB6B0B" KeyPath="yes" Source="$(var.EnglishImages)\Statusbar\CG40_Statusbar_Map_Size.png" />
+            </Component>
+            <Component Id="cmp03D602B943EE57C4D538F6EDAF405874" Directory="dir5E17D90885C820F95AD14882AFD84FBE" Guid="D5EA6DDF-E5E1-4F54-B680-466CBFED2D7A">
+                <File Id="fil863AC4BB1A4B1510ABED581236AB3405" KeyPath="yes" Source="$(var.EnglishImages)\Statusbar\CG40_Statusbar_Modified.png" />
+            </Component>
+            <Component Id="cmpD891C06BA49B8CE795695054A944642D" Directory="dir5E17D90885C820F95AD14882AFD84FBE" Guid="013CE8B7-0CB2-498F-97C8-4528B0A1644B">
+                <File Id="filDBEB3393EC9E3045D50E2FC60D161162" KeyPath="yes" Source="$(var.EnglishImages)\Statusbar\CG40_Statusbar_Online.png" />
+            </Component>
+            <Component Id="cmpF00C91C4753181527F5EA179E44A7525" Directory="dir5E17D90885C820F95AD14882AFD84FBE" Guid="E1203FFE-2456-4D18-A710-9F3A0B0E6432">
+                <File Id="filD49AAC666CDC75E83A1DB93D37B90C58" KeyPath="yes" Source="$(var.EnglishImages)\Statusbar\CG40_Statusbar_Time.png" />
+            </Component>
+            <Component Id="cmpEBC297EF07D05B853FA25BC26EE3F800" Directory="dir5E17D90885C820F95AD14882AFD84FBE" Guid="83E09E90-A559-4618-BA5A-82E2CB3F4A75">
+                <File Id="filE1441E6679EA992CF40518B756606156" KeyPath="yes" Source="$(var.EnglishImages)\Statusbar\CG40_Statusbar_Timelimit.png" />
+            </Component>
+            <Component Id="cmpFFFD150E95E9E3D5A56E9AF8336C3CAE" Directory="dir5E17D90885C820F95AD14882AFD84FBE" Guid="9F931C4E-D7D2-40C2-AD84-11E2F14FEF0D">
+                <File Id="fil866C6CCC5F4D735B04C814E698988B57" KeyPath="yes" Source="$(var.EnglishImages)\Statusbar\CG40_Statusbar_Unit.png" />
+            </Component>
+            <Component Id="cmp0B32E89E6FF691EDBA51606DDFC9CC26" Directory="dirA6507408B27C35C82BE181F4F69507ED" Guid="C7A4326F-D6D9-4B37-B1F5-E6B2659DD6A7">
+                <File Id="filAB5AFB2E056E531CCD6289F4E54DA906" KeyPath="yes" Source="$(var.EnglishImages)\Tabs\CG40_Tab_Analyze_Dist_Time.png" />
+            </Component>
+            <Component Id="cmp5A35CFF0E69CD44B46435B3C7EE0E1EB" Directory="dirA6507408B27C35C82BE181F4F69507ED" Guid="5A8A2CFC-6657-4860-9F71-0A36C54A8CB0">
+                <File Id="fil15C7916EBF739E565992A7F33D5B45C0" KeyPath="yes" Source="$(var.EnglishImages)\Tabs\CG40_Tab_Analyze_Speed.png" />
+            </Component>
+            <Component Id="cmp21BD9F4CBB08568E99817E49D353591A" Directory="dirA6507408B27C35C82BE181F4F69507ED" Guid="D1DDB29B-1520-458A-9AED-C9A8EB215302">
+                <File Id="fil570E2B068B7BABA122724CDDDADB3F68" KeyPath="yes" Source="$(var.EnglishImages)\Tabs\CG40_Tab_Analyze_Speed_Slope.png" />
+            </Component>
+            <Component Id="cmp2AAE7EEDEE381CD5223C16C66B466302" Directory="dirA6507408B27C35C82BE181F4F69507ED" Guid="24A42657-AF1A-4AC5-A867-5A4DA0AB980B">
+                <File Id="fil1AD657D466DAB9ECF3591B9EB870950E" KeyPath="yes" Source="$(var.EnglishImages)\Tabs\CG40_Tab_Analyze_Speed_Slope_Save.png" />
+            </Component>
+            <Component Id="cmpBDC9A752DA2B549725C9FBAB7CC02D37" Directory="dirA6507408B27C35C82BE181F4F69507ED" Guid="42AD4A00-E265-4C58-9D61-3403F784F463">
+                <File Id="fil753E293258802432D99668B81DDBEEDC" KeyPath="yes" Source="$(var.EnglishImages)\Tabs\CG40_Tab_Data.png" />
+            </Component>
+            <Component Id="cmpDB52DAFC71A18BE45D809F843532D907" Directory="dirA6507408B27C35C82BE181F4F69507ED" Guid="8568514F-8C58-404F-A95C-A093A8D244F5">
+                <File Id="filAA3B70F2374ADE3F157FD5461F9A35BF" KeyPath="yes" Source="$(var.EnglishImages)\Tabs\CG40_Tab_Profil.png" />
+            </Component>
+            <Component Id="cmp434ED2F5B2C93C175A4CB2D17B9400FB" Directory="dirA6507408B27C35C82BE181F4F69507ED" Guid="E7E6E6BA-A01D-4AB2-B5CB-B0098D415764">
+                <File Id="fil00872C9E94C35469052998A83AAC1D35" KeyPath="yes" Source="$(var.EnglishImages)\Tabs\CG40_Tab_Resume.png" />
+            </Component>
+            <Component Id="cmp46ED6D7F5DA9E69CCD6BDA019C38D854" Directory="dirA6507408B27C35C82BE181F4F69507ED" Guid="28701E01-A65F-4EE5-8337-B82152A5C2E6">
+                <File Id="filB558B0E1E9658AFD8A977E4479DD28B6" KeyPath="yes" Source="$(var.EnglishImages)\Tabs\CG40_Tab_Stat.png" />
+            </Component>
+            <Component Id="cmpE126D126BAFBC7B242DF0D875E150F1A" Directory="dirA6507408B27C35C82BE181F4F69507ED" Guid="4C999932-C8B3-44CB-A229-15C583BB5AD4">
+                <File Id="filF2704D878F9A140E223412A8AB723321" KeyPath="yes" Source="$(var.EnglishImages)\Tabs\correction.png" />
+            </Component>
+            <Component Id="cmpE3CC9CB31A8992BC566BAA61ECEC4A94" Directory="dirA6507408B27C35C82BE181F4F69507ED" Guid="FDF6915E-3647-48FE-921C-27064FE7B90B">
+                <File Id="fil1AE6640248B08E8578CE7525844FCB7A" KeyPath="yes" Source="$(var.EnglishImages)\Tabs\profil_marker.png" />
+            </Component>
+            <Component Id="cmp78968528AC200DD4B33897A24BECDB3E" Directory="dirA6507408B27C35C82BE181F4F69507ED" Guid="09621435-5C50-4295-9518-9139E4AF36A5">
+                <File Id="filBA6B08917D4FBBE8211DE0AA7C4B6BCE" KeyPath="yes" Source="$(var.EnglishImages)\Tabs\refresh.png" />
+            </Component>
+            <Component Id="cmpA288371ACC28E3330603A2F76EAD6603" Directory="dirA6507408B27C35C82BE181F4F69507ED" Guid="039E1B25-FFF6-44BB-8DCF-2B3DB9220394">
+                <File Id="fil70038D77407ECAB501474AB916D398F2" KeyPath="yes" Source="$(var.EnglishImages)\Tabs\save.png" />
+            </Component>
+            <Component Id="cmp9322761874F9F18AA0FC273F4A7E48FA" Directory="dirA6507408B27C35C82BE181F4F69507ED" Guid="4FCAD510-E68F-4A20-9852-25D0097F252D">
+                <File Id="fil629A9C382602CDBD2FD59C3B4B57E500" KeyPath="yes" Source="$(var.EnglishImages)\Tabs\speed.png" />
+            </Component>
+            <Component Id="cmp9E6FDE330212FCFA287AEE9DC46A2860" Directory="dirA5E931BFDF8F59A79F102799D35F36DF" Guid="9A1A310E-0A01-4922-AECD-6C8085299588">
+                <File Id="fil33768F442E0E1144EB7FDC3A3C9B6E71" KeyPath="yes" Source="$(var.EnglishImages)\Tags\drink.png" />
+            </Component>
+            <Component Id="cmp32EF78D5671C3481BB150C6D572BD4CD" Directory="dirA5E931BFDF8F59A79F102799D35F36DF" Guid="6AB57A78-980D-4E2A-AFB9-C751A4ECD16C">
+                <File Id="filC4438A5E217938DD7FB49CA29A5675D7" KeyPath="yes" Source="$(var.EnglishImages)\Tags\eat.png" />
+            </Component>
+            <Component Id="cmp94CB7C15AA13BD8AEE304B47A8F45CAE" Directory="dirA5E931BFDF8F59A79F102799D35F36DF" Guid="FF0A1413-C8C7-430E-A1D1-2F5156AF875F">
+                <File Id="filF9F69AA3EB385B1EB0EC0559920D8E76" KeyPath="yes" Source="$(var.EnglishImages)\Tags\flag.png" />
+            </Component>
+            <Component Id="cmp4D68979BDC2C74B48AF0A58DF2558B93" Directory="dirA5E931BFDF8F59A79F102799D35F36DF" Guid="F73D163C-2D41-4493-8007-AD559D7DA556">
+                <File Id="fil8F96858B1A928FA342E56A117EFA1230" KeyPath="yes" Source="$(var.EnglishImages)\Tags\high_point.png" />
+            </Component>
+            <Component Id="cmp4C4231A3E4097468DEF3145EDF10D556" Directory="dirA5E931BFDF8F59A79F102799D35F36DF" Guid="8534FE17-2466-4A58-A519-A01F4B87E1B6">
+                <File Id="fil3D8637E1AC026108545B6296469AE987" KeyPath="yes" Source="$(var.EnglishImages)\Tags\info.png" />
+            </Component>
+            <Component Id="cmp1B24201A51FA15BE15234757E571C463" Directory="dirA5E931BFDF8F59A79F102799D35F36DF" Guid="45652832-0337-418C-90C5-39C1F6327807">
+                <File Id="filCB26ECB1AFB214CA33CF4255DFD428EF" KeyPath="yes" Source="$(var.EnglishImages)\Tags\low_point.png" />
+            </Component>
+            <Component Id="cmp36C134AF6464EC6C7B69D59D4ED78ED9" Directory="dirA5E931BFDF8F59A79F102799D35F36DF" Guid="C3592BE5-1010-4484-96C9-4AF9F7AF81AF">
+                <File Id="fil8BDE77699DF218F8F047832724F974B4" KeyPath="yes" Source="$(var.EnglishImages)\Tags\note.png" />
+            </Component>
+            <Component Id="cmpB4AFAF1815558BA00D3841C360D0C5F3" Directory="dirA5E931BFDF8F59A79F102799D35F36DF" Guid="06A21384-3D43-4C38-B2C4-20416F803E13">
+                <File Id="fil2D298097114244FAEF3D9849F5FEB3F7" KeyPath="yes" Source="$(var.EnglishImages)\Tags\photo.png" />
+            </Component>
+            <Component Id="cmp77C1128E170D016B0FBFBADEA0B3BC8B" Directory="dirA5E931BFDF8F59A79F102799D35F36DF" Guid="EE98F693-35BF-48FC-B327-8EF1F204392B">
+                <File Id="fil4571F831ADE3F8FCA7DABCB8A893DAFE" KeyPath="yes" Source="$(var.EnglishImages)\Tags\roadbook.png" />
+            </Component>
+            <Component Id="cmpE0C09A492A856FFF06A0778D09EE9A90" Directory="dirBA83CC06CEA9D08B69CB5137A1699E89" Guid="E5DD3808-D4D9-437A-8FE7-4E0251AD30BC">
+                <File Id="fil59DBC8DCE79D74A161C8E7C6B5B13DC2" KeyPath="yes" Source="$(var.EnglishImages)\Toolbar\CG40_Main_Toolbar.png" />
+            </Component>
+            <Component Id="cmp82A9CE4ADCF4C3A15AB310AC716B4DB7" Directory="dirBA83CC06CEA9D08B69CB5137A1699E89" Guid="0A5F8022-A686-4584-A235-30CB661120C6">
+                <File Id="fil0956AF7F2E467D2F37F5BF29C230D167" KeyPath="yes" Source="$(var.EnglishImages)\Toolbar\curve.png" />
+            </Component>
+            <Component Id="cmp44AC8C9DAA1A020CE4D9857704E0036D" Directory="dirBA83CC06CEA9D08B69CB5137A1699E89" Guid="79D34DA7-B846-4DEF-A0C5-2F028F0093BD">
+                <File Id="fil83D0359E49355381CD8CF3A2A6E291EA" KeyPath="yes" Source="$(var.EnglishImages)\Toolbar\fill_coeff.png" />
+            </Component>
+            <Component Id="cmpB852D612EF28447F3851B4B9878CF764" Directory="dirBA83CC06CEA9D08B69CB5137A1699E89" Guid="0FA1083C-DD9C-427B-A414-E8BD2A669A0B">
+                <File Id="filCF842271FC0A668AD4A21C5D7AF2AF09" KeyPath="yes" Source="$(var.EnglishImages)\Toolbar\fill_diff.png" />
+            </Component>
+            <Component Id="cmpE97C4A8614563228B05D203958E68A1A" Directory="dirBA83CC06CEA9D08B69CB5137A1699E89" Guid="B791356A-F2CA-446B-A09A-0F9C0A6141F0">
+                <File Id="fil7F938E8215081E59E7332B1A156F5622" KeyPath="yes" Source="$(var.EnglishImages)\Toolbar\mrb.png" />
+            </Component>
+            <Component Id="cmp03CD768E830DEA70B21F41A653BFC9BB" Directory="dirBA83CC06CEA9D08B69CB5137A1699E89" Guid="B60CD73D-A281-447E-9E54-36E136826697">
+                <File Id="filF8B9F77F5F3478A690DCA4EDA2E301E7" KeyPath="yes" Source="$(var.EnglishImages)\Toolbar\next_position.png" />
+            </Component>
+            <Component Id="cmp1C863B6D48D31BD581A6607934453B75" Directory="dirBA83CC06CEA9D08B69CB5137A1699E89" Guid="51FD5413-6472-4AA3-8FB2-9080EC7A0E3D">
+                <File Id="filCE5ADA2E2F0C3F20C9288089C718FDD8" KeyPath="yes" Source="$(var.EnglishImages)\Toolbar\openCGX.png" />
+            </Component>
+            <Component Id="cmp80AD26FBCF4AFA7F2BC44A19EA5AA2A3" Directory="dirBA83CC06CEA9D08B69CB5137A1699E89" Guid="89C290B3-CF11-4064-9686-37D238E99E00">
+                <File Id="filA4B3D4B48AC6AB3DB5FB3B1B48A5B7AF" KeyPath="yes" Source="$(var.EnglishImages)\Toolbar\openGPX.png" />
+            </Component>
+            <Component Id="cmp0A9EB7394B70AF08C9082FCB72D3E3D2" Directory="dirBA83CC06CEA9D08B69CB5137A1699E89" Guid="B7B94CED-AE6C-4461-8ACE-E32D087419A8">
+                <File Id="fil5CFED8D07EFD46DA2CE68042B02DEF21" KeyPath="yes" Source="$(var.EnglishImages)\Toolbar\prev_position.png" />
+            </Component>
+            <Component Id="cmp8176A5555BD7881ACB038FDA2099256D" Directory="dirBA83CC06CEA9D08B69CB5137A1699E89" Guid="53E635A5-4B09-4DB0-936C-D52526044272">
+                <File Id="fil9D2F2B317AA8254E9E13B2DCBAE320D6" KeyPath="yes" Source="$(var.EnglishImages)\Toolbar\refresh_data.png" />
+            </Component>
+            <Component Id="cmp2086C330189E000E8B4A5797ED152CB9" Directory="dirBA83CC06CEA9D08B69CB5137A1699E89" Guid="29D3C652-DD1B-4F2D-A77F-A84E637DB703">
+                <File Id="fil1F3A3EA273A9D105457768D96E7F9908" KeyPath="yes" Source="$(var.EnglishImages)\Toolbar\saveCGX.png" />
+            </Component>
+            <Component Id="cmpE3D27B87E552D3607977200360520CAC" Directory="dirBA83CC06CEA9D08B69CB5137A1699E89" Guid="102A89A4-615B-4B8B-B2B2-67AEE6719BC7">
+                <File Id="fil77F09F5BE0396CD6FE599D52020B4284" KeyPath="yes" Source="$(var.EnglishImages)\Toolbar\search.png" />
+            </Component>
+            <Component Id="cmp1B5DF0E0D290D3FCF77F729B362EC161" Directory="dirBA83CC06CEA9D08B69CB5137A1699E89" Guid="8478CF0A-C416-433E-A5FA-E0A785D35E9D">
+                <File Id="fil10B3F1969148FA83C606BE39D31EDC8C" KeyPath="yes" Source="$(var.EnglishImages)\Toolbar\settings.png" />
+            </Component>
+            <Component Id="cmpE7A1FCF00609052AA002FEBF9F6B7AB1" Directory="dirBA83CC06CEA9D08B69CB5137A1699E89" Guid="EA4AF161-752F-4194-AE8A-071F50BA9015">
+                <File Id="filD9F3B32F0C2826594A5A80FD81CDCD1C" KeyPath="yes" Source="$(var.EnglishImages)\Toolbar\undo.png" />
+            </Component>
+        </ComponentGroup>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir3E4A7C33B21EB0FE0969205953A4F970">
+            <Directory Id="dirB2BF9254DB4FB3636BA251A057033AD9" Name="Toolbar" />
+        </DirectoryRef>
+    </Fragment>
+</Wix>

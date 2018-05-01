@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define EnglishImages = "Resources\Documentation\en\images" ?>
+  <?define FrenchImages = "Resources\Documentation\fr\images" ?>
+</Include>
