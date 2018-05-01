@@ -63,17 +63,6 @@
             </Directory>
           </Directory>
         </Directory>
-        <!--<Directory Id="LocalAppDataFolder" Name="AppData">
-          <Directory Id="AppDataCourseGenerator" Name="Course Generator">
-            <Directory Id="AppDataCurves" Name="Curves" >
-              <Component Id="CurvesFolder" Guid="E510F3DA-82AA-12DF-8814-8970DFD72085">
-                <RemoveFolder Id='RemoveCurves' Directory='AppDataCurves' On='uninstall' />
-                <RemoveFolder Id='RemoveCourseGeneratorLocal' Directory='AppDataCourseGenerator' On='uninstall' />
-                <RegistryValue Root='HKCU' Key='Software\CourseGenerator' Type='string' Value='' KeyPath='yes' />
-              </Component>
-            </Directory>
-          </Directory>
-        </Directory>-->
       </Directory>
     </Directory>
 
@@ -837,8 +826,6 @@
       <ComponentRef Id="CG4_en_pdfStartMenuShortcut" />
       <ComponentGroupRef Id="FrenchDocumentationFiles" />
       <ComponentGroupRef Id="EnglishDocumentationFiles" />
-      <!--<ComponentGroupRef Id="CurvesFiles" />-->
-      <!--<ComponentRef Id="CurvesFolder" />-->
     </Feature>
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />

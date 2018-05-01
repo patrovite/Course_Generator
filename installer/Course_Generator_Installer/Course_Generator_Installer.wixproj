@@ -24,7 +24,6 @@
     <Compile Include="Custom_WixUI_InstallDir.wxs" />
     <Compile Include="Custom_InstallDirDlg.wxs" />
     <Compile Include="Product.wxs" />
-    <Compile Include="Resources\Curves\HarvestedCurves.wxs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config.wxi">
@@ -37,36 +36,6 @@
     <Content Include="Resources\CGDialog.bmp" />
     <Content Include="Resources\Course_Generator.exe" />
     <Content Include="Resources\course_generator.jar" />
-    <Content Include="Resources\Curves\Default.par" />
-    <Content Include="Resources\Curves\Run_10km_h.par" />
-    <Content Include="Resources\Curves\Run_10_5km_h.par" />
-    <Content Include="Resources\Curves\Run_11km_h.par" />
-    <Content Include="Resources\Curves\Run_11_5km_h.par" />
-    <Content Include="Resources\Curves\Run_12km_h.par" />
-    <Content Include="Resources\Curves\Run_12_5km_h.par" />
-    <Content Include="Resources\Curves\Run_13km_h.par" />
-    <Content Include="Resources\Curves\Run_13_5km_h.par" />
-    <Content Include="Resources\Curves\Run_14km_h.par" />
-    <Content Include="Resources\Curves\Run_14_5km_h.par" />
-    <Content Include="Resources\Curves\Run_15km_h.par" />
-    <Content Include="Resources\Curves\Run_15_5km_h.par" />
-    <Content Include="Resources\Curves\Run_16km_h.par" />
-    <Content Include="Resources\Curves\Run_16_5km_h.par" />
-    <Content Include="Resources\Curves\Run_17km_h.par" />
-    <Content Include="Resources\Curves\Run_17_5km_h.par" />
-    <Content Include="Resources\Curves\Run_18km_h.par" />
-    <Content Include="Resources\Curves\Run_4km_h.par" />
-    <Content Include="Resources\Curves\Run_4_5km_h.par" />
-    <Content Include="Resources\Curves\Run_5km_h.par" />
-    <Content Include="Resources\Curves\Run_5_5km_h.par" />
-    <Content Include="Resources\Curves\Run_6km_h.par" />
-    <Content Include="Resources\Curves\Run_6_5km_h.par" />
-    <Content Include="Resources\Curves\Run_7km_h.par" />
-    <Content Include="Resources\Curves\Run_7_5km_h.par" />
-    <Content Include="Resources\Curves\Run_8km_h.par" />
-    <Content Include="Resources\Curves\Run_8_5km_h.par" />
-    <Content Include="Resources\Curves\Run_9km_h.par" />
-    <Content Include="Resources\Curves\Run_9_5km_h.par" />
     <Content Include="Resources\Documentation\en\en_cg_doc_4.00.html" />
     <Content Include="Resources\Documentation\en\en_cg_doc_4.00.pdf" />
     <Content Include="Resources\Documentation\en\images\CG40_Dlg_Confirm_New_Start.png" />
@@ -331,7 +300,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="Resources\Curves\" />
     <Folder Include="Resources\Documentation\" />
     <Folder Include="Resources\Documentation\en\images\" />
     <Folder Include="Resources\Documentation\en\images\Curve\" />
