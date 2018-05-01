@@ -21,3 +21,6 @@ Desktop.ini
 ._*
 .Spotlight-V100
 .Trashes
+/installer/.vs/Course_Generator_Installer/v15
+/installer/Course_Generator_Installer/bin
+/installer/Course_Generator_Installer/obj
