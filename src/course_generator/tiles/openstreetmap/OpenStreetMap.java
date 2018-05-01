@@ -27,11 +27,11 @@ import org.openstreetmap.gui.jmapviewer.tilesources.AbstractOsmTileSource;
  */
 
 public class OpenStreetMap extends AbstractOsmTileSource {
-//	private static final String PATTERN = "http://%s.tile.opentopomap.org";
+	// private static final String PATTERN = "http://%s.tile.opentopomap.org";
 	private static final String PATTERN = "http://%s.tile.openstreetmap.org";
-	//http://a.tile.openstreetmap.org/$%7Bz%7D/$%7Bx%7D/$%7By%7D.png
-	//http://www.openstreetmap.org/#map=18/38.94780/-106.80057&layers=C
-			
+	// http://a.tile.openstreetmap.org/$%7Bz%7D/$%7Bx%7D/$%7By%7D.png
+	// http://www.openstreetmap.org/#map=18/38.94780/-106.80057&layers=C
+
 	private static final String[] SERVER = { "a", "b", "c" };
 
 	private int SERVER_NUM = 0;

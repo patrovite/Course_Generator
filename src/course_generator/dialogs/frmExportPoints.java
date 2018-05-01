@@ -42,13 +42,13 @@ import course_generator.utils.Utils;
 public class frmExportPoints extends javax.swing.JDialog {
 	private ResourceBundle bundle;
 	private boolean ok;
-//	private CgSettings settings;
+	// private CgSettings settings;
 	private JPanel jPanelButtons;
 	private JButton btCancel;
 	private JButton btOk;
-//	private TrackData track;
-//	private CgData data;
-//	private int line;
+	// private TrackData track;
+	// private CgData data;
+	// private int line;
 	private JPanel panelMain;
 	private JCheckBox chkIncludeHightPt;
 	private JCheckBox chkIncludeLowPt;
@@ -69,6 +69,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 	private JCheckBox chkIncludeInfo;
 	private JLabel lbIncludeInfo;
 
+
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -77,6 +78,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
+
 
 	public int showDialog() {
 		chkIncludeHightPt.setSelected(true);
@@ -88,54 +90,54 @@ public class frmExportPoints extends javax.swing.JDialog {
 		chkIncludeNotes.setSelected(true);
 		chkIncludeRoadbook.setSelected(true);
 		chkIncludeInfo.setSelected(true);
-		
+
 		// End set field
 		ok = false;
 
-		//-- Show the dialog
+		// -- Show the dialog
 		setVisible(true);
 
 		if (ok) {
-			int tag=0;
-            //Higher point
+			int tag = 0;
+			// Higher point
 			if (chkIncludeHightPt.isSelected())
-				tag=tag | CgConst.TAG_HIGH_PT;
+				tag = tag | CgConst.TAG_HIGH_PT;
 
-			//Lower point
+			// Lower point
 			if (chkIncludeLowPt.isSelected())
-				tag=tag | CgConst.TAG_LOW_PT;
+				tag = tag | CgConst.TAG_LOW_PT;
 
-            //Station
+			// Station
 			if (chkIncludeEatStation.isSelected())
-            	tag=tag | CgConst.TAG_EAT_PT;
+				tag = tag | CgConst.TAG_EAT_PT;
 
-            //Drink
+			// Drink
 			if (chkIncludeDrinkStation.isSelected())
-				tag=tag | CgConst.TAG_WATER_PT;
-            
-            //Mark
-			if (chkIncludeMark.isSelected())
-				tag=tag | CgConst.TAG_MARK;
-            
-            //Roadbook
-			if (chkIncludeRoadbook.isSelected())
-				tag=tag | CgConst.TAG_ROADBOOK;
-            
-            //Photo
-			if (chkIncludePhoto.isSelected())
-				tag=tag | CgConst.TAG_COOL_PT;
-            
-            //Note
-			if (chkIncludeNotes.isSelected())
-				tag=tag | CgConst.TAG_NOTE;
+				tag = tag | CgConst.TAG_WATER_PT;
 
-            //Info
+			// Mark
+			if (chkIncludeMark.isSelected())
+				tag = tag | CgConst.TAG_MARK;
+
+			// Roadbook
+			if (chkIncludeRoadbook.isSelected())
+				tag = tag | CgConst.TAG_ROADBOOK;
+
+			// Photo
+			if (chkIncludePhoto.isSelected())
+				tag = tag | CgConst.TAG_COOL_PT;
+
+			// Note
+			if (chkIncludeNotes.isSelected())
+				tag = tag | CgConst.TAG_NOTE;
+
+			// Info
 			if (chkIncludeInfo.isSelected())
-				tag=tag | CgConst.TAG_INFO;
-			
+				tag = tag | CgConst.TAG_INFO;
+
 			return tag;
-		}
-		else return -1;
+		} else
+			return -1;
 	}
 
 
@@ -171,6 +173,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 		return rootPane;
 	}
 
+
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -182,7 +185,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 		}
 	}
 
-	
+
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmExportPoints.title"));
@@ -195,200 +198,113 @@ public class frmExportPoints extends javax.swing.JDialog {
 		Container paneGlobal = getContentPane();
 		paneGlobal.setLayout(new GridBagLayout());
 
-		//== Left panel
+		// == Left panel
 		panelMain = new JPanel();
 		panelMain.setLayout(new GridBagLayout());
-		Utils.addComponent(paneGlobal, panelMain, 
-				0, 0, 
-				1, 1, 
-				1, 1, 
-				10, 10, 10, 10, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
-		
-		//--
-		chkIncludeHightPt = new javax.swing.JCheckBox();
-		Utils.addComponent(panelMain, chkIncludeHightPt, 
-				0, 0, 
-				1, 1, 
-				0, 0, 
-				0, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		lbIncludeHightPt = new JLabel(bundle.getString("frmExportPoints.lbIncludeHightPt"), //Include high points
-			new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/high_point.png")),
-			JLabel.LEFT);
-		Utils.addComponent(panelMain, lbIncludeHightPt, 
-				1, 0, 
-				1, 1, 
-				1, 0, 
-				0, 5, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(paneGlobal, panelMain, 0, 0, 1, 1, 1, 1, 10, 10, 10, 10, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.BOTH);
 
-		//--
+		// --
+		chkIncludeHightPt = new javax.swing.JCheckBox();
+		Utils.addComponent(panelMain, chkIncludeHightPt, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		lbIncludeHightPt = new JLabel(bundle.getString("frmExportPoints.lbIncludeHightPt"), // Include high points
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/high_point.png")),
+				JLabel.LEFT);
+		Utils.addComponent(panelMain, lbIncludeHightPt, 1, 0, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		// --
 		chkIncludeLowPt = new javax.swing.JCheckBox();
-		Utils.addComponent(panelMain, chkIncludeLowPt, 
-				0, 1, 
-				1, 1, 
-				0, 0, 
-				5, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		lbIncludeLowPt = new JLabel(bundle.getString("frmExportPoints.lbIncludeLowPt"), //Include low points
+		Utils.addComponent(panelMain, chkIncludeLowPt, 0, 1, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		lbIncludeLowPt = new JLabel(bundle.getString("frmExportPoints.lbIncludeLowPt"), // Include low points
 				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/low_point.png")),
 				JLabel.LEFT);
-		Utils.addComponent(panelMain, lbIncludeLowPt, 
-				1, 1, 
-				1, 1, 
-				1, 0, 
-				5, 5, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		//--
+		Utils.addComponent(panelMain, lbIncludeLowPt, 1, 1, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		// --
 		chkIncludeEatStation = new javax.swing.JCheckBox();
-		Utils.addComponent(panelMain, chkIncludeEatStation, 
-				0, 2, 
-				1, 1, 
-				0, 0, 
-				5, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(panelMain, chkIncludeEatStation, 0, 2, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
 
-		lbIncludeEatStation = new JLabel(bundle.getString("frmExportPoints.lbIncludeEatStation"), //Include eat station points
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/eat.png")),
-				JLabel.LEFT);
-		Utils.addComponent(panelMain, lbIncludeEatStation, 
-				1, 2, 
-				1, 1, 
-				1, 0, 
-				5, 5, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		//--
+		lbIncludeEatStation = new JLabel(bundle.getString("frmExportPoints.lbIncludeEatStation"), // Include eat station
+																									// points
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/eat.png")), JLabel.LEFT);
+		Utils.addComponent(panelMain, lbIncludeEatStation, 1, 2, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		// --
 		chkIncludeDrinkStation = new javax.swing.JCheckBox();
-		Utils.addComponent(panelMain, chkIncludeDrinkStation, 
-				0, 3, 
-				1, 1, 
-				0, 0, 
-				5, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		lbIncludeDrinkStation = new JLabel(bundle.getString("frmExportPoints.lbIncludeDrinkStation"), //Include drink station points
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/drink.png")),
-				JLabel.LEFT);
-		Utils.addComponent(panelMain, lbIncludeDrinkStation, 
-				1, 3, 
-				1, 1, 
-				1, 0, 
-				5, 5, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		//--
-		chkIncludeMark = new javax.swing.JCheckBox();
-		Utils.addComponent(panelMain, chkIncludeMark, 
-				0, 4, 
-				1, 1, 
-				0, 0, 
-				5, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		lbIncludeMark = new JLabel(bundle.getString("frmExportPoints.lbIncludeMark"), //Include mark points
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/flag.png")),
-				JLabel.LEFT);
-		Utils.addComponent(panelMain, lbIncludeMark, 
-				1, 4, 
-				1, 1, 
-				1, 0, 
-				5, 5, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(panelMain, chkIncludeDrinkStation, 0, 3, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
 
-		
-		//--
+		lbIncludeDrinkStation = new JLabel(bundle.getString("frmExportPoints.lbIncludeDrinkStation"), // Include drink
+																										// station
+																										// points
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/drink.png")), JLabel.LEFT);
+		Utils.addComponent(panelMain, lbIncludeDrinkStation, 1, 3, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		// --
+		chkIncludeMark = new javax.swing.JCheckBox();
+		Utils.addComponent(panelMain, chkIncludeMark, 0, 4, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		lbIncludeMark = new JLabel(bundle.getString("frmExportPoints.lbIncludeMark"), // Include mark points
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/flag.png")), JLabel.LEFT);
+		Utils.addComponent(panelMain, lbIncludeMark, 1, 4, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		// --
 		chkIncludePhoto = new javax.swing.JCheckBox();
-		Utils.addComponent(panelMain, chkIncludePhoto, 
-				0, 5, 
-				1, 1, 
-				0, 0, 
-				5, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		lbIncludePhoto = new JLabel(bundle.getString("frmExportPoints.lbIncludePhoto"), //Include photo points
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/photo.png")),
-				JLabel.LEFT);
-		Utils.addComponent(panelMain, lbIncludePhoto, 
-				1, 5, 
-				1, 1, 
-				1, 0, 
-				5, 5, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		//--
+		Utils.addComponent(panelMain, chkIncludePhoto, 0, 5, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		lbIncludePhoto = new JLabel(bundle.getString("frmExportPoints.lbIncludePhoto"), // Include photo points
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/photo.png")), JLabel.LEFT);
+		Utils.addComponent(panelMain, lbIncludePhoto, 1, 5, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		// --
 		chkIncludeRoadbook = new javax.swing.JCheckBox();
-		Utils.addComponent(panelMain, chkIncludeRoadbook, 
-				0, 6, 
-				1, 1, 
-				0, 0, 
-				5, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		lbIncludeRoadbook = new JLabel(bundle.getString("frmExportPoints.lbIncludeRoadbook"), //Include roadbook points
+		Utils.addComponent(panelMain, chkIncludeRoadbook, 0, 6, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		lbIncludeRoadbook = new JLabel(bundle.getString("frmExportPoints.lbIncludeRoadbook"), // Include roadbook points
 				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/roadbook.png")),
 				JLabel.LEFT);
-		Utils.addComponent(panelMain, lbIncludeRoadbook, 
-				1, 6, 
-				1, 1, 
-				1, 0, 
-				5, 5, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		//--
+		Utils.addComponent(panelMain, lbIncludeRoadbook, 1, 6, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		// --
 		chkIncludeInfo = new javax.swing.JCheckBox();
-		Utils.addComponent(panelMain, chkIncludeInfo, 
-				0, 7, 
-				1, 1, 
-				0, 0, 
-				5, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		lbIncludeInfo = new JLabel(bundle.getString("frmExportPoints.lbIncludeInfo"), //Include information points
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/info.png")),
-				JLabel.LEFT);
-		Utils.addComponent(panelMain, lbIncludeInfo, 
-				1, 7, 
-				1, 1, 
-				1, 0, 
-				5, 5, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		//--
+		Utils.addComponent(panelMain, chkIncludeInfo, 0, 7, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		lbIncludeInfo = new JLabel(bundle.getString("frmExportPoints.lbIncludeInfo"), // Include information points
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/info.png")), JLabel.LEFT);
+		Utils.addComponent(panelMain, lbIncludeInfo, 1, 7, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		// --
 		chkIncludeNotes = new javax.swing.JCheckBox();
-		Utils.addComponent(panelMain, chkIncludeNotes, 
-				0, 8, 
-				1, 1, 
-				0, 1, 
-				5, 0, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		lbIncludeNotes = new JLabel(bundle.getString("frmExportPoints.lbIncludeNotes"), //Include notes points
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/note.png")),
-				JLabel.LEFT);
-		Utils.addComponent(panelMain, lbIncludeNotes, 
-				1, 8, 
-				1, 1, 
-				1, 1, 
-				5, 5, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-		
-		
-		
-		
+		Utils.addComponent(panelMain, chkIncludeNotes, 0, 8, 1, 1, 0, 1, 5, 0, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
+		lbIncludeNotes = new JLabel(bundle.getString("frmExportPoints.lbIncludeNotes"), // Include notes points
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/note.png")), JLabel.LEFT);
+		Utils.addComponent(panelMain, lbIncludeNotes, 1, 8, 1, 1, 1, 1, 5, 5, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
 		// == BUTTONS
 		// ===========================================================
 		jPanelButtons = new javax.swing.JPanel();
 		jPanelButtons.setLayout(new FlowLayout());
-		Utils.addComponent(paneGlobal, jPanelButtons, 
-				0, 1, 
-				GridBagConstraints.REMAINDER, 1, 
-				0, 0, 
-				0, 0, 0, 0,
+		Utils.addComponent(paneGlobal, jPanelButtons, 0, 1, GridBagConstraints.REMAINDER, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();

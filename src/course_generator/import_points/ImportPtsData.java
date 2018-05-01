@@ -22,14 +22,16 @@ import java.util.ArrayList;
 
 public class ImportPtsData {
 	private static ImportPtsData instance;
-	public int ReadError=0;
-	
+	public int ReadError = 0;
+
 	public ArrayList<CgImportPts> data;
+
 
 	// -- Constructeur --
 	public ImportPtsData() {
 		data = new ArrayList<CgImportPts>();
 	}
+
 
 	public static synchronized ImportPtsData getInstance() {
 		if (instance == null) {

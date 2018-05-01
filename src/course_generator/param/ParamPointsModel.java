@@ -28,45 +28,50 @@ public class ParamPointsModel extends AbstractTableModel {
 	private java.util.ResourceBundle bundle;
 	private ParamData param;
 	private CgSettings settings;
-	
-	private final String[] header; // = { "Slope", "Speed" };	
+
+	private final String[] header; // = { "Slope", "Speed" };
+
 
 	/**
 	 * Constructor
 	 */
 	public ParamPointsModel(ParamData p) {
-		param=p;
-		this.settings=null;
+		param = p;
+		this.settings = null;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		header = new String[2];
-		header[0]=bundle.getString("ParamPointsModel.slope");
-		header[1]=bundle.getString("ParamPointsModel.speed");
+		header[0] = bundle.getString("ParamPointsModel.slope");
+		header[1] = bundle.getString("ParamPointsModel.speed");
 	}
+
 
 	public void setParam(ParamData p) {
-		param=p;
+		param = p;
 	}
 
+
 	public void setSettings(CgSettings settings) {
-		this.settings=settings;
+		this.settings = settings;
 	}
-	
-	
+
+
 	@Override
 	public int getColumnCount() {
 		return header.length;
 	}
 
+
 	@Override
 	public String getColumnName(int columnIndex) {
 		return header[columnIndex];
 	}
-	
-	
+
+
 	@Override
 	public int getRowCount() {
 		return param.data.size();
 	}
+
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
@@ -78,7 +83,7 @@ public class ParamPointsModel extends AbstractTableModel {
 
 		case 1:
 			// Speed
-			if (settings.Unit==CgConst.UNIT_MILES_FEET)
+			if (settings.Unit == CgConst.UNIT_MILES_FEET)
 				return Utils.Km2Miles(param.data.get(rowIndex).Speed);
 			else
 				return param.data.get(rowIndex).Speed;
@@ -87,15 +92,16 @@ public class ParamPointsModel extends AbstractTableModel {
 			throw new IllegalArgumentException();
 		}
 	}
-	
+
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		switch (columnIndex) {
-			case 0:
-			case 1:
-				return Double.class;
-			default:
-				return Object.class;
+		case 0:
+		case 1:
+			return Double.class;
+		default:
+			return Object.class;
 		}
 	}
 }

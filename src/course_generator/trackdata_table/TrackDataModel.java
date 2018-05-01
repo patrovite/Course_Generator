@@ -28,88 +28,94 @@ import javax.swing.table.AbstractTableModel;
  * @author pierre.delore
  */
 public class TrackDataModel extends AbstractTableModel {
-    
-    private final String header[];
-    private TrackData track;
-    private CgSettings settings;
 
-    public TrackDataModel(TrackData data, CgSettings _settings) {
-    	super();
-    	java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
-    	
-    	header = new String[16];
-		header[0]=bundle.getString("frmMain.HeaderNum.text");
-		header[1]=bundle.getString("frmMain.HeaderLat.text");
-		header[2]=bundle.getString("frmMain.HeaderLon.text");
-		header[3]=bundle.getString("frmMain.HeaderElev.text");
-		header[4]=bundle.getString("frmMain.HeaderTag.text");
-		header[5]=bundle.getString("frmMain.HeaderDist.text");
-		header[6]=bundle.getString("frmMain.HeaderTotal.text");
-		header[7]=bundle.getString("frmMain.HeaderDiff.text");
-		header[8]=bundle.getString("frmMain.HeaderCoeff.text");
-		header[9]=bundle.getString("frmMain.HeaderRecovery.text");
-		header[10]=bundle.getString("frmMain.HeaderTime.text");
-		header[11]=bundle.getString("frmMain.HeaderTimeLimit.text");
-		header[12]=bundle.getString("frmMain.HeaderHour.text");
-		header[13]=bundle.getString("frmMain.HeaderStation.text");
-		header[14]=bundle.getString("frmMain.HeaderName.text");
-		header[15]=bundle.getString("frmMain.HeaderComment.text");
-    	
-    	settings = _settings;
-        track = data; //TrackData.getInstance();
-    }
-   
-    public CgSettings getSettings() {
-        return settings;
-    }
-    
-    @Override
-    public int getColumnCount() {
-        return header.length;
-    }
-    
-    @Override
-    public String getColumnName(int columnIndex) {
-        return header[columnIndex];
-    }
+	private final String header[];
+	private TrackData track;
+	private CgSettings settings;
 
-    @Override
-    public int getRowCount() {
-        return track.data.size();
-    }
-    
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        switch (columnIndex) {
-            case 0: //N°
-            case 1: //Lat
-            case 2: //Lon
-            case 3: //Elev
-            case 4: //Tag
-            case 5: //Dist (m)
-            case 6: //Total (km)
-            case 7: //Diff
-            case 8: //Coeff
-            case 9: //Recovery
-            case 10: //Time
-            case 11: //Timelimit
-            case 13: //Station
-            case 14: //Name
-            case 15: //Comment
-                return track.data.get(rowIndex);
-            case 12: //Hour
-            	//This is normal to return the complete track object
-            	//because we need several info for the rendering
-                return track; 
-            default:
-                throw new IllegalArgumentException();
-        }
-    }
-    
-    @Override
-    public Class<?> getColumnClass(int columnIndex) {
-    	return TrackDataClass.class;
-    }
-    
 
-} //Class
+	public TrackDataModel(TrackData data, CgSettings _settings) {
+		super();
+		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+
+		header = new String[16];
+		header[0] = bundle.getString("frmMain.HeaderNum.text");
+		header[1] = bundle.getString("frmMain.HeaderLat.text");
+		header[2] = bundle.getString("frmMain.HeaderLon.text");
+		header[3] = bundle.getString("frmMain.HeaderElev.text");
+		header[4] = bundle.getString("frmMain.HeaderTag.text");
+		header[5] = bundle.getString("frmMain.HeaderDist.text");
+		header[6] = bundle.getString("frmMain.HeaderTotal.text");
+		header[7] = bundle.getString("frmMain.HeaderDiff.text");
+		header[8] = bundle.getString("frmMain.HeaderCoeff.text");
+		header[9] = bundle.getString("frmMain.HeaderRecovery.text");
+		header[10] = bundle.getString("frmMain.HeaderTime.text");
+		header[11] = bundle.getString("frmMain.HeaderTimeLimit.text");
+		header[12] = bundle.getString("frmMain.HeaderHour.text");
+		header[13] = bundle.getString("frmMain.HeaderStation.text");
+		header[14] = bundle.getString("frmMain.HeaderName.text");
+		header[15] = bundle.getString("frmMain.HeaderComment.text");
+
+		settings = _settings;
+		track = data; // TrackData.getInstance();
+	}
+
+
+	public CgSettings getSettings() {
+		return settings;
+	}
+
+
+	@Override
+	public int getColumnCount() {
+		return header.length;
+	}
+
+
+	@Override
+	public String getColumnName(int columnIndex) {
+		return header[columnIndex];
+	}
+
+
+	@Override
+	public int getRowCount() {
+		return track.data.size();
+	}
+
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		switch (columnIndex) {
+		case 0: // N°
+		case 1: // Lat
+		case 2: // Lon
+		case 3: // Elev
+		case 4: // Tag
+		case 5: // Dist (m)
+		case 6: // Total (km)
+		case 7: // Diff
+		case 8: // Coeff
+		case 9: // Recovery
+		case 10: // Time
+		case 11: // Timelimit
+		case 13: // Station
+		case 14: // Name
+		case 15: // Comment
+			return track.data.get(rowIndex);
+		case 12: // Hour
+			// This is normal to return the complete track object
+			// because we need several info for the rendering
+			return track;
+		default:
+			throw new IllegalArgumentException();
+		}
+	}
+
+
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		return TrackDataClass.class;
+	}
+
+} // Class

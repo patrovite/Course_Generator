@@ -27,10 +27,12 @@ public class ResumeData {
 
 	public ArrayList<CgResume> data;
 
+
 	// -- Constructeur --
 	public ResumeData() {
 		data = new ArrayList<CgResume>();
 	}
+
 
 	public static synchronized ResumeData getInstance() {
 		if (instance == null) {
@@ -38,6 +40,7 @@ public class ResumeData {
 		}
 		return instance;
 	}
+
 
 	/**
 	 * Save the resume data as a CSV file
@@ -50,7 +53,7 @@ public class ResumeData {
 	public void SaveAsCSV(String filename, int unit, boolean pace) {
 		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		StringBuilder s = new StringBuilder();
-		
+
 		try {
 			PrintWriter writer = new PrintWriter(filename, "UTF-8");
 
@@ -106,7 +109,7 @@ public class ResumeData {
 
 			writer.close();
 		} catch (IOException e) {
-			 e.printStackTrace();
+			e.printStackTrace();
 		}
 
 	}

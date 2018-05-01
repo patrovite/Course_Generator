@@ -19,5 +19,5 @@
 package course_generator.trackdata_table;
 
 public class TrackDataClass {
-	//Empty class - This is normal ;)
+	// Empty class - This is normal ;)
 }

@@ -267,6 +267,7 @@ The possible settings are:
 * "language" : Selects the language used in the interface. "System" uses operating system settings to determine which language to use. If the system language is not managed by **Course Generator** then English is selected.
 * "Units" : Choose between "km/m" and "Miles/Pieds".
 * "Speed format" : Choose the type of speed for the display (speed or pace).
+* "Check for update at startup" : Allows you to choose if you want to check for update at application startup.
 
 ## Import and export marked points
 

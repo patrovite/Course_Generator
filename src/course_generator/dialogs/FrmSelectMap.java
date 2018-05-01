@@ -38,7 +38,7 @@ import javax.swing.KeyStroke;
 
 import course_generator.utils.Utils;
 
-public class FrmSelectMap  extends javax.swing.JDialog {
+public class FrmSelectMap extends javax.swing.JDialog {
 	private ResourceBundle bundle;
 	private boolean ok;
 
@@ -61,30 +61,27 @@ public class FrmSelectMap  extends javax.swing.JDialog {
 		setModal(true);
 	}
 
+
 	/**
 	 * Show the dialog to selct the map
+	 * 
 	 * @param map
-	 * 	map code :
-	 * 	0 : OpenStreetMap
-	 *  1 : OpenTopoMap
-	 *  2 : BingAerial
-	 * @return
-	 * 	Return the select map code.
-	 *  -1 if the selection has been cancelled
+	 *            map code : 0 : OpenStreetMap 1 : OpenTopoMap 2 : BingAerial
+	 * @return Return the select map code. -1 if the selection has been cancelled
 	 */
 	public int showDialog(int map) {
 		switch (map) {
-			case 0 :
-				rbOpenStreetMap.setSelected(true);
-				break;
-			case 1 :
-				rbOpenTopoMap.setSelected(true);
-				break;
-			case 2 :
-				rbBingAerialMap.setSelected(true);
-				break;
-			default:
-				rbOpenStreetMap.setSelected(true);
+		case 0:
+			rbOpenStreetMap.setSelected(true);
+			break;
+		case 1:
+			rbOpenTopoMap.setSelected(true);
+			break;
+		case 2:
+			rbBingAerialMap.setSelected(true);
+			break;
+		default:
+			rbOpenStreetMap.setSelected(true);
 		}
 		// End set field
 		ok = false;
@@ -92,9 +89,12 @@ public class FrmSelectMap  extends javax.swing.JDialog {
 		// -- Show the dialog
 		setVisible(true);
 		if (ok) {
-			if (rbOpenStreetMap.isSelected()) return 0;
-			if (rbOpenTopoMap.isSelected()) return 1;			
-			if (rbBingAerialMap.isSelected()) return 2;			
+			if (rbOpenStreetMap.isSelected())
+				return 0;
+			if (rbOpenTopoMap.isSelected())
+				return 1;
+			if (rbBingAerialMap.isSelected())
+				return 2;
 		}
 		return -1;
 	}
@@ -160,41 +160,26 @@ public class FrmSelectMap  extends javax.swing.JDialog {
 		// == Panel start
 		panelMain = new JPanel();
 		panelMain.setLayout(new GridBagLayout());
-		Utils.addComponent(paneGlobal, panelMain, 0, 0, 
-				1, 1, 
-				1, 1, 
-				10, 10, 10, 10, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(paneGlobal, panelMain, 0, 0, 1, 1, 1, 1, 10, 10, 10, 10, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.BOTH);
 
 		rbOpenStreetMap = new JRadioButton(bundle.getString("FrmSelectMap.rbOpenStreetMap.Text"));
-		Utils.addComponent(panelMain, rbOpenStreetMap, 
-				0, 0, 
-				1, 1, 
-				1, 0, 
-				0, 0, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelMain, rbOpenStreetMap, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
 		rbOpenTopoMap = new JRadioButton(bundle.getString("FrmSelectMap.rbOpenTopoMap.Text"));
-		Utils.addComponent(panelMain, rbOpenTopoMap, 0, 1, 
-				1, 1, 
-				1, 0, 
-				0, 0, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelMain, rbOpenTopoMap, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
-		
+
 		rbBingAerialMap = new JRadioButton(bundle.getString("FrmSelectMap.rbBingAerialMap.Text"));
-		Utils.addComponent(panelMain, rbBingAerialMap, 
-				0, 2, 
-				1, 1, 
-				1, 1, 
-				0, 0, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelMain, rbBingAerialMap, 0, 2, 1, 1, 1, 1, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
 		groupMap = new ButtonGroup();
 		groupMap.add(rbOpenStreetMap);
 		groupMap.add(rbOpenTopoMap);
 		groupMap.add(rbBingAerialMap);
-		
-		 
+
 		// == BUTTONS
 		// ===========================================================
 		jPanelButtons = new javax.swing.JPanel();

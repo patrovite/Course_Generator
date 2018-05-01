@@ -65,7 +65,7 @@ import course_generator.utils.Utils;
 
 public class frmEditCurve extends javax.swing.JDialog {
 	private boolean ok;
-    private boolean bEditMode;
+	private boolean bEditMode;
 	private TrackData track;
 	private java.util.ResourceBundle bundle;
 	private JFreeChart chart = null;
@@ -86,7 +86,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 	private JLabel lbNameVal;
 	private JLabel lbComment;
 	private JTextField tfComment;
-//	private JList jListPoint;
+	// private JList jListPoint;
 	private JScrollPane jScrollPanePoint;
 	private JToolBar ToolBarEdit;
 	private JButton btAddLine;
@@ -102,15 +102,18 @@ public class frmEditCurve extends javax.swing.JDialog {
 	private Crosshair xCrosshair;
 	private Crosshair yCrosshair;
 	private CgSettings settings;
-	
+
+
 	/**
 	 * Creates new form frmSettings
-	 * @param settings The Course Generator settings
+	 * 
+	 * @param settings
+	 *            The Course Generator settings
 	 */
 	public frmEditCurve(CgSettings settings) {
 		super();
-		bEditMode=false;
-		this.settings=settings;
+		bEditMode = false;
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		dataset = new XYSeriesCollection();
 		chart = CreateChartProfile(dataset);
@@ -120,20 +123,22 @@ public class frmEditCurve extends javax.swing.JDialog {
 		setModal(true);
 	}
 
+
 	/**
 	 * Show the dialog
+	 * 
 	 * @return
 	 */
 	public boolean showDialog(TrackData t) {
-		track = t;	
-		Paramfile=track.Paramfile;
-		Old_Paramfile=Paramfile;
-		bEditMode=false;
+		track = t;
+		Paramfile = track.Paramfile;
+		Old_Paramfile = Paramfile;
+		bEditMode = false;
 		tablemodel.setSettings(settings);
 
-		LoadCurve(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/"+Paramfile+".par");
-        ChangeEditStatus();
-        RefreshView();
+		LoadCurve(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + Paramfile + ".par");
+		ChangeEditStatus();
+		RefreshView();
 		// Set field
 
 		// End set field
@@ -143,7 +148,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		if (ok) {
 			// Copy fields
-			track.Paramfile=Paramfile;
+			track.Paramfile = Paramfile;
 		}
 		return ok;
 	}
@@ -163,15 +168,20 @@ public class frmEditCurve extends javax.swing.JDialog {
 		}
 	}
 
+
 	/**
 	 * Creates the chart
-	 * @param dataset Dataset to display
+	 * 
+	 * @param dataset
+	 *            Dataset to display
 	 * @return Return a JFreeChart object
 	 */
 	private JFreeChart CreateChartProfile(XYDataset dataset) {
-		JFreeChart chart = ChartFactory.createXYAreaChart("",
-				bundle.getString("frmEditCurve.chart.slope"), //"Slope"  x axis label
-				bundle.getString("frmEditCurve.chart.speed")+" ("+Utils.uSpeed2String(settings.Unit, settings.isPace)+")", //"speed"  y axis label
+		JFreeChart chart = ChartFactory.createXYAreaChart("", bundle.getString("frmEditCurve.chart.slope"), // "Slope" x
+																											// axis
+																											// label
+				bundle.getString("frmEditCurve.chart.speed") + " ("
+						+ Utils.uSpeed2String(settings.Unit, settings.isPace) + ")", // "speed" y axis label
 				dataset, // data
 				PlotOrientation.VERTICAL, false, // include legend
 				true, // tooltips
@@ -187,7 +197,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		// XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
 		XYAreaRenderer renderer = new XYAreaRenderer();
 		// Green (safe color)
-		renderer.setSeriesPaint(0, new Color(0x99, 0xff, 0x00)); 
+		renderer.setSeriesPaint(0, new Color(0x99, 0xff, 0x00));
 		renderer.setOutline(true);
 		// Width of the outline
 		renderer.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
@@ -198,39 +208,37 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		return chart;
 	}
-	
-		
+
+
 	/**
 	 * Refresh the curve list
 	 */
-    private void RefreshCurveList()
-    {
-    	File[] files = new File(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/").listFiles(new FilenameFilter() 
-    		{ 
-    			@Override 
-    			public boolean accept(File dir, String name) {
-    				return name.toLowerCase().endsWith(".par"); 
-    			} 
-    		});
-    		
-    	model.clear();
-    	
-	    for (int i = 0; i < files.length; i++) {
-	      if (files[i].isFile()) {
-	    	  model.addElement(Utils.getFileNameWithoutExtension(files[i].getName())); 
-	      }
-	    }
-	    model.sort();
-    }
+	private void RefreshCurveList() {
+		File[] files = new File(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/").listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.toLowerCase().endsWith(".par");
+			}
+		});
 
-    
+		model.clear();
+
+		for (int i = 0; i < files.length; i++) {
+			if (files[i].isFile()) {
+				model.addElement(Utils.getFileNameWithoutExtension(files[i].getName()));
+			}
+		}
+		model.sort();
+	}
+
+
 	/**
 	 * This method is called to initialize the form.
 	 */
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmEditCurve.title"));
-		setPreferredSize(new Dimension(1200,600));
+		setPreferredSize(new Dimension(1200, 600));
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setType(java.awt.Window.Type.UTILITY);
@@ -245,146 +253,94 @@ public class frmEditCurve extends javax.swing.JDialog {
 		Container paneGlobal = getContentPane();
 		paneGlobal.setLayout(new GridBagLayout());
 
-		//-- Curves list
-        ListCurves = new javax.swing.JList<>();
-        model=new ParamListModel();
-        ListCurves.setModel(model);
-        ListCurves.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        ListCurves.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-            	SelectCurve();
-            }
-        });
-        jScrollPaneCurves = new javax.swing.JScrollPane();
-        jScrollPaneCurves.setViewportView(ListCurves);
+		// -- Curves list
+		ListCurves = new javax.swing.JList<>();
+		model = new ParamListModel();
+		ListCurves.setModel(model);
+		ListCurves.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+		ListCurves.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				SelectCurve();
+			}
+		});
+		jScrollPaneCurves = new javax.swing.JScrollPane();
+		jScrollPaneCurves.setViewportView(ListCurves);
 
-		Utils.addComponent(paneGlobal, jScrollPaneCurves,
-				0, 0, 
-				1, 4, 
-				0.5, 1, 
-				10, 10, 0, 0, 
-				GridBagConstraints.PAGE_START,
-				GridBagConstraints.BOTH);
+		Utils.addComponent(paneGlobal, jScrollPaneCurves, 0, 0, 1, 4, 0.5, 1, 10, 10, 0, 0,
+				GridBagConstraints.PAGE_START, GridBagConstraints.BOTH);
 
-		//-- Curve management toolbar
+		// -- Curve management toolbar
 		CreateCurvesToolbar();
-		Utils.addComponent(paneGlobal, ToolBarAction,
-				1, 0, 
-				1, 4, 
-				0, 0, 
-				10, 0, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.BOTH);
-		
+		Utils.addComponent(paneGlobal, ToolBarAction, 1, 0, 1, 4, 0, 0, 10, 0, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+
 		lbSelectedCurve = new javax.swing.JLabel();
 		lbSelectedCurve.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		lbSelectedCurve.setText("Selected");
 		lbSelectedCurve.setHorizontalAlignment(JLabel.LEFT);
-		Utils.addComponent(paneGlobal, lbSelectedCurve,
-				2, 0, 
-				GridBagConstraints.REMAINDER, 1, 
-				1, 0, 
-				10, 0, 5, 10, 
-				GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(paneGlobal, lbSelectedCurve, 2, 0, GridBagConstraints.REMAINDER, 1, 1, 0, 10, 0, 5, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
-		//-- Curve name
+		// -- Curve name
 		lbName = new javax.swing.JLabel();
 		lbName.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		lbName.setText(" "+bundle.getString("frmEditCurve.lbName.text")+" ");
-		Utils.addComponent(paneGlobal, lbName,
-				2, 1, 
-				1, 1, 
-				0, 0, 
-				0, 0, 5, 0, 
-				GridBagConstraints.BASELINE_LEADING,
+		lbName.setText(" " + bundle.getString("frmEditCurve.lbName.text") + " ");
+		Utils.addComponent(paneGlobal, lbName, 2, 1, 1, 1, 0, 0, 0, 0, 5, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
-		
+
 		lbNameVal = new javax.swing.JLabel();
 		lbNameVal.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		Utils.addComponent(paneGlobal, lbNameVal,
-				3, 1, 
-				GridBagConstraints.REMAINDER, 1, 
-				1, 0, 
-				0, 5, 5, 10, 
-				GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.BOTH);
-		
-		//-- Curve comment
+		Utils.addComponent(paneGlobal, lbNameVal, 3, 1, GridBagConstraints.REMAINDER, 1, 1, 0, 0, 5, 5, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+
+		// -- Curve comment
 		lbComment = new javax.swing.JLabel();
 		lbComment.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		lbComment.setText(" "+bundle.getString("frmEditCurve.lbComment.text")+" ");
-		Utils.addComponent(paneGlobal, lbComment,
-				2, 2, 
-				1, 1, 
-				0, 0, 
-				0, 0, 5, 0, 
-				GridBagConstraints.BASELINE_LEADING,
+		lbComment.setText(" " + bundle.getString("frmEditCurve.lbComment.text") + " ");
+		Utils.addComponent(paneGlobal, lbComment, 2, 2, 1, 1, 0, 0, 0, 0, 5, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
-		
+
 		tfComment = new JTextField();
 		tfComment.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-		Utils.addComponent(paneGlobal, tfComment,
-				3, 2, 
-				GridBagConstraints.REMAINDER, 1, 
-				1, 0, 
-				0, 5, 5, 10, 
-				GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
-		
-		//-- Point list
+		Utils.addComponent(paneGlobal, tfComment, 3, 2, GridBagConstraints.REMAINDER, 1, 1, 0, 0, 5, 5, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
+		// -- Point list
 		TablePoints = new javax.swing.JTable();
-		TablePoints.setModel(tablemodel);//new ParamPointsModel(param));
+		TablePoints.setModel(tablemodel);// new ParamPointsModel(param));
 		TablePoints.getTableHeader().setReorderingAllowed(false);
 		TablePoints.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
-//				TableMainMouseClicked(evt);
-				//TODO
+				// TableMainMouseClicked(evt);
+				// TODO
 			}
 		});
 		TablePoints.addKeyListener(new java.awt.event.KeyAdapter() {
 			public void keyReleased(java.awt.event.KeyEvent evt) {
-//				TableMainKeyReleased(evt);
-				//TODO
+				// TableMainKeyReleased(evt);
+				// TODO
 			}
 		});
-		TablePoints.getSelectionModel()
-			.addListSelectionListener( new ListSelectionListener() {
-				@Override
-				public void valueChanged(ListSelectionEvent event) {
-					btEditLine.setEnabled(TablePoints.getSelectedRow() > 0);
-				}
-			});
-		
-        jScrollPanePoint = new javax.swing.JScrollPane();
-        jScrollPanePoint.setViewportView(TablePoints);
-		Utils.addComponent(paneGlobal, jScrollPanePoint,
-				2, 3, 
-				2, 1, 
-				0.5, 0, 
-				0, 0, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.BOTH);
-		
-		
-		//-- Edit toolbar
+		TablePoints.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent event) {
+				btEditLine.setEnabled(TablePoints.getSelectedRow() > 0);
+			}
+		});
+
+		jScrollPanePoint = new javax.swing.JScrollPane();
+		jScrollPanePoint.setViewportView(TablePoints);
+		Utils.addComponent(paneGlobal, jScrollPanePoint, 2, 3, 2, 1, 0.5, 0, 0, 0, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+
+		// -- Edit toolbar
 		CreateEditToolbar();
-		Utils.addComponent(paneGlobal, ToolBarEdit,
-				4, 3, 
-				1, 1, 
-				0, 0, 
-				0, 0, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(paneGlobal, ToolBarEdit, 4, 3, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.BOTH);
-		
+
 		jPanelProfilChart = new ChartPanel(chart);
-		Utils.addComponent(paneGlobal, jPanelProfilChart,
-				5, 3, 
-				1, 1, 
-				1, 0, 
-				0, 0, 0, 10, 
-				GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.BOTH);
+		Utils.addComponent(paneGlobal, jPanelProfilChart, 5, 3, 1, 1, 1, 0, 0, 0, 0, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 		CrosshairOverlay crosshairOverlay = new CrosshairOverlay();
 		xCrosshair = new Crosshair(Double.NaN, Color.DARK_GRAY, new BasicStroke(0f));
 		xCrosshair.setLabelVisible(true);
@@ -416,12 +372,12 @@ public class frmEditCurve extends javax.swing.JDialog {
 				}
 			}
 
+
 			@Override
 			public void chartMouseMoved(ChartMouseEvent event) {
 			}
 		});
-		
-		
+
 		// == Bottom button
 		// ===========================================================
 		btOk = new javax.swing.JButton();
@@ -432,29 +388,25 @@ public class frmEditCurve extends javax.swing.JDialog {
 				RequestToClose();
 			}
 		});
-		Utils.addComponent(paneGlobal, btOk,
-				0, 5, 
-				GridBagConstraints.REMAINDER, 1, 
-				0, 0, 
-				10, 0, 10, 0, 
-				GridBagConstraints.CENTER,
-				GridBagConstraints.NONE);
-
+		Utils.addComponent(paneGlobal, btOk, 0, 5, GridBagConstraints.REMAINDER, 1, 0, 0, 10, 0, 10, 0,
+				GridBagConstraints.CENTER, GridBagConstraints.NONE);
 
 		// --
 		pack();
-		
-		//-- Refresh the curve list
+
+		// -- Refresh the curve list
 		RefreshCurveList();
 
-		//-- Center the windows
+		// -- Center the windows
 		setLocationRelativeTo(null);
 	}
 
+
 	/**
-	 * Called when the form is closing.
-	 * Check if we are still in edit mode
-	 * @param evt Event
+	 * Called when the form is closing. Check if we are still in edit mode
+	 * 
+	 * @param evt
+	 *            Event
 	 */
 	protected void formWindowClosing(WindowEvent evt) {
 		if (bEditMode)
@@ -463,27 +415,31 @@ public class frmEditCurve extends javax.swing.JDialog {
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
+
 	/**
 	 * Select a curve
 	 */
 	protected void SelectCurve() {
-    	int index=ListCurves.getSelectedIndex();
-    	if (index>=0) {
-    		Paramfile=(String)model.getElementAt(index);
-    		LoadCurve(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/"+(String)model.getElementAt(index)+".par");
-    		bEditMode=false;
-    		RefreshView();
-    	}
+		int index = ListCurves.getSelectedIndex();
+		if (index >= 0) {
+			Paramfile = (String) model.getElementAt(index);
+			LoadCurve(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + (String) model.getElementAt(index) + ".par");
+			bEditMode = false;
+			RefreshView();
+		}
 	}
+
 
 	/**
 	 * Load a curve
-	 * @param filename Curve file name
+	 * 
+	 * @param filename
+	 *            Curve file name
 	 */
 	protected void LoadCurve(String filename) {
-		
+
 		if (Utils.FileExist(filename)) {
-			
+
 			try {
 				param.Load(filename);
 			} catch (Exception e) {
@@ -492,15 +448,15 @@ public class frmEditCurve extends javax.swing.JDialog {
 		}
 	}
 
-	
+
 	private void CreateEditToolbar() {
-		//-- Buttons bar
+		// -- Buttons bar
 		ToolBarEdit = new javax.swing.JToolBar();
 		ToolBarEdit.setFloatable(false);
 		ToolBarEdit.setRollover(true);
 		ToolBarEdit.setOrientation(JToolBar.VERTICAL);
 
-		//-- Edit line
+		// -- Edit line
 		btEditLine = new javax.swing.JButton();
 		btEditLine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/edit.png")));
 		btEditLine.setToolTipText(bundle.getString("frmEditCurve.btEditLine.toolTipText"));
@@ -513,8 +469,8 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		// -- Separator
 		ToolBarEdit.add(new javax.swing.JToolBar.Separator());
-		
-		//-- Add line
+
+		// -- Add line
 		btAddLine = new javax.swing.JButton();
 		btAddLine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/add.png")));
 		btAddLine.setToolTipText(bundle.getString("frmEditCurve.btAddLine.toolTipText"));
@@ -525,7 +481,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		});
 		ToolBarEdit.add(btAddLine);
 
-		//-- Delete line
+		// -- Delete line
 		btDeleteLine = new javax.swing.JButton();
 		btDeleteLine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/delete.png")));
 		btDeleteLine.setToolTipText(bundle.getString("frmEditCurve.btDeleteLine.toolTipText"));
@@ -539,7 +495,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		// -- Separator
 		ToolBarEdit.add(new javax.swing.JToolBar.Separator());
 
-		//-- Save edit
+		// -- Save edit
 		btSaveEdit = new javax.swing.JButton();
 		btSaveEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/save.png")));
 		btSaveEdit.setToolTipText(bundle.getString("frmEditCurve.btSaveEdit.toolTipText"));
@@ -548,19 +504,18 @@ public class frmEditCurve extends javax.swing.JDialog {
 				if (bEditMode) {
 					param.comment = tfComment.getText();
 					param.name = lbNameVal.getText();
-			        param.SaveCurve(Utils.GetHomeDir() + "/" + 
-			        		CgConst.CG_DIR + "/"+ Paramfile +".par", 
-			        		settings.Unit);
-			        bEditMode = false;
-			        ChangeEditStatus();
-			        RefreshView();
-			        RefreshCurveList();
-			      }
+					param.SaveCurve(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + Paramfile + ".par",
+							settings.Unit);
+					bEditMode = false;
+					ChangeEditStatus();
+					RefreshView();
+					RefreshCurveList();
+				}
 			}
 		});
 		ToolBarEdit.add(btSaveEdit);
-		
-		//-- Cancel edit
+
+		// -- Cancel edit
 		btCancelEdit = new javax.swing.JButton();
 		btCancelEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
 		btCancelEdit.setToolTipText(bundle.getString("frmEditCurve.btCancelEdit.toolTipText"));
@@ -568,11 +523,11 @@ public class frmEditCurve extends javax.swing.JDialog {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				if (bEditMode) {
 					bEditMode = false;
-			        Paramfile = Old_Paramfile;
-			        LoadCurve(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/"+Paramfile+".par");
-			        ChangeEditStatus();
-			        RefreshView();
-			    }
+					Paramfile = Old_Paramfile;
+					LoadCurve(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + Paramfile + ".par");
+					ChangeEditStatus();
+					RefreshView();
+				}
 			}
 		});
 		ToolBarEdit.add(btCancelEdit);
@@ -581,15 +536,16 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 
 	protected void RefreshView() {
-		//-- Refresh the fields
-		lbSelectedCurve.setText(" "+bundle.getString("frmEditCurve.lbSelectedCurve.text")+" "+Paramfile);
+		// -- Refresh the fields
+		lbSelectedCurve.setText(" " + bundle.getString("frmEditCurve.lbSelectedCurve.text") + " " + Paramfile);
 		lbNameVal.setText(param.name);
 		tfComment.setText(param.comment);
-		//-- Refresh points table
+		// -- Refresh points table
 		RefreshTablePoints();
-		//-- Refresh chart
+		// -- Refresh chart
 		RefreshChart();
 	}
+
 
 	private void RefreshChart() {
 		if (param.data.size() <= 0)
@@ -602,38 +558,41 @@ public class frmEditCurve extends javax.swing.JDialog {
 		// -- Populate the serie
 		XYSeries serie1 = new XYSeries("Slope/Speed");
 		for (CgParam p : param.data) {
-			if (settings.Unit==CgConst.UNIT_MILES_FEET)
+			if (settings.Unit == CgConst.UNIT_MILES_FEET)
 				serie1.add(p.Slope, Utils.Km2Miles(p.Speed));
 			else
 				serie1.add(p.Slope, p.Speed);
-			
+
 		}
 		dataset.addSeries(serie1);
 	}
+
 
 	/**
 	 * Add a new line to the point list
 	 */
 	protected void AddLine() {
-		CgParam p=new CgParam(0,0);
-		frmEditPoint frm=new frmEditPoint(settings);
+		CgParam p = new CgParam(0, 0);
+		frmEditPoint frm = new frmEditPoint(settings);
 		if (frm.showDialog(p)) {
 			param.data.add(p);
 			Collections.sort(param.data);
 			RefreshView();
 		}
 	}
-	
+
+
 	/**
 	 * Edit the selected line
 	 */
 	protected void EditLine() {
-		if (!bEditMode) return;
-		
-		int r=TablePoints.getSelectedRow();
-		if (r>=0) {
-			CgParam p=new CgParam(param.data.get(r).Slope,param.data.get(r).Speed);
-			frmEditPoint frm=new frmEditPoint(settings);
+		if (!bEditMode)
+			return;
+
+		int r = TablePoints.getSelectedRow();
+		if (r >= 0) {
+			CgParam p = new CgParam(param.data.get(r).Slope, param.data.get(r).Speed);
+			frmEditPoint frm = new frmEditPoint(settings);
 			if (frm.showDialog(p)) {
 				param.data.set(r, p);
 				Collections.sort(param.data);
@@ -642,19 +601,21 @@ public class frmEditCurve extends javax.swing.JDialog {
 		}
 	}
 
+
 	/**
 	 * Delete the selected line in the points table
 	 */
 	protected void DeleteLine() {
-		if (!bEditMode) return;
-		
-		int r=TablePoints.getSelectedRow();
-		if (r>=0) {
+		if (!bEditMode)
+			return;
+
+		int r = TablePoints.getSelectedRow();
+		if (r >= 0) {
 			Object[] options = { " " + bundle.getString("frmEditCurve.DeleteYes") + " ",
 					" " + bundle.getString("frmEditCurve.DeleteNo") + " " };
 			int ret = JOptionPane.showOptionDialog(this, bundle.getString("frmEditCurve.DeleteLineMessage"),
-					bundle.getString("frmEditCurve.DeleteLineTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
-					null, options, options[1]);
+					bundle.getString("frmEditCurve.DeleteLineTitle"), JOptionPane.YES_NO_OPTION,
+					JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
 			if (ret == JOptionPane.YES_OPTION) {
 				param.data.remove(r);
@@ -664,19 +625,21 @@ public class frmEditCurve extends javax.swing.JDialog {
 		}
 	}
 
+
 	/**
 	 * Create the left toolbar
 	 */
 	private void CreateCurvesToolbar() {
-		//-- Buttons bar
+		// -- Buttons bar
 		ToolBarAction = new javax.swing.JToolBar();
 		ToolBarAction.setFloatable(false);
 		ToolBarAction.setRollover(true);
 		ToolBarAction.setOrientation(JToolBar.VERTICAL);
-		
-		//-- Load curve
+
+		// -- Load curve
 		btLoadCurve = new javax.swing.JButton();
-		btLoadCurve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chart_curve_open.png")));
+		btLoadCurve.setIcon(
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chart_curve_open.png")));
 		btLoadCurve.setToolTipText(bundle.getString("frmEditCurve.btLoadCurve.toolTipText"));
 		btLoadCurve.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -685,23 +648,25 @@ public class frmEditCurve extends javax.swing.JDialog {
 		});
 		ToolBarAction.add(btLoadCurve);
 
-		//-- Edit curve
+		// -- Edit curve
 		btEditCurve = new javax.swing.JButton();
-		btEditCurve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chart_curve_edit.png")));
+		btEditCurve.setIcon(
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chart_curve_edit.png")));
 		btEditCurve.setToolTipText(bundle.getString("frmEditCurve.btEditCurve.toolTipText"));
 		btEditCurve.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				TablePoints.setRowSelectionInterval(0, 0);
 				bEditMode = true;
-			    ChangeEditStatus();
-			    Old_Paramfile = Paramfile;
+				ChangeEditStatus();
+				Old_Paramfile = Paramfile;
 			}
 		});
 		ToolBarAction.add(btEditCurve);
-		
-		//-- Add curve
+
+		// -- Add curve
 		btAddCurve = new javax.swing.JButton();
-		btAddCurve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chart_curve_add.png")));
+		btAddCurve.setIcon(
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chart_curve_add.png")));
 		btAddCurve.setToolTipText(bundle.getString("frmEditCurve.btAddCurve.toolTipText"));
 		btAddCurve.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -709,10 +674,11 @@ public class frmEditCurve extends javax.swing.JDialog {
 			}
 		});
 		ToolBarAction.add(btAddCurve);
-		
-		//-- Duplicate curve
+
+		// -- Duplicate curve
 		btDuplicateCurve = new javax.swing.JButton();
-		btDuplicateCurve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chart_curve_duplicate.png")));
+		btDuplicateCurve.setIcon(new javax.swing.ImageIcon(
+				getClass().getResource("/course_generator/images/chart_curve_duplicate.png")));
 		btDuplicateCurve.setToolTipText(bundle.getString("frmEditCurve.btDuplicateCurve.toolTipText"));
 		btDuplicateCurve.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -720,10 +686,11 @@ public class frmEditCurve extends javax.swing.JDialog {
 			}
 		});
 		ToolBarAction.add(btDuplicateCurve);
-		
-		//-- Delete curve
+
+		// -- Delete curve
 		btDeleteCurve = new javax.swing.JButton();
-		btDeleteCurve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chart_curve_delete.png")));
+		btDeleteCurve.setIcon(
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chart_curve_delete.png")));
 		btDeleteCurve.setToolTipText(bundle.getString("frmEditCurve.btDeleteCurve.toolTipText"));
 		btDeleteCurve.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -732,7 +699,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 		});
 		ToolBarAction.add(btDeleteCurve);
 	}
-
 
 
 	/**
@@ -746,7 +712,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		btSaveEdit.setEnabled(bEditMode);
 		btCancelEdit.setEnabled(bEditMode);
 		TablePoints.setEnabled(bEditMode);
-		
+
 		ListCurves.setEnabled(!bEditMode);
 		btLoadCurve.setEnabled(!bEditMode);
 		btEditCurve.setEnabled(!bEditMode);
@@ -756,6 +722,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		btOk.setEnabled(!bEditMode);
 	}
 
+
 	/**
 	 * Refresh the table content
 	 */
@@ -763,31 +730,30 @@ public class frmEditCurve extends javax.swing.JDialog {
 		tablemodel.fireTableDataChanged();
 	}
 
+
 	/**
-	 * Duplicate the selected curve
-	 * Its new name is requested
+	 * Duplicate the selected curve Its new name is requested
 	 */
 	private void DuplicateCurve() {
 		if (!bEditMode) {
 			Old_Paramfile = Paramfile;
-			
-			//-- Configuration of the panel
-			JPanel panel = new JPanel(new GridLayout(0,1));
+
+			// -- Configuration of the panel
+			JPanel panel = new JPanel(new GridLayout(0, 1));
 			panel.add(new JLabel(bundle.getString("frmEditCurve.DuplicatePanel.name.text")));
-			JTextField tfName = new JTextField(""); 
+			JTextField tfName = new JTextField("");
 			panel.add(tfName);
-			int result=JOptionPane.showConfirmDialog(this, panel,bundle.getString("frmEditCurve.DuplicatePanel.title"),JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-			if ((result==JOptionPane.OK_OPTION) && (!tfName.getText().isEmpty())) {
-				if (Utils.FileExist(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/" + tfName.getText() + ".par")) {
+			int result = JOptionPane.showConfirmDialog(this, panel,
+					bundle.getString("frmEditCurve.DuplicatePanel.title"), JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.PLAIN_MESSAGE);
+			if ((result == JOptionPane.OK_OPTION) && (!tfName.getText().isEmpty())) {
+				if (Utils.FileExist(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + tfName.getText() + ".par")) {
 					JOptionPane.showMessageDialog(this, bundle.getString("frmEditCurve.DuplicatePanel.fileexist"));
 					return;
 				}
 				param.name = tfName.getText();
 				Paramfile = param.name;
-				param.SaveCurve(
-						Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" +
-								param.name + ".par", 
-						settings.Unit);
+				param.SaveCurve(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + param.name + ".par", settings.Unit);
 				ChangeEditStatus();
 				RefreshCurveList();
 				RefreshView();
@@ -795,69 +761,73 @@ public class frmEditCurve extends javax.swing.JDialog {
 		}
 	}
 
+
 	/**
 	 * Delete the selected curve
 	 */
 	protected void DeleteCurve() {
 		if (!bEditMode) {
-			int index=ListCurves.getSelectedIndex();
-	    	if (index>=0) {
-	          String s = Paramfile=(String)model.getElementAt(index);
-	          if (s.toUpperCase()!="DEFAULT")
-	          {
-	  			Object[] options = { " " + bundle.getString("frmEditCurve.DeleteYes") + " ",
-						" " + bundle.getString("frmEditCurve.DeleteNo") + " " };
-				int ret = JOptionPane.showOptionDialog(this, bundle.getString("frmEditCurve.DeleteCurveMessage"),
-						bundle.getString("frmEditCurve.DeleteCurveTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
-						null, options, options[1]);
+			int index = ListCurves.getSelectedIndex();
+			if (index >= 0) {
+				String s = Paramfile = (String) model.getElementAt(index);
+				if (s.toUpperCase() != "DEFAULT") {
+					Object[] options = { " " + bundle.getString("frmEditCurve.DeleteYes") + " ",
+							" " + bundle.getString("frmEditCurve.DeleteNo") + " " };
+					int ret = JOptionPane.showOptionDialog(this, bundle.getString("frmEditCurve.DeleteCurveMessage"),
+							bundle.getString("frmEditCurve.DeleteCurveTitle"), JOptionPane.YES_NO_OPTION,
+							JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
-				if (ret == JOptionPane.YES_OPTION) {
-					File f = new File(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/" + s + ".par");
-					f.delete();
-					LoadCurve(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/default.par");
-					Paramfile = "Default";
-					RefreshView();
-					RefreshCurveList();
-	            }
-	          }
-	        }
+					if (ret == JOptionPane.YES_OPTION) {
+						File f = new File(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + s + ".par");
+						f.delete();
+						LoadCurve(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/default.par");
+						Paramfile = "Default";
+						RefreshView();
+						RefreshCurveList();
+					}
+				}
+			}
 		}
 	}
+
 
 	/**
 	 * Add a new curve to the curve list
 	 */
 	protected void AddCurve() {
 		if (!bEditMode) {
-	        
-			JPanel panel = new JPanel(new GridLayout(0,1));
+
+			JPanel panel = new JPanel(new GridLayout(0, 1));
 			panel.add(new JLabel(bundle.getString("frmEditCurve.AddCurvePanel.name.text")));
-			JTextField tfName = new JTextField(""); 
+			JTextField tfName = new JTextField("");
 			panel.add(tfName);
-			int result=JOptionPane.showConfirmDialog(this, panel,bundle.getString("frmEditCurve.AddCurvePanel.title"),JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-			if ((result==JOptionPane.OK_OPTION) && (!tfName.getText().isEmpty())) {
-				if (Utils.FileExist(Utils.GetHomeDir() + "/"+CgConst.CG_DIR+"/" + tfName.getText() + ".par")) {
+			int result = JOptionPane.showConfirmDialog(this, panel,
+					bundle.getString("frmEditCurve.AddCurvePanel.title"), JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.PLAIN_MESSAGE);
+			if ((result == JOptionPane.OK_OPTION) && (!tfName.getText().isEmpty())) {
+				if (Utils.FileExist(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + tfName.getText() + ".par")) {
 					JOptionPane.showMessageDialog(this, bundle.getString("frmEditCurve.AddCurvePanelPanel.fileexist"));
 					return;
 				}
-				
-				//-- Add the 2 extrem points to the list and sort the list (not really necessary...)
+
+				// -- Add the 2 extrem points to the list and sort the list (not really
+				// necessary...)
 				param = new ParamData();
 				param.name = tfName.getText();
-				param.data.add(new CgParam(-50.0,0));
-				param.data.add(new CgParam(50.0,0));
+				param.data.add(new CgParam(-50.0, 0));
+				param.data.add(new CgParam(50.0, 0));
 				Collections.sort(param.data);
 
-				//-- Update
+				// -- Update
 				tablemodel.setParam(param);
-				
+
 				Old_Paramfile = Paramfile;
 				Paramfile = param.name;
 
 				bEditMode = true;
 				ChangeEditStatus();
 				RefreshView();
-	        }
+			}
 		}
 	}
 

@@ -28,49 +28,52 @@ import javax.swing.table.TableCellRenderer;
  * @author pierre.delore
  */
 public class MainHeaderRenderer implements TableCellRenderer {
-    private final JLabel lbl;
-    private final TableCellRenderer wrappedRenderer;
-    private final String tooltips[];
-    
-    public MainHeaderRenderer(TableCellRenderer wrappedRenderer) {
-        if (!(wrappedRenderer instanceof JLabel)) {
-            throw new IllegalArgumentException("The supplied renderer must inherit from JLabel");
-        }
+	private final JLabel lbl;
+	private final TableCellRenderer wrappedRenderer;
+	private final String tooltips[];
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
-    	tooltips = new String[16];
-		tooltips[0]=bundle.getString("frmMain.HeaderNum.tooltips");
-		tooltips[1]=bundle.getString("frmMain.HeaderLat.tooltips");
-		tooltips[2]=bundle.getString("frmMain.HeaderLon.tooltips");
-		tooltips[3]=bundle.getString("frmMain.HeaderElev.tooltips");
-		tooltips[4]=bundle.getString("frmMain.HeaderTag.tooltips");
-		tooltips[5]=bundle.getString("frmMain.HeaderDist.tooltips");
-		tooltips[6]=bundle.getString("frmMain.HeaderTotal.tooltips");
-		tooltips[7]=bundle.getString("frmMain.HeaderDiff.tooltips");
-		tooltips[8]=bundle.getString("frmMain.HeaderCoeff.tooltips");
-		tooltips[9]=bundle.getString("frmMain.HeaderRecovery.tooltips");
-		tooltips[10]=bundle.getString("frmMain.HeaderTime.tooltips");
-		tooltips[11]=bundle.getString("frmMain.HeaderTimeLimit.tooltips");
-		tooltips[12]=bundle.getString("frmMain.HeaderHour.tooltips");
-		tooltips[13]=bundle.getString("frmMain.HeaderStation.tooltips");
-		tooltips[14]=bundle.getString("frmMain.HeaderName.tooltips");
-		tooltips[15]=bundle.getString("frmMain.HeaderComment.tooltips");
-        
-        this.wrappedRenderer = wrappedRenderer;
-        this.lbl = (JLabel) wrappedRenderer;
-    }
-      
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int col) {
-        if (!(wrappedRenderer instanceof JLabel)) {
-            throw new IllegalArgumentException("The supplied renderer must inherit from JLabel");
-        }
-        wrappedRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
-        lbl.setHorizontalAlignment(JLabel.CENTER);
-        
-        lbl.setToolTipText(tooltips[col]);
-        
-        return lbl;        
-    }    
-    
+
+	public MainHeaderRenderer(TableCellRenderer wrappedRenderer) {
+		if (!(wrappedRenderer instanceof JLabel)) {
+			throw new IllegalArgumentException("The supplied renderer must inherit from JLabel");
+		}
+
+		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		tooltips = new String[16];
+		tooltips[0] = bundle.getString("frmMain.HeaderNum.tooltips");
+		tooltips[1] = bundle.getString("frmMain.HeaderLat.tooltips");
+		tooltips[2] = bundle.getString("frmMain.HeaderLon.tooltips");
+		tooltips[3] = bundle.getString("frmMain.HeaderElev.tooltips");
+		tooltips[4] = bundle.getString("frmMain.HeaderTag.tooltips");
+		tooltips[5] = bundle.getString("frmMain.HeaderDist.tooltips");
+		tooltips[6] = bundle.getString("frmMain.HeaderTotal.tooltips");
+		tooltips[7] = bundle.getString("frmMain.HeaderDiff.tooltips");
+		tooltips[8] = bundle.getString("frmMain.HeaderCoeff.tooltips");
+		tooltips[9] = bundle.getString("frmMain.HeaderRecovery.tooltips");
+		tooltips[10] = bundle.getString("frmMain.HeaderTime.tooltips");
+		tooltips[11] = bundle.getString("frmMain.HeaderTimeLimit.tooltips");
+		tooltips[12] = bundle.getString("frmMain.HeaderHour.tooltips");
+		tooltips[13] = bundle.getString("frmMain.HeaderStation.tooltips");
+		tooltips[14] = bundle.getString("frmMain.HeaderName.tooltips");
+		tooltips[15] = bundle.getString("frmMain.HeaderComment.tooltips");
+
+		this.wrappedRenderer = wrappedRenderer;
+		this.lbl = (JLabel) wrappedRenderer;
+	}
+
+
+	@Override
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+			int row, int col) {
+		if (!(wrappedRenderer instanceof JLabel)) {
+			throw new IllegalArgumentException("The supplied renderer must inherit from JLabel");
+		}
+		wrappedRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, col);
+		lbl.setHorizontalAlignment(JLabel.CENTER);
+
+		lbl.setToolTipText(tooltips[col]);
+
+		return lbl;
+	}
+
 }

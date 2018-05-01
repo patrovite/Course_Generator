@@ -59,8 +59,9 @@ import course_generator.settings.CgSettings;
  * @author pierre.delore
  */
 public class Utils {
-	
+
 	public static final String htmlDocFile = "cg_doc_4.00.html";
+
 
 	/**
 	 * Display a load dialog
@@ -184,49 +185,49 @@ public class Utils {
 		pos = 0;
 		while ((pos < s1.length()) && (ok) && (!error)) {
 			switch (step) {
-				case 0: { // '+' ou '-'
-					if (s1.charAt(pos) == '+') {
-						str = str + s1.charAt(pos);
-						pos++;
-					} else if (s1.charAt(pos) == '-') {
-						str = str + s1.charAt(pos);
-						pos++;
-					}
-					step = 1;
-					break;
-				} // Case 0
+			case 0: { // '+' ou '-'
+				if (s1.charAt(pos) == '+') {
+					str = str + s1.charAt(pos);
+					pos++;
+				} else if (s1.charAt(pos) == '-') {
+					str = str + s1.charAt(pos);
+					pos++;
+				}
+				step = 1;
+				break;
+			} // Case 0
 
-				case 1: { // Digit?
-					if (Character.isDigit(s1.charAt(pos))) {
-						str = str + s1.charAt(pos);
+			case 1: { // Digit?
+				if (Character.isDigit(s1.charAt(pos))) {
+					str = str + s1.charAt(pos);
+					pos++;
+				} else { // Separator?
+					if ((s1.charAt(pos) == ',') || (s1.charAt(pos) == '.')) {
+						str = str + decimalseparator;
 						pos++;
-					} else { // Separator?
-						if ((s1.charAt(pos) == ',') || (s1.charAt(pos) == '.')) {
-							str = str + decimalseparator;
-							pos++;
-							step = 2;
-						} else {
-							error = true;
-							// step = 10;
-						}
-					}
-					break;
-				} // Case 1
-
-				case 2: { // Digit?
-					if (Character.isDigit(s1.charAt(pos))) {
-						str = str + s1.charAt(pos);
-						pos++;
+						step = 2;
 					} else {
 						error = true;
+						// step = 10;
 					}
-					break;
-				} // Case 2
-					// case 10: { //Error
-					// error=true;
-					// ok=false;
-					// break;
-					// }
+				}
+				break;
+			} // Case 1
+
+			case 2: { // Digit?
+				if (Character.isDigit(s1.charAt(pos))) {
+					str = str + s1.charAt(pos);
+					pos++;
+				} else {
+					error = true;
+				}
+				break;
+			} // Case 2
+				// case 10: { //Error
+				// error=true;
+				// ok=false;
+				// break;
+				// }
 
 			} // Case
 		} // While
@@ -373,142 +374,157 @@ public class Utils {
 		return m * 1.609344;
 	}
 
+
 	/**
 	 * Convert °C to °F
+	 * 
 	 * @param c
-	 * 	Temperature in °C
-	 * @return
-	 * 	Temperature in °F
+	 *            Temperature in °C
+	 * @return Temperature in °F
 	 */
 	public static double C2F(double c) {
-		return c*9/5+32;
+		return c * 9 / 5 + 32;
 	}
-	
+
+
 	/**
 	 * Convert °F to °C
+	 * 
 	 * @param f
-	 * 	Temperature in °F
-	 * @return
-	 * 	Temperature in °C
+	 *            Temperature in °F
+	 * @return Temperature in °C
 	 */
 	public static double F2C(double f) {
-		return (f-32)*5/9;
+		return (f - 32) * 5 / 9;
 	}
-	
+
+
 	/**
 	 * Return the speed unit as string (km/h, miles/h, min/km or min/mile)
+	 * 
 	 * @param unit
-	 * 	Unit
+	 *            Unit
 	 * @param pace
-	 *  if "true" the speed type is pace (min/km or min/mile) otherwise it's a speed (km/h or miles/h)
-	 * @return
-	 * 	String with the unit
+	 *            if "true" the speed type is pace (min/km or min/mile) otherwise
+	 *            it's a speed (km/h or miles/h)
+	 * @return String with the unit
 	 */
 	public static String uSpeed2String(int unit, boolean pace) {
 		if (!pace) {
 			switch (unit) {
-				case CgConst.UNIT_METER:
-					return "km/h";
-				case CgConst.UNIT_MILES_FEET:
-					return "miles/h";
-				default:
-					return "km/h";
+			case CgConst.UNIT_METER:
+				return "km/h";
+			case CgConst.UNIT_MILES_FEET:
+				return "miles/h";
+			default:
+				return "km/h";
+			}
+		} else {
+			switch (unit) {
+			case CgConst.UNIT_METER:
+				return "min/km";
+			case CgConst.UNIT_MILES_FEET:
+				return "min/mile";
+			default:
+				return "min/km";
 			}
 		}
-		else {
-			switch (unit) {
-				case CgConst.UNIT_METER:
-					return "min/km";
-				case CgConst.UNIT_MILES_FEET:
-					return "min/mile";
-				default:
-					return "min/km";
-			}			
-		}
 	}
+
 
 	/**
 	 * Return the (long) distance unit as string (km or miles)
+	 * 
 	 * @param unit
-	 * 	Unit
-	 * @return
-	 * 	String with the unit
+	 *            Unit
+	 * @return String with the unit
 	 */
 	public static String uLDist2String(int unit) {
 		switch (unit) {
-			case CgConst.UNIT_METER:
-				return "km";
-			case CgConst.UNIT_MILES_FEET:
-				return "miles";
-			default:
-				return "km";
+		case CgConst.UNIT_METER:
+			return "km";
+		case CgConst.UNIT_MILES_FEET:
+			return "miles";
+		default:
+			return "km";
 		}
 	}
+
 
 	/**
 	 * Return the elevation unit as string (m or feet)
+	 * 
 	 * @param unit
-	 * 	Unit
-	 * @return
-	 * 	String with the unit
+	 *            Unit
+	 * @return String with the unit
 	 */
 	public static String uElev2String(int unit) {
 		switch (unit) {
-			case CgConst.UNIT_METER:
-				return "m";
-			case CgConst.UNIT_MILES_FEET:
-				return "feet";
-			default:
-				return "m";
+		case CgConst.UNIT_METER:
+			return "m";
+		case CgConst.UNIT_MILES_FEET:
+			return "feet";
+		default:
+			return "m";
 		}
 	}
 
-	
+
 	/**
 	 * Calculate the pace from a speed
-	 * @param speed Speed in km/h or miles/h
+	 * 
+	 * @param speed
+	 *            Speed in km/h or miles/h
 	 * @return pace in min/km or min/mile (8.30min/mile =>8.3)
 	 */
 	public static double Speed2Pace(double speed) {
-		if (speed==0.0) return 0.0;
-		
-		double p=60.0/speed;
-		double min=(long) p;
-		double sec=(long)((p-min)*60);
-		return min+(sec/100);
+		if (speed == 0.0)
+			return 0.0;
+
+		double p = 60.0 / speed;
+		double min = (long) p;
+		double sec = (long) ((p - min) * 60);
+		return min + (sec / 100);
 	}
+
 
 	/**
 	 * Calculate the pace from a speed and return the result as a string
-	 * @param speed Speed in km/h or miles/h
+	 * 
+	 * @param speed
+	 *            Speed in km/h or miles/h
 	 * @return pace as string in min/km or min/mile (8.30min/mile =>"8.3")
 	 */
 	public static String Speed2PaceString(double speed) {
-		if (speed==0.0) return "0.0";
-		
-		double p=60.0/speed;
-		double min=(long) p;
-		double sec=(p-min)*60;
-		return String.format("%1.0f.%02.0f", min,sec);
+		if (speed == 0.0)
+			return "0.0";
+
+		double p = 60.0 / speed;
+		double min = (long) p;
+		double sec = (p - min) * 60;
+		return String.format("%1.0f.%02.0f", min, sec);
 	}
-	
-	
+
+
 	/**
 	 * Calculate the speed from a pace
-	 * @param pace Pace in min/km or min/mile (8.30min/mile =>8.3)
-	 * @return speed in km/h or miles/h 
+	 * 
+	 * @param pace
+	 *            Pace in min/km or min/mile (8.30min/mile =>8.3)
+	 * @return speed in km/h or miles/h
 	 */
 	public static double Pace2Speed(double pace) {
-		if (pace==0.0) return 0.0;
-		
-		double min=(long) pace;
-		double sec60=pace-min;
-		double sec100=sec60/0.6;
+		if (pace == 0.0)
+			return 0.0;
 
-		return 60/(min+sec100);
+		double min = (long) pace;
+		double sec60 = pace - min;
+		double sec100 = sec60 / 0.6;
+
+		return 60 / (min + sec100);
 	}
-	
-	
+
+
 	/**
 	 * Convert the seconds in string. Format hh:mm:ss
 	 * 
@@ -557,7 +573,7 @@ public class Utils {
 	public static double CalcDistance(double lat1, double lon1, double lat2, double lon2) {
 		double a, c, dDistance, dLat1InRad, dLong1InRad, dLat2InRad, dLong2InRad, dLongitude, dLatitude;
 
-		double kEarthRadiusKms = 6371; //6378.14; // 6376.5
+		double kEarthRadiusKms = 6371; // 6378.14; // 6376.5
 
 		dDistance = 0; // Double.MinValue
 		dLat1InRad = lat1 * (Math.PI / 180.0);
@@ -582,7 +598,6 @@ public class Utils {
 		return dDistance * 1000.0;
 	}
 
-	
 	public static class CalcLineResult {
 		public double a, b;
 		/*
@@ -740,6 +755,7 @@ public class Utils {
 		return System.getProperty("user.dir");
 	}
 
+
 	/**
 	 * Return the home directory path. Cross platform
 	 * 
@@ -843,99 +859,99 @@ public class Utils {
 
 		while (step != 100) {
 			switch (step) {
-				// Add the size
-				case 0: {
-					if (ps + width < text.length()) {
-						pe = ps + width;
-						step = 1;
-					} else {
-						pe = text.length() - 1;
-						step = 3;
-					}
-					break;
+			// Add the size
+			case 0: {
+				if (ps + width < text.length()) {
+					pe = ps + width;
+					step = 1;
+				} else {
+					pe = text.length() - 1;
+					step = 3;
 				}
+				break;
+			}
 
-				// Search the first space
-				case 1: {
-					pt = pe;
-					while ((text.charAt(pe) != ' ') && (pe > 0) && (pe > ps)) {
-						pe--;
-					}
-					if ((pe == ps) || (pe == 0)) {
-						// Search before the space because size overflow
-						pe = pt;
-						step = 5;
-					} else {
-						step = 2;
-					}
-					break;
+			// Search the first space
+			case 1: {
+				pt = pe;
+				while ((text.charAt(pe) != ' ') && (pe > 0) && (pe > ps)) {
+					pe--;
 				}
-
-				// Backward search of the first "none-space"
-				case 2: {
-					pt = pe;
-					while ((text.charAt(pe) == ' ') && (pe > 0) && (pe > ps)) {
-						pe--;
-					}
-					if ((pe == ps) || (pe == 0)) {
-						// Forward search of the first search
-						pe = pt;
-						step = 99;
-					} else {
-						step = 3;
-					}
-					break;
+				if ((pe == ps) || (pe == 0)) {
+					// Search before the space because size overflow
+					pe = pt;
+					step = 5;
+				} else {
+					step = 2;
 				}
+				break;
+			}
 
-				// Copy of ps..pe to the result string
-				case 3: {
-					for (int i = ps; i <= pe; i++) {
-						r = r + text.charAt(i);
-					}
+			// Backward search of the first "none-space"
+			case 2: {
+				pt = pe;
+				while ((text.charAt(pe) == ' ') && (pe > 0) && (pe > ps)) {
+					pe--;
+				}
+				if ((pe == ps) || (pe == 0)) {
+					// Forward search of the first search
+					pe = pt;
+					step = 99;
+				} else {
+					step = 3;
+				}
+				break;
+			}
+
+			// Copy of ps..pe to the result string
+			case 3: {
+				for (int i = ps; i <= pe; i++) {
+					r = r + text.charAt(i);
+				}
+				pe++;
+				if (pe >= text.length()) {
+					step = 99;
+				} else {
+					r = r + '\n';
+					ps = pe;
+					step = 4;
+				}
+				break;
+			}
+
+			// Forward search of the first "none-space"
+			case 4: {
+				while ((text.charAt(ps) == ' ') && (ps < text.length())) {
+					ps++;
+				}
+				if (ps > text.length()) {
+					step = 99;
+				} else {
+					pe = ps;
+					step = 0;
+				}
+				break;
+			}
+
+			// Forward search of the first space because size overflow
+			case 5: {
+				while ((text.charAt(pe) != ' ') && (pe < text.length() - 1)) {
 					pe++;
-					if (pe >= text.length()) {
-						step = 99;
-					} else {
-						r = r + '\n';
-						ps = pe;
-						step = 4;
-					}
-					break;
 				}
+				if (pe >= text.length()) {
+					step = 99;
+				} else {
+					// pe = ps;
+					step = 3;
+				}
+				break;
+			}
 
-				// Forward search of the first "none-space"
-				case 4: {
-					while ((text.charAt(ps) == ' ') && (ps < text.length())) {
-						ps++;
-					}
-					if (ps > text.length()) {
-						step = 99;
-					} else {
-						pe = ps;
-						step = 0;
-					}
-					break;
-				}
-
-				// Forward search of the first space because size overflow
-				case 5: {
-					while ((text.charAt(pe) != ' ') && (pe < text.length() - 1)) {
-						pe++;
-					}
-					if (pe >= text.length()) {
-						step = 99;
-					} else {
-						// pe = ps;
-						step = 3;
-					}
-					break;
-				}
-
-				case 99: // End
-				{
-					step = 100;
-					break;
-				}
+			case 99: // End
+			{
+				step = 100;
+				break;
+			}
 
 			}
 
@@ -946,26 +962,12 @@ public class Utils {
 
 	public static String GenLabel(String s, CgData r, TrackData cd, CgSettings settings) {
 		/*
-		 * %N:Name 
-		 * %A:Elevation 
-		 * %D:Distance from the start 
-		 * %T:Time (hh:mm)
-		 * %Ts:Time (hh:mm) 
-		 * %Tl:Time (hh:mm:ss) 
-		 * %H: Hour (ddd hh:mm) 
-		 * %h: Hour (hh:mm) 
-		 * %hs:Hour (hh:mm) 
-		 * %hl:Hour (hh:mm:s) 
-		 * %B :Time limit (hh:mm) -> Time from the start 
-		 * %b :Time limit (hh:mm) -> Limit hour 
-		 * %C :Comment
-		 * %c :Comment from the main data 
-		 * %L :Carriage return 
-		 * %R :Station time (hh:mm) 
-		 * %Rs:Station time (hh:mm) 
-		 * %Rl:Station time (Duration) (hh:mm:ss) 
-		 * %+ :Sum ascend 
-		 * %- :Sum descend
+		 * %N:Name %A:Elevation %D:Distance from the start %T:Time (hh:mm) %Ts:Time
+		 * (hh:mm) %Tl:Time (hh:mm:ss) %H: Hour (ddd hh:mm) %h: Hour (hh:mm) %hs:Hour
+		 * (hh:mm) %hl:Hour (hh:mm:s) %B :Time limit (hh:mm) -> Time from the start %b
+		 * :Time limit (hh:mm) -> Limit hour %C :Comment %c :Comment from the main data
+		 * %L :Carriage return %R :Station time (hh:mm) %Rs:Station time (hh:mm)
+		 * %Rl:Station time (Duration) (hh:mm:ss) %+ :Sum ascend %- :Sum descend
 		 */
 		int i = 0;
 		int step = 0;
@@ -978,168 +980,168 @@ public class Utils {
 
 			for (i = 0; i < s.length(); i++) {
 				switch (step) {
-					case 0: {
-						if (s.charAt(i) == '%') {
-							step = 1;
+				case 0: {
+					if (s.charAt(i) == '%') {
+						step = 1;
+					} else {
+						sr = sr + s.charAt(i);
+					}
+					break;
+				}
+				case 1: {
+					switch (s.charAt(i)) {
+					// %N:Name
+					case 'N':
+						sr = sr + r.getName();
+						step = 0;
+						break;
+
+					// A:Elevation
+					case 'A':
+						sr = sr + String.format("%.0f", r.getElevation(settings.Unit));
+						step = 0;
+						break;
+
+					// %D:Distance from the start
+					case 'D':
+						sr = sr + String.format("%.1f", r.getTotal(settings.Unit) / 1000.0);
+						step = 0;
+						break;
+
+					// %T:Time (hh:mm)
+					case 'T':
+						step = 3;
+						break;
+
+					// %H:Hour (ddd hh:mm)
+					case 'H':
+						sr = sr + r.getHour().toString("E HH:mm");
+						step = 0;
+						break;
+
+					// %h:Time (hh:mm)
+					case 'h':
+						step = 2;
+						break;
+
+					// %R:Station time (hh:mm:ss)
+					case 'R':
+						step = 4;
+						break;
+
+					// %B:Time limit (hh:mm) -> Time from the start
+					case 'B':
+						sr = sr + Utils.Second2DateString_HM(r.getTimeLimit());
+						step = 0;
+						break;
+
+					// %b:Time limit (hh:mm) -> Limit hour
+					case 'b':
+						if (cd != null) {
+							dt = cd.StartTime.plusSeconds(r.getTimeLimit());
+							sr = sr + dt.toString("HH:mm");
 						} else {
-							sr = sr + s.charAt(i);
+							sr = sr + "00:00";
 						}
+						step = 0;
+						break;
+
+					// %C:Comment from the MRB data
+					case 'C':
+						sr = sr + r.CommentMiniRoadbook;
+						step = 0;
+						break;
+
+					// %c:Comment from the main data
+					case 'c':
+						sr = sr + r.getComment();
+						step = 0;
+						break;
+
+					// %+: Sum ascend
+					case '+':
+						sr = sr + String.format("%.0f", res.cp);
+						step = 0;
+						break;
+
+					// %-: Sum descend
+					case '-':
+						sr = sr + String.format("%.0f", res.cm);
+						step = 0;
+						break;
+
+					// %L: Carriage return
+					case 'L':
+						sr = sr + "\n";
+						step = 0;
+						break;
+
+					default:
+						sr = sr + s.charAt(i);
 						break;
 					}
-					case 1: {
-						switch (s.charAt(i)) {
-							// %N:Name
-							case 'N':
-								sr = sr + r.getName();
-								step = 0;
-								break;
+					break;
+				}
 
-							// A:Elevation
-							case 'A':
-								sr = sr + String.format("%.0f", r.getElevation(settings.Unit));
-								step = 0;
-								break;
-
-							// %D:Distance from the start
-							case 'D':
-								sr = sr + String.format("%.1f", r.getTotal(settings.Unit) / 1000.0);
-								step = 0;
-								break;
-
-							// %T:Time (hh:mm)
-							case 'T':
-								step = 3;
-								break;
-
-							// %H:Hour (ddd hh:mm)
-							case 'H':
-								sr = sr + r.getHour().toString("E HH:mm");
-								step = 0;
-								break;
-
-							// %h:Time (hh:mm)
-							case 'h':
-								step = 2;
-								break;
-
-							// %R:Station time (hh:mm:ss)
-							case 'R':
-								step = 4;
-								break;
-
-							// %B:Time limit (hh:mm) -> Time from the start
-							case 'B':
-								sr = sr + Utils.Second2DateString_HM(r.getTimeLimit());
-								step = 0;
-								break;
-
-							// %b:Time limit (hh:mm) -> Limit hour
-							case 'b':
-								if (cd != null) {
-									dt = cd.StartTime.plusSeconds(r.getTimeLimit());
-									sr = sr + dt.toString("HH:mm");
-								} else {
-									sr = sr + "00:00";
-								}
-								step = 0;
-								break;
-
-							// %C:Comment from the MRB data
-							case 'C':
-								sr = sr + r.CommentMiniRoadbook;
-								step = 0;
-								break;
-
-							// %c:Comment from the main data
-							case 'c':
-								sr = sr + r.getComment();
-								step = 0;
-								break;
-
-							// %+: Sum ascend
-							case '+':
-								sr = sr + String.format("%.0f", res.cp);
-								step = 0;
-								break;
-
-							// %-: Sum descend
-							case '-':
-								sr = sr + String.format("%.0f", res.cm);
-								step = 0;
-								break;
-
-							// %L: Carriage return
-							case 'L':
-								sr = sr + "\n";
-								step = 0;
-								break;
-
-							default:
-								sr = sr + s.charAt(i);
-								break;
-						}
+				case 2: // %h
+				{
+					switch (s.charAt(i)) {
+					case 's':
+						sr = sr + r.getHour().toString("HH:mm");
+						step = 0;
+						break;
+					case 'l':
+						sr = sr + r.getHour().toString("HH:mm:ss");
+						step = 0;
+						break;
+					default:
+						sr = sr + r.getHour().toString("HH:mm");
+						sr = sr + s.charAt(i);
+						step = 0;
 						break;
 					}
+					break;
+				}
 
-					case 2: // %h
-					{
-						switch (s.charAt(i)) {
-							case 's':
-								sr = sr + r.getHour().toString("HH:mm");
-								step = 0;
-								break;
-							case 'l':
-								sr = sr + r.getHour().toString("HH:mm:ss");
-								step = 0;
-								break;
-							default:
-								sr = sr + r.getHour().toString("HH:mm");
-								sr = sr + s.charAt(i);
-								step = 0;
-								break;
-						}
+				case 3: // %T
+				{
+					switch (s.charAt(i)) {
+					case 's':
+						sr = sr + Utils.Second2DateString_HM(r.getTime());
+						step = 0;
+						break;
+					case 'l':
+						sr = sr + Utils.Second2DateString(r.getTime());
+						step = 0;
+						break;
+					default:
+						sr = sr + Utils.Second2DateString_HM(r.getTime());
+						sr = sr + s.charAt(i);
+						step = 0;
 						break;
 					}
+					break;
+				}
 
-					case 3: // %T
-					{
-						switch (s.charAt(i)) {
-							case 's':
-								sr = sr + Utils.Second2DateString_HM(r.getTime());
-								step = 0;
-								break;
-							case 'l':
-								sr = sr + Utils.Second2DateString(r.getTime());
-								step = 0;
-								break;
-							default:
-								sr = sr + Utils.Second2DateString_HM(r.getTime());
-								sr = sr + s.charAt(i);
-								step = 0;
-								break;
-						}
+				case 4: // %R
+				{
+					switch (s.charAt(i)) {
+					case 's':
+						sr = sr + Utils.Second2DateString_HM(r.getStation());
+						step = 0;
+						break;
+					case 'l':
+						sr = sr + Utils.Second2DateString(r.getStation());
+						step = 0;
+						break;
+					default:
+						sr = sr + Utils.Second2DateString(r.getStation());
+						sr = sr + s.charAt(i);
+						step = 0;
 						break;
 					}
-
-					case 4: // %R
-					{
-						switch (s.charAt(i)) {
-							case 's':
-								sr = sr + Utils.Second2DateString_HM(r.getStation());
-								step = 0;
-								break;
-							case 'l':
-								sr = sr + Utils.Second2DateString(r.getStation());
-								step = 0;
-								break;
-							default:
-								sr = sr + Utils.Second2DateString(r.getStation());
-								sr = sr + s.charAt(i);
-								step = 0;
-								break;
-						}
-						break;
-					}
+					break;
+				}
 
 				}
 			}
@@ -1168,8 +1170,8 @@ public class Utils {
 	public static String GetFileExtension(String fname) {
 		// String name = file.getName();
 		/*
-		 * try { return fname.substring(fname.lastIndexOf(".") + 1); } catch
-		 * (Exception e) { return ""; }
+		 * try { return fname.substring(fname.lastIndexOf(".") + 1); } catch (Exception
+		 * e) { return ""; }
 		 */
 		for (int i = fname.length() - 1; i >= 0; i--) {
 			if ((fname.charAt(i) == '.') && (i != fname.length() - 1)) {
@@ -1235,6 +1237,7 @@ public class Utils {
 		return new File(fname).isFile();
 	}
 
+
 	/**
 	 * Return if a directory exist
 	 * 
@@ -1245,7 +1248,8 @@ public class Utils {
 	public static boolean DirExist(String fname) {
 		return new File(fname).isDirectory();
 	}
-	
+
+
 	/**
 	 * Returns true if the given name is a valid resource name on this operating
 	 * system, and false otherwise.
@@ -1255,16 +1259,16 @@ public class Utils {
 		String[] INVALID_RESOURCE_BASENAMES;
 		String[] INVALID_RESOURCE_FULLNAMES;
 
-		name=name.trim();
-		
+		name = name.trim();
+
 		OsCheck.OSType ostype = OsCheck.getOperatingSystemType();
-		if (ostype==OsCheck.OSType.Windows) {
+		if (ostype == OsCheck.OSType.Windows) {
 			// valid names and characters taken from
 			// http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/naming_a_file.asp
 			INVALID_RESOURCE_CHARACTERS = "\\/:*\"?<>|\0";
-			INVALID_RESOURCE_BASENAMES = new String[] { "aux", "com1", "com2", "com3", "com4",
-					"com5", "com6", "com7", "com8", "com9", "con", "lpt1", "lpt2",
-					"lpt3", "lpt4", "lpt5", "lpt6", "lpt7", "lpt8", "lpt9", "nul", "prn" };
+			INVALID_RESOURCE_BASENAMES = new String[] { "aux", "com1", "com2", "com3", "com4", "com5", "com6", "com7",
+					"com8", "com9", "con", "lpt1", "lpt2", "lpt3", "lpt4", "lpt5", "lpt6", "lpt7", "lpt8", "lpt9",
+					"nul", "prn" };
 			Arrays.sort(INVALID_RESOURCE_BASENAMES);
 			// CLOCK$ may be used if an extension is provided
 			INVALID_RESOURCE_FULLNAMES = new String[] { "clock$" }; //$NON-NLS-1$
@@ -1276,36 +1280,36 @@ public class Utils {
 			INVALID_RESOURCE_BASENAMES = null;
 			INVALID_RESOURCE_FULLNAMES = null;
 		}
-		
+
 		// . and .. have special meaning on all platforms
 		if (name.equals(".") || name.equals("..")) //$NON-NLS-1$ //$NON-NLS-2$
 			return false;
-		
-		for (int i=0; i<INVALID_RESOURCE_CHARACTERS.length(); i++) {
-			if (name.indexOf(INVALID_RESOURCE_CHARACTERS.charAt(i))!=-1) 
+
+		for (int i = 0; i < INVALID_RESOURCE_CHARACTERS.length(); i++) {
+			if (name.indexOf(INVALID_RESOURCE_CHARACTERS.charAt(i)) != -1)
 				return false;
 		}
 
-		if (ostype==OsCheck.OSType.Windows) {
+		if (ostype == OsCheck.OSType.Windows) {
 			// empty names are not valid
 			final int length = name.length();
 			if (length == 0)
 				return false;
-		
+
 			final char lastChar = name.charAt(length - 1);
 			// filenames ending in dot are not valid
 			if (lastChar == '.')
 				return false;
-			
+
 			// file names ending with whitespace are truncated (bug 118997)
 			if (Character.isWhitespace(lastChar))
 				return false;
-			
+
 			int dot = name.indexOf('.');
 			// on windows, filename suffixes are not relevant to name
 			// validity
 			String basename = dot == -1 ? name : name.substring(0, dot);
-					
+
 			if (Arrays.binarySearch(INVALID_RESOURCE_BASENAMES, basename.toLowerCase()) >= 0)
 				return false;
 			return Arrays.binarySearch(INVALID_RESOURCE_FULLNAMES, name.toLowerCase()) < 0;
@@ -1313,127 +1317,111 @@ public class Utils {
 		return true;
 	}
 
-	
+
 	/**
 	 * Return the size of a folder
+	 * 
 	 * @param directory
-	 * @return 
-	 * 	Size of the directory
+	 * @return Size of the directory
 	 */
 	public static long folderSize(File directory) {
-	    long length = 0;
-	    for (File file : directory.listFiles()) {
-	    	if (file==null) return 0;
-	   
-	        if (file.isFile())
-	            length += file.length();
-	        else
-	            length += folderSize(file);
-	    }
-	    return length;
+		long length = 0;
+		for (File file : directory.listFiles()) {
+			if (file == null)
+				return 0;
+
+			if (file.isFile())
+				length += file.length();
+			else
+				length += folderSize(file);
+		}
+		return length;
 	}
-	
+
+
 	public static String humanReadableByteCount(long bytes, boolean si) {
 		int unit = si ? 1000 : 1024;
-		if (bytes<unit) return bytes + " B";
-		int exp = (int) (Math.log(bytes)/Math.log(unit));
-		String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp-1) + (si ? "" : "i");
+		if (bytes < unit)
+			return bytes + " B";
+		int exp = (int) (Math.log(bytes) / Math.log(unit));
+		String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp - 1) + (si ? "" : "i");
 		return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
 	}
-	
-	
+
+
 	/**
 	 * Search and replace all strings in a stringbuilder object
-	 * @param sb 
-	 * 		StringBuilder object
-	 * @param from 
-	 * 		String to search
-	 * @param to 
-	 * 		Replacement string
-	 * @return 
-	 * 		StringBuilder object
+	 * 
+	 * @param sb
+	 *            StringBuilder object
+	 * @param from
+	 *            String to search
+	 * @param to
+	 *            Replacement string
+	 * @return StringBuilder object
 	 */
-	public static StringBuilder sbReplace(StringBuilder sb, String from, String to) { 
+	public static StringBuilder sbReplace(StringBuilder sb, String from, String to) {
 		int position = sb.indexOf(from);
-		while (position != -1)
-	    {
+		while (position != -1) {
 			sb.replace(position, position + from.length(), to);
 			position += to.length(); // Move to the end of the replacement
-	        position = sb.indexOf(from, position);
-	    }
+			position = sb.indexOf(from, position);
+		}
 		return sb;
 	}
-	
-	
+
+
 	public static boolean ExportResource(Object obj, String resourceName, String dst) throws Exception {
-		boolean ok=false;
-		
+		boolean ok = false;
+
 		File file = new File(dst);
 		if (!file.exists()) {
-		     InputStream link = (obj.getClass().getResourceAsStream(resourceName));
-		     Files.copy(link, file.getAbsoluteFile().toPath());
-		     ok=true;
-		     System.out.println(resourceName+" exported to " + dst);
+			InputStream link = (obj.getClass().getResourceAsStream(resourceName));
+			Files.copy(link, file.getAbsoluteFile().toPath());
+			ok = true;
+			System.out.println(resourceName + " exported to " + dst);
 		}
 		return ok;
-		
+
 		/*
-		InputStream stream = null;
-		OutputStream resStreamOut = null;
-		boolean ok=false;
-		String jarFolder;
-		try {
-			stream = obj.getClass().getResourceAsStream(resourceName);
-			if (stream == null) {
-				throw new Exception ("Cannot get resource \"" + resourceName + "\" from jar file");
-			}
-			int readBytes;
-			byte[] buffer = new byte[4096];
-			String s=obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-			System.out.println("resourceName="+resourceName);
-			System.out.println("s="+s);
-			//jarFolder = new File(obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getPath().replace('\\', '/');
-			jarFolder = new File(s).getParentFile().getPath().replace('\\', '/');
-			resStreamOut = new FileOutputStream(dst);
-			while ((readBytes = stream.read(buffer)) >0 ) {
-				resStreamOut.write(buffer, 0, readBytes);
-			}
-			ok=true;
-		} catch (Exception ex) {
-			throw ex;
-		} finally {
-			if (stream!=null) stream.close();
-			if (resStreamOut!=null) resStreamOut.close();
-		}
-		return ok;
-		*/
+		 * InputStream stream = null; OutputStream resStreamOut = null; boolean
+		 * ok=false; String jarFolder; try { stream =
+		 * obj.getClass().getResourceAsStream(resourceName); if (stream == null) { throw
+		 * new Exception ("Cannot get resource \"" + resourceName + "\" from jar file");
+		 * } int readBytes; byte[] buffer = new byte[4096]; String
+		 * s=obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().
+		 * getPath(); System.out.println("resourceName="+resourceName);
+		 * System.out.println("s="+s); //jarFolder = new
+		 * File(obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI
+		 * ().getPath()).getParentFile().getPath().replace('\\', '/'); jarFolder = new
+		 * File(s).getParentFile().getPath().replace('\\', '/'); resStreamOut = new
+		 * FileOutputStream(dst); while ((readBytes = stream.read(buffer)) >0 ) {
+		 * resStreamOut.write(buffer, 0, readBytes); } ok=true; } catch (Exception ex) {
+		 * throw ex; } finally { if (stream!=null) stream.close(); if
+		 * (resStreamOut!=null) resStreamOut.close(); } return ok;
+		 */
 	}
-	
+
+
 	public static boolean OpenHelp(String language) {
 		boolean success = false;
 		Map<String, String> environmentVariables = System.getenv();
-		String helpFolder = 
-				environmentVariables.get("CGInstallFolder");
-		
-		String helpFilePath = helpFolder + "/help/" + language +
-				"/" + language + "_" + htmlDocFile;
+		String helpFolder = environmentVariables.get("CGInstallFolder");
+
+		String helpFilePath = helpFolder + "/help/" + language + "/" + language + "_" + htmlDocFile;
 		File helpFile = new File(helpFilePath);
-		if(helpFile.exists() && !helpFile.isDirectory())
-		{
+		if (helpFile.exists() && !helpFile.isDirectory()) {
 			try {
 				Desktop.getDesktop().browse(helpFile.toURI());
 				success = true;
-			}
-			catch (IOException ex) {
-				CgLog.info("mnuCGHelp : Error when loading : " +
-						helpFilePath + ".");
+			} catch (IOException ex) {
+				CgLog.info("mnuCGHelp : Error when loading : " + helpFilePath + ".");
 				ex.printStackTrace();
 			}
-		}
-		else {
+		} else {
 			CgLog.info("The help file '" + helpFilePath + "' was not found.");
 		}
 		return success;
 	}
-	
+
 } // Class

@@ -122,8 +122,9 @@ public class JPanelStatistics extends JPanel {
 	 * Refresh the statistic tab
 	 */
 	public void refresh() {
-		if (track==null) return;
-		
+		if (track == null)
+			return;
+
 		if (track.data.isEmpty())
 			return;
 
@@ -186,7 +187,7 @@ public class JPanelStatistics extends JPanel {
 		sb = Utils.sbReplace(sb, "@510",
 				String.format("%1.3f " + Utils.uLDist2String(unit), casr.getTotClimbM(unit) / 1000));
 		sb = Utils.sbReplace(sb, "@511",
-				String.format("%1.1f " + Utils.uSpeed2String(unit,settings.isPace), speedResult.getAvrspeed(unit)));
+				String.format("%1.1f " + Utils.uSpeed2String(unit, settings.isPace), speedResult.getAvrspeed(unit)));
 
 		double tmpdbl = (track.getDistRoad(unit) * 100 / track.getTotalDistance(unit));
 		sb = Utils.sbReplace(sb, "@512",
@@ -253,7 +254,8 @@ public class JPanelStatistics extends JPanel {
 		for (int i = 310; i <= 315; i++)
 			sb = Utils.sbReplace(sb, String.format("@%03d", i),
 					String.format("%1.3f " + Utils.uLDist2String(unit),
-							track.StatElevNight[i - 310].getDist(unit) / 1000) + ' ' + String.format("(%1.1f%%)",
+							track.StatElevNight[i - 310].getDist(unit) / 1000) + ' '
+							+ String.format("(%1.1f%%)",
 									track.StatElevNight[i - 310].getDist(unit) / track.getTotalDistance(unit) * 100));
 
 		for (int i = 320; i <= 325; i++) {
@@ -279,11 +281,15 @@ public class JPanelStatistics extends JPanel {
 		sb = Utils.sbReplace(sb, "@421", Utils.Second2DateString(k1));
 
 		/*
-		@900=1000m=3280feet
-		@901=1500m=4921feet
-		@902=2000m=6561feet
-		@903=2500m=8202feet
-		@904=3000m=9842feet
+		 * @900=1000m=3280feet
+		 * 
+		 * @901=1500m=4921feet
+		 * 
+		 * @902=2000m=6561feet
+		 * 
+		 * @903=2500m=8202feet
+		 * 
+		 * @904=3000m=9842feet
 		 */
 		if (unit == CgConst.UNIT_METER) {
 			sb = Utils.sbReplace(sb, "@900", "1000m");
@@ -307,9 +313,9 @@ public class JPanelStatistics extends JPanel {
 
 	private String CalcVMoy(double d, double t, int unit) {
 		if (t != 0) {
-			return String.format("%1.1f " + Utils.uSpeed2String(unit,settings.isPace), d / t * 3.6);
+			return String.format("%1.1f " + Utils.uSpeed2String(unit, settings.isPace), d / t * 3.6);
 		} else
-			return "0.0 " + Utils.uSpeed2String(unit,settings.isPace);
+			return "0.0 " + Utils.uSpeed2String(unit, settings.isPace);
 	}
 
 
@@ -319,8 +325,9 @@ public class JPanelStatistics extends JPanel {
 	private void SaveStat() {
 		String s;
 
-		if (track==null) return;
-		
+		if (track == null)
+			return;
+
 		if (track.data.isEmpty())
 			return;
 
@@ -329,7 +336,7 @@ public class JPanelStatistics extends JPanel {
 
 		if (!s.isEmpty()) {
 			// -- Save the statistics
-//			track.SaveCGX(s, 0, track.data.size() - 1);
+			// track.SaveCGX(s, 0, track.data.size() - 1);
 			try {
 				FileWriter out = new FileWriter(s);
 				out.write(editorStat.getText());

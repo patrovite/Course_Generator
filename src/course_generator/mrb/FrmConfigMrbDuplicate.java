@@ -40,8 +40,7 @@ import javax.swing.KeyStroke;
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
-
-public class FrmConfigMrbDuplicate  extends javax.swing.JDialog {
+public class FrmConfigMrbDuplicate extends javax.swing.JDialog {
 
 	private ResourceBundle bundle;
 	private boolean ok;
@@ -49,13 +48,14 @@ public class FrmConfigMrbDuplicate  extends javax.swing.JDialog {
 	private JPanel panelButtons;
 	private JButton btCancel;
 	private JButton btOk;
-//	private JPanel panelGlobal;
+	// private JPanel panelGlobal;
 	private JCheckBox chkPosition;
 	private JCheckBox chkAlign;
 	private JCheckBox chkFormat;
 	private JCheckBox chkSize;
 	private JCheckBox chkTags;
 	private JPanel panelCheck;
+
 
 	/**
 	 * Creates new form frmSettings
@@ -66,40 +66,41 @@ public class FrmConfigMrbDuplicate  extends javax.swing.JDialog {
 		setModal(true);
 	}
 
+
 	public int showDialog(int config) {
 		this.config = config;
-		
-		chkPosition.setSelected((config & CgConst.MRB_DUP_POS)!=0);
-		chkAlign.setSelected((config & CgConst.MRB_DUP_ALIGN)!=0);
-		chkFormat.setSelected((config & CgConst.MRB_DUP_FORMAT)!=0);
-		chkSize.setSelected((config & CgConst.MRB_DUP_SIZE)!=0);
-		chkTags.setSelected((config & CgConst.MRB_DUP_TAGS)!=0);
-		
-		
+
+		chkPosition.setSelected((config & CgConst.MRB_DUP_POS) != 0);
+		chkAlign.setSelected((config & CgConst.MRB_DUP_ALIGN) != 0);
+		chkFormat.setSelected((config & CgConst.MRB_DUP_FORMAT) != 0);
+		chkSize.setSelected((config & CgConst.MRB_DUP_SIZE) != 0);
+		chkTags.setSelected((config & CgConst.MRB_DUP_TAGS) != 0);
+
 		// End set field
 		ok = false;
-		
-		//-- Show the dialog
+
+		// -- Show the dialog
 		setVisible(true);
 
 		if (ok) {
 			// Copy fields
-			this.config=0;
+			this.config = 0;
 			if (chkPosition.isSelected())
-				this.config=this.config | CgConst.MRB_DUP_POS;
+				this.config = this.config | CgConst.MRB_DUP_POS;
 			if (chkAlign.isSelected())
-				this.config=this.config | CgConst.MRB_DUP_ALIGN;
+				this.config = this.config | CgConst.MRB_DUP_ALIGN;
 			if (chkFormat.isSelected())
-				this.config=this.config | CgConst.MRB_DUP_FORMAT;
+				this.config = this.config | CgConst.MRB_DUP_FORMAT;
 			if (chkSize.isSelected())
-				this.config=this.config | CgConst.MRB_DUP_SIZE;
+				this.config = this.config | CgConst.MRB_DUP_SIZE;
 			if (chkTags.isSelected())
-				this.config=this.config | CgConst.MRB_DUP_TAGS;
-			
+				this.config = this.config | CgConst.MRB_DUP_TAGS;
+
 			return this.config;
 		}
 		return config;
 	}
+
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -133,6 +134,7 @@ public class FrmConfigMrbDuplicate  extends javax.swing.JDialog {
 		return rootPane;
 	}
 
+
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -144,79 +146,52 @@ public class FrmConfigMrbDuplicate  extends javax.swing.JDialog {
 		}
 	}
 
-	
+
 	private void initComponents() {
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setMinimumSize(new Dimension(300,100));
+		setMinimumSize(new Dimension(300, 100));
 		setAlwaysOnTop(true);
 		setResizable(false);
-		
+
 		// -- Layout
 		// ------------------------------------------------------------
 		Container paneGlobal = getContentPane();
 		paneGlobal.setLayout(new GridBagLayout());
 
-		//== panelGlobal
+		// == panelGlobal
 		panelCheck = new JPanel();
 		panelCheck.setLayout(new GridBagLayout());
-		panelCheck.setBorder(BorderFactory.createTitledBorder(bundle.getString("FrmConfigMrbDuplicate.panelCheck.text")));
-		Utils.addComponent(paneGlobal, panelCheck, 
-				0, 0, 
-				1, 1, 
-				1, 1, 
-				10, 10, 0, 10, GridBagConstraints.WEST,
+		panelCheck
+				.setBorder(BorderFactory.createTitledBorder(bundle.getString("FrmConfigMrbDuplicate.panelCheck.text")));
+		Utils.addComponent(paneGlobal, panelCheck, 0, 0, 1, 1, 1, 1, 10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
+
 		chkPosition = new javax.swing.JCheckBox(bundle.getString("FrmConfigMrbDuplicate.chkPosition.text"));
-		Utils.addComponent(panelCheck, chkPosition, 
-				0, 0, 
-				1, 1, 
-				1, 0, 
-				5, 5, 0, 5, GridBagConstraints.WEST,
+		Utils.addComponent(panelCheck, chkPosition, 0, 0, 1, 1, 1, 0, 5, 5, 0, 5, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
+
 		chkAlign = new javax.swing.JCheckBox(bundle.getString("FrmConfigMrbDuplicate.chkAlign.text"));
-		Utils.addComponent(panelCheck, chkAlign, 
-				0, 1, 
-				1, 1, 
-				1, 0, 
-				0, 5, 0, 5, GridBagConstraints.WEST,
+		Utils.addComponent(panelCheck, chkAlign, 0, 1, 1, 1, 1, 0, 0, 5, 0, 5, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
 		chkFormat = new javax.swing.JCheckBox(bundle.getString("FrmConfigMrbDuplicate.chkFormat.text"));
-		Utils.addComponent(panelCheck, chkFormat, 
-				0, 2, 
-				1, 1, 
-				1, 0, 
-				0, 5, 0, 5, GridBagConstraints.WEST,
+		Utils.addComponent(panelCheck, chkFormat, 0, 2, 1, 1, 1, 0, 0, 5, 0, 5, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
 		chkSize = new javax.swing.JCheckBox(bundle.getString("FrmConfigMrbDuplicate.chkSize.text"));
-		Utils.addComponent(panelCheck, chkSize, 
-				0, 3, 
-				1, 1, 
-				1, 0, 
-				0, 5, 0, 5, GridBagConstraints.WEST,
+		Utils.addComponent(panelCheck, chkSize, 0, 3, 1, 1, 1, 0, 0, 5, 0, 5, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
 		chkTags = new javax.swing.JCheckBox(bundle.getString("FrmConfigMrbDuplicate.chkTags.text"));
-		Utils.addComponent(panelCheck, chkTags, 
-				0, 4, 
-				1, 1, 
-				1, 1, 
-				0, 5, 10, 5, GridBagConstraints.WEST,
+		Utils.addComponent(panelCheck, chkTags, 0, 4, 1, 1, 1, 1, 0, 5, 10, 5, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
 		// == BUTTONS
 		// ===========================================================
 		panelButtons = new javax.swing.JPanel();
 		panelButtons.setLayout(new FlowLayout());
-		Utils.addComponent(paneGlobal, panelButtons, 
-				0, 1, 
-				1, 1, 
-				1, 0, 
-				0, 10, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(paneGlobal, panelButtons, 0, 1, 1, 1, 1, 0, 0, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
 		btCancel = new javax.swing.JButton();

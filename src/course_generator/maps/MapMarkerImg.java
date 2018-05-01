@@ -39,90 +39,112 @@ import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 
 public class MapMarkerImg extends MapObjectImpl implements MapMarker {
 
-    Coordinate coord;
-    MapMarker.STYLE markerStyle;
-    Image img;
+	Coordinate coord;
+	MapMarker.STYLE markerStyle;
+	Image img;
 
-    public MapMarkerImg(Coordinate coord, Image img) {
-        this(null, null, coord, img);
-    }
-    
-    public MapMarkerImg(Layer layer, String name, Coordinate coord, Image img) {
-        this(layer, name, coord, img, MapMarker.STYLE.VARIABLE, getDefaultStyle());
-    }
-    
-    public MapMarkerImg(Layer layer, String name, Coordinate coord, Image img, MapMarker.STYLE markerStyle, Style style) {
-        super(layer, name, style);
-        this.markerStyle = markerStyle;
-        this.coord = coord;
-        this.img=img;
-    }
 
-    public Coordinate getCoordinate(){
-        return coord;
-    }
-    public double getLat() {
-        return coord.getLat();
-    }
+	public MapMarkerImg(Coordinate coord, Image img) {
+		this(null, null, coord, img);
+	}
 
-    public double getLon() {
-        return coord.getLon();
-    }
 
-    public Image getImg() {
-        return img;
-    }
-    
-    public MapMarker.STYLE getMarkerStyle() {
-        return markerStyle;
-    }
+	public MapMarkerImg(Layer layer, String name, Coordinate coord, Image img) {
+		this(layer, name, coord, img, MapMarker.STYLE.VARIABLE, getDefaultStyle());
+	}
 
-    public double getRadius() {
-        return 0;
-    }
-    
-    public void paint(Graphics g, Point position, int radio) {
-        //int size_h = radio;
-        //int size = img. size_h * 2;
-        
-        
-        if (g instanceof Graphics2D && getBackColor()!=null) {
-            Graphics2D g2 = (Graphics2D) g;
-            Composite oldComposite = g2.getComposite();
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
-            g2.setPaint(getBackColor());
-            g.drawImage(img, position.x-img.getWidth(null)/2, position.y-img.getHeight(null)/2, null);
-            //g.fillOval(position.x - size_h, position.y - size_h, size, size);
-            g2.setComposite(oldComposite);
-        }
-        g.setColor(getColor());
-        g.drawImage(img, position.x-img.getWidth(null)/2, position.y-img.getHeight(null)/2, null);
-        //g.drawOval(position.x - size_h, position.y - size_h, size, size);
 
-        if(getLayer()==null||getLayer().isVisibleTexts()) paintText(g, position);
-    }
+	public MapMarkerImg(Layer layer, String name, Coordinate coord, Image img, MapMarker.STYLE markerStyle,
+			Style style) {
+		super(layer, name, style);
+		this.markerStyle = markerStyle;
+		this.coord = coord;
+		this.img = img;
+	}
 
-    public static Style getDefaultStyle(){
-        return new Style(Color.ORANGE, new Color(200,200,200,200), null, getDefaultFont());
-    }
-    @Override
-    public String toString() {
-        return "MapMarkerImg at " + getLat() + " " + getLon();
-    }
-    
-    @Override
-    public void setLat(double lat) {
-        if(coord==null) coord = new Coordinate(lat,0);
-        else coord.setLat(lat);
-    }
-    
-    @Override
-    public void setLon(double lon) {
-        if(coord==null) coord = new Coordinate(0,lon);
-        else coord.setLon(lon);
-    }
-    
-    public void setImg(Image img) {
-        this.img=img;
-    }
+
+	public Coordinate getCoordinate() {
+		return coord;
+	}
+
+
+	public double getLat() {
+		return coord.getLat();
+	}
+
+
+	public double getLon() {
+		return coord.getLon();
+	}
+
+
+	public Image getImg() {
+		return img;
+	}
+
+
+	public MapMarker.STYLE getMarkerStyle() {
+		return markerStyle;
+	}
+
+
+	public double getRadius() {
+		return 0;
+	}
+
+
+	public void paint(Graphics g, Point position, int radio) {
+		// int size_h = radio;
+		// int size = img. size_h * 2;
+
+		if (g instanceof Graphics2D && getBackColor() != null) {
+			Graphics2D g2 = (Graphics2D) g;
+			Composite oldComposite = g2.getComposite();
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+			g2.setPaint(getBackColor());
+			g.drawImage(img, position.x - img.getWidth(null) / 2, position.y - img.getHeight(null) / 2, null);
+			// g.fillOval(position.x - size_h, position.y - size_h, size, size);
+			g2.setComposite(oldComposite);
+		}
+		g.setColor(getColor());
+		g.drawImage(img, position.x - img.getWidth(null) / 2, position.y - img.getHeight(null) / 2, null);
+		// g.drawOval(position.x - size_h, position.y - size_h, size, size);
+
+		if (getLayer() == null || getLayer().isVisibleTexts())
+			paintText(g, position);
+	}
+
+
+	public static Style getDefaultStyle() {
+		return new Style(Color.ORANGE, new Color(200, 200, 200, 200), null, getDefaultFont());
+	}
+
+
+	@Override
+	public String toString() {
+		return "MapMarkerImg at " + getLat() + " " + getLon();
+	}
+
+
+	@Override
+	public void setLat(double lat) {
+		if (coord == null)
+			coord = new Coordinate(lat, 0);
+		else
+			coord.setLat(lat);
+	}
+
+
+	@Override
+	public void setLon(double lon) {
+		if (coord == null)
+			coord = new Coordinate(0, lon);
+		else
+			coord.setLon(lon);
+	}
+
+
+	public void setImg(Image img) {
+		this.img = img;
+	}
 }

@@ -67,8 +67,9 @@ public class frmSearchPoint extends javax.swing.JDialog {
 	private JButton btClose;
 	CustomFocusTraversalPolicy newPolicy;
 	private List<frmSearchPointListener> listeners = new ArrayList<frmSearchPointListener>();
-	private SearchPointResult result=null;
-	 
+	private SearchPointResult result = null;
+
+
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -77,7 +78,8 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
-	
+
+
 	public void addListener(frmSearchPointListener toAdd) {
 		listeners.add(toAdd);
 	}
@@ -90,14 +92,16 @@ public class frmSearchPoint extends javax.swing.JDialog {
 
 
 	public boolean showDialog(CgSettings settings, TrackData track) {
-		if ((track==null) || (settings==null) ) return false;
-		
+		if ((track == null) || (settings == null))
+			return false;
+
 		this.settings = settings;
 		this.track = track;
-		this.result=null;
+		this.result = null;
 		setVisible(true);
 		return ok;
 	}
+
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -120,6 +124,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 
 		return rootPane;
 	}
+
 
 	/**
 	 * Search the point from the latitude and longitude Display the result
@@ -168,6 +173,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		}
 	}
 
+
 	/**
 	 * This method is called to initialize the form.
 	 */
@@ -198,7 +204,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 
 		tfLatitude = new JTextFieldLimit(10);
 		tfLatitude.setFocusable(true);
-//		tfLatitude.setDocument(new JTextFieldLimit(10));
+		// tfLatitude.setDocument(new JTextFieldLimit(10));
 		tfLatitude.setMinimumSize(new Dimension(100, 20));
 		tfLatitude.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 		Utils.addComponent(pnSearch, tfLatitude, 1, 0, 1, 1, 1, 0, 0, 5, 2, 5, GridBagConstraints.BASELINE_LEADING,
@@ -213,7 +219,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 
 		tfLongitude = new JTextFieldLimit(10);
 		tfLongitude.setFocusable(true);
-//		tfLongitude.setDocument(new JTextFieldLimit(10));
+		// tfLongitude.setDocument(new JTextFieldLimit(10));
 		tfLongitude.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 		Utils.addComponent(pnSearch, tfLongitude, 1, 1, 1, 1, 1, 0, 0, 5, 0, 5, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
@@ -292,22 +298,23 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		Utils.addComponent(paneGlobal, btClose, 0, 2, GridBagConstraints.REMAINDER, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
-		//-- Configure the travel policy (TAB mvt)
+		// -- Configure the travel policy (TAB mvt)
 		Vector<Component> order = new Vector<Component>(4);
 		order.add(tfLatitude);
 		order.add(tfLongitude);
 		order.add(btSearch);
 		order.add(btClose);
 		newPolicy = new CustomFocusTraversalPolicy(order);
-		//-- Set the travel policy
+		// -- Set the travel policy
 		setFocusTraversalPolicy(newPolicy);
-		
+
 		// --
 		pack();
 
-		//-- Center the windows
+		// -- Center the windows
 		setLocationRelativeTo(null);
 	}
+
 
 	public SearchPointResult getResult() {
 		return result;

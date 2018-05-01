@@ -59,8 +59,8 @@ public class CgData {
 	/** Time from the start to this position (in s) **/
 	private int Time;
 	/**
-	 * Time from the previous position to this position (in s). In float format
-	 * in order to maximize the precision
+	 * Time from the previous position to this position (in s). In float format in
+	 * order to maximize the precision
 	 **/
 	private double dTime_f;
 	/** Time limit at this position. in second from the start. 0=none **/
@@ -90,14 +90,12 @@ public class CgData {
 	/** Font size of this position in the mini roadbook **/
 	public int FontSizeMiniRoadbook;
 
+
 	public CgData(double Num, double Latitude, double Longitude, double Elevation, double ElevationMemo, int Tag,
 			double Dist, double Total, double Diff, double Coeff, double Recup, double Slope, double Speed,
-			double dElevation, int Time,
-			double dTime_f,
-			int TimeLimit,
-			DateTime Hour,
-			int Station, String Name, String Comment, double tmp1, double tmp2, String FmtLbMiniRoadbook,
-			int OptionMiniRoadbook, int VPosMiniRoadbook, String CommentMiniRoadbook, int FontSizeMiniRoadbook) {
+			double dElevation, int Time, double dTime_f, int TimeLimit, DateTime Hour, int Station, String Name,
+			String Comment, double tmp1, double tmp2, String FmtLbMiniRoadbook, int OptionMiniRoadbook,
+			int VPosMiniRoadbook, String CommentMiniRoadbook, int FontSizeMiniRoadbook) {
 		this.Num = Num;
 		this.Latitude = Latitude;
 		this.Longitude = Longitude;
@@ -131,6 +129,7 @@ public class CgData {
 			this.FontSizeMiniRoadbook = FontSizeMiniRoadbook;
 	}
 
+
 	public CgData() {
 		this.Num = 0;
 		this.Latitude = 0;
@@ -162,49 +161,60 @@ public class CgData {
 		this.FontSizeMiniRoadbook = 10;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public double getNum() {
 		return Num;
 	}
+
 
 	public String getNumString() {
 		return String.format("%1.0f ", Num);
 	}
 
+
 	public void setNum(double num) {
 		Num = num;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public double getLatitude() {
 		return Latitude;
 	}
 
+
 	public String getLatitudeString() {
 		return String.format("%1.7f", Latitude);
 	}
-	
+
+
 	public void setLatitude(double latitude) {
 		Latitude = latitude;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public double getLongitude() {
 		return Longitude;
 	}
+
 
 	public String getLongitudeString() {
 		return String.format("%1.7f", Longitude);
 	}
 
+
 	public void setLongitude(double longitude) {
 		Longitude = longitude;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	private double getElevation() {
 		return Elevation;
 	}
+
 
 	public double getElevation(int unit) {
 		switch (unit) {
@@ -217,6 +227,7 @@ public class CgData {
 			return Elevation;
 		}
 	}
+
 
 	public String getElevationString(int unit, boolean withunit) {
 
@@ -243,23 +254,28 @@ public class CgData {
 		return s;
 	}
 
+
 	public void setElevation(double elevation) {
 		Elevation = elevation;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public int getTag() {
 		return Tag;
 	}
+
 
 	public void setTag(int tag) {
 		Tag = tag;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	private double getDist() {
 		return Dist;
 	}
+
 
 	public double getDist(int unit) {
 		switch (unit) {
@@ -272,6 +288,7 @@ public class CgData {
 			return Dist;
 		}
 	}
+
 
 	public String getDistString(int unit, boolean withunit) {
 
@@ -300,14 +317,17 @@ public class CgData {
 		return s;
 	}
 
+
 	public void setDist(double dist) {
 		Dist = dist;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	private double getTotal() {
 		return Total;
 	}
+
 
 	public double getTotal(int unit) {
 		switch (unit) {
@@ -320,6 +340,7 @@ public class CgData {
 			return Total;
 		}
 	}
+
 
 	public String getTotalString(int unit, boolean withunit) {
 
@@ -348,41 +369,50 @@ public class CgData {
 		return s;
 	}
 
+
 	public void setTotal(double total) {
 		Total = total;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public double getDiff() {
 		return Diff;
 	}
+
 
 	public void setDiff(double diff) {
 		Diff = diff;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public double getCoeff() {
 		return Coeff;
 	}
+
 
 	public void setCoeff(double coeff) {
 		Coeff = coeff;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public double getRecovery() {
 		return Recovery;
 	}
+
 
 	public void setRecovery(double recup) {
 		Recovery = recup;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public double getSlope() {
 		return Slope;
 	}
+
 
 	public String getSlopeString(boolean withunit) {
 		if (withunit)
@@ -391,38 +421,39 @@ public class CgData {
 			return String.format("%1.1f ", getSlope());
 	}
 
+
 	public void setSlope(double slope) {
 		Slope = slope;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	private double getSpeed() {
 		return Speed;
 	}
 
-	
+
 	public double getSpeed(int unit, boolean pace) {
 		switch (unit) {
-			case CgConst.UNIT_METER:
-				if (pace) 
-					return Utils.Speed2Pace(Speed);
-				else
-					return Speed;
-			case CgConst.UNIT_MILES_FEET:
-				if (pace)
-					return Utils.Speed2Pace(Utils.Meter2uMiles(Speed));
-				else
-					return Utils.Meter2uMiles(Speed);
-			default:
+		case CgConst.UNIT_METER:
+			if (pace)
+				return Utils.Speed2Pace(Speed);
+			else
 				return Speed;
+		case CgConst.UNIT_MILES_FEET:
+			if (pace)
+				return Utils.Speed2Pace(Utils.Meter2uMiles(Speed));
+			else
+				return Utils.Meter2uMiles(Speed);
+		default:
+			return Speed;
 		}
 	}
 
-	public String getSpeedString(int unit, boolean withunit, boolean pace) {
-		double v = getSpeed(unit,pace);
 
-		
-		
+	public String getSpeedString(int unit, boolean withunit, boolean pace) {
+		double v = getSpeed(unit, pace);
+
 		String s = "";
 		s = String.format("%1.1f ", v);
 		if (withunit)
@@ -430,14 +461,17 @@ public class CgData {
 		return s;
 	}
 
+
 	public void setSpeed(double speed) {
 		Speed = speed;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	private double getdElevation() {
 		return dElevation;
 	}
+
 
 	public double getdElevation(int unit) {
 		switch (unit) {
@@ -451,14 +485,17 @@ public class CgData {
 		}
 	}
 
+
 	public void setdElevation(double dElevation) {
 		this.dElevation = dElevation;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public int getTime() {
 		return Time;
 	}
+
 
 	public String getTimeString() {
 		int time = getTime();
@@ -470,23 +507,28 @@ public class CgData {
 		return String.format("%02d:%02d:%02d ", nbh, nbm, nbs);
 	}
 
+
 	public void setTime(int time) {
 		Time = time;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public double getdTime_f() {
 		return dTime_f;
 	}
+
 
 	public void setdTime_f(double dTime_f) {
 		this.dTime_f = dTime_f;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public int getTimeLimit() {
 		return TimeLimit;
 	}
+
 
 	public String getTimeLimitString(boolean empty_if_0) {
 		int time = getTimeLimit();
@@ -502,27 +544,33 @@ public class CgData {
 		}
 	}
 
+
 	public void setTimeLimit(int timeLimit) {
 		TimeLimit = timeLimit;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public DateTime getHour() {
 		return Hour;
 	}
+
 
 	public String getHourString() {
 		return getHour().toString("E HH:mm:ss");
 	}
 
+
 	public void setHour(DateTime hour) {
 		Hour = hour;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public int getStation() {
 		return Station;
 	}
+
 
 	public String getStationString(boolean empty_if_0) {
 		int time = getStation();
@@ -538,37 +586,45 @@ public class CgData {
 		}
 	}
 
+
 	public void setStation(int station) {
 		Station = station;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public String getName() {
 		return Name;
 	}
+
 
 	public void setName(String name) {
 		Name = name;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public String getComment() {
 		return Comment;
 	}
+
 
 	public void setComment(String comment) {
 		Comment = comment;
 	}
 
-	//-------------------------------
+
+	// -------------------------------
 	public double getElevationMemo() {
 		return ElevationMemo;
 	}
 
+
 	public void setElevationMemo(double elevationMemo) {
 		ElevationMemo = elevationMemo;
 	}
-	
+
+
 	public CgData CopyTo(CgData d) {
 		d.Num = Num;
 		d.Latitude = Latitude;
@@ -600,5 +656,5 @@ public class CgData {
 		d.FontSizeMiniRoadbook = FontSizeMiniRoadbook;
 		return d;
 	}
-	
+
 }

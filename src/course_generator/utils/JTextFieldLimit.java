@@ -29,29 +29,32 @@ import javax.swing.text.PlainDocument;
  * @author pierre.delore
  */
 public class JTextFieldLimit extends JTextField {
-    private int limit;
+	private int limit;
 
-    public JTextFieldLimit(int limit) {
-        super();
-        this.limit = limit;
-    }
 
-    @Override
-    protected Document createDefaultModel() {
-        return new LimitDocument();
-    }
+	public JTextFieldLimit(int limit) {
+		super();
+		this.limit = limit;
+	}
 
-    private class LimitDocument extends PlainDocument {
 
-        @Override
-        public void insertString( int offset, String  str, AttributeSet attr ) throws BadLocationException {
-            if (str == null) return;
+	@Override
+	protected Document createDefaultModel() {
+		return new LimitDocument();
+	}
 
-            if ((getLength() + str.length()) <= limit) {
-                super.insertString(offset, str, attr);
-            }
-        }       
+	private class LimitDocument extends PlainDocument {
 
-    }
+		@Override
+		public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {
+			if (str == null)
+				return;
+
+			if ((getLength() + str.length()) <= limit) {
+				super.insertString(offset, str, attr);
+			}
+		}
+
+	}
 
 }

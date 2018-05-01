@@ -185,9 +185,9 @@ public class JPanelAnalysisSpeed extends JPanel {
 	private JFreeChart CreateChart(XYDataset dataset1, XYDataset dataset2) {
 		JFreeChart chart = ChartFactory.createXYAreaChart("",
 				// x axis label
-				bundle.getString("JPanelAnalysisSpeed.labelX"), //"Distance",
+				bundle.getString("JPanelAnalysisSpeed.labelX"), // "Distance",
 				// y axis label
-				bundle.getString("JPanelAnalysisSpeed.labelY"), //"Speed"
+				bundle.getString("JPanelAnalysisSpeed.labelY"), // "Speed"
 				dataset1, // data
 				PlotOrientation.VERTICAL, false, // include legend
 				true, // tooltips
@@ -234,10 +234,10 @@ public class JPanelAnalysisSpeed extends JPanel {
 		CgData d = track.data.get(i);
 
 		lbSpeedInfoStartSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoStartSpeed.text") + "="
-				+ String.format("%2.1f", startSpeed) + Utils.uSpeed2String(settings.Unit, settings.isPace)+ " ");
+				+ String.format("%2.1f", startSpeed) + Utils.uSpeed2String(settings.Unit, settings.isPace) + " ");
 
 		lbSpeedInfoEndSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoEndSpeed.text") + "="
-				+ String.format("%2.1f", endSpeed) +  Utils.uSpeed2String(settings.Unit, settings.isPace)+ " ");
+				+ String.format("%2.1f", endSpeed) + Utils.uSpeed2String(settings.Unit, settings.isPace) + " ");
 
 		lbSpeedInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoSpeed.text") + "="
 				+ d.getSpeedString(settings.Unit, true, settings.isPace) + " ");
@@ -251,8 +251,9 @@ public class JPanelAnalysisSpeed extends JPanel {
 	 * Update the Time/Distance chart
 	 */
 	public void Refresh(TrackData track, CgSettings settings) {
-		if (track==null) return;
-		
+		if (track == null)
+			return;
+
 		if (track.data.isEmpty())
 			return;
 
@@ -261,8 +262,8 @@ public class JPanelAnalysisSpeed extends JPanel {
 
 		// -- Calculate the speed regression
 		/*
-		 * y = ax + b a = the slope of the trend line. b = the intercept of the
-		 * trend line.
+		 * y = ax + b a = the slope of the trend line. b = the intercept of the trend
+		 * line.
 		 */
 		double xAvg = 0;
 		double yAvg = 0;
@@ -329,8 +330,9 @@ public class JPanelAnalysisSpeed extends JPanel {
 
 		}
 		// -- If there is no speed the exit (not already calculated)
-		if (maxspeed==0.0) return;
-		
+		if (maxspeed == 0.0)
+			return;
+
 		datasetSpeedReg.addSeries(serie2);
 		datasetSpeed.addSeries(serie1);
 

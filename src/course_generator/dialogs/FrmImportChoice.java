@@ -41,24 +41,22 @@ import course_generator.utils.Utils;
 
 //import org.joda.time.DateTime;
 
+public class FrmImportChoice extends javax.swing.JDialog {
+	public final static int RESULT_CANCEL = 0;
+	public final static int RESULT_AT_BEGIN = 1;
+	public final static int RESULT_AT_END = 2;
 
-public class FrmImportChoice  extends javax.swing.JDialog {
-	public final static int RESULT_CANCEL=0;
-	public final static int RESULT_AT_BEGIN=1;
-	public final static int RESULT_AT_END=2;
-	
 	private ResourceBundle bundle;
 	private boolean ok;
-	
+
 	private JPanel jPanelButtons;
 	private JButton btCancel;
 	private JButton btOk;
 	private JRadioButton rbAtBeginning;
 	private JRadioButton rbAtEnd;
 	private ButtonGroup groupChoice;
-	
 
-		
+
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -68,27 +66,28 @@ public class FrmImportChoice  extends javax.swing.JDialog {
 		setModal(true);
 	}
 
-	
+
 	public int showDialog() {
-		int res=RESULT_CANCEL;
+		int res = RESULT_CANCEL;
 		// Set field
 		rbAtEnd.setSelected(true);
-		
+
 		// End set field
 		ok = false;
 
-		//-- Show the dialog
+		// -- Show the dialog
 		setVisible(true);
-		
+
 		if (ok) {
 			// Copy fields
 			if (rbAtBeginning.isSelected())
-				res=RESULT_AT_BEGIN;
+				res = RESULT_AT_BEGIN;
 			else if (rbAtEnd.isSelected())
-				res=RESULT_AT_END;
+				res = RESULT_AT_END;
 		}
 		return res;
 	}
+
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -122,7 +121,7 @@ public class FrmImportChoice  extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-	
+
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -134,21 +133,20 @@ public class FrmImportChoice  extends javax.swing.JDialog {
 		}
 	}
 
-	
+
 	private void initComponents() {
-		int line=0;
-		
+		int line = 0;
+
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("FrmImportChoice.title"));
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setType(java.awt.Window.Type.UTILITY);
 		addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                formComponentShown(evt);
-            }
-        });
-		
+			public void componentShown(java.awt.event.ComponentEvent evt) {
+				formComponentShown(evt);
+			}
+		});
 
 		// -- Layout
 		// ------------------------------------------------------------
@@ -156,36 +154,23 @@ public class FrmImportChoice  extends javax.swing.JDialog {
 		paneGlobal.setLayout(new GridBagLayout());
 
 		rbAtBeginning = new JRadioButton(bundle.getString("FrmImportChoice.chkAtBeginning.Text"));
-		Utils.addComponent(paneGlobal, rbAtBeginning, 
-				0, line++, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 10, 
+		Utils.addComponent(paneGlobal, rbAtBeginning, 0, line++, 1, 1, 1, 0, 10, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		rbAtEnd = new JRadioButton(bundle.getString("FrmImportChoice.chkAtEnd.Text"));
-		Utils.addComponent(paneGlobal, rbAtEnd, 
-				0, line++, 
-				1, 1, 
-				1, 1, 
-				5, 10, 0, 10, 
+		Utils.addComponent(paneGlobal, rbAtEnd, 0, line++, 1, 1, 1, 1, 5, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
-		 groupChoice = new ButtonGroup();
-		 groupChoice.add(rbAtBeginning);
-		 groupChoice.add(rbAtEnd);
-		
+		groupChoice = new ButtonGroup();
+		groupChoice.add(rbAtBeginning);
+		groupChoice.add(rbAtEnd);
+
 		// == BUTTONS
 		// ===========================================================
 		jPanelButtons = new javax.swing.JPanel();
 		jPanelButtons.setLayout(new FlowLayout());
-		Utils.addComponent(paneGlobal, jPanelButtons, 
-				0, line, 
-				GridBagConstraints.REMAINDER, 1, 
-				1, 0, 
-				10, 0, 0, 0,
+		Utils.addComponent(paneGlobal, jPanelButtons, 0, line, GridBagConstraints.REMAINDER, 1, 1, 0, 10, 0, 0, 0,
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
-
 
 		btOk = new javax.swing.JButton();
 		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
@@ -215,9 +200,9 @@ public class FrmImportChoice  extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-	
+
 	protected void formComponentShown(ComponentEvent evt) {
 		repaint();
 	}
-	
+
 }

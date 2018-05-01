@@ -32,9 +32,10 @@ public final class CgLog {
 	private static String _oldfilename = "";
 	private static boolean active = false;
 
+
 	/**
-	 * Create the logging engine. If the size of the log file is greater than
-	 * the maximum then "old" file is deleted and the current is renamed to
+	 * Create the logging engine. If the size of the log file is greater than the
+	 * maximum then "old" file is deleted and the current is renamed to
 	 * "filename".old
 	 * 
 	 * @param filename
@@ -62,13 +63,16 @@ public final class CgLog {
 		checkFileSize();
 	}
 
+
 	public static void info(String msg) {
 		System.out.println(new SimpleDateFormat("yyyyMMdd-HH:mm:ss.S").format(new Date()) + ": (i) : " + msg);
 	}
 
+
 	public static void error(String msg) {
 		System.out.println(new SimpleDateFormat("yyyyMMdd-HH:mm:ss.S").format(new Date()) + ": (!) : " + msg);
 	}
+
 
 	public static void checkFileSize() {
 		if (active && logfile != null) {

@@ -45,269 +45,269 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 
 		// Depending of the column number return the rendered label
 		switch (column) {
-			case 0: // N°
-				val = data.getNum();
+		case 0: // N°
+			val = data.getNum();
 
-				// -- Display the value
-				setText(String.format("%1.0f ", val));
-				setHorizontalAlignment(CENTER);
+			// -- Display the value
+			setText(String.format("%1.0f ", val));
+			setHorizontalAlignment(CENTER);
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-			case 1: // Name
-				str = data.getName();
+			return this;
 
-				// -- Display the value
-				setText(str);
-				setHorizontalAlignment(LEFT);
+		case 1: // Name
+			str = data.getName();
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			// -- Display the value
+			setText(str);
+			setHorizontalAlignment(LEFT);
 
-			case 2: // Line
-				val = data.getLine();
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-				// -- Display the value
-				setText(String.format("%1.0f ", val));
-				setHorizontalAlignment(CENTER);
+			return this;
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+		case 2: // Line
+			val = data.getLine();
 
-			case 3: // Elevation
-				setText(data.getElevationString(settings.Unit, false));
-				setHorizontalAlignment(CENTER);
+			// -- Display the value
+			setText(String.format("%1.0f ", val));
+			setHorizontalAlignment(CENTER);
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-			case 4: // Positive climb
-				setText(data.getClimbPString(settings.Unit, false));
-				setHorizontalAlignment(CENTER);
+			return this;
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+		case 3: // Elevation
+			setText(data.getElevationString(settings.Unit, false));
+			setHorizontalAlignment(CENTER);
 
-			case 5: // Negative climb
-				setText(data.getClimbMString(settings.Unit, false));
-				setHorizontalAlignment(CENTER);
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			return this;
 
-			case 6: // Distance
-				setText(data.getDistString(settings.Unit, false));
-				setHorizontalAlignment(CENTER);
+		case 4: // Positive climb
+			setText(data.getClimbPString(settings.Unit, false));
+			setHorizontalAlignment(CENTER);
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-			case 7: // Time
-				setText(data.getTimeString());
-				setHorizontalAlignment(CENTER);
+			return this;
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+		case 5: // Negative climb
+			setText(data.getClimbMString(settings.Unit, false));
+			setHorizontalAlignment(CENTER);
 
-			case 8: // Hour
-				setText(data.getHourString());
-				setHorizontalAlignment(CENTER);
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			return this;
 
-			case 9: // dt Time
-				setText(data.getdTime_f_String());
-				setHorizontalAlignment(CENTER);
+		case 6: // Distance
+			setText(data.getDistString(settings.Unit, false));
+			setHorizontalAlignment(CENTER);
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-			case 10: // Time limit
-				setText(data.getTimeLimitString());
-				setHorizontalAlignment(CENTER);
+			return this;
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+		case 7: // Time
+			setText(data.getTimeString());
+			setHorizontalAlignment(CENTER);
 
-			case 11: // Station Time
-				setText(data.getStationTimeString());
-				setHorizontalAlignment(CENTER);
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			return this;
 
-			case 12: // dt Distance
-				setText(data.getdDistString(settings.Unit, false));
-				setHorizontalAlignment(CENTER);
+		case 8: // Hour
+			setText(data.getHourString());
+			setHorizontalAlignment(CENTER);
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-			case 13: // dt positive climb
-				setText(data.getdClimbPString(settings.Unit, false));
-				setHorizontalAlignment(CENTER);
+			return this;
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+		case 9: // dt Time
+			setText(data.getdTime_f_String());
+			setHorizontalAlignment(CENTER);
 
-			case 14: // dt negative climb
-				setText(data.getdClimbMString(settings.Unit, false));
-				setHorizontalAlignment(CENTER);
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			return this;
 
-			case 15: // Ascend speed
-				setText(data.getSpeedPString(settings.Unit, false));
-				setHorizontalAlignment(CENTER);
+		case 10: // Time limit
+			setText(data.getTimeLimitString());
+			setHorizontalAlignment(CENTER);
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-			case 16: // Descend speed
-				setText(data.getSpeedMString(settings.Unit, false));
-				setHorizontalAlignment(CENTER);
+			return this;
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+		case 11: // Station Time
+			setText(data.getStationTimeString());
+			setHorizontalAlignment(CENTER);
 
-			case 17: // Average ascend slope
-				setText(data.getAvgSlopePString());
-				setHorizontalAlignment(CENTER);
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			return this;
 
-			case 18: // Average descend slope
-				setText(data.getAvgSlopeMString());
-				setHorizontalAlignment(CENTER);
+		case 12: // dt Distance
+			setText(data.getdDistString(settings.Unit, false));
+			setHorizontalAlignment(CENTER);
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-			case 19: // Average speed
-				setText(data.getAvgSpeedString(settings.Unit, false, settings.isPace));
-				setHorizontalAlignment(CENTER);
-				
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			return this;
 
-			case 20: // Comment
-				str = data.getComment();
+		case 13: // dt positive climb
+			setText(data.getdClimbPString(settings.Unit, false));
+			setHorizontalAlignment(CENTER);
 
-				// -- Display the value
-				setText(str); // TODO Delete /n
-				setHorizontalAlignment(LEFT);
-				
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
-				
-				return this;
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
+
+			return this;
+
+		case 14: // dt negative climb
+			setText(data.getdClimbMString(settings.Unit, false));
+			setHorizontalAlignment(CENTER);
+
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
+
+			return this;
+
+		case 15: // Ascend speed
+			setText(data.getSpeedPString(settings.Unit, false));
+			setHorizontalAlignment(CENTER);
+
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
+
+			return this;
+
+		case 16: // Descend speed
+			setText(data.getSpeedMString(settings.Unit, false));
+			setHorizontalAlignment(CENTER);
+
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
+
+			return this;
+
+		case 17: // Average ascend slope
+			setText(data.getAvgSlopePString());
+			setHorizontalAlignment(CENTER);
+
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
+
+			return this;
+
+		case 18: // Average descend slope
+			setText(data.getAvgSlopeMString());
+			setHorizontalAlignment(CENTER);
+
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
+
+			return this;
+
+		case 19: // Average speed
+			setText(data.getAvgSpeedString(settings.Unit, false, settings.isPace));
+			setHorizontalAlignment(CENTER);
+
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
+
+			return this;
+
+		case 20: // Comment
+			str = data.getComment();
+
+			// -- Display the value
+			setText(str); // TODO Delete /n
+			setHorizontalAlignment(LEFT);
+
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
+
+			return this;
 		} // switch
 
 		return this;
