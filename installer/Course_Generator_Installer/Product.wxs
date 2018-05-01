@@ -27,10 +27,10 @@
                 <File Id="CourseGenerator4_fr.epub" Source="Resources\Documentation\fr\images\CourseGenerator4_fr.epub" KeyPath="yes" Checksum="yes"/>
               </Component>-->
               <Component Id="fr_CG4_html" Guid="edebd932-8948-40e1-82d6-1f3479808263">
-                <File Id="fr_cg_doc_4.00.html" Source="Resources\Documentation\fr\fr_cg_doc_4.00.html" KeyPath="yes" Checksum="yes" />
+                <File Id="fr_cg_doc_4.00.html" Source="..\..\build\help\fr\fr_cg_doc_4.00.html" KeyPath="yes" Checksum="yes" />
               </Component>
               <Component Id="fr_CG4_pdf" Guid="d030457e-d98b-4092-badf-53accedeb0fe">
-                <File Id="fr_cg_doc_4.00.pdf" Source="Resources\Documentation\fr\fr_cg_doc_4.00.pdf" KeyPath="yes" Checksum="yes" />
+                <File Id="fr_cg_doc_4.00.pdf" Source="..\..\build\fr_cg_doc_4.00.pdf" KeyPath="yes" Checksum="yes" />
               </Component>
               <Directory Id="FrenchImages" Name="images">
                 <Directory Id="dir83197B50A5FA18903B2EFB16EAC378A2" Name="Curve" />
@@ -45,10 +45,10 @@
             </Directory>
             <Directory Id="EN" Name="en">
               <Component Id="en_CG4_html" Guid="89e721f1-a444-4701-9509-fde801329548">
-                <File Id="en_cg_doc_4.00.html" Source="Resources\Documentation\en\en_cg_doc_4.00.html" KeyPath="yes" Checksum="yes" />
+                <File Id="en_cg_doc_4.00.html" Source="..\..\build\help\en\en_cg_doc_4.00.html" KeyPath="yes" Checksum="yes" />
               </Component>
               <Component Id="en_CG4_pdf" Guid="be9fb5ce-3b8d-40f9-a4a6-c8a01066c0f1">
-                <File Id="en_cg_doc_4.00.pdf" Source="Resources\Documentation\en\en_cg_doc_4.00.pdf" KeyPath="yes" Checksum="yes" />
+                <File Id="en_cg_doc_4.00.pdf" Source="..\..\build\en_cg_doc_4.00.pdf" KeyPath="yes" Checksum="yes" />
               </Component>
               <Directory Id="EnglishImages" Name="images">
                 <Directory Id="dirFCC2F786703D248B706A0E3C29F96A4C" Name="Curve" />
@@ -837,11 +837,11 @@
   <Fragment>
     <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
       <Component Id="Course_Generator.exe" Guid="47e3842b-ebc4-42d7-86fe-437c0513b748">
-        <File Id="Course_Generator.exe" Source="Resources/Course_Generator.exe" KeyPath="yes" Checksum="yes" />
+        <File Id="Course_Generator.exe" Source="..\..\build\Course_Generator.exe" KeyPath="yes" Checksum="yes" />
         <Environment Id="CGInstallFolderEnvironmentVariable" Name="CGInstallFolder" Value="[INSTALLDIR]" Permanent="yes" Part="last" Action="set" System="yes" />
       </Component>
       <Component Id="Course_Generator.jar" Guid="89e62283-e9b6-455a-b25d-2bf71470f031">
-        <File Id="Course_Generator.jar" Source="Resources/Course_Generator.jar" KeyPath="yes" Checksum="yes" />
+        <File Id="Course_Generator.jar" Source="..\..\build\Course_Generator.jar" KeyPath="yes" Checksum="yes" />
       </Component>
     </DirectoryRef>
     <DirectoryRef Id="DesktopFolder">

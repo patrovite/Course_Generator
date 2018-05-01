@@ -34,7 +34,6 @@
     <Content Include="Resources\CG.ico" />
     <Content Include="Resources\CGBanner.bmp" />
     <Content Include="Resources\CGDialog.bmp" />
-    <Content Include="Resources\course_generator.jar" />
     <Content Include="Resources\gpl-3.0.rtf" />
     <Content Include="Resources\Tools\CurveHarvester.bat" />
     <Content Include="Resources\Tools\DocumentationHarvester.bat" />
