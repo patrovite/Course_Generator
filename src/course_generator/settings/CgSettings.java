@@ -44,11 +44,9 @@ public class CgSettings {
 	public String ParamFile = "";
 	public boolean bNoConnectOnStartup = true;
 	public int ConnectionTimeout = 10; // Time in second between internet test
-	/** Map selected 
-	 * 0 : OpenStreetMap
-	 * 1 : OpenTopoMap
-	 * 2 : BingAreal
-	 * **/
+	/**
+	 * Map selected 0 : OpenStreetMap 1 : OpenTopoMap 2 : BingAreal
+	 **/
 	public int map = 0;
 	public boolean offlineMap = true;
 
@@ -72,8 +70,8 @@ public class CgSettings {
 											// 1=Miles/feet
 	public boolean isPace = false; // 'true' the speed is display as pace
 									// otherwise it's a speed
-	public boolean Check4UpdateAtStart=true;
-	
+	public boolean Check4UpdateAtStart = true;
+
 	public int ReadError = 0;
 	public int LineError = 0;
 	public String LastDir; // Store the last directory
@@ -106,7 +104,7 @@ public class CgSettings {
 
 		Unit = CgConst.UNIT_METER;
 		isPace = false;
-		Check4UpdateAtStart=true;
+		Check4UpdateAtStart = true;
 
 		ReadError = 0;
 		LineError = 0;
@@ -133,7 +131,9 @@ public class CgSettings {
 
 	/**
 	 * Save the settings to the disk
-	 * @param path Path where the setting file is stored
+	 * 
+	 * @param path
+	 *            Path where the setting file is stored
 	 */
 	public void Save(String path) {
 		// -- Check if the data directory exist. If not! creation
@@ -150,11 +150,9 @@ public class CgSettings {
 		// -- Save the data in the home directory
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
-			BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(
+			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
 					new FileOutputStream(path + "/config.xml"));
-			XMLStreamWriter writer = factory
-					.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
-
+			XMLStreamWriter writer = factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
 
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeComment("Course Generator (C) Pierre DELORE");
@@ -229,7 +227,9 @@ public class CgSettings {
 
 	/**
 	 * Load the settings from disk
-	 * @param _Path Path where the setting file is stored
+	 * 
+	 * @param _Path
+	 *            Path where the setting file is stored
 	 */
 	public void Load(String _Path) {
 		// -- Test if the config file exist
@@ -252,64 +252,68 @@ public class CgSettings {
 
 	/**
 	 * Return the distance unit as string
+	 * 
 	 * @return string with the unit
 	 */
 	public String getDistanceUnitString() {
 		switch (Unit) {
-			case CgConst.UNIT_METER:
-				return "km";
-			case CgConst.UNIT_MILES_FEET:
-				return "miles";
-			default:
-				return "Km";
+		case CgConst.UNIT_METER:
+			return "km";
+		case CgConst.UNIT_MILES_FEET:
+			return "miles";
+		default:
+			return "Km";
 		}
 	}
 
 
 	/**
 	 * Return the distance unit as string (abbreviation)
+	 * 
 	 * @return string with the unit
 	 */
 	public String getShortDistanceUnitString() {
 		switch (Unit) {
-			case CgConst.UNIT_METER:
-				return "km";
-			case CgConst.UNIT_MILES_FEET:
-				return "mi";
-			default:
-				return "km";
+		case CgConst.UNIT_METER:
+			return "km";
+		case CgConst.UNIT_MILES_FEET:
+			return "mi";
+		default:
+			return "km";
 		}
 	}
 
 
 	/**
 	 * Return the elevation unit as string
+	 * 
 	 * @return string with the unit
 	 */
 	public String getElevationUnitString() {
 		switch (Unit) {
-			case CgConst.UNIT_METER:
-				return "m";
-			case CgConst.UNIT_MILES_FEET:
-				return "feet";
-			default:
-				return "m";
+		case CgConst.UNIT_METER:
+			return "m";
+		case CgConst.UNIT_MILES_FEET:
+			return "feet";
+		default:
+			return "m";
 		}
 	}
 
 
 	/**
 	 * Return the elevation unit as string (abbreviation)
+	 * 
 	 * @return string with the unit
 	 */
 	public String getShortElevationUnitString() {
 		switch (Unit) {
-			case CgConst.UNIT_METER:
-				return "m";
-			case CgConst.UNIT_MILES_FEET:
-				return "ft";
-			default:
-				return "m";
+		case CgConst.UNIT_METER:
+			return "m";
+		case CgConst.UNIT_MILES_FEET:
+			return "ft";
+		default:
+			return "m";
 		}
 	}
 

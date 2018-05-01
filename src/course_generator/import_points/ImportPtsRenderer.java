@@ -37,236 +37,236 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 			int row, int column) {
 		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-		CgImportPts data=null;
-		
+		CgImportPts data = null;
+
 		CgSettings settings = ((ImportPtsDataModel) table.getModel()).getSettings();
 		setIcon(null);
 
 		data = (CgImportPts) value;
 
-		//Depending of the column number return the rendered label
+		// Depending of the column number return the rendered label
 		switch (column) {
-//			case 0:
-//				JCheckBox b=new JCheckBox();
-//				b.setSelected(data.getSel());
-//				return b;
-			case 0: // Selection
-				// -- Set the value
-				if (data.getSel())
-					setText("X");
+		// case 0:
+		// JCheckBox b=new JCheckBox();
+		// b.setSelected(data.getSel());
+		// return b;
+		case 0: // Selection
+			// -- Set the value
+			if (data.getSel())
+				setText("X");
+			else
+				setText("");
+
+			setHorizontalAlignment(CENTER);
+
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(Color.WHITE);
+
+			return this;
+		case 1: // Line
+			// -- Set the value
+			setText(data.getLineString());
+			setHorizontalAlignment(CENTER);
+
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(Color.WHITE);
+
+			return this;
+
+		case 2: // Distance
+			setText(data.getDistString(settings.Unit, false));
+			setHorizontalAlignment(CENTER);
+
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else {
+				double dist = data.getDist();
+				if (dist <= settings.DistNear)
+					setBackground(Color.GREEN);
+				else if (dist <= settings.DistFar)
+					setBackground(Color.ORANGE);
 				else
-					setText("");
-				
-				setHorizontalAlignment(CENTER);
+					setBackground(Color.RED);
+			}
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(Color.WHITE);
+			return this;
 
-				return this;
-			case 1: // Line
-				// -- Set the value
-				setText(data.getLineString());
-				setHorizontalAlignment(CENTER);
+		case 3: // Latitude
+			// -- Set the value
+			setText(data.getLatitudeString());
+			setHorizontalAlignment(CENTER);
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(Color.WHITE);
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 242, 193));
 
-				return this;
+			return this;
 
-			case 2: // Distance
-					setText(data.getDistString(settings.Unit, false));
-					setHorizontalAlignment(CENTER);
+		case 4: // Longitude
+			// -- Set the value
+			setText(data.getLongitudeString());
+			setHorizontalAlignment(CENTER);
 
-					// -- Set the background
-					if (isSelected)
-						setBackground(CgConst.CL_LINE_SELECTION);
-					else {
-						double dist = data.getDist();
-						if (dist<=settings.DistNear)
-							setBackground(Color.GREEN);
-						else if (dist<=settings.DistFar)
-							setBackground(Color.ORANGE);
-						else 
-							setBackground(Color.RED);
-					}
-					
-					return this;
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 242, 193));
 
-			case 3: // Latitude
-				// -- Set the value
-				setText(data.getLatitudeString());
-				setHorizontalAlignment(CENTER);
+			return this;
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 242, 193));
+		case 5: // Elevation
+			setText(data.getElevationString(settings.Unit, false));
+			setHorizontalAlignment(CENTER);
 
-				return this;
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(Color.WHITE);
 
-			case 4: // Longitude
-				// -- Set the value
-				setText(data.getLongitudeString());
-				setHorizontalAlignment(CENTER);
+			return this;
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 242, 193));
+		case 6: // Tags
+			int tag = data.getTag();
 
-				return this;
+			// -- Count the number of active tag
+			int cmpt = 0;
+			int i = 1;
+			while (i < 65536) {
+				if ((tag & i) != 0)
+					cmpt++;
+				i = i * 2;
+			}
 
-			case 5: // Elevation
-				setText(data.getElevationString(settings.Unit, false));
-				setHorizontalAlignment(CENTER);
-				
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(Color.WHITE);
+			int x = 0; // X position in the resulting image
 
-				return this;
+			if (cmpt > 0) {
+				// -- Prepare the resulting image
+				BufferedImage combined = new BufferedImage(18 * cmpt, 16, BufferedImage.TYPE_INT_ARGB);
+				Graphics g = combined.getGraphics();
 
-			case 6: // Tags
-				int tag = data.getTag();
-
-				// -- Count the number of active tag
-				int cmpt = 0;
-				int i = 1;
-				while (i < 65536) {
-					if ((tag & i) != 0)
-						cmpt++;
-					i = i * 2;
+				// Higher point
+				if ((tag & CgConst.TAG_HIGH_PT) != 0) {
+					ImageIcon image = new javax.swing.ImageIcon(
+							getClass().getResource("/course_generator/images/high_point.png"));
+					g.drawImage(image.getImage(), x, 0, null);
+					x += 18;
 				}
 
-				int x = 0; // X position in the resulting image
+				// Lower point
+				if ((tag & CgConst.TAG_LOW_PT) != 0) {
+					ImageIcon image = new javax.swing.ImageIcon(
+							getClass().getResource("/course_generator/images/low_point.png"));
+					g.drawImage(image.getImage(), x, 0, null);
+					x += 18;
+				}
 
-				if (cmpt > 0) {
-					// -- Prepare the resulting image
-					BufferedImage combined = new BufferedImage(18 * cmpt, 16, BufferedImage.TYPE_INT_ARGB);
-					Graphics g = combined.getGraphics();
+				// Station
+				if ((tag & CgConst.TAG_EAT_PT) != 0) {
+					ImageIcon image = new javax.swing.ImageIcon(
+							getClass().getResource("/course_generator/images/eat.png"));
+					g.drawImage(image.getImage(), x, 0, null);
+					x += 18;
+				}
 
-					// Higher point
-					if ((tag & CgConst.TAG_HIGH_PT) != 0) {
-						ImageIcon image = new javax.swing.ImageIcon(
-								getClass().getResource("/course_generator/images/high_point.png"));
-						g.drawImage(image.getImage(), x, 0, null);
-						x += 18;
-					}
+				// Drink
+				if ((tag & CgConst.TAG_WATER_PT) != 0) {
+					ImageIcon image = new javax.swing.ImageIcon(
+							getClass().getResource("/course_generator/images/drink.png"));
+					g.drawImage(image.getImage(), x, 0, null);
+					x += 18;
+				}
 
-					// Lower point
-					if ((tag & CgConst.TAG_LOW_PT) != 0) {
-						ImageIcon image = new javax.swing.ImageIcon(
-								getClass().getResource("/course_generator/images/low_point.png"));
-						g.drawImage(image.getImage(), x, 0, null);
-						x += 18;
-					}
+				// Mark
+				if ((tag & CgConst.TAG_MARK) != 0) {
+					ImageIcon image = new javax.swing.ImageIcon(
+							getClass().getResource("/course_generator/images/flag.png"));
+					g.drawImage(image.getImage(), x, 0, null);
+					x += 18;
+				}
 
-					// Station
-					if ((tag & CgConst.TAG_EAT_PT) != 0) {
-						ImageIcon image = new javax.swing.ImageIcon(
-								getClass().getResource("/course_generator/images/eat.png"));
-						g.drawImage(image.getImage(), x, 0, null);
-						x += 18;
-					}
+				// Roadbook
+				if ((tag & CgConst.TAG_ROADBOOK) != 0) {
+					ImageIcon image = new javax.swing.ImageIcon(
+							getClass().getResource("/course_generator/images/roadbook.png"));
+					g.drawImage(image.getImage(), x, 0, null);
+					x += 18;
+				}
 
-					// Drink
-					if ((tag & CgConst.TAG_WATER_PT) != 0) {
-						ImageIcon image = new javax.swing.ImageIcon(
-								getClass().getResource("/course_generator/images/drink.png"));
-						g.drawImage(image.getImage(), x, 0, null);
-						x += 18;
-					}
+				// Photo
+				if ((tag & CgConst.TAG_COOL_PT) != 0) {
+					ImageIcon image = new javax.swing.ImageIcon(
+							getClass().getResource("/course_generator/images/photo.png"));
+					g.drawImage(image.getImage(), x, 0, null);
+					x += 18;
+				}
 
-					// Mark
-					if ((tag & CgConst.TAG_MARK) != 0) {
-						ImageIcon image = new javax.swing.ImageIcon(
-								getClass().getResource("/course_generator/images/flag.png"));
-						g.drawImage(image.getImage(), x, 0, null);
-						x += 18;
-					}
+				// Note
+				if ((tag & CgConst.TAG_NOTE) != 0) {
+					ImageIcon image = new javax.swing.ImageIcon(
+							getClass().getResource("/course_generator/images/note.png"));
+					g.drawImage(image.getImage(), x, 0, null);
+					x += 18;
+				}
 
-					// Roadbook
-					if ((tag & CgConst.TAG_ROADBOOK) != 0) {
-						ImageIcon image = new javax.swing.ImageIcon(
-								getClass().getResource("/course_generator/images/roadbook.png"));
-						g.drawImage(image.getImage(), x, 0, null);
-						x += 18;
-					}
+				// Info
+				if ((tag & CgConst.TAG_INFO) != 0) {
+					ImageIcon image = new javax.swing.ImageIcon(
+							getClass().getResource("/course_generator/images/info.png"));
+					g.drawImage(image.getImage(), x, 0, null);
+					x += 18;
+				}
 
-					// Photo
-					if ((tag & CgConst.TAG_COOL_PT) != 0) {
-						ImageIcon image = new javax.swing.ImageIcon(
-								getClass().getResource("/course_generator/images/photo.png"));
-						g.drawImage(image.getImage(), x, 0, null);
-						x += 18;
-					}
+				setIcon(new ImageIcon(combined));
+			} else
+				setIcon(null); // No image
 
-					// Note
-					if ((tag & CgConst.TAG_NOTE) != 0) {
-						ImageIcon image = new javax.swing.ImageIcon(
-								getClass().getResource("/course_generator/images/note.png"));
-						g.drawImage(image.getImage(), x, 0, null);
-						x += 18;
-					}
+			// -- Set the value
+			setText("");
+			setHorizontalAlignment(LEFT);
 
-					// Info
-					if ((tag & CgConst.TAG_INFO) != 0) {
-						ImageIcon image = new javax.swing.ImageIcon(
-								getClass().getResource("/course_generator/images/info.png"));
-						g.drawImage(image.getImage(), x, 0, null);
-						x += 18;
-					}
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-					setIcon(new ImageIcon(combined));
-				} else
-					setIcon(null); // No image
+			return this;
 
-				// -- Set the value
-				setText("");
-				setHorizontalAlignment(LEFT);
+		case 7: // Name
+			// -- Set the value
+			setText(data.getName());
+			setHorizontalAlignment(LEFT);
 
-				// -- Set the background
-				if (isSelected)
-					setBackground(CgConst.CL_LINE_SELECTION);
-				else
-					setBackground(new Color(255, 255, 255));
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-				return this;
+			return this;
 
-			case 7: //Name
-		        //-- Set the value
-		        setText(data.getName());
-		        setHorizontalAlignment(LEFT);
-		        
-		        //-- Set the background
-		        if (isSelected)
-		            setBackground(CgConst.CL_LINE_SELECTION);
-		        else
-		            setBackground(new Color(255, 255, 255));
+		case 8: // Comment
+			// -- Set the value
+			setText(data.getComment());
+			setHorizontalAlignment(LEFT);
 
-		        return this;
-		        
-			case 8: //Comment
-		        //-- Set the value
-		        setText(data.getComment());
-		        setHorizontalAlignment(LEFT);
-		        
-		        //-- Set the background
-		        if (isSelected)
-		            setBackground(CgConst.CL_LINE_SELECTION);
-		        else
-		            setBackground(new Color(255, 255, 255));
+			// -- Set the background
+			if (isSelected)
+				setBackground(CgConst.CL_LINE_SELECTION);
+			else
+				setBackground(new Color(255, 255, 255));
 
-		        return this;
+			return this;
 
 		} // switch
 

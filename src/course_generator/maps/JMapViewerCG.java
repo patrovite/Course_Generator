@@ -26,19 +26,19 @@ import org.openstreetmap.gui.jmapviewer.MemoryTileCache;
 
 /**
  * This class extend JMapViewer in order to change the way the map is controlled
- * with the mouse.
- * Scroll map with right click => left click
- *  
+ * with the mouse. Scroll map with right click => left click
+ * 
  * @author pierre.delore
  *
  */
-public class JMapViewerCG extends JMapViewer{
+public class JMapViewerCG extends JMapViewer {
 	public CGMapController CGMapController;
-	
+
+
 	public JMapViewerCG() {
 		super(new MemoryTileCache(), 8);
 		CGMapController = new CGMapController(this);
-		//CGMapController.setMovementMouseButton(MouseEvent.BUTTON1);
+		// CGMapController.setMovementMouseButton(MouseEvent.BUTTON1);
 	}
-	
+
 }

@@ -19,5 +19,5 @@
 package course_generator.import_points;
 
 public class ImportPtsDataClass {
-	//Empty class - This is normal ;)
+	// Empty class - This is normal ;)
 }

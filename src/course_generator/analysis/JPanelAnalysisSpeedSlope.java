@@ -159,7 +159,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 					int s = e.getSeriesIndex();
 					int i = e.getItem();
 					double x = d.getXValue(s, i);
-					//double y = d.getYValue(s, i);
+					// double y = d.getYValue(s, i);
 					xCrosshair.setValue(x);
 					// yCrosshair.setValue(y);
 					RefreshInfo(i);
@@ -201,9 +201,9 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 				if (track.data.isEmpty())
 					return;
 
-				if (datasetSpeedSlopeLine.getSeriesCount()<=0)
+				if (datasetSpeedSlopeLine.getSeriesCount() <= 0)
 					return;
-				
+
 				frmSaveSSCurve dlg = new frmSaveSSCurve();
 				if (dlg.showDialog()) {
 					SaveCurve(dlg.getName(), dlg.getComment());
@@ -255,12 +255,10 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		// -- Save the data in the home directory
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
-			BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(
+			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
 					new FileOutputStream(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + name + ".par"));
-			XMLStreamWriter writer = factory
-					.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
+			XMLStreamWriter writer = factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
 
-			
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("Project");
 			Utils.WriteStringToXML(writer, "Name", name);
@@ -270,23 +268,21 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 				writer.writeStartElement("Item");
 				Utils.WriteStringToXML(writer, "Slope",
 						String.format(Locale.ROOT, "%f", datasetSpeedSlopeLine.getSeries(0).getX(i)));
-				
-				if (settings.Unit==CgConst.UNIT_MILES_FEET) {
+
+				if (settings.Unit == CgConst.UNIT_MILES_FEET) {
 					if (settings.isPace)
-						Utils.WriteStringToXML(writer, "Speed",
-								String.format(Locale.ROOT, "%f", Utils.Miles2Km( Utils.Pace2Speed(datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue()) )));
+						Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", Utils
+								.Miles2Km(Utils.Pace2Speed(datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue()))));
 					else
-						Utils.WriteStringToXML(writer, "Speed",
-							String.format(Locale.ROOT, "%f", Utils.Miles2Km(datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue()) ));
-				}
+						Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f",
+								Utils.Miles2Km(datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue())));
+				} else if (settings.isPace)
+					Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f",
+							Utils.Pace2Speed(datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue())));
 				else
-					if (settings.isPace)
-						Utils.WriteStringToXML(writer, "Speed",
-								String.format(Locale.ROOT, "%f", Utils.Pace2Speed(datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue())));
-					else
-						Utils.WriteStringToXML(writer, "Speed",
+					Utils.WriteStringToXML(writer, "Speed",
 							String.format(Locale.ROOT, "%f", datasetSpeedSlopeLine.getSeries(0).getY(i)));
-				
+
 				writer.writeEndElement(); // Item
 			}
 			writer.writeEndElement(); // Param
@@ -366,8 +362,9 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 	 * Update the Slope/Speed chart
 	 */
 	public void Refresh(TrackData track, CgSettings settings) {
-		if (track==null) return;
-		
+		if (track == null)
+			return;
+
 		if (track.data.isEmpty())
 			return;
 
@@ -410,8 +407,8 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		SpeedFilter();
 
 		/*
-		 * -- Pass 1 We calculate the average, variance and standard deviation
-		 * of each area (1% per area)
+		 * -- Pass 1 We calculate the average, variance and standard deviation of each
+		 * area (1% per area)
 		 */
 		int n = 0;
 		double s = 0.0;
@@ -461,8 +458,8 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		}
 
 		/*
-		 * -- Pass 2 We filter the same data at +-100% of the standard deviation
-		 * around the average
+		 * -- Pass 2 We filter the same data at +-100% of the standard deviation around
+		 * the average
 		 */
 
 		// -- Init calc
@@ -547,8 +544,9 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 			}
 		}
 		// -- If there is no speed the exit (not already calculated)
-		if (maxspeed==0) return;
-		
+		if (maxspeed == 0)
+			return;
+
 		datasetSpeedSlopeLine.addSeries(serie2);
 
 		// -- Set the range of the X axis
@@ -575,16 +573,22 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 			if (i == 0)
 				avr = track.data.get(0).getSpeed(settings.Unit, settings.isPace);
 			else if (i == 1)
-				avr = (track.data.get(1).getSpeed(settings.Unit, settings.isPace) + track.data.get(0).getSpeed(settings.Unit, settings.isPace)) / 2;
+				avr = (track.data.get(1).getSpeed(settings.Unit, settings.isPace)
+						+ track.data.get(0).getSpeed(settings.Unit, settings.isPace)) / 2;
 			else if (i == 2)
-				avr = (track.data.get(2).getSpeed(settings.Unit, settings.isPace) + track.data.get(1).getSpeed(settings.Unit, settings.isPace)
+				avr = (track.data.get(2).getSpeed(settings.Unit, settings.isPace)
+						+ track.data.get(1).getSpeed(settings.Unit, settings.isPace)
 						+ track.data.get(0).getSpeed(settings.Unit, settings.isPace)) / 3;
 			else if (i == 3)
-				avr = (track.data.get(3).getSpeed(settings.Unit, settings.isPace) + track.data.get(2).getSpeed(settings.Unit, settings.isPace)
-						+ track.data.get(1).getSpeed(settings.Unit, settings.isPace) + track.data.get(0).getSpeed(settings.Unit, settings.isPace)) / 4;
+				avr = (track.data.get(3).getSpeed(settings.Unit, settings.isPace)
+						+ track.data.get(2).getSpeed(settings.Unit, settings.isPace)
+						+ track.data.get(1).getSpeed(settings.Unit, settings.isPace)
+						+ track.data.get(0).getSpeed(settings.Unit, settings.isPace)) / 4;
 			else
-				avr = (track.data.get(i).getSpeed(settings.Unit, settings.isPace) + track.data.get(i - 1).getSpeed(settings.Unit, settings.isPace)
-						+ track.data.get(i - 2).getSpeed(settings.Unit, settings.isPace) + track.data.get(i - 3).getSpeed(settings.Unit, settings.isPace)
+				avr = (track.data.get(i).getSpeed(settings.Unit, settings.isPace)
+						+ track.data.get(i - 1).getSpeed(settings.Unit, settings.isPace)
+						+ track.data.get(i - 2).getSpeed(settings.Unit, settings.isPace)
+						+ track.data.get(i - 3).getSpeed(settings.Unit, settings.isPace)
 						+ track.data.get(i - 4).getSpeed(settings.Unit, settings.isPace)) / 5;
 
 			track.data.get(i).tmp1 = avr;

@@ -70,6 +70,7 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 	private JCheckBox chkMark;
 	private JLabel lbMark;
 
+
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -79,59 +80,61 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 		setModal(true);
 	}
 
+
 	/**
 	 * Show the dialog
-	 * @return 
-	 * 	true if ok was pressed
+	 * 
+	 * @return true if ok was pressed
 	 */
 	public boolean showDialog() {
 		ok = false;
-		tag=0;
+		tag = 0;
 
 		// -- Show the dialog
 		setVisible(true);
 
 		if (ok) {
-			tag=0;
-            //Higher point
+			tag = 0;
+			// Higher point
 			if (chkHighPt.isSelected())
-				tag=tag | CgConst.TAG_HIGH_PT;
+				tag = tag | CgConst.TAG_HIGH_PT;
 
-			//Lower point
+			// Lower point
 			if (chkLowPt.isSelected())
-				tag=tag | CgConst.TAG_LOW_PT;
+				tag = tag | CgConst.TAG_LOW_PT;
 
-            //Station
+			// Station
 			if (chkEat.isSelected())
-            	tag=tag | CgConst.TAG_EAT_PT;
+				tag = tag | CgConst.TAG_EAT_PT;
 
-            //Drink
+			// Drink
 			if (chkDrink.isSelected())
-				tag=tag | CgConst.TAG_WATER_PT;
-            
-            //Mark
-			if (chkMark.isSelected())
-				tag=tag | CgConst.TAG_MARK;
-            
-            //Roadbook
-			if (chkRoadbook.isSelected())
-				tag=tag | CgConst.TAG_ROADBOOK;
-            
-            //Photo
-			if (chkPhoto.isSelected())
-				tag=tag | CgConst.TAG_COOL_PT;
-            
-            //Note
-			if (chkNote.isSelected())
-				tag=tag | CgConst.TAG_NOTE;
+				tag = tag | CgConst.TAG_WATER_PT;
 
-            //Info
+			// Mark
+			if (chkMark.isSelected())
+				tag = tag | CgConst.TAG_MARK;
+
+			// Roadbook
+			if (chkRoadbook.isSelected())
+				tag = tag | CgConst.TAG_ROADBOOK;
+
+			// Photo
+			if (chkPhoto.isSelected())
+				tag = tag | CgConst.TAG_COOL_PT;
+
+			// Note
+			if (chkNote.isSelected())
+				tag = tag | CgConst.TAG_NOTE;
+
+			// Info
 			if (chkInfo.isSelected())
-				tag=tag | CgConst.TAG_INFO;
+				tag = tag | CgConst.TAG_INFO;
 
 		}
 		return ok;
 	}
+
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -165,6 +168,7 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 		return rootPane;
 	}
 
+
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -175,6 +179,7 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
+
 
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -235,7 +240,6 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 		Utils.addComponent(panelTags, lbDrink, 1, 3, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
-		
 		// -- mark
 		chkMark = new JCheckBox();
 		Utils.addComponent(panelTags, chkMark, 0, 4, 1, 1, 0, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
@@ -245,7 +249,6 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 		Utils.addComponent(panelTags, lbMark, 1, 4, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
-		
 		// -- Tag : Place to see
 		chkPhoto = new JCheckBox();
 		Utils.addComponent(panelTags, chkPhoto, 0, 5, 1, 1, 0, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
@@ -259,7 +262,7 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 		chkNote = new JCheckBox();
 		Utils.addComponent(panelTags, chkNote, 0, 6, 1, 1, 0, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
-		lbNote = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbNote.Text"), 
+		lbNote = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbNote.Text"),
 				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/note.png")), JLabel.LEFT);
 		Utils.addComponent(panelTags, lbNote, 1, 6, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
@@ -268,7 +271,7 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 		chkInfo = new JCheckBox();
 		Utils.addComponent(panelTags, chkInfo, 0, 7, 1, 1, 0, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
-		lbInfo = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbInfo.Text"), 
+		lbInfo = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbInfo.Text"),
 				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/info.png")), JLabel.LEFT);
 		Utils.addComponent(panelTags, lbInfo, 1, 7, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
@@ -319,6 +322,7 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 
 		setLocationRelativeTo(null);
 	}
+
 
 	public int getTag() {
 		return tag;

@@ -207,78 +207,78 @@ public class JPanelTrackData extends JPanel {
 			String s = "";
 
 			switch (col) {
-				case 0: // Num
-					s = track.data.get(row).getNumString();
-					break;
-				case 1: // Latitude
-					s = track.data.get(row).getLatitudeString();
-					break;
-				case 2: // Longitude
-					s = track.data.get(row).getLongitudeString();
-					break;
-				case 3: // Elevation
-					s = track.data.get(row).getElevationString(settings.Unit, false);
-					break;
-				case 4: // Tags
-					int tag = track.data.get(row).getTag();
+			case 0: // Num
+				s = track.data.get(row).getNumString();
+				break;
+			case 1: // Latitude
+				s = track.data.get(row).getLatitudeString();
+				break;
+			case 2: // Longitude
+				s = track.data.get(row).getLongitudeString();
+				break;
+			case 3: // Elevation
+				s = track.data.get(row).getElevationString(settings.Unit, false);
+				break;
+			case 4: // Tags
+				int tag = track.data.get(row).getTag();
 
-					// High and low point
-					if ((tag & CgConst.TAG_HIGH_PT) != 0)
-						s = s + "High ";
-					if ((tag & CgConst.TAG_LOW_PT) != 0)
-						s = s + "Low ";
+				// High and low point
+				if ((tag & CgConst.TAG_HIGH_PT) != 0)
+					s = s + "High ";
+				if ((tag & CgConst.TAG_LOW_PT) != 0)
+					s = s + "Low ";
 
-					// Eat and drink station
-					if ((tag & CgConst.TAG_EAT_PT) != 0)
-						s = s + "Eat ";
-					if ((tag & CgConst.TAG_WATER_PT) != 0)
-						s = s + "Drink";
+				// Eat and drink station
+				if ((tag & CgConst.TAG_EAT_PT) != 0)
+					s = s + "Eat ";
+				if ((tag & CgConst.TAG_WATER_PT) != 0)
+					s = s + "Drink";
 
-					// Photo
-					if ((tag & CgConst.TAG_COOL_PT) != 0)
-						s = s + "Photo ";
+				// Photo
+				if ((tag & CgConst.TAG_COOL_PT) != 0)
+					s = s + "Photo ";
 
-					// Mark
-					if ((tag & CgConst.TAG_MARK) != 0)
-						s = s + "Mark ";
+				// Mark
+				if ((tag & CgConst.TAG_MARK) != 0)
+					s = s + "Mark ";
 
-					// Note
-					if ((tag & CgConst.TAG_NOTE) != 0)
-						s = s + "Note ";
-					break;
-				case 5: // Distance
-					s = track.data.get(row).getDistString(settings.Unit, false);
-					break;
-				case 6: // Total distance
-					s = track.data.get(row).getTotalString(settings.Unit, false);
-					break;
-				case 7: // Difficulty
-					s = String.format("%1.1f", track.data.get(row).getDiff());
-					break;
-				case 8: // Coeff
-					s = String.format("%1.1f", track.data.get(row).getCoeff());
-					break;
-				case 9: // Recovery
-					s = String.format("%1.2f", track.data.get(row).getRecovery());
-					break;
-				case 10: // Time
-					s = track.data.get(row).getTimeString();
-					break;
-				case 11: // Time limit
-					s = track.data.get(row).getTimeLimitString(false);
-					break;
-				case 12: // Hour
-					s = track.data.get(row).getHourString();
-					break;
-				case 13: // Station time
-					s = track.data.get(row).getStationString(false);
-					break;
-				case 14: // Name
-					s = track.data.get(row).getName();
-					break;
-				case 15: // Comment
-					s = track.data.get(row).getComment();
-					break;
+				// Note
+				if ((tag & CgConst.TAG_NOTE) != 0)
+					s = s + "Note ";
+				break;
+			case 5: // Distance
+				s = track.data.get(row).getDistString(settings.Unit, false);
+				break;
+			case 6: // Total distance
+				s = track.data.get(row).getTotalString(settings.Unit, false);
+				break;
+			case 7: // Difficulty
+				s = String.format("%1.1f", track.data.get(row).getDiff());
+				break;
+			case 8: // Coeff
+				s = String.format("%1.1f", track.data.get(row).getCoeff());
+				break;
+			case 9: // Recovery
+				s = String.format("%1.2f", track.data.get(row).getRecovery());
+				break;
+			case 10: // Time
+				s = track.data.get(row).getTimeString();
+				break;
+			case 11: // Time limit
+				s = track.data.get(row).getTimeLimitString(false);
+				break;
+			case 12: // Hour
+				s = track.data.get(row).getHourString();
+				break;
+			case 13: // Station time
+				s = track.data.get(row).getStationString(false);
+				break;
+			case 14: // Name
+				s = track.data.get(row).getName();
+				break;
+			case 15: // Comment
+				s = track.data.get(row).getComment();
+				break;
 			} // switch
 
 			StringSelection selection = new StringSelection(s);

@@ -39,13 +39,17 @@ public class ParamData {
 	public String comment = "";
 	public ArrayList<CgParam> data;
 
+
 	public ParamData() {
 		data = new ArrayList<CgParam>();
 	}
 
+
 	/**
 	 * Load parameters from disk
-	 * @param name File name to load
+	 * 
+	 * @param name
+	 *            File name to load
 	 * @throws Exception
 	 */
 	public void Load(String name) throws Exception {
@@ -56,14 +60,15 @@ public class ParamData {
 			System.out.println("Load parameters '" + name + "'from disk. Error line =" + paramHandler.getErrLine());
 
 	} // -- Load
-	
 
-	
+
 	/**
 	 * Save parameters on disk
-	 * @param fname Name of the file
+	 * 
+	 * @param fname
+	 *            Name of the file
 	 */
-	public void SaveCurve(String fname,int unit) {
+	public void SaveCurve(String fname, int unit) {
 		if (data.size() <= 0) {
 			return;
 		}
@@ -71,10 +76,8 @@ public class ParamData {
 		// -- Save the data in the home directory
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
-			BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(
-					new FileOutputStream(fname));
-			XMLStreamWriter writer = factory
-					.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
+			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(fname));
+			XMLStreamWriter writer = factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
 
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("Project");
@@ -83,15 +86,9 @@ public class ParamData {
 			writer.writeStartElement("Param");
 			for (CgParam curvePoint : data) {
 				writer.writeStartElement("Item");
-				Utils.WriteStringToXML(
-						writer, 
-						"Slope", 
-						String.format(Locale.ROOT, "%f", curvePoint.Slope));
+				Utils.WriteStringToXML(writer, "Slope", String.format(Locale.ROOT, "%f", curvePoint.Slope));
 				// Saving the curve speeds using the metric system.
-				Utils.WriteStringToXML(
-						writer, 
-						"Speed",
-						String.format(Locale.ROOT, "%f", curvePoint.Speed));
+				Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", curvePoint.Speed));
 				writer.writeEndElement(); // Item
 			}
 			writer.writeEndElement(); // Param
@@ -104,9 +101,10 @@ public class ParamData {
 		}
 	}
 
-	
+
 	/**
 	 * Find the maximum speed of the list
+	 * 
 	 * @return Maximum speed en km/h
 	 */
 	public double FindMaxSpeed() {

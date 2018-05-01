@@ -27,66 +27,73 @@ public class DrawStringMultiLine {
 	private int Width;
 	private int Height;
 	private int Align;
-	public final int ALIGN_CENTER=0;
-	public final int ALIGN_LEFT=1;
-	public final int ALIGN_RIGHT=2;
-	
+	public final int ALIGN_CENTER = 0;
+	public final int ALIGN_LEFT = 1;
+	public final int ALIGN_RIGHT = 2;
+
+
 	public DrawStringMultiLine() {
-		Text="";
-		Width=0;
-		Height=0;
-		Align=0;
+		Text = "";
+		Width = 0;
+		Height = 0;
+		Align = 0;
 	}
-	
+
 
 	public void draw(Graphics2D g2d, String text, int x, int y) {
-		setText(g2d,text);
-		
-		int w=0;
+		setText(g2d, text);
+
+		int w = 0;
 		FontMetrics m = g2d.getFontMetrics();
-		int hh= m.getHeight();
-		int h=hh;
-		
+		int hh = m.getHeight();
+		int h = hh;
+
 		for (String line : TabText) {
-			if (Align==ALIGN_CENTER)
-				w=(Width-m.stringWidth(line))/2;
-			else if (Align==ALIGN_RIGHT)
-				w=(Width-m.stringWidth(line));
-			else 
-				w=0;
-			g2d.drawString(line, x+w, y+h);
-			h=h+hh;
+			if (Align == ALIGN_CENTER)
+				w = (Width - m.stringWidth(line)) / 2;
+			else if (Align == ALIGN_RIGHT)
+				w = (Width - m.stringWidth(line));
+			else
+				w = 0;
+			g2d.drawString(line, x + w, y + h);
+			h = h + hh;
 		}
 	}
+
 
 	public String getText() {
 		return Text;
 	}
 
+
 	public void setText(Graphics2D g2d, String text) {
 		Text = text;
-		TabText=Text.split("\n");
+		TabText = Text.split("\n");
 		CalcDimension(g2d);
 	}
+
 
 	public int getWidth() {
 		return Width;
 	}
 
+
 	private void CalcDimension(Graphics2D g2d) {
-		int xmax=0;
-		int w=0;
-		int h=0;
+		int xmax = 0;
+		int w = 0;
+		int h = 0;
 		FontMetrics m = g2d.getFontMetrics();
-		
+
 		for (String line : TabText) {
-			w=m.stringWidth(line);
-			if (w>xmax) xmax=w;
-			h=h+m.getHeight();
+			w = m.stringWidth(line);
+			if (w > xmax)
+				xmax = w;
+			h = h + m.getHeight();
 		}
-		Width=xmax;
-		Height=h;
+		Width = xmax;
+		Height = h;
 	}
+
 
 	public int getHeight() {
 		return Height;
@@ -102,7 +109,4 @@ public class DrawStringMultiLine {
 		Align = align;
 	}
 
-	
-	
-	
 }

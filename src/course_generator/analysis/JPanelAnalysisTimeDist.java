@@ -60,9 +60,9 @@ public class JPanelAnalysisTimeDist extends JPanel {
 	private XYSeriesCollection datasetElevDist = null;
 	private XYSeriesCollection datasetTimeDist = null;
 	private ResourceBundle bundle;
-	private TrackData track=null;
-	private CgSettings settings=null;
-	
+	private TrackData track = null;
+	private CgSettings settings = null;
+
 	private JToolBar toolBar;
 	private JButton btTimeDistSave;
 	private JPanel jPanelTimeDistInfo;
@@ -77,8 +77,8 @@ public class JPanelAnalysisTimeDist extends JPanel {
 
 	public JPanelAnalysisTimeDist() {
 		super();
-		track=null;
-		settings=null;
+		track = null;
+		settings = null;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		datasetElevDist = new XYSeriesCollection();
 		datasetTimeDist = new XYSeriesCollection();
@@ -147,11 +147,11 @@ public class JPanelAnalysisTimeDist extends JPanel {
 				GridBagConstraints.VERTICAL);
 
 		// -- Chart Time/Dist
-		ChartPanelTimeDist = new ChartPanel(chart, true /*Properties*/, true /*save*/, true /*print*/, false /*zoom*/,
-				true /*tooltips*/);
+		ChartPanelTimeDist = new ChartPanel(chart, true /* Properties */, true /* save */, true /* print */,
+				false /* zoom */, true /* tooltips */);
 		ChartPanelTimeDist.setDomainZoomable(false);
 		ChartPanelTimeDist.setRangeZoomable(false);
-		
+
 		CrosshairOverlay crosshairOverlay = new CrosshairOverlay();
 
 		xCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
@@ -193,35 +193,35 @@ public class JPanelAnalysisTimeDist extends JPanel {
 
 
 	private void RefreshInfo(int i) {
-		if ((track==null) || (settings==null)) return;
-		
+		if ((track == null) || (settings == null))
+			return;
+
 		// -- Get the data
 		CgData d = track.data.get(i);
 
-		
-		lbTimeDistInfoDistance.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistInfoDistance.text") 
-			+ "="+d.getTotalString(settings.Unit, true)+" ");
-		
-		lbTimeDistInfoElevation.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistInfoElevation.text") 
-			+ "="+d.getElevationString(settings.Unit, true)+" ");
-		
-		lbTimeDistInfoTime.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistInfoTime.text") 
-			+ "="+d.getTimeString()+" ");
-		
-		lbTimeDistInfoHour.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistInfoHour.text") 
-			+ "="+d.getHourString()+" ");
-		
-		lbTimeDistSlope.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistSlope.text") 
-			+ "="+d.getSlopeString(true)+" ");
+		lbTimeDistInfoDistance.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistInfoDistance.text")
+				+ "=" + d.getTotalString(settings.Unit, true) + " ");
+
+		lbTimeDistInfoElevation.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistInfoElevation.text")
+				+ "=" + d.getElevationString(settings.Unit, true) + " ");
+
+		lbTimeDistInfoTime.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistInfoTime.text") + "="
+				+ d.getTimeString() + " ");
+
+		lbTimeDistInfoHour.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistInfoHour.text") + "="
+				+ d.getHourString() + " ");
+
+		lbTimeDistSlope.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistSlope.text") + "="
+				+ d.getSlopeString(true) + " ");
 	}
 
 
 	private JFreeChart CreateChart(XYDataset dataset1, XYDataset dataset2) {
-		JFreeChart chart = ChartFactory.createXYAreaChart("", 
-				// x  axis label
-				bundle.getString("JPanelAnalysisTimeDist.labelX"), //"Distance" 
+		JFreeChart chart = ChartFactory.createXYAreaChart("",
+				// x axis label
+				bundle.getString("JPanelAnalysisTimeDist.labelX"), // "Distance"
 				// y axis label
-				bundle.getString("JPanelAnalysisTimeDist.labelY1"), //"Elevation" 
+				bundle.getString("JPanelAnalysisTimeDist.labelY1"), // "Elevation"
 				dataset1, // data
 				PlotOrientation.VERTICAL, false, // include legend
 				true, // tooltips
@@ -237,14 +237,14 @@ public class JPanelAnalysisTimeDist extends JPanel {
 		plot.setDomainGridlinePaint(Color.gray);
 		plot.setRangeGridlinePaint(Color.gray);
 		plot.setDomainAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
-		
+
 		XYAreaRenderer renderer = new XYAreaRenderer();
 		renderer.setSeriesPaint(0, new Color(0x99, 0xff, 0x00));
 		renderer.setOutline(true);
 		renderer.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
 		plot.setRenderer(0, renderer);
 
-		NumberAxis rangeAxis2 = new NumberAxis(bundle.getString("JPanelAnalysisTimeDist.labelY2")); //"Time"
+		NumberAxis rangeAxis2 = new NumberAxis(bundle.getString("JPanelAnalysisTimeDist.labelY2")); // "Time"
 		plot.setRangeAxis(1, rangeAxis2);
 		plot.setDataset(1, dataset2);
 		plot.setRangeAxis(1, rangeAxis2);
@@ -253,7 +253,7 @@ public class JPanelAnalysisTimeDist extends JPanel {
 		renderer2.setSeriesPaint(0, Color.red);
 		plot.setRenderer(1, renderer2);
 
-		//-- Select the display order
+		// -- Select the display order
 		plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
 
 		return chart;
@@ -264,12 +264,13 @@ public class JPanelAnalysisTimeDist extends JPanel {
 	 * Update the Time/Distance chart
 	 */
 	public void Refresh(TrackData track, CgSettings settings) {
-		if (track==null) return;
-		
+		if (track == null)
+			return;
+
 		if (track.data.isEmpty())
 			return;
-		this.track=track;
-		this.settings=settings;
+		this.track = track;
+		this.settings = settings;
 
 		// -- Clear all series
 		if (datasetElevDist.getSeriesCount() > 0)

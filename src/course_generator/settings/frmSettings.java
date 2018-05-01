@@ -60,6 +60,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private JLabel lbCheck;
 	private JCheckBox chkCheck;
 
+
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -68,6 +69,7 @@ public class frmSettings extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
+
 
 	public boolean showDialog(CgSettings s) {
 		settings = s;
@@ -94,7 +96,7 @@ public class frmSettings extends javax.swing.JDialog {
 			cbSpeed.setSelectedIndex(1);
 		else
 			cbSpeed.setSelectedIndex(0);
-		
+
 		// -- Check for update
 		chkCheck.setSelected(s.Check4UpdateAtStart);
 
@@ -106,8 +108,8 @@ public class frmSettings extends javax.swing.JDialog {
 		if (ok) {
 			// Copy fields
 
-			String old_language=s.Language;
-			
+			String old_language = s.Language;
+
 			// -- Language
 			switch (cbLanguage.getSelectedIndex()) {
 			case 0: // Default
@@ -125,7 +127,7 @@ public class frmSettings extends javax.swing.JDialog {
 
 			if (!old_language.equalsIgnoreCase(s.Language))
 				JOptionPane.showMessageDialog(this, bundle.getString("frmSettings.MsgRestart"));
-			
+
 			// -- Units
 			switch (cbUnit.getSelectedIndex()) {
 			case 0: // Kilometer / Feet
@@ -151,11 +153,12 @@ public class frmSettings extends javax.swing.JDialog {
 			}
 
 			// -- Check for update
-			s.Check4UpdateAtStart=chkCheck.isSelected();
+			s.Check4UpdateAtStart = chkCheck.isSelected();
 
 		}
 		return ok;
 	}
+
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -189,6 +192,7 @@ public class frmSettings extends javax.swing.JDialog {
 		return rootPane;
 	}
 
+
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -199,6 +203,7 @@ public class frmSettings extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
+
 
 	/**
 	 * This method is called to initialize the form.
@@ -221,23 +226,14 @@ public class frmSettings extends javax.swing.JDialog {
 		// -- LANGUAGE - String
 		lbLanguage = new javax.swing.JLabel();
 		lbLanguage.setText(bundle.getString("frmSettings.lbLanguage.text"));
-		Utils.addComponent(paneGlobal, lbLanguage, 
-				0, line, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(paneGlobal, lbLanguage, 0, line, 1, 1, 1, 0, 10, 10, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		cbLanguage = new javax.swing.JComboBox<>();
 		String language[] = { bundle.getString("frmSettings.LanguageDefault"),
 				bundle.getString("frmSettings.LanguageEN"), bundle.getString("frmSettings.LanguageFR") };
 		cbLanguage.setModel(new javax.swing.DefaultComboBoxModel<>(language));
-		Utils.addComponent(paneGlobal, cbLanguage, 
-				1, line++, 
-				1, 1, 
-				0, 0, 
-				10, 5, 0, 10,
+		Utils.addComponent(paneGlobal, cbLanguage, 1, line++, 1, 1, 0, 0, 10, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		line++;
@@ -245,65 +241,38 @@ public class frmSettings extends javax.swing.JDialog {
 		// -- UNIT - int - Unit
 		lbUnit = new javax.swing.JLabel();
 		lbUnit.setText(bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbUnit, 
-				0, line, 
-				1, 1, 
-				1, 0, 
-				2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(paneGlobal, lbUnit, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		cbUnit = new javax.swing.JComboBox<>();
 		String units[] = { bundle.getString("frmSettings.Units.KmM"), bundle.getString("frmSettings.Units.MilesFeet") };
 		cbUnit.setModel(new javax.swing.DefaultComboBoxModel<>(units));
-		Utils.addComponent(paneGlobal, cbUnit, 
-				1, line++, 
-				1, 1, 
-				0, 0, 
-				2, 5, 0, 10, 
-				GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(paneGlobal, cbUnit, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		// -- Speed/Pace
 		lbSpeed = new javax.swing.JLabel();
 		lbSpeed.setText(bundle.getString("frmSettings.lbSpeed.text"));
-		Utils.addComponent(paneGlobal, lbSpeed, 
-				0, line, 
-				1, 1, 
-				1, 0, 
-				2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(paneGlobal, lbSpeed, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		cbSpeed = new javax.swing.JComboBox<>();
-		String speeddisplay[] = { bundle.getString("frmSettings.SpeedDisplay.Speed"), bundle.getString("frmSettings.SpeedDisplay.Pace") };
+		String speeddisplay[] = { bundle.getString("frmSettings.SpeedDisplay.Speed"),
+				bundle.getString("frmSettings.SpeedDisplay.Pace") };
 		cbSpeed.setModel(new javax.swing.DefaultComboBoxModel<>(speeddisplay));
-		Utils.addComponent(paneGlobal, cbSpeed, 
-				1, line++, 
-				1, 1, 
-				0, 0, 
-				2, 5, 0, 10, 
-				GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(paneGlobal, cbSpeed, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		// -- Check for update
 		lbCheck = new javax.swing.JLabel();
 		lbCheck.setText(bundle.getString("frmSettings.lbCheck.text"));
-		Utils.addComponent(paneGlobal, lbCheck, 
-				0, line, 
-				1, 1, 
-				1, 0, 
-				2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(paneGlobal, lbCheck, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		chkCheck = new javax.swing.JCheckBox();
-		Utils.addComponent(paneGlobal, chkCheck, 
-				1, line++, 
-				1, 1, 
-				0, 0, 
-				2, 5, 0, 10, 
-				GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
-		
-		
+		Utils.addComponent(paneGlobal, chkCheck, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
 		// -- Separator
 		// -- NOCONNECTIONONSTARTUP - Boolean -bNoConnectOnStartup
 		// -- CONNECTIONTIMEOUT - int - ConnectionTimeout
@@ -312,11 +281,7 @@ public class frmSettings extends javax.swing.JDialog {
 		// ===========================================================
 		jPanelButtons = new javax.swing.JPanel();
 		jPanelButtons.setLayout(new FlowLayout());
-		Utils.addComponent(paneGlobal, jPanelButtons, 
-				0, line, 
-				GridBagConstraints.REMAINDER, 1, 
-				0, 0, 
-				10, 0, 0, 0,
+		Utils.addComponent(paneGlobal, jPanelButtons, 0, line, GridBagConstraints.REMAINDER, 1, 0, 0, 10, 0, 0, 0,
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();

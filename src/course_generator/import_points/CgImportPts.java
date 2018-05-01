@@ -22,50 +22,53 @@ import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class CgImportPts {
-	/**Selection**/
+	/** Selection **/
 	private boolean Sel;
-	/**Line from the data grid**/
+	/** Line from the data grid **/
 	private double Line;
-	/**Distance between point in meter**/
+	/** Distance between point in meter **/
 	private double Dist;
 	/** Latitude of the position **/
 	private double Latitude;
 	/** Longitude of the position **/
 	private double Longitude;
-	/**Elevation in meter**/
+	/** Elevation in meter **/
 	private double Elevation;
 	/** Tag of the position **/
 	private int Tag;
-	/**Name of the position**/
+	/** Name of the position **/
 	private String Name;
-	/**Comment**/
+	/** Comment **/
 	private String Comment;
 
-	//-- Constructor
+
+	// -- Constructor
 	public CgImportPts() {
-		Sel=false;
-		Line=0;
-		Dist=0.0;
-		Latitude=0.0;
-		Longitude=0.0;
-		Elevation=0.0;
-		Tag=0;
-		Name="";
-		Comment="";		
+		Sel = false;
+		Line = 0;
+		Dist = 0.0;
+		Latitude = 0.0;
+		Longitude = 0.0;
+		Elevation = 0.0;
+		Tag = 0;
+		Name = "";
+		Comment = "";
 	}
 
+
 	public CgImportPts(double lat, double lon, double ele, int tag, String name, String comment) {
-		Sel=false;
-		Line=0;
-		Dist=0.0;
-		Latitude=lat;
-		Longitude=lon;
-		Elevation=ele;
-		Tag=tag;
-		Name=name;
-		Comment=comment;		
+		Sel = false;
+		Line = 0;
+		Dist = 0.0;
+		Latitude = lat;
+		Longitude = lon;
+		Elevation = ele;
+		Tag = tag;
+		Name = name;
+		Comment = comment;
 	}
-	
+
+
 	// -- Selection
 	public boolean getSel() {
 		return Sel;
@@ -84,9 +87,11 @@ public class CgImportPts {
 		this.Sel = sel;
 	}
 
+
 	public void invSel() {
 		Sel = !Sel;
 	}
+
 
 	// -- Line number
 	public double getLine() {
@@ -96,11 +101,11 @@ public class CgImportPts {
 
 	/**
 	 * Return the line as string
-	 * @return 
-	 * 	Line number + 1 as string
+	 * 
+	 * @return Line number + 1 as string
 	 */
 	public String getLineString() {
-		return String.format("%1.0f", Line+1);
+		return String.format("%1.0f", Line + 1);
 	}
 
 
@@ -117,13 +122,13 @@ public class CgImportPts {
 
 	public double getDist(int unit) {
 		switch (unit) {
-			case CgConst.UNIT_METER:
-				return Dist;
-			case CgConst.UNIT_MILES_FEET:
-				// meter to miles
-				return Utils.Meter2uMiles(Dist);
-			default:
-				return Dist;
+		case CgConst.UNIT_METER:
+			return Dist;
+		case CgConst.UNIT_MILES_FEET:
+			// meter to miles
+			return Utils.Meter2uMiles(Dist);
+		default:
+			return Dist;
 		}
 	}
 
@@ -136,21 +141,21 @@ public class CgImportPts {
 
 		// -- Set the value
 		switch (unit) {
-			case CgConst.UNIT_METER:
-				s = String.format("%1.3f ", d);
-				if (withunit)
-					s = s + "m";
-				break;
-			case CgConst.UNIT_MILES_FEET:
-				s = String.format("%1.3f ", d);
-				if (withunit)
-					s = s + "miles";
-				break;
-			default:
-				s = String.format("%1.3f ", d);
-				if (withunit)
-					s = s + "m";
-				break;
+		case CgConst.UNIT_METER:
+			s = String.format("%1.3f ", d);
+			if (withunit)
+				s = s + "m";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			s = String.format("%1.3f ", d);
+			if (withunit)
+				s = s + "miles";
+			break;
+		default:
+			s = String.format("%1.3f ", d);
+			if (withunit)
+				s = s + "m";
+			break;
 		}
 		return s;
 	}
@@ -201,13 +206,13 @@ public class CgImportPts {
 
 	public double getElevation(int unit) {
 		switch (unit) {
-			case CgConst.UNIT_METER:
-				return Elevation;
-			case CgConst.UNIT_MILES_FEET:
-				// meter to miles
-				return Utils.Meter2Feet(Elevation);
-			default:
-				return Elevation;
+		case CgConst.UNIT_METER:
+			return Elevation;
+		case CgConst.UNIT_MILES_FEET:
+			// meter to miles
+			return Utils.Meter2Feet(Elevation);
+		default:
+			return Elevation;
 		}
 	}
 
@@ -218,21 +223,21 @@ public class CgImportPts {
 
 		String s = "";
 		switch (unit) {
-			case CgConst.UNIT_METER:
-				s = String.format("%1.0f ", e);
-				if (withunit)
-					s = s + "m";
-				break;
-			case CgConst.UNIT_MILES_FEET:
-				s = String.format("%1.0f ", e);
-				if (withunit)
-					s = s + "feet";
-				break;
-			default:
-				s = String.format("%1.0f ", e);
-				if (withunit)
-					s = s + "m";
-				break;
+		case CgConst.UNIT_METER:
+			s = String.format("%1.0f ", e);
+			if (withunit)
+				s = s + "m";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			s = String.format("%1.0f ", e);
+			if (withunit)
+				s = s + "feet";
+			break;
+		default:
+			s = String.format("%1.0f ", e);
+			if (withunit)
+				s = s + "m";
+			break;
 		}
 		return s;
 	}

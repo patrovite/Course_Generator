@@ -57,37 +57,31 @@ public class SaxCGPHandler extends DefaultHandler {
 
 
 	/*
-	<?xml version="1.0" encoding="UTF-8"?>
-	<COURSEGENERATOR VERSION="1">
-		<Points>
-			<Pt>
-				<LatitudeDegrees>45.85291000000000</LatitudeDegrees>
-				<LongitudeDegrees>6.72386000000000</LongitudeDegrees>
-				<AltitudeMeters>1183.0</AltitudeMeters>
-				<Comment> </Comment>
-				<Name>St Nicolas</Name>
-				<Tag>288</Tag>
-			</Pt>
-		</Points>
-	</COURSEGENERATOR>
-	*/
+	 * <?xml version="1.0" encoding="UTF-8"?> <COURSEGENERATOR VERSION="1"> <Points>
+	 * <Pt> <LatitudeDegrees>45.85291000000000</LatitudeDegrees>
+	 * <LongitudeDegrees>6.72386000000000</LongitudeDegrees>
+	 * <AltitudeMeters>1183.0</AltitudeMeters> <Comment> </Comment> <Name>St
+	 * Nicolas</Name> <Tag>288</Tag> </Pt> </Points> </COURSEGENERATOR>
+	 */
 
 	/**
 	 * Read the CGP file from disc
-	 * @param filename Name of the gpx file to read
-	 * @param CGPData ImportPtsData object where to store the read data
-	 * @return The error code
-	 *   Erroce explanation:
-	 *   ERR_READ_NO = No problem during the reading of the file
-	 *   ERR_READ_LAT = Parsing error during the read of a latitude (lat) element 
-	 *   ERR_READ_LON = Parsing error during the read of a longitude (lon) element
-	 *   ERR_READ_ELE = Parsing error during the read of a elevation (ele) element
-	 *   ERR_READ_TIME = Parsing error during the read of a time (time) element
-	 *   ERR_READ_VERSION = Parsing error during the read of a version of the GPX file. Must be 1.1
-	 *   ERR_READ_NOTEXIST = The file doesn't exist or can't by read
+	 * 
+	 * @param filename
+	 *            Name of the gpx file to read
+	 * @param CGPData
+	 *            ImportPtsData object where to store the read data
+	 * @return The error code Erroce explanation: ERR_READ_NO = No problem during
+	 *         the reading of the file ERR_READ_LAT = Parsing error during the read
+	 *         of a latitude (lat) element ERR_READ_LON = Parsing error during the
+	 *         read of a longitude (lon) element ERR_READ_ELE = Parsing error during
+	 *         the read of a elevation (ele) element ERR_READ_TIME = Parsing error
+	 *         during the read of a time (time) element ERR_READ_VERSION = Parsing
+	 *         error during the read of a version of the GPX file. Must be 1.1
+	 *         ERR_READ_NOTEXIST = The file doesn't exist or can't by read
 	 * @throws SAXException
 	 * @throws IOException
-	 * @throws ParserConfigurationException 
+	 * @throws ParserConfigurationException
 	 */
 	public int readDataFromCGP(String filename, ImportPtsData CGPData)
 			throws SAXException, IOException, ParserConfigurationException {
@@ -133,6 +127,7 @@ public class SaxCGPHandler extends DefaultHandler {
 
 	/**
 	 * Parse a string element
+	 * 
 	 * @return Return the parsed value
 	 */
 	private String ManageString() {
@@ -144,8 +139,11 @@ public class SaxCGPHandler extends DefaultHandler {
 
 	/**
 	 * Parse a double element
-	 * @param _default Default value
-	 * @param _errcode Error code if a parse error occur
+	 * 
+	 * @param _default
+	 *            Default value
+	 * @param _errcode
+	 *            Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private double ManageDouble(double _default, int _errcode) {
@@ -164,8 +162,11 @@ public class SaxCGPHandler extends DefaultHandler {
 
 	/**
 	 * Parse a integer element
-	 * @param _default Default value
-	 * @param _errcode Error code if a parse error occur
+	 * 
+	 * @param _default
+	 *            Default value
+	 * @param _errcode
+	 *            Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private int ManageInt(int _default, int _errcode) {
@@ -218,9 +219,9 @@ public class SaxCGPHandler extends DefaultHandler {
 	public void endElement(String uri, String localname, String qName) throws SAXException {
 		if (qName.equalsIgnoreCase("COURSEGENERATOR")) {
 			level--;
-		} else if (qName.equalsIgnoreCase("POINTS") && (level==LEVEL_PTS)) {
+		} else if (qName.equalsIgnoreCase("POINTS") && (level == LEVEL_PTS)) {
 			level--;
-		} else if (qName.equalsIgnoreCase("PT") && (level==LEVEL_PT)) {
+		} else if (qName.equalsIgnoreCase("PT") && (level == LEVEL_PT)) {
 			level--;
 			// Add data at the of the array
 			ptsdata.data.add(new CgImportPts(tmp_lat, tmp_lon, tmp_ele, tmp_tag, tmp_name, tmp_comment));

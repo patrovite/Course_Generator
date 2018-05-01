@@ -44,7 +44,7 @@ import course_generator.utils.CgConst;
 import course_generator.utils.CgSpinner;
 import course_generator.utils.Utils;
 
-public class FrmConfigMrb  extends javax.swing.JDialog {
+public class FrmConfigMrb extends javax.swing.JDialog {
 
 	private ResourceBundle bundle;
 	private boolean ok;
@@ -56,7 +56,7 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 	private JPanel panelSimple;
 	private JPanel panelSlope;
 	private JPanel panelRoadTrack;
-//	private JLabel lbNbCharPerLine;
+	// private JLabel lbNbCharPerLine;
 	private CgSpinner spinCharPerLine;
 	private JLabel lbCurveFilter;
 	private CgSpinner spinCurveFilter;
@@ -109,6 +109,7 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 	private JButton btRTDefaultColor;
 	private JButton btSlopeDefaultColor;
 
+
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -118,57 +119,57 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 		setModal(true);
 	}
 
-	
+
 	public boolean showDialog(TrackData track) {
 
-//		spinCharPerLine.setValue(track.WordWrapLength);
+		// spinCharPerLine.setValue(track.WordWrapLength);
 		spinCurveFilter.setValue(track.CurveFilter);
 		spinTopSize.setValue(track.TopMargin);
-		
-		ColorSimpleFill=track.clProfil_Simple_Fill;
-		ColorSimpleBorder=track.clProfil_Simple_Border;
-		
-		ColorRSPath=track.clProfil_RS_Path;
-		ColorRSRoad=track.clProfil_RS_Road;
-		ColorRSBorder=track.clProfil_RS_Border;
 
-		ColorSlopeInf5=track.clProfil_SlopeInf5;
-		ColorSlopeInf10=track.clProfil_SlopeInf10;
-		ColorSlopeInf15=track.clProfil_SlopeInf15;
-		ColorSlopeSup15=track.clProfil_SlopeSup15;
-		ColorSlopeBorder=track.clProfil_SlopeBorder;
-		
+		ColorSimpleFill = track.clProfil_Simple_Fill;
+		ColorSimpleBorder = track.clProfil_Simple_Border;
+
+		ColorRSPath = track.clProfil_RS_Path;
+		ColorRSRoad = track.clProfil_RS_Road;
+		ColorRSBorder = track.clProfil_RS_Border;
+
+		ColorSlopeInf5 = track.clProfil_SlopeInf5;
+		ColorSlopeInf10 = track.clProfil_SlopeInf10;
+		ColorSlopeInf15 = track.clProfil_SlopeInf15;
+		ColorSlopeSup15 = track.clProfil_SlopeSup15;
+		ColorSlopeBorder = track.clProfil_SlopeBorder;
+
 		Refresh();
-		
+
 		// End set field
 		ok = false;
-		
-		//-- Show the dialog
+
+		// -- Show the dialog
 		setVisible(true);
 
 		if (ok) {
 			// Copy fields
-//			track.WordWrapLength=spinCharPerLine.getValueAsInt();
-			track.CurveFilter=spinCurveFilter.getValueAsInt();
-			track.TopMargin=spinTopSize.getValueAsInt();
+			// track.WordWrapLength=spinCharPerLine.getValueAsInt();
+			track.CurveFilter = spinCurveFilter.getValueAsInt();
+			track.TopMargin = spinTopSize.getValueAsInt();
 
-			track.clProfil_Simple_Fill=ColorSimpleFill;
-			track.clProfil_Simple_Border=ColorSimpleBorder;
+			track.clProfil_Simple_Fill = ColorSimpleFill;
+			track.clProfil_Simple_Border = ColorSimpleBorder;
 
-			track.clProfil_RS_Path=ColorRSPath;
-			track.clProfil_RS_Road=ColorRSRoad;
-			track.clProfil_RS_Border=ColorRSBorder;
+			track.clProfil_RS_Path = ColorRSPath;
+			track.clProfil_RS_Road = ColorRSRoad;
+			track.clProfil_RS_Border = ColorRSBorder;
 
-			track.clProfil_SlopeInf5=ColorSlopeInf5;
-			track.clProfil_SlopeInf10=ColorSlopeInf10;
-			track.clProfil_SlopeInf15=ColorSlopeInf15;
-			track.clProfil_SlopeSup15=ColorSlopeSup15;
-			track.clProfil_SlopeBorder=ColorSlopeBorder;			
+			track.clProfil_SlopeInf5 = ColorSlopeInf5;
+			track.clProfil_SlopeInf10 = ColorSlopeInf10;
+			track.clProfil_SlopeInf15 = ColorSlopeInf15;
+			track.clProfil_SlopeSup15 = ColorSlopeSup15;
+			track.clProfil_SlopeBorder = ColorSlopeBorder;
 		}
 		return ok;
 	}
 
-	
+
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -201,7 +202,7 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-	
+
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -213,7 +214,7 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 		}
 	}
 
-	
+
 	private void initComponents() {
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -221,11 +222,10 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 		setResizable(false);
 		setType(java.awt.Window.Type.UTILITY);
 		addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                repaint();
-            }
-        });
-
+			public void componentShown(java.awt.event.ComponentEvent evt) {
+				repaint();
+			}
+		});
 
 		// -- Layout
 		// ------------------------------------------------------------
@@ -235,153 +235,104 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 		// -- Tabbed panel
 		// ------------------------------------------------------
 		TabbedPaneConfig = new javax.swing.JTabbedPane();
-		Utils.addComponent(paneGlobal, TabbedPaneConfig, 
-				0, 0, 
-				1, 1, 
-				1, 1, 
-				10, 10, 0, 10, GridBagConstraints.WEST,
+		Utils.addComponent(paneGlobal, TabbedPaneConfig, 0, 0, 1, 1, 1, 1, 10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
-		
-		//== TAB : panel general config
+		// == TAB : panel general config
 		panelGeneral = new JPanel();
 		panelGeneral.setLayout(new GridBagLayout());
 		TabbedPaneConfig.add(panelGeneral, bundle.getString("FrmConfigMrb.panelGeneral.tabTitle"));
 
-		//-- Content of the panel
-//		lbNbCharPerLine = new JLabel(bundle.getString("FrmConfigMrb.lbNbCharPerLine.text"));		
-//		Utils.addComponent(panelGeneral, lbNbCharPerLine, 
-//				0, 0, 
-//				1, 1, 
-//				0, 0, 
-//				10, 10, 0, 0, GridBagConstraints.WEST,
-//				GridBagConstraints.BOTH);
-//		
-//		spinCharPerLine = new CgSpinner(25,1,100,1);
-//		Utils.addComponent(panelGeneral, spinCharPerLine, 
-//				1, 0, 
-//				1, 1, 
-//				1, 0, 
-//				10, 10, 0, 10, 
-//				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		// -- Content of the panel
+		// lbNbCharPerLine = new
+		// JLabel(bundle.getString("FrmConfigMrb.lbNbCharPerLine.text"));
+		// Utils.addComponent(panelGeneral, lbNbCharPerLine,
+		// 0, 0,
+		// 1, 1,
+		// 0, 0,
+		// 10, 10, 0, 0, GridBagConstraints.WEST,
+		// GridBagConstraints.BOTH);
+		//
+		// spinCharPerLine = new CgSpinner(25,1,100,1);
+		// Utils.addComponent(panelGeneral, spinCharPerLine,
+		// 1, 0,
+		// 1, 1,
+		// 1, 0,
+		// 10, 10, 0, 10,
+		// GridBagConstraints.WEST, GridBagConstraints.BOTH);
 
-		//--
-		lbCurveFilter = new JLabel(bundle.getString("FrmConfigMrb.lbCurveFilter.text"));		
-		Utils.addComponent(panelGeneral, lbCurveFilter, 
-				0, 0, 
-				1, 1, 
-				0, 0, 
-				5, 10, 0, 0, GridBagConstraints.WEST,
-				GridBagConstraints.BOTH);
-		
-		spinCurveFilter = new CgSpinner(1,1,10,1);
-		Utils.addComponent(panelGeneral, spinCurveFilter, 
-				1, 0, 
-				1, 1, 
-				1, 0, 
-				5, 10, 0, 10, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
-		
-		//--
-		lbTopSize = new JLabel(bundle.getString("FrmConfigMrb.lbTopSize.text"));		
-		Utils.addComponent(panelGeneral, lbTopSize, 
-				0, 1, 
-				1, 1, 
-				0, 0, 
-				5, 10, 10, 0, GridBagConstraints.WEST,
-				GridBagConstraints.BOTH);
-		
-		spinTopSize = new CgSpinner(100,1,1000,1);
-		Utils.addComponent(panelGeneral, spinTopSize, 
-				1, 1, 
-				1, 1, 
-				1, 0, 
-				5, 10, 10, 10, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
-
-		//-- Empty line for resize purpose (not the best solution but it's simple ;) )
-		lbEmpty = new JLabel();		
-		Utils.addComponent(panelGeneral, lbEmpty, 
-				0, 2, 
-				1, 1, 
-				0, 1, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+		// --
+		lbCurveFilter = new JLabel(bundle.getString("FrmConfigMrb.lbCurveFilter.text"));
+		Utils.addComponent(panelGeneral, lbCurveFilter, 0, 0, 1, 1, 0, 0, 5, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
-		
-		//== TAB :  panel simple graph config
+		spinCurveFilter = new CgSpinner(1, 1, 10, 1);
+		Utils.addComponent(panelGeneral, spinCurveFilter, 1, 0, 1, 1, 1, 0, 5, 10, 0, 10, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
+
+		// --
+		lbTopSize = new JLabel(bundle.getString("FrmConfigMrb.lbTopSize.text"));
+		Utils.addComponent(panelGeneral, lbTopSize, 0, 1, 1, 1, 0, 0, 5, 10, 10, 0, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
+
+		spinTopSize = new CgSpinner(100, 1, 1000, 1);
+		Utils.addComponent(panelGeneral, spinTopSize, 1, 1, 1, 1, 1, 0, 5, 10, 10, 10, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
+
+		// -- Empty line for resize purpose (not the best solution but it's simple ;) )
+		lbEmpty = new JLabel();
+		Utils.addComponent(panelGeneral, lbEmpty, 0, 2, 1, 1, 0, 1, 10, 10, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
+
+		// == TAB : panel simple graph config
 		panelSimple = new JPanel();
 		panelSimple.setLayout(new GridBagLayout());
 		TabbedPaneConfig.add(panelSimple, bundle.getString("FrmConfigMrb.panelSimple.tabTitle"));
 
-		//-- Content of the panel
-		lbSimpleFillColor = new JLabel(" "+bundle.getString("FrmConfigMrb.lbSimpleFillColor.text")+" ");	
-		Utils.addComponent(panelSimple, lbSimpleFillColor, 
-				0, 0, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+		// -- Content of the panel
+		lbSimpleFillColor = new JLabel(" " + bundle.getString("FrmConfigMrb.lbSimpleFillColor.text") + " ");
+		Utils.addComponent(panelSimple, lbSimpleFillColor, 0, 0, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		lbSimpleFillColorView = new JLabel("          ");		
+
+		lbSimpleFillColorView = new JLabel("          ");
 		lbSimpleFillColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbSimpleFillColorView.setOpaque(true);
-		Utils.addComponent(panelSimple, lbSimpleFillColorView, 
-				1, 0, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelSimple, lbSimpleFillColorView, 1, 0, 1, 1, 0, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
+
 		btSimpleFillColor = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btSimpleFillColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSimpleFill=FrmColorChooser.showDialog("", ColorSimpleFill);
+				ColorSimpleFill = FrmColorChooser.showDialog("", ColorSimpleFill);
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelSimple, btSimpleFillColor, 
-				2, 0, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST,
+		Utils.addComponent(panelSimple, btSimpleFillColor, 2, 0, 1, 1, 0, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
-		//--
-		lbSimplePenColor = new JLabel(" "+bundle.getString("FrmConfigMrb.lbSimplePenColor.text")+" ");	
-		Utils.addComponent(panelSimple, lbSimplePenColor, 
-				0, 1, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+		// --
+		lbSimplePenColor = new JLabel(" " + bundle.getString("FrmConfigMrb.lbSimplePenColor.text") + " ");
+		Utils.addComponent(panelSimple, lbSimplePenColor, 0, 1, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		lbSimplePenColorView = new JLabel("          ");		
+
+		lbSimplePenColorView = new JLabel("          ");
 		lbSimplePenColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbSimplePenColorView.setOpaque(true);
-		Utils.addComponent(panelSimple, lbSimplePenColorView, 
-				1, 1, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelSimple, lbSimplePenColorView, 1, 1, 1, 1, 0, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
+
 		btSimplePenColor = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btSimplePenColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSimpleBorder=FrmColorChooser.showDialog("", ColorSimpleBorder);
+				ColorSimpleBorder = FrmColorChooser.showDialog("", ColorSimpleBorder);
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelSimple, btSimplePenColor, 
-				2, 1, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST,
+		Utils.addComponent(panelSimple, btSimplePenColor, 2, 1, 1, 1, 0, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
-		//--
-		btSimpleDefaultColor = new JButton(bundle.getString("FrmConfigMrb.btDefaultColors.text")); 
+		// --
+		btSimpleDefaultColor = new JButton(bundle.getString("FrmConfigMrb.btDefaultColors.text"));
 		btSimpleDefaultColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ColorSimpleFill = CgConst.CL_PROFIL_SIMPLE_FILL;
@@ -389,130 +340,84 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelSimple, btSimpleDefaultColor, 
-				0, 2, 
-				GridBagConstraints.REMAINDER, 1, 
-				0, 0, 
-				10, 10, 0, 10, 
-				GridBagConstraints.EAST,
-				GridBagConstraints.VERTICAL);
+		Utils.addComponent(panelSimple, btSimpleDefaultColor, 0, 2, GridBagConstraints.REMAINDER, 1, 0, 0, 10, 10, 0,
+				10, GridBagConstraints.EAST, GridBagConstraints.VERTICAL);
 
-		//-- Empty line for resize purpose (not the best solution but it's simple ;) )
-		lbSimpleEmpty = new JLabel();		
-		Utils.addComponent(panelSimple, lbSimpleEmpty, 
-				0, 3, 
-				1, 1, 
-				0, 1, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+		// -- Empty line for resize purpose (not the best solution but it's simple ;) )
+		lbSimpleEmpty = new JLabel();
+		Utils.addComponent(panelSimple, lbSimpleEmpty, 0, 3, 1, 1, 0, 1, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-	
-			
-		//== TAB :  panel road/track graph config
+
+		// == TAB : panel road/track graph config
 		panelRoadTrack = new JPanel();
 		panelRoadTrack.setLayout(new GridBagLayout());
 		TabbedPaneConfig.add(panelRoadTrack, bundle.getString("FrmConfigMrb.panelRoadTrack.tabTitle"));
 
-		//-- Content of the panel
-		lbRTTrackFillColor = new JLabel(" "+bundle.getString("FrmConfigMrb.lbRTTrackFillColor.text")+" ");	
-		Utils.addComponent(panelRoadTrack, lbRTTrackFillColor, 
-				0, 0, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+		// -- Content of the panel
+		lbRTTrackFillColor = new JLabel(" " + bundle.getString("FrmConfigMrb.lbRTTrackFillColor.text") + " ");
+		Utils.addComponent(panelRoadTrack, lbRTTrackFillColor, 0, 0, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		lbRTTrackFillColorView = new JLabel("          ");		
+
+		lbRTTrackFillColorView = new JLabel("          ");
 		lbRTTrackFillColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbRTTrackFillColorView.setOpaque(true);
-		Utils.addComponent(panelRoadTrack, lbRTTrackFillColorView, 
-				1, 0, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
-				GridBagConstraints.BOTH);
-		
+		Utils.addComponent(panelRoadTrack, lbRTTrackFillColorView, 1, 0, 1, 1, 0, 0, 10, 10, 0, 0,
+				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+
 		btRTTrackFillColor = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btRTTrackFillColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorRSPath=FrmColorChooser.showDialog("", ColorRSPath);
+				ColorRSPath = FrmColorChooser.showDialog("", ColorRSPath);
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelRoadTrack, btRTTrackFillColor, 
-				2, 0, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST,
+		Utils.addComponent(panelRoadTrack, btRTTrackFillColor, 2, 0, 1, 1, 0, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
-		//--
-		lbRTRoadFillColor = new JLabel(" "+bundle.getString("FrmConfigMrb.lbRTRoadFillColor.text")+" ");	
-		Utils.addComponent(panelRoadTrack, lbRTRoadFillColor, 
-				0, 1, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+		// --
+		lbRTRoadFillColor = new JLabel(" " + bundle.getString("FrmConfigMrb.lbRTRoadFillColor.text") + " ");
+		Utils.addComponent(panelRoadTrack, lbRTRoadFillColor, 0, 1, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		lbRTRoadFillColorView = new JLabel("          ");		
+
+		lbRTRoadFillColorView = new JLabel("          ");
 		lbRTRoadFillColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbRTRoadFillColorView.setOpaque(true);
-		Utils.addComponent(panelRoadTrack, lbRTRoadFillColorView, 
-				1, 1, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
-				GridBagConstraints.BOTH);
-		
+		Utils.addComponent(panelRoadTrack, lbRTRoadFillColorView, 1, 1, 1, 1, 0, 0, 10, 10, 0, 0,
+				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+
 		btRTRoadFillColor = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btRTRoadFillColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorRSRoad=FrmColorChooser.showDialog("", ColorRSRoad);
+				ColorRSRoad = FrmColorChooser.showDialog("", ColorRSRoad);
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelRoadTrack, btRTRoadFillColor, 
-				2, 1, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST,
+		Utils.addComponent(panelRoadTrack, btRTRoadFillColor, 2, 1, 1, 1, 0, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		//--
-		lbRTPenColor = new JLabel(" "+bundle.getString("FrmConfigMrb.lbRTPenColor.text")+" ");	
-		Utils.addComponent(panelRoadTrack, lbRTPenColor, 
-				0, 2, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+
+		// --
+		lbRTPenColor = new JLabel(" " + bundle.getString("FrmConfigMrb.lbRTPenColor.text") + " ");
+		Utils.addComponent(panelRoadTrack, lbRTPenColor, 0, 2, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		lbRTPenColorView = new JLabel("          ");		
+
+		lbRTPenColorView = new JLabel("          ");
 		lbRTPenColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbRTPenColorView.setOpaque(true);
-		Utils.addComponent(panelRoadTrack, lbRTPenColorView, 
-				1, 2, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelRoadTrack, lbRTPenColorView, 1, 2, 1, 1, 0, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
+
 		btRTPenColor = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btRTPenColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorRSBorder=FrmColorChooser.showDialog("", ColorRSBorder);
+				ColorRSBorder = FrmColorChooser.showDialog("", ColorRSBorder);
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelRoadTrack, btRTPenColor, 
-				2, 2, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST,
+		Utils.addComponent(panelRoadTrack, btRTPenColor, 2, 2, 1, 1, 0, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
-		//--
-		btRTDefaultColor = new JButton(bundle.getString("FrmConfigMrb.btDefaultColors.text")); 
+		// --
+		btRTDefaultColor = new JButton(bundle.getString("FrmConfigMrb.btDefaultColors.text"));
 		btRTDefaultColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ColorRSPath = CgConst.CL_PROFIL_RS_PATH;
@@ -521,199 +426,129 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelRoadTrack, btRTDefaultColor, 
-				0, 3, 
-				GridBagConstraints.REMAINDER, 1, 
-				0, 0, 
-				10, 10, 0, 10, 
-				GridBagConstraints.EAST,
-				GridBagConstraints.VERTICAL);
-		
-		//-- Empty line for resize purpose (not the best solution but it's simple ;) )
-		lbRTEmpty = new JLabel();		
-		Utils.addComponent(panelRoadTrack, lbRTEmpty, 
-				0, 4, 
-				1, 1, 
-				0, 1, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelRoadTrack, btRTDefaultColor, 0, 3, GridBagConstraints.REMAINDER, 1, 0, 0, 10, 10, 0, 10,
+				GridBagConstraints.EAST, GridBagConstraints.VERTICAL);
+
+		// -- Empty line for resize purpose (not the best solution but it's simple ;) )
+		lbRTEmpty = new JLabel();
+		Utils.addComponent(panelRoadTrack, lbRTEmpty, 0, 4, 1, 1, 0, 1, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		
-		//== TAB :  panel slope graph config
+
+		// == TAB : panel slope graph config
 		panelSlope = new JPanel();
 		panelSlope.setLayout(new GridBagLayout());
 		TabbedPaneConfig.add(panelSlope, bundle.getString("FrmConfigMrb.panelSlope.tabTitle"));
-		
-		//-- Content of the panel
-		lbSlopeInf5 = new JLabel(" "+bundle.getString("FrmConfigMrb.lbSlopeInf5.text")+" ");	
-		Utils.addComponent(panelSlope, lbSlopeInf5, 
-				0, 0, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+
+		// -- Content of the panel
+		lbSlopeInf5 = new JLabel(" " + bundle.getString("FrmConfigMrb.lbSlopeInf5.text") + " ");
+		Utils.addComponent(panelSlope, lbSlopeInf5, 0, 0, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		lbSlopeInf5View = new JLabel("          ");		
+
+		lbSlopeInf5View = new JLabel("          ");
 		lbSlopeInf5View.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbSlopeInf5View.setOpaque(true);
-		Utils.addComponent(panelSlope, lbSlopeInf5View, 
-				1, 0, 
-				1, 1, 
-				0, 0, 
-				10, 0, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelSlope, lbSlopeInf5View, 1, 0, 1, 1, 0, 0, 10, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
+
 		btSlopeInf5 = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btSlopeInf5.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSlopeInf5=FrmColorChooser.showDialog("", ColorSlopeInf5);
+				ColorSlopeInf5 = FrmColorChooser.showDialog("", ColorSlopeInf5);
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelSlope, btSlopeInf5, 
-				2, 0, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST,
+		Utils.addComponent(panelSlope, btSlopeInf5, 2, 0, 1, 1, 0, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
-		//--
-		lbSlopeInf10 = new JLabel(" "+bundle.getString("FrmConfigMrb.lbSlopeInf10.text")+" ");	
-		Utils.addComponent(panelSlope, lbSlopeInf10, 
-				0, 1, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+		// --
+		lbSlopeInf10 = new JLabel(" " + bundle.getString("FrmConfigMrb.lbSlopeInf10.text") + " ");
+		Utils.addComponent(panelSlope, lbSlopeInf10, 0, 1, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		lbSlopeInf10View = new JLabel("          ");		
+
+		lbSlopeInf10View = new JLabel("          ");
 		lbSlopeInf10View.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbSlopeInf10View.setOpaque(true);
-		Utils.addComponent(panelSlope, lbSlopeInf10View, 
-				1, 1, 
-				1, 1, 
-				0, 0, 
-				10, 0, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelSlope, lbSlopeInf10View, 1, 1, 1, 1, 0, 0, 10, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
+
 		btSlopeInf10 = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btSlopeInf10.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSlopeInf10=FrmColorChooser.showDialog("", ColorSlopeInf10);
+				ColorSlopeInf10 = FrmColorChooser.showDialog("", ColorSlopeInf10);
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelSlope, btSlopeInf10, 
-				2, 1, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST,
+		Utils.addComponent(panelSlope, btSlopeInf10, 2, 1, 1, 1, 0, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		//--
-		lbSlopeInf15 = new JLabel(" "+bundle.getString("FrmConfigMrb.lbSlopeInf15.text")+" ");	
-		Utils.addComponent(panelSlope, lbSlopeInf15, 
-				0, 2, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+
+		// --
+		lbSlopeInf15 = new JLabel(" " + bundle.getString("FrmConfigMrb.lbSlopeInf15.text") + " ");
+		Utils.addComponent(panelSlope, lbSlopeInf15, 0, 2, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		lbSlopeInf15View = new JLabel("          ");		
+
+		lbSlopeInf15View = new JLabel("          ");
 		lbSlopeInf15View.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbSlopeInf15View.setOpaque(true);
-		Utils.addComponent(panelSlope, lbSlopeInf15View, 
-				1, 2, 
-				1, 1, 
-				0, 0, 
-				10, 0, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelSlope, lbSlopeInf15View, 1, 2, 1, 1, 0, 0, 10, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
+
 		btSlopeInf15 = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btSlopeInf15.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSlopeInf15=FrmColorChooser.showDialog("", ColorSlopeInf15);
+				ColorSlopeInf15 = FrmColorChooser.showDialog("", ColorSlopeInf15);
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelSlope, btSlopeInf15, 
-				2, 2, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST,
+		Utils.addComponent(panelSlope, btSlopeInf15, 2, 2, 1, 1, 0, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		//--
-		lbSlopeSup15 = new JLabel(" "+bundle.getString("FrmConfigMrb.lbSlopeSup15.text")+" ");	
-		Utils.addComponent(panelSlope, lbSlopeSup15, 
-				0, 3, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+
+		// --
+		lbSlopeSup15 = new JLabel(" " + bundle.getString("FrmConfigMrb.lbSlopeSup15.text") + " ");
+		Utils.addComponent(panelSlope, lbSlopeSup15, 0, 3, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		lbSlopeSup15View = new JLabel("          ");		
+
+		lbSlopeSup15View = new JLabel("          ");
 		lbSlopeSup15View.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbSlopeSup15View.setOpaque(true);
-		Utils.addComponent(panelSlope, lbSlopeSup15View, 
-				1, 3, 
-				1, 1, 
-				0, 0, 
-				10, 0, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelSlope, lbSlopeSup15View, 1, 3, 1, 1, 0, 0, 10, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
+
 		btSlopeSup15 = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btSlopeSup15.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSlopeSup15=FrmColorChooser.showDialog("", ColorSlopeSup15);
+				ColorSlopeSup15 = FrmColorChooser.showDialog("", ColorSlopeSup15);
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelSlope, btSlopeSup15, 
-				2, 3, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST,
+		Utils.addComponent(panelSlope, btSlopeSup15, 2, 3, 1, 1, 0, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
-		//--
-		lbSlopePenColor = new JLabel(" "+bundle.getString("FrmConfigMrb.lbSlopePenColor.text")+" ");	
-		Utils.addComponent(panelSlope, lbSlopePenColor, 
-				0, 4, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+		// --
+		lbSlopePenColor = new JLabel(" " + bundle.getString("FrmConfigMrb.lbSlopePenColor.text") + " ");
+		Utils.addComponent(panelSlope, lbSlopePenColor, 0, 4, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		lbSlopePenColorView = new JLabel("          ");		
+
+		lbSlopePenColorView = new JLabel("          ");
 		lbSlopePenColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbSlopePenColorView.setOpaque(true);
-		Utils.addComponent(panelSlope, lbSlopePenColorView, 
-				1, 4, 
-				1, 1, 
-				0, 0, 
-				10, 0, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelSlope, lbSlopePenColorView, 1, 4, 1, 1, 0, 0, 10, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
+
 		btSlopePenColor = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btSlopePenColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSlopeBorder=FrmColorChooser.showDialog("", ColorSlopeBorder);
+				ColorSlopeBorder = FrmColorChooser.showDialog("", ColorSlopeBorder);
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelSlope, btSlopePenColor, 
-				2, 4, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST,
+		Utils.addComponent(panelSlope, btSlopePenColor, 2, 4, 1, 1, 0, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
-		//--
-		btSlopeDefaultColor = new JButton(bundle.getString("FrmConfigMrb.btDefaultColors.text")); 
+		// --
+		btSlopeDefaultColor = new JButton(bundle.getString("FrmConfigMrb.btDefaultColors.text"));
 		btSlopeDefaultColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSlopeInf5 = CgConst.CL_PROFIL_SLOPE_INF5; 
+				ColorSlopeInf5 = CgConst.CL_PROFIL_SLOPE_INF5;
 				ColorSlopeInf10 = CgConst.CL_PROFIL_SLOPE_INF10;
 				ColorSlopeInf15 = CgConst.CL_PROFIL_SLOPE_INF15;
 				ColorSlopeSup15 = CgConst.CL_PROFIL_SLOPE_SUP15;
@@ -721,34 +556,19 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelSlope, btSlopeDefaultColor, 
-				0, 5, 
-				GridBagConstraints.REMAINDER, 1, 
-				0, 0, 
-				10, 10, 0, 10, 
-				GridBagConstraints.EAST,
-				GridBagConstraints.VERTICAL);
-		
+		Utils.addComponent(panelSlope, btSlopeDefaultColor, 0, 5, GridBagConstraints.REMAINDER, 1, 0, 0, 10, 10, 0, 10,
+				GridBagConstraints.EAST, GridBagConstraints.VERTICAL);
 
-		//-- Empty line for resize purpose (not the best solution but it's simple ;) )
-		lbRTEmpty = new JLabel();		
-		Utils.addComponent(panelSlope, lbRTEmpty, 
-				0, 6, 
-				1, 1, 
-				0, 1, 
-				10, 10, 0, 0, GridBagConstraints.WEST,
+		// -- Empty line for resize purpose (not the best solution but it's simple ;) )
+		lbRTEmpty = new JLabel();
+		Utils.addComponent(panelSlope, lbRTEmpty, 0, 6, 1, 1, 0, 1, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-		
-		
+
 		// == BUTTONS
 		// ===========================================================
 		panelButtons = new javax.swing.JPanel();
 		panelButtons.setLayout(new FlowLayout());
-		Utils.addComponent(paneGlobal, panelButtons, 
-				0, 1, 
-				1, 1, 
-				1, 0, 
-				0, 10, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(paneGlobal, panelButtons, 0, 1, 1, 1, 1, 0, 0, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
 		btCancel = new javax.swing.JButton();
@@ -781,6 +601,7 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
+
 	private void Refresh() {
 		lbSimpleFillColorView.setBackground(ColorSimpleFill);
 		lbSimplePenColorView.setBackground(ColorSimpleBorder);
@@ -788,12 +609,12 @@ public class FrmConfigMrb  extends javax.swing.JDialog {
 		lbRTTrackFillColorView.setBackground(ColorRSPath);
 		lbRTRoadFillColorView.setBackground(ColorRSRoad);
 		lbRTPenColorView.setBackground(ColorRSBorder);
-		
+
 		lbSlopeInf5View.setBackground(ColorSlopeInf5);
 		lbSlopeInf10View.setBackground(ColorSlopeInf10);
 		lbSlopeInf15View.setBackground(ColorSlopeInf15);
 		lbSlopeSup15View.setBackground(ColorSlopeSup15);
 		lbSlopePenColorView.setBackground(ColorSlopeBorder);
 	}
-	
+
 }

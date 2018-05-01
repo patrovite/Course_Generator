@@ -54,7 +54,8 @@ public class frmEditPoint extends javax.swing.JDialog {
 	private double slope;
 	private double speed;
 	private CgSettings settings;
-	
+
+
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -66,116 +67,94 @@ public class frmEditPoint extends javax.swing.JDialog {
 		setModal(true);
 	}
 
+
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmEditPoint.title"));
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setType(java.awt.Window.Type.UTILITY);
-		
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                formComponentShown(evt);
-            }
-        });
+
+		addComponentListener(new java.awt.event.ComponentAdapter() {
+			public void componentShown(java.awt.event.ComponentEvent evt) {
+				formComponentShown(evt);
+			}
+		});
 
 		// -- Layout
 		// ------------------------------------------------------------
 		Container paneGlobal = getContentPane();
 		paneGlobal.setLayout(new GridBagLayout());
 
-		//-- Slope
+		// -- Slope
 		lbSlope = new javax.swing.JLabel();
-		lbSlope.setText(bundle.getString("frmEditPoint.lbSlope.text")+" ");
-		Utils.addComponent(paneGlobal, lbSlope,
-				0, 0, 
-				1, 1, 
-				0, 0, 
-				10, 5, 5, 0, 
-				GridBagConstraints.BASELINE_LEADING,
+		lbSlope.setText(bundle.getString("frmEditPoint.lbSlope.text") + " ");
+		Utils.addComponent(paneGlobal, lbSlope, 0, 0, 1, 1, 0, 0, 10, 5, 5, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
-		
-		tfSlope = new JTextField();
-		Utils.addComponent(paneGlobal, tfSlope,
-				1, 0, 
-				GridBagConstraints.REMAINDER, 1, 
-				1, 0, 
-				0, 5, 5, 10, 
-				GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
-		
-		//-- Speed
-		lbSpeed = new javax.swing.JLabel();
-		lbSpeed.setText(bundle.getString("frmEditPoint.lbSpeed.text")+" ");
-		Utils.addComponent(paneGlobal, lbSpeed,
-				0, 1, 
-				1, 1, 
-				0, 0, 
-				0, 5, 5, 0, 
-				GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
-		
-		tfSpeed = new JTextField();
-		Utils.addComponent(paneGlobal, tfSpeed,
-				1, 1, 
-				GridBagConstraints.REMAINDER, 1, 
-				1, 0, 
-				0, 5, 5, 10, 
-				GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
-		
-        //-- Create the panel for the bottom buttons ---------------------------
-        pnButtons = new javax.swing.JPanel();
-        pnButtons.setLayout(new FlowLayout());
-        
-        //----------------------------------------------------------------------
-        btCancel = new javax.swing.JButton();
-        btCancel.setText(bundle.getString("Global.btCancel.text")); 
-        btCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
-        btCancel.addActionListener(new java.awt.event.ActionListener() {
-        	public void actionPerformed(java.awt.event.ActionEvent evt) {
-        		setVisible(false);
-        	}
-        });
 
-        //----------------------------------------------------------------------
+		tfSlope = new JTextField();
+		Utils.addComponent(paneGlobal, tfSlope, 1, 0, GridBagConstraints.REMAINDER, 1, 1, 0, 0, 5, 5, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
+		// -- Speed
+		lbSpeed = new javax.swing.JLabel();
+		lbSpeed.setText(bundle.getString("frmEditPoint.lbSpeed.text") + " ");
+		Utils.addComponent(paneGlobal, lbSpeed, 0, 1, 1, 1, 0, 0, 0, 5, 5, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		tfSpeed = new JTextField();
+		Utils.addComponent(paneGlobal, tfSpeed, 1, 1, GridBagConstraints.REMAINDER, 1, 1, 0, 0, 5, 5, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
+		// -- Create the panel for the bottom buttons ---------------------------
+		pnButtons = new javax.swing.JPanel();
+		pnButtons.setLayout(new FlowLayout());
+
+		// ----------------------------------------------------------------------
+		btCancel = new javax.swing.JButton();
+		btCancel.setText(bundle.getString("Global.btCancel.text"));
+		btCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
+		btCancel.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				setVisible(false);
+			}
+		});
+
+		// ----------------------------------------------------------------------
 		btOk = new javax.swing.JButton();
-		btOk.setText(bundle.getString("Global.btOk.text")); 
+		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
-        btOk.setPreferredSize(btCancel.getPreferredSize());
+		btOk.setPreferredSize(btCancel.getPreferredSize());
 		btOk.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				RequestToClose();
 			}
 		});
 
-		//-- Add buttons to the buttons panel
-        pnButtons.add(btOk);
-        pnButtons.add(btCancel);
+		// -- Add buttons to the buttons panel
+		pnButtons.add(btOk);
+		pnButtons.add(btCancel);
 
-        //-- Add the buttons panel
-        Utils.addComponent(paneGlobal, pnButtons, 
-        		0, 2, 
-        		GridBagConstraints.REMAINDER, 1, 
-        		0, 1,
-        		10, 0, 5, 5,
-        		GridBagConstraints.PAGE_END, GridBagConstraints.NONE);
+		// -- Add the buttons panel
+		Utils.addComponent(paneGlobal, pnButtons, 0, 2, GridBagConstraints.REMAINDER, 1, 0, 1, 10, 0, 5, 5,
+				GridBagConstraints.PAGE_END, GridBagConstraints.NONE);
 
 		// --
 		pack();
-		
-		//-- Center the windows
+
+		// -- Center the windows
 		setLocationRelativeTo(null);
 	}
 
+
 	public boolean showDialog(CgParam p) {
-		param=p;
-		slope=p.Slope;
-		speed=p.Speed;
-		
-		double convertedSpeed = settings.Unit == CgConst.UNIT_MILES_FEET ? Utils.Km2Miles(p.Speed): p.Speed;
-		
+		param = p;
+		slope = p.Slope;
+		speed = p.Speed;
+
+		double convertedSpeed = settings.Unit == CgConst.UNIT_MILES_FEET ? Utils.Km2Miles(p.Speed) : p.Speed;
+
 		// Set field
 		tfSlope.setText(String.valueOf(slope));
 		tfSpeed.setText(String.valueOf(convertedSpeed));
@@ -186,11 +165,12 @@ public class frmEditPoint extends javax.swing.JDialog {
 
 		if (ok) {
 			// Copy fields
-			p.Slope=slope;
-			p.Speed=settings.Unit == CgConst.UNIT_MILES_FEET ? Utils.Miles2Km(speed) : speed;
+			p.Slope = slope;
+			p.Speed = settings.Unit == CgConst.UNIT_MILES_FEET ? Utils.Miles2Km(speed) : speed;
 		}
 		return ok;
 	}
+
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -224,36 +204,37 @@ public class frmEditPoint extends javax.swing.JDialog {
 		return rootPane;
 	}
 
+
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
 
 		slope = Utils.ParseDoubleEx(tfSlope.getText(), -1000.0);
-		if ((slope>=-50) && (slope<=50))
+		if ((slope >= -50) && (slope <= 50))
 			tfSlope.setBackground(Color.WHITE);
 		else {
 			tfSlope.setBackground(Color.MAGENTA);
-			param_valid=false;
+			param_valid = false;
 		}
 
 		speed = Utils.ParseDoubleEx(tfSpeed.getText(), -1000.0);
-		if ((speed>0) && (speed<100))
+		if ((speed > 0) && (speed < 100))
 			tfSpeed.setBackground(Color.WHITE);
 		else {
 			tfSpeed.setBackground(Color.MAGENTA);
-			param_valid=false;
+			param_valid = false;
 		}
-		
+
 		// -- Ok?
 		if (param_valid) {
 			ok = true;
 			setVisible(false);
 		}
 	}
-	
-	
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {
-        repaint();
-    }
+
+
+	private void formComponentShown(java.awt.event.ComponentEvent evt) {
+		repaint();
+	}
 
 }

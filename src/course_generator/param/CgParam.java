@@ -23,20 +23,24 @@ package course_generator.param;
  * @author pierre.delore
  */
 public class CgParam implements Comparable<CgParam> {
-    public double Slope;
-    public double Speed;
-    
-    public CgParam(double slope, double speed) {
-    	Slope=slope;
-    	Speed=speed;
-    }
-  
-    @Override
-    public int compareTo(CgParam p)
-    {
-      if (Slope - p.Slope < 0) return -1;
-      else if (Slope -p.Slope> 0) return 1;
-      else return 0;
-    }
-    
+	public double Slope;
+	public double Speed;
+
+
+	public CgParam(double slope, double speed) {
+		Slope = slope;
+		Speed = speed;
+	}
+
+
+	@Override
+	public int compareTo(CgParam p) {
+		if (Slope - p.Slope < 0)
+			return -1;
+		else if (Slope - p.Slope > 0)
+			return 1;
+		else
+			return 0;
+	}
+
 }

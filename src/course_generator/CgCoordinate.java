@@ -25,16 +25,18 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
  *
  * @author pierre.delore
  */
-public class CgCoordinate extends Coordinate{
+public class CgCoordinate extends Coordinate {
 
-    private Color _color;
-    
-    public CgCoordinate(double lat, double lon, Color color) {
-        super(lat, lon);
-        _color=color;
-    }
-    
-    public Color getColor() {
-        return _color;
-    }
+	private Color _color;
+
+
+	public CgCoordinate(double lat, double lon, Color color) {
+		super(lat, lon);
+		_color = color;
+	}
+
+
+	public Color getColor() {
+		return _color;
+	}
 }

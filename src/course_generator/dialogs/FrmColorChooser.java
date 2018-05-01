@@ -38,117 +38,110 @@ import course_generator.utils.Utils;
 
 public class FrmColorChooser extends javax.swing.JDialog {
 
-    private javax.swing.JButton btCancel;
-    private javax.swing.JButton btOk;
-    private javax.swing.JColorChooser jColorChooser1;
-    private boolean ok;
+	private javax.swing.JButton btCancel;
+	private javax.swing.JButton btOk;
+	private javax.swing.JColorChooser jColorChooser1;
+	private boolean ok;
 	private JPanel panelButtons;
 	private ResourceBundle bundle;
-    
-    /**
-     * Creates new form DialogColorChooser
-     */
-    public FrmColorChooser() {
+
+
+	/**
+	 * Creates new form DialogColorChooser
+	 */
+	public FrmColorChooser() {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
-        initComponents();
-        setModal(true);
-    }
+		initComponents();
+		setModal(true);
+	}
 
-    public static Color showDialog(String title, Color c) {
-        FrmColorChooser dlg = new FrmColorChooser();
-        if (title!=null)
-            dlg.setTitle(title);
-        dlg.jColorChooser1.setColor(c);
-        dlg.ok=false;
-        
-        dlg.setVisible(true);
-        if (dlg.ok) {
-            return dlg.jColorChooser1.getColor(); 
-        }
-        else return c;
-    }
 
-    
-     /**
-     * Manage low level key strokes
-     * ESCAPE : Close the window
-     * @return 
-     */
-    protected JRootPane createRootPane() { 
-        JRootPane rootPane = new JRootPane();
-        KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
-        KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
-        
-        Action actionListener = new AbstractAction() { 
-            public void actionPerformed(ActionEvent actionEvent) { 
-                setVisible(false);
-            } 
-        } ;
+	public static Color showDialog(String title, Color c) {
+		FrmColorChooser dlg = new FrmColorChooser();
+		if (title != null)
+			dlg.setTitle(title);
+		dlg.jColorChooser1.setColor(c);
+		dlg.ok = false;
 
-        Action actionListenerEnter = new AbstractAction() { 
-            public void actionPerformed(ActionEvent actionEvent) { 
-                RequestToClose();
-            } 
-        } ;
+		dlg.setVisible(true);
+		if (dlg.ok) {
+			return dlg.jColorChooser1.getColor();
+		} else
+			return c;
+	}
 
-        InputMap inputMap = rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        inputMap.put(strokeEscape, "ESCAPE");
-        rootPane.getActionMap().put("ESCAPE", actionListener);
 
-        inputMap.put(strokeEnter, "ENTER");
-        rootPane.getActionMap().put("ENTER", actionListenerEnter);
+	/**
+	 * Manage low level key strokes ESCAPE : Close the window
+	 * 
+	 * @return
+	 */
+	protected JRootPane createRootPane() {
+		JRootPane rootPane = new JRootPane();
+		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
+		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
-        return rootPane;
-    } 
-    
-    
-    private void RequestToClose() {
-        boolean param_valid=true;
-        //check that the parameters are ok
-        
-        //
-        if (param_valid){
-            ok=true;
-            setVisible(false);
-        }
-    }
+		Action actionListener = new AbstractAction() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				setVisible(false);
+			}
+		};
 
-    private void initComponents() {
+		Action actionListenerEnter = new AbstractAction() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				RequestToClose();
+			}
+		};
+
+		InputMap inputMap = rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+		inputMap.put(strokeEscape, "ESCAPE");
+		rootPane.getActionMap().put("ESCAPE", actionListener);
+
+		inputMap.put(strokeEnter, "ENTER");
+		rootPane.getActionMap().put("ENTER", actionListenerEnter);
+
+		return rootPane;
+	}
+
+
+	private void RequestToClose() {
+		boolean param_valid = true;
+		// check that the parameters are ok
+
+		//
+		if (param_valid) {
+			ok = true;
+			setVisible(false);
+		}
+	}
+
+
+	private void initComponents() {
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setType(java.awt.Window.Type.UTILITY);
 		addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                repaint();
-            }
-        });
+			public void componentShown(java.awt.event.ComponentEvent evt) {
+				repaint();
+			}
+		});
 
 		// -- Layout
 		// ------------------------------------------------------------
 		Container paneGlobal = getContentPane();
 		paneGlobal.setLayout(new GridBagLayout());
 
-		
-    	jColorChooser1 = new javax.swing.JColorChooser();
-		Utils.addComponent(paneGlobal, jColorChooser1, 
-				0, 0, 
-				1, 1, 
-				1, 1, 
-				10, 10, 10, 10, GridBagConstraints.WEST,
+		jColorChooser1 = new javax.swing.JColorChooser();
+		Utils.addComponent(paneGlobal, jColorChooser1, 0, 0, 1, 1, 1, 1, 10, 10, 10, 10, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
-
 
 		// == BUTTONS
 		// ===========================================================
 		panelButtons = new javax.swing.JPanel();
 		panelButtons.setLayout(new FlowLayout());
-		Utils.addComponent(paneGlobal, panelButtons, 
-				0, 1, 
-				1, 1, 
-				1, 0, 
-				0, 0, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(paneGlobal, panelButtons, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
 		btCancel = new javax.swing.JButton();
@@ -179,6 +172,6 @@ public class FrmColorChooser extends javax.swing.JDialog {
 		pack();
 
 		setLocationRelativeTo(null);
-    }
+	}
 
 }

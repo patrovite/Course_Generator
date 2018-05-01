@@ -19,5 +19,5 @@
 package course_generator.resume_table;
 
 public class ResumeClass {
-	//Empty class - This is normal ;)
+	// Empty class - This is normal ;)
 }

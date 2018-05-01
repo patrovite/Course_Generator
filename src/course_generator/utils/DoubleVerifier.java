@@ -25,24 +25,23 @@ import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
-
 public class DoubleVerifier extends InputVerifier {
 
-    public boolean verify(JComponent input) {
-        Boolean ok = true;
-        String s = ((JTextField) (input)).getText();
-        try {
-            DecimalFormat decimalFormat = new DecimalFormat("#.#");
-            double d  = decimalFormat.parse(s).doubleValue();                
-           
-            //double d = Double.parseDouble(s);
-        } catch (Exception e) {
-            ok = false;
-        }
-        if (ok) 
-            ((JTextField) (input)).setBackground(Color.white);
-        else
-            ((JTextField) (input)).setBackground(Color.red);
-        return ok;
-    }
+	public boolean verify(JComponent input) {
+		Boolean ok = true;
+		String s = ((JTextField) (input)).getText();
+		try {
+			DecimalFormat decimalFormat = new DecimalFormat("#.#");
+			double d = decimalFormat.parse(s).doubleValue();
+
+			// double d = Double.parseDouble(s);
+		} catch (Exception e) {
+			ok = false;
+		}
+		if (ok)
+			((JTextField) (input)).setBackground(Color.white);
+		else
+			((JTextField) (input)).setBackground(Color.red);
+		return ok;
+	}
 }
