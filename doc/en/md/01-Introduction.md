@@ -9,12 +9,12 @@
 * To define recovery coefficients,
 * To define the night periods and the associated efficiency decline,
 * To select the decline of performance according to the altitude,
-* View your track on an OpenStreetMap map,
-* To generate a mini-roadbook with the profile of your track and annotations on the waypoints (name, time, time, altitude, Elevation + ...),
+* View your track on an map (OpenStreetMap, OpenTopoMap, etc...),
+* To generate a mini-roadbook with the profile of your track and annotations on the waypoints (name, time, altitude, Elevation gain ...),
 * To generate a report in text format (CSV),
-* Get statistics on the track with a save in HTML format,
+* Get statistics on the track (HTML format),
 * Reverse the direction of the track,
-* Set a new starting point for a looped track,
+* Set a new starting point for a loop track,
 * Insert a track at the beginning or at the end of another track,
 * To extract part of the track,
 * To save the modified track, containing calculated track times, in GPX format. This will allow you, for example, to use the "Virtual Partner" function of GARMIN GPS,
@@ -24,12 +24,12 @@ And many other things...
 
 Writing conventions have been adopted in this manual. They are detailed below.
 
-* *"File> Load GPX file"* indicates that it is necessary to select the "File" menu then select, in this menu, "Loading GPX file". This allows to simply describe a sequence of manipulation to be done with the mouse.
-* *"[CTRL + O]"* indicates one or a series of keys to activate to trigger an action. For example [CTRL + O] indicates that it is necessary to press the CTRL key and while maintaining it pressed, it is necessary to press the key O.
+* *"File> Open GPX"* indicates that it is necessary to select the "File" menu then select, in this menu, "Open GPX". This allows to simply describe a sequence of manipulation to be done with the mouse.
+* *"[CTRL + O]"* indicates one or a series of keys to activate in order to trigger an action. For example [CTRL + O] indicates that it is necessary to press the CTRL key while at the same time press the O key.
 
 ## Author's Note
 
-I created **Course Generator** in 2008 to help me prepare for my first 100km Ultra-trail. I completed it following my needs. A small article in Ultrafondu (French magazin) allowed me to start making it known and I then made it grow with the user feedbacks.
+I created **Course Generator** in 2008 to help me prepare for my first 100km Ultramarathon trail race. I improved the software based on my needs. A small article in Ultrafondu (French magazine) allowed me to start making it known and I then made it grow with the user feedbacks.
 It has evolved enormously and many times, I have rewritten it to fit my needs. Each time it was a challenge and like the races that I ran, it was an adventure that made me grow (knowledge, questioning, open-mindedness ...).
 
 **Course Generator** does not pretend to give you totally accurate results. Too much depends on you and external conditions. Consider this software as a help to prepare your futur adventures.

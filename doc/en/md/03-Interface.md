@@ -1,5 +1,6 @@
 ﻿# The GUI
 Upon starting the software, the following window is displayed : 
+
 ![Fenêtre principale](./images/CG40_Main.png)
 
 The software's GUI is made of (from top to bottom):

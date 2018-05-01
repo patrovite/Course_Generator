@@ -43,6 +43,6 @@ The following use cases could be considered (non-exhaustive list):
 ![](./images/CG40_Virtual_Partner.jpg)
 
 
-> __Must I have Garmin GPS to use **Course Generator**?__
+> __Do I need to own a Garmin GPS device to use **Course Generator**?__
 >
 > No! But it's a plus if you want to use the virtual partner feature. That's what pushed me to create **Course Generator** (even though now I almost don't use this feature anymore).
