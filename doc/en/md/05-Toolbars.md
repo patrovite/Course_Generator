@@ -12,6 +12,6 @@
 * ![](./images/Toolbar/mrb.png) : Displays the mini road-book
 * ![](./images/Toolbar/curve.png) : Displays the speed/slope curve
 * ![](./images/Toolbar/settings.png) : Displays the course settings window
-* ![](./images/Toolbar/fill_diff.png) : Displays the terrain difficulty global settings window
-* ![](./images/Toolbar/fill_coeff.png) : Displays the fatigue coefficient global settings window
+* ![](./images/Toolbar/fill_diff.png) : Displays the global terrain difficulty settings window
+* ![](./images/Toolbar/fill_coeff.png) : Displays the global fatigue coefficient settings window
 * ![](./images/Toolbar/refresh_data.png) : Computes the course estimated time

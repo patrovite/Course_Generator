@@ -1,6 +1,7 @@
 # The Status bar
 
 Located at the bottom of the main GUI, it displays the general information related to the software status and the course.
+
 ![Status Bar](./images/Statusbar/CG40_Statusbar.png)
 
 * ![](./images/Statusbar/CG40_Statusbar_Dist.png) : Total distance.

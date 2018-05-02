@@ -47,7 +47,7 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 * **Copy** : Copies the selected line in the clipboard. Keyboard shortcut: [CTRL+C].
 
-* **Search a point...** : Searches a GPS point using a longitude and a latitude. The closest point found will be returned. Keyboard shortcut: [CTRL+F].
+* **Search a point...** : Searches a GPS point using longitude and latitude coordinates. The closest point found will be returned. Keyboard shortcut: [CTRL+F].
 
 * **Mark the current position** : Sets a mark on the selected line. If the line already has a mark, the mark will be deleted. Keyboard shortcut: [F6].
 
@@ -63,7 +63,7 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 ## "Tools" Menu
 
-![Menu Outils](./images/Menu/CG40_Menu_Tools.png)
+![Tools Menu](./images/Menu/CG40_Menu_Tools.png)
 
 * **Find Min/Max** : Determines the highest and lowest course points.
 
@@ -81,7 +81,7 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 * **Track settings...** : Opens the dialog to configure the course settings. Keyboard shortcut: [F9].
 
-* **Speed/Slope curves...** : Opens the dialog to choose or create a speed/slope cruve.
+* **Speed/Slope curves...** : Opens the dialog to choose, create, modify or delete a speed/slope cruve.
 
 * **Course Generator settings...** : Opens the dialog to change the main settings of **Course Generator**.
 
