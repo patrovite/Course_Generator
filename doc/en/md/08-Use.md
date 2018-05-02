@@ -113,7 +113,7 @@ The area "Help" allows according to your estimated to give you an approximate va
 
 ## Set the refueling times
 
-In order to stick to reality, you can enter for a given point the time you plan for your refueling (or your rest).
+In order to stick to reality, you can enter the time you plan to spend at a specific location (refueling, rest...).
 
 The following dialog box is displayed:
 
@@ -122,8 +122,8 @@ The following dialog box is displayed:
 The "Aid station time" fields are used to enter the time at this location (hours, minutes and seconds). The "0" button allows you to reset the time to 00h00mm00s.
 
 > **FAQ!**
-> The time or hour displayed on the line containing a refueling time is the time or hour you plan to leave this position.
-> It's the design of **Course Generator** which oblige this method of calculation.
+> The time or hour displayed on the line containing a refueling time is the time or hour you plan to leave from this position, NOT the time you plan to arrive at this position.
+> It's the design of **Course Generator** that forces this method of calculation.
 >
 > To summarize:
 > [Hour] = [Hour of the previous position] + [Travel time between 2 positions] + [Refueling time]
@@ -145,7 +145,7 @@ After modifying the "Recovery" column, it is necessary to restart a global calcu
 
 ## Set the cut-off times
 
-You can enter for a given point the scheduled time barrier. This time barrier is expressed in time since the start and not the time at the point. This makes it possible to take into account the departure delays (for example the UTMB 2011 with 5 hours delay). To do this, go to the corresponding cell and open the line editor by double-clicking.
+You can enter for a given point the scheduled ccut-off time. This cut-off time is expressed in time since the start and not the time at the point. This makes it possible to take into account the departure delays (for example the UTMB 2011 was delayed by 5 hours). To do this, go to the corresponding cell and open the line editor by double-clicking.
 
 The following dialog box is displayed:
 
@@ -153,7 +153,7 @@ The following dialog box is displayed:
 
 The "Cut-off time" fields are used to enter the cut-off time (hours, minutes and seconds). The "0" button allows you to reset the time to 00h00mm00s.
 
-In order to take into account the input it is necessary to run a calculation with the button  ![refresh button](./images/Toolbar/refresh_data.png). After the calculation if one of the position time exceeds a cut-off time then a red indicator "Cut-off time" will appear in the lower bar. A click on the indicator will select the first line of the track having a cut-off time.
+In order to take into account the input it is necessary to run a calculation with the button  ![refresh button](./images/Toolbar/refresh_data.png). After the calculation if one of the position time exceeds a cut-off time then a red indicator "Cut-off time" will appear in the status bar. A click on the indicator will select the first line of the trackthe first line where the cut-off time has been exceeded.
 
 ## Indicators or tags
 
@@ -161,17 +161,17 @@ For each point you can have indicators or tags that indicates a particularity of
 
 The different indicators are as follows:
 
-* ![high point indicator](./images/Tags/high_point.png) : Indicates a high point. This indicator selected manually or automatically by the function "Find Min/Max".
-* ![low point indicator](./images/Tags/low_point.png) : Indicates a low point. This indicator selected manually or automatically by the function "Find Min/Max".
-* ![eat indicator](./images/Tags/eat.png) : Indicates a refueling point (eat or drink)
-* ![drink indicator](./images/Tags/drink.png) : Indicates a water point
-* ![photo indicator](./images/Tags/photo.png) : Indicates a view point
+* ![high point indicator](./images/Tags/high_point.png) : Indicates a high point. This indicator is selected manually or automatically by the function "Find Min/Max".
+* ![low point indicator](./images/Tags/low_point.png) : Indicates a low point. This indicator is selected manually or automatically by the function "Find Min/Max".
+* ![eat indicator](./images/Tags/eat.png) : Indicates a refueling point (eat or drink).
+* ![drink indicator](./images/Tags/drink.png) : Indicates a water point.
+* ![photo indicator](./images/Tags/photo.png) : Indicates a view point.
 * ![mark indicator](./images/Tags/flag.png) : Indicates a special point. This indicator is called "Mark" and allows you to split the track into steps. Each mark adds a line in the summary table.
 * ![note indicator](./images/Tags/note.png) : Indicates a note.
 * ![info indicator](./images/Tags/info.png) : Indicates information.
-* ![roadbook indicator](./images/Tags/roadbook.png) : Indicates the beginning of a new part of the roadbook
+* ![roadbook indicator](./images/Tags/roadbook.png) : Indicates the beginning of a new part of the roadbook.
 
-To set the indicators for a position, select the corresponding cell concerned and open the line editor by double-clicking.
+To set the indicators for a position, select the corresponding cell and open the line editor by double-clicking.
 
 The following dialog box is displayed:
 
@@ -187,12 +187,12 @@ In order to save time, keyboard shortcuts are available:
 
 ## Calculate the track time
 
-Once the track parameters have been entered, it is necessary to press the button ![refresh button](./images/Toolbar/refresh_data.png) to start the calculation of the time for each point.
-The columns 'Time' and 'Hours' are then updated according to the settings you have made previously.In the status bar at the bottom of the window, the total time is updated.
+Once the track parameters have been entered, it is necessary to click on the button ![refresh button](./images/Toolbar/refresh_data.png) to start the calculation of the time for each point.
+The columns 'Time' and 'Hours' are then updated according to the settings you have made previously. In the status bar at the bottom of the window, the total time is updated.
 
 ## Save the track
 
-**Course Generator**offers the possibility to save your track in several formats.
+**Course Generator** offers the possibility to save your track in several formats.
 
 * "File>Save as GPX" save the track in GPX format which is the standard track exchange format. The problem with this format is that it does not store specific data of **Course Generator**.
 * "File>Save as CGX" saves the track in CGX format which is the standard file format of **Course Generator**. This format should be used as soon as you want to keep the settings made on a track.
