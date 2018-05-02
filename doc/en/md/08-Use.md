@@ -5,11 +5,11 @@ The normal procedure for using **Course Generator** is:
 * Upload a GPS file
 * Set the global track parameters (Name, date and start time)
 * Choose the "Speed/Slope"curve
-* Set the track parameters (field difficulty, fatigue coefficient, aid stations...)
+* Set the track parameters (terrain difficulty, fatigue coefficient, aid stations...)
 * Start the calculation
 * Save the track in CGX or GPX format
 
-The subchapters will describe all these manipulations (And much more).
+The below chapters will describe all these manipulations (And much more).
 
 ## Load a track
 
@@ -52,52 +52,52 @@ If you have chosen to take into account the night effect, you will see that the 
 
 ## Set the speed/slope curve
 
-In order to have a track time consistent with your level, you have to choose or create a speed curve according to the slope. This curve goes from -50% slope (downhill) to + 50% slope (climb). The choice of the curve is made by the choice of the speed that one wants to "hold" when the slope is null (0%) on a road. A set of curves have been created to cover most running uses.
+In order to have a track time consistent with your speed, you have to choose or create a speed curve according to the slope. This curve goes from -50% slope (downhill) to + 50% slope (climb). The choice of the curve is made by the choice of the speed that one wants to "hold" when the slope is null (0%) on a road. A set of curves has been created to cover most running speeds.
 
-The menu "Settings>Speed/Slope curves..." or the button ![curve button](./images/Toolbar/curve.png) to display the dialog box for selecting and managing curves.
+The menu "Settings>Speed/Slope curves..." or the button ![curve button](./images/Toolbar/curve.png) will display the dialog box for selecting and managing curves.
 
 ![Curves dialog](./images/Curve/CG40_Dlg_Curves.png)
 
-On the left appears the list of curves already created. During the creation, an explicit name was given to them to find them quickly. Try to preserve this principle if you create new curves.
+On the left appears the list of curves already created. During the creation, an explicit name was assigned to them to find them quickly. Try to preserve this principle if you create new curves.
 
-The button ![open curve button](./images/Curve/chart_curve_open.png) load the data from the selected curve file into the list.
+The button ![open curve button](./images/Curve/chart_curve_open.png) loads the data from the selected curve file into the list.
 The button ![edit curve button](./images/Curve/chart_curve_edit.png) allows you to modify the data of the selected curve.
 The button ![add curve button](./images/Curve/chart_curve_add.png) allows you to create a new curve.
-The button ![duplicate curve button](./images/Curve/chart_curve_duplicate.png) duplicate the selected curve.
+The button ![duplicate curve button](./images/Curve/chart_curve_duplicate.png) duplicates the selected curve.
 The button ![delete curve button](./images/Curve/chart_curve_delete.png) deletes the selected curve.
 
 > **How to choose a speed curve?**
 > This will depend on you, your goals... You can base yourself on a percentage of your vVO2max.
 > For example for a long trail you can take 60% of your vVO2max. About 10km/h in my case, I then select the curve of 10km/h.
-> There is also the pratice. At the beginning you will surely underestimate or over-evaluate your speed. But over time your choice will become more and more precise.
+> There is also the pratice. At the beginning you will surely underestimate or overestimate your speed. But over time your choice will become more and more accurate.
 
 **Notes:**  
 * If you create new curves that seem interesting to you, do not hesitate to send them to me so that I can add them on the website as well as in the next versions.
 * Each curve is a file whose extension is '.par'. These files are accessible through the menu "Tools>Open "Speed/Slope" folder". This will open the file manager and display the contents of the directory.
 
-## Enter the field difficulty
+## Set the terrain difficulty
 
-The "Diff" column is used to 'quantify' the difficulty of the field.
+The "Diff" column is used to 'quantify' the difficulty of the terrain.
 
-You can quickly enter terrain difficulty for a set of points. Simply select the first line and then while holding down the SHIFT key you select the following lines (with mouse or keyboard). The button ![diff button](./images/Toolbar/fill_diff.png) to display the auto-fill dialog.
+You can quickly enter terrain difficulty for a set of points. Simply select the first line and then while holding down the SHIFT key you select the following lines (with mouse or keyboard). The button ![diff button](./images/Toolbar/fill_diff.png) will display the auto-fill dialog.
 
-![Difficulty dialog](./images/CG40_Dlg_Fill_Diff.png)
+![Terrain Difficulty dialog](./images/CG40_Dlg_Fill_Diff.png)
 
 The "Start" area is used to define the start line (from the beginning or from a specific line number).
 The "End" area is used to define the end line (to the end or to a specific line number).
-The zone "Difficulty" makes it possible to choose the difficulty of the field. You can either use the pre-determined values ​​or enter your own difficulty value.
+The zone "Difficulty" makes it possible to choose the difficulty of the terrain. You can either use the pre-determined values or enter your own difficulty value.
 
-This action can also be done on the tracke map (see below).
+This action can also be done on the track map (see below).
 
 **Note:**  
-It is sometimes impossible to determine the quality of the field because of the ignorance of it. It may be wise to set an average field quality for the entire track. For example, the "Montagn'hard 100" has been qualified in middle filed on the whole track. Even if some passages were very difficult (scree, slippery areas ...) and other very easy (roads or tracks).
-Don't try to take intop account the slope of the field because this is taken into account via the "Speed​​/Slope" curve and the calculation of the slope is automatically done by **Course Generator**.
+It is sometimes impossible to determine or know the quality of the terrain. It may be wise to set an average terrain quality for the entire track. For example, the "Montagn'hard 100" has been rated as "average" terrain. Even if some sections were very difficult (scree, slippery areas ...) and other very easy (roads or tracks).
+Don't try to take into account the slope of the terrain because this is taken into account via the "Speed/Slope" curve and the calculation of the slope is automatically done by **Course Generator**.
 
-## Enter fatigue coefficient
+## Set the fatigue coefficient
 
 The "Coeff" column is used to 'quantify' fatigue over time.
 
-You can quickly enter the fatigue coefficient for a set of points (more generally for the entire track). Simply select the first line and then while holding down the SHIFT key you select the following lines (with mouse or keyboard). The button ![coeff button](./images/Toolbar/fill_coeff.png) allows to display the auto-fill dialog.
+You can quickly enter the fatigue coefficient for a set of points (usually for the entire track). Simply select the first line and then while holding down the SHIFT key select the following lines (with mouse or keyboard). The button ![coeff button](./images/Toolbar/fill_coeff.png) allows to display the auto-fill dialog.
 
 ![Health coefficient dialog](./images/CG40_Dlg_Fill_Coeff.png)
 
@@ -111,7 +111,7 @@ The settings made in this window will be global and stored in the CGX file.
 
 The area "Help" allows according to your estimated to give you an approximate value of the coefficient of fatigue. This value can be copied to in the "Initial value" and "Ending value" fields with the buttons "> Start" and "> End".
 
-## Enter refueling times
+## Set the refueling times
 
 In order to stick to reality, you can enter for a given point the time you plan for your refueling (or your rest).
 
@@ -130,7 +130,7 @@ The "Aid station time" fields are used to enter the time at this location (hours
 >
 > [Time] = [Time of the previous position] + [Travel time between 2 positions] + [Refueling time]
 
-## Enter recovery times
+## Set the recovery times
 
 You can enter for a given point the recovery coefficient after refueling or rest. To do this, go to the corresponding cell and open the line editor by double-clicking.
 
@@ -143,7 +143,7 @@ The "Recovery" field is used to enter the recovery coefficient (between 0 and 10
 **Note :**  
 After modifying the "Recovery" column, it is necessary to restart a global calculation with the button ![fill coeff](./images/Toolbar/fill_coeff.png) in order to have your input taken into account.
 
-## Enter cut-off times
+## Set the cut-off times
 
 You can enter for a given point the scheduled time barrier. This time barrier is expressed in time since the start and not the time at the point. This makes it possible to take into account the departure delays (for example the UTMB 2011 with 5 hours delay). To do this, go to the corresponding cell and open the line editor by double-clicking.
 

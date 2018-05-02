@@ -61,11 +61,11 @@
 <li><a href="#load-a-track"><span class="toc-section-number">8.1</span> Load a track</a></li>
 <li><a href="#set-up-a-track"><span class="toc-section-number">8.2</span> Set up a track</a></li>
 <li><a href="#set-the-speedslope-curve"><span class="toc-section-number">8.3</span> Set the speed/slope curve</a></li>
-<li><a href="#enter-the-field-difficulty"><span class="toc-section-number">8.4</span> Enter the field difficulty</a></li>
-<li><a href="#enter-fatigue-coefficient"><span class="toc-section-number">8.5</span> Enter fatigue coefficient</a></li>
-<li><a href="#enter-refueling-times"><span class="toc-section-number">8.6</span> Enter refueling times</a></li>
-<li><a href="#enter-recovery-times"><span class="toc-section-number">8.7</span> Enter recovery times</a></li>
-<li><a href="#enter-cut-off-times"><span class="toc-section-number">8.8</span> Enter cut-off times</a></li>
+<li><a href="#set-the-terrain-difficulty"><span class="toc-section-number">8.4</span> Set the terrain difficulty</a></li>
+<li><a href="#set-the-fatigue-coefficient"><span class="toc-section-number">8.5</span> Set the fatigue coefficient</a></li>
+<li><a href="#set-the-refueling-times"><span class="toc-section-number">8.6</span> Set the refueling times</a></li>
+<li><a href="#set-the-recovery-times"><span class="toc-section-number">8.7</span> Set the recovery times</a></li>
+<li><a href="#set-the-cut-off-times"><span class="toc-section-number">8.8</span> Set the cut-off times</a></li>
 <li><a href="#indicators-or-tags"><span class="toc-section-number">8.9</span> Indicators or tags</a></li>
 <li><a href="#calculate-the-track-time"><span class="toc-section-number">8.10</span> Calculate the track time</a></li>
 <li><a href="#save-the-track"><span class="toc-section-number">8.11</span> Save the track</a></li>
@@ -111,12 +111,12 @@
 <li>To define recovery coefficients,</li>
 <li>To define the night periods and the associated efficiency decline,</li>
 <li>To select the decline of performance according to the altitude,</li>
-<li>View your track on an OpenStreetMap map,</li>
-<li>To generate a mini-roadbook with the profile of your track and annotations on the waypoints (name, time, time, altitude, Elevation + …),</li>
+<li>View your track on an map (OpenStreetMap, OpenTopoMap, etc…),</li>
+<li>To generate a mini-roadbook with the profile of your track and annotations on the waypoints (name, time, altitude, Elevation gain …),</li>
 <li>To generate a report in text format (CSV),</li>
-<li>Get statistics on the track with a save in HTML format,</li>
+<li>Get statistics on the track (HTML format),</li>
 <li>Reverse the direction of the track,</li>
-<li>Set a new starting point for a looped track,</li>
+<li>Set a new starting point for a loop track,</li>
 <li>Insert a track at the beginning or at the end of another track,</li>
 <li>To extract part of the track,</li>
 <li>To save the modified track, containing calculated track times, in GPX format. This will allow you, for example, to use the “Virtual Partner” function of GARMIN GPS,</li>
@@ -125,11 +125,11 @@
 <p>And many other things…</p>
 <p>Writing conventions have been adopted in this manual. They are detailed below.</p>
 <ul>
-<li><em>“File&gt; Load GPX file”</em> indicates that it is necessary to select the “File” menu then select, in this menu, “Loading GPX file”. This allows to simply describe a sequence of manipulation to be done with the mouse.</li>
-<li><em>“[CTRL + O]”</em> indicates one or a series of keys to activate to trigger an action. For example [CTRL + O] indicates that it is necessary to press the CTRL key and while maintaining it pressed, it is necessary to press the key O.</li>
+<li><em>“File&gt; Open GPX”</em> indicates that it is necessary to select the “File” menu then select, in this menu, “Open GPX”. This allows to simply describe a sequence of manipulation to be done with the mouse.</li>
+<li><em>“[CTRL + O]”</em> indicates one or a series of keys to activate in order to trigger an action. For example [CTRL + O] indicates that it is necessary to press the CTRL key while at the same time press the O key.</li>
 </ul>
 <h2 id="authors-note"><span class="header-section-number">1.1</span> Author’s Note</h2>
-<p>I created <strong>Course Generator</strong> in 2008 to help me prepare for my first 100km Ultra-trail. I completed it following my needs. A small article in Ultrafondu (French magazin) allowed me to start making it known and I then made it grow with the user feedbacks. It has evolved enormously and many times, I have rewritten it to fit my needs. Each time it was a challenge and like the races that I ran, it was an adventure that made me grow (knowledge, questioning, open-mindedness …).</p>
+<p>I created <strong>Course Generator</strong> in 2008 to help me prepare for my first 100km Ultramarathon trail race. I improved the software based on my needs. A small article in Ultrafondu (French magazine) allowed me to start making it known and I then made it grow with the user feedbacks. It has evolved enormously and many times, I have rewritten it to fit my needs. Each time it was a challenge and like the races that I ran, it was an adventure that made me grow (knowledge, questioning, open-mindedness …).</p>
 <p><strong>Course Generator</strong> does not pretend to give you totally accurate results. Too much depends on you and external conditions. Consider this software as a help to prepare your futur adventures.</p>
 <p>You notice that I didn’t use the term “race” because for me the “adventure” approach of a race, as hard as it is, has always allowed me to go through with its positive approach (not to mention the chrono anyway:) ).</p>
 <p>The development of <strong>Course Generator</strong> has been and continues to be an adventure.</p>
@@ -179,11 +179,14 @@ Wikipedia source</p>
 </ul>
 <p><img src="./images/CG40_Virtual_Partner.jpg" /></p>
 <blockquote>
-<p><strong>Must I have Garmin GPS to use <strong>Course Generator</strong>?</strong></p>
+<p><strong>Do I need to own a Garmin GPS device to use <strong>Course Generator</strong>?</strong></p>
 <p>No! But it’s a plus if you want to use the virtual partner feature. That’s what pushed me to create <strong>Course Generator</strong> (even though now I almost don’t use this feature anymore).</p>
 </blockquote>
 <h1 id="the-gui"><span class="header-section-number">3</span> The GUI</h1>
-<p>Upon starting the software, the following window is displayed : <img src="./images/CG40_Main.png" alt="Fenêtre principale" /></p>
+<p>Upon starting the software, the following window is displayed :</p>
+<figure>
+<img src="./images/CG40_Main.png" alt="Main GUI" /><figcaption>Main GUI</figcaption>
+</figure>
 <p>The software’s GUI is made of (from top to bottom):</p>
 <ul>
 <li>A ribbon on top of the window.</li>
@@ -221,7 +224,7 @@ Wikipedia source</p>
 </figure>
 <ul>
 <li><p><strong>Copy</strong> : Copies the selected line in the clipboard. Keyboard shortcut: [CTRL+C].</p></li>
-<li><p><strong>Search a point…</strong> : Searches a GPS point using a longitude and a latitude. The closest point found will be returned. Keyboard shortcut: [CTRL+F].</p></li>
+<li><p><strong>Search a point…</strong> : Searches a GPS point using longitude and latitude coordinates. The closest point found will be returned. Keyboard shortcut: [CTRL+F].</p></li>
 <li><p><strong>Mark the current position</strong> : Sets a mark on the selected line. If the line already has a mark, the mark will be deleted. Keyboard shortcut: [F6].</p></li>
 <li><p><strong>Go to the next mark</strong> : Locates and selects the next mark. Keyboard shortcut: [F7].</p></li>
 <li><p><strong>Go to the previous mark</strong> : Locates and selects the previous mark. Keyboard shortcut: [Ctrl+F7].</p></li>
@@ -235,7 +238,7 @@ Wikipedia source</p>
 </ul>
 <h2 id="tools-menu"><span class="header-section-number">4.4</span> “Tools” Menu</h2>
 <figure>
-<img src="./images/Menu/CG40_Menu_Tools.png" alt="Menu Outils" /><figcaption>Menu Outils</figcaption>
+<img src="./images/Menu/CG40_Menu_Tools.png" alt="Tools Menu" /><figcaption>Tools Menu</figcaption>
 </figure>
 <ul>
 <li><p><strong>Find Min/Max</strong> : Determines the highest and lowest course points.</p></li>
@@ -250,7 +253,7 @@ Wikipedia source</p>
 </figure>
 <ul>
 <li><p><strong>Track settings…</strong> : Opens the dialog to configure the course settings. Keyboard shortcut: [F9].</p></li>
-<li><p><strong>Speed/Slope curves…</strong> : Opens the dialog to choose or create a speed/slope cruve.</p></li>
+<li><p><strong>Speed/Slope curves…</strong> : Opens the dialog to choose, create, modify or delete a speed/slope cruve.</p></li>
 <li><p><strong>Course Generator settings…</strong> : Opens the dialog to change the main settings of <strong>Course Generator</strong>.</p></li>
 </ul>
 <h2 id="help-menu"><span class="header-section-number">4.6</span> “Help” Menu</h2>
@@ -279,12 +282,15 @@ Wikipedia source</p>
 <li><img src="./images/Toolbar/mrb.png" /> : Displays the mini road-book</li>
 <li><img src="./images/Toolbar/curve.png" /> : Displays the speed/slope curve</li>
 <li><img src="./images/Toolbar/settings.png" /> : Displays the course settings window</li>
-<li><img src="./images/Toolbar/fill_diff.png" /> : Displays the terrain difficulty global settings window</li>
-<li><img src="./images/Toolbar/fill_coeff.png" /> : Displays the fatigue coefficient global settings window</li>
+<li><img src="./images/Toolbar/fill_diff.png" /> : Displays the global terrain difficulty settings window</li>
+<li><img src="./images/Toolbar/fill_coeff.png" /> : Displays the global fatigue coefficient settings window</li>
 <li><img src="./images/Toolbar/refresh_data.png" /> : Computes the course estimated time</li>
 </ul>
 <h1 id="the-status-bar"><span class="header-section-number">6</span> The Status bar</h1>
-<p>Located at the bottom of the main GUI, it displays the general information related to the software status and the course. <img src="./images/Statusbar/CG40_Statusbar.png" alt="Status Bar" /></p>
+<p>Located at the bottom of the main GUI, it displays the general information related to the software status and the course.</p>
+<figure>
+<img src="./images/Statusbar/CG40_Statusbar.png" alt="Status Bar" /><figcaption>Status Bar</figcaption>
+</figure>
 <ul>
 <li><img src="./images/Statusbar/CG40_Statusbar_Dist.png" /> : Total distance.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Ascend.png" /> : Total elevation gain.</li>
@@ -306,15 +312,15 @@ Wikipedia source</p>
 <p>A double click on one of the lines opens the edit window.</p>
 <p>The details of the columns are described below:</p>
 <ul>
-<li><strong>N°</strong> : This is the row number of the table. It allows you to find quickly a line in the table.</li>
+<li><strong>Num</strong> : This is the row number of the table. It allows you to find quickly a line in the table.</li>
 <li><strong>Lat</strong> : Contains the latitude of the point in degree.</li>
 <li><strong>Lon</strong> : Contains the longitude of the point in degree.</li>
-<li><strong>Altitude</strong> : Contains the altitude of the point in meters/feet.
+<li><strong>Alt</strong> : Contains the altitude of the point in meters/feet.
 <ul>
 <li>On the left of the altitude an arrow indicates the inclination of the field.
 <ul>
 <li>Upwards, this indicates that we have climbed since the last point.</li>
-<li>Dowwards, this indicates that we have descended from the last point.</li>
+<li>Donwards, this indicates that we have descended from the last point.</li>
 <li>To the right, this indicates that the field is flat.</li>
 </ul></li>
 <li>The background color indicates the degree of slope of the field.
@@ -336,22 +342,22 @@ Wikipedia source</p>
 <li><img src="./images/Tags/info.png" /> : Indicates information.</li>
 <li><img src="./images/Tags/roadbook.png" /> : Indicates the beginning or the end of a roadbook section.</li>
 </ul></li>
-<li><strong>Dist</strong> : Contains the distance, in meters/miles, with the previous point.</li>
+<li><strong>Dist</strong> : Contains the distance, in meters/miles, since the previous point.</li>
 <li><strong>Total</strong> : Contains the distance, in kilometers/miles, that has been traveled to this point.</li>
-<li><strong>Diff</strong> : Contains the field difficulty between the previous point and this point. The initial value is 100, this corresponds to a flat road. The lower the value, the more rugged field. If you enter 80, this indicates that compared to a flat road you will spend 20% more time to cover the distance. The button <img src="./images/Toolbar/fill_diff.png" /> allows you to quickly fill a set of position. You will find below the values ​​used by Softrun (www.softrun.fr). Thanks to Rémi Poisvert for these informations.
+<li><strong>Diff</strong> : Contains the field difficulty between the previous point and this point. The initial value is 100, this corresponds to a flat road. The lower the value, the more rugged it is. If you enter 80, this indicates that compared to a flat road you will spend 20% more time to cover the distance. The button <img src="./images/Toolbar/fill_diff.png" /> allows you to quickly fill a set of position. You will find below the values ​​used by Softrun (www.softrun.fr). Thanks to Rémi Poisvert for these informations.
 <ul>
 <li>“Easy field” = 98</li>
-<li>“Average field” (normal mountain path) = 95</li>
+<li>“Average field” (normal mountain trail) = 95</li>
 <li>“Hard field” = 88</li>
 <li>“Very hard field” = 80</li>
-<li>“Extremely hard field” = below 80</li>
+<li>“Extremely hard field” = &lt; 80</li>
 </ul></li>
-<li><strong>Coeff</strong> : Contains the fatigue coefficient to be applied between the previous point and this point. The value is between 1 and 200. The initial value is 100, this corresponds to your initial state (in principle in good shape). If you enter 80, it indicates that you will spend 20% more time to travel the distance. The button <img src="./images/Toolbar/fill_coeff.png" /> allows to define a rule of global evolution of the fatigue coefficient.</li>
-<li><strong>Recovery</strong> : Contains the recovery coefficient that will be added to the fatigue coefficient. It is a relative value that is between 0 and 100. Initial value is 0 (not displayed). The sum “Coeff” + “Recovery” is limited to 100%. This parameter is used to indicate recovery after a break (refueling, nap in a aid station…). Once the value entered, it’s necessary to restart an overall calculation of the coefficient of fatigue with the button <img src="./images/Toolbar/fill_coeff.png" />.</li>
-<li><strong>Time</strong> : Contains the time needed to reach this point from the start.</li>
-<li><strong>Cut-off</strong> : Contains the cut-off time at this point of the track. This is the time since time and not the hour (this avoids the problems related to the departure times shift). If at a point in the track the time is greater than the cut-off time then an indicator appears in the information bar at the bottom of the main window. A click on the indicator select the first line with cut-off time.</li>
-<li><strong>Hours</strong> : Contains the day and time of passage at this point. Start date and time are adjustable in the track parameters. If the background is green it indicates that the travel is made during the dayligth. If the background is blue then the trip is done during the night.</li>
-<li><strong>Aid station</strong> : Contains the refueling time you expect at this point. If no refueling is planned for this point (time equal to 00: 00.00) then the cell is empty.</li>
+<li><strong>Coeff</strong> : Contains the fatigue coefficient to be applied between the previous point and this point. The value is between 1 and 200. The initial value is 100, this corresponds to your initial state (fresh state). If you enter 80, it indicates that you will spend 20% more time to travel the distance. The button <img src="./images/Toolbar/fill_coeff.png" /> allows to define a rule of global evolution of the fatigue coefficient.</li>
+<li><strong>Recovery</strong> : Contains the recovery coefficient that will be added to the fatigue coefficient. It is a relative value that is between 0 and 100. Initial value is 0 (not displayed). The sum “Coeff” + “Recovery” is limited to 100%. This parameter is used to indicate recovery after a break (refueling, nap at a aid station…). Once the value entered, it’s necessary to restart an overall calculation of the coefficient of fatigue with the button <img src="./images/Toolbar/fill_coeff.png" />.</li>
+<li><strong>Time</strong> : Contains the total time needed to reach this point from the start.</li>
+<li><strong>Cut-off</strong> : Contains the cut-off time at this point of the track. This is the time since the start and not the hour (this avoids the problems related to the departure times shift). If at a point in the track the time is greater than the cut-off time then an indicator appears in the status bar. A click on the indicator will select the first line where the cut-off time has been exceeded.</li>
+<li><strong>Hours</strong> : Contains the day and time of passage at this point. Start date and time are adjustable in the track parameters. If the background is green it indicates that the travel is made during day time. If the background is blue then the trip is done during night time.</li>
+<li><strong>Aid station</strong> : Contains the total refueling time you expect to spend at this point. If no refueling is planned for this point (time equal to 00:00.00) then the cell is empty.</li>
 <li><strong>Name</strong> : Contains the name of the point. It is used in profile view, reports and mini roadbook.</li>
 <li><strong>Comment</strong> : Contains a comment on the point. It is used in reports and the mini roadbook.</li>
 </ul>
@@ -359,37 +365,40 @@ Wikipedia source</p>
 <p>This tab displays the track profile.<br />
 <img src="./images/Tabs/CG40_Tab_Profil.png" alt="Profile tab" /></p>
 <p>If a mark has been positioned in the table then a point appears on the curve as well as its serial number. This number corresponds to the table row of the Summary tab.</p>
-<p>A left click on the curve makes it possible to position a cursor and to obtain information on the point (issue from the data table).</p>
+<p>A left click on the curve makes it possible to position a cursor and to obtain information on the point (information coming from the data table).</p>
 <p>A right click on the curve displays a menu to adjust the display of the curve and save the display as an image (PNG format).</p>
 <p>The button <img src="./images/Tabs/profil_marker.png" /> displays the row position of the “Summary” table.</p>
 <h2 id="statistics-tab"><span class="header-section-number">7.3</span> “Statistics” tab</h2>
 <p>This tab provides statistics on the track.<br />
 <img src="./images/Tabs/CG40_Tab_Stat.png" alt="Statistics tab" /></p>
-<p>Statistics concern among other things:</p>
+<p>Statistics contain among other things:</p>
 <ul>
 <li>Average speed, distance and time for various slope areas</li>
-<li>Average speed, distance and time for various altitude range</li>
-<li>Average speed, distance and time for daylight period</li>
-<li>Average speed, distance and time for night period</li>
-<li>The average percentage of slope on the ascent and descent</li>
+<li>Average speed, distance and time for various altitude ranges</li>
+<li>Average speed, distance and time for the daylight period</li>
+<li>Average speed, distance and time for the night period</li>
+<li>The average percentage of slope of the ascent and descent</li>
 <li>The distance traveled uphill, on the flat and downhill</li>
-<li>The temperature difference between the low point of the course and the high point. This value is purely indicative and theoretical. It does not take into account the felt temperature (due to the wind) and local phenomena. The basis of calculation is 0.6°C per 100m of elevation gain.</li>
+<li>The temperature difference between the low point of the course and the high point. This value is purely indicative and theoretical. It does not take into account the wind chill effect and local phenomena. The basis of calculation is 0.6°C per 100m of elevation gain.</li>
 </ul>
-<p>The button <img src="./images/Tabs/save.png" /> save this data in HTML format.<br />
-The button <img src="./images/Tabs/refresh.png" /> refresh the data.</p>
+<p>The button <img src="./images/Tabs/save.png" /> saves this data in HTML format.<br />
+The button <img src="./images/Tabs/refresh.png" /> refreshes the data.</p>
 <h2 id="analysis-tab"><span class="header-section-number">7.4</span> “Analysis” tab</h2>
 <p>This tab allows to obtain an analysis of your track. It contains 3 sub-tabs which are detailed below.</p>
 <h3 id="analysistimedistance-tab"><span class="header-section-number">7.4.1</span> “Analysis&gt;Time/Distance” tab</h3>
-<p>This tab allows you to analyze your speed over time. <img src="./images/Tabs/CG40_Tab_Analyze_Dist_Time.png" alt="Time/Distance tab" /></p>
+<p>This tab allows you to analyze your speed over time.</p>
+<figure>
+<img src="./images/Tabs/CG40_Tab_Analyze_Dist_Time.png" alt="Time/Distance tab" /><figcaption>Time/Distance tab</figcaption>
+</figure>
 <p>Two curves are displayed:</p>
 <ul>
 <li>A curve of the altitude over the distance</li>
-<li>A curve of the time (in seconde) over the distance</li>
+<li>A curve of the time (in seconds) over the distance</li>
 </ul>
-<p>The study of the curve of time/distance makes it possible to see its evolution on the track (acceleration, slowdown, stopped). The change of slope of the red curve indicates a variation of speed.</p>
+<p>The study of the curve of time/distance allows to see its evolution on the track (acceleration, slowdown, stopped). The change of slope of the red curve indicates a variation of speed.</p>
 <p>The following cases are possible:</p>
 <ul>
-<li>The slope of the curve becomes steeper. This indicates a slowdown (due to the field or fatigue).</li>
+<li>The slope of the curve becomes steeper. This indicates a slowdown (due to the terrain or fatigue).</li>
 <li>The slope of the curve becomes less steep. This indicates an acceleration.</li>
 <li>The slope changes abruptly. This indicates a stop.</li>
 </ul>
@@ -405,7 +414,7 @@ The button <img src="./images/Tabs/refresh.png" /> refresh the data.</p>
 <h3 id="analysisspeedslope-tab"><span class="header-section-number">7.4.3</span> “Analysis&gt;Speed​​/Slope” tab</h3>
 <p>This tab is used to extrapolate a speed curve over the slope.<br />
 <img src="./images/Tabs/CG40_Tab_Analyze_Speed_Slope.png" alt="Speed/slope tab" /></p>
-<p>This curve is useful for creating its own speed/slope curves according to a runned track.</p>
+<p>This curve is useful for creating its own speed/slope curves according to a previous track.</p>
 <p>Two curves are present:</p>
 <ul>
 <li>A scatter plot that includes all the points acquired during your race</li>
@@ -416,7 +425,7 @@ The button <img src="./images/Tabs/refresh.png" /> refresh the data.</p>
 <img src="./images/Tabs/CG40_Tab_Analyze_Speed_Slope_Save.png" /><br />
 The “Name” input field is used to enter the name of the curve.<br />
 The “Comment” input field is used to enter a comment.</p>
-<p>The button <img src="./images/Tabs/correction.png" /> corrects the speed/slope curve with the track parameters (field difficulty and fatigue).<br />
+<p>The button <img src="./images/Tabs/correction.png" /> corrects the speed/slope curve with the track parameters (terrain difficulty and fatigue).<br />
 The button <img src="./images/Tabs/speed.png" /> allows to filter the speed of the speed/slope curve.</p>
 <h3 id="summary-tab"><span class="header-section-number">7.4.4</span> “Summary” tab</h3>
 <p>This tab displays a table containing all the lines of the track containing a mark.<br />
@@ -424,19 +433,19 @@ The button <img src="./images/Tabs/speed.png" /> allows to filter the speed of t
 <p>For each line you have:</p>
 <ul>
 <li>A number.</li>
-<li>The name of this point.</li>
-<li>The line of the data table where is this point.</li>
-<li>The altitude of this point.</li>
-<li>The elevation gain achieved up to this point.</li>
-<li>The elevation loss achieved up to this point.</li>
-<li>The distance traveled to this point.</li>
-<li>The time at this point.</li>
-<li>The hour at this point.</li>
+<li>The name of the point.</li>
+<li>The line of the data table where is the point.</li>
+<li>The altitude of the point.</li>
+<li>The accumulated elevation gain up to the point.</li>
+<li>The accumulated elevation loss up to the point.</li>
+<li>The distance traveled up to the point.</li>
+<li>The time at the point.</li>
+<li>The hour at the point.</li>
 <li>The travel time since the last point.</li>
 <li>The cut-off expressed in time since the start.</li>
 <li>The refueling time.</li>
 <li>The distance from the last point.</li>
-<li>The elevation gain since last point.</li>
+<li>The elevation gain since the last point.</li>
 <li>The elevation loss since the last point.</li>
 <li>The climb speed since the last point.</li>
 <li>The descent speed since the last point.</li>
@@ -453,11 +462,11 @@ The button <img src="./images/Tabs/refresh.png" /> allows you to refresh the dat
 <li>Upload a GPS file</li>
 <li>Set the global track parameters (Name, date and start time)</li>
 <li>Choose the “Speed/Slope”curve</li>
-<li>Set the track parameters (field difficulty, fatigue coefficient, aid stations…)</li>
+<li>Set the track parameters (terrain difficulty, fatigue coefficient, aid stations…)</li>
 <li>Start the calculation</li>
 <li>Save the track in CGX or GPX format</li>
 </ul>
-<p>The subchapters will describe all these manipulations (And much more).</p>
+<p>The below chapters will describe all these manipulations (And much more).</p>
 <h2 id="load-a-track"><span class="header-section-number">8.1</span> Load a track</h2>
 <p>Two types of files can be opened by <strong>Course Generator</strong>.</p>
 <ul>
@@ -488,31 +497,31 @@ The button <img src="./images/Tabs/refresh.png" /> allows you to refresh the dat
 <p>Enter the time zone (1 for France).</p>
 <p>Once the setting is completed, press “Ok” to validate. If you have chosen to take into account the night effect, you will see that the “Time” column shows a blue background during the night and green periods during the daytime periods.</p>
 <h2 id="set-the-speedslope-curve"><span class="header-section-number">8.3</span> Set the speed/slope curve</h2>
-<p>In order to have a track time consistent with your level, you have to choose or create a speed curve according to the slope. This curve goes from -50% slope (downhill) to + 50% slope (climb). The choice of the curve is made by the choice of the speed that one wants to “hold” when the slope is null (0%) on a road. A set of curves have been created to cover most running uses.</p>
-<p>The menu “Settings&gt;Speed/Slope curves…” or the button <img src="./images/Toolbar/curve.png" alt="curve button" /> to display the dialog box for selecting and managing curves.</p>
+<p>In order to have a track time consistent with your speed, you have to choose or create a speed curve according to the slope. This curve goes from -50% slope (downhill) to + 50% slope (climb). The choice of the curve is made by the choice of the speed that one wants to “hold” when the slope is null (0%) on a road. A set of curves has been created to cover most running speeds.</p>
+<p>The menu “Settings&gt;Speed/Slope curves…” or the button <img src="./images/Toolbar/curve.png" alt="curve button" /> will display the dialog box for selecting and managing curves.</p>
 <figure>
 <img src="./images/Curve/CG40_Dlg_Curves.png" alt="Curves dialog" /><figcaption>Curves dialog</figcaption>
 </figure>
-<p>On the left appears the list of curves already created. During the creation, an explicit name was given to them to find them quickly. Try to preserve this principle if you create new curves.</p>
-<p>The button <img src="./images/Curve/chart_curve_open.png" alt="open curve button" /> load the data from the selected curve file into the list. The button <img src="./images/Curve/chart_curve_edit.png" alt="edit curve button" /> allows you to modify the data of the selected curve. The button <img src="./images/Curve/chart_curve_add.png" alt="add curve button" /> allows you to create a new curve. The button <img src="./images/Curve/chart_curve_duplicate.png" alt="duplicate curve button" /> duplicate the selected curve. The button <img src="./images/Curve/chart_curve_delete.png" alt="delete curve button" /> deletes the selected curve.</p>
+<p>On the left appears the list of curves already created. During the creation, an explicit name was assigned to them to find them quickly. Try to preserve this principle if you create new curves.</p>
+<p>The button <img src="./images/Curve/chart_curve_open.png" alt="open curve button" /> loads the data from the selected curve file into the list. The button <img src="./images/Curve/chart_curve_edit.png" alt="edit curve button" /> allows you to modify the data of the selected curve. The button <img src="./images/Curve/chart_curve_add.png" alt="add curve button" /> allows you to create a new curve. The button <img src="./images/Curve/chart_curve_duplicate.png" alt="duplicate curve button" /> duplicates the selected curve. The button <img src="./images/Curve/chart_curve_delete.png" alt="delete curve button" /> deletes the selected curve.</p>
 <blockquote>
-<p><strong>How to choose a speed curve?</strong> This will depend on you, your goals… You can base yourself on a percentage of your vVO2max. For example for a long trail you can take 60% of your vVO2max. About 10km/h in my case, I then select the curve of 10km/h. There is also the pratice. At the beginning you will surely underestimate or over-evaluate your speed. But over time your choice will become more and more precise.</p>
+<p><strong>How to choose a speed curve?</strong> This will depend on you, your goals… You can base yourself on a percentage of your vVO2max. For example for a long trail you can take 60% of your vVO2max. About 10km/h in my case, I then select the curve of 10km/h. There is also the pratice. At the beginning you will surely underestimate or overestimate your speed. But over time your choice will become more and more accurate.</p>
 </blockquote>
 <p><strong>Notes:</strong><br />
 * If you create new curves that seem interesting to you, do not hesitate to send them to me so that I can add them on the website as well as in the next versions. * Each curve is a file whose extension is ‘.par’. These files are accessible through the menu “Tools&gt;Open”Speed/Slope&quot; folder“. This will open the file manager and display the contents of the directory.</p>
-<h2 id="enter-the-field-difficulty"><span class="header-section-number">8.4</span> Enter the field difficulty</h2>
-<p>The “Diff” column is used to ‘quantify’ the difficulty of the field.</p>
-<p>You can quickly enter terrain difficulty for a set of points. Simply select the first line and then while holding down the SHIFT key you select the following lines (with mouse or keyboard). The button <img src="./images/Toolbar/fill_diff.png" alt="diff button" /> to display the auto-fill dialog.</p>
+<h2 id="set-the-terrain-difficulty"><span class="header-section-number">8.4</span> Set the terrain difficulty</h2>
+<p>The “Diff” column is used to ‘quantify’ the difficulty of the terrain.</p>
+<p>You can quickly enter terrain difficulty for a set of points. Simply select the first line and then while holding down the SHIFT key you select the following lines (with mouse or keyboard). The button <img src="./images/Toolbar/fill_diff.png" alt="diff button" /> will display the auto-fill dialog.</p>
 <figure>
-<img src="./images/CG40_Dlg_Fill_Diff.png" alt="Difficulty dialog" /><figcaption>Difficulty dialog</figcaption>
+<img src="./images/CG40_Dlg_Fill_Diff.png" alt="Terrain Difficulty dialog" /><figcaption>Terrain Difficulty dialog</figcaption>
 </figure>
-<p>The “Start” area is used to define the start line (from the beginning or from a specific line number). The “End” area is used to define the end line (to the end or to a specific line number). The zone “Difficulty” makes it possible to choose the difficulty of the field. You can either use the pre-determined values ​​or enter your own difficulty value.</p>
-<p>This action can also be done on the tracke map (see below).</p>
+<p>The “Start” area is used to define the start line (from the beginning or from a specific line number). The “End” area is used to define the end line (to the end or to a specific line number). The zone “Difficulty” makes it possible to choose the difficulty of the terrain. You can either use the pre-determined values or enter your own difficulty value.</p>
+<p>This action can also be done on the track map (see below).</p>
 <p><strong>Note:</strong><br />
-It is sometimes impossible to determine the quality of the field because of the ignorance of it. It may be wise to set an average field quality for the entire track. For example, the “Montagn’hard 100” has been qualified in middle filed on the whole track. Even if some passages were very difficult (scree, slippery areas …) and other very easy (roads or tracks). Don’t try to take intop account the slope of the field because this is taken into account via the “Speed​​/Slope” curve and the calculation of the slope is automatically done by <strong>Course Generator</strong>.</p>
-<h2 id="enter-fatigue-coefficient"><span class="header-section-number">8.5</span> Enter fatigue coefficient</h2>
+It is sometimes impossible to determine or know the quality of the terrain. It may be wise to set an average terrain quality for the entire track. For example, the “Montagn’hard 100” has been rated as “average” terrain. Even if some sections were very difficult (scree, slippery areas …) and other very easy (roads or tracks). Don’t try to take into account the slope of the terrain because this is taken into account via the “Speed/Slope” curve and the calculation of the slope is automatically done by <strong>Course Generator</strong>.</p>
+<h2 id="set-the-fatigue-coefficient"><span class="header-section-number">8.5</span> Set the fatigue coefficient</h2>
 <p>The “Coeff” column is used to ‘quantify’ fatigue over time.</p>
-<p>You can quickly enter the fatigue coefficient for a set of points (more generally for the entire track). Simply select the first line and then while holding down the SHIFT key you select the following lines (with mouse or keyboard). The button <img src="./images/Toolbar/fill_coeff.png" alt="coeff button" /> allows to display the auto-fill dialog.</p>
+<p>You can quickly enter the fatigue coefficient for a set of points (usually for the entire track). Simply select the first line and then while holding down the SHIFT key select the following lines (with mouse or keyboard). The button <img src="./images/Toolbar/fill_coeff.png" alt="coeff button" /> allows to display the auto-fill dialog.</p>
 <figure>
 <img src="./images/CG40_Dlg_Fill_Coeff.png" alt="Health coefficient dialog" /><figcaption>Health coefficient dialog</figcaption>
 </figure>
@@ -521,7 +530,7 @@ It is sometimes impossible to determine the quality of the field because of the 
 <p>If the ending value is not equal to the initial value then the intermediate lines will have a gradual and linear variation of the values. Manual edits made through the line editor will be overwritten.</p>
 <p>The settings made in this window will be global and stored in the CGX file.</p>
 <p>The area “Help” allows according to your estimated to give you an approximate value of the coefficient of fatigue. This value can be copied to in the “Initial value” and “Ending value” fields with the buttons “&gt; Start” and “&gt; End”.</p>
-<h2 id="enter-refueling-times"><span class="header-section-number">8.6</span> Enter refueling times</h2>
+<h2 id="set-the-refueling-times"><span class="header-section-number">8.6</span> Set the refueling times</h2>
 <p>In order to stick to reality, you can enter for a given point the time you plan for your refueling (or your rest).</p>
 <p>The following dialog box is displayed:</p>
 <figure>
@@ -533,7 +542,7 @@ It is sometimes impossible to determine the quality of the field because of the 
 <p>To summarize: [Hour] = [Hour of the previous position] + [Travel time between 2 positions] + [Refueling time]</p>
 <p>[Time] = [Time of the previous position] + [Travel time between 2 positions] + [Refueling time]</p>
 </blockquote>
-<h2 id="enter-recovery-times"><span class="header-section-number">8.7</span> Enter recovery times</h2>
+<h2 id="set-the-recovery-times"><span class="header-section-number">8.7</span> Set the recovery times</h2>
 <p>You can enter for a given point the recovery coefficient after refueling or rest. To do this, go to the corresponding cell and open the line editor by double-clicking.</p>
 <p>The following dialog box is displayed:</p>
 <figure>
@@ -542,7 +551,7 @@ It is sometimes impossible to determine the quality of the field because of the 
 <p>The “Recovery” field is used to enter the recovery coefficient (between 0 and 100). This value is relative. If you think that you will recover 5% of fatigue coefficient, you must enter 5 and not the value you think you will have (eg from 85% to 90%).</p>
 <p><strong>Note :</strong><br />
 After modifying the “Recovery” column, it is necessary to restart a global calculation with the button <img src="./images/Toolbar/fill_coeff.png" alt="fill coeff" /> in order to have your input taken into account.</p>
-<h2 id="enter-cut-off-times"><span class="header-section-number">8.8</span> Enter cut-off times</h2>
+<h2 id="set-the-cut-off-times"><span class="header-section-number">8.8</span> Set the cut-off times</h2>
 <p>You can enter for a given point the scheduled time barrier. This time barrier is expressed in time since the start and not the time at the point. This makes it possible to take into account the departure delays (for example the UTMB 2011 with 5 hours delay). To do this, go to the corresponding cell and open the line editor by double-clicking.</p>
 <p>The following dialog box is displayed:</p>
 <figure>
