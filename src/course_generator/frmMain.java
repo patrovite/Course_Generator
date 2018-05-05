@@ -159,7 +159,7 @@ import course_generator.utils.Utils.CalcLineResult;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
-	private final String Version = "4.0.0.BETA 8";
+	private final String Version = "4.0.0";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
