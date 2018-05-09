@@ -12,53 +12,61 @@
     <!-- Step 1: Define the directory structure -->
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="APPLICATIONROOTDIRECTORY" Name="Course Generator" />
-        <Directory Id="DesktopFolder" Name="Desktop" />
-        <Directory Id="ProgramMenuFolder"  Name="All Programs folder">
-          <!--%ProgramData%\Microsoft\Windows\Start Menu\Programs\-->
-          <Directory Id ="CourseGenerator4" Name="Course Generator 4">
-            <!--%ProgramData%\Microsoft\Windows\Start Menu\Programs\Course Generator 4\-->
+        <Directory Id="APPLICATIONROOTDIRECTORY">
+          <Directory Id="DesktopFolder" Name="Desktop" />
+          <Directory Id="ProgramMenuFolder"  Name="All Programs folder">
+            <!--%ProgramData%\Microsoft\Windows\Start Menu\Programs\-->
+            <Directory Id ="CourseGenerator4" Name="Course Generator 4">
+              <!--%ProgramData%\Microsoft\Windows\Start Menu\Programs\Course Generator 4\-->
+            </Directory>
           </Directory>
-        </Directory>
-        <Directory Id="INSTALLDIR" Name="Course Generator">
-          <Directory Id="HELP" Name="help">
-            <Directory Id="FR" Name="fr">
-              <!--<Component Id="CG4_fr_epub" Guid="A05C824C-2911-469B-A358-42337EA4E475">
+          <Directory Id="INSTALLDIR" Name="Course Generator 4">
+            <Component Id="Course_Generator.exe" Guid="47e3842b-ebc4-42d7-86fe-437c0513b748">
+              <File Id="Course_Generator.exe" Source="..\..\build\Course_Generator.exe" KeyPath="yes" Checksum="yes" />
+              <Environment Id="CGInstallFolderEnvironmentVariable" Name="CGInstallFolder" Value="[INSTALLDIR]" Permanent="yes" Part="all" Action="set" System="yes" />
+            </Component>
+            <Component Id="Course_Generator.jar" Guid="89e62283-e9b6-455a-b25d-2bf71470f031">
+              <File Id="Course_Generator.jar" Source="..\..\build\Course_Generator.jar" KeyPath="yes" Checksum="yes" />
+            </Component>
+            <Directory Id="HELP" Name="help">
+              <Directory Id="FR" Name="fr">
+                <!--<Component Id="CG4_fr_epub" Guid="A05C824C-2911-469B-A358-42337EA4E475">
                 <File Id="CourseGenerator4_fr.epub" Source="Resources\Documentation\fr\images\CourseGenerator4_fr.epub" KeyPath="yes" Checksum="yes"/>
               </Component>-->
-              <Component Id="fr_CG4_html" Guid="edebd932-8948-40e1-82d6-1f3479808263">
-                <File Id="fr_cg_doc_4.00.html" Source="..\..\build\help\fr\fr_cg_doc_4.00.html" KeyPath="yes" Checksum="yes" />
-              </Component>
-              <Component Id="fr_CG4_pdf" Guid="d030457e-d98b-4092-badf-53accedeb0fe">
-                <File Id="fr_cg_doc_4.00.pdf" Source="..\..\build\fr_cg_doc_4.00.pdf" KeyPath="yes" Checksum="yes" />
-              </Component>
-              <Directory Id="FrenchImages" Name="images">
-                <Directory Id="dir83197B50A5FA18903B2EFB16EAC378A2" Name="Curve" />
-                <Directory Id="dirD77D9E007E9E808DDAA224C28DB7A533" Name="Map" />
-                <Directory Id="dir1FEC52AD8F1D6B3A37B259CC724FB09B" Name="Menu" />
-                <Directory Id="dir7759BE5E20D31981A14D2B256E53AFAF" Name="MRB" />
-                <Directory Id="dir1259BE3A26938706475A0CE41E6B3C08" Name="Statusbar" />
-                <Directory Id="dirE6E115D80A9DE962C12B4D77A3C8F043" Name="Tabs" />
-                <Directory Id="dir1EA9BCAEFC61983373B08DAC62D7438F" Name="Tags" />
-                <Directory Id="dirA0BBC423BFA436194A72A587850644C2" Name="Toolbar" />
+                <Component Id="fr_CG4_html" Guid="edebd932-8948-40e1-82d6-1f3479808263">
+                  <File Id="fr_cg_doc_4.00.html" Source="..\..\build\help\fr\fr_cg_doc_4.00.html" KeyPath="yes" Checksum="yes" />
+                </Component>
+                <Component Id="fr_CG4_pdf" Guid="d030457e-d98b-4092-badf-53accedeb0fe">
+                  <File Id="fr_cg_doc_4.00.pdf" Source="..\..\build\fr_cg_doc_4.00.pdf" KeyPath="yes" Checksum="yes" />
+                </Component>
+                <Directory Id="FrenchImages" Name="images">
+                  <Directory Id="dir83197B50A5FA18903B2EFB16EAC378A2" Name="Curve" />
+                  <Directory Id="dirD77D9E007E9E808DDAA224C28DB7A533" Name="Map" />
+                  <Directory Id="dir1FEC52AD8F1D6B3A37B259CC724FB09B" Name="Menu" />
+                  <Directory Id="dir7759BE5E20D31981A14D2B256E53AFAF" Name="MRB" />
+                  <Directory Id="dir1259BE3A26938706475A0CE41E6B3C08" Name="Statusbar" />
+                  <Directory Id="dirE6E115D80A9DE962C12B4D77A3C8F043" Name="Tabs" />
+                  <Directory Id="dir1EA9BCAEFC61983373B08DAC62D7438F" Name="Tags" />
+                  <Directory Id="dirA0BBC423BFA436194A72A587850644C2" Name="Toolbar" />
+                </Directory>
               </Directory>
-            </Directory>
-            <Directory Id="EN" Name="en">
-              <Component Id="en_CG4_html" Guid="89e721f1-a444-4701-9509-fde801329548">
-                <File Id="en_cg_doc_4.00.html" Source="..\..\build\help\en\en_cg_doc_4.00.html" KeyPath="yes" Checksum="yes" />
-              </Component>
-              <Component Id="en_CG4_pdf" Guid="be9fb5ce-3b8d-40f9-a4a6-c8a01066c0f1">
-                <File Id="en_cg_doc_4.00.pdf" Source="..\..\build\en_cg_doc_4.00.pdf" KeyPath="yes" Checksum="yes" />
-              </Component>
-              <Directory Id="EnglishImages" Name="images">
-                <Directory Id="dirFCC2F786703D248B706A0E3C29F96A4C" Name="Curve" />
-                <Directory Id="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Name="Map" />
-                <Directory Id="dirFE6C6994DC834507BB8866FA4634513C" Name="Menu" />
-                <Directory Id="dir3E4A7C33B21EB0FE0969205953A4F970" Name="MRB" />
-                <Directory Id="dir5E17D90885C820F95AD14882AFD84FBE" Name="Statusbar" />
-                <Directory Id="dirA6507408B27C35C82BE181F4F69507ED" Name="Tabs" />
-                <Directory Id="dirA5E931BFDF8F59A79F102799D35F36DF" Name="Tags" />
-                <Directory Id="dirBA83CC06CEA9D08B69CB5137A1699E89" Name="Toolbar" />
+              <Directory Id="EN" Name="en">
+                <Component Id="en_CG4_html" Guid="89e721f1-a444-4701-9509-fde801329548">
+                  <File Id="en_cg_doc_4.00.html" Source="..\..\build\help\en\en_cg_doc_4.00.html" KeyPath="yes" Checksum="yes" />
+                </Component>
+                <Component Id="en_CG4_pdf" Guid="be9fb5ce-3b8d-40f9-a4a6-c8a01066c0f1">
+                  <File Id="en_cg_doc_4.00.pdf" Source="..\..\build\en_cg_doc_4.00.pdf" KeyPath="yes" Checksum="yes" />
+                </Component>
+                <Directory Id="EnglishImages" Name="images">
+                  <Directory Id="dirFCC2F786703D248B706A0E3C29F96A4C" Name="Curve" />
+                  <Directory Id="dir48488CF40E3A34CCFE1C55EEBB3EAB6B" Name="Map" />
+                  <Directory Id="dirFE6C6994DC834507BB8866FA4634513C" Name="Menu" />
+                  <Directory Id="dir3E4A7C33B21EB0FE0969205953A4F970" Name="MRB" />
+                  <Directory Id="dir5E17D90885C820F95AD14882AFD84FBE" Name="Statusbar" />
+                  <Directory Id="dirA6507408B27C35C82BE181F4F69507ED" Name="Tabs" />
+                  <Directory Id="dirA5E931BFDF8F59A79F102799D35F36DF" Name="Tags" />
+                  <Directory Id="dirBA83CC06CEA9D08B69CB5137A1699E89" Name="Toolbar" />
+                </Directory>
               </Directory>
             </Directory>
           </Directory>
@@ -835,15 +843,6 @@
   </Product>
 
   <Fragment>
-    <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
-      <Component Id="Course_Generator.exe" Guid="47e3842b-ebc4-42d7-86fe-437c0513b748">
-        <File Id="Course_Generator.exe" Source="..\..\build\Course_Generator.exe" KeyPath="yes" Checksum="yes" />
-        <Environment Id="CGInstallFolderEnvironmentVariable" Name="CGInstallFolder" Value="[INSTALLDIR]" Permanent="yes" Part="last" Action="set" System="yes" />
-      </Component>
-      <Component Id="Course_Generator.jar" Guid="89e62283-e9b6-455a-b25d-2bf71470f031">
-        <File Id="Course_Generator.jar" Source="..\..\build\Course_Generator.jar" KeyPath="yes" Checksum="yes" />
-      </Component>
-    </DirectoryRef>
     <DirectoryRef Id="DesktopFolder">
       <Component Id="ApplicationShortcutDesktop" Guid="cde1e030-eb64-49a5-b7b8-400b379c2d1a">
         <Condition>INSTALLSHORTCUT</Condition>
