@@ -23,7 +23,7 @@
           <Directory Id="INSTALLDIR" Name="Course Generator 4">
             <Component Id="Course_Generator.exe" Guid="47e3842b-ebc4-42d7-86fe-437c0513b748">
               <File Id="Course_Generator.exe" Source="..\..\build\Course_Generator.exe" KeyPath="yes" Checksum="yes" />
-              <Environment Id="CGInstallFolderEnvironmentVariable" Name="CGInstallFolder" Value="[INSTALLDIR]" Permanent="yes" Part="last" Action="set" System="yes" />
+              <Environment Id="CGInstallFolderEnvironmentVariable" Name="CGInstallFolder" Value="[INSTALLDIR]" Permanent="yes" Part="all" Action="set" System="yes" />
             </Component>
             <Component Id="Course_Generator.jar" Guid="89e62283-e9b6-455a-b25d-2bf71470f031">
               <File Id="Course_Generator.jar" Source="..\..\build\Course_Generator.jar" KeyPath="yes" Checksum="yes" />
