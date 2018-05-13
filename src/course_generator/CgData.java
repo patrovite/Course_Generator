@@ -90,6 +90,7 @@ public class CgData {
 	/** Font size of this position in the mini roadbook **/
 	public int FontSizeMiniRoadbook;
 
+	public boolean ToDelete;
 
 	public CgData(double Num, double Latitude, double Longitude, double Elevation, double ElevationMemo, int Tag,
 			double Dist, double Total, double Diff, double Coeff, double Recup, double Slope, double Speed,
@@ -159,6 +160,7 @@ public class CgData {
 		this.VPosMiniRoadbook = 0;
 		this.CommentMiniRoadbook = "";
 		this.FontSizeMiniRoadbook = 10;
+		this.ToDelete=false;
 	}
 
 

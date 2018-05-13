@@ -194,7 +194,7 @@ public class TrackData {
 	public Color clProfil_SlopeInf15 = Color.BLACK;
 	public Color clProfil_SlopeSup15 = Color.BLACK;
 	public Color clProfil_SlopeBorder = Color.BLACK;
-
+	
 
 	// -- Constructor --
 	public TrackData() {
@@ -308,7 +308,7 @@ public class TrackData {
 
 
 	/**
-	 * Read a GPX fileand store the data in the array
+	 * Read a GPX file and store the data in the array
 	 * 
 	 * @param name
 	 *            Full name of the file
@@ -326,16 +326,22 @@ public class TrackData {
 		if (ret != 0)
 			CgLog.error("TrackData.OpenGPX : Error while reading '" + name + "'. Line =" + GPXhandler.getErrLine());
 
-		int cmpt = 1;
+		CgLog.info(data.size() + " positions loaded.");
 
+		// -- Positions filter
+		PositionFilter();
+		CgLog.info(data.size() + " positions after positions filter.");
+
+		// -- Set the line number
+		int cmpt = 1;
 		for (CgData r : data) {
 			r.setNum(cmpt);
 			cmpt++;
 		}
-		CgLog.info((cmpt - 1) + " positions loaded.");
 
 		isCalculated = false;
 		isModified = false;
+
 		CalcDist();
 		CalcSpeed();
 		CalcSlope();
@@ -745,6 +751,78 @@ public class TrackData {
 		return new SearchPointResult(p, best);
 	}
 
+	
+	private void AltitudeFilter() {
+		if (data.size() <= 1) {
+			return;
+		}
+
+		CgData r = null;
+		double threshold = 4.0;
+
+		double oldAlt=data.get(0).getElevation(CgConst.UNIT_METER);
+		
+		// We dn't use the first and last point
+		for (int i = 1; i < data.size() - 2; i++) {
+			r = data.get(i);
+			
+			if (Math.abs(r.getElevation(CgConst.UNIT_METER)-oldAlt)<threshold)
+				r.setElevation(oldAlt);
+			else
+				oldAlt=r.getElevation(CgConst.UNIT_METER);
+		}
+	}
+
+
+	private void PositionFilter() {
+		if (data.size() <= 0) {
+			return;
+		}
+
+		int i = 0;
+		CgData r = null;
+		CgData r1 = null;
+		CgData r2 = null;
+		CgData r3 = null;
+		CgData r4 = null;
+		double threshold = 8.0;
+
+		for (i = 0; i < data.size() - 6; i++) {
+			r = data.get(i);
+			if (r.ToDelete)
+				continue;
+
+			r1 = data.get(i + 1);
+			r2 = data.get(i + 2);
+			r3 = data.get(i + 3);
+			r4 = data.get(i + 4);
+
+			double dist1 = CalcDistance(r.getLatitude(), r.getLongitude(), r1.getLatitude(), r1.getLongitude());
+			double dist2 = CalcDistance(r.getLatitude(), r.getLongitude(), r2.getLatitude(), r2.getLongitude());
+			double dist3 = CalcDistance(r.getLatitude(), r.getLongitude(), r3.getLatitude(), r3.getLongitude());
+			double dist4 = CalcDistance(r.getLatitude(), r.getLongitude(), r4.getLatitude(), r4.getLongitude());
+
+			if (dist4 < threshold) {
+				r4.ToDelete = true;
+			}
+			if (dist3 < threshold) {
+				r3.ToDelete = true;
+			}
+			if (dist2 < threshold) {
+				r2.ToDelete = true;
+			}
+			if (dist1 < threshold) {
+				r1.ToDelete = true;
+			}
+		}
+
+		for (i = data.size() - 1; i >= 0; i--) {
+			if (data.get(i).ToDelete)
+				data.remove(i);
+		}
+
+	}
+	
 
 	// -- Calculate Distance ---
 
@@ -772,7 +850,7 @@ public class TrackData {
 			if (b) {
 				// -- Calculate the "flat" distance
 				dist = CalcDistance(mLat, mLon, Lat, Lon);
-				// -- A lit bit of Pythagoras theorem in order to include the
+				// -- A little bit of Pythagoras theorem in order to include the
 				// difference of elevation between the points
 				v = Math.sqrt(dist * dist + (Ele - mEle) * (Ele - mEle));
 
@@ -962,6 +1040,7 @@ public class TrackData {
 		return r;
 	} // CalcAvrSlope
 
+	
 	public static class CalcClimbResult {
 		public double cp, cm;
 		public int tp, tm;
@@ -997,6 +1076,7 @@ public class TrackData {
 
 				de = (elev - oldElev);
 				dt = (time - oldTime);
+
 				if (Math.abs(de) > CgConst.MIN_ELEV) {
 					if (de > 0) {
 						r.cp += de;
@@ -1484,8 +1564,7 @@ public class TrackData {
 						data.get(n).OptionMiniRoadbook, // int
 						data.get(n).VPosMiniRoadbook, // int
 						data.get(n).CommentMiniRoadbook, // String
-						data.get(n).FontSizeMiniRoadbook // FontSizeMiniRoadbook
-															// //int
+						data.get(n).FontSizeMiniRoadbook // FontSizeMiniRoadbook int
 				));
 				nb++;
 				n++;
@@ -1571,13 +1650,20 @@ public class TrackData {
 		if (ret != 0)
 			CgLog.error("TrackData.OpenCGX : Error while reading '" + name + "'. Line =" + CGXhandler.getErrLine());
 
-		int cmpt = 1;
+		CgLog.info(data.size() + " positions loaded.");
 
+		// -- Positions filter
+		PositionFilter();
+		CgLog.info(data.size() + " positions after positions filter.");
+
+
+		// -- Set the line number
+		int cmpt = 1;
 		for (CgData r : data) {
 			r.setNum(cmpt);
 			cmpt++;
 		}
-		CgLog.info((cmpt - 1) + " positions loaded.");
+
 
 		isCalculated = false;
 		isModified = false;
