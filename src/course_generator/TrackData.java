@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 
+import javax.swing.JOptionPane;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -306,6 +307,37 @@ public class TrackData {
 		TotalDistance = totalDistance;
 	}
 
+	/***
+	 * Check the GPS point density on the track.
+	 * If the result is too high, ask if CG need to filter the track
+	 * @return true : filter must be apply
+	 */
+	private boolean CheckPointDensity(double PosFilterAskThreshold) {
+		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		
+		CalcDist();
+		
+		int nb=0;
+		boolean ok=false;
+		
+		//Scan the data
+		for (CgData r : data) {
+			if (r.getDist(CgConst.UNIT_METER)<10.0)
+				nb+=1;
+		}
+		double p = nb*100.0/data.size();
+		CgLog.info("Point density calculation = "+p+"%");
+		
+		//Question?
+		if (p>=PosFilterAskThreshold) {
+			if (JOptionPane.showConfirmDialog(null, String.format(bundle.getString("TrackData.PositionFilterQuestion"),p), "",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				ok=true;
+			}
+		}
+		
+		return ok;
+	}
 
 	/**
 	 * Read a GPX file and store the data in the array
@@ -319,7 +351,7 @@ public class TrackData {
 	 * @return Return true if time data have been loaded
 	 * @throws Exception
 	 */
-	public boolean OpenGPX(String name, int mode) throws Exception {
+	public boolean OpenGPX(String name, int mode, double PosFilterAskThreshold) throws Exception {
 		SaxGPXHandler GPXhandler = new SaxGPXHandler();
 
 		int ret = GPXhandler.readDataFromGPX(name, this, mode);
@@ -328,10 +360,14 @@ public class TrackData {
 
 		CgLog.info(data.size() + " positions loaded.");
 
+		boolean filter=CheckPointDensity(PosFilterAskThreshold);
+		
 		// -- Positions filter
-		PositionFilter();
-		CgLog.info(data.size() + " positions after positions filter.");
-
+		if (filter) {
+			PositionFilter();
+			CgLog.info(data.size() + " positions after positions filter.");
+		}
+		
 		// -- Set the line number
 		int cmpt = 1;
 		for (CgData r : data) {
@@ -774,6 +810,9 @@ public class TrackData {
 	}
 
 
+	/**
+	 * Position filter
+	 */
 	private void PositionFilter() {
 		if (data.size() <= 0) {
 			return;
@@ -785,8 +824,11 @@ public class TrackData {
 		CgData r2 = null;
 		CgData r3 = null;
 		CgData r4 = null;
+		
+		//Threshold. Point at a distance less than +- threshold are removed 
 		double threshold = 8.0;
 
+		//Scan the data
 		for (i = 0; i < data.size() - 6; i++) {
 			r = data.get(i);
 			if (r.ToDelete)
@@ -816,6 +858,7 @@ public class TrackData {
 			}
 		}
 
+		//Removed the marked points
 		for (i = data.size() - 1; i >= 0; i--) {
 			if (data.get(i).ToDelete)
 				data.remove(i);
@@ -1652,10 +1695,11 @@ public class TrackData {
 
 		CgLog.info(data.size() + " positions loaded.");
 
+		/* Currently not used. Useful for CGX????
 		// -- Positions filter
 		PositionFilter();
 		CgLog.info(data.size() + " positions after positions filter.");
-
+		*/
 
 		// -- Set the line number
 		int cmpt = 1;

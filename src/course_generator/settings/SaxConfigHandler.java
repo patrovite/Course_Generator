@@ -305,8 +305,10 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.DistNear = ManageDouble(100.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("DISTFAR")) {
 				Settings.DistFar = ManageDouble(1000.0, ERR_READ_DOUBLE);
+			} else if (qName.equalsIgnoreCase("POSFILTERASKTHRESHOLD")) {
+				Settings.PosFilterAskThreshold = ManageInt(5, ERR_READ_INT);
 			}
-
+			
 			else if (qName.equalsIgnoreCase("CONFIG")) {
 				level--;
 			}

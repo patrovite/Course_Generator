@@ -66,6 +66,9 @@ public class CgSettings {
 	/** Over this distance we consider the distance far (in m) **/
 	public double DistFar = 1000.0;
 
+	/** Threshold where CG ask if a position filter must be apply (m) **/
+	public int PosFilterAskThreshold = 10;
+	
 	public int Unit = CgConst.UNIT_METER; // Unit for the display 0=meter
 											// 1=Miles/feet
 	public boolean isPace = false; // 'true' the speed is display as pace
@@ -125,7 +128,7 @@ public class CgSettings {
 
 		offlineMap = true;
 		map = 0;
-
+		PosFilterAskThreshold = 5;
 	}
 
 
@@ -213,6 +216,8 @@ public class CgSettings {
 
 			Utils.WriteDoubleToXML(writer, "DISTNEAR", DistNear);
 			Utils.WriteDoubleToXML(writer, "DISTFAR", DistFar);
+			
+			Utils.WriteIntToXML(writer, "POSFILTERASKTHRESHOLD", PosFilterAskThreshold);
 
 			writer.writeEndElement();
 			writer.writeEndDocument();

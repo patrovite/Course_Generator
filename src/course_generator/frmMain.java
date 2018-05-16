@@ -2791,7 +2791,7 @@ public class frmMain extends javax.swing.JFrame {
 				BackupInCGX();
 				// bAutorUpdatePos = false;
 				try {
-					if (Track.OpenGPX(s, mode))
+					if (Track.OpenGPX(s, mode,(double)Settings.PosFilterAskThreshold))
 						JOptionPane.showMessageDialog(this, bundle.getString("frmMain.NoTimeData"));
 					panelTrackData.refresh();
 					RefreshStatusbar(Track);
@@ -2858,7 +2858,7 @@ public class frmMain extends javax.swing.JFrame {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 		try {
-			Track.OpenGPX(filename, 0);
+			Track.OpenGPX(filename, 0,(double)Settings.PosFilterAskThreshold);
 			AddMruGPX(filename);
 		} catch (Exception e) {
 		}

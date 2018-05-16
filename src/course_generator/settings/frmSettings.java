@@ -38,6 +38,7 @@ import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
 import course_generator.utils.CgConst;
+import course_generator.utils.CgSpinner;
 import course_generator.utils.Utils;
 
 /**
@@ -59,6 +60,8 @@ public class frmSettings extends javax.swing.JDialog {
 	private JComboBox cbSpeed;
 	private JLabel lbCheck;
 	private JCheckBox chkCheck;
+	private JLabel lbThresholdAsk;
+	private CgSpinner spinThresholdAsk;
 
 
 	/**
@@ -96,10 +99,13 @@ public class frmSettings extends javax.swing.JDialog {
 			cbSpeed.setSelectedIndex(1);
 		else
 			cbSpeed.setSelectedIndex(0);
-
+		
 		// -- Check for update
 		chkCheck.setSelected(s.Check4UpdateAtStart);
 
+		// -- Threshold
+		spinThresholdAsk.setValue((int)	s.PosFilterAskThreshold);
+					
 		// End set field
 		ok = false;
 
@@ -155,6 +161,8 @@ public class frmSettings extends javax.swing.JDialog {
 			// -- Check for update
 			s.Check4UpdateAtStart = chkCheck.isSelected();
 
+			// -- Threshold
+			s.PosFilterAskThreshold = spinThresholdAsk.getValueAsInt();
 		}
 		return ok;
 	}
@@ -263,16 +271,27 @@ public class frmSettings extends javax.swing.JDialog {
 		Utils.addComponent(paneGlobal, cbSpeed, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
+		// -- Minimum Threshold for asking if PosFilterAskThreshold
+		lbThresholdAsk = new javax.swing.JLabel();
+		lbThresholdAsk.setText(bundle.getString("frmSettings.lbThresholdAsk.Text"));// "Elevation"
+		Utils.addComponent(paneGlobal, lbThresholdAsk, 0, line, 1, 1, 1, 0, 2, 10, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+
+		spinThresholdAsk = new CgSpinner(0, 0, 100, 1);
+		Utils.addComponent(paneGlobal, spinThresholdAsk, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+
 		// -- Check for update
 		lbCheck = new javax.swing.JLabel();
 		lbCheck.setText(bundle.getString("frmSettings.lbCheck.text"));
-		Utils.addComponent(paneGlobal, lbCheck, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(paneGlobal, lbCheck, 0, line, 1, 1, 1, 0, 7, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		chkCheck = new javax.swing.JCheckBox();
-		Utils.addComponent(paneGlobal, chkCheck, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10,
+		Utils.addComponent(paneGlobal, chkCheck, 1, line++, 1, 1, 0, 0, 7, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
+		
 		// -- Separator
 		// -- NOCONNECTIONONSTARTUP - Boolean -bNoConnectOnStartup
 		// -- CONNECTIONTIMEOUT - int - ConnectionTimeout
