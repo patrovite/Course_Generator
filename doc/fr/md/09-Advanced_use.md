@@ -266,7 +266,7 @@ Les réglages possibles sont les suivants:
 
 * "Langues" : Permet de sélectionner la langue utilisée dans l'interface. "Système" utilise les réglages du système d'exploitation pour déterminer la langue à utiliser. Si la langue système n'est pas géré par **Course Generator** alors l'anglais est sélectionné.
 * "Unité" : Permet de choisir entre "km/m" et "Miles/Pieds".
-* "Format vitesse" : Permet de choisir le format de la vitesse (Vitesse ou pas).
+* "Format vitesse" : Permet de choisir le format de la vitesse (Vitesse ou Allure).
 * "Contrôle mise à jour au démarrage" : Permet de choisir si on veut contrôler la présence d'une mise à jour de l'application au démarrage.
 
 ## Importer et exporter les points marqués
