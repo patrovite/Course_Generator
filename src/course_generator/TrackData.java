@@ -138,8 +138,8 @@ public class TrackData {
 	public int TimeLimit_Line = -1;
 	/** Timezone for the sunrise/sunset calculation **/
 	public Double TrackTimeZone = 0.0;
-	/** Are we using the summer time for the sunrise/sunset calculation **/
-	public boolean TrackUseSumerTime = false;
+	/** Are we using the daylight saving time for the sunrise/sunset calculation **/
+	public boolean TrackUseDaylightSaving = false;
 	public double StartSpeed = 0.0;
 	public double EndSpeed = 0.0;
 	/** Number of meter of road in the track **/
@@ -195,7 +195,7 @@ public class TrackData {
 	public Color clProfil_SlopeInf15 = Color.BLACK;
 	public Color clProfil_SlopeSup15 = Color.BLACK;
 	public Color clProfil_SlopeBorder = Color.BLACK;
-	
+
 
 	// -- Constructor --
 	public TrackData() {
@@ -307,37 +307,41 @@ public class TrackData {
 		TotalDistance = totalDistance;
 	}
 
+
 	/***
-	 * Check the GPS point density on the track.
-	 * If the result is too high, ask if CG need to filter the track
+	 * Check the GPS point density on the track. If the result is too high, ask if
+	 * CG need to filter the track
+	 * 
 	 * @return true : filter must be apply
 	 */
 	private boolean CheckPointDensity(double PosFilterAskThreshold) {
 		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
-		
+
 		CalcDist();
-		
-		int nb=0;
-		boolean ok=false;
-		
-		//Scan the data
+
+		int nb = 0;
+		boolean ok = false;
+
+		// Scan the data
 		for (CgData r : data) {
-			if (r.getDist(CgConst.UNIT_METER)<10.0)
-				nb+=1;
+			if (r.getDist(CgConst.UNIT_METER) < 10.0)
+				nb += 1;
 		}
-		double p = nb*100.0/data.size();
-		CgLog.info("Point density calculation = "+p+"%");
-		
-		//Question?
-		if (p>=PosFilterAskThreshold) {
-			if (JOptionPane.showConfirmDialog(null, String.format(bundle.getString("TrackData.PositionFilterQuestion"),p), "",
+		double p = nb * 100.0 / data.size();
+		CgLog.info("Point density calculation = " + p + "%");
+
+		// Question?
+		if (p >= PosFilterAskThreshold) {
+			if (JOptionPane.showConfirmDialog(null,
+					String.format(bundle.getString("TrackData.PositionFilterQuestion"), p), "",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				ok=true;
+				ok = true;
 			}
 		}
-		
+
 		return ok;
 	}
+
 
 	/**
 	 * Read a GPX file and store the data in the array
@@ -360,14 +364,14 @@ public class TrackData {
 
 		CgLog.info(data.size() + " positions loaded.");
 
-		boolean filter=CheckPointDensity(PosFilterAskThreshold);
-		
+		boolean filter = CheckPointDensity(PosFilterAskThreshold);
+
 		// -- Positions filter
 		if (filter) {
 			PositionFilter();
 			CgLog.info(data.size() + " positions after positions filter.");
 		}
-		
+
 		// -- Set the line number
 		int cmpt = 1;
 		for (CgData r : data) {
@@ -787,7 +791,7 @@ public class TrackData {
 		return new SearchPointResult(p, best);
 	}
 
-	
+
 	private void AltitudeFilter() {
 		if (data.size() <= 1) {
 			return;
@@ -796,16 +800,16 @@ public class TrackData {
 		CgData r = null;
 		double threshold = 4.0;
 
-		double oldAlt=data.get(0).getElevation(CgConst.UNIT_METER);
-		
+		double oldAlt = data.get(0).getElevation(CgConst.UNIT_METER);
+
 		// We dn't use the first and last point
 		for (int i = 1; i < data.size() - 2; i++) {
 			r = data.get(i);
-			
-			if (Math.abs(r.getElevation(CgConst.UNIT_METER)-oldAlt)<threshold)
+
+			if (Math.abs(r.getElevation(CgConst.UNIT_METER) - oldAlt) < threshold)
 				r.setElevation(oldAlt);
 			else
-				oldAlt=r.getElevation(CgConst.UNIT_METER);
+				oldAlt = r.getElevation(CgConst.UNIT_METER);
 		}
 	}
 
@@ -824,11 +828,11 @@ public class TrackData {
 		CgData r2 = null;
 		CgData r3 = null;
 		CgData r4 = null;
-		
-		//Threshold. Point at a distance less than +- threshold are removed 
+
+		// Threshold. Point at a distance less than +- threshold are removed
 		double threshold = 8.0;
 
-		//Scan the data
+		// Scan the data
 		for (i = 0; i < data.size() - 6; i++) {
 			r = data.get(i);
 			if (r.ToDelete)
@@ -858,14 +862,14 @@ public class TrackData {
 			}
 		}
 
-		//Removed the marked points
+		// Removed the marked points
 		for (i = data.size() - 1; i >= 0; i--) {
 			if (data.get(i).ToDelete)
 				data.remove(i);
 		}
 
 	}
-	
+
 
 	// -- Calculate Distance ---
 
@@ -1083,7 +1087,6 @@ public class TrackData {
 		return r;
 	} // CalcAvrSlope
 
-	
 	public static class CalcClimbResult {
 		public double cp, cm;
 		public int tp, tm;
@@ -1695,11 +1698,11 @@ public class TrackData {
 
 		CgLog.info(data.size() + " positions loaded.");
 
-		/* Currently not used. Useful for CGX????
-		// -- Positions filter
-		PositionFilter();
-		CgLog.info(data.size() + " positions after positions filter.");
-		*/
+		/*
+		 * Currently not used. Useful for CGX???? // -- Positions filter
+		 * PositionFilter(); CgLog.info(data.size() +
+		 * " positions after positions filter.");
+		 */
 
 		// -- Set the line number
 		int cmpt = 1;
@@ -1707,7 +1710,6 @@ public class TrackData {
 			r.setNum(cmpt);
 			cmpt++;
 		}
-
 
 		isCalculated = false;
 		isModified = false;
@@ -1798,7 +1800,7 @@ public class TrackData {
 			Utils.WriteStringToXML(writer, "STARTGLOBALCOEFF", String.format(Locale.ROOT, "%f", StartGlobalCoeff));
 			Utils.WriteStringToXML(writer, "ENDGLOBALCOEFF", String.format(Locale.ROOT, "%f", EndGlobalCoeff));
 			Utils.WriteStringToXML(writer, "TIMEZONE", String.format(Locale.ROOT, "%f", TrackTimeZone));
-			Utils.WriteStringToXML(writer, "USESUMMERTIME", (TrackUseSumerTime ? "1" : "0"));
+			Utils.WriteStringToXML(writer, "USESUMMERTIME", (TrackUseDaylightSaving ? "1" : "0"));
 			Utils.WriteStringToXML(writer, "CURVE", Paramfile);
 			Utils.WriteIntToXML(writer, "MRBSIZEW", MrbSizeW);
 			Utils.WriteIntToXML(writer, "MRBSIZEH", MrbSizeH);
@@ -2567,7 +2569,7 @@ public class TrackData {
 		d.isTimeLimit = isTimeLimit;
 		d.TimeLimit_Line = TimeLimit_Line;
 		d.TrackTimeZone = TrackTimeZone;
-		d.TrackUseSumerTime = TrackUseSumerTime;
+		d.TrackUseDaylightSaving = TrackUseDaylightSaving;
 		d.StartSpeed = StartSpeed;
 		d.EndSpeed = EndSpeed;
 		d.DistRoad = DistRoad;
