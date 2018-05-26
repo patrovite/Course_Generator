@@ -90,6 +90,7 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -3510,7 +3511,7 @@ public class frmMain extends javax.swing.JFrame {
 				String[] part = str.split("=");
 
 				if (part[0].equalsIgnoreCase("version")) {
-					if (!part[1].equalsIgnoreCase(Version)) {
+					if (isRemoteVersionNewer(part[1])) {
 						msg_version = part[1];
 						new_version = true;
 					}
@@ -3662,6 +3663,23 @@ public class frmMain extends javax.swing.JFrame {
 				new frmMain(args).setVisible(true);
 			}
 		});
+	}
+
+
+	/**
+	 * Determines if a more recent version is available.
+	 * 
+	 * @param remoteVersionNumber
+	 *            The current version on the server.
+	 */
+	private boolean isRemoteVersionNewer(String remoteVersionNumber) {
+		StringTokenizer localVersion = new StringTokenizer(Version, ".");
+		StringTokenizer remoteVersion = new StringTokenizer(remoteVersionNumber, ".");
+		while (localVersion.hasMoreTokens() && remoteVersion.hasMoreTokens()) {
+			if (Integer.parseInt(localVersion.nextToken()) < Integer.parseInt(remoteVersion.nextToken()))
+				return true;
+		}
+		return false;
 	}
 
 	private javax.swing.JLabel LbInfoCalculate;
