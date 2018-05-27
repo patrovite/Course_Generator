@@ -20,6 +20,7 @@ package course_generator.settings;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -37,6 +38,9 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
+import org.jfree.ui.FontChooserDialog;
+
+import course_generator.dialogs.FontChooser;
 import course_generator.utils.CgConst;
 import course_generator.utils.CgSpinner;
 import course_generator.utils.Utils;
@@ -62,6 +66,9 @@ public class frmSettings extends javax.swing.JDialog {
 	private JCheckBox chkCheck;
 	private JLabel lbThresholdAsk;
 	private CgSpinner spinThresholdAsk;
+	private JLabel lbDefaultFont;
+	private JButton btDefaultFont;
+	private Font DefaultFont;
 
 
 	/**
@@ -105,6 +112,9 @@ public class frmSettings extends javax.swing.JDialog {
 
 		// -- Threshold
 		spinThresholdAsk.setValue((int)	s.PosFilterAskThreshold);
+		
+		//-- Default font
+		DefaultFont = new Font(settings.DefaultFontName, settings.DefaultFontStyle, settings.DefaultFontSize);
 					
 		// End set field
 		ok = false;
@@ -163,6 +173,11 @@ public class frmSettings extends javax.swing.JDialog {
 
 			// -- Threshold
 			s.PosFilterAskThreshold = spinThresholdAsk.getValueAsInt();
+			
+			//-- Default font
+			settings.DefaultFontName = DefaultFont.getFontName();
+			settings.DefaultFontStyle = DefaultFont.getStyle();
+			settings.DefaultFontSize = DefaultFont.getSize();
 		}
 		return ok;
 	}
@@ -291,6 +306,23 @@ public class frmSettings extends javax.swing.JDialog {
 		Utils.addComponent(paneGlobal, chkCheck, 1, line++, 1, 1, 0, 0, 7, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
+		// -- Default font
+		lbDefaultFont = new javax.swing.JLabel();
+		lbDefaultFont.setText(bundle.getString("frmSettings.lbDefaultFont.text"));
+		Utils.addComponent(paneGlobal, lbDefaultFont, 0, line, 1, 1, 1, 0, 7, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		
+		btDefaultFont = new javax.swing.JButton("...");
+		btDefaultFont.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				//spinDiff.setValue(100);
+				ChooseFont();
+			}
+		});
+		Utils.addComponent(paneGlobal, btDefaultFont, 1, line++, 1, 1, 0, 0, 7, 5, 0, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+		
 		
 		// -- Separator
 		// -- NOCONNECTIONONSTARTUP - Boolean -bNoConnectOnStartup
@@ -331,5 +363,14 @@ public class frmSettings extends javax.swing.JDialog {
 		pack();
 
 		setLocationRelativeTo(null);
+	}
+	
+	/**
+	 * Display the font chooser dialog
+	 */
+	private void ChooseFont() {
+		Font res = FontChooser.showDialog("", DefaultFont);
+		if (res!=null)
+			DefaultFont = res;
 	}
 }

@@ -74,7 +74,6 @@ import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -106,6 +105,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -379,10 +379,21 @@ public class frmMain extends javax.swing.JFrame {
 			Lang4Help = "fr";
 		else
 			Lang4Help = "en";
-
+		
+		
 		// -- Set default font
-		setUIFont(new javax.swing.plaf.FontUIResource("Arial", Font.PLAIN, 14));
-
+		SetDefaultFont();
+		
+		/*
+		if (Settings.DefaultFontName.isEmpty())
+			Settings.DefaultFontName="Arial";
+		
+		//setUIFont(new javax.swing.plaf.FontUIResource("Arial", Font.PLAIN, 14));
+		setUIFont(new javax.swing.plaf.FontUIResource(Settings.DefaultFontName, Settings.DefaultFontStyle, Settings.DefaultFontSize));
+	
+		CgLog.info("Default font: "+javax.swing.UIManager.getDefaults().getFont("TabbedPane.font").toString());
+		*/
+		
 		// -- Initialize the track data model (here because we need to know the current
 		// language
 		ModelTableMain = new TrackDataModel(Track, Settings);
@@ -1231,6 +1242,8 @@ public class frmMain extends javax.swing.JFrame {
 				frm.showDialog(Settings);
 
 				// -- Refresh data and display
+				SetDefaultFont();
+				RefreshWindows(); //Refresh the main window (after a font change)
 				RefreshStatusbar(Track);
 				PanelResume.refresh();
 				panelProfil.RefreshProfilChart();
@@ -2309,7 +2322,29 @@ public class frmMain extends javax.swing.JFrame {
 		tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 	}
 
+	
+	/**
+	 * Refresh the main window 
+	 * Used after a font change
+	 */
+	private void RefreshWindows() {
+		SwingUtilities.updateComponentTreeUI(this);
+	}
+	
+	/**
+	 * Set the default interface font
+	 */
+	private void SetDefaultFont() {
+		if (Settings.DefaultFontName.isEmpty())
+			Settings.DefaultFontName="Arial";
+		
+		//setUIFont(new javax.swing.plaf.FontUIResource("Arial", Font.PLAIN, 14));
+		setUIFont(new javax.swing.plaf.FontUIResource(Settings.DefaultFontName, Settings.DefaultFontStyle, Settings.DefaultFontSize));
+	
+		CgLog.info("Default font: "+javax.swing.UIManager.getDefaults().getFont("TabbedPane.font").toString());
+	}
 
+	
 	/**
 	 * This method is called to initialize the form.
 	 */
@@ -3617,6 +3652,7 @@ public class frmMain extends javax.swing.JFrame {
 					// Theme.loadTheme(course_generator.class().getResource("/course_generator/CG_Gray.theme"));
 					System.setProperty("awt.useSystemAAFontSettings", "on");
 					System.setProperty("swing.aatext", "true");
+					
 				} catch (Exception ex) {
 					ex.printStackTrace();
 					javax.swing.UIManager.getSystemLookAndFeelClassName();

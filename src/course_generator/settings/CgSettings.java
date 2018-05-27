@@ -81,8 +81,11 @@ public class CgSettings {
 	public String previousGPXDirectory;
 	public String previousCGXDirectory;
 	public String previousCSVDirectory;
-
-
+	
+	public String DefaultFontName;
+	public int DefaultFontStyle;
+	public int DefaultFontSize;
+	
 	public CgSettings() {
 		int i = 0;
 
@@ -129,6 +132,10 @@ public class CgSettings {
 		offlineMap = true;
 		map = 0;
 		PosFilterAskThreshold = 5;
+		
+		DefaultFontName = "Arial";
+		DefaultFontStyle = 0; //Normal
+		DefaultFontSize = 14;
 	}
 
 
@@ -218,6 +225,10 @@ public class CgSettings {
 			Utils.WriteDoubleToXML(writer, "DISTFAR", DistFar);
 			
 			Utils.WriteIntToXML(writer, "POSFILTERASKTHRESHOLD", PosFilterAskThreshold);
+			
+			Utils.WriteStringToXML(writer, "DEFAULTFONTNAME",DefaultFontName);
+			Utils.WriteIntToXML(writer, "DEFAULTFONTSTYLE",DefaultFontStyle);
+			Utils.WriteIntToXML(writer, "DEFAULTFONTSIZE",DefaultFontSize);
 
 			writer.writeEndElement();
 			writer.writeEndDocument();
