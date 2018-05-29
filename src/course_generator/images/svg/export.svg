@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2845"
+   viewBox="0 0 512 512"
+   version="1.1"
+   sodipodi:docname="export.svg"
+   width="512"
+   height="512"
+   inkscape:version="0.92.2 2405546, 2018-03-11">
+  <defs
+     id="defs1787" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1032"
+     id="namedview1785"
+     showgrid="false"
+     inkscape:zoom="1.2291667"
+     inkscape:cx="-67.328726"
+     inkscape:cy="192.09459"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2845" />
+  <path
+     id="path2823"
+     d="m 140.04586,155.32285 c 0.59787,-7.09892 11.08374,-20.36843 32.69683,-45.01029 C 267.27993,2.5297185 273.97475,3.6697528 281.87074,3.7308988 l 3.82231,0.8492508 c 7.21388,4.0391728 10.03067,8.7553004 41.61329,58.5983064 8.80911,13.903255 27.34995,42.541354 41.18798,63.693814 34.38991,52.56658 34.04613,55.20266 -6.3687,52.2296 -23.91218,-1.75951 -25.68678,-1.66901 -30.57303,2.54775 -4.44192,3.83345 -5.51537,7.52912 -8.06856,24.62828 -6.9788,46.72102 0.44841,97.78613 20.80733,143.09536 8.49658,18.91452 11.60552,24.76823 25.47752,45.01029 6.64726,9.70185 8.19493,13.30498 7.64326,20.80597 -0.48917,6.7883 -1.97434,9.22979 -5.09551,10.61564 -16.18604,7.18819 -49.79599,-16.62901 -90.44589,-64.11912 -40.94204,-47.82845 -66.35842,-101.96309 -77.70577,-166.45316 -4.855,-27.58774 -5.01805,-27.89347 -35.66853,-30.14908 -19.43358,-1.42987 -29.04438,-2.66747 -28.45058,-9.76639 z"
+     inkscape:connector-curvature="0"
+     style="fill:#a9d300;fill-opacity:0.66666669;stroke-width:13.5880127" />
+  <path
+     id="path2825"
+     d="m 90.109908,439.81508 c 0,37.63879 30.301272,67.94006 67.940062,67.94006 h 219.52794 c 37.6388,0 67.94007,-30.30127 67.94007,-67.94006 V 136.20451 c 0,-37.638792 -30.30127,-67.940061 -67.94007,-67.940061 h -27.59997 c 6.3937,9.917347 11.74181,18.63596 18.68352,29.298474 27.02791,8.961567 46.70879,34.008077 46.70879,64.119117 v 228.87649 c 0,37.6388 -30.30127,67.94006 -67.94006,67.94006 H 188.19226 c -37.63879,0 -67.94006,-30.30126 -67.94006,-67.94006 V 161.68204 c 0,-30.7225 20.5179,-56.08588 48.40729,-64.543063 1.06639,-1.223193 1.84892,-2.116062 2.97238,-3.397004 9.71217,-11.072871 14.89246,-16.480901 22.92977,-25.477524 h -36.51778 c -37.6388,0 -67.940066,30.301269 -67.940066,67.940061 v 303.61057 z"
+     inkscape:connector-curvature="0"
+     style="fill:#ffcc00;fill-opacity:0.66666667;stroke-width:13.5880127" />
+  <metadata
+     id="metadata1782">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>export icon</dc:title>
+        <dc:date>2013-07-15T19:09:27</dc:date>
+        <dc:description>An export icon</dc:description>
+        <dc:source>https://openclipart.org/detail/180890/export-icon-by-dibargatin-180890</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>dibargatin</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>android</rdf:li>
+            <rdf:li>export</rdf:li>
+            <rdf:li>icon</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   sodipodi:docname="edit.svg"
+   viewBox="0 0 511.99998 511.99999"
+   version="1.1"
+   inkscape:version="0.92.2 2405546, 2018-03-11"
+   width="512"
+   height="512">
+  <defs
+     id="defs4">
+    <filter
+       id="filter3774"
+       height="1.2376"
+       width="1.2465"
+       y="-0.11878"
+       x="-0.12324"
+       inkscape:collect="always">
+      <feGaussianBlur
+         id="feGaussianBlur3776"
+         stdDeviation="47.403534"
+         inkscape:collect="always" />
+    </filter>
+    <linearGradient
+       id="linearGradient3778"
+       y2="334.60999"
+       gradientUnits="userSpaceOnUse"
+       x2="920.79999"
+       gradientTransform="matrix(0.49835102,0,0,0.49835102,18.333922,666.58536)"
+       y1="-176.74001"
+       x1="413.57001"
+       inkscape:collect="always">
+      <stop
+         id="stop3731"
+         style="stop-color:#f1dbdb"
+         offset="0" />
+      <stop
+         id="stop3733"
+         style="stop-color:#8a8a8a;stop-opacity:0"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3780"
+       y2="-203.97"
+       gradientUnits="userSpaceOnUse"
+       x2="567.12"
+       gradientTransform="matrix(0.49835102,0,0,0.49835102,18.333922,666.58536)"
+       y1="177.02"
+       x1="944.56"
+       inkscape:collect="always">
+      <stop
+         id="stop3741"
+         style="stop-color:#805050"
+         offset="0" />
+      <stop
+         id="stop3743"
+         style="stop-color:#fff3f3"
+         offset="1" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#666666"
+     inkscape:pageshadow="2"
+     inkscape:window-y="24"
+     pagecolor="#ffffff"
+     inkscape:window-height="1032"
+     inkscape:window-maximized="1"
+     inkscape:zoom="0.98994952"
+     inkscape:window-x="0"
+     showgrid="false"
+     borderopacity="1.0"
+     inkscape:current-layer="layer1"
+     inkscape:cx="79.490421"
+     inkscape:cy="253.12871"
+     inkscape:window-width="1920"
+     inkscape:pageopacity="0.0"
+     inkscape:document-units="px" />
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(0,-540.40002)">
+    <path
+       id="path3747"
+       style="fill:#040404;filter:url(#filter3774)"
+       d="M 675.33,54.63 C 629.897,54.5398 593.754,75.453 569.49,95.568 l -13.625,-13.719 -174.62,178.62 16.438,16.562 -404.16,408.53 -3,-0.3125 c 0,0 -0.015,0.78124 0,2.0938 l -1.4063,0.15625 v 166.47 131.28 h 144.84 131.47 c 12.05,1.6968 22.25,0 22.25,0 v -1.3438 l 409.81,-404.94 14.125,14.219 176.84,-176.34 -16.094,-16.219 c 39.066,-48.211 80.774,-143.2 -40.5,-265.91 -59.31,-60.004 -112.32,-80.002 -156.54,-80.09 z m -236.22,954.84 c -0.8284,0 -1.5,0.6715 -1.5,1.5 0,0.8284 0.6716,1.5 1.5,1.5 0.8285,0 1.5,-0.6716 1.5,-1.5 0,-0.8285 -0.6715,-1.5 -1.5,-1.5 z"
+       inkscape:export-ydpi="2.3311617"
+       inkscape:export-filename="/Users/andersbr/rails/coop/public/images/web_decorations/edit.png"
+       transform="matrix(0.49835101,0,0,0.49835101,34.443112,537.71331)"
+       inkscape:export-xdpi="2.3311617"
+       inkscape:connector-curvature="0" />
+    <g
+       id="g4547">
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:export-xdpi="2.3311617"
+         inkscape:export-filename="/Users/andersbr/rails/coop/public/images/web_decorations/edit.png"
+         sodipodi:nodetypes="cscc"
+         inkscape:export-ydpi="2.3311617"
+         d="m 300.96064,603.5228 c 0,0 60.0621,-87.69014 148.04223,1.32697 88.84135,89.89788 2.17539,149.95852 2.17539,149.95852 L 300.95743,603.52369 Z"
+         style="fill:#805050;stroke-width:0.72862601"
+         id="path3623" />
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:export-xdpi="2.3311617"
+         inkscape:export-filename="/Users/andersbr/rails/coop/public/images/web_decorations/edit.png"
+         sodipodi:nodetypes="cscc"
+         inkscape:export-ydpi="2.3311617"
+         d="m 300.96064,603.5228 c 0,0 60.0621,-87.69014 148.04223,1.32697 88.84135,89.89788 2.17539,149.95852 2.17539,149.95852 L 300.95743,603.52369 Z"
+         style="opacity:0.23361003;fill:url(#linearGradient3780);stroke-width:0.72862601"
+         id="path3737" />
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:export-xdpi="2.3311617"
+         inkscape:export-filename="/Users/andersbr/rails/coop/public/images/web_decorations/edit.png"
+         inkscape:export-ydpi="2.3311617"
+         d="M 29.010478,880.33509 V 1028.7125 H 177.81046 V 863.54026 L 29.010478,880.33727 Z"
+         style="fill:#f2dcb8;stroke-width:0.72862601"
+         id="path3625" />
+      <circle
+         r="0.74752653"
+         cy="1041.5258"
+         cx="253.27081"
+         inkscape:export-xdpi="2.3311617"
+         inkscape:export-filename="/Users/andersbr/rails/coop/public/images/web_decorations/edit.png"
+         inkscape:export-ydpi="2.3311617"
+         style="fill:#000000;stroke-width:0.49835101"
+         id="path2818" />
+      <circle
+         r="0.74752653"
+         cy="731.12433"
+         cx="251.84697"
+         inkscape:export-xdpi="2.3311617"
+         inkscape:export-filename="/Users/andersbr/rails/coop/public/images/web_decorations/edit.png"
+         inkscape:export-ydpi="2.3311617"
+         style="fill:#000000;stroke-width:0.49835101"
+         id="path2820" />
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:export-xdpi="2.3311617"
+         inkscape:export-filename="/Users/andersbr/rails/coop/public/images/web_decorations/edit.png"
+         sodipodi:nodetypes="cccscscscccc"
+         inkscape:export-ydpi="2.3311617"
+         d="m 239.04201,669.2813 -207.825982,210.08472 -1.498054,-0.1603 c 0,0 -0.396839,20.46565 7.844386,30.60885 9.255007,11.3906 29.889694,7.12596 29.889694,7.12596 0,0 -5.684301,25.62287 19.233539,51.25228 24.917847,25.62939 57.653257,26.33469 57.653257,26.33469 0,0 -0.70746,17.0972 7.83564,27.0648 8.54315,9.967 25.63161,7.1194 25.63161,7.1194 l -0.0309,-0.6386 211.28693,-208.77318 -150.01681,-150.0168 z"
+         style="fill:#ffba00;stroke-width:0.72862601"
+         id="path2842" />
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:export-xdpi="2.3311617"
+         inkscape:export-filename="/Users/andersbr/rails/coop/public/images/web_decorations/edit.png"
+         inkscape:export-ydpi="2.3311617"
+         d="M 355.93548,786.17476 143.75959,994.50345 c 0.34472,0.0175 0.57626,0.0317 0.57626,0.0317 0,0 -0.70971,17.09945 7.83345,27.06705 8.54314,9.9668 25.63379,7.1172 25.63379,7.1172 l -0.0308,-0.6386 211.28696,-208.78053 -33.1248,-33.1248 z"
+         style="fill:#cb9605;stroke-width:0.72862601"
+         id="path3633" />
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:export-xdpi="2.3311617"
+         inkscape:export-filename="/Users/andersbr/rails/coop/public/images/web_decorations/edit.png"
+         inkscape:export-ydpi="2.3311617"
+         d="m 239.04201,669.2813 -207.825982,210.08472 -1.498054,-0.1603 c 0,0 -0.392403,20.45836 7.848757,30.60156 9.155186,11.26747 29.369455,7.2373 29.807359,7.14826 L 273.64082,703.88346 239.03838,669.28101 Z"
+         style="fill:#ffcf4b;stroke-width:0.72862601"
+         id="path3638" />
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:export-xdpi="2.3311617"
+         inkscape:export-filename="/Users/andersbr/rails/coop/public/images/web_decorations/edit.png"
+         inkscape:export-ydpi="2.3311617"
+         d="m 224.44034,667.51803 87.01252,-89.01625 165.76241,166.94278 -88.1346,87.89416 z"
+         style="fill:#777777;stroke-width:0.72862601"
+         id="path3727" />
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:export-xdpi="2.3311617"
+         inkscape:export-filename="/Users/andersbr/rails/coop/public/images/web_decorations/edit.png"
+         inkscape:export-ydpi="2.3311617"
+         d="m 224.44034,667.51803 87.01252,-89.01625 165.76241,166.94278 -88.1346,87.89416 z"
+         style="fill:url(#linearGradient3778);stroke-width:0.72862601"
+         id="path3621" />
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:export-xdpi="2.3311617"
+         inkscape:export-filename="/Users/andersbr/rails/coop/public/images/web_decorations/edit.png"
+         sodipodi:nodetypes="cccc"
+         inkscape:export-ydpi="2.3311617"
+         d="m 29.017034,963.28916 v 65.42404 H 101.20055 C 82.314566,1000.8433 51.055784,974.21927 29.017034,963.28989 Z"
+         style="fill:#333333;stroke-width:0.72862601"
+         id="path3627" />
+    </g>
+  </g>
+  <metadata
+     id="metadata25">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>Edit pencil icon</dc:title>
+        <dc:date>2011-06-08T15:50:50</dc:date>
+        <dc:description>Stubby pencil.</dc:description>
+        <dc:source>https://openclipart.org/detail/143629/edit-pencil-icon-by-darth_schmoo</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>darth_schmoo</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>edit</rdf:li>
+            <rdf:li>icons</rdf:li>
+            <rdf:li>pencil</rdf:li>
+            <rdf:li>web icon</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

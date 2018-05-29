@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="512"
+   height="512"
+   viewBox="0 0 135.46667 135.46667"
+   id="svg8185"
+   version="1.1"
+   inkscape:version="0.92.2 2405546, 2018-03-11"
+   sodipodi:docname="gps.svg">
+  <title
+     id="title4137">Location (GPS) Symbol</title>
+  <defs
+     id="defs8187" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="151.84608"
+     inkscape:cy="338.3489"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1371"
+     inkscape:window-height="988"
+     inkscape:window-x="105"
+     inkscape:window-y="67"
+     inkscape:window-maximized="0"
+     units="px" />
+  <metadata
+     id="metadata8190">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Location (GPS) Symbol</dc:title>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
+        <dc:source>https://openclipart.org/user-detail/joede</dc:source>
+        <dc:description>A simple &quot;Location&quot; or &quot;GPS&quot; symbol for designing keypad buttons</dc:description>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-248.39789,-36.296964)">
+    <path
+       style="fill:#ffa000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 317.08606,39.268599 c -28.22772,-0.08413 -35.33277,21.945887 -35.30856,34.963639 0.0523,28.070082 14.42182,49.561832 35.64958,84.591702 20.73827,-35.40517 34.7079,-56.46639 34.70788,-84.487076 0,-13.832263 -6.8212,-34.984135 -35.0489,-35.068265 z m -0.34104,17.725965 c 9.70744,-0.0012 17.57778,7.867384 17.57872,17.574828 -9.4e-4,9.707445 -7.87128,17.576039 -17.57872,17.574829 -9.70591,-9.32e-4 -17.57389,-7.868912 -17.57483,-17.574829 9.4e-4,-9.705916 7.86892,-17.573896 17.57483,-17.574828 z"
+       id="path8166"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sscssccccc" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:7.71998787;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path8172"
+       sodipodi:type="arc"
+       sodipodi:cx="316.95401"
+       sodipodi:cy="153.14207"
+       sodipodi:rx="49.895687"
+       sodipodi:ry="13.618407"
+       sodipodi:start="5.1465846"
+       sodipodi:end="4.2879646"
+       d="m 337.94417,140.78734 a 49.895687,13.618407 0 0 1 27.70791,15.32057 49.895687,13.618407 0 0 1 -48.94184,10.65241 49.895687,13.618407 0 0 1 -48.55815,-10.78243 49.895687,13.618407 0 0 1 28.25506,-15.24594"
+       sodipodi:open="true" />
+  </g>
+</svg>
