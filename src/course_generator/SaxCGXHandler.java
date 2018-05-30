@@ -410,7 +410,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("TIMEZONE")) {
 				trkdata.TrackTimeZone = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("USESUMMERTIME")) {
-				trkdata.TrackUseSumerTime = ManageBoolean(false, ERR_READ_BOOL);
+				trkdata.TrackUseDaylightSaving = ManageBoolean(false, ERR_READ_BOOL);
 			} else if (qName.equalsIgnoreCase("CURVE")) {
 				curve = ManageString();
 				if (!Utils.FileExist(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + curve + ".par")) {

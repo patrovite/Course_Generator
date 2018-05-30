@@ -95,6 +95,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	private JLabel lbDescCoeff;
 	private CgSpinnerDouble spinDescCoeff;
 	private JPanel panelCoeff;
+	private static FrmCalcSunriseSunset calcSunriseSunset;
 
 
 	/**
@@ -111,7 +112,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		this.settings = settings;
 		this.track = track;
 		this.timezone = track.TrackTimeZone;
-		this.summertime = track.TrackUseSumerTime;
+		this.summertime = track.TrackUseDaylightSaving;
 
 		// Set field
 		tfTrackName.setText(this.track.CourseName);
@@ -157,7 +158,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 			track.NightCoeffDesc = spinDescCoeff.getValueAsDouble();
 
 			track.TrackTimeZone = this.timezone;
-			track.TrackUseSumerTime = this.summertime;
+			track.TrackUseDaylightSaving = this.summertime;
 
 			JOptionPane.showMessageDialog(this, bundle.getString("frmTrackSettings.ModificationMsg"));
 		}
@@ -329,15 +330,17 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		btCalc = new JButton(bundle.getString("frmTrackSettings.btCalc.text"));
 		btCalc.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				FrmCalcSunriseSunset frm = new FrmCalcSunriseSunset();
-				ResCalcSunriseSunset res = frm.showDialog(track.data.get(0).getLongitude(),
+				if (calcSunriseSunset == null)
+					calcSunriseSunset = new FrmCalcSunriseSunset();
+
+				ResCalcSunriseSunset res = calcSunriseSunset.showDialog(track.data.get(0).getLongitude(),
 						track.data.get(0).getLatitude(), track.StartTime, track.TrackTimeZone.intValue(),
-						track.TrackUseSumerTime);
+						track.TrackUseDaylightSaving);
 				if (res.valid) {
 					timezone = Double.valueOf(res.TimeZone);
 					summertime = res.SummerTime;
-					spinEndNightModel.setValue(res.Sunrise.toDate());
-					spinStartNightModel.setValue(res.Sunset.toDate());
+					spinEndNightModel.setValue(res.Sunrise);
+					spinStartNightModel.setValue(res.Sunset);
 				}
 			}
 		});
