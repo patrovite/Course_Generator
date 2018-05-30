@@ -47,6 +47,7 @@ import javax.swing.SpinnerDateModel;
 
 import org.jdesktop.swingx.JXMonthView;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import course_generator.CgData;
 import course_generator.TrackData;
@@ -336,11 +337,14 @@ public class frmTrackSettings extends javax.swing.JDialog {
 				ResCalcSunriseSunset res = calcSunriseSunset.showDialog(track.data.get(0).getLongitude(),
 						track.data.get(0).getLatitude(), track.StartTime, track.TrackTimeZone.intValue(),
 						track.TrackUseDaylightSaving);
+
 				if (res.valid) {
 					timezone = Double.valueOf(res.TimeZone);
 					summertime = res.SummerTime;
-					spinEndNightModel.setValue(res.Sunrise);
-					spinStartNightModel.setValue(res.Sunset);
+					spinEndNightModel
+							.setValue(res.Sunrise.withZone(DateTimeZone.forID("America/Los_Angeles")).toDate());
+					spinStartNightModel
+							.setValue(res.Sunset.withZone(DateTimeZone.forID("America/Los_Angeles")).toDate());
 				}
 			}
 		});
