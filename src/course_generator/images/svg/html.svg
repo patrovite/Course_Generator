@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   viewBox="0 0 512 512"
+   version="1.1"
+   sodipodi:docname="html.svg"
+   width="512"
+   height="512"
+   inkscape:version="0.92.2 2405546, 2018-03-11">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1032"
+     id="namedview22"
+     showgrid="false"
+     inkscape:zoom="1.18"
+     inkscape:cx="401.95858"
+     inkscape:cy="211.5784"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3046"
+       x1="105"
+       gradientUnits="userSpaceOnUse"
+       y1="123"
+       gradientTransform="translate(2,922.36)"
+       x2="-80"
+       y2="-112">
+      <stop
+         id="stop3602"
+         stop-color="#e6e6e6"
+         offset="0" />
+      <stop
+         id="stop3604"
+         stop-color="#f9f9f9"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3048"
+       x1="93"
+       gradientUnits="userSpaceOnUse"
+       y1="944.35999"
+       gradientTransform="translate(2,-2)"
+       x2="80"
+       y2="957.35999">
+      <stop
+         id="stop3610"
+         stop-color="#ccc"
+         offset="0" />
+      <stop
+         id="stop3616"
+         stop-color="#e6e6e6"
+         offset=".22008" />
+      <stop
+         id="stop3618"
+         stop-color="#fff"
+         offset=".46933" />
+      <stop
+         id="stop3612"
+         stop-color="#e6e6e6"
+         offset="1" />
+    </linearGradient>
+  </defs>
+  <g
+     id="g848"
+     transform="matrix(5.1685548,0,0,5.1558306,64.765178,-2126.0065)"
+     style="stroke-width:0.19371627">
+    <g
+       style="fill-rule:evenodd;stroke:#808080;stroke-width:0.19371627px;stroke-linejoin:round"
+       transform="matrix(0.86046,0,0,0.86207,-18.5,-389.602)"
+       id="g2995">
+      <path
+         style="fill:url(#linearGradient3046);stroke-width:0.19371627px"
+         inkscape:connector-curvature="0"
+         d="M 82,930.36 H 22 v 115 h 85 v -90 z"
+         id="path2826" />
+      <path
+         style="fill:url(#linearGradient3048);stroke-width:0.19371627px"
+         inkscape:connector-curvature="0"
+         d="m 107,955.36 -25,-25 c 1.8633,8.3333 2.1329,16.667 0,25 9.9055,-1.935 17.128,-0.56751 25,0 z"
+         id="rect2822" />
+    </g>
+    <rect
+       style="fill:#005aa6;stroke-width:0"
+       x="1.9420017"
+       y="446.37802"
+       width="70.115997"
+       height="31.256001"
+       id="rect3088" />
+    <text
+       x="1.6918262"
+       y="470.95071"
+       line-height="125%"
+       font-size="24.549px"
+       xml:space="preserve"
+       style="font-size:24.54899979px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;stroke-width:0.19371627"
+       id="text3858">         <tspan
+   x="1.6918262"
+   y="470.95071"
+   id="tspan3860"
+   style="stroke-width:0.19371627">HTML</tspan> </text>
+  </g>
+  <metadata
+     id="metadata19">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>Icon HTML - Ãcone</dc:title>
+        <dc:date>2012-08-23T08:57:45</dc:date>
+        <dc:description>Icon HTML - Ãcone</dc:description>
+        <dc:source>https://openclipart.org/detail/171856/icon-html---Ãcone-by-leandrosciola-171856</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>leandrosciola</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>Icon</rdf:li>
+            <rdf:li>Icon HTML</rdf:li>
+            <rdf:li>Ãcone</rdf:li>
+            <rdf:li>Ãcone HTML</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

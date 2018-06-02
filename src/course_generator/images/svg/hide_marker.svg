@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="512"
+   height="512"
+   viewBox="0 0 480 479.99999"
+   id="svg8185"
+   version="1.1"
+   inkscape:version="0.92.2 2405546, 2018-03-11"
+   sodipodi:docname="hide_marker.svg">
+  <title
+     id="title4137">Location (GPS) Symbol</title>
+  <defs
+     id="defs8187" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.24748737"
+     inkscape:cx="-94.666209"
+     inkscape:cy="-30.393788"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1032"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     units="px" />
+  <metadata
+     id="metadata8190">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Location (GPS) Symbol</dc:title>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/4.0/" />
+        <dc:source>https://openclipart.org/user-detail/joede</dc:source>
+        <dc:description>A simple &quot;Location&quot; or &quot;GPS&quot; symbol for designing keypad buttons</dc:description>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-248.39789,-36.296964)">
+    <path
+       style="fill:#aad400;fill-opacity:1;fill-rule:evenodd;stroke:#1a1a1a;stroke-width:9.375;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 491.98585,40.98538 c -110.45967,-0.328046 -138.26291,85.57297 -138.16819,136.33271 0.205,109.45292 56.43496,193.25507 139.50265,329.84603 81.15221,-138.05432 135.81763,-220.17779 135.81754,-329.43806 0,-53.93574 -26.69244,-136.412637 -137.152,-136.74068 z m -1.33456,69.11835 c 37.9868,-0.004 68.78472,30.67706 68.78836,68.52901 -0.003,37.85197 -30.80156,68.53375 -68.78836,68.52904 -37.98084,-0.003 -68.76951,-30.68302 -68.77316,-68.52904 0.003,-37.84599 30.79232,-68.52538 68.77316,-68.52901 z"
+       id="path8166"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sscssccccc" />
+    <path
+       style="fill:none;stroke:#ff2a2a;stroke-width:37.49999961;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 315.20329,438.63503 668.71247,87.261399"
+       id="path821"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#ff0000;stroke:#ff0000;stroke-width:37.49999961;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 313.09489,85.855905 668.00966,440.04052"
+       id="path823"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

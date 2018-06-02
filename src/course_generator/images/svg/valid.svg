@@ -10,7 +10,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg2160"
-   sodipodi:docname="cancel1.svg"
+   sodipodi:docname="valid1.svg"
    viewBox="0 0 512 512"
    sodipodi:version="0.32"
    version="1.0"
@@ -21,13 +21,13 @@
   <defs
      id="defs2162">
     <radialGradient
-       id="radialGradient2201"
+       id="radialGradient2197"
        gradientUnits="userSpaceOnUse"
        cy="15.163"
        cx="15.891"
        r="27.545"
        inkscape:collect="always"
-       gradientTransform="matrix(0.99849002,0,0,0.99849004,4.4959994,4.3146972)">
+       gradientTransform="matrix(8.9306214,0,0,8.9600432,10.001984,-441.24403)">
       <stop
          id="stop3145"
          style="stop-color:#ffffff"
@@ -38,20 +38,22 @@
          offset="1" />
     </radialGradient>
     <radialGradient
-       id="radialGradient2203"
+       id="radialGradient2199"
        gradientUnits="userSpaceOnUse"
-       cy="16.847"
-       cx="16.028"
-       gradientTransform="matrix(0.91749251,0.94389257,-0.71598725,0.69595751,17.856793,-5.7171254)"
+       cy="14.107545"
+       cx="-6.5755816"
+       gradientTransform="matrix(-1.1764633,6.8098872,-6.665582,-1.141546,200.36028,-306.54868)"
        r="27.545"
-       inkscape:collect="always">
+       inkscape:collect="always"
+       fx="-6.5755816"
+       fy="14.107545">
       <stop
-         id="stop3203"
-         style="stop-color:#ff9b9b"
+         id="stop3179"
+         style="stop-color:#9bffb3"
          offset="0" />
       <stop
-         id="stop3205"
-         style="stop-color:#f00000"
+         id="stop3181"
+         style="stop-color:#00f038"
          offset="1" />
     </radialGradient>
   </defs>
@@ -64,13 +66,13 @@
      inkscape:window-height="1032"
      inkscape:grid-bbox="true"
      width="64px"
-     inkscape:zoom="0.48613591"
+     inkscape:zoom="0.0859375"
      inkscape:window-x="0"
      showgrid="true"
      borderopacity="1.0"
      inkscape:current-layer="layer1"
-     inkscape:cx="-494.21017"
-     inkscape:cy="342.88074"
+     inkscape:cx="-2545.114"
+     inkscape:cy="1127.4313"
      inkscape:window-width="1920"
      height="64px"
      inkscape:pageopacity="0.0"
@@ -82,27 +84,31 @@
      inkscape:groupmode="layer"
      transform="translate(0,448)">
     <g
-       id="g829"
-       transform="matrix(0.96565266,0,0,0.96565265,8.7929194,-6.5947039)"
-       style="stroke-width:1.03556907">
+       id="g839">
       <ellipse
-         ry="254.74879"
-         rx="254.74998"
-         id="path3185"
-         style="fill:url(#radialGradient2201);stroke-width:1.03400528"
+         ry="245.99603"
+         rx="246"
+         id="path3141"
+         style="fill:url(#radialGradient2197);stroke-width:0.99849015"
+         inkscape:export-ydpi="46.5"
+         inkscape:export-filename="C:\Documents and Settings\xne0096\Desktop\ok.gif"
+         inkscape:export-xdpi="46.5"
          cx="256"
-         cy="-191.99879" />
+         cy="-191.99603" />
       <ellipse
-         ry="254.74879"
-         rx="254.74998"
-         id="path3187"
-         style="fill:url(#radialGradient2203);stroke:#be0000;stroke-width:20.71138;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         ry="245.99603"
+         rx="246"
+         id="path2168"
+         style="fill:url(#radialGradient2199);stroke:#00be31;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+         inkscape:export-ydpi="46.5"
+         inkscape:export-filename="C:\Documents and Settings\xne0096\Desktop\ok.gif"
+         inkscape:export-xdpi="46.5"
          cx="256"
-         cy="-191.99879" />
+         cy="-191.99603" />
       <path
-         id="path3207"
-         style="fill:#ffffff;stroke-width:1.03556907"
-         d="m 293.92129,-314.15086 c -16.65368,14.36581 -29.13005,40.47621 -41.97691,54.12883 -24.3692,-20.16401 -35.36359,-57.75965 -61.6501,-68.3094 -31.86244,8.51204 -82.47184,38.30884 -45.15389,70.62498 19.06189,28.18515 57.38017,53.23039 66.29054,82.48997 -13.59711,35.10409 -39.75395,61.27933 -65.13275,86.843252 12.41153,43.301216 71.82942,4.853441 95.8096,-16.209012 19.12673,-42.92146 33.04802,8.317539 50.93359,26.777287 14.27326,57.629982 90.78015,40.781873 97.44903,-6.854096 -26.30503,-42.134171 -62.8079,-82.656691 -88.17743,-124.123981 10.04963,-43.11597 52.14695,-71.97727 61.96502,-113.75947 -16.57958,-28.91688 -48.94218,3.26959 -70.3567,8.39164 z"
+         id="path3167"
+         style="fill:#ffffff;stroke-width:1.00000012"
+         d="m 396.8706,-342.16764 c -83.40466,22.44064 -157.6594,89.56577 -172.17584,176.92235 -35.10598,-23.30821 -64.55028,-71.14996 -107.05312,-73.50224 -28.057946,14.60564 -93.323765,52.46582 -38.29011,74.62024 49.23781,38.26267 123.00062,72.724114 134.71752,139.196327 24.05991,22.4764098 55.15888,-9.471754 80.22053,-17.888108 31.07215,-50.29242 -3.82812,-119.582009 26.27805,-173.013799 15.54502,-50.3908 69.94364,-70.78324 100.89952,-107.32865 -0.0269,-13.26403 -12.17306,-22.44958 -24.59655,-19.00612 z"
          inkscape:connector-curvature="0" />
     </g>
   </g>
@@ -124,7 +130,7 @@
         <dc:title>red + green OK, not OK Icons</dc:title>
         <dc:date>2007-11-06T09:00:17</dc:date>
         <dc:description>Two circular icons in red and green, indicating success or failure. Can be used as visual confirmation.</dc:description>
-        <dc:source>https://openclipart.org/detail/10941/red-+-green-ok-not-ok-icons-by-tzeeniewheenie-10941</dc:source>
+        <dc:source>https://openclipart.org/detail/10940/red-+-green-ok-not-ok-icons-by-tzeeniewheenie-10940</dc:source>
         <dc:creator>
           <cc:Agent>
             <dc:title>TzeenieWheenie</dc:title>
