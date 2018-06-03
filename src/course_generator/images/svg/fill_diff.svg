@@ -24,15 +24,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1032"
+     inkscape:window-width="1366"
+     inkscape:window-height="699"
      id="namedview49"
      showgrid="false"
      inkscape:zoom="0.58617523"
-     inkscape:cx="623.697"
+     inkscape:cx="319.18055"
      inkscape:cy="232.22191"
      inkscape:window-x="0"
-     inkscape:window-y="24"
+     inkscape:window-y="45"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg4455" />
   <defs
@@ -214,7 +214,7 @@
          stdDeviation="17.227831" />
     </filter>
     <radialGradient
-       gradientTransform="translate(561.90609,261.69297)"
+       gradientTransform="matrix(0.92038857,0,0,0.92024826,7.9693626,66.77278)"
        id="XMLID_1_"
        gradientUnits="userSpaceOnUse"
        cy="393.79001"
@@ -230,11 +230,6 @@
          id="stop4" />
     </radialGradient>
   </defs>
-  <path
-     id="path5034"
-     d="m 260.8396,154.85862 c 0.48,0 0.95,0 0,0 z"
-     inkscape:connector-curvature="0"
-     style="fill:none;stroke:#000000;stroke-width:1px" />
   <metadata
      id="metadata46">
     <rdf:RDF>
@@ -250,7 +245,7 @@
             <dc:title>Openclipart</dc:title>
           </cc:Agent>
         </dc:publisher>
-        <dc:title></dc:title>
+        <dc:title />
         <dc:date>2009-01-14T08:20:17</dc:date>
         <dc:description>A Glossy love / heart symbol. Created in Inkscape. This is an Inkscape SVG</dc:description>
         <dc:source>http://openclipart.org/detail/21138/glossy-heart-by-kablam-21138</dc:source>
@@ -287,29 +282,33 @@
     </rdf:RDF>
   </metadata>
   <path
-     style="fill:none;stroke:#000000;stroke-width:20;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM)"
-     d="M 458.3648,34.003748 V 425.49551"
+     style="fill:none;stroke:#000000;stroke-width:25;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleOutM)"
+     d="M 444.71701,28.885825 V 420.37758"
      id="path901"
      inkscape:connector-curvature="0" />
   <g
-     id="g1597"
-     transform="matrix(0.92038857,0,0,0.92024826,-509.20258,-174.04972)"
-     style="stroke-width:1.08658028">
+     id="g887"
+     transform="matrix(0.86393532,0,0,0.86393532,15.338407,-2.2250242)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px"
+       inkscape:connector-curvature="0"
+       d="m 260.8396,154.85862 c 0.48,0 0.95,0 0,0 z"
+       id="path5034" />
     <path
        id="path7"
-       d="m 570.45709,652.19297 184.84999,-368.8 c 0,0 26.409,-31.504 52.815,0 26.41,31.501 180.19,370.65 180.19,370.65 0,0 3.105,18.534 -27.961,18.534 -31.066,0 -361.93999,0 -361.93999,0 0,0 -23.299,0 -27.959,-20.38 z"
-       style="fill:url(#XMLID_1_);stroke-width:1.08658028"
+       d="M 15.839605,426.12973 185.97342,86.742168 c 0,0 24.30655,-28.991502 48.61033,0 24.30746,28.988742 165.84481,341.090022 165.84481,341.090022 0,0 2.85781,17.05588 -25.73498,17.05588 -28.59279,0 -333.125433,0 -333.125433,0 0,0 -21.444133,0 -25.733144,-18.75466 z"
+       style="fill:url(#XMLID_1_);stroke-width:0.99999982"
        inkscape:connector-curvature="0" />
     <path
        sodipodi:nodetypes="ccccscc"
        id="path9"
-       d="m 570.45709,652.19297 184.84999,-368.8 c 0,0 26.409,-31.504 52.815,0 26.41,31.501 180.19,370.65 180.19,370.65 0,0 3.105,18.534 -27.961,18.534 H 598.41109 c -23.17443,0.52191 -32.13175,-2.01355 -27.954,-20.384 z"
-       style="fill:none;stroke:#1a1a1a;stroke-width:21.73160744;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 15.839605,426.12973 185.97342,86.742168 c 0,0 24.30655,-28.991502 48.61033,0 24.30746,28.988742 165.84481,341.090022 165.84481,341.090022 0,0 2.85781,17.05588 -25.73498,17.05588 H 41.568147 c -21.32948,0.48028 -29.573695,-1.85297 -25.728542,-18.75834 z"
+       style="fill:none;stroke:#1a1a1a;stroke-width:30;stroke-miterlimit:4;stroke-dasharray:none"
        inkscape:connector-curvature="0" />
     <path
        id="path11"
-       d="m 774.40608,554.32297 c -13.168,-79.969 -19.75,-123.12 -19.75,-129.45 0,-7.703 2.551,-13.926 7.66,-18.676 5.105,-4.746 10.871,-7.121 17.293,-7.121 6.949,0 12.82,2.535 17.609,7.598 4.789,5.063 7.188,11.023 7.188,17.883 0,6.543 -6.668,49.801 -20,129.77 h -10 z m 27,38.17 c 0,6.098 -2.156,11.301 -6.469,15.613 -4.313,4.309 -9.461,6.465 -15.453,6.465 -6.098,0 -11.301,-2.156 -15.613,-6.465 -4.313,-4.313 -6.465,-9.516 -6.465,-15.613 0,-5.992 2.152,-11.141 6.465,-15.453 4.313,-4.312 9.516,-6.469 15.613,-6.469 5.992,0 11.141,2.156 15.453,6.469 4.312,4.313 6.48,9.45 6.48,15.44 z"
+       d="M 203.55192,336.06503 C 191.43225,262.4737 185.37425,222.76406 185.37425,216.93889 c 0,-7.08867 2.34791,-12.81538 7.05018,-17.18656 4.69858,-4.36749 10.00554,-6.55308 15.91628,-6.55308 6.39578,0 11.79938,2.33283 16.20712,6.99204 4.40774,4.65922 6.61575,10.1439 6.61575,16.4568 0,6.02119 -6.13715,45.82929 -18.40777,119.42062 h -9.20389 z m 24.8505,35.12587 c 0,5.61168 -1.98436,10.39973 -5.954,14.36784 -3.96963,3.96535 -8.70779,5.94941 -14.22276,5.94941 -5.61253,0 -10.40131,-1.98406 -14.37003,-5.94941 -3.96963,-3.96903 -5.95031,-8.75708 -5.95031,-14.36784 0,-5.51412 1.98068,-10.25248 5.95031,-14.22059 3.96964,-3.96811 8.75842,-5.95309 14.37003,-5.95309 5.51497,0 10.25405,1.98406 14.22276,5.95309 3.96872,3.96903 5.96412,8.69634 5.96412,14.20863 z"
        inkscape:connector-curvature="0"
-       style="stroke-width:1.08658028" />
+       style="stroke-width:0.99999982" />
   </g>
 </svg>

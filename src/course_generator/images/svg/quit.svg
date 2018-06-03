@@ -299,16 +299,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="270.48261"
-     inkscape:cy="-31.603274"
+     inkscape:cx="15.48261"
+     inkscape:cy="254.11101"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      units="px"
-     inkscape:window-width="1920"
-     inkscape:window-height="1032"
+     inkscape:window-width="1366"
+     inkscape:window-height="699"
      inkscape:window-x="0"
-     inkscape:window-y="24"
+     inkscape:window-y="45"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata4204">
@@ -318,7 +318,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -372,12 +372,6 @@
        style="fill:url(#radialGradient12406);stroke-width:0.55073488"
        d="m 129.11309,228.95451 c 0,34.41169 -27.7406,62.30764 -61.96066,62.30764 -34.220056,0 -61.9606603,-27.89595 -61.9606603,-62.30764 0,-34.41169 27.7406043,-62.30764 61.9606603,-62.30764 34.22006,0 61.96066,27.89595 61.96066,62.30764 z"
        inkscape:connector-curvature="0" />
-    <path
-       id="path5499"
-       style="opacity:0.22000002;fill:#2b1100;filter:url(#filter4363)"
-       d="m 526.74,423.45 c -44.645,0.7251 -86.723,31.117 -101.28,73.156 -13.418,36.456 -5.8694,80.074 19.594,109.28 24.455,29.367 64.79,44.667 102.72,37.96 33.187,-5.3866 63.539,-26.592 79.332,-56.172 16.366,-29.631 18.325,-67.009 4.3215,-97.944 -15.134,-34.671 -48.832,-60.707 -86.727,-65.296 -5.9478,-0.83309 -11.957,-1.1546 -17.961,-0.98481 z m 3.3438,2.5312 c 45.748,-0.91102 89.482,31.359 102.22,75.188 11.14,36.156 1.6679,78.096 -24.969,105.03 -24.665,25.855 -62.898,38.153 -98.057,30.666 -38.223,-7.6514 -71.073,-37.463 -81.255,-75.197 -9.7458,-33.907 -1.5074,-72.579 21.812,-98.849 19.939,-22.857 49.702,-37.115 80.251,-36.839 z"
-       inkscape:connector-curvature="0"
-       transform="matrix(0.54919926,0,0,0.54919926,-224.86505,-64.153589)" />
     <path
        id="path5501"
        style="fill:#e9a71c;stroke-width:0.54919928"

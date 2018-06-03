@@ -9,63 +9,95 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   id="svg1"
-   sodipodi:docname="pouce.svg"
-   viewBox="0 0 512 511.99998"
-   sodipodi:version="0.32"
+   id="svg3336"
+   sodipodi:docname="pouce1.svg"
+   viewBox="0 0 512 512"
    version="1.1"
    inkscape:version="0.92.2 2405546, 2018-03-11"
    width="512"
    height="512">
   <defs
-     id="defs4">
-    <linearGradient
-       id="linearGradient1683">
-      <stop
-         id="stop1684"
-         style="stop-color:#e9b487"
-         offset="0" />
-      <stop
-         id="stop1685"
-         style="stop-color:#ffdc84"
-         offset="1" />
-    </linearGradient>
-  </defs>
+     id="defs15" />
+  <title
+     id="title3408">personnage</title>
   <sodipodi:namedview
      id="base"
      bordercolor="#666666"
      inkscape:pageshadow="2"
      inkscape:window-y="24"
      pagecolor="#ffffff"
+     inkscape:window-height="1032"
      inkscape:window-maximized="1"
-     inkscape:window-width="1920"
-     inkscape:zoom="0.21707918"
+     inkscape:zoom="0.49497475"
      inkscape:window-x="0"
      showgrid="false"
      borderopacity="1.0"
-     inkscape:current-layer="svg1"
-     inkscape:cx="-1376.3926"
-     inkscape:cy="936.30244"
-     inkscape:window-height="1032"
-     inkscape:pageopacity="0" />
+     inkscape:current-layer="layer1"
+     inkscape:cx="-200.30759"
+     inkscape:cy="194.09951"
+     inkscape:window-width="1920"
+     inkscape:pageopacity="0.0"
+     inkscape:document-units="px" />
   <g
-     id="g826"
-     transform="translate(99.726266,-0.0996596)">
-    <path
-       id="path1061"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="csssssssssssssssss"
-       style="fill:#c8beb7;fill-rule:evenodd;stroke:#4d4d4d;stroke-width:12.5"
-       d="m 24.713895,370.18891 c -9.263738,9.09473 -16.712798,24.48876 -18.0833236,37.68091 -1.6433616,15.82803 2.0050282,34.9876 9.0416616,49.37323 6.313301,12.90495 18.254639,25.89286 31.001796,32.48575 17.391716,8.999 43.425357,20.4807 59.421171,14.2899 17.58841,-6.8035 24.0413,-41.34434 41.33784,-53.2728 12.84233,-8.85859 35.36083,-1.92744 49.08512,-9.09473 8.6673,-4.52503 17.34095,-15.61741 18.08332,-25.98221 6.14833,-85.78407 -0.44415,-175.12945 2.58243,-262.47079 0.85023,-24.39941 12.16341,-49.5647 9.04166,-72.757862 C 223.75101,62.052992 213.60531,40.646864 200.39497,28.463114 187.76837,16.828239 169.88809,-0.3496368 148.72108,8.9716662 124.54653,19.623672 131.67834,53.315667 133.22018,63.546443 c 3.62301,23.990947 12.48067,47.445787 15.5009,71.462257 1.7195,13.66444 2.13827,28.24792 -1.28804,41.58048 -12.07459,46.87138 -24.33317,96.40417 -45.21465,139.02495 -8.400819,17.14916 -26.909259,29.21803 -42.625888,40.28488 -10.120316,7.12261 -26.490483,6.05677 -34.878607,14.2899 z" />
-    <path
-       id="path1687"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="sssssssssssssssssscssssssssssssssss"
-       style="fill:#c8beb7;fill-rule:evenodd;stroke:#4d4d4d;stroke-width:12.5"
-       d="m 161.63955,172.68962 c -21.4906,6.29929 -41.6424,10.39671 -59.42116,22.08903 -4.612839,3.03796 -9.054357,17.02151 -7.747281,22.08903 1.706812,6.63117 10.970551,16.93854 10.329701,23.39101 -1.07865,10.869 -15.919669,17.51295 -15.500897,28.5798 0.437806,11.45617 19.897997,21.53377 21.960137,33.78773 2.23979,13.30064 -11.719266,29.86263 -9.04166,42.87608 2.49359,12.10716 19.18101,20.61472 24.54255,32.48574 3.24866,7.18644 -3.71818,19.64462 1.29439,24.68662 9.20029,9.2479 26.79504,16.74069 41.33784,18.18946 24.64408,2.45079 53.35533,1.60195 76.21011,-6.49715 15.03771,-5.32919 31.32539,-20.88278 37.46103,-33.78134 3.33748,-7.0205 -1.6736,-27.08321 -9.04166,-25.9886 -10.5148,1.5621 -27.56279,1.49345 -41.33784,1.30198 -17.22675,-0.24252 -57.11793,-2.60396 -51.66755,-2.60396 10.48198,0 74.87765,11.76252 99.46462,2.60396 10.29164,-3.83574 8.68635,-29.53075 5.16486,-41.58048 -2.93141,-10.0393 -13.83216,-23.05913 -24.54256,-24.68661 -31.92183,-4.86329 -103.34144,5.19517 -103.34144,5.19517 0,0 70.48689,-8.06719 103.34144,-3.89957 11.49718,1.46154 23.01975,24.06115 29.71375,20.79343 8.38178,-4.09742 15.23441,-28.96912 15.5009,-42.88246 0.16497,-9.04368 -8.13432,-18.40008 -14.21286,-25.98222 -6.40847,-8.00974 -13.69891,-19.05745 -23.24817,-20.79343 -21.45253,-3.89318 -46.67401,1.42325 -69.75722,3.89957 -9.21297,0.98925 -17.99449,5.78872 -27.12498,6.49715 -7.66479,0.59355 -14.27939,2.74928 -22.03301,1.8813 0,0 16.86181,0.71628 23.32105,-0.57932 6.45924,-1.30198 40.04346,-10.39671 40.04346,-10.39671 18.08967,0 37.52448,-4.07189 54.25631,0 9.96169,2.42526 20.81169,20.69131 25.83695,19.49144 4.02274,-0.96372 4.00371,-18.11287 1.28804,-25.98859 -5.03795,-14.64093 -14.9933,-28.867 -24.54256,-41.58048 -5.08871,-6.77797 -11.71292,-15.42594 -19.37771,-16.88748 -10.36143,-1.98489 -66.26745,7.5949 -89.12858,14.2899 z" />
+     id="layer1"
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     transform="translate(0,-540.4)">
+    <g
+       id="g841"
+       transform="matrix(0.98108392,0,0,0.98111143,-11.211116,16.037465)"
+       style="stroke-width:1.01926637">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 245.23019,545.62291 c -19.89845,1.71991 -37.01381,19.42038 -40.32083,43.17098 l -3.66557,27.07397 c -0.73616,1.30125 -1.55224,2.51883 -2.19934,3.9025 l -70.8676,151.71348 c -2.86786,6.13215 -4.54515,12.5637 -5.13179,18.78038 H 84.679192 c -25.122127,0 -45.453017,20.04869 -45.453017,45.12223 v 143.17482 c 0,25.07433 20.33089,45.36653 45.453017,45.36653 H 151.3921 c 15.27065,13.7914 35.3599,22.1958 57.67157,22.1958 h 90.90603 c 47.72938,0 86.01861,-38.2163 86.01861,-85.8549 V 812.70748 c 0,-47.63857 -38.28923,-85.85494 -86.01861,-85.85494 H 271.86664 L 289.21737,600.997 c 3.78013,-27.14343 -11.81035,-51.68389 -35.18943,-55.12277 -2.92236,-0.43006 -5.95467,-0.48937 -8.79736,-0.24352 z"
+         style="color:#000000;fill:#aad400;stroke:#445500;stroke-width:20.3853302;stroke-miterlimit:4;stroke-dasharray:none;enable-background:accumulate"
+         id="rect9675" />
+      <rect
+         x="726.77679"
+         y="-475.31433"
+         width="77.900871"
+         height="195.13713"
+         ry="36.239643"
+         transform="rotate(90)"
+         style="color:#000000;fill:#aad400;stroke:#445500;stroke-width:20.3853302;stroke-miterlimit:4;stroke-dasharray:none;enable-background:accumulate"
+         id="rect9623-6" />
+      <rect
+         x="806.85614"
+         y="-505.40524"
+         width="77.900871"
+         height="225.22801"
+         ry="39.025082"
+         inkscape:transform-center-y="-6.844065"
+         inkscape:transform-center-x="-2.9954163"
+         transform="rotate(90)"
+         style="color:#000000;fill:#aad400;stroke:#445500;stroke-width:20.3853302;stroke-miterlimit:4;stroke-dasharray:none;enable-background:accumulate"
+         id="rect9623-6-5" />
+      <rect
+         height="200.29825"
+         x="887.01355"
+         y="-480.47543"
+         width="77.900871"
+         ry="39.025082"
+         transform="rotate(90)"
+         inkscape:transform-center-y="-6.844065"
+         inkscape:transform-center-x="-2.6638674"
+         style="color:#000000;fill:#aad400;stroke:#445500;stroke-width:20.3853302;stroke-miterlimit:4;stroke-dasharray:none;enable-background:accumulate"
+         id="rect9671" />
+      <rect
+         x="967.09241"
+         y="-453.82535"
+         width="77.900871"
+         height="173.64812"
+         ry="39.025082"
+         inkscape:transform-center-y="-6.844065"
+         inkscape:transform-center-x="-2.3094439"
+         transform="rotate(90)"
+         style="color:#000000;fill:#aad400;stroke:#445500;stroke-width:20.3853302;stroke-miterlimit:4;stroke-dasharray:none;enable-background:accumulate"
+         id="rect9673" />
+    </g>
   </g>
   <metadata
-     id="metadata13">
+     id="metadata12">
     <rdf:RDF>
       <cc:Work>
         <dc:format>image/svg+xml</dc:format>
@@ -79,7 +111,20 @@
             <dc:title>Openclipart</dc:title>
           </cc:Agent>
         </dc:publisher>
-        <dc:title></dc:title>
+        <dc:title>Main_ok</dc:title>
+        <dc:date>2010-04-04T14:52:10</dc:date>
+        <dc:description>Main ok yes oui hand</dc:description>
+        <dc:source>https://openclipart.org/detail/37159/main_ok-by-antoine</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Antoine</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>Main ok yes oui hand</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
       </cc:Work>
       <cc:License
          rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">

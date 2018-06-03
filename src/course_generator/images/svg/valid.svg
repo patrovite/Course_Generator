@@ -10,7 +10,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg2160"
-   sodipodi:docname="valid1.svg"
+   sodipodi:docname="valid.svg"
    viewBox="0 0 512 512"
    sodipodi:version="0.32"
    version="1.0"
@@ -61,19 +61,19 @@
      id="base"
      bordercolor="#666666"
      inkscape:pageshadow="2"
-     inkscape:window-y="24"
+     inkscape:window-y="45"
      pagecolor="#ffffff"
-     inkscape:window-height="1032"
+     inkscape:window-height="699"
      inkscape:grid-bbox="true"
      width="64px"
-     inkscape:zoom="0.0859375"
+     inkscape:zoom="0.6875"
      inkscape:window-x="0"
      showgrid="true"
      borderopacity="1.0"
      inkscape:current-layer="layer1"
-     inkscape:cx="-2545.114"
-     inkscape:cy="1127.4313"
-     inkscape:window-width="1920"
+     inkscape:cx="406.12951"
+     inkscape:cy="178.87124"
+     inkscape:window-width="1366"
      height="64px"
      inkscape:pageopacity="0.0"
      inkscape:document-units="px"
@@ -83,34 +83,31 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      transform="translate(0,448)">
-    <g
-       id="g839">
-      <ellipse
-         ry="245.99603"
-         rx="246"
-         id="path3141"
-         style="fill:url(#radialGradient2197);stroke-width:0.99849015"
-         inkscape:export-ydpi="46.5"
-         inkscape:export-filename="C:\Documents and Settings\xne0096\Desktop\ok.gif"
-         inkscape:export-xdpi="46.5"
-         cx="256"
-         cy="-191.99603" />
-      <ellipse
-         ry="245.99603"
-         rx="246"
-         id="path2168"
-         style="fill:url(#radialGradient2199);stroke:#00be31;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
-         inkscape:export-ydpi="46.5"
-         inkscape:export-filename="C:\Documents and Settings\xne0096\Desktop\ok.gif"
-         inkscape:export-xdpi="46.5"
-         cx="256"
-         cy="-191.99603" />
-      <path
-         id="path3167"
-         style="fill:#ffffff;stroke-width:1.00000012"
-         d="m 396.8706,-342.16764 c -83.40466,22.44064 -157.6594,89.56577 -172.17584,176.92235 -35.10598,-23.30821 -64.55028,-71.14996 -107.05312,-73.50224 -28.057946,14.60564 -93.323765,52.46582 -38.29011,74.62024 49.23781,38.26267 123.00062,72.724114 134.71752,139.196327 24.05991,22.4764098 55.15888,-9.471754 80.22053,-17.888108 31.07215,-50.29242 -3.82812,-119.582009 26.27805,-173.013799 15.54502,-50.3908 69.94364,-70.78324 100.89952,-107.32865 -0.0269,-13.26403 -12.17306,-22.44958 -24.59655,-19.00612 z"
-         inkscape:connector-curvature="0" />
-    </g>
+    <ellipse
+       cy="-191.99603"
+       cx="256"
+       inkscape:export-xdpi="46.5"
+       inkscape:export-filename="C:\Documents and Settings\xne0096\Desktop\ok.gif"
+       inkscape:export-ydpi="46.5"
+       style="fill:url(#radialGradient2197);stroke-width:0.99849015"
+       id="path3141"
+       rx="246"
+       ry="245.99603" />
+    <ellipse
+       cy="-191.99603"
+       cx="256"
+       inkscape:export-xdpi="46.5"
+       inkscape:export-filename="C:\Documents and Settings\xne0096\Desktop\ok.gif"
+       inkscape:export-ydpi="46.5"
+       style="fill:url(#radialGradient2199);stroke:#00be31;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path2168"
+       rx="246"
+       ry="245.99603" />
+    <path
+       inkscape:connector-curvature="0"
+       d="m 396.8706,-342.16764 c -83.40466,22.44064 -157.6594,89.56577 -172.17584,176.92235 -35.10598,-23.30821 -64.55028,-71.14996 -107.05312,-73.50224 -28.057946,14.60564 -93.323765,52.46582 -38.29011,74.62024 49.23781,38.26267 123.00062,72.724114 134.71752,139.196327 24.05991,22.4764098 55.15888,-9.471754 80.22053,-17.888108 31.07215,-50.29242 -3.82812,-119.582009 26.27805,-173.013799 15.54502,-50.3908 69.94364,-70.78324 100.89952,-107.32865 -0.0269,-13.26403 -12.17306,-22.44958 -24.59655,-19.00612 z"
+       style="fill:#f9f9f9;stroke-width:1.00000012"
+       id="path3167" />
   </g>
   <metadata
      id="metadata15">
