@@ -1702,8 +1702,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Total distance
 		// ----------------------------------------------------
 		LbInfoTotalDist = new javax.swing.JLabel();
-		LbInfoTotalDist
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/distance.png")));
+		LbInfoTotalDist.setIcon(getIcon("distance.png", Settings.StatusbarIconSize));
 		LbInfoTotalDist.setToolTipText(bundle.getString("frmMain.LbInfoTotalDist.toolTipText")); // Total
 																									// distance
 																									// of
@@ -1727,7 +1726,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Ascent
 		// ------------------------------------------------------
 		LbInfoDp = new javax.swing.JLabel();
-		LbInfoDp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/dp.png")));
+		LbInfoDp.setIcon(getIcon("dp.png", Settings.StatusbarIconSize));
 		LbInfoDp.setToolTipText(bundle.getString("frmMain.LbInfoDp.toolTipText")); // Total
 																					// ascent
 																					// elevation
@@ -1747,7 +1746,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Descent
 		// -----------------------------------------------------
 		LbInfoDm = new javax.swing.JLabel();
-		LbInfoDm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/dm.png")));
+		LbInfoDm.setIcon(getIcon("dm.png", Settings.StatusbarIconSize));
 		LbInfoDm.setToolTipText(bundle.getString("frmMain.LbInfoDm.toolTipText")); // Total
 																					// descent
 																					// elevation
@@ -1767,8 +1766,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Total time
 		// --------------------------------------------------------
 		LbInfoTime = new javax.swing.JLabel();
-		LbInfoTime
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chronometer.png")));
+		LbInfoTime.setIcon(getIcon("chronometer.png", Settings.StatusbarIconSize));
+		
 		LbInfoTime.setToolTipText(bundle.getString("frmMain.LbInfoTime.toolTipText")); // Total
 																						// time
 		StatusBar.add(LbInfoTime);
@@ -1786,7 +1785,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Curve
 		// --------------------------------------------------------
 		LbInfoCurve = new javax.swing.JLabel();
-		LbInfoCurve.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/curve.png")));
+		LbInfoCurve.setIcon(getIcon("chart_curve.png", Settings.StatusbarIconSize));
 		LbInfoCurve.setToolTipText(bundle.getString("frmMain.LbInfoCurve.toolTipText")); // Selected
 																							// curve
 		StatusBar.add(LbInfoCurve);
@@ -1807,14 +1806,8 @@ public class frmMain extends javax.swing.JFrame {
 		LbTimeLimit.setOpaque(true);
 		LbTimeLimit.setBackground(Color.RED);
 		LbTimeLimit.setForeground(Color.WHITE);
-		LbTimeLimit.setToolTipText(bundle.getString("frmMain.LbTimeLimit.toolTipText")); // Time
-																							// limit
-																							// reached
-																							// in a
-																							// part
-																							// of
-																							// the
-																							// track
+		// Time limit reached in a part of the track
+		LbTimeLimit.setToolTipText(bundle.getString("frmMain.LbTimeLimit.toolTipText")); 
 		LbTimeLimit.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				JumpToTimelimitLine();
@@ -1829,7 +1822,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Modified
 		// --------------------------------------------------------
 		LbModified = new javax.swing.JLabel();
-		LbModified.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/edit.png")));
+		LbModified.setIcon(getIcon("edit.png", Settings.StatusbarIconSize));
 		LbModified.setToolTipText(bundle.getString("frmMain.LbModified.toolTipText")); // Track
 																						// modified
 		StatusBar.add(LbModified);
@@ -1847,32 +1840,15 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Calculation needed
 		// ------------------------------------------------
 		LbInfoCalculate = new javax.swing.JLabel();
-		LbInfoCalculate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/calc.png")));
-		LbInfoCalculate.setToolTipText(bundle.getString("frmMain.LbInfoCalculate.toolTipText")); // Track
-																									// data
-																									// need
-																									// to
-																									// be
-																									// updated.
-																									// Press
-																									// F5
-																									// to
-																									// update.
+		LbInfoCalculate.setIcon(getIcon("calc.png", Settings.StatusbarIconSize));
+		// Track data need to be updated. Press F5 to update.
+		LbInfoCalculate.setToolTipText(bundle.getString("frmMain.LbInfoCalculate.toolTipText")); 
 		StatusBar.add(LbInfoCalculate);
 
 		// -- Calculation needed value
 		// ------------------------------------------------
 		LbInfoCalculateVal = new javax.swing.JLabel();
-		LbInfoCalculateVal.setToolTipText(bundle.getString("frmMain.LbInfoCalculate.toolTipText")); // Track
-																									// data
-																									// need
-																									// to
-																									// be
-																									// updated.
-																									// Press
-																									// F5
-																									// to
-																									// update.
+		LbInfoCalculateVal.setToolTipText(bundle.getString("frmMain.LbInfoCalculate.toolTipText")); 
 		StatusBar.add(LbInfoCalculateVal);
 
 		// -- Separator
@@ -1881,16 +1857,14 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Internet connection present
 		// ----------------------------------------
 		LbInfoInternet = new javax.swing.JLabel();
-		LbInfoInternet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/earth.png")));
-		LbInfoInternet.setToolTipText(bundle.getString("frmMain.LbInfoInternet.toolTipText")); // Internet
-																								// status
+		LbInfoInternet.setIcon(getIcon("www.png", Settings.StatusbarIconSize));
+		LbInfoInternet.setToolTipText(bundle.getString("frmMain.LbInfoInternet.toolTipText")); 
 		StatusBar.add(LbInfoInternet);
 
 		// -- Internet connection present value
 		// ----------------------------------------
 		LbInfoInternetVal = new javax.swing.JLabel();
-		LbInfoInternetVal.setToolTipText(bundle.getString("frmMain.LbInfoInternet.toolTipText")); // Internet
-																									// status
+		LbInfoInternetVal.setToolTipText(bundle.getString("frmMain.LbInfoInternet.toolTipText")); 
 		StatusBar.add(LbInfoInternetVal);
 
 		// -- Separator
@@ -1899,22 +1873,15 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Unit
 		// ----------------------------------------
 		LbInfoUnit = new javax.swing.JLabel();
-		LbInfoUnit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/unit.png")));
-		LbInfoUnit.setToolTipText(bundle.getString("frmMain.LbInfoUnit.toolTipText")); // Unit
-																						// selected
-																						// for
-																						// the
-																						// display
+		LbInfoUnit.setIcon(getIcon("unit.png", Settings.StatusbarIconSize));
+		 // Unit selected for the display
+		LbInfoUnit.setToolTipText(bundle.getString("frmMain.LbInfoUnit.toolTipText"));
 		StatusBar.add(LbInfoUnit);
 
 		// -- Unit value
 		// ----------------------------------------
 		LbInfoUnitVal = new javax.swing.JLabel();
-		LbInfoUnitVal.setToolTipText(bundle.getString("frmMain.LbInfoUnit.toolTipText")); // Unit
-																							// selected
-																							// for
-																							// the
-																							// display
+		LbInfoUnitVal.setToolTipText(bundle.getString("frmMain.LbInfoUnit.toolTipText")); 
 		StatusBar.add(LbInfoUnitVal);
 
 		// -- Separator
@@ -1922,9 +1889,8 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Map dir size
 		// ----------------------------------------
-		LbInfoMapDirSize = new javax.swing.JLabel();
-		LbInfoMapDirSize
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/earth_bw.png")));
+		LbInfoMapDirSize = new javax.swing.JLabel();	
+		//LbInfoMapDirSize.setIcon(getIcon("earth_bw.png", Settings.StatusbarIconSize));
 		LbInfoMapDirSize.setToolTipText(bundle.getString("frmMain.LbInfoMapDirSize.toolTipText")); // Size
 																									// of
 																									// maps
@@ -3578,6 +3544,17 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
+	
+	/**
+	 * Return the icon in the resource library
+	 * @param name name of the icon (ie "distance.png")
+	 * @param size size of the icon (16,24,32,48,64,96,128)
+	 * @return
+	 */
+	public ImageIcon getIcon(String name, int size) {
+		return new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/"+size+"/"+name));
+	}
+	
 
 	/**
 	 * Set the default font

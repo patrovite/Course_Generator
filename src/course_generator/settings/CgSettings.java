@@ -86,6 +86,8 @@ public class CgSettings {
 	public int DefaultFontStyle;
 	public int DefaultFontSize;
 	
+	public int StatusbarIconSize;
+	
 	public CgSettings() {
 		int i = 0;
 
@@ -136,6 +138,8 @@ public class CgSettings {
 		DefaultFontName = "Arial";
 		DefaultFontStyle = 0; //Normal
 		DefaultFontSize = 14;
+		
+		StatusbarIconSize=24;
 	}
 
 
