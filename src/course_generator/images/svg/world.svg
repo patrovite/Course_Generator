@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   sodipodi:docname="world.svg"
+   viewBox="0 0 512 512"
+   version="1.1"
+   inkscape:version="0.92.2 2405546, 2018-03-11"
+   width="512"
+   height="512">
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#666666"
+     inkscape:pageshadow="2"
+     inkscape:window-y="24"
+     fit-margin-left="0"
+     pagecolor="#ffffff"
+     fit-margin-top="0"
+     inkscape:window-maximized="1"
+     inkscape:zoom="0.5"
+     inkscape:window-x="0"
+     inkscape:window-height="1032"
+     showgrid="false"
+     borderopacity="1.0"
+     inkscape:current-layer="layer1"
+     inkscape:cx="-291.77369"
+     inkscape:cy="190.23253"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1920"
+     inkscape:pageopacity="0.0"
+     inkscape:document-units="px" />
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(184.53,-412.56)">
+    <path
+       id="path244"
+       style="fill:#1a1a1a;stroke-width:3.20000076"
+       inkscape:connector-curvature="0"
+       d="m 84.042644,412.87623 c -68.307006,-3.35489 -133.82362,20.07399 -184.457074,65.99062 -50.71026,45.96495 -80.44458,108.87395 -83.79816,177.13657 -3.35487,68.31062 20.07322,133.83084 66.0382,184.4934 45.891078,50.65936 108.7965,80.39706 177.103506,83.75068 C 199.95912,931.17424 320.23397,822.10636 327.15875,681.12031 334.08289,540.13105 225.07264,419.80105 84.042644,412.87623 Z M 286.35887,679.11709 c -1.1744,23.90057 -6.2771,46.67856 -14.52412,67.76343 -17.17339,-2.23681 -34.1215,-5.07426 -50.84146,-8.56003 17.15259,-41.64493 23.01274,-87.29628 16.51228,-133.13323 -6.19454,-43.60014 -23.17402,-83.13307 -47.75666,-116.22118 61.37262,40.54094 100.47331,111.50116 96.61092,190.15101 z M 122.16413,499.77572 C 80.090656,548.09587 44.183557,601.80164 15.687639,659.85624 -8.4143733,645.88691 -31.617827,630.51886 -53.828964,613.90409 -35.709975,579.46878 -8.5458932,550.51188 25.61081,529.99342 55.966244,511.70663 89.05703,501.91556 122.16413,499.77667 Z M -1.3043134,697.20995 C -19.476742,740.1989 -33.720221,785.33824 -43.476994,832.164 c -1.500795,-2.27521 -2.975991,-4.59554 -4.377267,-6.93795 -29.629676,-49.24815 -38.278292,-107.12355 -24.418811,-162.81972 0.767998,-3.21378 1.676795,-6.27394 2.591992,-9.48004 21.924738,15.98949 44.739074,30.77611 68.3774066,44.28175 z M 14.330202,854.21847 c -6.96734,1.0016 -13.91324027,1.56481 -20.8223404,1.88481 8.9359743,-48.55376 22.8882544,-95.22271 41.3470824,-139.54286 39.727887,19.84711 81.458966,36.22091 124.895646,48.72016 -1.2064,1.6512 -2.41599,3.42593 -3.67423,5.1245 -34.5503,45.94894 -84.85096,75.67704 -141.746798,83.81146 z M 51.693296,679.3251 C 80.373855,620.4705 117.10751,566.36474 160.44819,518.15658 c 18.75322,26.81064 31.68471,58.17618 36.58869,92.7171 5.77375,40.72013 -0.064,81.20986 -16.41979,117.81158 C 135.64762,716.50186 92.51174,699.86148 51.692656,679.3251 Z M -72.98475,509.18694 c 42.575879,-38.63692 97.615723,-58.32658 155.02356,-55.50738 12.974043,0.63681 25.64281,2.50561 37.87509,5.3069 -39.577485,2.50561 -79.116573,14.15589 -115.36607,35.96812 -38.364691,23.0756 -69.321403,55.09778 -90.764542,93.0371 -9.951972,-8.40963 -19.672578,-17.05189 -29.181038,-26.02696 11.12701,-19.4999 25.324729,-37.30892 42.41268,-52.77457 z m -70.403,148.82289 c 0.96,-19.53479 4.55551,-38.49933 10.50429,-56.59219 9.43037,8.57987 19.06779,16.92486 28.9356,25.06185 -3.0784,8.45378 -5.75614,17.1479 -8.00254,26.05864 -10.96669,44.10254 -10.00733,89.27709 2.17919,131.85323 -23.9788,-37.38253 -35.83669,-81.13946 -33.6159,-126.38121 z M 66.547653,883.57857 c 48.422257,-16.34822 90.841337,-46.82896 122.204457,-88.6339 4.6035,-6.13025 8.92286,-12.44516 12.93372,-18.94694 16.61371,3.67649 33.3759,6.79778 50.38706,9.39363 C 212.617,846.13716 143.5836,885.40448 66.547013,883.57729 Z" />
+  </g>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>World Globe Icon</dc:title>
+        <dc:date>2012-06-30T11:53:18</dc:date>
+        <dc:description>World Globe for use in http://dnt.dnteam.org/</dc:description>
+        <dc:source>https://openclipart.org/detail/170980/world-globe-icon-by-qubodup-170980</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>qubodup</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>earth</rdf:li>
+            <rdf:li>globe</rdf:li>
+            <rdf:li>i18n</rdf:li>
+            <rdf:li>internationalization</rdf:li>
+            <rdf:li>languages</rdf:li>
+            <rdf:li>simple</rdf:li>
+            <rdf:li>world</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

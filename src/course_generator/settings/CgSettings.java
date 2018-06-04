@@ -87,6 +87,9 @@ public class CgSettings {
 	public int DefaultFontSize;
 	
 	public int StatusbarIconSize;
+	public int TabIconSize;
+	public int ToolbarIconSize;
+	public int MenuIconSize;
 	
 	public CgSettings() {
 		int i = 0;
@@ -139,7 +142,10 @@ public class CgSettings {
 		DefaultFontStyle = 0; //Normal
 		DefaultFontSize = 14;
 		
-		StatusbarIconSize=24;
+		StatusbarIconSize=20;
+		TabIconSize=20;
+		ToolbarIconSize=24;
+		MenuIconSize=20;
 	}
 
 

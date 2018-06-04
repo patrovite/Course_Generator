@@ -20,28 +20,6 @@
    height="512">
   <defs
      id="defs3">
-    <linearGradient
-       id="linearGradient4446"
-       y2="31.062"
-       gradientUnits="userSpaceOnUse"
-       x2="33.219002"
-       gradientTransform="matrix(14.19477,0,0,13.734232,-74.362592,-542.00749)"
-       y1="34"
-       x1="30.656"
-       inkscape:collect="always">
-      <stop
-         id="stop4442"
-         style="stop-color:#7d7d7d"
-         offset="0" />
-      <stop
-         id="stop4448"
-         style="stop-color:#b1b1b1"
-         offset=".5" />
-      <stop
-         id="stop4444"
-         style="stop-color:#686868"
-         offset="1" />
-    </linearGradient>
     <radialGradient
        id="radialGradient4460"
        gradientUnits="userSpaceOnUse"
@@ -142,13 +120,13 @@
      pagecolor="#ffffff"
      inkscape:showpageshadow="false"
      inkscape:grid-bbox="true"
-     inkscape:zoom="0.70710675"
-     inkscape:cx="-17.045443"
+     inkscape:zoom="0.12499999"
+     inkscape:cx="-2750.5011"
      showgrid="false"
      borderopacity="0.25490196"
      inkscape:current-layer="layer1"
      stroke="#3465a4"
-     inkscape:cy="305.37601"
+     inkscape:cy="1037.9541"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
      inkscape:pageopacity="0.0"
@@ -175,7 +153,7 @@
     <path
        inkscape:connector-curvature="0"
        d="m 420.00594,-20.433205 c -5.09463,-24.175566 14.85846,-51.180302 38.11933,-50.935674 L 343.6822,-169.83672 c -31.32294,-0.60625 -45.4156,24.17557 -40.17207,48.92548 z"
-       style="color:#000000;fill:url(#linearGradient4446);fill-rule:evenodd;stroke-width:10.63597298"
+       style="color:#000000;fill:#d45500;fill-rule:evenodd;stroke-width:10.63597298"
        sodipodi:nodetypes="ccccc"
        id="path4438" />
     <circle
@@ -199,7 +177,7 @@
        ry="20.079597"
        rx="22.726004"
        transform="matrix(0.75298601,0.65803652,-0.64890183,0.76087214,0,0)"
-       style="color:#000000;opacity:0.43316004;fill:none;stroke:#ffffff;stroke-width:10.63598633;stroke-linecap:round;stroke-miterlimit:10"
+       style="color:#000000;opacity:0.43316004;fill:#aa4400;stroke:#ffffff;stroke-width:10.63598633;stroke-linecap:round;stroke-miterlimit:10"
        id="rect4495" />
     <circle
        r="123.59293"
@@ -230,7 +208,9 @@
         </dc:publisher>
         <dc:title>tango system search</dc:title>
         <dc:date>2010-03-26T15:34:28</dc:date>
-        <dc:description>&quot;Search&quot; icon from &lt;a href=&quot;http://tango.freedesktop.org/Tango_Desktop_Project&quot;&gt; Tango Project &lt;/a&gt; \n&lt;br&gt;&lt;br&gt;\nSince version 0.8.90 Tango Project icons are Public Domain: &lt;a href=&quot;http://tango.freedesktop.org/Frequently_Asked_Questions#Terms_of_Use.3F&quot;&gt; Tango Project FAQ &lt;/a&gt;</dc:description>
+        <dc:description>&quot;Search&quot; icon from &lt;a href=&quot;http://tango.freedesktop.org/Tango_Desktop_Project&quot;&gt; Tango Project &lt;/a&gt; 
+\n&lt;br&gt;&lt;br&gt;
+\nSince version 0.8.90 Tango Project icons are Public Domain: &lt;a href=&quot;http://tango.freedesktop.org/Frequently_Asked_Questions#Terms_of_Use.3F&quot;&gt; Tango Project FAQ &lt;/a&gt;</dc:description>
         <dc:source>https://openclipart.org/detail/34285/tango-system-search-by-warszawianka</dc:source>
         <dc:creator>
           <cc:Agent>
