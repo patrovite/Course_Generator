@@ -170,72 +170,63 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 
 				// Higher point
 				if ((tag & CgConst.TAG_HIGH_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/high_point.png"));
+					ImageIcon image = getIcon("high_point.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Lower point
 				if ((tag & CgConst.TAG_LOW_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/low_point.png"));
+					ImageIcon image = getIcon("low_point.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Station
 				if ((tag & CgConst.TAG_EAT_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/eat.png"));
+					ImageIcon image = getIcon("eat.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Drink
 				if ((tag & CgConst.TAG_WATER_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/drink.png"));
+					ImageIcon image = getIcon("drink.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Mark
 				if ((tag & CgConst.TAG_MARK) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/flag.png"));
+					ImageIcon image = getIcon("flag.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Roadbook
 				if ((tag & CgConst.TAG_ROADBOOK) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/roadbook.png"));
+					ImageIcon image = getIcon("roadbook.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Photo
 				if ((tag & CgConst.TAG_COOL_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/photo.png"));
+					ImageIcon image = getIcon("photo.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Note
 				if ((tag & CgConst.TAG_NOTE) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/note.png"));
+					ImageIcon image = getIcon("note.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Info
 				if ((tag & CgConst.TAG_INFO) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/info.png"));
+					ImageIcon image = getIcon("info.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
@@ -471,6 +462,16 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		} // switch
 
 		return this;
+	}
+	
+	/**
+	 * Return the icon in the resource library
+	 * @param name name of the icon (ie "distance.png")
+	 * @param size size of the icon (16,24,32,48,64,96,128)
+	 * @return
+	 */
+	public ImageIcon getIcon(String name, int size) {
+		return new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/"+size+"/"+name));
 	}
 
 }

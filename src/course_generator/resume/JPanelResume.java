@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -132,7 +133,7 @@ public class JPanelResume extends JPanel {
 		// -- Save
 		// --------------------------------------------------------------
 		btResumeSave = new javax.swing.JButton();
-		btResumeSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/save.png")));
+		btResumeSave.setIcon(getIcon("save.png",Settings.ToolbarIconSize));
 		btResumeSave.setToolTipText(bundle.getString("JPanelResume.btResumeSave.toolTipText"));
 		btResumeSave.setFocusable(false);
 		btResumeSave.addActionListener(new java.awt.event.ActionListener() {
@@ -149,8 +150,7 @@ public class JPanelResume extends JPanel {
 		// -- Refresh
 		// --------------------------------------------------------------
 		btRefreshRefresh = new javax.swing.JButton();
-		btRefreshRefresh
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/refresh.png")));
+		btRefreshRefresh.setIcon(getIcon("refresh.png",Settings.ToolbarIconSize));
 		btRefreshRefresh.setToolTipText(bundle.getString("JPanelResume.btRefreshRefresh.toolTipText"));
 		btRefreshRefresh.setFocusable(false);
 		btRefreshRefresh.addActionListener(new java.awt.event.ActionListener() {
@@ -328,4 +328,13 @@ public class JPanelResume extends JPanel {
 		refresh();
 	}
 
+	/**
+	 * Return the icon in the resource library
+	 * @param name name of the icon (ie "distance.png")
+	 * @param size size of the icon (16,24,32,48,64,96,128)
+	 * @return
+	 */
+	public ImageIcon getIcon(String name, int size) {
+		return new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/"+size+"/"+name));
+	}
 }

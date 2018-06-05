@@ -39,6 +39,7 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -151,7 +152,8 @@ public class Utils {
 			return "";
 	}
 
-
+	
+	
 	/**
 	 * Parse a string containing a double. The separator can be "." or ","
 	 * 

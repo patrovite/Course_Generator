@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -306,8 +307,7 @@ public class JPanelProfil extends JPanel {
 		// -- Show/Hide profil marker
 		// --------------------------------------------------------------
 		btProfilMarker = new javax.swing.JButton();
-		btProfilMarker.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/profil_marker.png")));
+		btProfilMarker.setIcon(getIcon("profil_marker.png",settings.ToolbarIconSize));
 		btProfilMarker.setToolTipText(bundle.getString("frmMain.btProfilMarker.toolTipText"));
 		btProfilMarker.setFocusable(false);
 		btProfilMarker.addActionListener(new java.awt.event.ActionListener() {
@@ -426,5 +426,15 @@ public class JPanelProfil extends JPanel {
 
 	public void setSettings(CgSettings settings) {
 		this.settings = settings;
+	}
+	
+	/**
+	 * Return the icon in the resource library
+	 * @param name name of the icon (ie "distance.png")
+	 * @param size size of the icon (16,24,32,48,64,96,128)
+	 * @return
+	 */
+	public ImageIcon getIcon(String name, int size) {
+		return new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/"+size+"/"+name));
 	}
 }

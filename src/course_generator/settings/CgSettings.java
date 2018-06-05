@@ -89,7 +89,12 @@ public class CgSettings {
 	public int StatusbarIconSize;
 	public int TabIconSize;
 	public int ToolbarIconSize;
+	public int MapToolbarIconSize;
 	public int MenuIconSize;
+	public int TagIconSize;
+	public int DialogIconSize;
+	
+	
 	
 	public CgSettings() {
 		int i = 0;
@@ -144,8 +149,11 @@ public class CgSettings {
 		
 		StatusbarIconSize=20;
 		TabIconSize=20;
-		ToolbarIconSize=24;
+		ToolbarIconSize=20;
+		MapToolbarIconSize=20;
 		MenuIconSize=20;
+		TagIconSize=16;
+		DialogIconSize=20;
 	}
 
 
