@@ -569,7 +569,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuOpenGPX = new javax.swing.JMenuItem();
 		mnuOpenGPX.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O,
 				java.awt.event.InputEvent.CTRL_MASK | java.awt.event.InputEvent.SHIFT_MASK));
-		mnuOpenGPX.setIcon(getIcon("open_gpx.png",Settings.MenuIconSize));
+		mnuOpenGPX.setIcon(Utils.getIcon(this,"open_gpx.png",Settings.MenuIconSize));
 		mnuOpenGPX.setText(bundle.getString("frmMain.mnuOpenGPX.text"));
 		mnuOpenGPX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -582,7 +582,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuOpenCGX = new javax.swing.JMenuItem();
 		mnuOpenCGX.setAccelerator(
 				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-		mnuOpenCGX.setIcon(getIcon("open_cgx.png",Settings.MenuIconSize));
+		mnuOpenCGX.setIcon(Utils.getIcon(this,"open_cgx.png",Settings.MenuIconSize));
 		mnuOpenCGX.setText(bundle.getString("frmMain.mnuOpenCGX.text"));
 		mnuOpenCGX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -712,7 +712,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSaveCGX = new javax.swing.JMenuItem();
 		mnuSaveCGX.setAccelerator(
 				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-		mnuSaveCGX.setIcon(getIcon("save_cgx.png", Settings.MenuIconSize));
+		mnuSaveCGX.setIcon(Utils.getIcon(this,"save_cgx.png", Settings.MenuIconSize));
 		mnuSaveCGX.setText(bundle.getString("frmMain.mnuSaveCGX.text"));
 		mnuSaveCGX.setEnabled(false);
 		mnuSaveCGX.addActionListener(new java.awt.event.ActionListener() {
@@ -724,7 +724,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Save GPX
 		mnuSaveGPX = new javax.swing.JMenuItem();
-		mnuSaveGPX.setIcon(getIcon("save_gpx.png", Settings.MenuIconSize));
+		mnuSaveGPX.setIcon(Utils.getIcon(this,"save_gpx.png", Settings.MenuIconSize));
 		mnuSaveGPX.setText(bundle.getString("frmMain.mnuSaveGPX.text"));
 		mnuSaveGPX.setEnabled(false);
 		mnuSaveGPX.addActionListener(new java.awt.event.ActionListener() {
@@ -736,7 +736,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Save CSV
 		mnuSaveCSV = new javax.swing.JMenuItem();
-		mnuSaveCSV.setIcon(getIcon("save_csv.png", Settings.MenuIconSize));
+		mnuSaveCSV.setIcon(Utils.getIcon(this,"save_csv.png", Settings.MenuIconSize));
 		mnuSaveCSV.setText(bundle.getString("frmMain.mnuSaveCSV.text"));
 		mnuSaveCSV.setEnabled(false);
 		mnuSaveCSV.addActionListener(new java.awt.event.ActionListener() {
@@ -751,7 +751,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Import GPX
 		mnuImportGPX = new javax.swing.JMenuItem();
-		mnuImportGPX.setIcon(getIcon("open_gpx.png",Settings.MenuIconSize));
+		mnuImportGPX.setIcon(Utils.getIcon(this,"open_gpx.png",Settings.MenuIconSize));
 		mnuImportGPX.setText(bundle.getString("frmMain.mnuImportGPX.text"));
 		mnuImportGPX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -762,7 +762,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Import CGX
 		mnuImportCGX = new javax.swing.JMenuItem();
-		mnuImportCGX.setIcon(getIcon("open_cgx.png",Settings.MenuIconSize));
+		mnuImportCGX.setIcon(Utils.getIcon(this,"open_cgx.png",Settings.MenuIconSize));
 		mnuImportCGX.setText(bundle.getString("frmMain.mnuImportCGX.text"));
 		mnuImportCGX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -773,7 +773,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Save a part of the track in CGX
 		mnuSavePartCGX = new javax.swing.JMenuItem();
-		mnuSavePartCGX.setIcon(getIcon("save_cgx.png", Settings.MenuIconSize));
+		mnuSavePartCGX.setIcon(Utils.getIcon(this,"save_cgx.png", Settings.MenuIconSize));
 		mnuSavePartCGX.setText(bundle.getString("frmMain.mnuSavePartCGX.text"));
 		mnuSavePartCGX.setEnabled(false);
 		mnuSavePartCGX.addActionListener(new java.awt.event.ActionListener() {
@@ -785,7 +785,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Save a part of the track in GPX
 		mnuSavePartGPX = new javax.swing.JMenuItem();
-		mnuSavePartGPX.setIcon(getIcon("save_gpx.png",Settings.MenuIconSize));
+		mnuSavePartGPX.setIcon(Utils.getIcon(this,"save_gpx.png",Settings.MenuIconSize));
 		mnuSavePartGPX.setText(bundle.getString("frmMain.mnuSavePartGPX.text"));
 		mnuSavePartGPX.setEnabled(false);
 		mnuSavePartGPX.addActionListener(new java.awt.event.ActionListener() {
@@ -797,7 +797,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Save a part of the track in CSV
 		mnuSavePartCSV = new javax.swing.JMenuItem();
-		mnuSavePartCSV.setIcon(getIcon("save_csv.png", Settings.MenuIconSize));
+		mnuSavePartCSV.setIcon(Utils.getIcon(this,"save_csv.png", Settings.MenuIconSize));
 		mnuSavePartCSV.setText(bundle.getString("frmMain.mnuSavePartCSV.text"));
 		mnuSavePartCSV.setEnabled(false);
 		mnuSavePartCSV.addActionListener(new java.awt.event.ActionListener() {
@@ -812,7 +812,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Import points
 		mnuImportPoints = new javax.swing.JMenuItem();
-		mnuImportPoints.setIcon(getIcon("import.png", Settings.MenuIconSize));
+		mnuImportPoints.setIcon(Utils.getIcon(this,"import.png", Settings.MenuIconSize));
 		mnuImportPoints.setText(bundle.getString("frmMain.mnuImportPoints.text"));
 		mnuImportPoints.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -824,7 +824,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Export points
 		mnuExportPoints = new javax.swing.JMenuItem();
-		mnuExportPoints.setIcon(getIcon("export.png", Settings.MenuIconSize));
+		mnuExportPoints.setIcon(Utils.getIcon(this,"export.png", Settings.MenuIconSize));
 		mnuExportPoints.setText(bundle.getString("frmMain.mnuExportPoints.text"));
 		mnuExportPoints.setEnabled(false);
 		mnuExportPoints.addActionListener(new java.awt.event.ActionListener() {
@@ -839,7 +839,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Export tags as waypoints
 		mnuExportTagAsWaypoints = new javax.swing.JMenuItem();
-		mnuExportTagAsWaypoints.setIcon(getIcon("export.png", Settings.MenuIconSize));
+		mnuExportTagAsWaypoints.setIcon(Utils.getIcon(this,"export.png", Settings.MenuIconSize));
 		mnuExportTagAsWaypoints.setText(bundle.getString("frmMain.mnuExportTagAsWaypoints.text"));
 		mnuExportTagAsWaypoints.setEnabled(false);
 		mnuExportTagAsWaypoints.addActionListener(new java.awt.event.ActionListener() {
@@ -870,7 +870,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuQuit = new javax.swing.JMenuItem();
 		mnuQuit.setAccelerator(
 				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
-		mnuQuit.setIcon(getIcon("quit.png", Settings.MenuIconSize));
+		mnuQuit.setIcon(Utils.getIcon(this,"quit.png", Settings.MenuIconSize));
 		mnuQuit.setText(bundle.getString("frmMain.mnuQuit.text"));
 		mnuQuit.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -891,7 +891,7 @@ public class frmMain extends javax.swing.JFrame {
 		// mnuCopy.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C,
 		// java.awt.event.InputEvent.CTRL_MASK));
 		//mnuCopy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/copy.png")));
-		mnuCopy.setIcon(getIcon("copy.png", Settings.MenuIconSize));
+		mnuCopy.setIcon(Utils.getIcon(this,"copy.png", Settings.MenuIconSize));
 		mnuCopy.setText(bundle.getString("frmMain.mnuCopy.text"));
 		mnuCopy.setEnabled(false);
 		mnuCopy.addActionListener(new java.awt.event.ActionListener() {
@@ -922,7 +922,7 @@ public class frmMain extends javax.swing.JFrame {
 				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
 		//mnuSearchPoint
 		//		.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/search.png")));
-		mnuSearchPoint.setIcon(getIcon("search.png", Settings.MenuIconSize));
+		mnuSearchPoint.setIcon(Utils.getIcon(this,"search.png", Settings.MenuIconSize));
 		mnuSearchPoint.setText(bundle.getString("frmMain.mnuSearchPoint.text"));
 		mnuSearchPoint.setEnabled(false);
 		mnuSearchPoint.addActionListener(new java.awt.event.ActionListener() {
@@ -938,7 +938,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Mark the current position
 		mnuMarkPosition = new javax.swing.JMenuItem();
 		mnuMarkPosition.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
-		mnuMarkPosition.setIcon(getIcon("flag.png",Settings.MenuIconSize));
+		mnuMarkPosition.setIcon(Utils.getIcon(this,"flag.png",Settings.MenuIconSize));
 		mnuMarkPosition.setText(bundle.getString("frmMain.mnuMarkPosition.text"));
 		mnuMarkPosition.setEnabled(false);
 		mnuMarkPosition.addActionListener(new java.awt.event.ActionListener() {
@@ -951,7 +951,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Go to the next mark
 		mnuGotoNextMark = new javax.swing.JMenuItem();
 		mnuGotoNextMark.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
-		mnuGotoNextMark.setIcon(getIcon("next.png",Settings.MenuIconSize));
+		mnuGotoNextMark.setIcon(Utils.getIcon(this,"next.png",Settings.MenuIconSize));
 		mnuGotoNextMark.setText(bundle.getString("frmMain.mnuGotoNextMark.text"));
 		mnuGotoNextMark.setEnabled(false);
 		mnuGotoNextMark.addActionListener(new java.awt.event.ActionListener() {
@@ -965,7 +965,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuGotoPrevMark = new javax.swing.JMenuItem();
 		mnuGotoPrevMark.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7,
 				java.awt.event.InputEvent.SHIFT_MASK));
-		mnuGotoPrevMark.setIcon(getIcon("prev.png",Settings.MenuIconSize));
+		mnuGotoPrevMark.setIcon(Utils.getIcon(this,"prev.png",Settings.MenuIconSize));
 		mnuGotoPrevMark.setText(bundle.getString("frmMain.mnuGotoPrevMark.text"));
 		mnuGotoPrevMark.setEnabled(false);
 		mnuGotoPrevMark.addActionListener(new java.awt.event.ActionListener() {
@@ -987,7 +987,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -------------------------------------------------------
 		mnuHTMLReport = new javax.swing.JMenuItem();
 		mnuHTMLReport.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
-		mnuHTMLReport.setIcon(getIcon("html.png",Settings.MenuIconSize));
+		mnuHTMLReport.setIcon(Utils.getIcon(this,"html.png",Settings.MenuIconSize));
 		mnuHTMLReport.setText(bundle.getString("frmMain.mnuHTMLReport.text"));
 		mnuHTMLReport.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1005,7 +1005,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Generate KML file (Google earth)
 		// ----------------------------------
 		mnuGenerateKML = new javax.swing.JMenuItem();
-		mnuGenerateKML.setIcon(getIcon("world.png",Settings.MenuIconSize));
+		mnuGenerateKML.setIcon(Utils.getIcon(this,"world.png",Settings.MenuIconSize));
 		mnuGenerateKML.setText(bundle.getString("frmMain.mnuGenerateKML.text"));
 		mnuGenerateKML.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1023,7 +1023,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Generate a roadbook
 		// -----------------------------------------------
 		mnuGenerateRoadbook = new javax.swing.JMenuItem();
-		mnuGenerateRoadbook.setIcon(getIcon("roadbook.png",Settings.MenuIconSize));
+		mnuGenerateRoadbook.setIcon(Utils.getIcon(this,"roadbook.png",Settings.MenuIconSize));
 		mnuGenerateRoadbook.setText(bundle.getString("frmMain.mnuGenerateRoadbook.text"));
 		mnuGenerateRoadbook.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1038,7 +1038,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -----------------------------------------------------
 		mnuGenerateMiniRoadbook = new javax.swing.JMenuItem();
 		mnuGenerateMiniRoadbook.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
-		mnuGenerateMiniRoadbook.setIcon(getIcon("roadbook.png",Settings.MenuIconSize));
+		mnuGenerateMiniRoadbook.setIcon(Utils.getIcon(this,"roadbook.png",Settings.MenuIconSize));
 		mnuGenerateMiniRoadbook.setText(bundle.getString("frmMain.mnuGenerateMiniRoadbook.text"));
 		mnuGenerateMiniRoadbook.setEnabled(false);
 		mnuGenerateMiniRoadbook.addActionListener(new java.awt.event.ActionListener() {
@@ -1091,7 +1091,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Find Min / Max
 		// ----------------------------------------------------
 		mnuFindMinMax = new javax.swing.JMenuItem();
-		mnuFindMinMax.setIcon(getIcon("minmax.png",Settings.MenuIconSize));
+		mnuFindMinMax.setIcon(Utils.getIcon(this,"minmax.png",Settings.MenuIconSize));
 		mnuFindMinMax.setText(bundle.getString("frmMain.mnuFindMinMax.text"));
 		mnuFindMinMax.setEnabled(false);
 		mnuFindMinMax.addActionListener(new java.awt.event.ActionListener() {
@@ -1105,7 +1105,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Invert track
 		// ------------------------------------------------------
 		mnuInvertTrack = new javax.swing.JMenuItem();
-		mnuInvertTrack.setIcon(getIcon("inverse.png",Settings.MenuIconSize));
+		mnuInvertTrack.setIcon(Utils.getIcon(this,"inverse.png",Settings.MenuIconSize));
 		mnuInvertTrack.setText(bundle.getString("frmMain.mnuInvertTrack.text"));
 		mnuInvertTrack.setEnabled(false);
 		mnuInvertTrack.addActionListener(new java.awt.event.ActionListener() {
@@ -1141,7 +1141,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -------------------------------------------
 		mnuCalculateTrackTime = new javax.swing.JMenuItem();
 		mnuCalculateTrackTime.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
-		mnuCalculateTrackTime.setIcon(getIcon("refresh.png",Settings.MenuIconSize));
+		mnuCalculateTrackTime.setIcon(Utils.getIcon(this,"refresh.png",Settings.MenuIconSize));
 		mnuCalculateTrackTime.setText(bundle.getString("frmMain.mnuCalculateTackTime.text"));
 		mnuCalculateTrackTime.setEnabled(false);
 		mnuCalculateTrackTime.addActionListener(new java.awt.event.ActionListener() {
@@ -1195,7 +1195,7 @@ public class frmMain extends javax.swing.JFrame {
 		// ----------------------------------------------------
 		mnuTrackSettings = new javax.swing.JMenuItem();
 		mnuTrackSettings.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, 0));
-		mnuTrackSettings.setIcon(getIcon("setting.png",Settings.MenuIconSize));
+		mnuTrackSettings.setIcon(Utils.getIcon(this,"setting.png",Settings.MenuIconSize));
 		mnuTrackSettings.setText(bundle.getString("frmMain.mnuTrackSettings.text"));
 		mnuTrackSettings.setEnabled(false);
 		mnuTrackSettings.addActionListener(new java.awt.event.ActionListener() {
@@ -1208,7 +1208,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Speed/Slope curves
 		// ------------------------------------------------
 		mnuSpeedSlopeCurves = new javax.swing.JMenuItem();
-		mnuSpeedSlopeCurves.setIcon(getIcon("chart_curve.png",Settings.MenuIconSize));
+		mnuSpeedSlopeCurves.setIcon(Utils.getIcon(this,"chart_curve.png",Settings.MenuIconSize));
 		mnuSpeedSlopeCurves.setText(bundle.getString("frmMain.mnuSpeedSlopeCurves.text"));
 		mnuSpeedSlopeCurves.setEnabled(false);
 		mnuSpeedSlopeCurves.addActionListener(new java.awt.event.ActionListener() {
@@ -1225,7 +1225,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Settings Course Generator
 		// -----------------------------------------
 		mnuCGSettings = new javax.swing.JMenuItem();
-		mnuCGSettings.setIcon(getIcon("setting.png",Settings.MenuIconSize));
+		mnuCGSettings.setIcon(Utils.getIcon(this,"setting.png",Settings.MenuIconSize));
 		mnuCGSettings.setText(bundle.getString("frmMain.mnuCGSettings.text"));
 		mnuCGSettings.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1265,7 +1265,7 @@ public class frmMain extends javax.swing.JFrame {
 		// --------------------------------------------------------------
 		mnuCGHelp = new javax.swing.JMenuItem();
 		mnuCGHelp.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-		mnuCGHelp.setIcon(getIcon("help.png",Settings.MenuIconSize));
+		mnuCGHelp.setIcon(Utils.getIcon(this,"help.png",Settings.MenuIconSize));
 		mnuCGHelp.setText(bundle.getString("frmMain.mnuCGHelp.text"));
 		mnuCGHelp.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1286,7 +1286,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Check for update
 		// -------------------------------------------------
 		mnuCheckUpdate = new javax.swing.JMenuItem();
-		mnuCheckUpdate.setIcon(getIcon("update.png",Settings.MenuIconSize));
+		mnuCheckUpdate.setIcon(Utils.getIcon(this,"update.png",Settings.MenuIconSize));
 		mnuCheckUpdate.setText(bundle.getString("frmMain.mnuCheckUpdate.text"));
 		mnuCheckUpdate.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1298,7 +1298,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Reward the author
 		// -------------------------------------------------
 		mnuReward = new javax.swing.JMenuItem();
-		mnuReward.setIcon(getIcon("pouce.png",Settings.MenuIconSize));
+		mnuReward.setIcon(Utils.getIcon(this,"pouce.png",Settings.MenuIconSize));
 		mnuReward.setText(bundle.getString("frmMain.mnuReward.text"));
 		mnuReward.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1314,7 +1314,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Course Generator web site
 		// -------------------------------------------------
 		mnuCGWebsite = new javax.swing.JMenuItem();
-		mnuCGWebsite.setIcon(getIcon("www.png",Settings.MenuIconSize));
+		mnuCGWebsite.setIcon(Utils.getIcon(this,"www.png",Settings.MenuIconSize));
 		mnuCGWebsite.setText(bundle.getString("frmMain.mnuCGWebsite.text"));
 		mnuCGWebsite.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1330,7 +1330,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- About
 		// -------------------------------------------------------------
 		mnuAbout = new javax.swing.JMenuItem();
-		mnuAbout.setIcon(getIcon("about.png",Settings.MenuIconSize));
+		mnuAbout.setIcon(Utils.getIcon(this,"about.png",Settings.MenuIconSize));
 		mnuAbout.setText(bundle.getString("frmMain.mnuAbout.text"));
 		mnuAbout.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1384,7 +1384,7 @@ public class frmMain extends javax.swing.JFrame {
 		if (Track.data.isEmpty())
 			return;
 
-		frmExportPoints frm = new frmExportPoints();
+		frmExportPoints frm = new frmExportPoints(Settings);
 		int mask = frm.showDialog();
 		if (mask != -1) {
 			String s = Utils.SaveDialog(this, Settings.LastDir, "", ".cgp", bundle.getString("frmMain.CGPFile"), true,
@@ -1692,7 +1692,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Total distance
 		// ----------------------------------------------------
 		LbInfoTotalDist = new javax.swing.JLabel();
-		LbInfoTotalDist.setIcon(getIcon("distance.png", Settings.StatusbarIconSize));
+		LbInfoTotalDist.setIcon(Utils.getIcon(this,"distance.png", Settings.StatusbarIconSize));
 		LbInfoTotalDist.setToolTipText(bundle.getString("frmMain.LbInfoTotalDist.toolTipText")); // Total
 																									// distance
 																									// of
@@ -1716,7 +1716,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Ascent
 		// ------------------------------------------------------
 		LbInfoDp = new javax.swing.JLabel();
-		LbInfoDp.setIcon(getIcon("dp.png", Settings.StatusbarIconSize));
+		LbInfoDp.setIcon(Utils.getIcon(this,"dp.png", Settings.StatusbarIconSize));
 		LbInfoDp.setToolTipText(bundle.getString("frmMain.LbInfoDp.toolTipText")); // Total
 																					// ascent
 																					// elevation
@@ -1736,7 +1736,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Descent
 		// -----------------------------------------------------
 		LbInfoDm = new javax.swing.JLabel();
-		LbInfoDm.setIcon(getIcon("dm.png", Settings.StatusbarIconSize));
+		LbInfoDm.setIcon(Utils.getIcon(this,"dm.png", Settings.StatusbarIconSize));
 		LbInfoDm.setToolTipText(bundle.getString("frmMain.LbInfoDm.toolTipText")); // Total
 																					// descent
 																					// elevation
@@ -1756,7 +1756,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Total time
 		// --------------------------------------------------------
 		LbInfoTime = new javax.swing.JLabel();
-		LbInfoTime.setIcon(getIcon("chronometer.png", Settings.StatusbarIconSize));
+		LbInfoTime.setIcon(Utils.getIcon(this,"chronometer.png", Settings.StatusbarIconSize));
 		
 		LbInfoTime.setToolTipText(bundle.getString("frmMain.LbInfoTime.toolTipText")); // Total
 																						// time
@@ -1775,7 +1775,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Curve
 		// --------------------------------------------------------
 		LbInfoCurve = new javax.swing.JLabel();
-		LbInfoCurve.setIcon(getIcon("chart_curve.png", Settings.StatusbarIconSize));
+		LbInfoCurve.setIcon(Utils.getIcon(this,"chart_curve.png", Settings.StatusbarIconSize));
 		LbInfoCurve.setToolTipText(bundle.getString("frmMain.LbInfoCurve.toolTipText")); // Selected
 																							// curve
 		StatusBar.add(LbInfoCurve);
@@ -1812,7 +1812,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Modified
 		// --------------------------------------------------------
 		LbModified = new javax.swing.JLabel();
-		LbModified.setIcon(getIcon("edit.png", Settings.StatusbarIconSize));
+		LbModified.setIcon(Utils.getIcon(this,"edit.png", Settings.StatusbarIconSize));
 		LbModified.setToolTipText(bundle.getString("frmMain.LbModified.toolTipText")); // Track
 																						// modified
 		StatusBar.add(LbModified);
@@ -1830,7 +1830,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Calculation needed
 		// ------------------------------------------------
 		LbInfoCalculate = new javax.swing.JLabel();
-		LbInfoCalculate.setIcon(getIcon("calc.png", Settings.StatusbarIconSize));
+		LbInfoCalculate.setIcon(Utils.getIcon(this,"calc.png", Settings.StatusbarIconSize));
 		// Track data need to be updated. Press F5 to update.
 		LbInfoCalculate.setToolTipText(bundle.getString("frmMain.LbInfoCalculate.toolTipText")); 
 		StatusBar.add(LbInfoCalculate);
@@ -1847,7 +1847,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Internet connection present
 		// ----------------------------------------
 		LbInfoInternet = new javax.swing.JLabel();
-		LbInfoInternet.setIcon(getIcon("www.png", Settings.StatusbarIconSize));
+		LbInfoInternet.setIcon(Utils.getIcon(this,"www.png", Settings.StatusbarIconSize));
 		LbInfoInternet.setToolTipText(bundle.getString("frmMain.LbInfoInternet.toolTipText")); 
 		StatusBar.add(LbInfoInternet);
 
@@ -1863,7 +1863,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Unit
 		// ----------------------------------------
 		LbInfoUnit = new javax.swing.JLabel();
-		LbInfoUnit.setIcon(getIcon("unit.png", Settings.StatusbarIconSize));
+		LbInfoUnit.setIcon(Utils.getIcon(this,"unit.png", Settings.StatusbarIconSize));
 		 // Unit selected for the display
 		LbInfoUnit.setToolTipText(bundle.getString("frmMain.LbInfoUnit.toolTipText"));
 		StatusBar.add(LbInfoUnit);
@@ -1880,7 +1880,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Map dir size
 		// ----------------------------------------
 		LbInfoMapDirSize = new javax.swing.JLabel();	
-		LbInfoMapDirSize.setIcon(getIcon("world.png", Settings.StatusbarIconSize));
+		LbInfoMapDirSize.setIcon(Utils.getIcon(this,"world.png", Settings.StatusbarIconSize));
 		LbInfoMapDirSize.setToolTipText(bundle.getString("frmMain.LbInfoMapDirSize.toolTipText")); // Size
 																									// of
 																									// maps
@@ -1903,7 +1903,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Open GPX
 		// ----------------------------------------------------------
 		btOpenGPX = new javax.swing.JButton();
-		btOpenGPX.setIcon(getIcon("open_gpx.png", Settings.ToolbarIconSize));		
+		btOpenGPX.setIcon(Utils.getIcon(this,"open_gpx.png", Settings.ToolbarIconSize));		
 		btOpenGPX.setToolTipText(bundle.getString("frmMain.btOpenGPX.toolTipText"));
 		btOpenGPX.setFocusable(false);
 		btOpenGPX.addActionListener(new java.awt.event.ActionListener() {
@@ -1916,7 +1916,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Open CGX
 		// ----------------------------------------------------------
 		btOpenCGX = new javax.swing.JButton();
-		btOpenCGX.setIcon(getIcon("open_cgx.png", Settings.ToolbarIconSize));		
+		btOpenCGX.setIcon(Utils.getIcon(this,"open_cgx.png", Settings.ToolbarIconSize));		
 		btOpenCGX.setToolTipText(bundle.getString("frmMain.btOpenCGX.toolTipText"));
 		btOpenCGX.setFocusable(false);
 		btOpenCGX.addActionListener(new java.awt.event.ActionListener() {
@@ -1933,7 +1933,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Save CGX
 		// ----------------------------------------------------------
 		btSaveCGX = new javax.swing.JButton();
-		btSaveCGX.setIcon(getIcon("save_cgx.png",Settings.ToolbarIconSize));
+		btSaveCGX.setIcon(Utils.getIcon(this,"save_cgx.png",Settings.ToolbarIconSize));
 		btSaveCGX.setToolTipText(bundle.getString("frmMain.btSaveCGX.toolTipText"));
 		btSaveCGX.setFocusable(false);
 		btSaveCGX.setEnabled(false);
@@ -1951,7 +1951,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Undo
 		// --------------------------------------------------------------
 		btUndo = new javax.swing.JButton();
-		btUndo.setIcon(getIcon("undo.png",Settings.ToolbarIconSize));
+		btUndo.setIcon(Utils.getIcon(this,"undo.png",Settings.ToolbarIconSize));
 		btUndo.setToolTipText(bundle.getString("frmMain.btUndo.toolTipText"));
 		btUndo.setFocusable(false);
 		btUndo.setEnabled(false);
@@ -1969,7 +1969,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Search
 		// ------------------------------------------------------------
 		btSearch = new javax.swing.JButton();
-		btSearch.setIcon(getIcon("search.png",Settings.ToolbarIconSize));
+		btSearch.setIcon(Utils.getIcon(this,"search.png",Settings.ToolbarIconSize));
 		btSearch.setToolTipText(bundle.getString("frmMain.btSearch.toolTipText"));
 		btSearch.setFocusable(false);
 		btSearch.setEnabled(false);
@@ -1983,7 +1983,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Previous mark
 		// -----------------------------------------------------
 		btGotoPreviousMark = new javax.swing.JButton();
-		btGotoPreviousMark.setIcon(getIcon("prev.png",Settings.ToolbarIconSize));
+		btGotoPreviousMark.setIcon(Utils.getIcon(this,"prev.png",Settings.ToolbarIconSize));
 		btGotoPreviousMark.setToolTipText(bundle.getString("frmMain.btGotoPreviousMark.toolTipText"));
 		btGotoPreviousMark.setFocusable(false);
 		btGotoPreviousMark.setEnabled(false);
@@ -2000,7 +2000,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Next mark
 		// ---------------------------------------------------------
 		btGotoNextMark = new javax.swing.JButton();
-		btGotoNextMark.setIcon(getIcon("next.png", Settings.ToolbarIconSize));
+		btGotoNextMark.setIcon(Utils.getIcon(this,"next.png", Settings.ToolbarIconSize));
 		btGotoNextMark.setToolTipText(bundle.getString("frmMain.btGotoNextMark.toolTipText"));
 		btGotoNextMark.setFocusable(false);
 		btGotoNextMark.setEnabled(false);
@@ -2021,7 +2021,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Mini roadbook
 		// ------------------------------------------------
 		btMiniRoadbook = new javax.swing.JButton();
-		btMiniRoadbook.setIcon(getIcon("roadbook.png", Settings.ToolbarIconSize));
+		btMiniRoadbook.setIcon(Utils.getIcon(this,"roadbook.png", Settings.ToolbarIconSize));
 		btMiniRoadbook.setToolTipText(bundle.getString("frmMain.btMiniRoadbook.toolTipText"));
 		btMiniRoadbook.setFocusable(false);
 		btMiniRoadbook.setEnabled(false);
@@ -2035,7 +2035,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Display S/S curves
 		// ------------------------------------------------
 		btDisplaySSCurves = new javax.swing.JButton();
-		btDisplaySSCurves.setIcon(getIcon("chart_curve.png", Settings.ToolbarIconSize));
+		btDisplaySSCurves.setIcon(Utils.getIcon(this,"chart_curve.png", Settings.ToolbarIconSize));
 		btDisplaySSCurves.setToolTipText(bundle.getString("frmMain.btDisplaySSCurves.toolTipText"));
 		btDisplaySSCurves.setFocusable(false);
 		btDisplaySSCurves.setEnabled(false);
@@ -2049,7 +2049,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Track settings
 		// ----------------------------------------------------
 		btTrackSettings = new javax.swing.JButton();
-		btTrackSettings.setIcon(getIcon("setting.png", Settings.ToolbarIconSize));
+		btTrackSettings.setIcon(Utils.getIcon(this,"setting.png", Settings.ToolbarIconSize));
 		btTrackSettings.setToolTipText(bundle.getString("frmMain.btTrackSettings.toolTipText"));
 		btTrackSettings.setFocusable(false);
 		btTrackSettings.setEnabled(false);
@@ -2067,7 +2067,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Fill difficulty
 		// ----------------------------------------------------
 		btFillDiff = new javax.swing.JButton();
-		btFillDiff.setIcon(getIcon("fill_diff.png", Settings.ToolbarIconSize));
+		btFillDiff.setIcon(Utils.getIcon(this,"fill_diff.png", Settings.ToolbarIconSize));
 		btFillDiff.setToolTipText(bundle.getString("frmMain.btFillDiff.toolTipText"));
 		btFillDiff.setFocusable(false);
 		btFillDiff.setEnabled(false);
@@ -2105,7 +2105,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Fill coeff
 		// ----------------------------------------------------
 		btFillCoeff = new javax.swing.JButton();
-		btFillCoeff.setIcon(getIcon("fill_coeff.png", Settings.ToolbarIconSize));
+		btFillCoeff.setIcon(Utils.getIcon(this,"fill_coeff.png", Settings.ToolbarIconSize));
 		btFillCoeff.setToolTipText(bundle.getString("frmMain.btFillCoeff.toolTipText"));
 		btFillCoeff.setFocusable(false);
 		btFillCoeff.setEnabled(false);
@@ -2175,7 +2175,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Calculate track time
 		// ----------------------------------------------
 		btCalculateTrackTime = new javax.swing.JButton();
-		btCalculateTrackTime.setIcon(getIcon("refresh.png", Settings.ToolbarIconSize));
+		btCalculateTrackTime.setIcon(Utils.getIcon(this,"refresh.png", Settings.ToolbarIconSize));
 		btCalculateTrackTime.setToolTipText(bundle.getString("frmMain.btCalculateTrackTime.toolTipText"));
 		btCalculateTrackTime.setFocusable(false);
 		btCalculateTrackTime.setEnabled(false);
@@ -2500,7 +2500,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		//addTab(TabbedPaneMain, panelTrackData, bundle.getString("frmMain.TabData.tabTitle"),
 		//		new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/satellite16.png")));
-		addTab(TabbedPaneMain, panelTrackData, bundle.getString("frmMain.TabData.tabTitle"), getIcon("gps.png",Settings.TabIconSize));
+		addTab(TabbedPaneMain, panelTrackData, bundle.getString("frmMain.TabData.tabTitle"), Utils.getIcon(this,"gps.png",Settings.TabIconSize));
 
 		// -- Tab - Profil
 		// ------------------------------------------------------
@@ -2518,14 +2518,14 @@ public class frmMain extends javax.swing.JFrame {
 
 		//addTab(TabbedPaneMain, panelProfil, bundle.getString("frmMain.TabProfil.tabTitle"),
 		//		new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/profil.png")));
-		addTab(TabbedPaneMain, panelProfil, bundle.getString("frmMain.TabProfil.tabTitle"), getIcon("profil.png",Settings.TabIconSize));
+		addTab(TabbedPaneMain, panelProfil, bundle.getString("frmMain.TabProfil.tabTitle"), Utils.getIcon(this,"profil.png",Settings.TabIconSize));
 
 		// -- Tab - Statistic
 		// ---------------------------------------------------
 		panelStatistics = new JPanelStatistics(Settings);
 		//addTab(TabbedPaneMain, panelStatistics, bundle.getString("frmMain.TabStatistic.tabTitle"),
 		//		new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/stat.png")));
-		addTab(TabbedPaneMain, panelStatistics, bundle.getString("frmMain.TabStatistic.tabTitle"), getIcon("stat.png",Settings.TabIconSize));
+		addTab(TabbedPaneMain, panelStatistics, bundle.getString("frmMain.TabStatistic.tabTitle"), Utils.getIcon(this,"stat.png",Settings.TabIconSize));
 
 		// -- Tab - Analysis
 		// ----------------------------------------------------
@@ -2533,7 +2533,7 @@ public class frmMain extends javax.swing.JFrame {
 		jPanelAnalyze.setLayout(new java.awt.BorderLayout());
 		//addTab(TabbedPaneMain, jPanelAnalyze, bundle.getString("frmMain.TabAnalyze.tabTitle"),
 		//		new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/search.png")));
-		addTab(TabbedPaneMain, jPanelAnalyze, bundle.getString("frmMain.TabAnalyze.tabTitle"), getIcon("search.png",Settings.TabIconSize));
+		addTab(TabbedPaneMain, jPanelAnalyze, bundle.getString("frmMain.TabAnalyze.tabTitle"), Utils.getIcon(this,"search.png",Settings.TabIconSize));
 
 		// -- Create the tab bar
 		TabbedPaneAnalysis = new javax.swing.JTabbedPane(JTabbedPane.LEFT);
@@ -2562,7 +2562,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		//addTab(TabbedPaneMain, PanelResume, bundle.getString("frmMain.TabResume.tabTitle"),
 		//		new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/grid.png")));
-		addTab(TabbedPaneMain, PanelResume, bundle.getString("frmMain.TabResume.tabTitle"),	getIcon("grid.png",Settings.TabIconSize));
+		addTab(TabbedPaneMain, PanelResume, bundle.getString("frmMain.TabResume.tabTitle"),	Utils.getIcon(this,"grid.png",Settings.TabIconSize));
 
 		// -- Map panel
 		// ---------------------------------------------------------
@@ -2739,7 +2739,7 @@ public class frmMain extends javax.swing.JFrame {
 		if (Track.data.size() <= 0)
 			return;
 
-		final frmSearchPoint frm = new frmSearchPoint();
+		final frmSearchPoint frm = new frmSearchPoint(Settings);
 		frm.addListener(new frmSearchPointListener() {
 
 			@Override
@@ -3046,7 +3046,7 @@ public class frmMain extends javax.swing.JFrame {
 				bundle.getString("frmMain.FileExist"));
 
 		if (!s.isEmpty()) {
-			FrmExportWaypoints frm = new FrmExportWaypoints();
+			FrmExportWaypoints frm = new FrmExportWaypoints(Settings);
 			if (frm.showDialog()) {
 				Track.SaveWaypoint(s, frm.getTag());
 			}
@@ -3534,17 +3534,6 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 	
-	/**
-	 * Return the icon in the resource library
-	 * @param name name of the icon (ie "distance.png")
-	 * @param size size of the icon (16,24,32,48,64,96,128)
-	 * @return
-	 */
-	public ImageIcon getIcon(String name, int size) {
-		return new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/"+size+"/"+name));
-	}
-	
-
 	/**
 	 * Set the default font
 	 * 

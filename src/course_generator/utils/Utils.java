@@ -152,6 +152,16 @@ public class Utils {
 			return "";
 	}
 
+	/**
+	 * Return the icon in the resource library
+	 * @param name name of the icon (ie "distance.png")
+	 * @param size size of the icon (16,24,32,48,64,96,128)
+	 * @return
+	 */
+	public static ImageIcon getIcon(Component Parent,String name, int size) {
+		return new javax.swing.ImageIcon(Parent.getClass().getResource("/course_generator/images/"+size+"/"+name));
+	}
+	
 	
 	
 	/**

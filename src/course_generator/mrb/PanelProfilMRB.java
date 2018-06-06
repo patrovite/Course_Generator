@@ -610,50 +610,43 @@ public class PanelProfilMRB extends JPanel {
 					int lt = (int) ((w - w1) / 2);
 
 					if ((r.getTag() & CgConst.TAG_HIGH_PT) != 0) {
-						Image img = Toolkit.getDefaultToolkit()
-								.getImage(getClass().getResource("/course_generator/images/high_point.png"));
+						Image img = getIcon("high_point.png");
 						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
 
 					if ((r.getTag() & CgConst.TAG_LOW_PT) != 0) {
-						Image img = Toolkit.getDefaultToolkit()
-								.getImage(getClass().getResource("/course_generator/images/low_point.png"));
+						Image img = getIcon("low_point.png");
 						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
 
 					if ((r.getTag() & CgConst.TAG_EAT_PT) != 0) {
-						Image img = Toolkit.getDefaultToolkit()
-								.getImage(getClass().getResource("/course_generator/images/eat.png"));
+						Image img = getIcon("eat.png");
 						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
 
 					if ((r.getTag() & CgConst.TAG_WATER_PT) != 0) {
-						Image img = Toolkit.getDefaultToolkit()
-								.getImage(getClass().getResource("/course_generator/images/drink.png"));
+						Image img = getIcon("drink.png");
 						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
 
 					if ((r.getTag() & CgConst.TAG_COOL_PT) != 0) {
-						Image img = Toolkit.getDefaultToolkit()
-								.getImage(getClass().getResource("/course_generator/images/photo.png"));
+						Image img = getIcon("photo.png");
 						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
 
 					if ((r.getTag() & CgConst.TAG_NOTE) != 0) {
-						Image img = Toolkit.getDefaultToolkit()
-								.getImage(getClass().getResource("/course_generator/images/note.png"));
+						Image img = getIcon("note.png");
 						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
 
 					if ((r.getTag() & CgConst.TAG_INFO) != 0) {
-						Image img = Toolkit.getDefaultToolkit()
-								.getImage(getClass().getResource("/course_generator/images/info.png"));
+						Image img = getIcon("info.png");
 						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
@@ -663,8 +656,9 @@ public class PanelProfilMRB extends JPanel {
 		}
 
 		// -- Copyright --
-		Image img = Toolkit.getDefaultToolkit()
-				.getImage(getClass().getResource("/course_generator/images/copyright.png"));
+		//Image img = Toolkit.getDefaultToolkit()
+		//		.getImage(getClass().getResource("/course_generator/images/copyright.png"));
+		Image img = getIcon("copyright.png");
 		g2d.drawImage(img, width - 15, (height - offy - img.getHeight(null)) / 2, this);
 
 		g2d.dispose();
@@ -1068,5 +1062,11 @@ public class PanelProfilMRB extends JPanel {
 		SelLine = selLine;
 		repaint();
 	}
+	
+	private Image getIcon(String name) {
+		return Toolkit.getDefaultToolkit().getImage(getClass().getResource("/course_generator/images/"+name));
+	}
+
+	
 
 }

@@ -184,7 +184,7 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 
 		// btRefresh = new JButton(bundle.getString("FrmEditMrbFormat.btRefresh.text"));
 		btRefresh = new JButton();
-		btRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/refresh.png")));
+		btRefresh.setIcon(Utils.getIcon(this, "refresh.png", settings.DialogIconSize));
 		btRefresh.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				Refresh();
@@ -407,7 +407,7 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
+		btCancel.setIcon(Utils.getIcon(this,"cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -416,7 +416,7 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
+		btOk.setIcon(Utils.getIcon(this, "valid.png", settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());

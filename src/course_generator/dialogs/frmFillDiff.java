@@ -396,7 +396,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(getIcon("cancel.png",settings.DialogIconSize));
+		btCancel.setIcon(Utils.getIcon(this,"cancel.png",settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -405,7 +405,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(getIcon("valid.png",settings.DialogIconSize));
+		btOk.setIcon(Utils.getIcon(this,"valid.png",settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());
@@ -425,16 +425,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-	/**
-	 * Return the icon in the resource library
-	 * @param name name of the icon (ie "distance.png")
-	 * @param size size of the icon (16,24,32,48,64,96,128)
-	 * @return
-	 */
-	public ImageIcon getIcon(String name, int size) {
-		return new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/"+size+"/"+name));
-	}
-
+	
 	protected void Refresh() {
 		spinFromLine.setEnabled(rbFromLine.isSelected());
 		spinToLine.setEnabled(rbToLine.isSelected());

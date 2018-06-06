@@ -89,7 +89,7 @@ public class JPanelStatistics extends JPanel {
 		// -- Save
 		// --------------------------------------------------------------
 		btStatisticSave = new javax.swing.JButton();
-		btStatisticSave.setIcon(getIcon("save.png",settings.ToolbarIconSize));
+		btStatisticSave.setIcon(Utils.getIcon(this,"save.png",settings.ToolbarIconSize));
 		btStatisticSave.setToolTipText(bundle.getString("JPanelStastistics.btStatisticSave.toolTipText"));
 		btStatisticSave.setFocusable(false);
 		btStatisticSave.addActionListener(new java.awt.event.ActionListener() {
@@ -106,7 +106,7 @@ public class JPanelStatistics extends JPanel {
 		// -- Refresh
 		// --------------------------------------------------------------
 		btStatisticRefresh = new javax.swing.JButton();
-		btStatisticRefresh.setIcon(getIcon("refresh.png",settings.ToolbarIconSize));
+		btStatisticRefresh.setIcon(Utils.getIcon(this,"refresh.png",settings.ToolbarIconSize));
 		btStatisticRefresh.setToolTipText(bundle.getString("JPanelStastistics.btStatisticRefresh.toolTipText"));
 		btStatisticRefresh.setFocusable(false);
 		btStatisticRefresh.addActionListener(new java.awt.event.ActionListener() {
@@ -362,14 +362,5 @@ public class JPanelStatistics extends JPanel {
 		this.settings = settings;
 	}
 	
-	/**
-	 * Return the icon in the resource library
-	 * @param name name of the icon (ie "distance.png")
-	 * @param size size of the icon (16,24,32,48,64,96,128)
-	 * @return
-	 */
-	public ImageIcon getIcon(String name, int size) {
-		return new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/"+size+"/"+name));
-	}
 
 }
