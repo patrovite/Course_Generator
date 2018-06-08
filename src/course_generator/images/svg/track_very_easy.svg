@@ -26,7 +26,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="277.58037"
+     inkscape:cx="-85.064394"
      inkscape:cy="178.75768"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -45,7 +45,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -55,16 +55,16 @@
      id="layer1"
      transform="translate(0,-161.53336)">
     <rect
-       style="opacity:0.93999999;fill:#f9f9f9;fill-opacity:1;fill-rule:nonzero;stroke:#1a1a1a;stroke-width:2.64583325;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       style="opacity:0.93999999;fill:#f9f9f9;fill-opacity:1;fill-rule:nonzero;stroke:#1a1a1a;stroke-width:5.29166651;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
        id="rect815"
-       width="132.82083"
-       height="132.82083"
-       x="1.3229166"
-       y="162.85628"
-       ry="5.1883135" />
+       width="130.17499"
+       height="130.17499"
+       x="2.6458333"
+       y="164.1792"
+       ry="5.0849605" />
     <path
-       style="fill:none;stroke:#aad400;stroke-width:7.93749857;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 9.0685208,287.65188 C 18.86409,262.53458 28.694432,244.21099 40.464573,233.14734 56.327729,218.23635 83.145309,220.06247 99.991493,206.27182 111.3182,196.99953 125.61066,170.60525 125.61066,170.60525 v 0"
+       style="fill:none;stroke:#88aa00;stroke-width:10.58333302;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 11.997889,285.23826 c 9.368611,-24.02297 18.77048,-41.54822 30.027598,-52.12984 15.171731,-14.26134 40.820418,-12.51478 56.93233,-25.70459 10.833023,-8.8683 24.502513,-34.11262 24.502513,-34.11262 v 0"
        id="path817"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="csacc" />

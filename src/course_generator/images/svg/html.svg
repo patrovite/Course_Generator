@@ -28,7 +28,7 @@
      id="namedview22"
      showgrid="false"
      inkscape:zoom="1.18"
-     inkscape:cx="401.95858"
+     inkscape:cx="97.721296"
      inkscape:cy="211.5784"
      inkscape:window-x="0"
      inkscape:window-y="24"
@@ -79,45 +79,26 @@
          offset="1" />
     </linearGradient>
   </defs>
-  <g
-     id="g848"
-     transform="matrix(5.1685548,0,0,5.1558306,64.765178,-2126.0065)"
-     style="stroke-width:0.19371627">
-    <g
-       style="fill-rule:evenodd;stroke:#808080;stroke-width:0.19371627px;stroke-linejoin:round"
-       transform="matrix(0.86046,0,0,0.86207,-18.5,-389.602)"
-       id="g2995">
-      <path
-         style="fill:url(#linearGradient3046);stroke-width:0.19371627px"
-         inkscape:connector-curvature="0"
-         d="M 82,930.36 H 22 v 115 h 85 v -90 z"
-         id="path2826" />
-      <path
-         style="fill:url(#linearGradient3048);stroke-width:0.19371627px"
-         inkscape:connector-curvature="0"
-         d="m 107,955.36 -25,-25 c 1.8633,8.3333 2.1329,16.667 0,25 9.9055,-1.935 17.128,-0.56751 25,0 z"
-         id="rect2822" />
-    </g>
-    <rect
-       style="fill:#005aa6;stroke-width:0"
-       x="1.9420017"
-       y="446.37802"
-       width="70.115997"
-       height="31.256001"
-       id="rect3088" />
-    <text
-       x="1.6918262"
-       y="470.95071"
-       line-height="125%"
-       font-size="24.549px"
-       xml:space="preserve"
-       style="font-size:24.54899979px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ffffff;stroke-width:0.19371627"
-       id="text3858">         <tspan
-   x="1.6918262"
-   y="470.95071"
+  <rect
+     id="rect3088"
+     height="214.54047"
+     width="482.46234"
+     y="148.72977"
+     x="15.629548"
+     style="fill:#005aa6;stroke-width:0" />
+  <text
+     id="text3858"
+     style="font-size:168.71156311px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#f9f9f9;stroke-width:0.99999994;"
+     xml:space="preserve"
+     font-size="24.549px"
+     line-height="125%"
+     y="317.7876"
+     x="13.890987"
+     transform="scale(1.0012332,0.99876832)">         <tspan
+   style="stroke-width:0.99999994;fill:#f9f9f9;"
    id="tspan3860"
-   style="stroke-width:0.19371627">HTML</tspan> </text>
-  </g>
+   y="317.7876"
+   x="13.890987">HTML</tspan> </text>
   <metadata
      id="metadata19">
     <rdf:RDF>

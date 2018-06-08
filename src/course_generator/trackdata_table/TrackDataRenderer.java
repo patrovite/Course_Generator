@@ -111,12 +111,12 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 
 			// -- Set the icon next to the elevation value
 			if (slope > 1.0) {
-				setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/up_elev.png")));
+				setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/png/up_elev.png")));
 			} else if (slope < -1.0) {
-				setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/down_elev.png")));
+				setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/png/down_elev.png")));
 			} else
 				setIcon(new javax.swing.ImageIcon(
-						getClass().getResource("/course_generator/images/same_level_elev.png")));
+						getClass().getResource("/course_generator/images/png/same_level_elev.png")));
 
 			// -- Set the color of the background. Color depend of the slope
 			// value
@@ -166,7 +166,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 
 			if (cmpt > 0) {
 				// -- Prepare the resulting image
-				BufferedImage combined = new BufferedImage(18 * cmpt, 16, BufferedImage.TYPE_INT_ARGB);
+				BufferedImage combined = new BufferedImage(18 * cmpt, settings.TabIconSize/*16*/, BufferedImage.TYPE_INT_ARGB);
 				Graphics g = combined.getGraphics();
 
 				// Higher point

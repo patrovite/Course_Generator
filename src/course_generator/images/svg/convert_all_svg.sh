@@ -10,6 +10,7 @@ do
     mkdir -p ../64
     mkdir -p ../32
     mkdir -p ../24
+    mkdir -p ../22
     mkdir -p ../20    
     mkdir -p ../16
 
@@ -18,6 +19,7 @@ do
     magick $i -transparent white -resize 64x64 ../64/$f".png"
     magick $i -transparent white -resize 32x32 ../32/$f".png"
     magick $i -transparent white -resize 24x24 ../24/$f".png"
+    magick $i -transparent white -resize 22x22 ../22/$f".png"
     magick $i -transparent white -resize 20x20 ../20/$f".png"
     magick $i -transparent white -resize 16x16 ../16/$f".png"
    

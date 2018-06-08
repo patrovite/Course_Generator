@@ -405,7 +405,7 @@ public class frmMain extends javax.swing.JFrame {
 		initComponents();
 
 		// -- Set the icon of the application
-		setIconImage(createImageIcon("/course_generator/images/cg.png", "").getImage());
+		setIconImage(createImageIcon("/course_generator/images/png/logo_cg.png", "").getImage());
 
 		// -- Set the preferred column width
 		panelTrackData.setColumnWidth();
@@ -2468,6 +2468,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelTrackData.refresh();
 					panelProfil.RefreshProfilChart();
 					Track.CheckTimeLimit();
+					panelMap.RefreshTrack(Track, false);
 					RefreshStatusbar(Track);
 				}
 			}
@@ -2548,7 +2549,7 @@ public class frmMain extends javax.swing.JFrame {
 		addTab(TabbedPaneAnalysis, jPanelSpeed, bundle.getString("frmMain.TabSpeed.tabTitle"), null);
 
 		// -- Tab Analysis : Speed/slope
-		jPanelSpeedSlope = new JPanelAnalysisSpeedSlope();
+		jPanelSpeedSlope = new JPanelAnalysisSpeedSlope(Settings);
 		addTab(TabbedPaneAnalysis, jPanelSpeedSlope, bundle.getString("frmMain.TabSpeedSlope.tabTitle"), null);
 
 		// -- Tab - Resume

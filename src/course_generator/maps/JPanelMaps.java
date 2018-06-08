@@ -20,6 +20,7 @@ package course_generator.maps;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -452,9 +453,12 @@ public class JPanelMaps extends JPanel {
 			if ((t & CgConst.TAG_WATER_PT) != 0)
 				v = v + 4;
 
+			//if (v != 0)
+			//	MapViewer.addMapMarker(new MapMarkerImg(new Coordinate(r.getLatitude(), r.getLongitude()),
+			//			createImageIcon("/course_generator/images/png/markers_" + v + ".png", "").getImage()));
 			if (v != 0)
 				MapViewer.addMapMarker(new MapMarkerImg(new Coordinate(r.getLatitude(), r.getLongitude()),
-						createImageIcon("/course_generator/images/markers_" + v + ".png", "").getImage()));
+						getImage("markers_" + v + ".png", Settings.MapIconSize)));
 		}
 	}
 
@@ -654,8 +658,9 @@ public class JPanelMaps extends JPanel {
 	public void RefreshMapMarker(double lat, double lon) {
 		if (MapMarker == null) {
 			// -- Define the current position marker
-			MapMarker = new MapMarkerImg(new Coordinate(lat, lon),
-					createImageIcon("/course_generator/images/marker1.png", "").getImage());
+			//MapMarker = new MapMarkerImg(new Coordinate(lat, lon),
+			//		createImageIcon("/course_generator/images/marker1.png", "").getImage());
+			MapMarker = new MapMarkerImg(new Coordinate(lat, lon), getImage("marke1.png",Settings.MapIconSize));
 			MapViewer.addMapMarker(MapMarker);
 		} else {
 			MapMarker.setLat(lat);
@@ -728,8 +733,9 @@ public class JPanelMaps extends JPanel {
 	public void RefreshCurrentPosMarker(double lat, double lon) {
 		if (CurrentPosMarker == null) {
 			// -- Define the current position marker
-			CurrentPosMarker = new MapMarkerImg(new Coordinate(lat, lon),
-					createImageIcon("/course_generator/images/current_marker.png", "").getImage());
+			//CurrentPosMarker = new MapMarkerImg(new Coordinate(lat, lon),
+			//		createImageIcon("/course_generator/images/32/current_marker.png", "").getImage());
+			CurrentPosMarker = new MapMarkerImg(new Coordinate(lat, lon), getImage("current_marker.png", Settings.MapIconSize));
 			MapViewer.addMapMarker(CurrentPosMarker);
 		} else {
 			CurrentPosMarker.setLat(lat);
@@ -762,6 +768,10 @@ public class JPanelMaps extends JPanel {
 			Settings.map = ret;
 			RefreshMapType();
 		}
+	}
+	
+	private Image getImage(String name, int size) {
+		return createImageIcon("/course_generator/images/"+size+"/"+name, "").getImage();
 	}
 	
 }

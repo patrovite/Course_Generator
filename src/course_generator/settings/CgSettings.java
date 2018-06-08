@@ -93,6 +93,7 @@ public class CgSettings {
 	public int MenuIconSize;
 	public int TagIconSize;
 	public int DialogIconSize;
+	public int MapIconSize;
 	
 	
 	
@@ -151,6 +152,7 @@ public class CgSettings {
 		TabIconSize=20;
 		ToolbarIconSize=20;
 		MapToolbarIconSize=20;
+		MapIconSize=32;
 		MenuIconSize=20;
 		TagIconSize=16;
 		DialogIconSize=20;

@@ -40,20 +40,20 @@
     <radialGradient
        id="radialGradient2199"
        gradientUnits="userSpaceOnUse"
-       cy="14.107545"
-       cx="-6.5755816"
-       gradientTransform="matrix(-1.1764633,6.8098872,-6.665582,-1.141546,200.36028,-306.54868)"
+       cy="13.585108"
+       cx="-6.4535656"
+       gradientTransform="matrix(-0.71835641,5.8258381,-8.0951225,-0.98592308,225.21654,-314.98621)"
        r="27.545"
        inkscape:collect="always"
-       fx="-6.5755816"
-       fy="14.107545">
+       fx="-6.4535656"
+       fy="13.585108">
       <stop
          id="stop3179"
-         style="stop-color:#9bffb3"
+         style="stop-color:#d4ff2a;stop-opacity:1"
          offset="0" />
       <stop
          id="stop3181"
-         style="stop-color:#00f038"
+         style="stop-color:#aad400;stop-opacity:1"
          offset="1" />
     </radialGradient>
   </defs>
@@ -61,9 +61,9 @@
      id="base"
      bordercolor="#666666"
      inkscape:pageshadow="2"
-     inkscape:window-y="45"
+     inkscape:window-y="24"
      pagecolor="#ffffff"
-     inkscape:window-height="699"
+     inkscape:window-height="1032"
      inkscape:grid-bbox="true"
      width="64px"
      inkscape:zoom="0.6875"
@@ -71,9 +71,9 @@
      showgrid="true"
      borderopacity="1.0"
      inkscape:current-layer="layer1"
-     inkscape:cx="406.12951"
-     inkscape:cy="178.87124"
-     inkscape:window-width="1366"
+     inkscape:cx="145.0386"
+     inkscape:cy="180.32579"
+     inkscape:window-width="1920"
      height="64px"
      inkscape:pageopacity="0.0"
      inkscape:document-units="px"
@@ -99,7 +99,7 @@
        inkscape:export-xdpi="46.5"
        inkscape:export-filename="C:\Documents and Settings\xne0096\Desktop\ok.gif"
        inkscape:export-ydpi="46.5"
-       style="fill:url(#radialGradient2199);stroke:#00be31;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:url(#radialGradient2199);stroke:#88aa00;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
        id="path2168"
        rx="246"
        ry="245.99603" />
