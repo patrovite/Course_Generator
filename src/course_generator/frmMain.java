@@ -1453,7 +1453,7 @@ public class frmMain extends javax.swing.JFrame {
 		if (Track.data.isEmpty())
 			return;
 
-		FrmImportChoice frm = new FrmImportChoice();
+		FrmImportChoice frm = new FrmImportChoice(Settings);
 
 		int res = frm.showDialog();
 
@@ -1463,9 +1463,9 @@ public class frmMain extends javax.swing.JFrame {
 			if (!s.isEmpty()) {
 				int mode = FrmImportChoice.RESULT_AT_END;
 				if (res == FrmImportChoice.RESULT_AT_END)
-					mode = CgConst.IMPORT_MODE_INS_START;
-				else
 					mode = CgConst.IMPORT_MODE_ADD_END;
+				else
+					mode = CgConst.IMPORT_MODE_INS_START;
 
 				BackupInCGX();
 				// bAutorUpdatePos = false;
@@ -2766,7 +2766,7 @@ public class frmMain extends javax.swing.JFrame {
 		if (Track.data.isEmpty())
 			return;
 
-		FrmImportChoice frm = new FrmImportChoice();
+		FrmImportChoice frm = new FrmImportChoice(Settings);
 
 		int res = frm.showDialog();
 
@@ -2776,9 +2776,9 @@ public class frmMain extends javax.swing.JFrame {
 			if (!s.isEmpty()) {
 				int mode = FrmImportChoice.RESULT_AT_END;
 				if (res == FrmImportChoice.RESULT_AT_END)
-					mode = 1;
+					mode = CgConst.IMPORT_MODE_ADD_END;
 				else
-					mode = 2;
+					mode = CgConst.IMPORT_MODE_INS_START;
 
 				BackupInCGX();
 				// bAutorUpdatePos = false;
@@ -2861,6 +2861,7 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshStatusbar(Track);
 
 		// -- Force the update of the main table
+		panelTrackData.setSelectedRow(0);
 		panelTrackData.setTrack(Track);
 		panelTrackData.setSelectedRow(0);
 
@@ -2991,6 +2992,7 @@ public class frmMain extends javax.swing.JFrame {
 		panelStatistics.setTrack(Track);
 
 		// -- Force the update of the main table
+		panelTrackData.setSelectedRow(0);
 		panelTrackData.setTrack(Track);
 		panelTrackData.setSelectedRow(0);
 		RefreshMruCGX();
