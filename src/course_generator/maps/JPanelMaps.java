@@ -463,6 +463,10 @@ public class JPanelMaps extends JPanel {
 	}
 
 
+	/**
+	 * Set the track difficulty
+	 * @param diff
+	 */
 	private void MapTrackDifficulty(double diff) {
 		if ((Track.data.size() > 0) && (IndexMarker >= 0)) {
 			// int row = panelTrackData.getSelectedRow();
@@ -486,7 +490,7 @@ public class JPanelMaps extends JPanel {
 			UndoDiff.clear();
 
 			// -- Fill the table
-			for (int i = start; i <= end; i++) {
+			for (int i = start; i <= end-1; i++) {
 				UndoDiff.add(Track.data.get(i).getDiff());
 				Track.data.get(i).setDiff(diff);
 			}
@@ -660,7 +664,7 @@ public class JPanelMaps extends JPanel {
 			// -- Define the current position marker
 			//MapMarker = new MapMarkerImg(new Coordinate(lat, lon),
 			//		createImageIcon("/course_generator/images/marker1.png", "").getImage());
-			MapMarker = new MapMarkerImg(new Coordinate(lat, lon), getImage("marke1.png",Settings.MapIconSize));
+			MapMarker = new MapMarkerImg(new Coordinate(lat, lon), getImage("marker.png",Settings.MapIconSize));
 			MapViewer.addMapMarker(MapMarker);
 		} else {
 			MapMarker.setLat(lat);

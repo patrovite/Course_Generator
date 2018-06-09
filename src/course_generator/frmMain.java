@@ -751,7 +751,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Import GPX
 		mnuImportGPX = new javax.swing.JMenuItem();
-		mnuImportGPX.setIcon(Utils.getIcon(this,"open_gpx.png",Settings.MenuIconSize));
+		mnuImportGPX.setIcon(Utils.getIcon(this,"import.png",Settings.MenuIconSize));
 		mnuImportGPX.setText(bundle.getString("frmMain.mnuImportGPX.text"));
 		mnuImportGPX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -762,7 +762,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Import CGX
 		mnuImportCGX = new javax.swing.JMenuItem();
-		mnuImportCGX.setIcon(Utils.getIcon(this,"open_cgx.png",Settings.MenuIconSize));
+		mnuImportCGX.setIcon(Utils.getIcon(this,"import.png",Settings.MenuIconSize));
 		mnuImportCGX.setText(bundle.getString("frmMain.mnuImportCGX.text"));
 		mnuImportCGX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {

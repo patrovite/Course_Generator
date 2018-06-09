@@ -41,8 +41,8 @@
      showgrid="false"
      units="px"
      inkscape:zoom="0.99380962"
-     inkscape:cx="495.52445"
-     inkscape:cy="259.1084"
+     inkscape:cx="439.17563"
+     inkscape:cy="230.93399"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
@@ -92,13 +92,13 @@
     </linearGradient>
   </defs>
   <rect
-     style="opacity:1;fill:#ccff00;fill-opacity:1;fill-rule:nonzero;stroke:#1a1a1a;stroke-width:20;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+     style="opacity:1;fill:#f9f9f9;fill-opacity:1;fill-rule:nonzero;stroke:#1a1a1a;stroke-width:25;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
      id="rect823"
-     width="1004"
-     height="492"
-     x="10"
-     y="10"
-     ry="60.899254" />
+     width="999"
+     height="487"
+     x="12.5"
+     y="12.5"
+     ry="60.280357" />
   <g
      id="g828"
      transform="matrix(1.1532488,0,0,1.1562924,61.230587,33.6697)"

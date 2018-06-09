@@ -27,12 +27,12 @@
      inkscape:window-y="24"
      pagecolor="#ffffff"
      inkscape:window-height="1032"
-     inkscape:zoom="1"
+     inkscape:zoom="0.5"
      inkscape:window-x="0"
      borderopacity="1.0"
      inkscape:current-layer="svg1"
-     inkscape:cx="114.96542"
-     inkscape:cy="237.60247"
+     inkscape:cx="-429.78821"
+     inkscape:cy="317.31849"
      inkscape:window-width="1920"
      inkscape:pageopacity="0.0000000"
      showgrid="false"
@@ -52,7 +52,7 @@
             <dc:title>Openclipart</dc:title>
           </cc:Agent>
         </dc:publisher>
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
       <cc:License
          rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
@@ -67,7 +67,7 @@
   </metadata>
   <path
      id="path646"
-     style="fill:#88aa00;fill-rule:evenodd;stroke-width:9.7206459;stroke-linecap:round;stroke-linejoin:round"
+     style="fill:#cccccc;fill-rule:evenodd;stroke-width:9.7206459;stroke-linecap:round;stroke-linejoin:round"
      d="m 48.261877,16.817431 c -10.690097,0 -19.296205,8.736029 -19.296205,19.587467 V 475.5951 c 0,10.85145 8.606108,19.58747 19.296205,19.58747 H 463.73812 c 10.69011,0 19.29621,-8.73602 19.29621,-19.58747 V 81.397298 L 419.106,16.822345 H 48.261877 Z"
      inkscape:connector-curvature="0" />
   <g
@@ -94,19 +94,19 @@
   <path
      id="rect731"
      sodipodi:nodetypes="ccccccccc"
-     style="fill:#d5e5ff;fill-rule:evenodd;stroke:#d5e5ff;stroke-width:15.46354294;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+     style="fill:#f9f9f9;fill-rule:evenodd;stroke:#f9f9f9;stroke-width:15.46354294;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
      d="m 94.969839,201.48549 c -10.342316,0 -18.662438,8.44571 -18.662438,18.94413 v 204.64767 c 0,10.49843 8.320122,18.94413 18.662438,18.94413 H 417.03016 c 10.34232,0 18.66244,-8.4457 18.66244,-18.94413 V 220.42962 c 0,-10.49842 -8.32012,-18.94413 -18.66244,-18.94413 z"
      inkscape:connector-curvature="0" />
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:87.10041809px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#f9f9f9;stroke-width:1.54738784"
-     x="94.106354"
+     x="94.259453"
      y="357.53903"
      id="text1042"
      transform="scale(0.89430879,1.118182)"><tspan
        sodipodi:role="line"
        id="tspan1040"
-       x="94.106354"
+       x="94.259453"
        y="357.53903"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:209.04095459px;font-family:'Liberation Mono';-inkscape-font-specification:'Liberation Mono Bold';fill:#000000;stroke:#f9f9f9;stroke-width:1.54738784">GPX</tspan></text>
 </svg>

@@ -1064,7 +1064,7 @@ public class PanelProfilMRB extends JPanel {
 	}
 	
 	private Image getIcon(String name) {
-		return Toolkit.getDefaultToolkit().getImage(getClass().getResource("/course_generator/images/"+name));
+		return Toolkit.getDefaultToolkit().getImage(getClass().getResource("/course_generator/images/old/"+name));
 	}
 
 	
