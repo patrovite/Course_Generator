@@ -89,7 +89,7 @@ public class JPanelStatistics extends JPanel {
 		// -- Save
 		// --------------------------------------------------------------
 		btStatisticSave = new javax.swing.JButton();
-		btStatisticSave.setIcon(Utils.getIcon(this,"save.png",settings.ToolbarIconSize));
+		btStatisticSave.setIcon(Utils.getIcon(this,"save_html.png",settings.ToolbarIconSize));
 		btStatisticSave.setToolTipText(bundle.getString("JPanelStastistics.btStatisticSave.toolTipText"));
 		btStatisticSave.setFocusable(false);
 		btStatisticSave.addActionListener(new java.awt.event.ActionListener() {

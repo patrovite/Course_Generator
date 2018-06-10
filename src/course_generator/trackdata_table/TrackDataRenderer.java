@@ -80,7 +80,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 242, 193));
+				setBackground(CgConst.CL_TRACK_TABLE_LAT);
 
 			return this;
 
@@ -97,7 +97,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 242, 193));
+				setBackground(CgConst.CL_TRACK_TABLE_LAT);
 
 			return this;
 
@@ -275,7 +275,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(221, 255, 155));
+				setBackground(CgConst.CL_TRACK_TABLE_TOTAL);//new Color(221, 255, 155));
 
 			return this;
 
@@ -291,21 +291,15 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			// -- Set the background color
 			Color clDiff = Color.WHITE;
 			if ((diff <= CgConst.DIFF_VERYEASY) && (diff > CgConst.DIFF_EASY)) {
-				clDiff = CgConst.CL_DIFF_VERYEASY; // Color.WHITE; //--
-													// paint in white
+				clDiff = CgConst.CL_DIFF_VERYEASY; 
 			} else if ((diff <= CgConst.DIFF_EASY) && (diff > CgConst.DIFF_AVERAGE)) {
-				clDiff = CgConst.CL_DIFF_EASY; // new Color(170, 212, 0);
-												// //-- Paint in green
+				clDiff = CgConst.CL_DIFF_EASY; 
 			} else if ((diff <= CgConst.DIFF_AVERAGE) && (diff > CgConst.DIFF_HARD)) {
-				clDiff = CgConst.CL_DIFF_AVERAGE; // new Color(85, 153,
-													// 255); //-- Paint in
-													// blue
+				clDiff = CgConst.CL_DIFF_AVERAGE;
 			} else if ((diff <= CgConst.DIFF_HARD) && (diff > CgConst.DIFF_VERYHARD)) {
-				clDiff = CgConst.CL_DIFF_HARD; // new Color(255, 0, 0); //--
-												// Paint in red
+				clDiff = CgConst.CL_DIFF_HARD; 
 			} else if (diff <= CgConst.DIFF_VERYHARD) {
-				clDiff = CgConst.CL_DIFF_VERYHARD; // new Color(77, 77, 77);
-													// //-- Paint in gray
+				clDiff = CgConst.CL_DIFF_VERYHARD;
 			}
 
 			if (isSelected)
@@ -400,13 +394,13 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			setHorizontalAlignment(CENTER);
 
 			// -- Set the background color
-			Color clHour = new Color(221, 255, 155); // Color.LightGreen;
+			Color clHour = CgConst.CL_TRACK_TABLE_HOUR_DAY; //new Color(221, 255, 155); // Color.LightGreen;
 
 			int ts_val = hour.getSecondOfDay();
 			int ts_start = track.StartNightTime.getSecondOfDay();
 			int ts_end = track.EndNightTime.getSecondOfDay();
 			if ((track.bNightCoeff) && ((ts_val > ts_start) || (ts_val < ts_end)))
-				clHour = new Color(0, 128, 255);// 95,158,160); //CadetBlue;
+				clHour = CgConst.CL_TRACK_TABLE_HOUR_NIGHT; //new Color(0, 128, 255);// 95,158,160); //CadetBlue;
 
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);

@@ -133,7 +133,7 @@ public class JPanelResume extends JPanel {
 		// -- Save
 		// --------------------------------------------------------------
 		btResumeSave = new javax.swing.JButton();
-		btResumeSave.setIcon(Utils.getIcon(this,"save.png",Settings.ToolbarIconSize));
+		btResumeSave.setIcon(Utils.getIcon(this,"save_csv.png",Settings.ToolbarIconSize));
 		btResumeSave.setToolTipText(bundle.getString("JPanelResume.btResumeSave.toolTipText"));
 		btResumeSave.setFocusable(false);
 		btResumeSave.addActionListener(new java.awt.event.ActionListener() {
