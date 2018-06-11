@@ -74,44 +74,44 @@ public class frmSettings extends javax.swing.JDialog {
 	/**
 	 * Creates new form frmSettings
 	 */
-	public frmSettings() {
+	public frmSettings(CgSettings settings) {
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
 	}
 
 
-	public boolean showDialog(CgSettings s) {
-		settings = s;
+	public boolean showDialog() {
 		// Set field
 
 		// -- Language
-		if (s.Language.isEmpty())
+		if (settings.Language.isEmpty())
 			cbLanguage.setSelectedIndex(0);
-		else if (s.Language.equalsIgnoreCase("EN"))
+		else if (settings.Language.equalsIgnoreCase("EN"))
 			cbLanguage.setSelectedIndex(1);
-		else if (s.Language.equalsIgnoreCase("FR"))
+		else if (settings.Language.equalsIgnoreCase("FR"))
 			cbLanguage.setSelectedIndex(2);
 
 		// -- Units
-		if (s.Unit == CgConst.UNIT_METER)
+		if (settings.Unit == CgConst.UNIT_METER)
 			cbUnit.setSelectedIndex(0);
-		else if (s.Unit == CgConst.UNIT_MILES_FEET)
+		else if (settings.Unit == CgConst.UNIT_MILES_FEET)
 			cbUnit.setSelectedIndex(1);
 		else
 			cbUnit.setSelectedIndex(0);
 
 		// -- Speed format
-		if (s.isPace)
+		if (settings.isPace)
 			cbSpeed.setSelectedIndex(1);
 		else
 			cbSpeed.setSelectedIndex(0);
 		
 		// -- Check for update
-		chkCheck.setSelected(s.Check4UpdateAtStart);
+		chkCheck.setSelected(settings.Check4UpdateAtStart);
 
 		// -- Threshold
-		spinThresholdAsk.setValue((int)	s.PosFilterAskThreshold);
+		spinThresholdAsk.setValue((int)	settings.PosFilterAskThreshold);
 		
 		//-- Default font
 		DefaultFont = new Font(settings.DefaultFontName, settings.DefaultFontStyle, settings.DefaultFontSize);
@@ -124,55 +124,55 @@ public class frmSettings extends javax.swing.JDialog {
 		if (ok) {
 			// Copy fields
 
-			String old_language = s.Language;
+			String old_language = settings.Language;
 
 			// -- Language
 			switch (cbLanguage.getSelectedIndex()) {
 			case 0: // Default
-				s.Language = "";
+				settings.Language = "";
 				break;
 			case 1: // English
-				s.Language = "EN";
+				settings.Language = "EN";
 				break;
 			case 2: // French
-				s.Language = "FR";
+				settings.Language = "FR";
 				break;
 			default: // Default
-				s.Language = "";
+				settings.Language = "";
 			}
 
-			if (!old_language.equalsIgnoreCase(s.Language))
+			if (!old_language.equalsIgnoreCase(settings.Language))
 				JOptionPane.showMessageDialog(this, bundle.getString("frmSettings.MsgRestart"));
 
 			// -- Units
 			switch (cbUnit.getSelectedIndex()) {
 			case 0: // Kilometer / Feet
-				s.Unit = CgConst.UNIT_METER;
+				settings.Unit = CgConst.UNIT_METER;
 				break;
 			case 1: // Miles / Feet
-				s.Unit = CgConst.UNIT_MILES_FEET;
+				settings.Unit = CgConst.UNIT_MILES_FEET;
 				break;
 			default: // Default
-				s.Unit = CgConst.UNIT_METER;
+				settings.Unit = CgConst.UNIT_METER;
 			}
 
 			// -- Speed format
 			switch (cbSpeed.getSelectedIndex()) {
 			case 0: // Speed
-				s.isPace = false;
+				settings.isPace = false;
 				break;
 			case 1: // Miles / Feet
-				s.isPace = true;
+				settings.isPace = true;
 				break;
 			default: // Default
-				s.isPace = false;
+				settings.isPace = false;
 			}
 
 			// -- Check for update
-			s.Check4UpdateAtStart = chkCheck.isSelected();
+			settings.Check4UpdateAtStart = chkCheck.isSelected();
 
 			// -- Threshold
-			s.PosFilterAskThreshold = spinThresholdAsk.getValueAsInt();
+			settings.PosFilterAskThreshold = spinThresholdAsk.getValueAsInt();
 			
 			//-- Default font
 			settings.DefaultFontName = DefaultFont.getFontName();
@@ -336,7 +336,7 @@ public class frmSettings extends javax.swing.JDialog {
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
+		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -345,7 +345,7 @@ public class frmSettings extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
+		btOk.setIcon(Utils.getIcon(this, "valid.png", settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());

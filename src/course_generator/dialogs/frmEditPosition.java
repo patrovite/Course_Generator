@@ -176,7 +176,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 		// -- Show the dialog
 		setVisible(true);
 
-		if (ok) {
+		if (ok && !track.ReadOnly) {
 			// Copy fields
 			track.data.get(line).setName(tfName.getText());
 			int tag = 0;

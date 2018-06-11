@@ -94,6 +94,8 @@ public class CgSettings {
 	public int TagIconSize;
 	public int DialogIconSize;
 	public int MapIconSize;
+	public int CurveButtonsIconSize;
+	
 	
 	
 	
@@ -156,6 +158,7 @@ public class CgSettings {
 		MenuIconSize=20;
 		TagIconSize=16;
 		DialogIconSize=20;
+		CurveButtonsIconSize=32;
 	}
 
 

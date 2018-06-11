@@ -94,6 +94,7 @@ import java.util.StringTokenizer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -274,6 +275,10 @@ public class frmMain extends javax.swing.JFrame {
 	private JMenuItem mnuCGWebsite;
 
 	private JMenuItem mnuCheckUpdate;
+
+	private JCheckBoxMenuItem mnuReadOnly;
+
+	private JLabel LbReadOnly;
 
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
@@ -526,8 +531,13 @@ public class frmMain extends javax.swing.JFrame {
 		if (Track.data.isEmpty())
 			return;
 
+		//-- Read only? Exit
+		if (Track.ReadOnly) return;
+		
+		//-- Calculation
 		Track.Calculate();
 
+		//-- Refresh
 		RefreshStatusbar(Track);
 
 		CalcClimbResult ccr = new CalcClimbResult();
@@ -935,6 +945,22 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Separator
 		mnuEdit.add(new javax.swing.JPopupMenu.Separator());
 
+		// -- Read only mode
+		mnuReadOnly = new javax.swing.JCheckBoxMenuItem();
+		//mnuReadOnly.setIcon(Utils.getIcon(this,"flag.png",Settings.MenuIconSize));
+		mnuReadOnly.setText(bundle.getString("frmMain.mnuReadOnly.text"));
+		mnuReadOnly.setEnabled(false);
+		mnuReadOnly.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ReadOnly();
+			}
+		});
+		mnuEdit.add(mnuReadOnly);
+
+		// -- Separator
+		mnuEdit.add(new javax.swing.JPopupMenu.Separator());
+
+		
 		// -- Mark the current position
 		mnuMarkPosition = new javax.swing.JMenuItem();
 		mnuMarkPosition.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
@@ -1229,8 +1255,8 @@ public class frmMain extends javax.swing.JFrame {
 		mnuCGSettings.setText(bundle.getString("frmMain.mnuCGSettings.text"));
 		mnuCGSettings.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				frmSettings frm = new frmSettings();
-				frm.showDialog(Settings);
+				frmSettings frm = new frmSettings(Settings);
+				frm.showDialog();
 
 				// -- Refresh data and display
 				SetDefaultFont();
@@ -1813,17 +1839,26 @@ public class frmMain extends javax.swing.JFrame {
 		// --------------------------------------------------------
 		LbModified = new javax.swing.JLabel();
 		LbModified.setIcon(Utils.getIcon(this,"edit.png", Settings.StatusbarIconSize));
-		LbModified.setToolTipText(bundle.getString("frmMain.LbModified.toolTipText")); // Track
-																						// modified
+		LbModified.setToolTipText(bundle.getString("frmMain.LbModified.toolTipText")); 
 		StatusBar.add(LbModified);
 
 		// -- Modified status
 		// --------------------------------------------------------
 		LbModifiedVal = new javax.swing.JLabel();
-		LbModifiedVal.setToolTipText(bundle.getString("frmMain.LbModified.toolTipText")); // Track
-																							// modified
+		LbModifiedVal.setToolTipText(bundle.getString("frmMain.LbModified.toolTipText")); 
 		StatusBar.add(LbModifiedVal);
 
+		// -- Separator
+		StatusBar.add(createStatusbarSeparator());
+
+		//-- Readonly indicator
+		LbReadOnly = new javax.swing.JLabel(" " + bundle.getString("frmMain.LbReadOnly.text") + " ");
+		LbReadOnly.setOpaque(true);
+		LbReadOnly.setBackground(Color.lightGray);
+		LbReadOnly.setForeground(Color.BLACK);
+		LbReadOnly.setVisible(false);
+		StatusBar.add(LbReadOnly);
+				
 		// -- Separator
 		StatusBar.add(createStatusbarSeparator());
 
@@ -2205,8 +2240,8 @@ public class frmMain extends javax.swing.JFrame {
 		if (Track.data.size() <= 0)
 			return;
 
-		frmTrackSettings frm = new frmTrackSettings();
-		if (frm.showDialog(Settings, Track)) {
+		frmTrackSettings frm = new frmTrackSettings(Settings);
+		if (frm.showDialog(Track)) {
 			panelTrackData.refresh();
 			panelProfil.RefreshProfilChart();
 			jPanelTimeDist.Refresh(Track, Settings);
@@ -3099,6 +3134,22 @@ public class frmMain extends javax.swing.JFrame {
 		this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
 
+	
+	/**
+	 * Called by the Read only menu item 
+	 */
+	private void ReadOnly() {
+		if (Track==null) return;
+		
+		//-- Invert the status
+		Track.ReadOnly = !Track.ReadOnly;
+		
+		//-- Refresh the menu item
+		mnuReadOnly.setSelected(Track.ReadOnly);
+		
+		//-- Refresh the statusbar
+		RefreshStatusbar(Track);
+	}
 
 	// private void btTestActionPerformed(java.awt.event.ActionEvent evt) {
 	// // Bouge la carte de 100 pixel
@@ -3267,6 +3318,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuExportTagAsWaypoints.setEnabled(isLoaded);
 		mnuCopy.setEnabled(isLoaded);
 		mnuSearchPoint.setEnabled(isLoaded);
+		mnuReadOnly.setEnabled(isLoaded);
 		mnuMarkPosition.setEnabled(isLoaded);
 		mnuGotoNextMark.setEnabled(isLoaded);
 		mnuGotoPrevMark.setEnabled(isLoaded);
@@ -3319,6 +3371,9 @@ public class frmMain extends javax.swing.JFrame {
 		} else {
 			LbModifiedVal.setText(bundle.getString("frmMain.LbModified_Ok.text"));
 		}
+		
+		//-- Read only mode
+		LbReadOnly.setVisible(Track.ReadOnly);
 
 		// -- Calculation
 		if (Track.isCalculated) {
@@ -3519,7 +3574,7 @@ public class frmMain extends javax.swing.JFrame {
 			}
 			s.close();
 		} catch (IOException ex) {
-			ex.printStackTrace(); // for now, simply output it.
+			CgLog.info("No internet connexion to check the update status");
 		}
 
 		if (new_version) {

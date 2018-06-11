@@ -182,6 +182,8 @@ public class TrackData {
 	public int TopMargin = 100;
 	/** Show the night and day on the mrb profil **/
 	public boolean bShowNightDay = true;
+	//** Indicate this track is read only mode **/
+	public boolean ReadOnly = false;
 
 	// -- Profil colors
 	public Color clProfil_Simple_Fill = Color.BLACK;
@@ -231,6 +233,8 @@ public class TrackData {
 		DefaultMRBProfilSimpleColor();
 		DefaultMRBProfilRSColor();
 		DefaultMRBProfilSlopeColor();
+		
+		ReadOnly=false;
 	}
 
 
@@ -2589,6 +2593,7 @@ public class TrackData {
 		d.MRBType = MRBType;
 		d.TopMargin = TopMargin;
 		d.bShowNightDay = bShowNightDay;
+		d.ReadOnly = ReadOnly;
 		return d;
 	}
 
