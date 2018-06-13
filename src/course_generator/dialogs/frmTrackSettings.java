@@ -48,6 +48,7 @@ import javax.swing.SpinnerDateModel;
 import org.jdesktop.swingx.JXMonthView;
 import org.joda.time.DateTime;
 
+import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.dialogs.FrmCalcSunriseSunset.ResCalcSunriseSunset;
 import course_generator.settings.CgSettings;
@@ -61,6 +62,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	private boolean ok;
 	private Double timezone;
 	private boolean summertime;
+	private CgSettings settings;
 	private JPanel jPanelButtons;
 	private JButton btCancel;
 	private JButton btOk;
@@ -95,14 +97,15 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	/**
 	 * Creates new form frmSettings
 	 */
-	public frmTrackSettings() {
+	public frmTrackSettings(CgSettings settings) {
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
 	}
 
 
-	public boolean showDialog(CgSettings settings, TrackData track) {
+	public boolean showDialog(TrackData track) {
 		this.track = track;
 		this.timezone = track.TrackTimeZone;
 		this.summertime = track.TrackUseDaylightSaving;
@@ -131,7 +134,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		// -- Show the dialog
 		setVisible(true);
 
-		if (ok) {
+		if (ok && !this.track.ReadOnly) {
 			// Copy fields
 			track.CourseName = tfTrackName.getText();
 			track.Description = tfDescription.getText();
@@ -384,7 +387,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
+		btCancel.setIcon(Utils.getIcon(this,"cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -393,7 +396,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
+		btOk.setIcon(Utils.getIcon(this, "valid.png",settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());

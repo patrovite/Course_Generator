@@ -81,8 +81,24 @@ public class CgSettings {
 	public String previousGPXDirectory;
 	public String previousCGXDirectory;
 	public String previousCSVDirectory;
-
-
+	
+	public String DefaultFontName;
+	public int DefaultFontStyle;
+	public int DefaultFontSize;
+	
+	public int StatusbarIconSize;
+	public int TabIconSize;
+	public int ToolbarIconSize;
+	public int MapToolbarIconSize;
+	public int MenuIconSize;
+	public int TagIconSize;
+	public int DialogIconSize;
+	public int MapIconSize;
+	public int CurveButtonsIconSize;
+	
+	
+	
+	
 	public CgSettings() {
 		int i = 0;
 
@@ -129,6 +145,20 @@ public class CgSettings {
 		offlineMap = true;
 		map = 0;
 		PosFilterAskThreshold = 5;
+		
+		DefaultFontName = "Arial";
+		DefaultFontStyle = 0; //Normal
+		DefaultFontSize = 14;
+		
+		StatusbarIconSize=20;
+		TabIconSize=20;
+		ToolbarIconSize=20;
+		MapToolbarIconSize=20;
+		MapIconSize=32;
+		MenuIconSize=20;
+		TagIconSize=16;
+		DialogIconSize=20;
+		CurveButtonsIconSize=32;
 	}
 
 
@@ -218,6 +248,10 @@ public class CgSettings {
 			Utils.WriteDoubleToXML(writer, "DISTFAR", DistFar);
 			
 			Utils.WriteIntToXML(writer, "POSFILTERASKTHRESHOLD", PosFilterAskThreshold);
+			
+			Utils.WriteStringToXML(writer, "DEFAULTFONTNAME",DefaultFontName);
+			Utils.WriteIntToXML(writer, "DEFAULTFONTSTYLE",DefaultFontStyle);
+			Utils.WriteIntToXML(writer, "DEFAULTFONTSIZE",DefaultFontSize);
 
 			writer.writeEndElement();
 			writer.writeEndDocument();

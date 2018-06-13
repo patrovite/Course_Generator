@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2160"
+   sodipodi:docname="valid.svg"
+   viewBox="0 0 512 512"
+   sodipodi:version="0.32"
+   version="1.0"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:version="0.92.2 2405546, 2018-03-11"
+   width="512"
+   height="512">
+  <defs
+     id="defs2162">
+    <radialGradient
+       id="radialGradient2197"
+       gradientUnits="userSpaceOnUse"
+       cy="15.163"
+       cx="15.891"
+       r="27.545"
+       inkscape:collect="always"
+       gradientTransform="matrix(8.9306214,0,0,8.9600432,10.001984,-441.24403)">
+      <stop
+         id="stop3145"
+         style="stop-color:#ffffff"
+         offset="0" />
+      <stop
+         id="stop3147"
+         style="stop-color:#00f038;stop-opacity:0"
+         offset="1" />
+    </radialGradient>
+    <radialGradient
+       id="radialGradient2199"
+       gradientUnits="userSpaceOnUse"
+       cy="13.585108"
+       cx="-6.4535656"
+       gradientTransform="matrix(-0.71835641,5.8258381,-8.0951225,-0.98592308,225.21654,-314.98621)"
+       r="27.545"
+       inkscape:collect="always"
+       fx="-6.4535656"
+       fy="13.585108">
+      <stop
+         id="stop3179"
+         style="stop-color:#d4ff2a;stop-opacity:1"
+         offset="0" />
+      <stop
+         id="stop3181"
+         style="stop-color:#aad400;stop-opacity:1"
+         offset="1" />
+    </radialGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#666666"
+     inkscape:pageshadow="2"
+     inkscape:window-y="24"
+     pagecolor="#ffffff"
+     inkscape:window-height="1032"
+     inkscape:grid-bbox="true"
+     width="64px"
+     inkscape:zoom="0.6875"
+     inkscape:window-x="0"
+     showgrid="true"
+     borderopacity="1.0"
+     inkscape:current-layer="layer1"
+     inkscape:cx="145.0386"
+     inkscape:cy="180.32579"
+     inkscape:window-width="1920"
+     height="64px"
+     inkscape:pageopacity="0.0"
+     inkscape:document-units="px"
+     inkscape:window-maximized="1" />
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     transform="translate(0,448)">
+    <ellipse
+       cy="-191.99603"
+       cx="256"
+       inkscape:export-xdpi="46.5"
+       inkscape:export-filename="C:\Documents and Settings\xne0096\Desktop\ok.gif"
+       inkscape:export-ydpi="46.5"
+       style="fill:url(#radialGradient2197);stroke-width:0.99849015"
+       id="path3141"
+       rx="246"
+       ry="245.99603" />
+    <ellipse
+       cy="-191.99603"
+       cx="256"
+       inkscape:export-xdpi="46.5"
+       inkscape:export-filename="C:\Documents and Settings\xne0096\Desktop\ok.gif"
+       inkscape:export-ydpi="46.5"
+       style="fill:url(#radialGradient2199);stroke:#88aa00;stroke-width:20;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path2168"
+       rx="246"
+       ry="245.99603" />
+    <path
+       inkscape:connector-curvature="0"
+       d="m 396.8706,-342.16764 c -83.40466,22.44064 -157.6594,89.56577 -172.17584,176.92235 -35.10598,-23.30821 -64.55028,-71.14996 -107.05312,-73.50224 -28.057946,14.60564 -93.323765,52.46582 -38.29011,74.62024 49.23781,38.26267 123.00062,72.724114 134.71752,139.196327 24.05991,22.4764098 55.15888,-9.471754 80.22053,-17.888108 31.07215,-50.29242 -3.82812,-119.582009 26.27805,-173.013799 15.54502,-50.3908 69.94364,-70.78324 100.89952,-107.32865 -0.0269,-13.26403 -12.17306,-22.44958 -24.59655,-19.00612 z"
+       style="fill:#f9f9f9;stroke-width:1.00000012"
+       id="path3167" />
+  </g>
+  <metadata
+     id="metadata15">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>red + green OK, not OK Icons</dc:title>
+        <dc:date>2007-11-06T09:00:17</dc:date>
+        <dc:description>Two circular icons in red and green, indicating success or failure. Can be used as visual confirmation.</dc:description>
+        <dc:source>https://openclipart.org/detail/10940/red-+-green-ok-not-ok-icons-by-tzeeniewheenie-10940</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>TzeenieWheenie</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>cancel</rdf:li>
+            <rdf:li>cross</rdf:li>
+            <rdf:li>icon</rdf:li>
+            <rdf:li>okay</rdf:li>
+            <rdf:li>tick</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

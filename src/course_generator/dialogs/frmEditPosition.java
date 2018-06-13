@@ -33,6 +33,7 @@ import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -137,7 +138,8 @@ public class frmEditPosition extends javax.swing.JDialog {
 	/**
 	 * Creates new form frmSettings
 	 */
-	public frmEditPosition() {
+	public frmEditPosition(CgSettings _settings) {
+		settings = _settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
@@ -174,7 +176,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 		// -- Show the dialog
 		setVisible(true);
 
-		if (ok) {
+		if (ok && !track.ReadOnly) {
 			// Copy fields
 			track.data.get(line).setName(tfName.getText());
 			int tag = 0;
@@ -405,9 +407,8 @@ public class frmEditPosition extends javax.swing.JDialog {
 		Utils.addComponent(panelRight, tfName, 1, line, 10, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
-		lbNameHelp = new javax.swing.JLabel("",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/help_dialog.png")),
-				JLabel.LEFT);
+		lbNameHelp = new javax.swing.JLabel("", Utils.getIcon(this,"help_dialog.png",settings.DialogIconSize), JLabel.LEFT);		
+		
 		lbNameHelp.setToolTipText(bundle.getString("frmEditPosition.lbNameHelp.toolTipText"));
 		Utils.addComponent(panelRight, lbNameHelp, 11, line++, 1, 1, 0, 0, 0, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
@@ -423,9 +424,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 		Utils.addComponent(panelRight, spinElevation, 1, line, 3, 1, 0, 0, 5, 0, 0, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		lbElevationHelp = new javax.swing.JLabel("",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/attention.png")),
-				JLabel.LEFT);
+		lbElevationHelp = new javax.swing.JLabel("",Utils.getIcon(this,"attention.png",settings.DialogIconSize), JLabel.LEFT);
 		lbElevationHelp.setToolTipText(bundle.getString("frmEditPosition.lbElevationHelp.toolTipText"));
 		Utils.addComponent(panelRight, lbElevationHelp, 4, line++, 1, 1, 0, 0, 5, 0, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
@@ -439,7 +438,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		// -- Tag : Mark
 		lbMark = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbMark.Text"), // "Mark position",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/flag.png")), JLabel.LEFT);
+				Utils.getIcon(this,"flag.png",settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelRight, lbMark, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
@@ -449,7 +448,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		// -- Tag : High point
 		lbHighPoint = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbHighPoint.Text"), // "High point",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/high_point.png")),
+				Utils.getIcon(this,"high_point.png",settings.DialogIconSize),
 				JLabel.LEFT);
 		Utils.addComponent(panelRight, lbHighPoint, 1, line, 1, 1, 0, 0, 5, 0, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
@@ -469,8 +468,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		// -- Tag : Low point
 		lbLowPoint = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbLowPoint.Text"), // "Low point",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/low_point.png")),
-				JLabel.LEFT);
+				Utils.getIcon(this,"low_point.png",settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelRight, lbLowPoint, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
@@ -489,7 +487,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		// -- Tag : eat station
 		lbEat = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbEat.Text"), // "Eat station",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/eat.png")), JLabel.LEFT);
+				Utils.getIcon(this,"eat.png",settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelRight, lbEat, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
@@ -508,7 +506,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		// -- Tag : drink station
 		lbDrink = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbDrink.Text"), // "Drink station",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/drink.png")), JLabel.LEFT);
+				Utils.getIcon(this,"drink.png",settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelRight, lbDrink, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
@@ -527,7 +525,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		// -- Tag : Place to see
 		lbPhoto = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbPhoto.Text"), // "Place to see",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/photo.png")), JLabel.LEFT);
+				Utils.getIcon(this,"photo.png",settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelRight, lbPhoto, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
@@ -537,7 +535,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		// -- Tag : note
 		lbNote = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbNote.Text"), // "Note",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/note.png")), JLabel.LEFT);
+				Utils.getIcon(this,"note.png",settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelRight, lbNote, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
@@ -547,7 +545,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		// -- Tag : info
 		lbInfo = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbInfo.Text"), // "Information",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/info.png")), JLabel.LEFT);
+				Utils.getIcon(this,"info.png",settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelRight, lbInfo, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
@@ -557,7 +555,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		// -- Tag : Roadbook
 		lbRoadbook = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbRoadbook.Text"), // "Roadbook",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/roadbook.png")),
+				Utils.getIcon(this,"roadbook.png",settings.DialogIconSize),
 				JLabel.LEFT);
 		Utils.addComponent(panelRight, lbRoadbook, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
@@ -578,7 +576,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 				GridBagConstraints.BOTH);
 
 		lbDiffHelp = new javax.swing.JLabel("",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/help_dialog.png")),
+				Utils.getIcon(this,"help_dialog.png",settings.DialogIconSize),
 				JLabel.LEFT);
 		lbDiffHelp.setToolTipText(bundle.getString("frmEditPosition.lbDiffHelp.toolTipText"));
 		Utils.addComponent(panelRight, lbDiffHelp, 4, line, 1, 1, 0, 0, 5, 0, 0, 5, GridBagConstraints.BASELINE_LEADING,
@@ -586,7 +584,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btVeryEasy = new javax.swing.JButton();
 		btVeryEasy.setOpaque(true);
-		btVeryEasy.setBackground(Color.WHITE);
+		btVeryEasy.setBackground(CgConst.CL_DIFF_VERYEASY); 
 		btVeryEasy.setToolTipText(bundle.getString("frmEditPosition.btVeryEasy.toolTipText"));
 		btVeryEasy.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -598,7 +596,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btEasy = new javax.swing.JButton();
 		btEasy.setOpaque(true);
-		btEasy.setBackground(Color.GREEN);
+		btEasy.setBackground(CgConst.CL_DIFF_EASY); 
 		btEasy.setToolTipText(bundle.getString("frmEditPosition.btEasy.toolTipText"));
 		btEasy.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -610,7 +608,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btAverage = new javax.swing.JButton();
 		btAverage.setOpaque(true);
-		btAverage.setBackground(Color.BLUE);
+		btAverage.setBackground(CgConst.CL_DIFF_AVERAGE); 
 		btAverage.setToolTipText(bundle.getString("frmEditPosition.btAverage.toolTipText"));
 		btAverage.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -622,7 +620,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btHard = new javax.swing.JButton();
 		btHard.setOpaque(true);
-		btHard.setBackground(Color.RED);
+		btHard.setBackground(CgConst.CL_DIFF_HARD); 
 		btHard.setToolTipText(bundle.getString("frmEditPosition.btHard.toolTipText"));
 		btHard.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -634,7 +632,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btVeryHard = new javax.swing.JButton();
 		btVeryHard.setOpaque(true);
-		btVeryHard.setBackground(Color.BLACK);
+		btVeryHard.setBackground(CgConst.CL_DIFF_VERYHARD); 
 		btVeryHard.setToolTipText(bundle.getString("frmEditPosition.btVeryHard.toolTipText"));
 		btVeryHard.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -656,8 +654,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 				GridBagConstraints.BOTH);
 
 		lbCoeffHelp = new javax.swing.JLabel("",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/help_dialog.png")),
-				JLabel.LEFT);
+				Utils.getIcon(this,"help_dialog.png",settings.DialogIconSize),	JLabel.LEFT);
 		lbCoeffHelp.setToolTipText(bundle.getString("frmEditPosition.lbCoeffHelp.toolTipText"));
 		Utils.addComponent(panelRight, lbCoeffHelp, 4, line++, 1, 1, 0, 0, 5, 0, 0, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
@@ -674,8 +671,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		lbRecoveryHelp = new javax.swing.JLabel("",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/help_dialog.png")),
-				JLabel.LEFT);
+				Utils.getIcon(this,"help_dialog.png",settings.DialogIconSize),	JLabel.LEFT);
 		lbRecoveryHelp.setToolTipText(bundle.getString("frmEditPosition.lbRecoveryHelp.toolTipText"));
 		Utils.addComponent(panelRight, lbRecoveryHelp, 4, line++, 1, 1, 0, 0, 5, 0, 0, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
@@ -691,9 +687,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 		Utils.addComponent(panelRight, hsTimelimit, 1, line, 3, 1, 0, 0, 5, 0, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.VERTICAL);
 
-		lbTimelimitHelp = new javax.swing.JLabel("",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/help_dialog.png")),
-				JLabel.LEFT);
+		lbTimelimitHelp = new javax.swing.JLabel("",Utils.getIcon(this,"help_dialog.png",settings.DialogIconSize),	JLabel.LEFT);
 		lbTimelimitHelp.setToolTipText(bundle.getString("frmEditPosition.lbTimelimitHelp.toolTipText"));
 		Utils.addComponent(panelRight, lbTimelimitHelp, 4, line++, 1, 1, 0, 0, 5, 0, 0, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
@@ -709,9 +703,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 		Utils.addComponent(panelRight, hsStation, 1, line, 3, 1, 0, 0, 5, 0, 0, 10, GridBagConstraints.WEST,
 				GridBagConstraints.VERTICAL);
 
-		lbStationHelp = new javax.swing.JLabel("",
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/help_dialog.png")),
-				JLabel.LEFT);
+		lbStationHelp = new javax.swing.JLabel("",Utils.getIcon(this,"help_dialog.png",settings.DialogIconSize),JLabel.LEFT);
 		lbStationHelp.setToolTipText(bundle.getString("frmEditPosition.lbStationHelp.toolTipText"));
 		Utils.addComponent(panelRight, lbStationHelp, 4, line++, 1, 1, 0, 0, 5, 0, 0, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
@@ -735,7 +727,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
+		btCancel.setIcon(Utils.getIcon(this,"cancel.png",settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -744,7 +736,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
+		btOk.setIcon(Utils.getIcon(this,"valid.png",settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());
@@ -764,7 +756,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-
+	
 	private void Refresh() {
 		lbLineVal.setText(String.format(" : %1.0f", data.getNum()));
 		lbLatitudeVal.setText(String.format(" : %1.7f", data.getLatitude()) + "°");

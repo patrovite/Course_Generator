@@ -191,7 +191,7 @@ public class frmAbout extends javax.swing.JDialog {
 
 		// ----------------------------------------------------------------------
 		lbLogo = new javax.swing.JLabel();
-		lbLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/image_logo.png")));
+		lbLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/png/image_logo.png")));
 
 		// ----------------------------------------------------------------------
 		Utils.addComponent(paneGlobal, lbLogo, 0, 0, 1, 4, 0, 1, 0, 0, 0, 0, GridBagConstraints.NORTHWEST,

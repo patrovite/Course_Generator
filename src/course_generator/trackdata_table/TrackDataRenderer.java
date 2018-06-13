@@ -34,6 +34,7 @@ import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
+import course_generator.utils.Utils;
 
 public class TrackDataRenderer extends DefaultTableCellRenderer {
 
@@ -79,7 +80,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 242, 193));
+				setBackground(CgConst.CL_TRACK_TABLE_LAT);
 
 			return this;
 
@@ -96,7 +97,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 242, 193));
+				setBackground(CgConst.CL_TRACK_TABLE_LAT);
 
 			return this;
 
@@ -110,12 +111,12 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 
 			// -- Set the icon next to the elevation value
 			if (slope > 1.0) {
-				setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/up_elev.png")));
+				setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/png/up_elev.png")));
 			} else if (slope < -1.0) {
-				setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/down_elev.png")));
+				setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/png/down_elev.png")));
 			} else
 				setIcon(new javax.swing.ImageIcon(
-						getClass().getResource("/course_generator/images/same_level_elev.png")));
+						getClass().getResource("/course_generator/images/png/same_level_elev.png")));
 
 			// -- Set the color of the background. Color depend of the slope
 			// value
@@ -165,77 +166,68 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 
 			if (cmpt > 0) {
 				// -- Prepare the resulting image
-				BufferedImage combined = new BufferedImage(18 * cmpt, 16, BufferedImage.TYPE_INT_ARGB);
+				BufferedImage combined = new BufferedImage(18 * cmpt, settings.TabIconSize/*16*/, BufferedImage.TYPE_INT_ARGB);
 				Graphics g = combined.getGraphics();
 
 				// Higher point
 				if ((tag & CgConst.TAG_HIGH_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/high_point.png"));
+					ImageIcon image = Utils.getIcon(this,"high_point.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Lower point
 				if ((tag & CgConst.TAG_LOW_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/low_point.png"));
+					ImageIcon image = Utils.getIcon(this,"low_point.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Station
 				if ((tag & CgConst.TAG_EAT_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/eat.png"));
+					ImageIcon image = Utils.getIcon(this,"eat.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Drink
 				if ((tag & CgConst.TAG_WATER_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/drink.png"));
+					ImageIcon image = Utils.getIcon(this,"drink.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Mark
 				if ((tag & CgConst.TAG_MARK) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/flag.png"));
+					ImageIcon image = Utils.getIcon(this,"flag.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Roadbook
 				if ((tag & CgConst.TAG_ROADBOOK) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/roadbook.png"));
+					ImageIcon image = Utils.getIcon(this,"roadbook.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Photo
 				if ((tag & CgConst.TAG_COOL_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/photo.png"));
+					ImageIcon image = Utils.getIcon(this,"photo.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Note
 				if ((tag & CgConst.TAG_NOTE) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/note.png"));
+					ImageIcon image = Utils.getIcon(this,"note.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Info
 				if ((tag & CgConst.TAG_INFO) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/info.png"));
+					ImageIcon image = Utils.getIcon(this,"info.png", settings.TabIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
@@ -283,7 +275,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(221, 255, 155));
+				setBackground(CgConst.CL_TRACK_TABLE_TOTAL);//new Color(221, 255, 155));
 
 			return this;
 
@@ -299,21 +291,15 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			// -- Set the background color
 			Color clDiff = Color.WHITE;
 			if ((diff <= CgConst.DIFF_VERYEASY) && (diff > CgConst.DIFF_EASY)) {
-				clDiff = CgConst.CL_DIFF_VERYEASY; // Color.WHITE; //--
-													// paint in white
+				clDiff = CgConst.CL_DIFF_VERYEASY; 
 			} else if ((diff <= CgConst.DIFF_EASY) && (diff > CgConst.DIFF_AVERAGE)) {
-				clDiff = CgConst.CL_DIFF_EASY; // new Color(170, 212, 0);
-												// //-- Paint in green
+				clDiff = CgConst.CL_DIFF_EASY; 
 			} else if ((diff <= CgConst.DIFF_AVERAGE) && (diff > CgConst.DIFF_HARD)) {
-				clDiff = CgConst.CL_DIFF_AVERAGE; // new Color(85, 153,
-													// 255); //-- Paint in
-													// blue
+				clDiff = CgConst.CL_DIFF_AVERAGE;
 			} else if ((diff <= CgConst.DIFF_HARD) && (diff > CgConst.DIFF_VERYHARD)) {
-				clDiff = CgConst.CL_DIFF_HARD; // new Color(255, 0, 0); //--
-												// Paint in red
+				clDiff = CgConst.CL_DIFF_HARD; 
 			} else if (diff <= CgConst.DIFF_VERYHARD) {
-				clDiff = CgConst.CL_DIFF_VERYHARD; // new Color(77, 77, 77);
-													// //-- Paint in gray
+				clDiff = CgConst.CL_DIFF_VERYHARD;
 			}
 
 			if (isSelected)
@@ -408,13 +394,13 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			setHorizontalAlignment(CENTER);
 
 			// -- Set the background color
-			Color clHour = new Color(221, 255, 155); // Color.LightGreen;
+			Color clHour = CgConst.CL_TRACK_TABLE_HOUR_DAY; //new Color(221, 255, 155); // Color.LightGreen;
 
 			int ts_val = hour.getSecondOfDay();
 			int ts_start = track.StartNightTime.getSecondOfDay();
 			int ts_end = track.EndNightTime.getSecondOfDay();
 			if ((track.bNightCoeff) && ((ts_val > ts_start) || (ts_val < ts_end)))
-				clHour = new Color(0, 128, 255);// 95,158,160); //CadetBlue;
+				clHour = CgConst.CL_TRACK_TABLE_HOUR_NIGHT; //new Color(0, 128, 255);// 95,158,160); //CadetBlue;
 
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
@@ -472,5 +458,6 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 
 		return this;
 	}
+	
 
 }

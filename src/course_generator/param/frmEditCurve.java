@@ -382,7 +382,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		// ===========================================================
 		btOk = new javax.swing.JButton();
 		btOk.setText(bundle.getString("Global.btOk.text"));
-		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
+		btOk.setIcon(Utils.getIcon(this,"valid.png", settings.DialogIconSize));
 		btOk.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				RequestToClose();
@@ -458,7 +458,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		// -- Edit line
 		btEditLine = new javax.swing.JButton();
-		btEditLine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/edit.png")));
+		btEditLine.setIcon(Utils.getIcon(this,"edit.png", settings.DialogIconSize));
 		btEditLine.setToolTipText(bundle.getString("frmEditCurve.btEditLine.toolTipText"));
 		btEditLine.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -472,7 +472,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		// -- Add line
 		btAddLine = new javax.swing.JButton();
-		btAddLine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/add.png")));
+		btAddLine.setIcon(Utils.getIcon(this,"add.png", settings.DialogIconSize));
 		btAddLine.setToolTipText(bundle.getString("frmEditCurve.btAddLine.toolTipText"));
 		btAddLine.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -483,7 +483,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		// -- Delete line
 		btDeleteLine = new javax.swing.JButton();
-		btDeleteLine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/delete.png")));
+		btDeleteLine.setIcon(Utils.getIcon(this,"delete.png",settings.DialogIconSize));
 		btDeleteLine.setToolTipText(bundle.getString("frmEditCurve.btDeleteLine.toolTipText"));
 		btDeleteLine.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -497,7 +497,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		// -- Save edit
 		btSaveEdit = new javax.swing.JButton();
-		btSaveEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/save.png")));
+		btSaveEdit.setIcon(Utils.getIcon(this,"save.png", settings.DialogIconSize));
 		btSaveEdit.setToolTipText(bundle.getString("frmEditCurve.btSaveEdit.toolTipText"));
 		btSaveEdit.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -517,7 +517,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		// -- Cancel edit
 		btCancelEdit = new javax.swing.JButton();
-		btCancelEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
+		btCancelEdit.setIcon(Utils.getIcon(this,"cancel.png",settings.DialogIconSize));
 		btCancelEdit.setToolTipText(bundle.getString("frmEditCurve.btCancelEdit.toolTipText"));
 		btCancelEdit.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -638,8 +638,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		// -- Load curve
 		btLoadCurve = new javax.swing.JButton();
-		btLoadCurve.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chart_curve_open.png")));
+		btLoadCurve.setIcon(Utils.getIcon(this, "chart_curve_open.png", settings.CurveButtonsIconSize));
 		btLoadCurve.setToolTipText(bundle.getString("frmEditCurve.btLoadCurve.toolTipText"));
 		btLoadCurve.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -650,8 +649,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		// -- Edit curve
 		btEditCurve = new javax.swing.JButton();
-		btEditCurve.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chart_curve_edit.png")));
+		btEditCurve.setIcon(Utils.getIcon(this,"chart_curve_edit.png", settings.CurveButtonsIconSize));
 		btEditCurve.setToolTipText(bundle.getString("frmEditCurve.btEditCurve.toolTipText"));
 		btEditCurve.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -665,8 +663,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		// -- Add curve
 		btAddCurve = new javax.swing.JButton();
-		btAddCurve.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chart_curve_add.png")));
+		btAddCurve.setIcon(Utils.getIcon(this,"chart_curve_add.png",settings.CurveButtonsIconSize));
 		btAddCurve.setToolTipText(bundle.getString("frmEditCurve.btAddCurve.toolTipText"));
 		btAddCurve.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -677,8 +674,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		// -- Duplicate curve
 		btDuplicateCurve = new javax.swing.JButton();
-		btDuplicateCurve.setIcon(new javax.swing.ImageIcon(
-				getClass().getResource("/course_generator/images/chart_curve_duplicate.png")));
+		btDuplicateCurve.setIcon(Utils.getIcon(this,"chart_curve_duplicate.png",settings.CurveButtonsIconSize));
 		btDuplicateCurve.setToolTipText(bundle.getString("frmEditCurve.btDuplicateCurve.toolTipText"));
 		btDuplicateCurve.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -689,8 +685,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		// -- Delete curve
 		btDeleteCurve = new javax.swing.JButton();
-		btDeleteCurve.setIcon(
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/chart_curve_delete.png")));
+		btDeleteCurve.setIcon(Utils.getIcon(this,"chart_curve_delete.png",settings.CurveButtonsIconSize));
 		btDeleteCurve.setToolTipText(bundle.getString("frmEditCurve.btDeleteCurve.toolTipText"));
 		btDeleteCurve.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {

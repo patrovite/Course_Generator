@@ -106,16 +106,22 @@ public class CgConst {
 	public static final Color CL_PROFIL_SLOPE_SUP15 = new Color(0xA6, 0x55, 0x00);
 	public static final Color CL_PROFIL_SLOPE_BORDER = new Color(0xA6, 0x55, 0x00);
 
-	public static final Color CL_DIFF_VERYEASY = new Color(255, 255, 255); // -- White
-	public static final Color CL_DIFF_EASY = new Color(170, 212, 0); // -- Green
-	public static final Color CL_DIFF_AVERAGE = new Color(85, 153, 255); // -- Blue
-	public static final Color CL_DIFF_HARD = new Color(255, 0, 0); // -- Red
-	public static final Color CL_DIFF_VERYHARD = new Color(77, 77, 77); // -- Gray
+	public static final Color CL_DIFF_VERYEASY = new Color(188,211,95); //-- Green
+	public static final Color CL_DIFF_EASY = new Color(137,160,44);	//-- Dark green
+	public static final Color CL_DIFF_AVERAGE = new Color(42,127,255); //-- Blue
+	public static final Color CL_DIFF_HARD = new Color(255, 0, 0); //-- Red
+	public static final Color CL_DIFF_VERYHARD = new Color(77, 77, 77); //-- Black
 
-	public static final Color CL_MAP_DIFF_VERYEASY = new Color(0, 255, 0); // -- Green
+	public static final Color CL_MAP_DIFF_VERYEASY = new Color(0, 210, 0); // -- Green
 	public static final Color CL_MAP_DIFF_EASY = new Color(0, 128, 0); // -- Dark Green
-	public static final Color CL_MAP_DIFF_AVERAGE = new Color(0, 0, 255); // -- Blue
+	public static final Color CL_MAP_DIFF_AVERAGE = new Color(0, 0, 210); // -- Blue
 	public static final Color CL_MAP_DIFF_HARD = new Color(255, 0, 0); // -- Red
 	public static final Color CL_MAP_DIFF_VERYHARD = new Color(0, 0, 0); // -- Black
-
+	
+	public static final Color CL_TRACK_TABLE_HOUR_DAY = new Color(221, 255, 155);
+	public static final Color CL_TRACK_TABLE_HOUR_NIGHT = new Color(0, 128, 255);
+	public static final Color CL_TRACK_TABLE_TOTAL = new Color(221,233,175);
+	public static final Color CL_TRACK_TABLE_LAT = new Color(244,238,215);
+	public static final Color CL_TRACK_TABLE_LON = new Color(255, 242, 193);
+	
 }

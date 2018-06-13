@@ -30,6 +30,8 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import course_generator.utils.Utils;
+
 /**
  *
  * @author pierre.delore
@@ -307,8 +309,13 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.DistFar = ManageDouble(1000.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("POSFILTERASKTHRESHOLD")) {
 				Settings.PosFilterAskThreshold = ManageInt(5, ERR_READ_INT);
-			}
-			
+			} else if (qName.equalsIgnoreCase("DEFAULTFONTNAME")) {
+				Settings.DefaultFontName = ManageString();
+			} else if (qName.equalsIgnoreCase("DEFAULTFONTSTYLE")) {
+				Settings.DefaultFontStyle = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("DEFAULTFONTSIZE")) {
+				Settings.DefaultFontSize = ManageInt(14, ERR_READ_INT);
+			}			
 			else if (qName.equalsIgnoreCase("CONFIG")) {
 				level--;
 			}

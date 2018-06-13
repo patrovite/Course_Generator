@@ -29,6 +29,7 @@ import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -38,6 +39,9 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
+import org.jfree.chart.axis.SegmentedTimeline;
+
+import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
@@ -46,6 +50,7 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 	private ResourceBundle bundle;
 	private boolean ok;
 	private int tag;
+	private CgSettings settings;
 
 	private JPanel jPanelButtons;
 	private JButton btCancel;
@@ -74,7 +79,8 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 	/**
 	 * Creates new form frmSettings
 	 */
-	public FrmExportWaypoints() {
+	public FrmExportWaypoints(CgSettings settings) {
+		this.settings=settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
@@ -207,83 +213,83 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 		Utils.addComponent(panelTags, chkHighPt, 0, 0, 1, 1, 0, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 		lbHighPt = new JLabel(bundle.getString("FrmExportWaypoints.chkHighPt.Text"),
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/high_point.png")),
+				Utils.getIcon(this,"high_point.png", settings.DialogIconSize),
 				JLabel.LEFT);
 		Utils.addComponent(panelTags, lbHighPt, 1, 0, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
 		// Low point
 		chkLowPt = new JCheckBox();
-		Utils.addComponent(panelTags, chkLowPt, 0, 1, 1, 1, 0, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelTags, chkLowPt, 0, 1, 1, 1, 0, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 		lbLowPt = new JLabel(bundle.getString("FrmExportWaypoints.chkLowPt.Text"),
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/low_point.png")),
+				Utils.getIcon(this,"low_point.png", settings.DialogIconSize),
 				JLabel.LEFT);
-		Utils.addComponent(panelTags, lbLowPt, 1, 1, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelTags, lbLowPt, 1, 1, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
 		// -- eat station
 		chkEat = new JCheckBox();
-		Utils.addComponent(panelTags, chkEat, 0, 2, 1, 1, 0, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelTags, chkEat, 0, 2, 1, 1, 0, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 		lbEat = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbEat.Text"),
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/eat.png")), JLabel.LEFT);
-		Utils.addComponent(panelTags, lbEat, 1, 2, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+				Utils.getIcon(this,"eat.png", settings.DialogIconSize), JLabel.LEFT);
+		Utils.addComponent(panelTags, lbEat, 1, 2, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
 		// -- drink station
 		chkDrink = new JCheckBox();
-		Utils.addComponent(panelTags, chkDrink, 0, 3, 1, 1, 0, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelTags, chkDrink, 0, 3, 1, 1, 0, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 		lbDrink = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbDrink.Text"),
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/drink.png")), JLabel.LEFT);
-		Utils.addComponent(panelTags, lbDrink, 1, 3, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+				Utils.getIcon(this,"drink.png", settings.DialogIconSize), JLabel.LEFT);
+		Utils.addComponent(panelTags, lbDrink, 1, 3, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
 		// -- mark
 		chkMark = new JCheckBox();
-		Utils.addComponent(panelTags, chkMark, 0, 4, 1, 1, 0, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelTags, chkMark, 0, 4, 1, 1, 0, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 		lbMark = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbMark.Text"),
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/flag.png")), JLabel.LEFT);
-		Utils.addComponent(panelTags, lbMark, 1, 4, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+				Utils.getIcon(this,"flag.png", settings.DialogIconSize), JLabel.LEFT);
+		Utils.addComponent(panelTags, lbMark, 1, 4, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
 		// -- Tag : Place to see
 		chkPhoto = new JCheckBox();
-		Utils.addComponent(panelTags, chkPhoto, 0, 5, 1, 1, 0, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelTags, chkPhoto, 0, 5, 1, 1, 0, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 		lbPhoto = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbPhoto.Text"),
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/photo.png")), JLabel.LEFT);
-		Utils.addComponent(panelTags, lbPhoto, 1, 5, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+				Utils.getIcon(this,"photo.png", settings.DialogIconSize), JLabel.LEFT);
+		Utils.addComponent(panelTags, lbPhoto, 1, 5, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
 		// -- Tag : note
 		chkNote = new JCheckBox();
-		Utils.addComponent(panelTags, chkNote, 0, 6, 1, 1, 0, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelTags, chkNote, 0, 6, 1, 1, 0, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 		lbNote = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbNote.Text"),
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/note.png")), JLabel.LEFT);
-		Utils.addComponent(panelTags, lbNote, 1, 6, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+				Utils.getIcon(this,"note.png", settings.DialogIconSize), JLabel.LEFT);
+		Utils.addComponent(panelTags, lbNote, 1, 6, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
 		// -- Tag : info
 		chkInfo = new JCheckBox();
-		Utils.addComponent(panelTags, chkInfo, 0, 7, 1, 1, 0, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelTags, chkInfo, 0, 7, 1, 1, 0, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 		lbInfo = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbInfo.Text"),
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/info.png")), JLabel.LEFT);
-		Utils.addComponent(panelTags, lbInfo, 1, 7, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
+				Utils.getIcon(this,"info.png", settings.DialogIconSize), JLabel.LEFT);
+		Utils.addComponent(panelTags, lbInfo, 1, 7, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
 		// -- Tag : Roadbook
 		chkRoadbook = new JCheckBox();
-		Utils.addComponent(panelTags, chkRoadbook, 0, 8, 1, 1, 0, 0, 0, 5, 5, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelTags, chkRoadbook, 0, 8, 1, 1, 0, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 		lbRoadbook = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbRoadbook.Text"),
-				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/roadbook.png")),
+				Utils.getIcon(this,"roadbook.png", settings.DialogIconSize),
 				JLabel.LEFT);
-		Utils.addComponent(panelTags, lbRoadbook, 1, 8, 1, 1, 1, 0, 0, 5, 5, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelTags, lbRoadbook, 1, 8, 1, 1, 1, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
 		// == BUTTONS
@@ -294,7 +300,7 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
+		btCancel.setIcon(Utils.getIcon(this,"cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -303,7 +309,7 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
+		btOk.setIcon(Utils.getIcon(this,"valid.png", settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());
@@ -328,4 +334,13 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 		return tag;
 	}
 
+	/**
+	 * Return the icon in the resource library
+	 * @param name name of the icon (ie "distance.png")
+	 * @param size size of the icon (16,24,32,48,64,96,128)
+	 * @return
+	 */
+	//public ImageIcon getIcon(String name, int size) {
+	//	return new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/"+size+"/"+name));
+	//}
 }

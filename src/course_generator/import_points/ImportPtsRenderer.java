@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
+import course_generator.utils.Utils;
 
 public class ImportPtsRenderer extends DefaultTableCellRenderer {
 
@@ -156,72 +157,63 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 
 				// Higher point
 				if ((tag & CgConst.TAG_HIGH_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/high_point.png"));
+					ImageIcon image = Utils.getIcon(this,"high_point.png",settings.DialogIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Lower point
 				if ((tag & CgConst.TAG_LOW_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/low_point.png"));
+					ImageIcon image = Utils.getIcon(this,"low_point.png",settings.DialogIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Station
 				if ((tag & CgConst.TAG_EAT_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/eat.png"));
+					ImageIcon image = Utils.getIcon(this,"eat.png",settings.DialogIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Drink
 				if ((tag & CgConst.TAG_WATER_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/drink.png"));
+					ImageIcon image = Utils.getIcon(this,"drink.png",settings.DialogIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Mark
 				if ((tag & CgConst.TAG_MARK) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/flag.png"));
+					ImageIcon image = Utils.getIcon(this,"flag.png",settings.DialogIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Roadbook
 				if ((tag & CgConst.TAG_ROADBOOK) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/roadbook.png"));
+					ImageIcon image = Utils.getIcon(this,"roadbook.png",settings.DialogIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Photo
 				if ((tag & CgConst.TAG_COOL_PT) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/photo.png"));
+					ImageIcon image = Utils.getIcon(this,"photo.png",settings.DialogIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Note
 				if ((tag & CgConst.TAG_NOTE) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/note.png"));
+					ImageIcon image = Utils.getIcon(this,"note.png",settings.DialogIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
 
 				// Info
 				if ((tag & CgConst.TAG_INFO) != 0) {
-					ImageIcon image = new javax.swing.ImageIcon(
-							getClass().getResource("/course_generator/images/info.png"));
+					ImageIcon image = Utils.getIcon(this,"info.png",settings.DialogIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += 18;
 				}
@@ -272,5 +264,5 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 
 		return this;
 	}
-
+	
 }

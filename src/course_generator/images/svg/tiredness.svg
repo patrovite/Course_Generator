@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg4455"
+   style="enable-background:new"
+   viewBox="0 0 512.00001 512.00002"
+   version="1.0"
+   sodipodi:docname="tiredness.svg"
+   width="512"
+   height="512"
+   inkscape:version="0.92.2 2405546, 2018-03-11">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1032"
+     id="namedview49"
+     showgrid="false"
+     inkscape:zoom="0.82897696"
+     inkscape:cx="-165.32458"
+     inkscape:cy="198.94321"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4455" />
+  <defs
+     id="defs4457">
+    <marker
+       inkscape:stockid="TriangleOutM"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="TriangleOutM"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path1048"
+         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         transform="scale(0.4)" />
+    </marker>
+    <marker
+       inkscape:stockid="TriangleOutL"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="TriangleOutL"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path1045"
+         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         transform="scale(0.8)" />
+    </marker>
+    <filter
+       id="filter5022"
+       y="-0.11555"
+       width="1.3724999"
+       x="-0.18626"
+       height="1.2311">
+      <feGaussianBlur
+         id="feGaussianBlur5024"
+         stdDeviation="17.531555" />
+    </filter>
+    <clipPath
+       id="clipPath5030"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         id="path5032"
+         d="m 290.95,680.93 c 0,0 236.67,-140 202.39,-274.28 C 459.05,272.36 313.34,303.79 290.95,375.22 268.57,303.79 122.86,272.36 88.57,406.65 54.286,540.93 290.95,680.93 290.95,680.93 Z"
+         inkscape:connector-curvature="0"
+         style="fill:#ff0000;fill-rule:evenodd" />
+    </clipPath>
+    <filter
+       id="filter5244"
+       y="-0.19002999"
+       width="1.6231"
+       x="-0.31152999"
+       height="1.3801">
+      <feGaussianBlur
+         id="feGaussianBlur5246"
+         stdDeviation="25.39744" />
+    </filter>
+    <filter
+       id="filter5453"
+       y="-0.25824001"
+       width="1.6371"
+       x="-0.31856"
+       height="1.5165">
+      <feGaussianBlur
+         id="feGaussianBlur5455"
+         stdDeviation="17.570414" />
+    </filter>
+    <filter
+       id="filter5655">
+      <feGaussianBlur
+         id="feGaussianBlur5657"
+         stdDeviation="5.452887" />
+    </filter>
+    <filter
+       id="filter5667">
+      <feGaussianBlur
+         id="feGaussianBlur5669"
+         stdDeviation="0.45611138" />
+    </filter>
+    <radialGradient
+       id="radialGradient5758"
+       gradientUnits="userSpaceOnUse"
+       cy="649.44"
+       cx="220.47"
+       gradientTransform="matrix(1.1506,-1.0304,0.93066,1.0393,-489.71258,72.00438)"
+       r="205.78999">
+      <stop
+         id="stop5288"
+         stop-color="#ffbdbd"
+         offset="0" />
+      <stop
+         id="stop5290"
+         stop-color="#ffb4b4"
+         stop-opacity=".017094"
+         offset="1" />
+    </radialGradient>
+    <linearGradient
+       id="linearGradient5760"
+       y2="445.22"
+       gradientUnits="userSpaceOnUse"
+       y1="423.79001"
+       x2="324.29001"
+       x1="115.71">
+      <stop
+         id="stop5258"
+         stop-color="#d40000"
+         offset="0" />
+      <stop
+         id="stop5260"
+         stop-color="#d40000"
+         stop-opacity="0"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient5762"
+       y2="529.51001"
+       gradientUnits="userSpaceOnUse"
+       y1="453.79001"
+       x2="267.14001"
+       x1="462.85999"
+       gradientTransform="translate(65.977419,-166.10562)">
+      <stop
+         id="stop5250"
+         stop-color="#ff8080"
+         offset="0" />
+      <stop
+         id="stop5252"
+         stop-color="#ff8080"
+         stop-opacity="0"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient5764"
+       y2="633.78998"
+       gradientUnits="userSpaceOnUse"
+       y1="409.51001"
+       x2="291.41"
+       x1="135.71001"
+       gradientTransform="translate(65.977419,-166.10562)">
+      <stop
+         id="stop5271"
+         stop-color="#501616"
+         offset="0" />
+      <stop
+         id="stop5273"
+         stop-color="#501616"
+         stop-opacity="0"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient5766"
+       y2="463.54999"
+       gradientUnits="userSpaceOnUse"
+       y1="339.19"
+       x2="463.13"
+       x1="410.89999">
+      <stop
+         id="stop5617"
+         stop-color="#f4d7d7"
+         offset="0" />
+      <stop
+         id="stop5619"
+         stop-color="#f4d7d7"
+         stop-opacity="0"
+         offset="1" />
+    </linearGradient>
+    <filter
+       id="filter5812"
+       y="-0.11262"
+       width="1.2009"
+       x="-0.10046"
+       height="1.2252001">
+      <feGaussianBlur
+         id="feGaussianBlur5814"
+         stdDeviation="17.227831" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter1142"
+       x="-0.0071504711"
+       width="1.0143009"
+       y="-0.0072502199"
+       height="1.0145004">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.85174187"
+         id="feGaussianBlur1144" />
+    </filter>
+  </defs>
+  <metadata
+     id="metadata46">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>glossy heart</dc:title>
+        <dc:date>2009-01-14T08:20:17</dc:date>
+        <dc:description>A Glossy love / heart symbol. Created in Inkscape. This is an Inkscape SVG</dc:description>
+        <dc:source>http://openclipart.org/detail/21138/glossy-heart-by-kablam-21138</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>kablam</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>clip art</rdf:li>
+            <rdf:li>clipart</rdf:li>
+            <rdf:li>glossy</rdf:li>
+            <rdf:li>heart</rdf:li>
+            <rdf:li>image</rdf:li>
+            <rdf:li>love</rdf:li>
+            <rdf:li>media</rdf:li>
+            <rdf:li>png</rdf:li>
+            <rdf:li>public domain</rdf:li>
+            <rdf:li>svg</rdf:li>
+            <rdf:li>valentines</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <path
+     id="path5277"
+     d="m 222.91826,417.77678 c 0,0 246.29263,-145.69217 210.61886,-285.4318 C 397.85294,-7.4050332 246.21861,25.302862 222.91826,99.637087 199.62832,25.302862 47.993982,-7.4050332 12.309804,132.34498 -23.36813,272.08461 222.91826,417.77678 222.91826,417.77678 Z"
+     inkscape:connector-curvature="0"
+     style="fill:#ff0000;fill-rule:evenodd;stroke-width:10;stroke:#800000;stroke-miterlimit:4;stroke-dasharray:none" />
+  <path
+     id="path5034"
+     d="m 266.5547,121.10136 c 0.49088,0 0.97154,0 0,0 z"
+     inkscape:connector-curvature="0"
+     style="fill:none;stroke:#000000;stroke-width:1.02267325px" />
+  <path
+     id="path5457"
+     transform="matrix(0.41534853,0,0,0.41534853,203.65006,-46.964764)"
+     d="m 388.39,332.39 c -16.46,0 -31.84,4.47 -44.99,12.23 53.5,3.75 95.76,47.53 95.76,100.96 0,18.22 -4.92,35.33 -13.52,50.11 29.62,-13.73 50.14,-43.31 50.14,-77.56 0,-47.32 -39.15,-85.74 -87.39,-85.74 z"
+     inkscape:connector-curvature="0"
+     style="fill:url(#linearGradient5766);filter:url(#filter5655)" />
+  <path
+     style="fill:#999999;fill-opacity:1;stroke:#1a1a1a;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter1142)"
+     d="m 215.81095,223.52464 c 0,0 -26.25173,40.28199 17.24772,72.66784 29.91916,22.27517 60.67644,8.89395 60.67644,8.89395 0,0 18.62817,11.70911 26.34045,19.42519 27.46116,27.47464 41.04865,66.97471 69.12119,93.82433 21.89354,20.93981 56.60051,49.81883 75.49969,50.59663 12.04557,0.49575 27.46091,-12.22009 28.99235,-24.85753 2.52717,-20.85439 -27.24559,-47.87494 -46.38495,-67.24417 -47.24727,-47.81467 -70.77055,-49.01471 -100.3162,-79.91449 -7.85097,-8.2108 -20.02011,-27.5806 -20.02011,-27.5806 0,0 15.94549,-34.43691 -7.34116,-58.12986 -38.66569,-39.3403 -71.49611,-18.8969 -71.49611,-18.8969 0,0 33.301,26.99011 35.24214,40.33677 0.99772,6.85988 -13.00262,23.9572 -26.16098,26.04301 -11.721,1.85798 -41.40047,-35.16417 -41.40047,-35.16417 z"
+     id="path851"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cscaasssacscssc"
+     transform="matrix(1.2300539,0,0,1.2300539,-103.0357,-108.35325)" />
+</svg>

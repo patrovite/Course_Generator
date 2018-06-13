@@ -31,6 +31,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -88,7 +89,8 @@ public class frmFillDiff extends javax.swing.JDialog {
 	/**
 	 * Creates new form frmSettings
 	 */
-	public frmFillDiff() {
+	public frmFillDiff(CgSettings settings) {
+		this.settings=settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
@@ -394,7 +396,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
+		btCancel.setIcon(Utils.getIcon(this,"cancel.png",settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -403,7 +405,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
+		btOk.setIcon(Utils.getIcon(this,"valid.png",settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());
@@ -423,7 +425,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-
+	
 	protected void Refresh() {
 		spinFromLine.setEnabled(rbFromLine.isSelected());
 		spinToLine.setEnabled(rbToLine.isSelected());

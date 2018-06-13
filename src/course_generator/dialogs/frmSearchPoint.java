@@ -73,8 +73,9 @@ public class frmSearchPoint extends javax.swing.JDialog {
 	/**
 	 * Creates new form frmSettings
 	 */
-	public frmSearchPoint() {
+	public frmSearchPoint(CgSettings settings) {
 		super();
+		this.settings=settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
@@ -227,7 +228,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		btSearch = new javax.swing.JButton();
 		btSearch.setFocusable(true);
 		btSearch.setToolTipText(bundle.getString("frmSearchPoint.btSearch.tooltips"));
-		btSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/search.png")));
+		btSearch.setIcon(Utils.getIcon(this, "search.png", settings.DialogIconSize));
 		btSearch.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				SearchPoint();
@@ -289,7 +290,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		btClose = new javax.swing.JButton();
 		btClose.setFocusable(true);
 		btClose.setText(bundle.getString("frmSearchPoint.btClose.text"));
-		btClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
+		btClose.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btClose.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setVisible(false);

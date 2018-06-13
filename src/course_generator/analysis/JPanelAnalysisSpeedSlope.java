@@ -82,8 +82,9 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 	private JButton btSpeedSlopeFilter;
 
 
-	public JPanelAnalysisSpeedSlope() {
+	public JPanelAnalysisSpeedSlope(CgSettings settings) {
 		super();
+		this.settings=settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		datasetSpeedSlopePoint = new XYSeriesCollection();
 		datasetSpeedSlopeLine = new XYSeriesCollection();
@@ -192,8 +193,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		// -- Save
 		// --------------------------------------------------------------
 		btSpeedSlopeSave = new javax.swing.JButton();
-		btSpeedSlopeSave
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/save.png")));
+		btSpeedSlopeSave.setIcon(Utils.getIcon(this, "save.png", settings.ToolbarIconSize));
 		btSpeedSlopeSave.setToolTipText(bundle.getString("JPanelAnalysisSpeedSlope.btSpeedSlopeSave.toolTipText"));
 		btSpeedSlopeSave.setFocusable(false);
 		btSpeedSlopeSave.addActionListener(new java.awt.event.ActionListener() {
@@ -213,8 +213,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		toolBar.add(btSpeedSlopeSave);
 
 		btSpeedSlopeCorr = new javax.swing.JButton();
-		btSpeedSlopeCorr
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/correction.png")));
+		btSpeedSlopeCorr.setIcon(Utils.getIcon(this, "correction.png", settings.ToolbarIconSize));
 		btSpeedSlopeCorr.setToolTipText(bundle.getString("JPanelAnalysisSpeedSlope.btSpeedSlopeCorr.toolTipText"));
 		btSpeedSlopeCorr.setFocusable(false);
 		btSpeedSlopeCorr.addActionListener(new java.awt.event.ActionListener() {
@@ -226,8 +225,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		toolBar.add(btSpeedSlopeCorr);
 
 		btSpeedSlopeFilter = new javax.swing.JButton();
-		btSpeedSlopeFilter
-				.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/speed.png")));
+		btSpeedSlopeFilter.setIcon(Utils.getIcon(this,"speed.png", settings.ToolbarIconSize));
 		btSpeedSlopeFilter.setToolTipText(bundle.getString("JPanelAnalysisSpeedSlope.btSpeedSlopeFilter.toolTipText"));
 		btSpeedSlopeFilter.setFocusable(false);
 		btSpeedSlopeFilter.addActionListener(new java.awt.event.ActionListener() {
