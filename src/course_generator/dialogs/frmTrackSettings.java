@@ -19,6 +19,7 @@
 package course_generator.dialogs;
 
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -38,7 +39,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JRootPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -48,7 +48,6 @@ import javax.swing.SpinnerDateModel;
 import org.jdesktop.swingx.JXMonthView;
 import org.joda.time.DateTime;
 
-import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.dialogs.FrmCalcSunriseSunset.ResCalcSunriseSunset;
 import course_generator.settings.CgSettings;
@@ -67,17 +66,13 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	private JButton btCancel;
 	private JButton btOk;
 	private TrackData track;
-	private CgData data;
 	private JPanel panelTrackName;
 	private JPanel panelDescription;
 	private JPanel panelDateTime;
-	private JPanel panelEstimateTime;
 	private JPanel panelNightEffect;
 	private JTextFieldLimit tfTrackName;
 	private JTextField tfDescription;
-	private JRadioButton rbNightEffect;
 	private JPanel panelElevationEffect;
-	private JRadioButton rbElevationEffect;
 	private JCheckBox chkNightEffect;
 	private JCheckBox chkElevationEffect;
 	private JXMonthView jMonthView;
@@ -330,17 +325,37 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		btCalc = new JButton(bundle.getString("frmTrackSettings.btCalc.text"));
 		btCalc.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
 				if (calcSunriseSunset == null)
-					calcSunriseSunset = new FrmCalcSunriseSunset();
+					calcSunriseSunset = new FrmCalcSunriseSunset(settings);
 
 				ResCalcSunriseSunset res = calcSunriseSunset.showDialog(track.data.get(0).getLongitude(),
 						track.data.get(0).getLatitude(), track.StartTime, track.TrackTimeZone.intValue(),
 						track.TrackUseDaylightSaving);
+
+				setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+
 				if (res.valid) {
 					timezone = Double.valueOf(res.TimeZone);
 					summertime = res.SummerTime;
-					spinEndNightModel.setValue(res.Sunrise);
-					spinStartNightModel.setValue(res.Sunset);
+
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(res.Sunrise.toDate());
+					calendar.add(Calendar.HOUR_OF_DAY, res.TimeZone);
+					if (summertime) {
+						calendar.add(Calendar.HOUR_OF_DAY, 1);
+					}
+
+					spinEndNightModel.setValue(calendar.getTime());
+
+					calendar.setTime(res.Sunset.toDate());
+					calendar.add(Calendar.HOUR_OF_DAY, res.TimeZone);
+					if (summertime) {
+						calendar.add(Calendar.HOUR_OF_DAY, 1);
+					}
+
+					spinStartNightModel.setValue(calendar.getTime());
 				}
 			}
 		});
@@ -371,7 +386,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(Utils.getIcon(this,"cancel.png", settings.DialogIconSize));
+		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -380,7 +395,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(Utils.getIcon(this, "valid.png",settings.DialogIconSize));
+		btOk.setIcon(Utils.getIcon(this, "valid.png", settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());
