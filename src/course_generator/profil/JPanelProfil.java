@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -48,12 +47,12 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYAreaRenderer;
+import org.jfree.chart.ui.RectangleAnchor;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.TextAnchor;
 
 import course_generator.CgData;
 import course_generator.TrackData;
@@ -307,7 +306,7 @@ public class JPanelProfil extends JPanel {
 		// -- Show/Hide profil marker
 		// --------------------------------------------------------------
 		btProfilMarker = new javax.swing.JButton();
-		btProfilMarker.setIcon(Utils.getIcon(this,"profil_marker.png",settings.ToolbarIconSize));
+		btProfilMarker.setIcon(Utils.getIcon(this, "profil_marker.png", settings.ToolbarIconSize));
 		btProfilMarker.setToolTipText(bundle.getString("frmMain.btProfilMarker.toolTipText"));
 		btProfilMarker.setFocusable(false);
 		btProfilMarker.addActionListener(new java.awt.event.ActionListener() {
@@ -427,5 +426,5 @@ public class JPanelProfil extends JPanel {
 	public void setSettings(CgSettings settings) {
 		this.settings = settings;
 	}
-	
+
 }
