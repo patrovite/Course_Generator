@@ -20,7 +20,6 @@ package course_generator.dialogs;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -49,6 +48,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.shredzone.commons.suncalc.SunTimes;
 
+import course_generator.settings.CgSettings;
 import course_generator.utils.CgSpinner;
 import course_generator.utils.Utils;
 import net.iakovlev.timeshape.TimeZoneEngine;
@@ -81,6 +81,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 	private JLabel lbDateVal;
 	private TimeZoneEngine timeZoneEngine;
 	private TimeZone courseStartZone;
+	private CgSettings settings = null;
 
 	public class ResCalcSunriseSunset {
 		DateTime Sunrise;
@@ -93,8 +94,12 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 
 	/**
 	 * Creates new form frmSettings
+	 * 
+	 * @param settings
+	 *            Object containing the settings
 	 */
-	public FrmCalcSunriseSunset() {
+	public FrmCalcSunriseSunset(CgSettings settings) {
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
@@ -210,9 +215,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		});
 
 		// Initialize the time zone engine
-		this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		timeZoneEngine = TimeZoneEngine.initialize();
-		this.setCursor(Cursor.getDefaultCursor());
 
 		// -- Layout
 		// ------------------------------------------------------------
@@ -304,7 +307,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
+		btOk.setIcon(Utils.getIcon(this, "valid.png", settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -313,7 +316,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		});
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
+		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {

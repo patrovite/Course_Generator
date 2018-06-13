@@ -48,7 +48,6 @@ import javax.swing.SpinnerDateModel;
 import org.jdesktop.swingx.JXMonthView;
 import org.joda.time.DateTime;
 
-import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.dialogs.FrmCalcSunriseSunset.ResCalcSunriseSunset;
 import course_generator.settings.CgSettings;
@@ -329,7 +328,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 				if (calcSunriseSunset == null)
-					calcSunriseSunset = new FrmCalcSunriseSunset();
+					calcSunriseSunset = new FrmCalcSunriseSunset(settings);
 
 				ResCalcSunriseSunset res = calcSunriseSunset.showDialog(track.data.get(0).getLongitude(),
 						track.data.get(0).getLatitude(), track.StartTime, track.TrackTimeZone.intValue(),
@@ -387,7 +386,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(Utils.getIcon(this,"cancel.png", settings.DialogIconSize));
+		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -396,7 +395,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(Utils.getIcon(this, "valid.png",settings.DialogIconSize));
+		btOk.setIcon(Utils.getIcon(this, "valid.png", settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());
