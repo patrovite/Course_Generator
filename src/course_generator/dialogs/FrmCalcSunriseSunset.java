@@ -113,8 +113,8 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		long hoursOffsetFromUTC = TimeUnit.MILLISECONDS.toHours(courseStartZone.getRawOffset());
 
 		// Set field
-		lbLongitudeVal.setText(String.format("%10.7f �", longitude));
-		lbLatitudeVal.setText(String.format("%10.7f �", latitude));
+		lbLongitudeVal.setText(String.format("%10.7f°", longitude));
+		lbLatitudeVal.setText(String.format("%10.7f°", latitude));
 		lbSunriseVal.setText("00:00");
 		lbSunsetVal.setText("00:00");
 		spinTimeZone.setValue(hoursOffsetFromUTC);
@@ -261,13 +261,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		spinTimeZone = new CgSpinner(0, -12, 12, 1);
-		spinTimeZone.addChangeListener(new javax.swing.event.ChangeListener() {
-			public void stateChanged(javax.swing.event.ChangeEvent evt) {
-				Calc();
-				Refresh();
-			}
-		});
-
+		spinTimeZone.setEnabled(false);
 		Utils.addComponent(paneGlobal, spinTimeZone, 1, line++, 1, 1, 1, 0, 5, 5, 0, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
@@ -298,12 +292,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		// == Summer time
 		chkSummerTime = new JCheckBox(bundle.getString("FrmCalcSunsetSunset.chkSummerTime.Text"));
 		chkSummerTime.setPreferredSize(new Dimension(50, 25));
-		chkSummerTime.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				Calc();
-				Refresh();
-			}
-		});
+		chkSummerTime.setEnabled(false);
 		Utils.addComponent(paneGlobal, chkSummerTime, 1, line++, 1, 1, 1, 1, 5, 5, 0, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.NONE);
 

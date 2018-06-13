@@ -19,6 +19,7 @@
 package course_generator.dialogs;
 
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -38,7 +39,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JRootPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -47,9 +47,7 @@ import javax.swing.SpinnerDateModel;
 
 import org.jdesktop.swingx.JXMonthView;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
-import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.dialogs.FrmCalcSunriseSunset.ResCalcSunriseSunset;
 import course_generator.settings.CgSettings;
@@ -63,22 +61,17 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	private boolean ok;
 	private Double timezone;
 	private boolean summertime;
-	private CgSettings settings;
 	private JPanel jPanelButtons;
 	private JButton btCancel;
 	private JButton btOk;
 	private TrackData track;
-	private CgData data;
 	private JPanel panelTrackName;
 	private JPanel panelDescription;
 	private JPanel panelDateTime;
-	private JPanel panelEstimateTime;
 	private JPanel panelNightEffect;
 	private JTextFieldLimit tfTrackName;
 	private JTextField tfDescription;
-	private JRadioButton rbNightEffect;
 	private JPanel panelElevationEffect;
-	private JRadioButton rbElevationEffect;
 	private JCheckBox chkNightEffect;
 	private JCheckBox chkElevationEffect;
 	private JXMonthView jMonthView;
@@ -110,7 +103,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 
 
 	public boolean showDialog(CgSettings settings, TrackData track) {
-		this.settings = settings;
 		this.track = track;
 		this.timezone = track.TrackTimeZone;
 		this.summertime = track.TrackUseDaylightSaving;
@@ -331,6 +323,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		btCalc = new JButton(bundle.getString("frmTrackSettings.btCalc.text"));
 		btCalc.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+
 				if (calcSunriseSunset == null)
 					calcSunriseSunset = new FrmCalcSunriseSunset();
 
@@ -338,13 +332,28 @@ public class frmTrackSettings extends javax.swing.JDialog {
 						track.data.get(0).getLatitude(), track.StartTime, track.TrackTimeZone.intValue(),
 						track.TrackUseDaylightSaving);
 
+				setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+
 				if (res.valid) {
 					timezone = Double.valueOf(res.TimeZone);
 					summertime = res.SummerTime;
-					spinEndNightModel
-							.setValue(res.Sunrise.withZone(DateTimeZone.forID("America/Los_Angeles")).toDate());
-					spinStartNightModel
-							.setValue(res.Sunset.withZone(DateTimeZone.forID("America/Los_Angeles")).toDate());
+
+					Calendar calendar = Calendar.getInstance();
+					calendar.setTime(res.Sunrise.toDate());
+					calendar.add(Calendar.HOUR_OF_DAY, res.TimeZone);
+					if (summertime) {
+						calendar.add(Calendar.HOUR_OF_DAY, 1);
+					}
+
+					spinEndNightModel.setValue(calendar.getTime());
+
+					calendar.setTime(res.Sunset.toDate());
+					calendar.add(Calendar.HOUR_OF_DAY, res.TimeZone);
+					if (summertime) {
+						calendar.add(Calendar.HOUR_OF_DAY, 1);
+					}
+
+					spinStartNightModel.setValue(calendar.getTime());
 				}
 			}
 		});
