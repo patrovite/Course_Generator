@@ -150,12 +150,12 @@ public class CgSettings {
 		DefaultFontStyle = 0; //Normal
 		DefaultFontSize = 14;
 		
-		StatusbarIconSize=20;
+		StatusbarIconSize=22;
 		TabIconSize=20;
-		ToolbarIconSize=20;
-		MapToolbarIconSize=20;
+		ToolbarIconSize=22;
+		MapToolbarIconSize=22;
 		MapIconSize=32;
-		MenuIconSize=20;
+		MenuIconSize=22;
 		TagIconSize=16;
 		DialogIconSize=20;
 		CurveButtonsIconSize=32;
@@ -253,6 +253,16 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "DEFAULTFONTSTYLE",DefaultFontStyle);
 			Utils.WriteIntToXML(writer, "DEFAULTFONTSIZE",DefaultFontSize);
 
+			Utils.WriteIntToXML(writer, "STATUSBARICONSIZE",StatusbarIconSize);
+			Utils.WriteIntToXML(writer, "TABICONSIZE",TabIconSize);
+			Utils.WriteIntToXML(writer, "TOOLBARICONSIZE",ToolbarIconSize);
+			Utils.WriteIntToXML(writer, "MAPTOOLBARICONSIZE",MapToolbarIconSize);
+			Utils.WriteIntToXML(writer, "MENUICONSIZE",MenuIconSize);
+			Utils.WriteIntToXML(writer, "TAGICONSIZE",TagIconSize);
+			Utils.WriteIntToXML(writer, "DIALOGICONSIZE",DialogIconSize);
+			Utils.WriteIntToXML(writer, "MAPICONSIZE",MapIconSize);
+			Utils.WriteIntToXML(writer, "CURVEBUTTONSICONSIZE",CurveButtonsIconSize);
+			
 			writer.writeEndElement();
 			writer.writeEndDocument();
 
