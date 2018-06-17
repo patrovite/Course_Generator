@@ -307,7 +307,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private void initComponents() {
 
 		int line = 0;
-		String fontSizeStr[] = { "16","20","22","24","32","64","96","128" };
+		String fontSizeStr[] = { "16 px","20 px","22 px","24 px","32 px","64 px","96 px","128 px" };
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmSettings.title"));
@@ -339,7 +339,11 @@ public class frmSettings extends javax.swing.JDialog {
 		// -- LANGUAGE - String
 		lbLanguage = new javax.swing.JLabel();
 		lbLanguage.setText(bundle.getString("frmSettings.lbLanguage.text"));
-		Utils.addComponent(panelGeneral, lbLanguage, 0, line, 1, 1, 1, 0, 10, 10, 0, 0,
+		Utils.addComponent(panelGeneral, lbLanguage, 
+				0, line, 
+				1, 1, 
+				1, 0, 
+				10, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		cbLanguage = new javax.swing.JComboBox<>();
@@ -354,47 +358,79 @@ public class frmSettings extends javax.swing.JDialog {
 		// -- UNIT - int - Unit
 		lbUnit = new javax.swing.JLabel();
 		lbUnit.setText(bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(panelGeneral, lbUnit, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(panelGeneral, lbUnit, 
+				0, line, 
+				1, 1, 
+				1, 0, 
+				2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		cbUnit = new javax.swing.JComboBox<>();
 		String units[] = { bundle.getString("frmSettings.Units.KmM"), bundle.getString("frmSettings.Units.MilesFeet") };
 		cbUnit.setModel(new javax.swing.DefaultComboBoxModel<>(units));
-		Utils.addComponent(panelGeneral, cbUnit, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(panelGeneral, cbUnit, 
+				1, line++, 
+				1, 1, 
+				0, 0, 
+				2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		// -- Speed/Pace
 		lbSpeed = new javax.swing.JLabel();
 		lbSpeed.setText(bundle.getString("frmSettings.lbSpeed.text"));
-		Utils.addComponent(panelGeneral, lbSpeed, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(panelGeneral, lbSpeed, 
+				0, line, 
+				1, 1, 
+				1, 0, 
+				2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		cbSpeed = new javax.swing.JComboBox<>();
 		String speeddisplay[] = { bundle.getString("frmSettings.SpeedDisplay.Speed"),
 				bundle.getString("frmSettings.SpeedDisplay.Pace") };
 		cbSpeed.setModel(new javax.swing.DefaultComboBoxModel<>(speeddisplay));
-		Utils.addComponent(panelGeneral, cbSpeed, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(panelGeneral, cbSpeed, 
+				1, line++, 
+				1, 1, 
+				0, 0, 
+				2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		// -- Minimum Threshold for asking if PosFilterAskThreshold
 		lbThresholdAsk = new javax.swing.JLabel();
 		lbThresholdAsk.setText(bundle.getString("frmSettings.lbThresholdAsk.Text"));// "Elevation"
-		Utils.addComponent(panelGeneral, lbThresholdAsk, 0, line, 1, 1, 1, 0, 2, 10, 0, 0,
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+		Utils.addComponent(panelGeneral, lbThresholdAsk, 
+				0, line, 
+				1, 1, 
+				1, 0, 
+				2, 10, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		spinThresholdAsk = new CgSpinner(0, 0, 100, 1);
-		Utils.addComponent(panelGeneral, spinThresholdAsk, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10,
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+		Utils.addComponent(panelGeneral, spinThresholdAsk, 
+				1, line++, 
+				1, 1, 
+				0, 0, 
+				2, 5, 0, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		// -- Check for update
 		lbCheck = new javax.swing.JLabel();
 		lbCheck.setText(bundle.getString("frmSettings.lbCheck.text"));
-		Utils.addComponent(panelGeneral, lbCheck, 0, line, 1, 1, 1, 0, 7, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(panelGeneral, lbCheck, 
+				0, line, 
+				1, 1, 
+				1, 1, 
+				7, 10, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		chkCheck = new javax.swing.JCheckBox();
-		Utils.addComponent(panelGeneral, chkCheck, 1, line++, 1, 1, 0, 0, 7, 5, 0, 10,
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(panelGeneral, chkCheck, 
+				1, line++, 
+				1, 1, 
+				0, 1, 
+				7, 5, 0, 10,
+				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
 		addTab(TabbedPaneGlobal, panelGeneral, bundle.getString("frmSettings.TabGeneral.tabTitle"), null);
 
