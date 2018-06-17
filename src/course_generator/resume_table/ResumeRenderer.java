@@ -43,11 +43,14 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 
 		setIcon(null);
 
+		if (data==null) 
+			return this;
+		
 		// Depending of the column number return the rendered label
 		switch (column) {
 		case 0: // N°
 			val = data.getNum();
-
+			
 			// -- Display the value
 			setText(String.format("%1.0f ", val));
 			setHorizontalAlignment(CENTER);
@@ -77,7 +80,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 
 		case 2: // Line
 			val = data.getLine();
-
+			
 			// -- Display the value
 			setText(String.format("%1.0f ", val));
 			setHorizontalAlignment(CENTER);
@@ -296,7 +299,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 
 		case 20: // Comment
 			str = data.getComment();
-
+			
 			// -- Display the value
 			setText(str); // TODO Delete /n
 			setHorizontalAlignment(LEFT);

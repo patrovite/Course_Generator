@@ -2557,7 +2557,23 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Tab - Resume
 		// ------------------------------------------------------
 		PanelResume = new JPanelResume(Resume, Settings);
+		
 		PanelResume.addListener(new JPanelResumeListener() {
+			
+			@Override
+			public void doubleClickEvent() {
+				BackupInCGX();
+				frmEditPosition frm = new frmEditPosition(Settings);
+				if (frm.showDialog(Settings, Track, PanelResume.getDataTrackLine())) {
+					Track.isModified = true;
+					panelTrackData.refresh();
+					panelProfil.RefreshProfilChart();
+					Track.CheckTimeLimit();
+					panelMap.RefreshTrack(Track, false);
+					RefreshStatusbar(Track);
+				}
+			}
+
 			@Override
 			public void lineChangeEvent() {
 				SelectPositionFromResume(PanelResume.getSelectedLine());

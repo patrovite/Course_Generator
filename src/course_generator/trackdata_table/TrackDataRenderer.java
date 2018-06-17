@@ -129,15 +129,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 				setIcon(Utils.getIcon(this, "down_elev.png", settings.TagIconSize));
 			} else
 				setIcon(Utils.getIcon(this, "same_level_elev.png", settings.TagIconSize));
-			/*
-			if (slope > 1.0) {
-				setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/png/up_elev.png")));
-			} else if (slope < -1.0) {
-				setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/png/down_elev.png")));
-			} else
-				setIcon(new javax.swing.ImageIcon(
-						getClass().getResource("/course_generator/images/png/same_level_elev.png")));
-			*/
+
 			// -- Set the color of the background. Color depend of the slope
 			// value
 			float tmpslope = slope.floatValue();
