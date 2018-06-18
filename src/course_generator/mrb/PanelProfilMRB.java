@@ -656,8 +656,8 @@ public class PanelProfilMRB extends JPanel {
 		}
 
 		// -- Copyright --
-		//Image img = Toolkit.getDefaultToolkit()
-		//		.getImage(getClass().getResource("/course_generator/images/copyright.png"));
+		// Image img = Toolkit.getDefaultToolkit()
+		// .getImage(getClass().getResource("/course_generator/images/copyright.png"));
 		Image img = getIcon("copyright.png");
 		g2d.drawImage(img, width - 15, (height - offy - img.getHeight(null)) / 2, this);
 
@@ -932,7 +932,7 @@ public class PanelProfilMRB extends JPanel {
 			avrSlope += Math.abs(r.getSlope());
 			nbSlope++;
 
-			if ((xCurvePts[2] - xCurvePts[0]) > track.CurveFilter) // Filtre
+			if ((xCurvePts[2] - xCurvePts[0]) >= track.CurveFilter) // Filtre
 			{
 				double avr = avrSlope / nbSlope;
 				if (avr < 5.0)
@@ -1023,7 +1023,7 @@ public class PanelProfilMRB extends JPanel {
 		try {
 			ImageIO.write(image, "png", new File(filename));
 		} catch (IOException ex) {
-			CgLog.error("PanelProfilMRB.save : Impossible to save the profil image");
+			CgLog.error("PanelProfilMRB.save : Impossible to save the profile image");
 			System.out.println(ex.getMessage());
 		}
 		// -- Enable Highlight of the current box
@@ -1062,11 +1062,10 @@ public class PanelProfilMRB extends JPanel {
 		SelLine = selLine;
 		repaint();
 	}
-	
-	private Image getIcon(String name) {
-		return Toolkit.getDefaultToolkit().getImage(getClass().getResource("/course_generator/images/old/"+name));
-	}
 
-	
+
+	private Image getIcon(String name) {
+		return Toolkit.getDefaultToolkit().getImage(getClass().getResource("/course_generator/images/old/" + name));
+	}
 
 }
