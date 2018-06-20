@@ -28,14 +28,14 @@
  * This will allow to have the anti aliasing for the font.
  *  
  * Used libraries:
- *  - Joda-time - http://www.joda.org/joda-time/
- *  - SwingX - LGPL 2.1 - https://swingx.java.net/
- *  - JMapViewer - GPL - http://wiki.openstreetmap.org/wiki/JMapViewer
+ *  - Commons-Suncalc - Apache License 2.0 - https://shredzone.org/maven/commons-suncalc/index.html
  *  - jcommon - LGPL - http://www.jfree.org/jcommon/
  *  - jfreechart - LGPL - http://www.jfree.org/index.html
+ *  - Joda-time - http://www.joda.org/joda-time/
+ *  - JXMapViewer2 - LGPL - https://wiki.openstreetmap.org/wiki/JXMapViewer2
+ *  - SwingX - LGPL 2.1 - https://swingx.java.net/
+ *  - Timeshape - MIT - https://github.com/RomanIakovlev/timeshape
  *  - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf/ 
- *  - SunCalculator - Patrick Kalkman - pkalkie@gmail.com
- *  - Log4j - Apache V2 - https://logging.apache.org/log4j
  *  
  * Copyrights:
  * Maps :
@@ -901,6 +901,8 @@ public class frmMain extends javax.swing.JFrame {
 		mnuCopy = new javax.swing.JMenuItem();
 		// mnuCopy.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C,
 		// java.awt.event.InputEvent.CTRL_MASK));
+		// mnuCopy.setIcon(new
+		// javax.swing.ImageIcon(getClass().getResource("/course_generator/images/copy.png")));
 		mnuCopy.setIcon(Utils.getIcon(this, "copy.png", Settings.MenuIconSize));
 		mnuCopy.setText(bundle.getString("frmMain.mnuCopy.text"));
 		mnuCopy.setEnabled(false);
@@ -930,6 +932,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSearchPoint = new javax.swing.JMenuItem();
 		mnuSearchPoint.setAccelerator(
 				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+		// mnuSearchPoint
+		// .setIcon(new
+		// javax.swing.ImageIcon(getClass().getResource("/course_generator/images/search.png")));
 		mnuSearchPoint.setIcon(Utils.getIcon(this, "search.png", Settings.MenuIconSize));
 		mnuSearchPoint.setText(bundle.getString("frmMain.mnuSearchPoint.text"));
 		mnuSearchPoint.setEnabled(false);
@@ -1726,7 +1731,11 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Total distance - value
 		// ----------------------------------------------------
 		LbInfoTotalDistVal = new javax.swing.JLabel();
-		LbInfoTotalDistVal.setToolTipText(bundle.getString("frmMain.LbInfoTotalDist.toolTipText"));
+		LbInfoTotalDistVal.setToolTipText(bundle.getString("frmMain.LbInfoTotalDist.toolTipText")); // Total
+																									// distance
+																									// of
+																									// the
+																									// track
 		StatusBar.add(LbInfoTotalDistVal);
 
 		// -- Separator
@@ -1736,13 +1745,17 @@ public class frmMain extends javax.swing.JFrame {
 		// ------------------------------------------------------
 		LbInfoDp = new javax.swing.JLabel();
 		LbInfoDp.setIcon(Utils.getIcon(this, "dp.png", Settings.StatusbarIconSize));
-		LbInfoDp.setToolTipText(bundle.getString("frmMain.LbInfoDp.toolTipText"));
+		LbInfoDp.setToolTipText(bundle.getString("frmMain.LbInfoDp.toolTipText")); // Total
+																					// ascent
+																					// elevation
 		StatusBar.add(LbInfoDp);
 
 		// -- Ascent value
 		// ------------------------------------------------------
 		LbInfoDpVal = new javax.swing.JLabel();
-		LbInfoDpVal.setToolTipText(bundle.getString("frmMain.LbInfoDp.toolTipText"));
+		LbInfoDpVal.setToolTipText(bundle.getString("frmMain.LbInfoDp.toolTipText")); // Total
+																						// ascent
+																						// elevation
 		StatusBar.add(LbInfoDpVal);
 
 		// -- Separator
@@ -1752,13 +1765,17 @@ public class frmMain extends javax.swing.JFrame {
 		// -----------------------------------------------------
 		LbInfoDm = new javax.swing.JLabel();
 		LbInfoDm.setIcon(Utils.getIcon(this, "dm.png", Settings.StatusbarIconSize));
-		LbInfoDm.setToolTipText(bundle.getString("frmMain.LbInfoDm.toolTipText"));
+		LbInfoDm.setToolTipText(bundle.getString("frmMain.LbInfoDm.toolTipText")); // Total
+																					// descent
+																					// elevation
 		StatusBar.add(LbInfoDm);
 
 		// -- Descent value
 		// -----------------------------------------------------
 		LbInfoDmVal = new javax.swing.JLabel();
-		LbInfoDmVal.setToolTipText(bundle.getString("frmMain.LbInfoDm.toolTipText"));
+		LbInfoDmVal.setToolTipText(bundle.getString("frmMain.LbInfoDm.toolTipText")); // Total
+																						// descent
+																						// elevation
 		StatusBar.add(LbInfoDmVal);
 
 		// -- Separator
@@ -1769,13 +1786,15 @@ public class frmMain extends javax.swing.JFrame {
 		LbInfoTime = new javax.swing.JLabel();
 		LbInfoTime.setIcon(Utils.getIcon(this, "chronometer.png", Settings.StatusbarIconSize));
 
-		LbInfoTime.setToolTipText(bundle.getString("frmMain.LbInfoTime.toolTipText"));
+		LbInfoTime.setToolTipText(bundle.getString("frmMain.LbInfoTime.toolTipText")); // Total
+																						// time
 		StatusBar.add(LbInfoTime);
 
 		// -- Total time value
 		// --------------------------------------------------------
 		LbInfoTimeVal = new javax.swing.JLabel();
-		LbInfoTimeVal.setToolTipText(bundle.getString("frmMain.LbInfoTime.toolTipText"));
+		LbInfoTimeVal.setToolTipText(bundle.getString("frmMain.LbInfoTime.toolTipText")); // Total
+																							// time
 		StatusBar.add(LbInfoTimeVal);
 
 		// -- Separator
@@ -1785,13 +1804,15 @@ public class frmMain extends javax.swing.JFrame {
 		// --------------------------------------------------------
 		LbInfoCurve = new javax.swing.JLabel();
 		LbInfoCurve.setIcon(Utils.getIcon(this, "chart_curve.png", Settings.StatusbarIconSize));
-		LbInfoCurve.setToolTipText(bundle.getString("frmMain.LbInfoCurve.toolTipText"));
+		LbInfoCurve.setToolTipText(bundle.getString("frmMain.LbInfoCurve.toolTipText")); // Selected
+																							// curve
 		StatusBar.add(LbInfoCurve);
 
 		// -- Curve value
 		// --------------------------------------------------------
 		LbInfoCurveVal = new javax.swing.JLabel();
-		LbInfoCurveVal.setToolTipText(bundle.getString("frmMain.LbInfoCurve.toolTipText"));
+		LbInfoCurveVal.setToolTipText(bundle.getString("frmMain.LbInfoCurve.toolTipText")); // Selected
+																							// curve
 		StatusBar.add(LbInfoCurveVal);
 
 		// -- Separator
@@ -1897,7 +1918,13 @@ public class frmMain extends javax.swing.JFrame {
 		// ----------------------------------------
 		LbInfoMapDirSize = new javax.swing.JLabel();
 		LbInfoMapDirSize.setIcon(Utils.getIcon(this, "world.png", Settings.StatusbarIconSize));
-		LbInfoMapDirSize.setToolTipText(bundle.getString("frmMain.LbInfoMapDirSize.toolTipText"));
+		LbInfoMapDirSize.setToolTipText(bundle.getString("frmMain.LbInfoMapDirSize.toolTipText")); // Size
+																									// of
+																									// maps
+																									// stored
+																									// in
+																									// the
+																									// disk
 		StatusBar.add(LbInfoMapDirSize);
 	}
 
@@ -2510,6 +2537,10 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 
+		// addTab(TabbedPaneMain, panelTrackData,
+		// bundle.getString("frmMain.TabData.tabTitle"),
+		// new
+		// javax.swing.ImageIcon(getClass().getResource("/course_generator/images/satellite16.png")));
 		addTab(TabbedPaneMain, panelTrackData, bundle.getString("frmMain.TabData.tabTitle"),
 				Utils.getIcon(this, "gps.png", Settings.TabIconSize));
 
@@ -2527,12 +2558,20 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 
+		// addTab(TabbedPaneMain, panelProfil,
+		// bundle.getString("frmMain.TabProfil.tabTitle"),
+		// new
+		// javax.swing.ImageIcon(getClass().getResource("/course_generator/images/profil.png")));
 		addTab(TabbedPaneMain, panelProfil, bundle.getString("frmMain.TabProfil.tabTitle"),
 				Utils.getIcon(this, "profil.png", Settings.TabIconSize));
 
 		// -- Tab - Statistic
 		// ---------------------------------------------------
 		panelStatistics = new JPanelStatistics(Settings);
+		// addTab(TabbedPaneMain, panelStatistics,
+		// bundle.getString("frmMain.TabStatistic.tabTitle"),
+		// new
+		// javax.swing.ImageIcon(getClass().getResource("/course_generator/images/stat.png")));
 		addTab(TabbedPaneMain, panelStatistics, bundle.getString("frmMain.TabStatistic.tabTitle"),
 				Utils.getIcon(this, "stat.png", Settings.TabIconSize));
 
@@ -2540,6 +2579,10 @@ public class frmMain extends javax.swing.JFrame {
 		// ----------------------------------------------------
 		jPanelAnalyze = new javax.swing.JPanel();
 		jPanelAnalyze.setLayout(new java.awt.BorderLayout());
+		// addTab(TabbedPaneMain, jPanelAnalyze,
+		// bundle.getString("frmMain.TabAnalyze.tabTitle"),
+		// new
+		// javax.swing.ImageIcon(getClass().getResource("/course_generator/images/search.png")));
 		addTab(TabbedPaneMain, jPanelAnalyze, bundle.getString("frmMain.TabAnalyze.tabTitle"),
 				Utils.getIcon(this, "search.png", Settings.TabIconSize));
 
@@ -2562,29 +2605,16 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Tab - Resume
 		// ------------------------------------------------------
 		PanelResume = new JPanelResume(Resume, Settings);
-
 		PanelResume.addListener(new JPanelResumeListener() {
-
-			@Override
-			public void doubleClickEvent() {
-				BackupInCGX();
-				frmEditPosition frm = new frmEditPosition(Settings);
-				if (frm.showDialog(Settings, Track, PanelResume.getDataTrackLine())) {
-					Track.isModified = true;
-					panelTrackData.refresh();
-					panelProfil.RefreshProfilChart();
-					Track.CheckTimeLimit();
-					panelMap.RefreshTrack(Track, false);
-					RefreshStatusbar(Track);
-				}
-			}
-
-
 			@Override
 			public void lineChangeEvent() {
 				SelectPositionFromResume(PanelResume.getSelectedLine());
 			}
 		});
+		// addTab(TabbedPaneMain, PanelResume,
+		// bundle.getString("frmMain.TabResume.tabTitle"),
+		// new
+		// javax.swing.ImageIcon(getClass().getResource("/course_generator/images/grid.png")));
 		addTab(TabbedPaneMain, PanelResume, bundle.getString("frmMain.TabResume.tabTitle"),
 				Utils.getIcon(this, "grid.png", Settings.TabIconSize));
 
