@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -133,7 +132,7 @@ public class JPanelResume extends JPanel {
 		// -- Save
 		// --------------------------------------------------------------
 		btResumeSave = new javax.swing.JButton();
-		btResumeSave.setIcon(Utils.getIcon(this,"save_csv.png",Settings.ToolbarIconSize));
+		btResumeSave.setIcon(Utils.getIcon(this, "save_csv.png", Settings.ToolbarIconSize));
 		btResumeSave.setToolTipText(bundle.getString("JPanelResume.btResumeSave.toolTipText"));
 		btResumeSave.setFocusable(false);
 		btResumeSave.addActionListener(new java.awt.event.ActionListener() {
@@ -150,7 +149,7 @@ public class JPanelResume extends JPanel {
 		// -- Refresh
 		// --------------------------------------------------------------
 		btRefreshRefresh = new javax.swing.JButton();
-		btRefreshRefresh.setIcon(Utils.getIcon(this,"refresh.png",Settings.ToolbarIconSize));
+		btRefreshRefresh.setIcon(Utils.getIcon(this, "refresh.png", Settings.ToolbarIconSize));
 		btRefreshRefresh.setToolTipText(bundle.getString("JPanelResume.btRefreshRefresh.toolTipText"));
 		btRefreshRefresh.setFocusable(false);
 		btRefreshRefresh.addActionListener(new java.awt.event.ActionListener() {
@@ -307,7 +306,7 @@ public class JPanelResume extends JPanel {
 				dst.setAvgSlopeP(casr.AvrSlopeP);
 				dst.setAvgSlopeM(casr.AvrSlopeM);
 
-				dst.setAvgSpeed(speedResult.getAvrspeed(CgConst.UNIT_METER));
+				dst.setAvgSpeed(Double.valueOf(speedResult.getAvrspeed(CgConst.UNIT_METER, false)));
 
 				dst.setComment(src.getComment());
 

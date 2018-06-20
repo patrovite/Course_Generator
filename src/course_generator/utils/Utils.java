@@ -152,18 +152,22 @@ public class Utils {
 			return "";
 	}
 
+
 	/**
 	 * Return the icon in the resource library
-	 * @param name name of the icon (ie "distance.png")
-	 * @param size size of the icon (16,24,32,48,64,96,128)
+	 * 
+	 * @param name
+	 *            name of the icon (ie "distance.png")
+	 * @param size
+	 *            size of the icon (16,24,32,48,64,96,128)
 	 * @return
 	 */
-	public static ImageIcon getIcon(Component Parent,String name, int size) {
-		return new javax.swing.ImageIcon(Parent.getClass().getResource("/course_generator/images/"+size+"/"+name));
+	public static ImageIcon getIcon(Component Parent, String name, int size) {
+		return new javax.swing.ImageIcon(
+				Parent.getClass().getResource("/course_generator/images/" + size + "/" + name));
 	}
-	
-	
-	
+
+
 	/**
 	 * Parse a string containing a double. The separator can be "." or ","
 	 * 
@@ -483,38 +487,20 @@ public class Utils {
 
 
 	/**
-	 * Calculate the pace from a speed
-	 * 
-	 * @param speed
-	 *            Speed in km/h or miles/h
-	 * @return pace in min/km or min/mile (8.30min/mile =>8.3)
-	 */
-	public static double Speed2Pace(double speed) {
-		if (speed == 0.0)
-			return 0.0;
-
-		double p = 60.0 / speed;
-		double min = (long) p;
-		double sec = (long) ((p - min) * 60);
-		return min + (sec / 100);
-	}
-
-
-	/**
 	 * Calculate the pace from a speed and return the result as a string
 	 * 
 	 * @param speed
 	 *            Speed in km/h or miles/h
-	 * @return pace as string in min/km or min/mile (8.30min/mile =>"8.3")
+	 * @return pace as string in min/km or min/mile (8:30min/mile =>"8:3")
 	 */
-	public static String Speed2PaceString(double speed) {
+	public static String SpeedToPace(double speed) {
 		if (speed == 0.0)
-			return "0.0";
+			return "0:0";
 
 		double p = 60.0 / speed;
 		double min = (long) p;
 		double sec = (p - min) * 60;
-		return String.format("%1.0f.%02.0f", min, sec);
+		return String.format("%1.0f:%02.0f", min, sec);
 	}
 
 

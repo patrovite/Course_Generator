@@ -26,7 +26,6 @@ import java.io.InputStreamReader;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
@@ -89,7 +88,7 @@ public class JPanelStatistics extends JPanel {
 		// -- Save
 		// --------------------------------------------------------------
 		btStatisticSave = new javax.swing.JButton();
-		btStatisticSave.setIcon(Utils.getIcon(this,"save_html.png",settings.ToolbarIconSize));
+		btStatisticSave.setIcon(Utils.getIcon(this, "save_html.png", settings.ToolbarIconSize));
 		btStatisticSave.setToolTipText(bundle.getString("JPanelStastistics.btStatisticSave.toolTipText"));
 		btStatisticSave.setFocusable(false);
 		btStatisticSave.addActionListener(new java.awt.event.ActionListener() {
@@ -106,7 +105,7 @@ public class JPanelStatistics extends JPanel {
 		// -- Refresh
 		// --------------------------------------------------------------
 		btStatisticRefresh = new javax.swing.JButton();
-		btStatisticRefresh.setIcon(Utils.getIcon(this,"refresh.png",settings.ToolbarIconSize));
+		btStatisticRefresh.setIcon(Utils.getIcon(this, "refresh.png", settings.ToolbarIconSize));
 		btStatisticRefresh.setToolTipText(bundle.getString("JPanelStastistics.btStatisticRefresh.toolTipText"));
 		btStatisticRefresh.setFocusable(false);
 		btStatisticRefresh.addActionListener(new java.awt.event.ActionListener() {
@@ -130,6 +129,7 @@ public class JPanelStatistics extends JPanel {
 
 		StringBuilder sb = new StringBuilder();
 		int unit = settings.Unit;
+		boolean isPace = settings.isPace;
 
 		// -- Get current language
 		String lang = Locale.getDefault().toString();
@@ -187,7 +187,7 @@ public class JPanelStatistics extends JPanel {
 		sb = Utils.sbReplace(sb, "@510",
 				String.format("%1.3f " + Utils.uLDist2String(unit), casr.getTotClimbM(unit) / 1000));
 		sb = Utils.sbReplace(sb, "@511",
-				String.format("%1.1f " + Utils.uSpeed2String(unit, false), speedResult.getAvrspeed(unit)));
+				speedResult.getAvrspeed(unit, isPace) + " " + Utils.uSpeed2String(unit, isPace));
 
 		double tmpdbl = (track.getDistRoad(unit) * 100 / track.getTotalDistance(unit));
 		sb = Utils.sbReplace(sb, "@512",
@@ -361,6 +361,5 @@ public class JPanelStatistics extends JPanel {
 	public void setSettings(CgSettings settings) {
 		this.settings = settings;
 	}
-	
 
 }

@@ -790,15 +790,15 @@ public class CgResume {
 	public double getAvgSpeed(int unit, boolean pace) {
 		switch (unit) {
 		case CgConst.UNIT_METER:
-			if (pace)
-				return Utils.Speed2Pace(AvgSpeed);
-			else
-				return AvgSpeed;
+			// if (pace)
+			// return Utils.Speed2Pace(AvgSpeed);
+			// else
+			return AvgSpeed;
 		case CgConst.UNIT_MILES_FEET:
-			if (pace)
-				return Utils.Speed2Pace(Utils.Km2Miles(AvgSpeed));
-			else
-				return Utils.Km2Miles(AvgSpeed);
+			// if (pace)
+			// return Utils.Speed2Pace(Utils.Km2Miles(AvgSpeed));
+			// else
+			return Utils.Km2Miles(AvgSpeed);
 		default:
 			return AvgSpeed;
 		}

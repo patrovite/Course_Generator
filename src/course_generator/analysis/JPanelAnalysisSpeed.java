@@ -234,10 +234,10 @@ public class JPanelAnalysisSpeed extends JPanel {
 		CgData d = track.data.get(i);
 
 		lbSpeedInfoStartSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoStartSpeed.text") + "="
-				+ String.format("%2.1f", startSpeed) + Utils.uSpeed2String(settings.Unit, settings.isPace) + " ");
+				+ Utils.SpeedToPace(startSpeed) + Utils.uSpeed2String(settings.Unit, settings.isPace) + " ");
 
 		lbSpeedInfoEndSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoEndSpeed.text") + "="
-				+ String.format("%2.1f", endSpeed) + Utils.uSpeed2String(settings.Unit, settings.isPace) + " ");
+				+ Utils.SpeedToPace(endSpeed) + Utils.uSpeed2String(settings.Unit, settings.isPace) + " ");
 
 		lbSpeedInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoSpeed.text") + "="
 				+ d.getSpeedString(settings.Unit, true, settings.isPace) + " ");
@@ -273,7 +273,7 @@ public class JPanelAnalysisSpeed extends JPanel {
 		for (int x = 0; x < track.data.size(); x++) {
 			r = track.data.get(x);
 			xAvg += x;
-			yAvg += (r.getSpeed(settings.Unit, settings.isPace) / (100 / r.getDiff())) / (100 / r.getCoeff());
+			yAvg += (r.getSpeed(settings.Unit) / (100 / r.getDiff())) / (100 / r.getCoeff());
 		}
 
 		xAvg = xAvg / track.data.size();
@@ -284,7 +284,7 @@ public class JPanelAnalysisSpeed extends JPanel {
 
 		for (int x = 0; x < track.data.size(); x++) {
 			r = track.data.get(x);
-			v = (r.getSpeed(settings.Unit, settings.isPace) / (100 / r.getDiff())) / (100 / r.getCoeff());
+			v = (r.getSpeed(settings.Unit) / (100 / r.getDiff())) / (100 / r.getCoeff());
 			v1 += (x - xAvg) * (v - yAvg);
 			v2 += Math.pow(x - xAvg, 2);
 		}
@@ -311,7 +311,7 @@ public class JPanelAnalysisSpeed extends JPanel {
 		double cmpt = 0.0;
 		for (CgData d : track.data) {
 			double x = d.getTotal(settings.Unit) / 1000;
-			double y = d.getSpeed(settings.Unit, settings.isPace);
+			double y = d.getSpeed(settings.Unit);
 
 			if (x < 0.001)
 				x = 0;
