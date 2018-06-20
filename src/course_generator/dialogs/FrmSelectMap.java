@@ -42,6 +42,7 @@ import course_generator.utils.Utils;
 public class FrmSelectMap extends javax.swing.JDialog {
 	private ResourceBundle bundle;
 	private boolean ok;
+	private CgSettings settings;
 
 	private JPanel jPanelButtons;
 	private JButton btCancel;
@@ -51,16 +52,11 @@ public class FrmSelectMap extends javax.swing.JDialog {
 	private JRadioButton rbOpenTopoMap;
 	private ButtonGroup groupMap;
 	private JRadioButton rbBingAerialMap;
-	private CgSettings settings = null;
 
 
 	/**
-	 * Creates new form FrmSelectMap
-	 *
-	 * @param settings
-	 *            Object containing the settings
+	 * Creates new form frmSettings
 	 */
-
 	public FrmSelectMap(CgSettings settings) {
 		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");

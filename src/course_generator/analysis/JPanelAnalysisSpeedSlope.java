@@ -204,7 +204,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 				if (datasetSpeedSlopeLine.getSeriesCount() <= 0)
 					return;
 
-				frmSaveSSCurve dlg = new frmSaveSSCurve();
+				frmSaveSSCurve dlg = new frmSaveSSCurve(settings);
 				if (dlg.showDialog()) {
 					SaveCurve(dlg.getName(), dlg.getComment());
 				}

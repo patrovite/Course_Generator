@@ -42,11 +42,13 @@ import course_generator.resume_table.ResumeHeaderRenderer;
 import course_generator.resume_table.ResumeModel;
 import course_generator.resume_table.ResumeRenderer;
 import course_generator.settings.CgSettings;
+import course_generator.trackdata.JPanelTrackDataListener;
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class JPanelResume extends JPanel {
 	private int old_row_resume = -1;
+	private int selectedRow = -1;
 	private TrackData Track = null;
 	private final ResumeModel ModelTableResume;
 	private JTable TableResume;
@@ -80,6 +82,10 @@ public class JPanelResume extends JPanel {
 			hl.lineChangeEvent();
 	}
 
+	public void notifyDoubleClick() {
+		for (JPanelResumeListener hl : listeners)
+			hl.doubleClickEvent();
+	}
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -103,7 +109,13 @@ public class JPanelResume extends JPanel {
 
 		TableResume.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				TableResumeMouseClicked(evt);
+
+				if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() >= 2 && !evt.isConsumed()) {
+					evt.consume();
+					selectedRow = TableResume.rowAtPoint(evt.getPoint());
+					notifyDoubleClick();
+				} else
+					TableResumeMouseClicked(evt);
 			}
 		});
 		TableResume.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -183,12 +195,16 @@ public class JPanelResume extends JPanel {
 		notifyLineChange();
 		// SelectPositionFromResume(row);
 	}
-
+		
 
 	public int getSelectedLine() {
 		return TableResume.getSelectedRow();
 	}
 
+	public int getDataTrackLine() {
+		int p=TableResume.getSelectedRow();
+		return (int) Resume.data.get(p).getLine()-1;
+	}
 
 	// private void SelectPositionFromResume(int row) {
 	// if (Resume.data.size() > 0) {

@@ -18,6 +18,7 @@
 
 package course_generator.settings;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -27,6 +28,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.Icon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -36,6 +38,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
 import org.jfree.ui.FontChooserDialog;
@@ -69,6 +72,29 @@ public class frmSettings extends javax.swing.JDialog {
 	private JLabel lbDefaultFont;
 	private JButton btDefaultFont;
 	private Font DefaultFont;
+	private JTabbedPane TabbedPaneGlobal;
+	private JPanel panelGeneral;
+	private JPanel panelDisplay;
+	private JLabel lbStatusBarIconSize;
+	private JComboBox cbStatusBarIconSize;
+	private JLabel lbTabIconSize;
+	private JComboBox cbTabIconSize;
+	private JLabel lbToolbarIconSize;
+	private JComboBox cbToolbarIconSize;
+	private JLabel lbMapToolbarIconSize;
+	private JComboBox cbMapToolbarIconSize;
+	private JLabel lbMenuIconSize;
+	private JComboBox cbMenuIconSize;
+	private JLabel lbTagIconSize;
+	private JComboBox cbTagIconSize;
+	private JLabel lbDialogIconSize;
+	private JComboBox cbDialogIconSize;
+	private JLabel lbMapIconSize;
+	private JComboBox cbMapIconSize;
+	private JLabel lbCurveButtonsIconSize;
+	private JComboBox cbCurveButtonsIconSize;
+
+	private int fontSize[] = { 16,20,22,24,32,64,96,128 };
 
 
 	/**
@@ -116,6 +142,17 @@ public class frmSettings extends javax.swing.JDialog {
 		//-- Default font
 		DefaultFont = new Font(settings.DefaultFontName, settings.DefaultFontStyle, settings.DefaultFontSize);
 					
+		//-- Icon size
+		cbStatusBarIconSize.setSelectedIndex(FontSize2Index(settings.StatusbarIconSize));		
+		cbTabIconSize.setSelectedIndex(FontSize2Index(settings.TabIconSize));
+		cbToolbarIconSize.setSelectedIndex(FontSize2Index(settings.ToolbarIconSize));
+		cbMapToolbarIconSize.setSelectedIndex(FontSize2Index(settings.MapToolbarIconSize));
+		cbMenuIconSize.setSelectedIndex(FontSize2Index(settings.MenuIconSize));
+		cbTagIconSize.setSelectedIndex(FontSize2Index(settings.TagIconSize));
+		cbDialogIconSize.setSelectedIndex(FontSize2Index(settings.DialogIconSize));
+		cbMapIconSize.setSelectedIndex(FontSize2Index(settings.MapIconSize));
+		cbCurveButtonsIconSize.setSelectedIndex(FontSize2Index(settings.CurveButtonsIconSize));
+
 		// End set field
 		ok = false;
 
@@ -141,8 +178,8 @@ public class frmSettings extends javax.swing.JDialog {
 				settings.Language = "";
 			}
 
-			if (!old_language.equalsIgnoreCase(settings.Language))
-				JOptionPane.showMessageDialog(this, bundle.getString("frmSettings.MsgRestart"));
+			//if (!old_language.equalsIgnoreCase(settings.Language))
+			//	JOptionPane.showMessageDialog(this, bundle.getString("frmSettings.MsgRestart"));
 
 			// -- Units
 			switch (cbUnit.getSelectedIndex()) {
@@ -178,6 +215,42 @@ public class frmSettings extends javax.swing.JDialog {
 			settings.DefaultFontName = DefaultFont.getFontName();
 			settings.DefaultFontStyle = DefaultFont.getStyle();
 			settings.DefaultFontSize = DefaultFont.getSize();
+			
+			//-- Icons size
+
+			int OldStatusbarIconSize	= settings.StatusbarIconSize;		
+			int OldTabIconSize			= settings.TabIconSize;
+			int OldToolbarIconSize		= settings.ToolbarIconSize;
+			int OldMapToolbarIconSize	= settings.MapToolbarIconSize;
+			int OldMenuIconSize			= settings.MenuIconSize;
+			int OldTagIconSize			= settings.TagIconSize;
+			int OldDialogIconSize		= settings.DialogIconSize;
+			int OldMapIconSize			= settings.MapIconSize;
+			int OldCurveButtonsIconSize	= settings.CurveButtonsIconSize;
+
+			settings.StatusbarIconSize = Index2FontSize(cbStatusBarIconSize.getSelectedIndex());		
+			settings.TabIconSize = Index2FontSize(cbTabIconSize.getSelectedIndex());
+			settings.ToolbarIconSize = Index2FontSize(cbToolbarIconSize.getSelectedIndex());
+			settings.MapToolbarIconSize = Index2FontSize(cbMapToolbarIconSize.getSelectedIndex());
+			settings.MenuIconSize = Index2FontSize(cbMenuIconSize.getSelectedIndex());
+			settings.TagIconSize = Index2FontSize(cbTagIconSize.getSelectedIndex());
+			settings.DialogIconSize = Index2FontSize(cbDialogIconSize.getSelectedIndex());
+			settings.MapIconSize = Index2FontSize(cbMapIconSize.getSelectedIndex());
+			settings.CurveButtonsIconSize = Index2FontSize(cbCurveButtonsIconSize.getSelectedIndex());
+
+			if (
+					(!old_language.equalsIgnoreCase(settings.Language))
+					|| (OldStatusbarIconSize		!= settings.StatusbarIconSize)		
+					|| (OldTabIconSize			!= settings.TabIconSize)
+					|| (OldToolbarIconSize		!= settings.ToolbarIconSize)
+					|| (OldMapToolbarIconSize	!= settings.MapToolbarIconSize)
+					|| (OldMenuIconSize			!= settings.MenuIconSize)
+					|| (OldTagIconSize			!= settings.TagIconSize)
+					|| (OldDialogIconSize		!= settings.DialogIconSize)
+					|| (OldMapIconSize			!= settings.MapIconSize)
+					|| (OldCurveButtonsIconSize!= settings.CurveButtonsIconSize)
+			)
+				JOptionPane.showMessageDialog(this, bundle.getString("frmSettings.MsgRestart"));
 		}
 		return ok;
 	}
@@ -234,7 +307,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private void initComponents() {
 
 		int line = 0;
-		// jPanelMainWindowsColor = new javax.swing.JPanel();
+		String fontSizeStr[] = { "16 px","20 px","22 px","24 px","32 px","64 px","96 px","128 px" };
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmSettings.title"));
@@ -245,18 +318,39 @@ public class frmSettings extends javax.swing.JDialog {
 		// ------------------------------------------------------------
 		Container paneGlobal = getContentPane();
 		paneGlobal.setLayout(new GridBagLayout());
+		
+		// -- Tabbed panel
+		// ------------------------------------------------------
+		TabbedPaneGlobal = new javax.swing.JTabbedPane();
+		paneGlobal.add(TabbedPaneGlobal);
+		Utils.addComponent(paneGlobal, TabbedPaneGlobal, 
+				0, 0, 
+				GridBagConstraints.REMAINDER, 1, 
+				0, 1, 
+				10, 0, 0, 0,
+				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
+		//## Tab "General" ##
+		panelGeneral = new JPanel();
+		panelGeneral.setLayout(new GridBagLayout());
+
+		line=0;
+		
 		// -- LANGUAGE - String
 		lbLanguage = new javax.swing.JLabel();
 		lbLanguage.setText(bundle.getString("frmSettings.lbLanguage.text"));
-		Utils.addComponent(paneGlobal, lbLanguage, 0, line, 1, 1, 1, 0, 10, 10, 0, 0,
+		Utils.addComponent(panelGeneral, lbLanguage, 
+				0, line, 
+				1, 1, 
+				1, 0, 
+				10, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		cbLanguage = new javax.swing.JComboBox<>();
 		String language[] = { bundle.getString("frmSettings.LanguageDefault"),
 				bundle.getString("frmSettings.LanguageEN"), bundle.getString("frmSettings.LanguageFR") };
 		cbLanguage.setModel(new javax.swing.DefaultComboBoxModel<>(language));
-		Utils.addComponent(paneGlobal, cbLanguage, 1, line++, 1, 1, 0, 0, 10, 5, 0, 10,
+		Utils.addComponent(panelGeneral, cbLanguage, 1, line++, 1, 1, 0, 0, 10, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		line++;
@@ -264,52 +358,93 @@ public class frmSettings extends javax.swing.JDialog {
 		// -- UNIT - int - Unit
 		lbUnit = new javax.swing.JLabel();
 		lbUnit.setText(bundle.getString("frmSettings.lbUnit.text"));
-		Utils.addComponent(paneGlobal, lbUnit, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(panelGeneral, lbUnit, 
+				0, line, 
+				1, 1, 
+				1, 0, 
+				2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		cbUnit = new javax.swing.JComboBox<>();
 		String units[] = { bundle.getString("frmSettings.Units.KmM"), bundle.getString("frmSettings.Units.MilesFeet") };
 		cbUnit.setModel(new javax.swing.DefaultComboBoxModel<>(units));
-		Utils.addComponent(paneGlobal, cbUnit, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(panelGeneral, cbUnit, 
+				1, line++, 
+				1, 1, 
+				0, 0, 
+				2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		// -- Speed/Pace
 		lbSpeed = new javax.swing.JLabel();
 		lbSpeed.setText(bundle.getString("frmSettings.lbSpeed.text"));
-		Utils.addComponent(paneGlobal, lbSpeed, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(panelGeneral, lbSpeed, 
+				0, line, 
+				1, 1, 
+				1, 0, 
+				2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		cbSpeed = new javax.swing.JComboBox<>();
 		String speeddisplay[] = { bundle.getString("frmSettings.SpeedDisplay.Speed"),
 				bundle.getString("frmSettings.SpeedDisplay.Pace") };
 		cbSpeed.setModel(new javax.swing.DefaultComboBoxModel<>(speeddisplay));
-		Utils.addComponent(paneGlobal, cbSpeed, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(panelGeneral, cbSpeed, 
+				1, line++, 
+				1, 1, 
+				0, 0, 
+				2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		// -- Minimum Threshold for asking if PosFilterAskThreshold
 		lbThresholdAsk = new javax.swing.JLabel();
 		lbThresholdAsk.setText(bundle.getString("frmSettings.lbThresholdAsk.Text"));// "Elevation"
-		Utils.addComponent(paneGlobal, lbThresholdAsk, 0, line, 1, 1, 1, 0, 2, 10, 0, 0,
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+		Utils.addComponent(panelGeneral, lbThresholdAsk, 
+				0, line, 
+				1, 1, 
+				1, 0, 
+				2, 10, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		spinThresholdAsk = new CgSpinner(0, 0, 100, 1);
-		Utils.addComponent(paneGlobal, spinThresholdAsk, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10,
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
+		Utils.addComponent(panelGeneral, spinThresholdAsk, 
+				1, line++, 
+				1, 1, 
+				0, 0, 
+				2, 5, 0, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		// -- Check for update
 		lbCheck = new javax.swing.JLabel();
 		lbCheck.setText(bundle.getString("frmSettings.lbCheck.text"));
-		Utils.addComponent(paneGlobal, lbCheck, 0, line, 1, 1, 1, 0, 7, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(panelGeneral, lbCheck, 
+				0, line, 
+				1, 1, 
+				1, 1, 
+				7, 10, 0, 0, 
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		chkCheck = new javax.swing.JCheckBox();
-		Utils.addComponent(paneGlobal, chkCheck, 1, line++, 1, 1, 0, 0, 7, 5, 0, 10,
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(panelGeneral, chkCheck, 
+				1, line++, 
+				1, 1, 
+				0, 1, 
+				7, 5, 0, 10,
+				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
+
+		addTab(TabbedPaneGlobal, panelGeneral, bundle.getString("frmSettings.TabGeneral.tabTitle"), null);
+
+		
+		//## Tab "Display" ##
+		panelDisplay = new JPanel();
+		panelDisplay.setLayout(new GridBagLayout());
+
+		line=0;
 
 		// -- Default font
 		lbDefaultFont = new javax.swing.JLabel();
 		lbDefaultFont.setText(bundle.getString("frmSettings.lbDefaultFont.text"));
-		Utils.addComponent(paneGlobal, lbDefaultFont, 0, line, 1, 1, 1, 0, 7, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+		Utils.addComponent(panelDisplay, lbDefaultFont, 0, line, 1, 1, 1, 0, 7, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		
@@ -320,9 +455,110 @@ public class frmSettings extends javax.swing.JDialog {
 				ChooseFont();
 			}
 		});
-		Utils.addComponent(paneGlobal, btDefaultFont, 1, line++, 1, 1, 0, 0, 7, 5, 0, 10,
+		Utils.addComponent(panelDisplay, btDefaultFont, 1, line++, 1, 1, 0, 0, 7, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
+		//-- Statusbar icon size
+		lbStatusBarIconSize = new javax.swing.JLabel();
+		lbStatusBarIconSize.setText(bundle.getString("frmSettings.lbStatusbarIconSize.text"));
+		Utils.addComponent(panelDisplay, lbStatusBarIconSize, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		cbStatusBarIconSize = new javax.swing.JComboBox<>();		
+		cbStatusBarIconSize.setModel(new javax.swing.DefaultComboBoxModel<>(fontSizeStr));
+		Utils.addComponent(panelDisplay, cbStatusBarIconSize, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		//-- Tab icon size
+		lbTabIconSize = new javax.swing.JLabel();
+		lbTabIconSize.setText(bundle.getString("frmSettings.lbTabIconSize.text"));
+		Utils.addComponent(panelDisplay, lbTabIconSize, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		cbTabIconSize = new javax.swing.JComboBox<>();		
+		cbTabIconSize.setModel(new javax.swing.DefaultComboBoxModel<>(fontSizeStr));
+		Utils.addComponent(panelDisplay, cbTabIconSize, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
 		
+		//-- Toolbar icon size
+		lbToolbarIconSize = new javax.swing.JLabel();
+		lbToolbarIconSize.setText(bundle.getString("frmSettings.lbToolbarIconSize.text"));
+		Utils.addComponent(panelDisplay, lbToolbarIconSize, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		cbToolbarIconSize = new javax.swing.JComboBox<>();		
+		cbToolbarIconSize.setModel(new javax.swing.DefaultComboBoxModel<>(fontSizeStr));
+		Utils.addComponent(panelDisplay, cbToolbarIconSize, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		//-- Map Toolbar icon size
+		lbMapToolbarIconSize = new javax.swing.JLabel();
+		lbMapToolbarIconSize.setText(bundle.getString("frmSettings.MapToolbarIconSize.text"));
+		Utils.addComponent(panelDisplay, lbMapToolbarIconSize, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		cbMapToolbarIconSize = new javax.swing.JComboBox<>();		
+		cbMapToolbarIconSize.setModel(new javax.swing.DefaultComboBoxModel<>(fontSizeStr));
+		Utils.addComponent(panelDisplay, cbMapToolbarIconSize, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		//-- Menu icon size
+		lbMenuIconSize = new javax.swing.JLabel();
+		lbMenuIconSize.setText(bundle.getString("frmSettings.lbMenuIconSize.text"));
+		Utils.addComponent(panelDisplay, lbMenuIconSize, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		cbMenuIconSize = new javax.swing.JComboBox<>();		
+		cbMenuIconSize.setModel(new javax.swing.DefaultComboBoxModel<>(fontSizeStr));
+		Utils.addComponent(panelDisplay, cbMenuIconSize, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		//-- Tag icon size
+		lbTagIconSize = new javax.swing.JLabel();
+		lbTagIconSize.setText(bundle.getString("frmSettings.lbTagIconSize.text"));
+		Utils.addComponent(panelDisplay, lbTagIconSize, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		cbTagIconSize = new javax.swing.JComboBox<>();		
+		cbTagIconSize.setModel(new javax.swing.DefaultComboBoxModel<>(fontSizeStr));
+		Utils.addComponent(panelDisplay, cbTagIconSize, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		//-- Dialog icon size
+		lbDialogIconSize = new javax.swing.JLabel();
+		lbDialogIconSize.setText(bundle.getString("frmSettings.lbDialogIconSize.text"));
+		Utils.addComponent(panelDisplay, lbDialogIconSize, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		cbDialogIconSize = new javax.swing.JComboBox<>();		
+		cbDialogIconSize.setModel(new javax.swing.DefaultComboBoxModel<>(fontSizeStr));
+		Utils.addComponent(panelDisplay, cbDialogIconSize, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		//-- Map icon size
+		lbMapIconSize = new javax.swing.JLabel();
+		lbMapIconSize.setText(bundle.getString("frmSettings.lbMapIconSize.text"));
+		Utils.addComponent(panelDisplay, lbMapIconSize, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		cbMapIconSize = new javax.swing.JComboBox<>();		
+		cbMapIconSize.setModel(new javax.swing.DefaultComboBoxModel<>(fontSizeStr));
+		Utils.addComponent(panelDisplay, cbMapIconSize, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		//-- Curve buttons icon size
+		lbCurveButtonsIconSize = new javax.swing.JLabel();
+		lbCurveButtonsIconSize.setText(bundle.getString("frmSettings.lbCurveButtonIconSize.text"));
+		Utils.addComponent(panelDisplay, lbCurveButtonsIconSize, 0, line, 1, 1, 1, 0, 2, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		cbCurveButtonsIconSize = new javax.swing.JComboBox<>();		
+		cbCurveButtonsIconSize.setModel(new javax.swing.DefaultComboBoxModel<>(fontSizeStr));
+		Utils.addComponent(panelDisplay, cbCurveButtonsIconSize, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+		
+		addTab(TabbedPaneGlobal, panelDisplay, bundle.getString("frmSettings.TabDisplay.tabTitle"), null);
+
 		
 		// -- Separator
 		// -- NOCONNECTIONONSTARTUP - Boolean -bNoConnectOnStartup
@@ -332,7 +568,7 @@ public class frmSettings extends javax.swing.JDialog {
 		// ===========================================================
 		jPanelButtons = new javax.swing.JPanel();
 		jPanelButtons.setLayout(new FlowLayout());
-		Utils.addComponent(paneGlobal, jPanelButtons, 0, line, GridBagConstraints.REMAINDER, 1, 0, 0, 10, 0, 0, 0,
+		Utils.addComponent(paneGlobal, jPanelButtons, 0, 1, GridBagConstraints.REMAINDER, 1, 0, 0, 10, 0, 0, 0,
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
@@ -373,4 +609,62 @@ public class frmSettings extends javax.swing.JDialog {
 		if (res!=null)
 			DefaultFont = res;
 	}
+
+	/**
+	 * Add a tab to JTabbedPane. The icon is at the left of the text and there some
+	 * space between the icon and the label
+	 * 
+	 * @param tabbedPane
+	 *            JTabbedPane where we want to add the tab
+	 * @param tab
+	 *            Tab to add
+	 * @param title
+	 *            Title of the tab
+	 * @param icon
+	 *            Icon of the tab
+	 */
+	private void addTab(JTabbedPane tabbedPane, Component tab, String title, Icon icon) {
+		tabbedPane.add(tab);
+
+		// Create bespoke component for rendering the tab.
+		javax.swing.JLabel lbl = new javax.swing.JLabel(title);
+		if (icon != null)
+			lbl.setIcon(icon);
+
+		// Add some spacing between text and icon, and position text to the RHS.
+		lbl.setIconTextGap(5);
+		lbl.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+
+		tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
+	}
+
+	
+	/**
+	 * Return the index in the "fontSize" array of the value containing the font size
+	 * @param value Font size
+	 * @return Index in the "fontSize" array
+	 */
+	private int FontSize2Index(int value) {
+		for(int i=0;i<fontSize.length;i++)
+		{
+			if (fontSize[i]==value)
+				return i;
+		}
+		return 0; //Default value if not found
+	}
+
+	
+	/**
+	 * Return the font size corresponding at an index
+	 * @param value index
+	 * @return Font size
+	 */
+	private int Index2FontSize(int value) {
+		if (value>=fontSize.length) 
+			return 16; //Default value if not found
+		
+		return fontSize[value];
+	}
+	
+
 }

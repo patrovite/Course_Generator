@@ -37,12 +37,14 @@ import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
+import course_generator.settings.CgSettings;
 import course_generator.utils.Utils;
 
 public class frmSaveSSCurve extends javax.swing.JDialog {
 	private ResourceBundle bundle;
 	private boolean ok;
-
+	private CgSettings settings;
+	
 	private JPanel jPanelButtons;
 	private JButton btCancel;
 	private JButton btOk;
@@ -56,7 +58,8 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 	/**
 	 * Creates new form frmSettings
 	 */
-	public frmSaveSSCurve() {
+	public frmSaveSSCurve(CgSettings settings) {
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
@@ -173,7 +176,7 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/cancel.png")));
+		btCancel.setIcon(Utils.getIcon(this,"cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,7 +185,7 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/valid.png")));
+		btOk.setIcon(Utils.getIcon(this,"valid.png", settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());

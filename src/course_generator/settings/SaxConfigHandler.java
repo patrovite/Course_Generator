@@ -315,7 +315,28 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.DefaultFontStyle = ManageInt(0, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("DEFAULTFONTSIZE")) {
 				Settings.DefaultFontSize = ManageInt(14, ERR_READ_INT);
+				
+				
+			} else if (qName.equalsIgnoreCase("STATUSBARICONSIZE")) {
+				Settings.StatusbarIconSize = ManageInt(22, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("TABICONSIZE")) {
+				Settings.TabIconSize = ManageInt(20, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("TOOLBARICONSIZE")) {
+				Settings.ToolbarIconSize = ManageInt(20, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("MAPTOOLBARICONSIZE")) {
+				Settings.MapToolbarIconSize = ManageInt(20, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("MENUICONSIZE")) {
+				Settings.MenuIconSize = ManageInt(20, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("TAGICONSIZE")) {
+				Settings.TagIconSize = ManageInt(16, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("DIALOGICONSIZE")) {
+				Settings.DialogIconSize = ManageInt(20, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("MAPICONSIZE")) {
+				Settings.MapIconSize = ManageInt(20, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("CURVEBUTTONSICONSIZE")) {
+				Settings.CurveButtonsIconSize = ManageInt(32, ERR_READ_INT);
 			}			
+			
 			else if (qName.equalsIgnoreCase("CONFIG")) {
 				level--;
 			}
