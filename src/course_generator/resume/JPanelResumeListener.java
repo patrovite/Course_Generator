@@ -19,5 +19,7 @@
 package course_generator.resume;
 
 public interface JPanelResumeListener {
+	void doubleClickEvent();
+	
 	void lineChangeEvent();
 }
