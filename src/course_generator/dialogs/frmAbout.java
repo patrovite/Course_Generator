@@ -100,8 +100,8 @@ public class frmAbout extends javax.swing.JDialog {
 					" - Commons-Suncalc - Apache License 2.0 - https://shredzone.org/maven/commons-suncalc/index.html\n");
 			sb.append(" - jcommon - LGPL - http://www.jfree.org/jcommon\n");
 			sb.append(" - jfreechart - LGPL - http://www.jfree.org/index.html\n");
-			sb.append(" - JXMapViewer2 - LGPL - https://wiki.openstreetmap.org/wiki/JXMapViewer2\n");
 			sb.append(" - Joda-time - http://www.joda.org/joda-time\n");
+			sb.append(" - JXMapViewer2 - LGPL - https://wiki.openstreetmap.org/wiki/JXMapViewer2\n");
 			sb.append(" - SwingX - LGPL 2.1 - https://swingx.java.net\n");
 			sb.append(" - Timeshape - MIT - https://github.com/RomanIakovlev/timeshape\n");
 			sb.append(" - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf\n");
