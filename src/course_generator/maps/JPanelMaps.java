@@ -170,7 +170,7 @@ public class JPanelMaps extends JPanel {
 
 		// -- Add marker
 		btMapAddMarker = new javax.swing.JButton();
-		btMapAddMarker.setIcon(Utils.getIcon(this,"marker.png", Settings.MapToolbarIconSize));
+		btMapAddMarker.setIcon(Utils.getIcon(this, "marker.png", Settings.MapToolbarIconSize));
 		btMapAddMarker.setToolTipText(bundle.getString("frmMain.btMapAddMarker.toolTipText"));
 		btMapAddMarker.setFocusable(false);
 		btMapAddMarker.setEnabled(false);
@@ -183,7 +183,7 @@ public class JPanelMaps extends JPanel {
 
 		// -- Hide marker
 		btMapHideMarker = new javax.swing.JButton();
-		btMapHideMarker.setIcon(Utils.getIcon(this,"hide_marker.png", Settings.MapToolbarIconSize));
+		btMapHideMarker.setIcon(Utils.getIcon(this, "hide_marker.png", Settings.MapToolbarIconSize));
 		btMapHideMarker.setToolTipText(bundle.getString("frmMain.btMapHideMarker.toolTipText"));
 		btMapHideMarker.setFocusable(false);
 		btMapHideMarker.addActionListener(new java.awt.event.ActionListener() {
@@ -198,7 +198,7 @@ public class JPanelMaps extends JPanel {
 
 		// -- Undo
 		btMapUndo = new javax.swing.JButton();
-		btMapUndo.setIcon(Utils.getIcon(this,"undo.png", Settings.MapToolbarIconSize));
+		btMapUndo.setIcon(Utils.getIcon(this, "undo.png", Settings.MapToolbarIconSize));
 		btMapUndo.setToolTipText(bundle.getString("frmMain.btMapUndo.toolTipText"));
 		btMapUndo.setFocusable(false);
 		btMapUndo.addActionListener(new java.awt.event.ActionListener() {
@@ -213,7 +213,7 @@ public class JPanelMaps extends JPanel {
 
 		// -- Track very easy
 		btMapTrackVeryEasy = new javax.swing.JButton();
-		btMapTrackVeryEasy.setIcon(Utils.getIcon(this,"track_very_easy.png", Settings.MapToolbarIconSize));
+		btMapTrackVeryEasy.setIcon(Utils.getIcon(this, "track_very_easy.png", Settings.MapToolbarIconSize));
 		btMapTrackVeryEasy.setToolTipText(bundle.getString("frmMain.btMapTrackVeryEasy.toolTipText"));
 		btMapTrackVeryEasy.setFocusable(false);
 		btMapTrackVeryEasy.addActionListener(new java.awt.event.ActionListener() {
@@ -225,7 +225,7 @@ public class JPanelMaps extends JPanel {
 
 		// -- Track easy
 		btMapTrackEasy = new javax.swing.JButton();
-		btMapTrackEasy.setIcon(Utils.getIcon(this,"track_easy.png", Settings.MapToolbarIconSize));
+		btMapTrackEasy.setIcon(Utils.getIcon(this, "track_easy.png", Settings.MapToolbarIconSize));
 		btMapTrackEasy.setToolTipText(bundle.getString("frmMain.btMapTrackEasy.toolTipText"));
 		btMapTrackEasy.setFocusable(false);
 		btMapTrackEasy.addActionListener(new java.awt.event.ActionListener() {
@@ -237,7 +237,7 @@ public class JPanelMaps extends JPanel {
 
 		// -- Track average
 		btMapTrackAverage = new javax.swing.JButton();
-		btMapTrackAverage.setIcon(Utils.getIcon(this,"track_average.png", Settings.MapToolbarIconSize));
+		btMapTrackAverage.setIcon(Utils.getIcon(this, "track_average.png", Settings.MapToolbarIconSize));
 		btMapTrackAverage.setToolTipText(bundle.getString("frmMain.btMapTrackAverage.toolTipText"));
 		btMapTrackAverage.setFocusable(false);
 		btMapTrackAverage.addActionListener(new java.awt.event.ActionListener() {
@@ -249,7 +249,7 @@ public class JPanelMaps extends JPanel {
 
 		// -- Track hard
 		btMapTrackHard = new javax.swing.JButton();
-		btMapTrackHard.setIcon(Utils.getIcon(this,"track_hard.png", Settings.MapToolbarIconSize));
+		btMapTrackHard.setIcon(Utils.getIcon(this, "track_hard.png", Settings.MapToolbarIconSize));
 		btMapTrackHard.setToolTipText(bundle.getString("frmMain.btMapTrackHard.toolTipText"));
 		btMapTrackHard.setFocusable(false);
 		btMapTrackHard.addActionListener(new java.awt.event.ActionListener() {
@@ -261,7 +261,7 @@ public class JPanelMaps extends JPanel {
 
 		// -- Track average
 		btMapTrackVeryHard = new javax.swing.JButton();
-		btMapTrackVeryHard.setIcon(Utils.getIcon(this,"track_very_hard.png", Settings.MapToolbarIconSize));
+		btMapTrackVeryHard.setIcon(Utils.getIcon(this, "track_very_hard.png", Settings.MapToolbarIconSize));
 		btMapTrackVeryHard.setToolTipText(bundle.getString("frmMain.btMapTrackVeryHard.toolTipText"));
 		btMapTrackVeryHard.setFocusable(false);
 		btMapTrackVeryHard.addActionListener(new java.awt.event.ActionListener() {
@@ -276,7 +276,7 @@ public class JPanelMaps extends JPanel {
 
 		// -- Mark
 		btMapMark = new javax.swing.JButton();
-		btMapMark.setIcon(Utils.getIcon(this,"flag.png", Settings.MapToolbarIconSize));
+		btMapMark.setIcon(Utils.getIcon(this, "flag.png", Settings.MapToolbarIconSize));
 		btMapMark.setToolTipText(bundle.getString("frmMain.btMapMark.toolTipText"));
 		btMapMark.setFocusable(false);
 		btMapMark.setEnabled(false);
@@ -289,7 +289,7 @@ public class JPanelMaps extends JPanel {
 
 		// -- Eat
 		btMapEat = new javax.swing.JButton();
-		btMapEat.setIcon(Utils.getIcon(this,"eat.png", Settings.MapToolbarIconSize));
+		btMapEat.setIcon(Utils.getIcon(this, "eat.png", Settings.MapToolbarIconSize));
 		btMapEat.setToolTipText(bundle.getString("frmMain.btMapEat.toolTipText"));
 		btMapEat.setFocusable(false);
 		btMapEat.setEnabled(false);
@@ -302,7 +302,7 @@ public class JPanelMaps extends JPanel {
 
 		// -- Drink
 		btMapDrink = new javax.swing.JButton();
-		btMapDrink.setIcon(Utils.getIcon(this,"drink.png", Settings.MapToolbarIconSize));
+		btMapDrink.setIcon(Utils.getIcon(this, "drink.png", Settings.MapToolbarIconSize));
 		btMapDrink.setToolTipText(bundle.getString("frmMain.btMapDrink.toolTipText"));
 		btMapDrink.setFocusable(false);
 		btMapDrink.setEnabled(false);
@@ -318,12 +318,12 @@ public class JPanelMaps extends JPanel {
 
 		// -- Select the type of map
 		btMapSelect = new javax.swing.JButton();
-		btMapSelect.setIcon(Utils.getIcon(this,"select_map.png", Settings.MapToolbarIconSize));
+		btMapSelect.setIcon(Utils.getIcon(this, "select_map.png", Settings.MapToolbarIconSize));
 		btMapSelect.setToolTipText(bundle.getString("frmMain.btMapSelect.toolTipText"));
 		btMapSelect.setFocusable(false);
 		btMapSelect.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SelectMap();
+				SelectMap(Settings);
 			}
 		});
 		jToolBarMapViewer.add(btMapSelect);
@@ -453,9 +453,11 @@ public class JPanelMaps extends JPanel {
 			if ((t & CgConst.TAG_WATER_PT) != 0)
 				v = v + 4;
 
-			//if (v != 0)
-			//	MapViewer.addMapMarker(new MapMarkerImg(new Coordinate(r.getLatitude(), r.getLongitude()),
-			//			createImageIcon("/course_generator/images/png/markers_" + v + ".png", "").getImage()));
+			// if (v != 0)
+			// MapViewer.addMapMarker(new MapMarkerImg(new Coordinate(r.getLatitude(),
+			// r.getLongitude()),
+			// createImageIcon("/course_generator/images/png/markers_" + v + ".png",
+			// "").getImage()));
 			if (v != 0)
 				MapViewer.addMapMarker(new MapMarkerImg(new Coordinate(r.getLatitude(), r.getLongitude()),
 						getImage("markers_" + v + ".png", Settings.MapIconSize)));
@@ -465,6 +467,7 @@ public class JPanelMaps extends JPanel {
 
 	/**
 	 * Set the track difficulty
+	 * 
 	 * @param diff
 	 */
 	private void MapTrackDifficulty(double diff) {
@@ -490,7 +493,7 @@ public class JPanelMaps extends JPanel {
 			UndoDiff.clear();
 
 			// -- Fill the table
-			for (int i = start; i <= end-1; i++) {
+			for (int i = start; i <= end - 1; i++) {
 				UndoDiff.add(Track.data.get(i).getDiff());
 				Track.data.get(i).setDiff(diff);
 			}
@@ -662,9 +665,9 @@ public class JPanelMaps extends JPanel {
 	public void RefreshMapMarker(double lat, double lon) {
 		if (MapMarker == null) {
 			// -- Define the current position marker
-			//MapMarker = new MapMarkerImg(new Coordinate(lat, lon),
-			//		createImageIcon("/course_generator/images/marker1.png", "").getImage());
-			MapMarker = new MapMarkerImg(new Coordinate(lat, lon), getImage("marker.png",Settings.MapIconSize));
+			// MapMarker = new MapMarkerImg(new Coordinate(lat, lon),
+			// createImageIcon("/course_generator/images/marker1.png", "").getImage());
+			MapMarker = new MapMarkerImg(new Coordinate(lat, lon), getImage("marker.png", Settings.MapIconSize));
 			MapViewer.addMapMarker(MapMarker);
 		} else {
 			MapMarker.setLat(lat);
@@ -737,9 +740,11 @@ public class JPanelMaps extends JPanel {
 	public void RefreshCurrentPosMarker(double lat, double lon) {
 		if (CurrentPosMarker == null) {
 			// -- Define the current position marker
-			//CurrentPosMarker = new MapMarkerImg(new Coordinate(lat, lon),
-			//		createImageIcon("/course_generator/images/32/current_marker.png", "").getImage());
-			CurrentPosMarker = new MapMarkerImg(new Coordinate(lat, lon), getImage("current_marker.png", Settings.MapIconSize));
+			// CurrentPosMarker = new MapMarkerImg(new Coordinate(lat, lon),
+			// createImageIcon("/course_generator/images/32/current_marker.png",
+			// "").getImage());
+			CurrentPosMarker = new MapMarkerImg(new Coordinate(lat, lon),
+					getImage("current_marker.png", Settings.MapIconSize));
 			MapViewer.addMapMarker(CurrentPosMarker);
 		} else {
 			CurrentPosMarker.setLat(lat);
@@ -765,17 +770,22 @@ public class JPanelMaps extends JPanel {
 	}
 
 
-	private void SelectMap() {
-		FrmSelectMap dlg = new FrmSelectMap();
+	/*
+	 * 
+	 * @param settings Object containing the settings
+	 */
+	private void SelectMap(CgSettings settings) {
+		FrmSelectMap dlg = new FrmSelectMap(settings);
 		int ret = dlg.showDialog(Settings.map);
 		if (ret >= 0) {
 			Settings.map = ret;
 			RefreshMapType();
 		}
 	}
-	
+
+
 	private Image getImage(String name, int size) {
-		return createImageIcon("/course_generator/images/"+size+"/"+name, "").getImage();
+		return createImageIcon("/course_generator/images/" + size + "/" + name, "").getImage();
 	}
-	
+
 }
