@@ -275,7 +275,8 @@ public class JPanelProfil extends JPanel {
 		lbProfilSpeed = new javax.swing.JLabel();
 		lbProfilSpeed.setOpaque(true);
 		lbProfilSpeed.setBackground(Color.WHITE);
-		lbProfilSpeed.setText(" " + bundle.getString("frmMain.lbProfilSpeed.text") + "=0.0km/h ");
+		lbProfilSpeed.setText(" " + bundle.getString("frmMain.lbProfilSpeed.text") + "="
+				+ Utils.FormatSpeed(0.0, settings.Unit, settings.isPace, true));
 		lbProfilSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelProfilInfo, lbProfilSpeed, 2, 1, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
 				GridBagConstraints.BOTH);

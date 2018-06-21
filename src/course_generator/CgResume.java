@@ -787,33 +787,16 @@ public class CgResume {
 	}
 
 
-	public double getAvgSpeed(int unit, boolean pace) {
-		switch (unit) {
-		case CgConst.UNIT_METER:
-			if (pace)
-				return Utils.Speed2Pace(AvgSpeed);
-			else
-				return AvgSpeed;
-		case CgConst.UNIT_MILES_FEET:
-			if (pace)
-				return Utils.Speed2Pace(Utils.Km2Miles(AvgSpeed));
-			else
-				return Utils.Km2Miles(AvgSpeed);
-		default:
-			return AvgSpeed;
-		}
-	}
+	/*
+	 * public double getAvgSpeed(int unit, boolean pace) { switch (unit) { case
+	 * CgConst.UNIT_METER: // if (pace) // return Utils.Speed2Pace(AvgSpeed); //
+	 * else return AvgSpeed; case CgConst.UNIT_MILES_FEET: // if (pace) // return
+	 * Utils.Speed2Pace(Utils.Km2Miles(AvgSpeed)); // else return
+	 * Utils.Km2Miles(AvgSpeed); default: return AvgSpeed; } }
+	 */
 
-
-	public String getAvgSpeedString(int unit, boolean withunit, boolean pace) {
-
-		Double d = getAvgSpeed(unit, pace);
-
-		String s = "";
-		s = String.format("%1.1f ", d);
-		if (withunit)
-			s = s + Utils.uSpeed2String(unit, pace);
-		return s;
+	public String getAvgSpeedString(int unit, boolean withUnit, boolean pace) {
+		return Utils.FormatSpeed(AvgSpeed, unit, pace, withUnit);
 	}
 
 

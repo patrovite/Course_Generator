@@ -150,7 +150,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 				MrbData d = new MrbData(r.getNum(), r.getLatitude(), r.getLongitude(),
 						r.getElevation(CgConst.UNIT_METER), r.getElevationMemo(), r.getTag(),
 						r.getDist(CgConst.UNIT_METER), r.getTotal(CgConst.UNIT_METER), r.getDiff(), r.getCoeff(),
-						r.getRecovery(), r.getSlope(), r.getSpeed(CgConst.UNIT_METER, false),
+						r.getRecovery(), r.getSlope(), r.getSpeed(CgConst.UNIT_METER),
 						r.getdElevation(CgConst.UNIT_METER), r.getTime(), r.getdTime_f(), r.getTimeLimit(), r.getHour(),
 						r.getStation(), r.getName(), r.getComment(), 0, 0, r.FmtLbMiniRoadbook, r.OptionMiniRoadbook,
 						r.VPosMiniRoadbook, r.CommentMiniRoadbook, r.FontSizeMiniRoadbook, 0, 0);
@@ -288,7 +288,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Save as image
 		btSaveAsImage = new javax.swing.JButton();
-		btSaveAsImage.setIcon(Utils.getIcon(this,"save.png", settings.DialogIconSize));
+		btSaveAsImage.setIcon(Utils.getIcon(this, "save.png", settings.DialogIconSize));
 		btSaveAsImage.setToolTipText(bundle.getString("FrmMiniroadbook.btSaveAsImage.toolTipText"));
 		btSaveAsImage.setPreferredSize(new Dimension(btw, bth));
 		btSaveAsImage.setFocusable(false);
@@ -304,7 +304,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Configuration
 		btConfig = new javax.swing.JButton();
-		btConfig.setIcon(Utils.getIcon(this,"setting.png", settings.DialogIconSize));
+		btConfig.setIcon(Utils.getIcon(this, "setting.png", settings.DialogIconSize));
 		btConfig.setToolTipText(bundle.getString("FrmMiniroadbook.btConfig.toolTipText"));
 		btConfig.setPreferredSize(new Dimension(btw, bth));
 		btConfig.setFocusable(false);
@@ -325,7 +325,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Copy format
 		btCopyFormat = new javax.swing.JButton();
-		btCopyFormat.setIcon(Utils.getIcon(this,"pipette.png", settings.DialogIconSize));
+		btCopyFormat.setIcon(Utils.getIcon(this, "pipette.png", settings.DialogIconSize));
 		btCopyFormat.setToolTipText(bundle.getString("FrmMiniroadbook.btCopyFormat.toolTipText"));
 		btCopyFormat.setPreferredSize(new Dimension(btw, bth));
 		btCopyFormat.setFocusable(false);
@@ -338,7 +338,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Paste format
 		btPasteFormat = new javax.swing.JButton();
-		btPasteFormat.setIcon(Utils.getIcon(this,"replicate.png", settings.DialogIconSize));
+		btPasteFormat.setIcon(Utils.getIcon(this, "replicate.png", settings.DialogIconSize));
 		btPasteFormat.setToolTipText(bundle.getString("FrmMiniroadbook.btPasteFormat.toolTipText"));
 		btPasteFormat.setPreferredSize(new Dimension(btw, bth));
 		btPasteFormat.setFocusable(false);
@@ -351,7 +351,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Config format duplication
 		btPasteFormatConfig = new javax.swing.JButton();
-		btPasteFormatConfig.setIcon(Utils.getIcon(this,"replicate_config.png", settings.DialogIconSize));
+		btPasteFormatConfig.setIcon(Utils.getIcon(this, "replicate_config.png", settings.DialogIconSize));
 		btPasteFormatConfig.setToolTipText(bundle.getString("FrmMiniroadbook.btPasteFormatConfig.toolTipText"));
 		btPasteFormatConfig.setPreferredSize(new Dimension(btw, bth));
 		btPasteFormatConfig.setFocusable(false);
@@ -368,7 +368,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Label connected to the bottom of the profil
 		btLabelConnectedToBottom = new javax.swing.JButton();
-		btLabelConnectedToBottom.setIcon(Utils.getIcon(this,"label_to_bottom.png", settings.DialogIconSize));
+		btLabelConnectedToBottom.setIcon(Utils.getIcon(this, "label_to_bottom.png", settings.DialogIconSize));
 		btLabelConnectedToBottom
 				.setToolTipText(bundle.getString("FrmMiniroadbook.btLabelConnectedToBottom.toolTipText"));
 		btLabelConnectedToBottom.setPreferredSize(new Dimension(btw, bth));
@@ -385,7 +385,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Label connected to the top of the profil
 		btLabelConnectedToProfil = new javax.swing.JButton();
-		btLabelConnectedToProfil.setIcon(Utils.getIcon(this,"label_to_profil.png", settings.DialogIconSize));
+		btLabelConnectedToProfil.setIcon(Utils.getIcon(this, "label_to_profil.png", settings.DialogIconSize));
 		btLabelConnectedToProfil
 				.setToolTipText(bundle.getString("FrmMiniroadbook.btLabelConnectedToProfil.toolTipText"));
 		btLabelConnectedToProfil.setPreferredSize(new Dimension(btw, bth));
@@ -405,7 +405,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Night and day highlight
 		btNightAndDayHighlight = new javax.swing.JButton();
-		btNightAndDayHighlight.setIcon(Utils.getIcon(this,"night_day.png", settings.DialogIconSize));
+		btNightAndDayHighlight.setIcon(Utils.getIcon(this, "night_day.png", settings.DialogIconSize));
 		btNightAndDayHighlight.setToolTipText(bundle.getString("FrmMiniroadbook.btNightAndDayHighlight.toolTipText"));
 		btNightAndDayHighlight.setPreferredSize(new Dimension(btw, bth));
 		btNightAndDayHighlight.setFocusable(false);
@@ -440,7 +440,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Memory 1
 		btMemory1 = new javax.swing.JButton();
-		btMemory1.setIcon(Utils.getIcon(this,"favori1.png", settings.DialogIconSize));
+		btMemory1.setIcon(Utils.getIcon(this, "favori1.png", settings.DialogIconSize));
 		btMemory1.setPreferredSize(new Dimension(btw, bth));
 		btMemory1.setFocusable(false);
 		btMemory1.addMouseListener(new MouseAdapter() {
@@ -453,7 +453,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Memory 2
 		btMemory2 = new javax.swing.JButton();
-		btMemory2.setIcon(Utils.getIcon(this,"favori2.png", settings.DialogIconSize));
+		btMemory2.setIcon(Utils.getIcon(this, "favori2.png", settings.DialogIconSize));
 		btMemory2.setPreferredSize(new Dimension(btw, bth));
 		btMemory2.setFocusable(false);
 		btMemory2.addMouseListener(new MouseAdapter() {
@@ -466,7 +466,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Memory 3
 		btMemory3 = new javax.swing.JButton();
-		btMemory3.setIcon(Utils.getIcon(this,"favori3.png", settings.DialogIconSize));
+		btMemory3.setIcon(Utils.getIcon(this, "favori3.png", settings.DialogIconSize));
 		btMemory3.setPreferredSize(new Dimension(btw, bth));
 		btMemory3.setFocusable(false);
 		btMemory3.addMouseListener(new MouseAdapter() {
@@ -479,7 +479,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Memory 4
 		btMemory4 = new javax.swing.JButton();
-		btMemory4.setIcon(Utils.getIcon(this,"favori4.png", settings.DialogIconSize));
+		btMemory4.setIcon(Utils.getIcon(this, "favori4.png", settings.DialogIconSize));
 		btMemory4.setPreferredSize(new Dimension(btw, bth));
 		btMemory4.setFocusable(false);
 		btMemory4.addMouseListener(new MouseAdapter() {
@@ -492,7 +492,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Memory 5
 		btMemory5 = new javax.swing.JButton();
-		btMemory5.setIcon(Utils.getIcon(this,"favori5.png", settings.DialogIconSize));
+		btMemory5.setIcon(Utils.getIcon(this, "favori5.png", settings.DialogIconSize));
 		btMemory5.setPreferredSize(new Dimension(btw, bth));
 		btMemory5.setFocusable(false);
 		btMemory5.addMouseListener(new MouseAdapter() {
