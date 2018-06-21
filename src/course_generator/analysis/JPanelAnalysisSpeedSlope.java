@@ -114,7 +114,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		lbSpeedSlopeInfoSpeed.setOpaque(true);
 		lbSpeedSlopeInfoSpeed.setBackground(Color.WHITE);
 		lbSpeedSlopeInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSpeed.text")
-				+ "=0" + Utils.uSpeed2String(settings.Unit, settings.isPace));
+				+ "=0 " + Utils.uSpeed2String(settings.Unit, settings.isPace));
 		lbSpeedSlopeInfoSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelSpeedSlopeInfo, lbSpeedSlopeInfoSpeed, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.WEST, GridBagConstraints.BOTH);

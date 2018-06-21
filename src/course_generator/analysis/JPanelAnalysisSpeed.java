@@ -106,7 +106,7 @@ public class JPanelAnalysisSpeed extends JPanel {
 		lbSpeedInfoStartSpeed = new javax.swing.JLabel();
 		lbSpeedInfoStartSpeed.setOpaque(true);
 		lbSpeedInfoStartSpeed.setBackground(Color.WHITE);
-		lbSpeedInfoStartSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoStartSpeed.text") + "=0"
+		lbSpeedInfoStartSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoStartSpeed.text") + "=0 "
 				+ Utils.uSpeed2String(settings.Unit, settings.isPace));
 		lbSpeedInfoStartSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoStartSpeed, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0,
@@ -116,7 +116,8 @@ public class JPanelAnalysisSpeed extends JPanel {
 		lbSpeedInfoEndSpeed = new javax.swing.JLabel();
 		lbSpeedInfoEndSpeed.setOpaque(true);
 		lbSpeedInfoEndSpeed.setBackground(Color.WHITE);
-		lbSpeedInfoEndSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoEndSpeed.text") + "=0km/h ");
+		lbSpeedInfoEndSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoEndSpeed.text") + "=0 "
+				+ Utils.uSpeed2String(settings.Unit, settings.isPace));
 		lbSpeedInfoEndSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoEndSpeed, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
@@ -125,7 +126,8 @@ public class JPanelAnalysisSpeed extends JPanel {
 		lbSpeedInfoSpeed = new javax.swing.JLabel();
 		lbSpeedInfoSpeed.setOpaque(true);
 		lbSpeedInfoSpeed.setBackground(Color.WHITE);
-		lbSpeedInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoSpeed.text") + "=0km/h ");
+		lbSpeedInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoSpeed.text") + "=0 "
+				+ Utils.uSpeed2String(settings.Unit, settings.isPace));
 		lbSpeedInfoSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoSpeed, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
