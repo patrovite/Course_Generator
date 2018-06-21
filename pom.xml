@@ -55,5 +55,15 @@
 			<artifactId>timeshape</artifactId>
 			<version>2018d.3</version>
 		</dependency>
+		<dependency>
+			<groupId>de.muntjak</groupId>
+			<artifactId>tinylaf</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jxmapviewer</groupId>
+			<artifactId>jxmapviewer2</artifactId>
+			<version>2.4</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -96,16 +96,18 @@ public class frmAbout extends javax.swing.JDialog {
 			sb.append(" - Frédéric Bard (frederic@freemovin.com)\n\n");
 			sb.append(" .oO Copyrights Oo.\n");
 			sb.append(" Used libraries:\n");
-			sb.append(" - Joda-time - http://www.joda.org/joda-time\n");
-			sb.append(" - SwingX - LGPL 2.1 - https://swingx.java.net\n");
-			sb.append(" - JMapViewer - GPL - http://wiki.openstreetmap.org/wiki/JMapViewer\n");
+			sb.append(
+					" - Commons-Suncalc - Apache License 2.0 - https://shredzone.org/maven/commons-suncalc/index.html\n");
 			sb.append(" - jcommon - LGPL - http://www.jfree.org/jcommon\n");
 			sb.append(" - jfreechart - LGPL - http://www.jfree.org/index.html\n");
+			sb.append(" - Joda-time - http://www.joda.org/joda-time\n");
+			sb.append(" - JXMapViewer2 - LGPL - https://wiki.openstreetmap.org/wiki/JXMapViewer2\n");
+			sb.append(" - SwingX - LGPL 2.1 - https://swingx.java.net\n");
+			sb.append(" - Timeshape - MIT - https://github.com/RomanIakovlev/timeshape\n");
 			sb.append(" - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf\n");
-			sb.append(" - SunCalculator - Patrick Kalkman - pkalkie@gmail.com\n");
 			sb.append("\n");
 			sb.append(" Maps :\n");
-			sb.append(" - Openstreetmap : http://www.openstreetmap.org\n");
+			sb.append(" - OpenStreetMap : http://www.openstreetmap.org\n");
 			sb.append(" - OpenTopoMap : https://opentopomap.org\n");
 			sb.append(" - Bing map : (C)Microsoft\n");
 			taCopyright.setText(sb.toString());
@@ -191,7 +193,8 @@ public class frmAbout extends javax.swing.JDialog {
 
 		// ----------------------------------------------------------------------
 		lbLogo = new javax.swing.JLabel();
-		lbLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/png/image_logo.png")));
+		lbLogo.setIcon(
+				new javax.swing.ImageIcon(getClass().getResource("/course_generator/images/png/image_logo.png")));
 
 		// ----------------------------------------------------------------------
 		Utils.addComponent(paneGlobal, lbLogo, 0, 0, 1, 4, 0, 1, 0, 0, 0, 0, GridBagConstraints.NORTHWEST,
