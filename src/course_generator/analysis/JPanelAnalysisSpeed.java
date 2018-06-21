@@ -74,10 +74,10 @@ public class JPanelAnalysisSpeed extends JPanel {
 	private double endSpeed = 0.0;
 
 
-	public JPanelAnalysisSpeed() {
+	public JPanelAnalysisSpeed(CgSettings settings) {
 		super();
 		track = null;
-		settings = null;
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		datasetSpeedReg = new XYSeriesCollection();
 		datasetSpeed = new XYSeriesCollection();
@@ -106,8 +106,8 @@ public class JPanelAnalysisSpeed extends JPanel {
 		lbSpeedInfoStartSpeed = new javax.swing.JLabel();
 		lbSpeedInfoStartSpeed.setOpaque(true);
 		lbSpeedInfoStartSpeed.setBackground(Color.WHITE);
-		lbSpeedInfoStartSpeed
-				.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoStartSpeed.text") + "=0km/h ");
+		lbSpeedInfoStartSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoStartSpeed.text") + "=0"
+				+ Utils.uSpeed2String(settings.Unit, settings.isPace));
 		lbSpeedInfoStartSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoStartSpeed, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.WEST, GridBagConstraints.BOTH);

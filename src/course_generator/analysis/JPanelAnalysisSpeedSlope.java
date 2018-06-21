@@ -113,8 +113,8 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		lbSpeedSlopeInfoSpeed = new javax.swing.JLabel();
 		lbSpeedSlopeInfoSpeed.setOpaque(true);
 		lbSpeedSlopeInfoSpeed.setBackground(Color.WHITE);
-		lbSpeedSlopeInfoSpeed
-				.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSpeed.text") + "=0km/h ");
+		lbSpeedSlopeInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSpeed.text")
+				+ "=0" + Utils.uSpeed2String(settings.Unit, settings.isPace));
 		lbSpeedSlopeInfoSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelSpeedSlopeInfo, lbSpeedSlopeInfoSpeed, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.WEST, GridBagConstraints.BOTH);
@@ -347,7 +347,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 
 		// -- Get the data
 		CgData d = track.data.get(i);
-
+		// TODO
 		lbSpeedSlopeInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSpeed.text")
 				+ "=" + d.getSpeedString(settings.Unit, true, settings.isPace) + " ");
 
