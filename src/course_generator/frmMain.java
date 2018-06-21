@@ -2551,7 +2551,7 @@ public class frmMain extends javax.swing.JFrame {
 		addTab(TabbedPaneAnalysis, jPanelTimeDist, bundle.getString("frmMain.TabTimeDist.tabTitle"), null);
 
 		// -- Tab Analysis : Speed
-		jPanelSpeed = new JPanelAnalysisSpeed();
+		jPanelSpeed = new JPanelAnalysisSpeed(Settings);
 		addTab(TabbedPaneAnalysis, jPanelSpeed, bundle.getString("frmMain.TabSpeed.tabTitle"), null);
 
 		// -- Tab Analysis : Speed/slope

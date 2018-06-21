@@ -84,7 +84,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 
 	public JPanelAnalysisSpeedSlope(CgSettings settings) {
 		super();
-		this.settings=settings;
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		datasetSpeedSlopePoint = new XYSeriesCollection();
 		datasetSpeedSlopeLine = new XYSeriesCollection();
@@ -113,8 +113,8 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		lbSpeedSlopeInfoSpeed = new javax.swing.JLabel();
 		lbSpeedSlopeInfoSpeed.setOpaque(true);
 		lbSpeedSlopeInfoSpeed.setBackground(Color.WHITE);
-		lbSpeedSlopeInfoSpeed
-				.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSpeed.text") + "=0km/h ");
+		lbSpeedSlopeInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSpeed.text")
+				+ "=" + Utils.FormatSpeed(0.0, settings.Unit, settings.isPace, true));
 		lbSpeedSlopeInfoSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelSpeedSlopeInfo, lbSpeedSlopeInfoSpeed, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.WEST, GridBagConstraints.BOTH);
@@ -225,7 +225,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		toolBar.add(btSpeedSlopeCorr);
 
 		btSpeedSlopeFilter = new javax.swing.JButton();
-		btSpeedSlopeFilter.setIcon(Utils.getIcon(this,"speed.png", settings.ToolbarIconSize));
+		btSpeedSlopeFilter.setIcon(Utils.getIcon(this, "speed.png", settings.ToolbarIconSize));
 		btSpeedSlopeFilter.setToolTipText(bundle.getString("JPanelAnalysisSpeedSlope.btSpeedSlopeFilter.toolTipText"));
 		btSpeedSlopeFilter.setFocusable(false);
 		btSpeedSlopeFilter.addActionListener(new java.awt.event.ActionListener() {
@@ -347,7 +347,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 
 		// -- Get the data
 		CgData d = track.data.get(i);
-
+		// TODO
 		lbSpeedSlopeInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSpeed.text")
 				+ "=" + d.getSpeedString(settings.Unit, true, settings.isPace) + " ");
 
@@ -419,7 +419,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 			if (btSpeedSlopeFilter.isSelected())
 				s = r.tmp1;
 			else
-				s = r.getSpeed(settings.Unit, settings.isPace);
+				s = r.getSpeed(settings.Unit);
 
 			if (btSpeedSlopeCorr.isSelected()) {
 				coeff = r.getCoeff() / 100.0;
@@ -476,7 +476,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 				if (btSpeedSlopeFilter.isSelected())
 					s = r.tmp1;
 				else
-					s = r.getSpeed(settings.Unit, settings.isPace);
+					s = r.getSpeed(settings.Unit);
 
 				if (btSpeedSlopeCorr.isSelected()) {
 					coeff = r.getCoeff() / 100.0;
@@ -520,7 +520,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 			if (btSpeedSlopeFilter.isSelected())
 				s = r.tmp1;
 			else
-				s = r.getSpeed(settings.Unit, settings.isPace);
+				s = r.getSpeed(settings.Unit);
 
 			if (s > maxspeed)
 				maxspeed = s;
@@ -569,25 +569,19 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 
 		for (i = 0; i < track.data.size(); i++) {
 			if (i == 0)
-				avr = track.data.get(0).getSpeed(settings.Unit, settings.isPace);
+				avr = track.data.get(0).getSpeed(settings.Unit);
 			else if (i == 1)
-				avr = (track.data.get(1).getSpeed(settings.Unit, settings.isPace)
-						+ track.data.get(0).getSpeed(settings.Unit, settings.isPace)) / 2;
+				avr = (track.data.get(1).getSpeed(settings.Unit) + track.data.get(0).getSpeed(settings.Unit)) / 2;
 			else if (i == 2)
-				avr = (track.data.get(2).getSpeed(settings.Unit, settings.isPace)
-						+ track.data.get(1).getSpeed(settings.Unit, settings.isPace)
-						+ track.data.get(0).getSpeed(settings.Unit, settings.isPace)) / 3;
+				avr = (track.data.get(2).getSpeed(settings.Unit) + track.data.get(1).getSpeed(settings.Unit)
+						+ track.data.get(0).getSpeed(settings.Unit)) / 3;
 			else if (i == 3)
-				avr = (track.data.get(3).getSpeed(settings.Unit, settings.isPace)
-						+ track.data.get(2).getSpeed(settings.Unit, settings.isPace)
-						+ track.data.get(1).getSpeed(settings.Unit, settings.isPace)
-						+ track.data.get(0).getSpeed(settings.Unit, settings.isPace)) / 4;
+				avr = (track.data.get(3).getSpeed(settings.Unit) + track.data.get(2).getSpeed(settings.Unit)
+						+ track.data.get(1).getSpeed(settings.Unit) + track.data.get(0).getSpeed(settings.Unit)) / 4;
 			else
-				avr = (track.data.get(i).getSpeed(settings.Unit, settings.isPace)
-						+ track.data.get(i - 1).getSpeed(settings.Unit, settings.isPace)
-						+ track.data.get(i - 2).getSpeed(settings.Unit, settings.isPace)
-						+ track.data.get(i - 3).getSpeed(settings.Unit, settings.isPace)
-						+ track.data.get(i - 4).getSpeed(settings.Unit, settings.isPace)) / 5;
+				avr = (track.data.get(i).getSpeed(settings.Unit) + track.data.get(i - 1).getSpeed(settings.Unit)
+						+ track.data.get(i - 2).getSpeed(settings.Unit) + track.data.get(i - 3).getSpeed(settings.Unit)
+						+ track.data.get(i - 4).getSpeed(settings.Unit)) / 5;
 
 			track.data.get(i).tmp1 = avr;
 		}

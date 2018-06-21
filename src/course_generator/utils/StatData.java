@@ -58,6 +58,17 @@ public class StatData {
 
 
 	/**
+	 * Set the speed
+	 * 
+	 * @param speed
+	 *            Speed in meter per hour
+	 */
+	public void setSpeed(String speed) {
+		this.Speed = Double.valueOf(speed);
+	}
+
+
+	/**
 	 * Get the speed depending the unit
 	 * 
 	 * @param unit

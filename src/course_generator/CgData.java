@@ -92,6 +92,7 @@ public class CgData {
 
 	public boolean ToDelete;
 
+
 	public CgData(double Num, double Latitude, double Longitude, double Elevation, double ElevationMemo, int Tag,
 			double Dist, double Total, double Diff, double Coeff, double Recup, double Slope, double Speed,
 			double dElevation, int Time, double dTime_f, int TimeLimit, DateTime Hour, int Station, String Name,
@@ -160,7 +161,7 @@ public class CgData {
 		this.VPosMiniRoadbook = 0;
 		this.CommentMiniRoadbook = "";
 		this.FontSizeMiniRoadbook = 10;
-		this.ToDelete=false;
+		this.ToDelete = false;
 	}
 
 
@@ -429,38 +430,57 @@ public class CgData {
 	}
 
 
-	// -------------------------------
-	private double getSpeed() {
-		return Speed;
+	/**
+	 * Returns the speed as a string in the correct format (metric vs imperial, per
+	 * hour vs per mile).
+	 * 
+	 * @param unit
+	 *            The unit to use (metric vs imperial).
+	 * @param pace
+	 *            A boolean indicating whether to convert the speed into pace
+	 *            (min/mile).
+	 * @return A string containing the speed in the correct format.
+	 */
+	public String getSpeedString(int unit, boolean pace) {
+		return getSpeedString(unit, pace, false);
 	}
 
 
-	public double getSpeed(int unit, boolean pace) {
+	/**
+	 * Returns the speed in the correct format (metric vs imperial)
+	 * 
+	 * @param unit
+	 *            The unit to use (metric vs imperial).
+	 * @return A double containing the speed in the correct format.
+	 */
+	public double getSpeed(int unit) {
 		switch (unit) {
 		case CgConst.UNIT_METER:
-			if (pace)
-				return Utils.Speed2Pace(Speed);
-			else
-				return Speed;
+			return Speed;
 		case CgConst.UNIT_MILES_FEET:
-			if (pace)
-				return Utils.Speed2Pace(Utils.Meter2uMiles(Speed));
-			else
-				return Utils.Meter2uMiles(Speed);
+			return Utils.Meter2uMiles(Speed);
 		default:
 			return Speed;
 		}
 	}
 
 
-	public String getSpeedString(int unit, boolean withunit, boolean pace) {
-		double v = getSpeed(unit, pace);
-
-		String s = "";
-		s = String.format("%1.1f ", v);
-		if (withunit)
-			s = s + Utils.uSpeed2String(unit, pace);
-		return s;
+	/**
+	 * Returns the speed as a string in the correct format (metric vs imperial, per
+	 * hour vs per mile) with or without the string unit.
+	 * 
+	 * @param unit
+	 *            The unit to use (metric vs imperial).
+	 * @param withUnit
+	 *            A boolean indicating if the speed unit needs to be appended to the
+	 *            returned string.
+	 * @param pace
+	 *            A boolean indicating whether to convert the speed into pace
+	 *            (min/mile).
+	 * @return A string containing the speed in the correct format.
+	 */
+	public String getSpeedString(int unit, boolean withUnit, boolean pace) {
+		return Utils.FormatSpeed(Speed, unit, pace, withUnit);
 	}
 
 

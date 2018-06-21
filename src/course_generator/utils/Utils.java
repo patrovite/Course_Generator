@@ -152,18 +152,22 @@ public class Utils {
 			return "";
 	}
 
+
 	/**
 	 * Return the icon in the resource library
-	 * @param name name of the icon (ie "distance.png")
-	 * @param size size of the icon (16,24,32,48,64,96,128)
+	 * 
+	 * @param name
+	 *            name of the icon (ie "distance.png")
+	 * @param size
+	 *            size of the icon (16,24,32,48,64,96,128)
 	 * @return
 	 */
-	public static ImageIcon getIcon(Component Parent,String name, int size) {
-		return new javax.swing.ImageIcon(Parent.getClass().getResource("/course_generator/images/"+size+"/"+name));
+	public static ImageIcon getIcon(Component Parent, String name, int size) {
+		return new javax.swing.ImageIcon(
+				Parent.getClass().getResource("/course_generator/images/" + size + "/" + name));
 	}
-	
-	
-	
+
+
 	/**
 	 * Parse a string containing a double. The separator can be "." or ","
 	 * 
@@ -421,26 +425,55 @@ public class Utils {
 	 *            it's a speed (km/h or miles/h)
 	 * @return String with the unit
 	 */
+
 	public static String uSpeed2String(int unit, boolean pace) {
-		if (!pace) {
-			switch (unit) {
-			case CgConst.UNIT_METER:
-				return "km/h";
-			case CgConst.UNIT_MILES_FEET:
-				return "miles/h";
-			default:
-				return "km/h";
-			}
-		} else {
-			switch (unit) {
-			case CgConst.UNIT_METER:
-				return "min/km";
-			case CgConst.UNIT_MILES_FEET:
-				return "min/mile";
-			default:
-				return "min/km";
-			}
+		String unitString;
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			unitString = pace ? "min/km" : "km/h";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			unitString = pace ? "min/mile" : "mph";
+			break;
+		default:
+			unitString = "km/h";
+			break;
 		}
+
+		return unitString;
+	}
+
+
+	/**
+	 * Returns a given speed in the correct unit and format (km/h, miles/h, min/km
+	 * or min/mile)
+	 * 
+	 * @param speed
+	 *            The speed to be formatted.
+	 * @param unit
+	 *            The unit to use.
+	 * @param pace
+	 *            if "true" the speed type is pace (min/km or min/mile) otherwise
+	 *            it's a speed (km/h or miles/h).
+	 * @param withUnit
+	 *            Whether the unit string needs to be concatenated to the returned
+	 *            string. it's a speed (km/h or miles/h).
+	 * @return The given speed in the correct unit and format.
+	 */
+	public static String FormatSpeed(double speed, int unit, boolean pace, boolean withUnit) {
+		if (unit == CgConst.UNIT_MILES_FEET)
+			speed = Utils.Meter2uMiles(speed);
+
+		String speedString = String.format("%.1f", speed);
+		if (pace) {
+			speedString = Utils.SpeedToPace(speed);
+		}
+
+		if (withUnit) {
+			speedString += " " + uSpeed2String(unit, pace);
+		}
+
+		return speedString;
 	}
 
 
@@ -483,38 +516,20 @@ public class Utils {
 
 
 	/**
-	 * Calculate the pace from a speed
-	 * 
-	 * @param speed
-	 *            Speed in km/h or miles/h
-	 * @return pace in min/km or min/mile (8.30min/mile =>8.3)
-	 */
-	public static double Speed2Pace(double speed) {
-		if (speed == 0.0)
-			return 0.0;
-
-		double p = 60.0 / speed;
-		double min = (long) p;
-		double sec = (long) ((p - min) * 60);
-		return min + (sec / 100);
-	}
-
-
-	/**
 	 * Calculate the pace from a speed and return the result as a string
 	 * 
 	 * @param speed
 	 *            Speed in km/h or miles/h
-	 * @return pace as string in min/km or min/mile (8.30min/mile =>"8.3")
+	 * @return pace as string in min/km or min/mile (8:30min/mile =>"8:3")
 	 */
-	public static String Speed2PaceString(double speed) {
+	public static String SpeedToPace(double speed) {
 		if (speed == 0.0)
-			return "0.0";
+			return "0:0";
 
 		double p = 60.0 / speed;
 		double min = (long) p;
 		double sec = (p - min) * 60;
-		return String.format("%1.0f.%02.0f", min, sec);
+		return String.format("%1.0f:%02.0f", min, sec);
 	}
 
 

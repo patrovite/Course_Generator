@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -43,7 +42,6 @@ import course_generator.resume_table.ResumeHeaderRenderer;
 import course_generator.resume_table.ResumeModel;
 import course_generator.resume_table.ResumeRenderer;
 import course_generator.settings.CgSettings;
-import course_generator.trackdata.JPanelTrackDataListener;
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
@@ -83,10 +81,12 @@ public class JPanelResume extends JPanel {
 			hl.lineChangeEvent();
 	}
 
+
 	public void notifyDoubleClick() {
 		for (JPanelResumeListener hl : listeners)
 			hl.doubleClickEvent();
 	}
+
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -145,7 +145,7 @@ public class JPanelResume extends JPanel {
 		// -- Save
 		// --------------------------------------------------------------
 		btResumeSave = new javax.swing.JButton();
-		btResumeSave.setIcon(Utils.getIcon(this,"save_csv.png",Settings.ToolbarIconSize));
+		btResumeSave.setIcon(Utils.getIcon(this, "save_csv.png", Settings.ToolbarIconSize));
 		btResumeSave.setToolTipText(bundle.getString("JPanelResume.btResumeSave.toolTipText"));
 		btResumeSave.setFocusable(false);
 		btResumeSave.addActionListener(new java.awt.event.ActionListener() {
@@ -162,7 +162,7 @@ public class JPanelResume extends JPanel {
 		// -- Refresh
 		// --------------------------------------------------------------
 		btRefreshRefresh = new javax.swing.JButton();
-		btRefreshRefresh.setIcon(Utils.getIcon(this,"refresh.png",Settings.ToolbarIconSize));
+		btRefreshRefresh.setIcon(Utils.getIcon(this, "refresh.png", Settings.ToolbarIconSize));
 		btRefreshRefresh.setToolTipText(bundle.getString("JPanelResume.btRefreshRefresh.toolTipText"));
 		btRefreshRefresh.setFocusable(false);
 		btRefreshRefresh.addActionListener(new java.awt.event.ActionListener() {
@@ -196,16 +196,18 @@ public class JPanelResume extends JPanel {
 		notifyLineChange();
 		// SelectPositionFromResume(row);
 	}
-		
+
 
 	public int getSelectedLine() {
 		return TableResume.getSelectedRow();
 	}
 
+
 	public int getDataTrackLine() {
-		int p=TableResume.getSelectedRow();
-		return (int) Resume.data.get(p).getLine()-1;
+		int p = TableResume.getSelectedRow();
+		return (int) Resume.data.get(p).getLine() - 1;
 	}
+
 
 	// private void SelectPositionFromResume(int row) {
 	// if (Resume.data.size() > 0) {
@@ -323,7 +325,7 @@ public class JPanelResume extends JPanel {
 				dst.setAvgSlopeP(casr.AvrSlopeP);
 				dst.setAvgSlopeM(casr.AvrSlopeM);
 
-				dst.setAvgSpeed(speedResult.getAvrspeed(CgConst.UNIT_METER));
+				dst.setAvgSpeed(Double.valueOf(speedResult.getAvrspeed()));
 
 				dst.setComment(src.getComment());
 
