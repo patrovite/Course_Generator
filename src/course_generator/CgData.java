@@ -442,20 +442,7 @@ public class CgData {
 	 * @return A string containing the speed in the correct format.
 	 */
 	public String getSpeedString(int unit, boolean pace) {
-		switch (unit) {
-		case CgConst.UNIT_METER:
-			if (pace)
-				return Utils.SpeedToPace(Speed);
-			else
-				return String.valueOf(Speed);
-		case CgConst.UNIT_MILES_FEET:
-			if (pace)
-				return Utils.SpeedToPace(Utils.Meter2uMiles(Speed));
-			else
-				return String.valueOf(Utils.Meter2uMiles(Speed));
-		default:
-			return String.valueOf(Speed);
-		}
+		return getSpeedString(unit, pace, false);
 	}
 
 
@@ -493,11 +480,7 @@ public class CgData {
 	 * @return A string containing the speed in the correct format.
 	 */
 	public String getSpeedString(int unit, boolean withUnit, boolean pace) {
-		String speed = getSpeedString(unit, pace);
-
-		if (withUnit)
-			speed += Utils.uSpeed2String(unit, pace);
-		return speed;
+		return Utils.FormatSpeed(Speed, unit, pace, withUnit);
 	}
 
 

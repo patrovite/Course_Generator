@@ -188,8 +188,8 @@ public class JPanelStatistics extends JPanel {
 				String.format("%1.3f " + Utils.uLDist2String(settings.Unit), casr.getTotFlat(settings.Unit) / 1000));
 		sb = Utils.sbReplace(sb, "@510",
 				String.format("%1.3f " + Utils.uLDist2String(settings.Unit), casr.getTotClimbM(settings.Unit) / 1000));
-		sb = Utils.sbReplace(sb, "@511", speedResult.getAvrspeed(settings.Unit, settings.isPace) + " "
-				+ Utils.uSpeed2String(settings.Unit, settings.isPace));
+		sb = Utils.sbReplace(sb, "@511",
+				Utils.FormatSpeed(speedResult.getAvrspeed(), settings.Unit, settings.isPace, true));
 
 		double tmpdbl = (track.getDistRoad(settings.Unit) * 100 / track.getTotalDistance(settings.Unit));
 		sb = Utils.sbReplace(sb, "@512", String.format("%1.0f%% / %1.3f " + Utils.uLDist2String(settings.Unit), tmpdbl,
@@ -329,17 +329,11 @@ public class JPanelStatistics extends JPanel {
 	 * @return A string containing the avergage time and its corresponding unit.
 	 */
 	private String CalcVMoy(double distance, double time) {
+		double averageSpeed = 0.0;
 		if (time != 0) {
-			String averageSpeedString;
-			double averageSpeed = distance / time * 3.6;
-			averageSpeedString = String.format("%.2f", averageSpeed);
-
-			if (settings.isPace)
-				averageSpeedString = Utils.SpeedToPace(averageSpeed);
-
-			return averageSpeedString + " " + Utils.uSpeed2String(settings.Unit, settings.isPace);
-		} else
-			return "0 " + Utils.uSpeed2String(settings.Unit, settings.isPace);
+			averageSpeed = distance / time * 3.6;
+		}
+		return Utils.FormatSpeed(averageSpeed, settings.Unit, settings.isPace, true);
 	}
 
 

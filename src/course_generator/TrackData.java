@@ -1155,31 +1155,14 @@ public class TrackData {
 		private double avrspeed;
 
 
-		public String getAvrspeed(int unit, boolean pace) {
-			double averageSpeed;
-			switch (unit) {
-			case CgConst.UNIT_METER:
-				averageSpeed = avrspeed;
-			case CgConst.UNIT_MILES_FEET:
-				// meter to miles
-				averageSpeed = Utils.Meter2uMiles(avrspeed);
-			default:
-				averageSpeed = avrspeed;
-			}
-
-			String averageSpeedString = String.valueOf(averageSpeed);
-			if (pace) {
-				averageSpeedString = Utils.SpeedToPace(averageSpeed);
-			}
-
-			return averageSpeedString;
-		}
-
-
 		public void setAvrspeed(double avrspeed) {
 			this.avrspeed = avrspeed;
 		}
 
+
+		public double getAvrspeed() {
+			return avrspeed;
+		}
 	}
 
 

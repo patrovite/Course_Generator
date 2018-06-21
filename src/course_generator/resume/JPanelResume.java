@@ -42,7 +42,6 @@ import course_generator.resume_table.ResumeHeaderRenderer;
 import course_generator.resume_table.ResumeModel;
 import course_generator.resume_table.ResumeRenderer;
 import course_generator.settings.CgSettings;
-import course_generator.trackdata.JPanelTrackDataListener;
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
@@ -82,10 +81,12 @@ public class JPanelResume extends JPanel {
 			hl.lineChangeEvent();
 	}
 
+
 	public void notifyDoubleClick() {
 		for (JPanelResumeListener hl : listeners)
 			hl.doubleClickEvent();
 	}
+
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -195,16 +196,18 @@ public class JPanelResume extends JPanel {
 		notifyLineChange();
 		// SelectPositionFromResume(row);
 	}
-		
+
 
 	public int getSelectedLine() {
 		return TableResume.getSelectedRow();
 	}
 
+
 	public int getDataTrackLine() {
-		int p=TableResume.getSelectedRow();
-		return (int) Resume.data.get(p).getLine()-1;
+		int p = TableResume.getSelectedRow();
+		return (int) Resume.data.get(p).getLine() - 1;
 	}
+
 
 	// private void SelectPositionFromResume(int row) {
 	// if (Resume.data.size() > 0) {
@@ -322,7 +325,7 @@ public class JPanelResume extends JPanel {
 				dst.setAvgSlopeP(casr.AvrSlopeP);
 				dst.setAvgSlopeM(casr.AvrSlopeM);
 
-				dst.setAvgSpeed(Double.valueOf(speedResult.getAvrspeed(CgConst.UNIT_METER, false)));
+				dst.setAvgSpeed(Double.valueOf(speedResult.getAvrspeed()));
 
 				dst.setComment(src.getComment());
 

@@ -106,8 +106,8 @@ public class JPanelAnalysisSpeed extends JPanel {
 		lbSpeedInfoStartSpeed = new javax.swing.JLabel();
 		lbSpeedInfoStartSpeed.setOpaque(true);
 		lbSpeedInfoStartSpeed.setBackground(Color.WHITE);
-		lbSpeedInfoStartSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoStartSpeed.text") + "=0 "
-				+ Utils.uSpeed2String(settings.Unit, settings.isPace));
+		lbSpeedInfoStartSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoStartSpeed.text") + "="
+				+ Utils.FormatSpeed(0.0, settings.Unit, settings.isPace, true));
 		lbSpeedInfoStartSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoStartSpeed, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.WEST, GridBagConstraints.BOTH);
@@ -116,8 +116,8 @@ public class JPanelAnalysisSpeed extends JPanel {
 		lbSpeedInfoEndSpeed = new javax.swing.JLabel();
 		lbSpeedInfoEndSpeed.setOpaque(true);
 		lbSpeedInfoEndSpeed.setBackground(Color.WHITE);
-		lbSpeedInfoEndSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoEndSpeed.text") + "=0 "
-				+ Utils.uSpeed2String(settings.Unit, settings.isPace));
+		lbSpeedInfoEndSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoEndSpeed.text") + "="
+				+ Utils.FormatSpeed(0.0, settings.Unit, settings.isPace, true));
 		lbSpeedInfoEndSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoEndSpeed, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
@@ -126,8 +126,8 @@ public class JPanelAnalysisSpeed extends JPanel {
 		lbSpeedInfoSpeed = new javax.swing.JLabel();
 		lbSpeedInfoSpeed.setOpaque(true);
 		lbSpeedInfoSpeed.setBackground(Color.WHITE);
-		lbSpeedInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoSpeed.text") + "=0 "
-				+ Utils.uSpeed2String(settings.Unit, settings.isPace));
+		lbSpeedInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoSpeed.text")
+				+ Utils.FormatSpeed(0.0, settings.Unit, settings.isPace, true));
 		lbSpeedInfoSpeed.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelSpeedInfo, lbSpeedInfoSpeed, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
@@ -236,10 +236,10 @@ public class JPanelAnalysisSpeed extends JPanel {
 		CgData d = track.data.get(i);
 
 		lbSpeedInfoStartSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoStartSpeed.text") + "="
-				+ Utils.SpeedToPace(startSpeed) + Utils.uSpeed2String(settings.Unit, settings.isPace) + " ");
+				+ Utils.FormatSpeed(startSpeed, settings.Unit, settings.isPace, true));
 
 		lbSpeedInfoEndSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoEndSpeed.text") + "="
-				+ Utils.SpeedToPace(endSpeed) + Utils.uSpeed2String(settings.Unit, settings.isPace) + " ");
+				+ Utils.FormatSpeed(endSpeed, settings.Unit, settings.isPace, true));
 
 		lbSpeedInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoSpeed.text") + "="
 				+ d.getSpeedString(settings.Unit, true, settings.isPace) + " ");

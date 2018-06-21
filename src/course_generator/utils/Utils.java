@@ -425,26 +425,55 @@ public class Utils {
 	 *            it's a speed (km/h or miles/h)
 	 * @return String with the unit
 	 */
+
 	public static String uSpeed2String(int unit, boolean pace) {
-		if (!pace) {
-			switch (unit) {
-			case CgConst.UNIT_METER:
-				return "km/h";
-			case CgConst.UNIT_MILES_FEET:
-				return "miles/h";
-			default:
-				return "km/h";
-			}
-		} else {
-			switch (unit) {
-			case CgConst.UNIT_METER:
-				return "min/km";
-			case CgConst.UNIT_MILES_FEET:
-				return "min/mile";
-			default:
-				return "min/km";
-			}
+		String unitString;
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			unitString = pace ? "min/km" : "km/h";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			unitString = pace ? "min/mile" : "mph";
+			break;
+		default:
+			unitString = "km/h";
+			break;
 		}
+
+		return unitString;
+	}
+
+
+	/**
+	 * Returns a given speed in the correct unit and format (km/h, miles/h, min/km
+	 * or min/mile)
+	 * 
+	 * @param speed
+	 *            The speed to be formatted.
+	 * @param unit
+	 *            The unit to use.
+	 * @param pace
+	 *            if "true" the speed type is pace (min/km or min/mile) otherwise
+	 *            it's a speed (km/h or miles/h).
+	 * @param withUnit
+	 *            Whether the unit string needs to be concatenated to the returned
+	 *            string. it's a speed (km/h or miles/h).
+	 * @return The given speed in the correct unit and format.
+	 */
+	public static String FormatSpeed(double speed, int unit, boolean pace, boolean withUnit) {
+		if (unit == CgConst.UNIT_MILES_FEET)
+			speed = Utils.Meter2uMiles(speed);
+
+		String speedString = String.format("%.1f", speed);
+		if (pace) {
+			speedString = Utils.SpeedToPace(speed);
+		}
+
+		if (withUnit) {
+			speedString += " " + uSpeed2String(unit, pace);
+		}
+
+		return speedString;
 	}
 
 
