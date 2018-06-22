@@ -50,7 +50,7 @@ public class SaxParamHandler extends DefaultHandler {
 	private final int ERR_READ_COLOR = -7;
 	private int Cmpt = 0;
 	private double slope = 0.0;
-	private double speed = 0.0;
+	private String speed = "0.0";
 
 	private Locator locator;
 
@@ -215,7 +215,7 @@ public class SaxParamHandler extends DefaultHandler {
 			if (qName.equalsIgnoreCase("SLOPE")) {
 				slope = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("SPEED")) {
-				speed = ManageDouble(0.0, ERR_READ_DOUBLE);
+				speed = characters;
 			} else if (qName.equalsIgnoreCase("ITEM")) {
 				level--;
 				paramdata.data.add(new CgParam(slope, speed));

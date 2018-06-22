@@ -534,6 +534,30 @@ public class Utils {
 
 
 	/**
+	 * Calculate the speed from a pace and return the result as a "per hour" number.
+	 * 
+	 * @param speed
+	 *            Speed in min/mile or min/km.
+	 * @return speed as a double.
+	 */
+	public static double PaceToSpeed(String speed) {
+		double convertedSpeed = 0.0;
+
+		try {
+			String[] tokens = speed.split(":");
+			String minutes = tokens[0].trim();
+			String seconds = tokens[1].trim();
+
+			int totalTime = Integer.parseInt(minutes) * 60 + Integer.parseInt(seconds);
+			convertedSpeed = 3600 / (double) totalTime;
+		} catch (Exception error) {
+			CgLog.error("Parsing error:" + error + "");
+		}
+		return convertedSpeed;
+	}
+
+
+	/**
 	 * Calculate the speed from a pace
 	 * 
 	 * @param pace

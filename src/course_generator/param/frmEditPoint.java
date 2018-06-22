@@ -113,7 +113,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 		// ----------------------------------------------------------------------
 		btCancel = new javax.swing.JButton();
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
-		btCancel.setIcon(Utils.getIcon(this,"cancel.png", settings.DialogIconSize));
+		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setVisible(false);
@@ -150,10 +150,12 @@ public class frmEditPoint extends javax.swing.JDialog {
 
 	public boolean showDialog(CgParam p) {
 		param = p;
-		slope = p.Slope;
-		speed = p.Speed;
+		slope = p.getSlope();
+		speed = p.getSpeedNumber(settings.Unit);
 
-		double convertedSpeed = settings.Unit == CgConst.UNIT_MILES_FEET ? Utils.Km2Miles(p.Speed) : p.Speed;
+		double convertedSpeed = settings.Unit == CgConst.UNIT_MILES_FEET
+				? Utils.Km2Miles(p.getSpeedNumber(settings.Unit))
+				: p.getSpeedNumber(settings.Unit);
 
 		// Set field
 		tfSlope.setText(String.valueOf(slope));
@@ -165,8 +167,8 @@ public class frmEditPoint extends javax.swing.JDialog {
 
 		if (ok) {
 			// Copy fields
-			p.Slope = slope;
-			p.Speed = settings.Unit == CgConst.UNIT_MILES_FEET ? Utils.Miles2Km(speed) : speed;
+			p.setSlope(slope);
+			p.setSpeed(settings.Unit == CgConst.UNIT_MILES_FEET ? Utils.Miles2Km(speed) : speed);
 		}
 		return ok;
 	}

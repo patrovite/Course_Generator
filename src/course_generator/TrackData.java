@@ -43,6 +43,7 @@ import javax.xml.stream.XMLStreamWriter;
 import org.joda.time.DateTime;
 
 import course_generator.param.ParamData;
+import course_generator.settings.CgSettings;
 /*
 import course_generator.table.CoeffClass;
 import course_generator.table.DiffClass;
@@ -198,11 +199,13 @@ public class TrackData {
 	public Color clProfil_SlopeSup15 = Color.BLACK;
 	public Color clProfil_SlopeBorder = Color.BLACK;
 
+	private static CgSettings Settings;
+
 
 	// -- Constructor --
-	public TrackData() {
+	public TrackData(CgSettings settings) {
 		Name = "";
-		param = new ParamData();
+		param = new ParamData(settings);
 		Paramfile = "Default";
 		data = new ArrayList<CgData>();
 		tInNight = new StatData();
@@ -235,12 +238,13 @@ public class TrackData {
 		DefaultMRBProfilSlopeColor();
 
 		ReadOnly = false;
+		Settings = settings;
 	}
 
 
 	public static synchronized TrackData getInstance() {
 		if (instance == null) {
-			instance = new TrackData();
+			instance = new TrackData(Settings);
 		}
 		return instance;
 	}
@@ -1317,16 +1321,16 @@ public class TrackData {
 			ok = false;
 			for (j = 0; j <= param.data.size() - 1; j++) // -2
 			{
-				tmp = param.data.get(j).Slope;
+				tmp = param.data.get(j).getSlope();
 				if (tmp >= x) {
 					k = j - 1;
 					if (j == 0) {
 						k = 0;
 					}
-					x1 = param.data.get(k).Slope;
-					y1 = param.data.get(k).Speed;
-					x2 = param.data.get(j).Slope;
-					y2 = param.data.get(j).Speed;
+					x1 = param.data.get(k).getSlope();
+					y1 = param.data.get(k).getSpeedNumber(Settings.Unit);
+					x2 = param.data.get(j).getSlope();
+					y2 = param.data.get(j).getSpeedNumber(Settings.Unit);
 					ok = true;
 					break;
 				}
@@ -1345,7 +1349,7 @@ public class TrackData {
 					y = y1;
 				}
 			} else {
-				y = (double) param.data.get(param.data.size() - 2).Speed;
+				y = param.data.get(param.data.size() - 2).getSpeedNumber(Settings.Unit);
 			}
 
 			// --Night coeff --

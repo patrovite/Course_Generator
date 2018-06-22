@@ -79,14 +79,14 @@ public class ParamPointsModel extends AbstractTableModel {
 
 		case 0:
 			// Slope
-			return param.data.get(rowIndex).Slope;
+			return param.data.get(rowIndex).getSlope();
 
 		case 1:
 			// Speed
 			if (settings.Unit == CgConst.UNIT_MILES_FEET)
-				return Utils.Km2Miles(param.data.get(rowIndex).Speed);
+				return Utils.Km2Miles(param.data.get(rowIndex).getSpeedNumber(settings.Unit));
 			else
-				return param.data.get(rowIndex).Speed;
+				return param.data.get(rowIndex).getSpeedNumber(settings.Unit);
 
 		default:
 			throw new IllegalArgumentException();
