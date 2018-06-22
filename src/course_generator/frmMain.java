@@ -588,23 +588,11 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuFile.add(mnuOpenGPX);
 
-		// -- Open CGX
-		mnuOpenCGX = new javax.swing.JMenuItem();
-		mnuOpenCGX.setAccelerator(
-				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-		mnuOpenCGX.setIcon(Utils.getIcon(this, "open_cgx.png", Settings.MenuIconSize));
-		mnuOpenCGX.setText(bundle.getString("frmMain.mnuOpenCGX.text"));
-		mnuOpenCGX.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				OpenCGXDialog();
-			}
-		});
-		mnuFile.add(mnuOpenCGX);
-
 		// -- Recent GPX files
 		// --------------------------------------------------
 		mnuLastGPX = new javax.swing.JMenu();
 		mnuLastGPX.setText(bundle.getString("frmMain.mnuLastGPX.text"));
+		mnuLastGPX.setIcon(Utils.getIcon(this, "open_gpx.png", Settings.MenuIconSize));
 
 		// -- Mru GPX n°1
 		mnuMruGPX1 = new javax.swing.JMenuItem();
@@ -658,11 +646,28 @@ public class frmMain extends javax.swing.JFrame {
 
 		mnuFile.add(mnuLastGPX);
 
+		// -- Separator
+		mnuFile.add(new javax.swing.JPopupMenu.Separator());
+
+		// -- Open CGX
+		mnuOpenCGX = new javax.swing.JMenuItem();
+		mnuOpenCGX.setAccelerator(
+				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+		mnuOpenCGX.setIcon(Utils.getIcon(this, "open_cgx.png", Settings.MenuIconSize));
+		mnuOpenCGX.setText(bundle.getString("frmMain.mnuOpenCGX.text"));
+		mnuOpenCGX.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				OpenCGXDialog();
+			}
+		});
+		mnuFile.add(mnuOpenCGX);
+
 		// -- Recent CGX files
 		// --------------------------------------------------
 		mnuLastCGX = new javax.swing.JMenu();
 		mnuLastCGX.setText(bundle.getString("frmMain.mnuLastCGX.text"));
-
+		mnuLastCGX.setIcon(Utils.getIcon(this, "open_cgx.png", Settings.MenuIconSize));
+		
 		// -- Mru CGX n°1
 		mnuMruCGX1 = new javax.swing.JMenuItem();
 		mnuMruCGX1.setText(bundle.getString("frmMain.mnuMruCGX1.text"));
@@ -3736,8 +3741,9 @@ public class frmMain extends javax.swing.JFrame {
 	private javax.swing.JMenu mnuEdit;
 	private javax.swing.JPanel jPanelAnalyze;
 	private javax.swing.JPanel jPanelLeft;
-	private javax.swing.JTree jTreeMain; // Don't remove!!! May be one day I'll use it ;) (see comment block in
-											// "initcomponent")
+	//-- Don't remove!!! May be one day I'll use it ;) (see comment block in "initcomponent")
+	private javax.swing.JTree jTreeMain; 
+	//--
 	private javax.swing.JMenu mnuLastCGX;
 	private javax.swing.JMenu mnuLastGPX;
 	private javax.swing.JMenuBar mnuMain;
