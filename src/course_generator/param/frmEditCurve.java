@@ -117,7 +117,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		dataset = new XYSeriesCollection();
 		chart = CreateChartProfile(dataset);
-		param = new ParamData(settings);
+		param = new ParamData();
 		tablemodel = new ParamPointsModel(param);
 		initComponents();
 		setModal(true);
@@ -812,7 +812,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 				// -- Add the 2 extrem points to the list and sort the list (not really
 				// necessary...)
-				param = new ParamData(settings);
+				param = new ParamData();
 				param.name = tfName.getText();
 				param.data.add(new CgParam(-50.0, "0"));
 				param.data.add(new CgParam(50.0, "0"));

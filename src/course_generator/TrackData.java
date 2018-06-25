@@ -205,7 +205,7 @@ public class TrackData {
 	// -- Constructor --
 	public TrackData(CgSettings settings) {
 		Name = "";
-		param = new ParamData(settings);
+		param = new ParamData();
 		Paramfile = "Default";
 		data = new ArrayList<CgData>();
 		tInNight = new StatData();
