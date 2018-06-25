@@ -43,7 +43,6 @@ import course_generator.utils.Utils;
 public class frmEditPoint extends javax.swing.JDialog {
 	private java.util.ResourceBundle bundle;
 	private boolean ok;
-	private CgParam param;
 	private JLabel lbSlope;
 	private JTextField tfSlope;
 	private JLabel lbSpeed;
@@ -149,13 +148,11 @@ public class frmEditPoint extends javax.swing.JDialog {
 
 
 	public boolean showDialog(CgParam p) {
-		param = p;
 		slope = p.getSlope();
-		speed = p.getSpeedNumber(settings.Unit);
+		speed = p.getSpeedNumber();
 
-		double convertedSpeed = settings.Unit == CgConst.UNIT_MILES_FEET
-				? Utils.Km2Miles(p.getSpeedNumber(settings.Unit))
-				: p.getSpeedNumber(settings.Unit);
+		double convertedSpeed = settings.Unit == CgConst.UNIT_MILES_FEET ? Utils.Km2Miles(p.getSpeedNumber())
+				: p.getSpeedNumber();
 
 		// Set field
 		tfSlope.setText(String.valueOf(slope));

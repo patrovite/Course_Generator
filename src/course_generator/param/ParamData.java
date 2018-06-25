@@ -28,7 +28,6 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import course_generator.settings.CgSettings;
 import course_generator.utils.Utils;
 
 /**
@@ -39,12 +38,10 @@ public class ParamData {
 	public String name = "";
 	public String comment = "";
 	public ArrayList<CgParam> data;
-	private CgSettings Settings;
 
 
-	public ParamData(CgSettings settings) {
+	public ParamData() {
 		data = new ArrayList<CgParam>();
-		Settings = settings;
 	}
 
 
@@ -91,8 +88,7 @@ public class ParamData {
 				writer.writeStartElement("Item");
 				Utils.WriteStringToXML(writer, "Slope", String.format(Locale.ROOT, "%f", curvePoint.getSlope()));
 				// Saving the curve speeds using the metric system.
-				Utils.WriteStringToXML(writer, "Speed",
-						String.format(Locale.ROOT, "%f", curvePoint.getSpeedNumber(Settings.Unit)));
+				Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", curvePoint.getSpeedNumber()));
 				writer.writeEndElement(); // Item
 			}
 			writer.writeEndElement(); // Param
@@ -116,8 +112,8 @@ public class ParamData {
 		{
 			double max = -9999.0;
 			for (int j = 0; j <= data.size() - 1; j++) {
-				if (data.get(j).getSpeedNumber(Settings.Unit) > max)
-					max = data.get(j).getSpeedNumber(Settings.Unit);
+				if (data.get(j).getSpeedNumber() > max)
+					max = data.get(j).getSpeedNumber();
 			}
 			return max;
 		} else

@@ -73,7 +73,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 	public ParamData param = null;
 	private ParamPointsModel tablemodel;
 	private JButton btOk;
-	private JList ListCurves;
+	private JList<Object> ListCurves;
 	private JScrollPane jScrollPaneCurves;
 	private JToolBar ToolBarAction;
 	private JButton btLoadCurve;
@@ -551,20 +551,25 @@ public class frmEditCurve extends javax.swing.JDialog {
 		if (param.data.size() <= 0)
 			return;
 
-		// -- Clear all series
 		if (dataset.getSeriesCount() > 0)
 			dataset.removeAllSeries();
 
-		// -- Populate the serie
-		XYSeries serie1 = new XYSeries("Slope/Speed");
+		XYSeries slopeVsSpeedSerie = new XYSeries("Slope/Speed");
+		double speed;
 		for (CgParam p : param.data) {
-			if (settings.Unit == CgConst.UNIT_MILES_FEET)
-				serie1.add(p.getSlope(), Utils.Km2Miles(p.getSpeedNumber(settings.Unit)));
-			else
-				serie1.add(p.getSlope(), p.getSpeedNumber(settings.Unit));
+			if (settings.Unit == CgConst.UNIT_MILES_FEET) {
+				speed = Utils.Km2Miles(p.getSpeedNumber());
+			} else {
+				speed = p.getSpeedNumber();
+			}
 
+			if (settings.isPace) {
+				speed = Utils.SpeedToPaceNumber(speed);
+			}
+
+			slopeVsSpeedSerie.add(p.getSlope(), speed);
 		}
-		dataset.addSeries(serie1);
+		dataset.addSeries(slopeVsSpeedSerie);
 	}
 
 

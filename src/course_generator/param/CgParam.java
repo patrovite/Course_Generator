@@ -61,7 +61,7 @@ public class CgParam implements Comparable<CgParam> {
 	}
 
 
-	public double getSpeedNumber(int unit) {
+	public double getSpeedNumber() {
 		double speed = 0.0;
 
 		if (Speed.contains(":")) {

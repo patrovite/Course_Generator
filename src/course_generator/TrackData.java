@@ -1328,9 +1328,9 @@ public class TrackData {
 						k = 0;
 					}
 					x1 = param.data.get(k).getSlope();
-					y1 = param.data.get(k).getSpeedNumber(Settings.Unit);
+					y1 = param.data.get(k).getSpeedNumber();
 					x2 = param.data.get(j).getSlope();
-					y2 = param.data.get(j).getSpeedNumber(Settings.Unit);
+					y2 = param.data.get(j).getSpeedNumber();
 					ok = true;
 					break;
 				}
@@ -1349,7 +1349,7 @@ public class TrackData {
 					y = y1;
 				}
 			} else {
-				y = param.data.get(param.data.size() - 2).getSpeedNumber(Settings.Unit);
+				y = param.data.get(param.data.size() - 2).getSpeedNumber();
 			}
 
 			// --Night coeff --
