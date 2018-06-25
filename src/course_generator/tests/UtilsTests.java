@@ -12,10 +12,12 @@ import course_generator.utils.Utils;
 public class UtilsTests {
 
 	/**
-	 * 
+	 * Testing the Utils functions
 	 */
 	@Test
 	public void testEquals() {
+
+		// {@see course_generator.utils.Utils#PaceToSpeed(String)}
 		double expectedSpeed = 5.7; // mph
 		double actualSpeed = Utils.PaceToSpeed("10:30");
 		assertEquals(expectedSpeed, actualSpeed, 0.1);
