@@ -1,4 +1,4 @@
-package tests;
+package course_generator.tests;
 
 import static org.junit.Assert.assertEquals;
 
