@@ -182,7 +182,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			
 			if (cmpt > 0) {
 				// -- Prepare the resulting image
-				BufferedImage combined = new BufferedImage(xoffset * cmpt, settings.TagIconSize/*16*/, BufferedImage.TYPE_INT_ARGB);
+				BufferedImage combined = new BufferedImage(xoffset * cmpt, settings.TagIconSize, BufferedImage.TYPE_INT_ARGB);
 				Graphics g = combined.getGraphics();
 
 				// Higher point

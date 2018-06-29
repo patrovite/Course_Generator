@@ -193,7 +193,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		// -- Save
 		// --------------------------------------------------------------
 		btSpeedSlopeSave = new javax.swing.JButton();
-		btSpeedSlopeSave.setIcon(Utils.getIcon(this, "save.png", settings.ToolbarIconSize));
+		btSpeedSlopeSave.setIcon(Utils.getIcon(this, "save_curve.png", settings.ToolbarIconSize));
 		btSpeedSlopeSave.setToolTipText(bundle.getString("JPanelAnalysisSpeedSlope.btSpeedSlopeSave.toolTipText"));
 		btSpeedSlopeSave.setFocusable(false);
 		btSpeedSlopeSave.addActionListener(new java.awt.event.ActionListener() {

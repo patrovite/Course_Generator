@@ -2238,10 +2238,12 @@ public class frmMain extends javax.swing.JFrame {
 	 * Display the edition curves dialog
 	 */
 	private void EditSSCurves() {
-		frmEditCurve frm = new frmEditCurve(Settings);
-		frm.showDialog(Track);
-
-		RefreshStatusbar(Track);
+		if (!Track.ReadOnly) {
+			frmEditCurve frm = new frmEditCurve(Settings);
+			frm.showDialog(Track);
+	
+			RefreshStatusbar(Track);
+		}
 	}
 
 
