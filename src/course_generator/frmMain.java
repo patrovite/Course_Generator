@@ -2952,6 +2952,7 @@ public class frmMain extends javax.swing.JFrame {
 			Track.isModified = false;
 			// -- Refresh info panel
 			RefreshStatusbar(Track);
+			RefreshTitle();
 
 			setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		}
@@ -3059,6 +3060,7 @@ public class frmMain extends javax.swing.JFrame {
 			Track.isModified = false;
 			// -- Refresh info panel
 			RefreshStatusbar(Track);
+			RefreshTitle();
 
 			setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		}
