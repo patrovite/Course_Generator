@@ -87,6 +87,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		DateTime Sunrise;
 		DateTime Sunset;
 		int TimeZone;
+		String TimeZoneId;
 		boolean SummerTime;
 		boolean valid;
 	}
@@ -114,7 +115,8 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 
 		// Determine the course time zone
 		Optional<ZoneId> courseStartZoneId = timeZoneEngine.query(latitude, longitude);
-		courseStartZone = TimeZone.getTimeZone(courseStartZoneId.get().getId());
+		String timeZoneId = courseStartZoneId.get().getId();
+		courseStartZone = TimeZone.getTimeZone(timeZoneId);
 		long hoursOffsetFromUTC = TimeUnit.MILLISECONDS.toHours(courseStartZone.getRawOffset());
 
 		// Set field
@@ -148,6 +150,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 			res.Sunrise = this.sunrise;
 			res.Sunset = this.sunset;
 			res.TimeZone = spinTimeZone.getValueAsInt();
+			res.TimeZoneId = timeZoneId;
 			res.SummerTime = chkSummerTime.isSelected();
 		}
 		return res;
