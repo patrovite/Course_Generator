@@ -18,16 +18,18 @@
 
 package course_generator.param;
 
+import course_generator.utils.Utils;
+
 /**
  *
  * @author pierre.delore
  */
 public class CgParam implements Comparable<CgParam> {
-	public double Slope;
-	public double Speed;
+	private double Slope;
+	private String Speed;
 
 
-	public CgParam(double slope, double speed) {
+	public CgParam(double slope, String speed) {
 		Slope = slope;
 		Speed = speed;
 	}
@@ -41,6 +43,39 @@ public class CgParam implements Comparable<CgParam> {
 			return 1;
 		else
 			return 0;
+	}
+
+
+	public double getSlope() {
+		return Slope;
+	}
+
+
+	public void setSlope(double slope) {
+		Slope = slope;
+	}
+
+
+	public String getSpeed() {
+		return Speed;
+	}
+
+
+	public double getSpeedNumber() {
+		double speed = 0.0;
+
+		if (Speed.contains(":")) {
+			// if the speed is a pace, we need to convert it to a 'per hour' number
+			speed = Utils.PaceToSpeed(Speed);
+		} else {
+			speed = Double.valueOf(Speed);
+		}
+		return speed;
+	}
+
+
+	public void setSpeed(double speed) {
+		Speed = String.valueOf(speed);
 	}
 
 }

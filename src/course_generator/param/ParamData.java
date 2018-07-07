@@ -86,9 +86,9 @@ public class ParamData {
 			writer.writeStartElement("Param");
 			for (CgParam curvePoint : data) {
 				writer.writeStartElement("Item");
-				Utils.WriteStringToXML(writer, "Slope", String.format(Locale.ROOT, "%f", curvePoint.Slope));
+				Utils.WriteStringToXML(writer, "Slope", String.format(Locale.ROOT, "%f", curvePoint.getSlope()));
 				// Saving the curve speeds using the metric system.
-				Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", curvePoint.Speed));
+				Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", curvePoint.getSpeedNumber()));
 				writer.writeEndElement(); // Item
 			}
 			writer.writeEndElement(); // Param
@@ -112,8 +112,8 @@ public class ParamData {
 		{
 			double max = -9999.0;
 			for (int j = 0; j <= data.size() - 1; j++) {
-				if (data.get(j).Speed > max)
-					max = data.get(j).Speed;
+				if (data.get(j).getSpeedNumber() > max)
+					max = data.get(j).getSpeedNumber();
 			}
 			return max;
 		} else

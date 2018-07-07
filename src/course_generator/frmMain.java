@@ -318,10 +318,10 @@ public class frmMain extends javax.swing.JFrame {
 			ProgDir = ProgDir.substring(0, ProgDir.length() - 2);
 
 		// -- Initialize data
-		Track = new TrackData();
-		Backup_Track = new TrackData();
 		Resume = new ResumeData();
 		Settings = new CgSettings();
+		Track = new TrackData(Settings);
+		Backup_Track = new TrackData(Settings);
 
 		// showProfilMarker=true;
 
@@ -667,7 +667,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuLastCGX = new javax.swing.JMenu();
 		mnuLastCGX.setText(bundle.getString("frmMain.mnuLastCGX.text"));
 		mnuLastCGX.setIcon(Utils.getIcon(this, "open_cgx.png", Settings.MenuIconSize));
-		
+
 		// -- Mru CGX n°1
 		mnuMruCGX1 = new javax.swing.JMenuItem();
 		mnuMruCGX1.setText(bundle.getString("frmMain.mnuMruCGX1.text"));
@@ -1237,7 +1237,6 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSpeedSlopeCurves = new javax.swing.JMenuItem();
 		mnuSpeedSlopeCurves.setIcon(Utils.getIcon(this, "chart_curve.png", Settings.MenuIconSize));
 		mnuSpeedSlopeCurves.setText(bundle.getString("frmMain.mnuSpeedSlopeCurves.text"));
-		mnuSpeedSlopeCurves.setEnabled(false);
 		mnuSpeedSlopeCurves.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				EditSSCurves();
@@ -2052,7 +2051,6 @@ public class frmMain extends javax.swing.JFrame {
 		btDisplaySSCurves.setIcon(Utils.getIcon(this, "chart_curve.png", Settings.ToolbarIconSize));
 		btDisplaySSCurves.setToolTipText(bundle.getString("frmMain.btDisplaySSCurves.toolTipText"));
 		btDisplaySSCurves.setFocusable(false);
-		btDisplaySSCurves.setEnabled(false);
 		btDisplaySSCurves.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				EditSSCurves();
@@ -3286,7 +3284,6 @@ public class frmMain extends javax.swing.JFrame {
 		btSearch.setEnabled(isLoaded);
 		btGotoPreviousMark.setEnabled(isLoaded);
 		btGotoNextMark.setEnabled(isLoaded);
-		btDisplaySSCurves.setEnabled(isLoaded);
 		btTrackSettings.setEnabled(isLoaded);
 		btFillCoeff.setEnabled(isLoaded);
 		btFillDiff.setEnabled(isLoaded);
@@ -3324,7 +3321,6 @@ public class frmMain extends javax.swing.JFrame {
 		mnuDefineNewStart.setEnabled(isLoaded);
 		mnuCalculateTrackTime.setEnabled(isLoaded);
 		mnuTrackSettings.setEnabled(isLoaded);
-		mnuSpeedSlopeCurves.setEnabled(isLoaded);
 	}
 
 
@@ -3743,9 +3739,10 @@ public class frmMain extends javax.swing.JFrame {
 	private javax.swing.JMenu mnuEdit;
 	private javax.swing.JPanel jPanelAnalyze;
 	private javax.swing.JPanel jPanelLeft;
-	//-- Don't remove!!! May be one day I'll use it ;) (see comment block in "initcomponent")
-	private javax.swing.JTree jTreeMain; 
-	//--
+	// -- Don't remove!!! May be one day I'll use it ;) (see comment block in
+	// "initcomponent")
+	private javax.swing.JTree jTreeMain;
+	// --
 	private javax.swing.JMenu mnuLastCGX;
 	private javax.swing.JMenu mnuLastGPX;
 	private javax.swing.JMenuBar mnuMain;
