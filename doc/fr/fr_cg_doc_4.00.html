@@ -12,7 +12,7 @@
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <link rel="stylesheet" href="cg_doc.css">
+  <link rel="stylesheet" href="cg_doc.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -90,7 +90,10 @@
 </ul></li>
 <li><a href="#inverser-le-sens-du-parcours"><span class="toc-section-number">9.9</span> Inverser le sens du parcours</a></li>
 <li><a href="#définir-un-nouveau-point-de-départ-sur-un-parcours-en-boucle"><span class="toc-section-number">9.10</span> Définir un nouveau point de départ sur un parcours en boucle</a></li>
-<li><a href="#les-paramètres-généraux-de-course-generator"><span class="toc-section-number">9.11</span> Les paramètres généraux de Course Generator</a></li>
+<li><a href="#les-paramètres-généraux-de-course-generator"><span class="toc-section-number">9.11</span> Les paramètres généraux de Course Generator</a><ul>
+<li><a href="#onglet-général"><span class="toc-section-number">9.11.1</span> Onglet “Général”</a></li>
+<li><a href="#onglet-affichage"><span class="toc-section-number">9.11.2</span> Onglet “Affichage”</a></li>
+</ul></li>
 <li><a href="#importer-et-exporter-les-points-marqués"><span class="toc-section-number">9.12</span> Importer et exporter les points marqués</a></li>
 <li><a href="#analyser-les-données-après-une-course"><span class="toc-section-number">9.13</span> Analyser les données après une course</a></li>
 <li><a href="#utiliser-les-fonctionnalités-de-la-partie-carte"><span class="toc-section-number">9.14</span> Utiliser les fonctionnalités de la partie carte</a></li>
@@ -197,13 +200,10 @@ Source Wikipédia</p>
 </ul>
 <h1 id="les-menus"><span class="header-section-number">4</span> Les menus</h1>
 <h2 id="menu-fichier"><span class="header-section-number">4.1</span> Menu “Fichier”</h2>
-<figure>
-<img src="./images/Menu/CG40_Menu_File.png" alt="Menu Fichier" /><figcaption>Menu Fichier</figcaption>
-</figure>
 <ul>
 <li><p><strong>Ouvrir un fichier GPX</strong> : Permet de charger un fichier au format GPX. Raccourci clavier: [MAJ+CTRL+O].</p></li>
-<li><p><strong>Ouvrir un fichier CGX</strong> : Permet de charger un fichier au format CGX. Raccourci clavier: [CTRL+O].</p></li>
 <li><p><strong>Derniers fichiers GPX</strong> : Permet l’affichage d’un sous-menu listant les 5 derniers fichiers GPX qui ont été ouvert. Un clic sur un de ces fichiers permet de l’ouvrir.</p></li>
+<li><p><strong>Ouvrir un fichier CGX</strong> : Permet de charger un fichier au format CGX. Raccourci clavier: [CTRL+O].</p></li>
 <li><p><strong>Derniers fichiers CGX</strong> : Permet l’affichage d’un sous-menu listant les 5 derniers fichiers CGX qui ont été ouvert. Un clic sur un de ces fichiers permet de l’ouvrir.</p></li>
 <li><p><strong>Sauver CGX</strong> : Permet de sauver les données du parcours au format CGX. Toutes les données du parcours (difficultés, coefficient de fatigue, temps de ravitaillement….) sont sauvegardées. Raccourci clavier: [CTRL+S].</p></li>
 <li><p><strong>Sauver GPX</strong> : Permet de sauver les données du parcours au format GPX. Attention! Seules les données de latitude, de longitude, d’altitude et de temps sont sauvées.</p></li>
@@ -219,27 +219,19 @@ Source Wikipédia</p>
 <li><p><strong>Quitter Course Generator</strong> : Permet d’arrêter l’exécution de <strong>Course Generator</strong>. raccourci clavier: [Alt+F4].</p></li>
 </ul>
 <h2 id="menu-edition"><span class="header-section-number">4.2</span> Menu “Edition”</h2>
-<figure>
-<img src="./images/Menu/CG40_Menu_Edit.png" alt="Menu Edition" /><figcaption>Menu Edition</figcaption>
-</figure>
 <ul>
 <li><p><strong>Copier</strong> : Permet de copier la cellule courante dans le presse papier. Raccourci clavier: [CTRL+C].</p></li>
 <li><p><strong>Recherche d’un point…</strong> : Permet de rechercher un point GPS par sa longitude et sa latitude. Le point le plus proche est sélectionné. Raccourci clavier: [CTRL+F].</p></li>
+<li><p><strong>Mode lecture seul</strong> : Permet de sélectionner ou désélectionner le mode “Lecture seul”. Dans ce mode les modifications des paramètres du parcours sont impossibles.</p></li>
 <li><p><strong>Marquer la position courante</strong> : Permet de mettre une marque sur la ligne courante. Si la ligne contient déjà une marque, elle est alors supprimée. Raccourci clavier: [F6].</p></li>
 <li><p><strong>Aller à la marque suivante</strong> : Permet de sélectionner la ligne contenant le Tag suivant. Raccourci clavier: [F7].</p></li>
 <li><p><strong>Aller à la marque précédente</strong> : Permet de sélectionner la ligne contenant le Tag précédent. Raccourci clavier: [Ctrl+F7].</p></li>
 </ul>
 <h2 id="menu-affichage"><span class="header-section-number">4.3</span> Menu “Affichage”</h2>
-<figure>
-<img src="./images/Menu/CG40_Menu_Display.png" alt="Menu Affichage" /><figcaption>Menu Affichage</figcaption>
-</figure>
 <ul>
 <li><strong>Générer un mini roadbook</strong> : Permet d’ouvrir une fenêtre permettant de créer un mini roadbook.</li>
 </ul>
 <h2 id="menu-outils"><span class="header-section-number">4.4</span> Menu “Outils”</h2>
-<figure>
-<img src="./images/Menu/CG40_Menu_Tools.png" alt="Menu Outils" /><figcaption>Menu Outils</figcaption>
-</figure>
 <ul>
 <li><p><strong>Détermination des mini/maxi</strong> : Permet de déterminer les points haut et bas du parcours.</p></li>
 <li><p><strong>Inversion du parcours</strong> : Permet d’inverser le sens du parcours.</p></li>
@@ -248,18 +240,12 @@ Source Wikipédia</p>
 <li><p><strong>Afficher le répertoire contenant les fichiers courbes vitesse/pente</strong> : Ouvre l’explorateur de fichier et affiche le répertoire correspondant.</p></li>
 </ul>
 <h2 id="menu-paramètres"><span class="header-section-number">4.5</span> Menu “Paramètres”</h2>
-<figure>
-<img src="./images/Menu/CG40_Menu_Settings.png" alt="Menu Paramètres" /><figcaption>Menu Paramètres</figcaption>
-</figure>
 <ul>
 <li><p><strong>Paramètres du parcours…</strong> : Permet d’ouvrir une fenêtre permettant de régler les paramètres de la course. Raccourci clavier: [F9].</p></li>
 <li><p><strong>Courbes vitesses/pentes…</strong> : Permet d’ouvrir une fenêtre permettant de choisir ou de créer une courbe de vitesse par rapport à la pente.</p></li>
 <li><p><strong>Paramètres de Course Generator…</strong> : Permet de régler les paramètres spécifique au logiciel <strong>Course Generator</strong>.</p></li>
 </ul>
 <h2 id="menu-aide"><span class="header-section-number">4.6</span> Menu “Aide”</h2>
-<figure>
-<img src="./images/Menu/CG40_Menu_Help.png" alt="Menu Aide" /><figcaption>Menu Aide</figcaption>
-</figure>
 <ul>
 <li><p><strong>Aide</strong> : Affiche ce document.</p></li>
 <li><p><strong>Contrôle mise à jour</strong> : Permet de vérifier si une mise à jour de <strong>Course Generator</strong> existe.</p></li>
@@ -272,19 +258,19 @@ Source Wikipédia</p>
 <img src="./images/Toolbar/CG40_Main_Toolbar.png" alt="La barre d’outils" /><figcaption>La barre d’outils</figcaption>
 </figure>
 <ul>
-<li><img src="./images/Toolbar/openGPX.png" /> : Permet de charger un parcours au format GPX</li>
-<li><img src="./images/Toolbar/openCGX.png" /> : Permet de charger un parcours au format CGX</li>
-<li><img src="./images/Toolbar/saveCGX.png" /> : Permet de sauvegarder le parcours au format CGX</li>
+<li><img src="./images/Toolbar/open_gpx.png" /> : Permet de charger un parcours au format GPX</li>
+<li><img src="./images/Toolbar/open_cgx.png" /> : Permet de charger un parcours au format CGX</li>
+<li><img src="./images/Toolbar/save_cgx.png" /> : Permet de sauvegarder le parcours au format CGX</li>
 <li><img src="./images/Toolbar/undo.png" /> : Permet d’annuler la dernière commande</li>
 <li><img src="./images/Toolbar/search.png" /> : Permet de faire la recherche d’une position GPS</li>
-<li><img src="./images/Toolbar/prev_position.png" /> : Permet de rechercher la marque précédente</li>
-<li><img src="./images/Toolbar/next_position.png" /> : Permet de rechercher la marque suivante</li>
-<li><img src="./images/Toolbar/mrb.png" /> : Permet d’afficher le mini roadbook</li>
-<li><img src="./images/Toolbar/curve.png" /> : Permet d’afficher la fenêtre de choix de la courbe vitesse/pente</li>
-<li><img src="./images/Toolbar/settings.png" /> : Permet d’ouvrir la fenêtre de paramètres du parcours</li>
+<li><img src="./images/Toolbar/prev.png" /> : Permet de rechercher la marque précédente</li>
+<li><img src="./images/Toolbar/next.png" /> : Permet de rechercher la marque suivante</li>
+<li><img src="./images/Toolbar/roadbook.png" /> : Permet d’afficher le mini roadbook</li>
+<li><img src="./images/Toolbar/chart_curve.png" /> : Permet d’afficher la fenêtre de choix de la courbe vitesse/pente</li>
+<li><img src="./images/Toolbar/setting.png" /> : Permet d’ouvrir la fenêtre de paramètres du parcours</li>
 <li><img src="./images/Toolbar/fill_diff.png" /> : Permet d’afficher la fenêtre de réglage global de la qualité du terrain</li>
 <li><img src="./images/Toolbar/fill_coeff.png" /> : Permet d’afficher la fenêtre de réglage global du coefficient de fatigue</li>
-<li><img src="./images/Toolbar/refresh_data.png" /> : Permet de calculer le temps de parcours</li>
+<li><img src="./images/Toolbar/refresh.png" /> : Permet de calculer le temps de parcours</li>
 </ul>
 <h1 id="la-barre-détats"><span class="header-section-number">6</span> La barre d’états</h1>
 <p>Située sur le bas de la fenêtre elle affiche les informations sur l’application et le parcours.<br />
@@ -379,7 +365,7 @@ Source Wikipédia</p>
 <li>La distance parcourue en montée, sur le plat et en descente</li>
 <li>La différence de température entre le point bas du parcours et le point haut. Cette valeur est purement indicative et théorique. Elle ne prend pas en compte la température ressentie (du au vent) et les phénomènes locaux. La base de calcul est 0.6°C par 100m de dénivelé.</li>
 </ul>
-<p>Le bouton <img src="./images/Tabs/save.png" /> permet de sauver ces données au format HTML.<br />
+<p>Le bouton <img src="./images/Tabs/save_html.png" /> permet de sauver ces données au format HTML.<br />
 Le bouton <img src="./images/Tabs/refresh.png" /> permet de rafraîchir les données.</p>
 <h2 id="longlet-analyse"><span class="header-section-number">7.4</span> L’onglet “Analyse”</h2>
 <p>Cet onglet permet d’obtenir une analyse de votre parcours. Il contient 3 sous-onglets qui sont détaillés ci-dessous.</p>
@@ -413,7 +399,7 @@ Le bouton <img src="./images/Tabs/refresh.png" /> permet de rafraîchir les donn
 <li>Un nuage de points qui regroupe tous les points acquis lors de votre parcours</li>
 <li>Une courbe vitesse/pente (extrapolé)</li>
 </ul>
-<p>Le bouton <img src="./images/Tabs/save.png" /> permet de sauvegarder la courbe résultat (courbe rouge) dans la bibliothèque des courbes vitesse/pente. Elle sera exploitable dans la fenêtre courbe.</p>
+<p>Le bouton <img src="./images/Tabs/save_curve.png" /> permet de sauvegarder la courbe résultat (courbe rouge) dans la bibliothèque des courbes vitesse/pente. Elle sera exploitable dans la fenêtre courbe.</p>
 <p>La boite de dialogue suivante apparaît:<br />
 <img src="./images/Tabs/CG40_Tab_Analyze_Speed_Slope_Save.png" /><br />
 Le champ de saisie “Nom” permet de saisir le nom de la courbe.<br />
@@ -447,7 +433,7 @@ Le bouton <img src="./images/Tabs/speed.png" /> permet de filtrer la vitesse de 
 <li>La vitesse moyenne depuis le dernier point.</li>
 <li>Le commentaire sur le point marqué.</li>
 </ul>
-<p>Le bouton <img src="./images/Tabs/save.png" /> permet de sauvegarder les données du tableau au format CSV afin de les exploiter dans un tableur (Excel, OpenOffice Calc…).<br />
+<p>Le bouton <img src="./images/Tabs/save_csv.png" /> permet de sauvegarder les données du tableau au format CSV afin de les exploiter dans un tableur (Excel, OpenOffice Calc…).<br />
 Le bouton <img src="./images/Tabs/refresh.png" /> permet de rafraîchir les données.</p>
 <h1 id="utilisation-de-course-generator"><span class="header-section-number">8</span> Utilisation de Course Generator</h1>
 <p>La procédure normale d’utilisation de <strong>Course Generator</strong> est:</p>
@@ -488,7 +474,7 @@ Le bouton <img src="./images/Tabs/refresh.png" /> permet de rafraîchir les donn
 Si vous avez sélectionné la prise en compte de la nuit, vous pourrez constater que la colonne “Heure” à un fond bleu durant les périodes de nuit et vert durant les périodes de jour.</p>
 <h2 id="paramétrer-la-courbe-de-vitessepente"><span class="header-section-number">8.3</span> Paramétrer la courbe de vitesse/pente</h2>
 <p>Afin d’avoir une durée de parcours cohérente avec votre niveau, il faut choisir ou créer une courbe de vitesse par rapport à la pente. Cette courbe va de -50% de pente (descente) à +50% de pente (montée). Le choix de la courbe se fait par le choix de la vitesse que l’on veut “tenir” lorsque la pente est nulle (0%) sur un terrain goudronné. Un ensemble de courbes ont été créée afin de couvrir la plupart des utilisations en course à pied.</p>
-<p>Le menu “Paramètres&gt;Courbes Vitesse/Pente…” ou le bouton <img src="./images/Toolbar/curve.png" /> permettent d’afficher la boite de dialogue permettant de sélectionner et gérer les courbes.<br />
+<p>Le menu “Paramètres&gt;Courbes Vitesse/Pente…” ou le bouton <img src="./images/Toolbar/chart_curve.png" /> permettent d’afficher la boite de dialogue permettant de sélectionner et gérer les courbes.<br />
 <img src="./images/Curve/CG40_Dlg_Curves.png" /></p>
 <p>Sur la gauche apparaît la liste des courbes déjà créée. Lors de la création, un nom explicite leur a été donné afin de les retrouver rapidement. Essayez de conserver ce principe si vous créez de nouvelles courbes.</p>
 <p>Le bouton <img src="./images/Curve/chart_curve_open.png" /> permet de charger les données du fichier courbe sélectionné dans la liste.<br />
@@ -578,7 +564,7 @@ Après avoir modifié la colonne “Récup.”, il est nécessaire de relancer u
 <li>[Ctrl+F7] permet de se déplacer rapidement vers la précédente ligne contenant un indicateur.</li>
 </ul>
 <h2 id="calculer-le-temps-de-parcours"><span class="header-section-number">8.10</span> Calculer le temps de parcours</h2>
-<p>Une fois les paramètres du parcours saisis, il est nécessaire d’appuyer sur le bouton <img src="./images/Toolbar/refresh_data.png" /> afin de lancer le calcul du temps de passage pour chaque point. Les colonnes ‘Temps’ et ‘Heure’ sont alors mises à jour en fonction des réglages que vous avez réalisés précédemment. Dans la barre d’état, située en bas de la fenêtre, le temps total est mis à jour.</p>
+<p>Une fois les paramètres du parcours saisis, il est nécessaire d’appuyer sur le bouton <img src="./images/Toolbar/refresh.png" /> afin de lancer le calcul du temps de passage pour chaque point. Les colonnes ‘Temps’ et ‘Heure’ sont alors mises à jour en fonction des réglages que vous avez réalisés précédemment. Dans la barre d’état, située en bas de la fenêtre, le temps total est mis à jour.</p>
 <h2 id="sauver-le-parcours"><span class="header-section-number">8.11</span> Sauver le parcours</h2>
 <p><strong>Course Generator</strong> offre la possibilité de sauver votre parcours dans plusieurs formats.</p>
 <ul>
@@ -602,7 +588,7 @@ Chaque position trouvée est marquée avec un indicateur <img src="./images/Tags
 <p>La boite dialogue suivante s’affiche:<br />
 <img src="./images/CG40_Line_Editor.png" /></p>
 <p>Le champ “Altitude” permet de saisir la nouvelle altitude.</p>
-<p>Il sera nécessaire de relancer un calcul avec le bouton <img src="./images/Toolbar/refresh_data.png" /> afin de prendre en compte la nouvelle altitude.</p>
+<p>Il sera nécessaire de relancer un calcul avec le bouton <img src="./images/Toolbar/refresh.png" /> afin de prendre en compte la nouvelle altitude.</p>
 <h2 id="fusionner-deux-parcours"><span class="header-section-number">9.4</span> Fusionner deux parcours</h2>
 <p><strong>Course Generator</strong> offre la possibilité de fusionner deux parcours.</p>
 <p>La procédure est la suivante:</p>
@@ -616,7 +602,7 @@ Chaque position trouvée est marquée avec un indicateur <img src="./images/Tags
 <li>La fusion est alors réalisée</li>
 </ul>
 <p>Si vous avez d’autres parcours à fusionner au nouveau parcours, il vous suffit de recommencer la procédure.</p>
-<p>Après la fusion du ou des parcours vous faudra reprendre les réglages du coefficient de fatigue et relancer un calcul (bouton <img src="./images/Toolbar/refresh_data.png" /> ou [F5]) car les données temporelles seront fausses.</p>
+<p>Après la fusion du ou des parcours vous faudra reprendre les réglages du coefficient de fatigue et relancer un calcul (bouton <img src="./images/Toolbar/refresh.png" /> ou [F5]) car les données temporelles seront fausses.</p>
 <p>Une fois que vous avez terminé la fusion et relancé un calcul, vous pourrez sauvegarder le parcours.</p>
 <h2 id="sauver-une-partie-du-parcours"><span class="header-section-number">9.5</span> Sauver une partie du parcours</h2>
 <p><strong>Course Generator</strong> offre la possibilité de sauver une partie d’un parcours. Cela permet, par exemple, de scinder un parcours en plusieurs parties.</p>
@@ -676,12 +662,12 @@ Le profil met en évidence les portions de route et de sentier par un code de co
 <p>Le type “Pente”:<br />
 <img src="./images/MRB/CG40_MRB_Slope_Label.png" /><br />
 Le profil met en évidence le degré de pente par un code de couleur.</p>
-<p>Les couleurs utilisées dans les mini roadbook sont paramétrable dans la fenêtre de configuration accessible via le bouton <img src="./images/MRB/Toolbar/settings.png" />.</p>
+<p>Les couleurs utilisées dans les mini roadbook sont paramétrable dans la fenêtre de configuration accessible via le bouton <img src="./images/MRB/Toolbar/setting.png" />.</p>
 <h3 id="la-barre-dicônes"><span class="header-section-number">9.8.3</span> La barre d’icônes</h3>
 <p><img src="./images/MRB/CG40_MRB_Toolbar.png" /></p>
 <ul>
 <li><img src="./images/MRB/Toolbar/save.png" /> : Permet de sauver le mini roadbook sous forme d’image. Le format disponible est PNG.</li>
-<li><img src="./images/MRB/Toolbar/settings.png" /> : Permet d’ouvrir la fenêtre de configuration du mini roadbook</li>
+<li><img src="./images/MRB/Toolbar/setting.png" /> : Permet d’ouvrir la fenêtre de configuration du mini roadbook</li>
 <li><img src="./images/MRB/Toolbar/pipette.png" /> : Permet de copier la mise en forme d’une étiquette afin de la reproduire sur une ou plusieurs autres étiquettes. Cette fonction est aussi accessible avec le raccourci clavier CTRL+C</li>
 <li><img src="./images/MRB/Toolbar/replicate.png" /> : Permet de coller la mise en forme sur l’étiquette sélectionnée. Seules les propriétés sélectionnées dans la fenêtre de configuration de la fonction seront collées. Cette fonction est aussi accessible avec le raccourci clavier CTRL+V</li>
 <li><p><img src="./images/MRB/Toolbar/replicate_config.png" /> : Ouvre une fenêtre permettant de configurer la fonction de duplication de la mise en forme. Cela ouvre la fenêtre suivante:<br />
@@ -696,7 +682,7 @@ Sélectionnez les paramètres que vous voulez utiliser lors de la copie.</p></li
 <li>Avec route/sentier</li>
 <li>Avec pente</li>
 </ul></li>
-<li><img src="./images/MRB/Toolbar/favoris1.png" /> <img src="./images/MRB/Toolbar/favoris2.png" /> <img src="./images/MRB/Toolbar/favoris3.png" /> <img src="./images/MRB/Toolbar/favoris4.png" /> <img src="./images/MRB/Toolbar/favoris5.png" /> : Ces 5 boutons permettent de mémoriser des formats d’affichage.
+<li><img src="./images/MRB/Toolbar/favori1.png" /> <img src="./images/MRB/Toolbar/favori2.png" /> <img src="./images/MRB/Toolbar/favori3.png" /> <img src="./images/MRB/Toolbar/favori4.png" /> <img src="./images/MRB/Toolbar/favori5.png" /> : Ces 5 boutons permettent de mémoriser des formats d’affichage.
 <ul>
 <li>Un clique droit sur un bouton mémorise dans le bouton le réglage affiché dans le champ format.</li>
 <li>Un clique gauche sur un bouton restitue dans le champ format, le format mémorisé dans le bouton.</li>
@@ -708,7 +694,7 @@ Sélectionnez les paramètres que vous voulez utiliser lors de la copie.</p></li
 <p>La taille maximale du mini roadbook est de 4000x2000 pixels (Largeur x Hauteur). C’est aussi la taille de l’image finale.</p>
 <p>Le réglage de la taille est faite par les champs “Largeur” et “Hauteur” situé dans la barre d’icône.</p>
 <h3 id="configurer-le-mini-roadbook"><span class="header-section-number">9.8.5</span> Configurer le mini roadbook</h3>
-<p>L’icône <img src="./images/MRB/Toolbar/settings.png" /> permet d’ouvrir la fenêtre de configuration.</p>
+<p>L’icône <img src="./images/MRB/Toolbar/setting.png" /> permet d’ouvrir la fenêtre de configuration.</p>
 <p>L’onglet “Général” permet de:<br />
 <img src="./images/MRB/CG40_MRB_Settings1.png" /></p>
 <ul>
@@ -768,7 +754,7 @@ Le bouton “Couleurs par défaut” permet de remplacer les couleurs courantes 
 <p><img src="./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png" /><br />
 Les zones de nuits apparaissent grâce au fond grisé.</p>
 <h2 id="inverser-le-sens-du-parcours"><span class="header-section-number">9.9</span> Inverser le sens du parcours</h2>
-<p><strong>Course Generator</strong> offre la possibilité d’inverser le sens du parcours. Afin de réaliser cette action il faut sélectionner “Outil&gt;Inversion du parcours”. Après l’opération, il est nécessaire de redéfinir les coefficients de fatigues et les barrières horaires puis de relancer un calcul (bouton <img src="./images/Toolbar/refresh_data.png" /> ou [F5]).</p>
+<p><strong>Course Generator</strong> offre la possibilité d’inverser le sens du parcours. Afin de réaliser cette action il faut sélectionner “Outil&gt;Inversion du parcours”. Après l’opération, il est nécessaire de redéfinir les coefficients de fatigues et les barrières horaires puis de relancer un calcul (bouton <img src="./images/Toolbar/refresh.png" /> ou [F5]).</p>
 <h2 id="définir-un-nouveau-point-de-départ-sur-un-parcours-en-boucle"><span class="header-section-number">9.10</span> Définir un nouveau point de départ sur un parcours en boucle</h2>
 <p><strong>Course Generator</strong> offre la possibilité, si le parcours chargé en mémoire est une boucle, de définir un nouveau point départ. La procédure est la suivante:</p>
 <ul>
@@ -778,16 +764,25 @@ Les zones de nuits apparaissent grâce au fond grisé.</p>
 <img src="./images/CG40_Dlg_Confirm_New_Start.png" /></li>
 <li>Confirmer la commande en cliquant sur “Oui”.</li>
 </ul>
-<p>Après l’opération il est nécessaire de redéfinir les coefficients de fatigues et les barrières horaires puis de relancer un calcul (bouton <img src="./images/Toolbar/refresh_data.png" /> ou [F5]).</p>
+<p>Après l’opération il est nécessaire de redéfinir les coefficients de fatigues et les barrières horaires puis de relancer un calcul (bouton <img src="./images/Toolbar/refresh.png" /> ou [F5]).</p>
 <h2 id="les-paramètres-généraux-de-course-generator"><span class="header-section-number">9.11</span> Les paramètres généraux de Course Generator</h2>
-<p>Le menu “Paramètres&gt;Paramètres de Course Generator” affiche la fenêtre suivante:<br />
-<img src="./images/CG40_Settings.png" /></p>
+<p>Le menu “Paramètres&gt;Paramètres de Course Generator” affiche la fenêtre de configuration du logiciel.</p>
+<h3 id="onglet-général"><span class="header-section-number">9.11.1</span> Onglet “Général”</h3>
+<p><img src="./images/CG40_Settings_General.png" /></p>
 <p>Les réglages possibles sont les suivants:</p>
 <ul>
 <li>“Langues” : Permet de sélectionner la langue utilisée dans l’interface. “Système” utilise les réglages du système d’exploitation pour déterminer la langue à utiliser. Si la langue système n’est pas géré par <strong>Course Generator</strong> alors l’anglais est sélectionné.</li>
 <li>“Unité” : Permet de choisir entre “km/m” et “Miles/Pieds”.</li>
-<li>“Format vitesse” : Permet de choisir le format de la vitesse (Vitesse ou pas).</li>
+<li>“Format vitesse” : Permet de choisir le format de la vitesse (Vitesse ou Allure).</li>
+<li>&quot;Seuil pour filtre position (en %) : Seuil, en %, à partir duquel le logiciel demande si on veut appliquer un filtre sur les points GPS lors du chargement d’un parcours.</li>
 <li>“Contrôle mise à jour au démarrage” : Permet de choisir si on veut contrôler la présence d’une mise à jour de l’application au démarrage.</li>
+</ul>
+<h3 id="onglet-affichage"><span class="header-section-number">9.11.2</span> Onglet “Affichage”</h3>
+<p><img src="./images/CG40_Settings_Display.png" /></p>
+<p>Les réglages possibles sont les suivants:</p>
+<ul>
+<li>“Police de caractère par défaut” : Permet de choisir la police de caractère qui va être utilisée pour l’affichage.</li>
+<li>Taille des icônes : Permet de spécifier la taille des icônes de l’interface.</li>
 </ul>
 <h2 id="importer-et-exporter-les-points-marqués"><span class="header-section-number">9.12</span> Importer et exporter les points marqués</h2>
 <p>Il est nécessaire dans certain cas de devoir sauvegarder uniquement les points marqués du parcours actuel dans un fichier. Cela permet si vous avez une nouvelle version du parcours de pouvoir importer ces points sur ce parcours.</p>

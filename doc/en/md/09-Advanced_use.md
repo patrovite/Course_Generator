@@ -29,7 +29,7 @@ The following dialog box is displayed:
 
 The "Altitude" field is used to enter the new altitude.
 
-It will be necessary to restart a calculation with the button ![refresh button](./images/Toolbar/refresh_data.png) to take into account the new altitude.
+It will be necessary to restart a calculation with the button ![refresh button](./images/Toolbar/refresh.png) to take into account the new altitude.
 
 ## Merge two tracks
 
@@ -47,7 +47,7 @@ The procedure is as follows:
 
 If you have other tracks to merge, simply repeat the process.
 
-After merging the tracks you will have to modify the settings of the fatigue coefficients and restart a computation (butotn ![refresh button](./images/Toolbar/refresh_data.png) or [F5]) because the time data will be wrong.
+After merging the tracks you will have to modify the settings of the fatigue coefficients and restart a computation (button ![refresh button](./images/Toolbar/refresh.png) or [F5]) because the time data will be wrong.
 
 Once you have completed the merge and restarted a calculation, you will be able to save the track.
 
@@ -129,7 +129,7 @@ The "Slope" type :
 ![Slope type](./images/MRB/CG40_MRB_Slope_Label.png)  
 The profile highlights the degree of slope by a color code.
 
-The colors used in the mini roadbook can be set in the configuration window accessible with the button ![](./images/MRB/Toolbar/settings.png).
+The colors used in the mini roadbook can be set in the configuration window accessible with the button ![](./images/MRB/Toolbar/setting.png).
 
 ### The toolbar
 
@@ -137,7 +137,7 @@ The colors used in the mini roadbook can be set in the configuration window acce
 
 
 * ![save](./images/MRB/Toolbar/save.png) : Saves the mini roadbook as an image. The available format is PNG.
-* ![settings](./images/MRB/Toolbar/settings.png) : Opens the mini roadbook configuration window
+* ![settings](./images/MRB/Toolbar/setting.png) : Opens the mini roadbook configuration window
 * ![](./images/MRB/Toolbar/pipette.png) : Copies the current label format to reproduce it on one or more other labels. This function is also accessible with the keyboard shortcut CTRL + C
 * ![](./images/MRB/Toolbar/replicate.png) :  Paste the formatting on the selected label. Only the properties selected in the function's configuration window will be pasted. This function is also accessible with the keyboard shortcut CTRL + V
 * ![](./images/MRB/Toolbar/replicate_config.png) : Opens a window for configuring the duplicate formatting feature as shown below:
@@ -151,8 +151,8 @@ Select the settings you want to duplicate when copying.
     * Simple
     * With roads/trails
     * With slope
-* ![](./images/MRB/Toolbar/favoris1.png) ![](./images/MRB/Toolbar/favoris2.png) ![](./images/MRB/Toolbar/favoris3.png) ![](./images/MRB/Toolbar/favoris4.png)
-![](./images/MRB/Toolbar/favoris5.png) : These 5 buttons are used to store display formats.
+* ![](./images/MRB/Toolbar/favori1.png) ![](./images/MRB/Toolbar/favori2.png) ![](./images/MRB/Toolbar/favori3.png) ![](./images/MRB/Toolbar/favori4.png)
+![](./images/MRB/Toolbar/favori5.png) : These 5 buttons are used to store display formats.
     * A right click on a button memorizes in the button the setting displayed in the current format field.
     * A left click on a button restores the format stored in the button in the format field.
 * "Width" : Selects the width of the profile (Maximum value 4000 pixels).
@@ -167,7 +167,7 @@ The size setting is made by the "Width" and "Height" fields located in the icon 
 
 ### Configure the mini roadbook
 
-The icon ![](./images/MRB/Toolbar/settings.png) opens the configuration window.
+The icon ![](./images/MRB/Toolbar/setting.png) opens the configuration window.
 
 The "General" tab allows you to:  
 ![General tab](./images/MRB/CG40_MRB_Settings1.png)
@@ -241,7 +241,7 @@ The night times are displayed with a gray background.
 ## Reverse track direction
 
 **Course Generator** can reverse the direction of any given track. To perform this action select "Tools>Reverse track".
-After the operation, it is necessary to redefine the fatigue coefficients and cut-off time and then restart a calculation (button ![](./images/Toolbar/refresh_data.png) or [F5]).
+After the operation, it is necessary to redefine the fatigue coefficients and cut-off time and then restart a calculation (button ![](./images/Toolbar/refresh.png) or [F5]).
 
 ## Set a new starting point on a looped track
 
@@ -255,19 +255,31 @@ The procedure is as follows:
 ![Confirm new start dialog](./images/CG40_Dlg_Confirm_New_Start.png)
 * Confirm the order by clicking on "Yes".
 
-After the operation it is necessary to redefine the fatigue coefficients and cut-off times and then restart a calculation (button ![](./images/Toolbar/refresh_data.png) or [F5]).
+After the operation it is necessary to redefine the fatigue coefficients and cut-off times and then restart a calculation (button ![](./images/Toolbar/refresh.png) or [F5]).
 
 ## The general parameters of Course Generator
 
-The "Settings>Course Generator Settings" menu displays the following window:  
-![Global settings dialog](./images/CG40_Settings.png)
+Le menu "Paramètres>Paramètres de Course Generator" affiche la fenêtre de configuration du logiciel.
+The "Settings>Course Generator Settings" menu displays the software configuration window.
+
+### "General" tab  
+![](./images/CG40_Settings_General.png)
 
 The possible settings are:
 
 * "language" : Selects the language used in the interface. "System" uses operating system settings to determine which language to use. If the system language is not managed by **Course Generator** then English is selected.
 * "Units" : Chooses between "km/m" and "Miles/Feet".
 * "Speed format" : Chooses the type of speed to display (speed or pace).
+* "Threshold for position filter (in %) : Threshold, in%, from which the software asks if we want to apply a filter on GPS points when loading a track.
 * "Check for update at startup" : Allows you to choose if you want to check for a newer version of **Course Generator** available at application startup.
+
+### "Display" tab  
+![](./images/CG40_Settings_Display.png)
+
+The possible settings are:
+
+* "Default font" : Allows you to choose the font that will be used for the display.
+* Icons size : Specify the size of the interface icons.
 
 ## Import and export marked points
 
