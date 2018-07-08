@@ -279,6 +279,8 @@ public class frmMain extends javax.swing.JFrame {
 
 	private JLabel LbReadOnly;
 
+	private JMenuItem mnuDisplayCopyCurves;
+
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
 
@@ -456,7 +458,7 @@ public class frmMain extends javax.swing.JFrame {
 		panelMap.RefreshMapButtons();
 		panelProfil.RefreshProfilButtons();
 
-		ExportCurvesFromResource();
+		ExportCurvesFromResource(false);
 
 		// -- Display the splash screen
 		showDialogAbout(this, true, false, Version);
@@ -471,19 +473,21 @@ public class frmMain extends javax.swing.JFrame {
 
 
 	/**
-	 * If the "default.par" file is missing copy the curves files from the resource
-	 * to the config directory
+	 * Copy the curves files from the resource to the config directory
+	 * By default it's automatic if "default.par is missing. It can be forced
+	 * @param force "true" force the copy with checking the presence of "default.par"
 	 */
-	private void ExportCurvesFromResource() {
+	private void ExportCurvesFromResource(boolean force) {
 
 		String dst = DataDir + "/" + CgConst.CG_DIR + "/";
-		if (!Utils.FileExist(DataDir + "/" + CgConst.CG_DIR + "/" + "Default.par")) {
+		if ((!Utils.FileExist(DataDir + "/" + CgConst.CG_DIR + "/" + "Default.par")) || force) {
 			if (JOptionPane.showConfirmDialog(this, bundle.getString("frmMain.QuestionInstallCurves"), "",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
 				CgLog.info("Export curves from resource");
 
 				try {
+					//-- Curves in km/h
 					Utils.ExportResource(this, "/course_generator/curves/Default.par", dst + "Default.par");
 					Utils.ExportResource(this, "/course_generator/curves/Run_10_5km_h.par", dst + "Run_10_5km_h.par");
 					Utils.ExportResource(this, "/course_generator/curves/Run_10km_h.par", dst + "Run_10km_h.par");
@@ -514,6 +518,29 @@ public class frmMain extends javax.swing.JFrame {
 					Utils.ExportResource(this, "/course_generator/curves/Run_8km_h.par", dst + "Run_8km_h.par");
 					Utils.ExportResource(this, "/course_generator/curves/Run_9_5km_h.par", dst + "Run_9_5km_h.par");
 					Utils.ExportResource(this, "/course_generator/curves/Run_9km_h.par", dst + "Run_9km_h.par");
+					
+					//-- Curves in min/mile
+					Utils.ExportResource(this, "/course_generator/curves/Run_10min30sec_mile.par", dst + "Run_10min30sec_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_10min_mile.par", dst + "Run_10min_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_11min30sec_mile.par", dst + "Run_11min30sec_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_11min_mile.par", dst + "Run_11min_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_12min_mile.par", dst + "Run_12min_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_13min_mile.par", dst + "Run_13min_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_14min_mile.par", dst + "Run_14min_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_15min_mile.par", dst + "Run_15min_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_16min_mile.par", dst + "Run_16min_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_18min_mile.par", dst + "Run_18min_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_21min_mile.par", dst + "Run_21min_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_24min_mile.par", dst + "Run_24min_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_5min30sec_mile.par", dst + "Run_5min30sec_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_6min30sec_mile.par", dst + "Run_6min30sec_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_6min_mile.par", dst + "Run_6min_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_7min30sec_mile.par", dst + "Run_7min30sec_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_7min_mile.par", dst + "Run_7min_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_8min30sec_mile.par", dst + "Run_8min30sec_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_8min_mile.par", dst + "Run_8min_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_9min30sec_mile.par", dst + "Run_9min30sec_mile.par");
+					Utils.ExportResource(this, "/course_generator/curves/Run_9min_mile.par", dst + "Run_9min_mile.par");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -1194,6 +1221,22 @@ public class frmMain extends javax.swing.JFrame {
 		mnuInternetTools.setEnabled(false);
 		mnuInternetTools.setVisible(false);
 		mnuTools.add(mnuInternetTools);
+
+		
+		// -- Force curves copy from resources
+		// ------------
+		mnuDisplayCopyCurves = new javax.swing.JMenuItem();
+		mnuDisplayCopyCurves.setText(bundle.getString("frmMain.mnuDisplayCopyCurves.text"));
+		mnuDisplayCopyCurves.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ExportCurvesFromResource(true);
+			}
+		});
+		mnuTools.add(mnuDisplayCopyCurves);
+		
+		// -- Separator
+		// ---------------------------------------------------------
+		mnuTools.add(new javax.swing.JPopupMenu.Separator());
 
 		// -- Display the directory containing the speed/slope files
 		// ------------

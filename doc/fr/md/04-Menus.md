@@ -68,6 +68,8 @@ Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
 
 * **Estimer le temps de parcours** : Permet de lancer le calcul afin de déterminer le temps de passage pour chaque point GPS du parcours. Raccourci clavier: [F5].
 
+* **Mise à jour des courbes standards** : Les courbes standards "Vitesse/Pente" vont être mise à jour avec les réglages par défaut. Cela est nécessaire si vous avez modifié une courbe standard et que vous voulez revenir en arrière. Cela est aussi nécessaire après une mise à jour logicielle qui introduit de nouvelles courbes. Cela n'affecte pas les courbes personnalisées.
+
 * **Afficher le répertoire contenant les fichiers courbes vitesse/pente** : Ouvre l'explorateur de fichier et affiche le répertoire correspondant.
 
 ## Menu "Paramètres"

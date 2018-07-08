@@ -67,13 +67,15 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 * **Estimate track time** : Compute the estimated time for each of the course's points. Keyboard shortcut: [F5].
 
+* **Update standard curves** : The standard "Speed/slope" will be updated with standard settings. It's necessary to use this menu if you modified a standard curve and you want to retrieve the standard settings. It's also necessary after a software update that introduce new standard curves. It doesn't affect the custom curves.  
+
 * **Open the "Speed/Slope" folder** : Opens the folder containing the speed curve files in File Explorer.
 
 ## "Parameters" Menu 
 
 * **Track settings...** : Opens the dialog to configure the course settings. Keyboard shortcut: [F9].
 
-* **Speed/Slope curves...** : Opens the dialog to choose, create, modify or delete a speed/slope cruve.
+* **Speed/Slope curves...** : Opens the dialog to choose, create, modify or delete a speed/slope curve.
 
 * **Course Generator settings...** : Opens the dialog to change the main settings of **Course Generator**.
 
