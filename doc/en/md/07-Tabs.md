@@ -83,7 +83,7 @@ Statistics contain among other things:
 * The distance traveled uphill, on the flat and downhill
 * The temperature difference between the low point of the course and the high point. This value is purely indicative and theoretical. It does not take into account the wind chill effect and local phenomena. The basis of calculation is 0.6°C per 100m of elevation gain.
 
-The button ![](./images/Tabs/save.png) saves this data in HTML format.  
+The button ![](./images/Tabs/save_html.png) saves this data in HTML format.  
 The button ![](./images/Tabs/refresh.png) refreshes the data.
 
 ## "Analysis" tab
@@ -134,7 +134,7 @@ Two curves are present:
 * A speed/slope curve (extrapolated)
 
 
-The button ![](./images/Tabs/save.png) saves the result curve (red curve) in the speed/slope curve library. It will be useable in the curves dialog.  
+The button ![](./images/Tabs/save_curve.png) saves the result curve (red curve) in the speed/slope curve library. It will be useable in the curves dialog.  
 
 The following dialog appears:  
 ![](./images/Tabs/CG40_Tab_Analyze_Speed_Slope_Save.png)  
@@ -174,5 +174,5 @@ For each line you have:
 * The average speed since last point.
 * The comment on this point.
 
-The button ![](./images/Tabs/save.png) saves the table data in CSV format in order to be used in a spreadsheet (Excel, OpenOffice Calc ...).  
+The button ![](./images/Tabs/save_csv.png) saves the table data in CSV format in order to be used in a spreadsheet (Excel, OpenOffice Calc ...).  
 The button ![](./images/Tabs/refresh.png) allows you to refresh the data.  
