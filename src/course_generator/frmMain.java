@@ -178,7 +178,7 @@ public class frmMain extends javax.swing.JFrame {
 	private Timer timer1s; // 1 second timer object
 	private boolean bNoBackup = true;
 	private String StrMapsDirSize = "";
-	private String Lang4Help = "";
+	private String CurrentLanguage = "";
 	// private boolean showProfilMarker = true;
 
 	/**
@@ -221,6 +221,7 @@ public class frmMain extends javax.swing.JFrame {
 	private JMenuItem mnuCGSettings;
 	private JMenu mnuHelp;
 	private JMenuItem mnuCGHelp;
+	private JMenuItem menuCGFaq;
 	private JMenuItem mnuReward;
 	private JMenuItem mnuAbout;
 	private static JButton btSaveCGX;
@@ -380,9 +381,9 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Select the language for help
 		String tmpLang = Locale.getDefault().getLanguage();
 		if (tmpLang.equalsIgnoreCase("fr"))
-			Lang4Help = "fr";
+			CurrentLanguage = "fr";
 		else
-			Lang4Help = "en";
+			CurrentLanguage = "en";
 
 		// -- Set default font
 		SetDefaultFont();
@@ -1295,19 +1296,36 @@ public class frmMain extends javax.swing.JFrame {
 		mnuCGHelp.setText(bundle.getString("frmMain.mnuCGHelp.text"));
 		mnuCGHelp.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (!Utils.OpenHelp(Lang4Help)) {
-					CgLog.info("Failed to open help for the default language '" + Lang4Help);
+				if (!Utils.OpenHelp(CurrentLanguage)) {
+					CgLog.info("Failed to open help for the default language '" + CurrentLanguage);
 
-					// By default, we should be able to open the french help.
+					// By default, we should be able to open the French .
 					if (!Utils.OpenHelp("fr")) {
 						CgLog.info("Failed to open help for language 'fr'.");
 					}
 				}
-
-				// TODO link to website (when ready)
 			}
 		});
 		mnuHelp.add(mnuCGHelp);
+
+		// -- F.A.Q.
+		// --------------------------------------------------------------
+		menuCGFaq = new javax.swing.JMenuItem();
+		menuCGFaq.setIcon(Utils.getIcon(this, "help.png", Settings.MenuIconSize));
+		menuCGFaq.setText(bundle.getString("frmMain.menuCGFaq.text"));
+		menuCGFaq.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				String faqUrl = CurrentLanguage == "en" ? "https://techandrun.com/course-generator-2/faq/"
+						: "https://techandrun.com/course-generator/faq/";
+				try {
+
+					Desktop.getDesktop().browse(new URI(faqUrl));
+				} catch (IOException | URISyntaxException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		mnuHelp.add(menuCGFaq);
 
 		// -- Check for update
 		// -------------------------------------------------
