@@ -12,7 +12,7 @@
       span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
-  <link rel="stylesheet" href="cg_doc.css">
+  <link rel="stylesheet" href="cg_doc.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -90,7 +90,10 @@
 </ul></li>
 <li><a href="#reverse-track-direction"><span class="toc-section-number">9.9</span> Reverse track direction</a></li>
 <li><a href="#set-a-new-starting-point-on-a-looped-track"><span class="toc-section-number">9.10</span> Set a new starting point on a looped track</a></li>
-<li><a href="#the-general-parameters-of-course-generator"><span class="toc-section-number">9.11</span> The general parameters of Course Generator</a></li>
+<li><a href="#the-general-parameters-of-course-generator"><span class="toc-section-number">9.11</span> The general parameters of Course Generator</a><ul>
+<li><a href="#general-tab"><span class="toc-section-number">9.11.1</span> “General” tab</a></li>
+<li><a href="#display-tab"><span class="toc-section-number">9.11.2</span> “Display” tab</a></li>
+</ul></li>
 <li><a href="#import-and-export-marked-points"><span class="toc-section-number">9.12</span> Import and export marked points</a></li>
 <li><a href="#analyzing-data-after-a-race"><span class="toc-section-number">9.13</span> Analyzing data after a race</a></li>
 <li><a href="#using-the-map-features"><span class="toc-section-number">9.14</span> Using the map features</a></li>
@@ -144,7 +147,7 @@
 <p>Go on an adventure with <strong>Course Generator</strong>.</p>
 <p>Pierre DELORE</p>
 <h2 id="personal-data-protection"><span class="header-section-number">1.2</span> Personal data protection</h2>
-<p>The software collects information about your hardware and software configuration in the logs. These data are in the ‘logs’ directory which can be accessed via the menu “Tools&gt; Open the”Speed/Slope&quot; folder“. Nothing exits from your computer. It is only in case of problem that I will ask you to send me the ‘logs’ files.</p>
+<p>The software collects information about your hardware and software configuration in the logs. These data are in the ‘logs’ directory which can be accessed via the menu “Tools&gt; Open the”Speed/Slope&quot; folder&quot;. Nothing exits from your computer. It is only in case of problem that I will ask you to send me the ‘logs’ files.</p>
 <h1 id="the-principle"><span class="header-section-number">2</span> The principle</h1>
 <p>To work, <strong>Course Generator</strong> needs, as input, data containing a sequence of GPS points representing a track.</p>
 <p>This data can be:</p>
@@ -197,13 +200,10 @@ Wikipedia source</p>
 </ul>
 <h1 id="menus"><span class="header-section-number">4</span> Menus</h1>
 <h2 id="file-menu"><span class="header-section-number">4.1</span> “File” Menu</h2>
-<figure>
-<img src="./images/Menu/CG40_Menu_File.png" alt="File Menu" /><figcaption>File Menu</figcaption>
-</figure>
 <ul>
 <li><p><strong>Open GPX</strong> : Loads a GPX format file. Keyboard shortcut: [MAJ+CTRL+O].</p></li>
-<li><p><strong>Open CGX</strong> : Loads a CGX format file. Keyboard shortcut: [CTRL+O].</p></li>
 <li><p><strong>Recent GPX files</strong> : Displays a list of the last 5 GPX files that have been loaded. Clicking on one of those files will load them again.</p></li>
+<li><p><strong>Open CGX</strong> : Loads a CGX format file. Keyboard shortcut: [CTRL+O].</p></li>
 <li><p><strong>Recent CGX files</strong> : Displays a list of the last 5 CGX files that have been loaded. Clicking on one of those files will load them again.</p></li>
 <li><p><strong>Save as CGX</strong> : Saves the course data in CGX format. All the course data (difficulty, fatigue coefficient, aid station time…) will be asved. Keyboard shortcut: [CTRL+S].</p></li>
 <li><p><strong>Save as GPX</strong> : Saves the course data in GPX format. Warning! Only latitude, longitude and altitude data will be saved.</p></li>
@@ -219,47 +219,34 @@ Wikipedia source</p>
 <li><p><strong>Exit Course Generator</strong> : Exits <strong>Course Generator</strong>. Keyboard shortcut: [Alt+F4].</p></li>
 </ul>
 <h2 id="edit-menu"><span class="header-section-number">4.2</span> “Edit” Menu</h2>
-<figure>
-<img src="./images/Menu/CG40_Menu_Edit.png" alt="Edit Menu" /><figcaption>Edit Menu</figcaption>
-</figure>
 <ul>
 <li><p><strong>Copy</strong> : Copies the selected line in the clipboard. Keyboard shortcut: [CTRL+C].</p></li>
 <li><p><strong>Search a point…</strong> : Searches a GPS point using longitude and latitude coordinates. The closest point found will be returned. Keyboard shortcut: [CTRL+F].</p></li>
+<li><p><strong>Read only mode</strong> : Select or unselect the read only mode. In this mode no parameters modification is allowed.</p></li>
 <li><p><strong>Mark the current position</strong> : Sets a mark on the selected line. If the line already has a mark, the mark will be deleted. Keyboard shortcut: [F6].</p></li>
 <li><p><strong>Go to the next mark</strong> : Locates and selects the next mark. Keyboard shortcut: [F7].</p></li>
 <li><p><strong>Go to the previous mark</strong> : Locates and selects the previous mark. Keyboard shortcut: [Ctrl+F7].</p></li>
 </ul>
 <h2 id="display-menu"><span class="header-section-number">4.3</span> “Display” Menu</h2>
-<figure>
-<img src="./images/Menu/CG40_Menu_Display.png" alt="Display Menu" /><figcaption>Display Menu</figcaption>
-</figure>
 <ul>
 <li><strong>Generate mini roadbook</strong> : Opens a window and displays the course’s mini roadbook.</li>
 </ul>
 <h2 id="tools-menu"><span class="header-section-number">4.4</span> “Tools” Menu</h2>
-<figure>
-<img src="./images/Menu/CG40_Menu_Tools.png" alt="Tools Menu" /><figcaption>Tools Menu</figcaption>
-</figure>
 <ul>
 <li><p><strong>Find Min/Max</strong> : Determines the highest and lowest course points.</p></li>
 <li><p><strong>Reverse track</strong> : Reverse the course direction.</p></li>
 <li><p><strong>Define a new start</strong>: For a given course as a loop, sets the selected point as the start of the course.</p></li>
 <li><p><strong>Estimate track time</strong> : Compute the estimated time for each of the course’s points. Keyboard shortcut: [F5].</p></li>
+<li><p><strong>Update standard curves</strong> : The standard “Speed/slope” will be updated with standard settings. It’s necessary to use this menu if you modified a standard curve and you want to retrieve the standard settings. It’s also necessary after a software update that introduce new standard curves. It doesn’t affect the custom curves.</p></li>
 <li><p><strong>Open the “Speed/Slope” folder</strong> : Opens the folder containing the speed curve files in File Explorer.</p></li>
 </ul>
 <h2 id="parameters-menu"><span class="header-section-number">4.5</span> “Parameters” Menu</h2>
-<figure>
-<img src="./images/Menu/CG40_Menu_Settings.png" alt="Parameters Menu" /><figcaption>Parameters Menu</figcaption>
-</figure>
 <ul>
 <li><p><strong>Track settings…</strong> : Opens the dialog to configure the course settings. Keyboard shortcut: [F9].</p></li>
-<li><p><strong>Speed/Slope curves…</strong> : Opens the dialog to choose, create, modify or delete a speed/slope cruve.</p></li>
+<li><p><strong>Speed/Slope curves…</strong> : Opens the dialog to choose, create, modify or delete a speed/slope curve.</p></li>
 <li><p><strong>Course Generator settings…</strong> : Opens the dialog to change the main settings of <strong>Course Generator</strong>.</p></li>
 </ul>
 <h2 id="help-menu"><span class="header-section-number">4.6</span> “Help” Menu</h2>
-<figure>
-<img src="./images/Menu/CG40_Menu_Help.png" alt="Help Menu" /><figcaption>Help Menu</figcaption>
-</figure>
 <ul>
 <li><p><strong>Help</strong> : Displays this current document.</p></li>
 <li><p><strong>Check for update</strong> : Check if a <strong>Course Generator</strong> update exists.</p></li>
@@ -272,19 +259,19 @@ Wikipedia source</p>
 <img src="./images/Toolbar/CG40_Main_Toolbar.png" alt="Main Toolbar" /><figcaption>Main Toolbar</figcaption>
 </figure>
 <ul>
-<li><img src="./images/Toolbar/openGPX.png" /> : Loads a GPX file format course</li>
-<li><img src="./images/Toolbar/openCGX.png" /> : Loads a CGX file format course</li>
-<li><img src="./images/Toolbar/saveCGX.png" /> : Saves a CGX file format course</li>
+<li><img src="./images/Toolbar/open_gpx.png" /> : Loads a GPX file format course</li>
+<li><img src="./images/Toolbar/open_cgx.png" /> : Loads a CGX file format course</li>
+<li><img src="./images/Toolbar/save_cgx.png" /> : Saves a CGX file format course</li>
 <li><img src="./images/Toolbar/undo.png" /> : Undo the last command</li>
 <li><img src="./images/Toolbar/search.png" /> : Searches for a specific GPS location</li>
-<li><img src="./images/Toolbar/prev_position.png" /> : Searches the previous mark</li>
-<li><img src="./images/Toolbar/next_position.png" /> : Searches the next mark</li>
-<li><img src="./images/Toolbar/mrb.png" /> : Displays the mini road-book</li>
-<li><img src="./images/Toolbar/curve.png" /> : Displays the speed/slope curve</li>
-<li><img src="./images/Toolbar/settings.png" /> : Displays the course settings window</li>
+<li><img src="./images/Toolbar/prev.png" /> : Searches the previous mark</li>
+<li><img src="./images/Toolbar/next.png" /> : Searches the next mark</li>
+<li><img src="./images/Toolbar/roadbook.png" /> : Displays the mini road-book</li>
+<li><img src="./images/Toolbar/chart_curve.png" /> : Displays the speed/slope curve</li>
+<li><img src="./images/Toolbar/setting.png" /> : Displays the course settings window</li>
 <li><img src="./images/Toolbar/fill_diff.png" /> : Displays the global terrain difficulty settings window</li>
 <li><img src="./images/Toolbar/fill_coeff.png" /> : Displays the global fatigue coefficient settings window</li>
-<li><img src="./images/Toolbar/refresh_data.png" /> : Computes the course estimated time</li>
+<li><img src="./images/Toolbar/refresh.png" /> : Computes the course estimated time</li>
 </ul>
 <h1 id="the-status-bar"><span class="header-section-number">6</span> The Status bar</h1>
 <p>Located at the bottom of the main GUI, it displays the general information related to the software status and the course.</p>
@@ -299,7 +286,7 @@ Wikipedia source</p>
 <li><img src="./images/Statusbar/CG40_Statusbar_Curve.png" /> : Chosen ‘speed/slope’.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Timelimit.png" /> : Indicates that a cut-off time has been exceeded for a specific course location. Clicking on it will bring the specific line into focus.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Modified.png" /> : The course has been modified. It is recommended to save it.</li>
-<li><img src="./images/Statusbar/CG40_Statusbar_Calc.png" /> : The course has been modified. It is recommended to re-compute the estimated time. (button <img src="./images/Toolbar/refresh_data.png" /> or [F5]).</li>
+<li><img src="./images/Statusbar/CG40_Statusbar_Calc.png" /> : The course has been modified. It is recommended to re-compute the estimated time. (button <img src="./images/Toolbar/refresh.png" /> or [F5]).</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Online.png" /> : Displays the current internet connection status.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Unit.png" /> : Shows the selected measuring units.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Map_Size.png" /> : Displays the disk space used for the maps.</li>
@@ -381,7 +368,7 @@ Wikipedia source</p>
 <li>The distance traveled uphill, on the flat and downhill</li>
 <li>The temperature difference between the low point of the course and the high point. This value is purely indicative and theoretical. It does not take into account the wind chill effect and local phenomena. The basis of calculation is 0.6°C per 100m of elevation gain.</li>
 </ul>
-<p>The button <img src="./images/Tabs/save.png" /> saves this data in HTML format.<br />
+<p>The button <img src="./images/Tabs/save_html.png" /> saves this data in HTML format.<br />
 The button <img src="./images/Tabs/refresh.png" /> refreshes the data.</p>
 <h2 id="analysis-tab"><span class="header-section-number">7.4</span> “Analysis” tab</h2>
 <p>This tab allows to obtain an analysis of your track. It contains 3 sub-tabs which are detailed below.</p>
@@ -420,7 +407,7 @@ The button <img src="./images/Tabs/refresh.png" /> refreshes the data.</p>
 <li>A scatter plot that includes all the points acquired during your race</li>
 <li>A speed/slope curve (extrapolated)</li>
 </ul>
-<p>The button <img src="./images/Tabs/save.png" /> saves the result curve (red curve) in the speed/slope curve library. It will be useable in the curves dialog.</p>
+<p>The button <img src="./images/Tabs/save_curve.png" /> saves the result curve (red curve) in the speed/slope curve library. It will be useable in the curves dialog.</p>
 <p>The following dialog appears:<br />
 <img src="./images/Tabs/CG40_Tab_Analyze_Speed_Slope_Save.png" /><br />
 The “Name” input field is used to enter the name of the curve.<br />
@@ -454,7 +441,7 @@ The button <img src="./images/Tabs/speed.png" /> allows to filter the speed of t
 <li>The average speed since last point.</li>
 <li>The comment on this point.</li>
 </ul>
-<p>The button <img src="./images/Tabs/save.png" /> saves the table data in CSV format in order to be used in a spreadsheet (Excel, OpenOffice Calc …).<br />
+<p>The button <img src="./images/Tabs/save_csv.png" /> saves the table data in CSV format in order to be used in a spreadsheet (Excel, OpenOffice Calc …).<br />
 The button <img src="./images/Tabs/refresh.png" /> allows you to refresh the data.</p>
 <h1 id="using-course-generator"><span class="header-section-number">8</span> Using Course Generator</h1>
 <p>The normal procedure for using <strong>Course Generator</strong> is:</p>
@@ -503,12 +490,16 @@ The button <img src="./images/Tabs/refresh.png" /> allows you to refresh the dat
 <img src="./images/Curve/CG40_Dlg_Curves.png" alt="Curves dialog" /><figcaption>Curves dialog</figcaption>
 </figure>
 <p>On the left appears the list of curves already created. During the creation, an explicit name was assigned to them to find them quickly. Try to preserve this principle if you create new curves.</p>
-<p>The button <img src="./images/Curve/chart_curve_open.png" alt="open curve button" /> loads the data from the selected curve file into the list. The button <img src="./images/Curve/chart_curve_edit.png" alt="edit curve button" /> allows you to modify the data of the selected curve. The button <img src="./images/Curve/chart_curve_add.png" alt="add curve button" /> allows you to create a new curve. The button <img src="./images/Curve/chart_curve_duplicate.png" alt="duplicate curve button" /> duplicates the selected curve. The button <img src="./images/Curve/chart_curve_delete.png" alt="delete curve button" /> deletes the selected curve.</p>
+<p>The button <img src="./images/Curve/chart_curve_open.png" alt="open curve button" /> loads the data from the selected curve file into the list.<br />
+The button <img src="./images/Curve/chart_curve_edit.png" alt="edit curve button" /> allows you to modify the data of the selected curve.<br />
+The button <img src="./images/Curve/chart_curve_add.png" alt="add curve button" /> allows you to create a new curve.<br />
+The button <img src="./images/Curve/chart_curve_duplicate.png" alt="duplicate curve button" /> duplicates the selected curve.<br />
+The button <img src="./images/Curve/chart_curve_delete.png" alt="delete curve button" /> deletes the selected curve.</p>
 <blockquote>
 <p><strong>How to choose a speed curve?</strong> This will depend on you, your goals… You can base yourself on a percentage of your vVO2max. For example for a long trail you can take 60% of your vVO2max. About 10km/h in my case, I then select the curve of 10km/h. There is also the pratice. At the beginning you will surely underestimate or overestimate your speed. But over time your choice will become more and more accurate.</p>
 </blockquote>
 <p><strong>Notes:</strong><br />
-* If you create new curves that seem interesting to you, do not hesitate to send them to me so that I can add them on the website as well as in the next versions. * Each curve is a file whose extension is ‘.par’. These files are accessible through the menu “Tools&gt;Open”Speed/Slope&quot; folder“. This will open the file manager and display the contents of the directory.</p>
+* If you create new curves that seem interesting to you, do not hesitate to send them to me so that I can add them on the website as well as in the next versions. * Each curve is a file whose extension is ‘.par’. These files are accessible through the menu “Tools&gt;Open”Speed/Slope&quot; folder&quot;. This will open the file manager and display the contents of the directory.</p>
 <h2 id="set-the-terrain-difficulty"><span class="header-section-number">8.4</span> Set the terrain difficulty</h2>
 <p>The “Diff” column is used to ‘quantify’ the difficulty of the terrain.</p>
 <p>You can quickly enter terrain difficulty for a set of points. Simply select the first line and then while holding down the SHIFT key you select the following lines (with mouse or keyboard). The button <img src="./images/Toolbar/fill_diff.png" alt="diff button" /> will display the auto-fill dialog.</p>
@@ -614,7 +605,7 @@ Each found position is marked with an indicator <img src="./images/Tags/high_poi
 <img src="./images/CG40_Line_Editor.png" alt="Line editor" /><figcaption>Line editor</figcaption>
 </figure>
 <p>The “Altitude” field is used to enter the new altitude.</p>
-<p>It will be necessary to restart a calculation with the button <img src="./images/Toolbar/refresh_data.png" alt="refresh button" /> to take into account the new altitude.</p>
+<p>It will be necessary to restart a calculation with the button <img src="./images/Toolbar/refresh.png" alt="refresh button" /> to take into account the new altitude.</p>
 <h2 id="merge-two-tracks"><span class="header-section-number">9.4</span> Merge two tracks</h2>
 <p><strong>Course Generator</strong> offers the opportunity to merge two tracks.</p>
 <p>The procedure is as follows:</p>
@@ -628,7 +619,7 @@ Each found position is marked with an indicator <img src="./images/Tags/high_poi
 <li>The merge is then realized</li>
 </ul>
 <p>If you have other tracks to merge, simply repeat the process.</p>
-<p>After merging the tracks you will have to modify the settings of the fatigue coefficients and restart a computation (butotn <img src="./images/Toolbar/refresh_data.png" alt="refresh button" /> or [F5]) because the time data will be wrong.</p>
+<p>After merging the tracks you will have to modify the settings of the fatigue coefficients and restart a computation (button <img src="./images/Toolbar/refresh.png" alt="refresh button" /> or [F5]) because the time data will be wrong.</p>
 <p>Once you have completed the merge and restarted a calculation, you will be able to save the track.</p>
 <h2 id="save-part-of-the-track"><span class="header-section-number">9.5</span> Save part of the track</h2>
 <p><strong>Course Generator</strong> allows to save a section of a track.</p>
@@ -688,12 +679,12 @@ The profile highlights the portions of the roads and trails with a color code. T
 <p>The “Slope” type :<br />
 <img src="./images/MRB/CG40_MRB_Slope_Label.png" alt="Slope type" /><br />
 The profile highlights the degree of slope by a color code.</p>
-<p>The colors used in the mini roadbook can be set in the configuration window accessible with the button <img src="./images/MRB/Toolbar/settings.png" />.</p>
+<p>The colors used in the mini roadbook can be set in the configuration window accessible with the button <img src="./images/MRB/Toolbar/setting.png" />.</p>
 <h3 id="the-toolbar-1"><span class="header-section-number">9.8.3</span> The toolbar</h3>
 <p><img src="./images/MRB/CG40_MRB_Toolbar.png" /></p>
 <ul>
 <li><img src="./images/MRB/Toolbar/save.png" alt="save" /> : Saves the mini roadbook as an image. The available format is PNG.</li>
-<li><img src="./images/MRB/Toolbar/settings.png" alt="settings" /> : Opens the mini roadbook configuration window</li>
+<li><img src="./images/MRB/Toolbar/setting.png" alt="settings" /> : Opens the mini roadbook configuration window</li>
 <li><img src="./images/MRB/Toolbar/pipette.png" /> : Copies the current label format to reproduce it on one or more other labels. This function is also accessible with the keyboard shortcut CTRL + C</li>
 <li><img src="./images/MRB/Toolbar/replicate.png" /> : Paste the formatting on the selected label. Only the properties selected in the function’s configuration window will be pasted. This function is also accessible with the keyboard shortcut CTRL + V</li>
 <li><p><img src="./images/MRB/Toolbar/replicate_config.png" /> : Opens a window for configuring the duplicate formatting feature as shown below: <img src="./images/MRB/CG40_MRB_Replicate_Dlg.png" alt="Duplicate configuration dialog" /><br />
@@ -707,7 +698,7 @@ Select the settings you want to duplicate when copying.</p></li>
 <li>With roads/trails</li>
 <li>With slope</li>
 </ul></li>
-<li><img src="./images/MRB/Toolbar/favoris1.png" /> <img src="./images/MRB/Toolbar/favoris2.png" /> <img src="./images/MRB/Toolbar/favoris3.png" /> <img src="./images/MRB/Toolbar/favoris4.png" /> <img src="./images/MRB/Toolbar/favoris5.png" /> : These 5 buttons are used to store display formats.
+<li><img src="./images/MRB/Toolbar/favori1.png" /> <img src="./images/MRB/Toolbar/favori2.png" /> <img src="./images/MRB/Toolbar/favori3.png" /> <img src="./images/MRB/Toolbar/favori4.png" /> <img src="./images/MRB/Toolbar/favori5.png" /> : These 5 buttons are used to store display formats.
 <ul>
 <li>A right click on a button memorizes in the button the setting displayed in the current format field.</li>
 <li>A left click on a button restores the format stored in the button in the format field.</li>
@@ -719,7 +710,7 @@ Select the settings you want to duplicate when copying.</p></li>
 <p>The maximum size of the mini roadbook is 4000x2000 pixels (Width x Height). It is also the size of the final image.</p>
 <p>The size setting is made by the “Width” and “Height” fields located in the icon bar.</p>
 <h3 id="configure-the-mini-roadbook"><span class="header-section-number">9.8.5</span> Configure the mini roadbook</h3>
-<p>The icon <img src="./images/MRB/Toolbar/settings.png" /> opens the configuration window.</p>
+<p>The icon <img src="./images/MRB/Toolbar/setting.png" /> opens the configuration window.</p>
 <p>The “General” tab allows you to:<br />
 <img src="./images/MRB/CG40_MRB_Settings1.png" alt="General tab" /></p>
 <ul>
@@ -781,7 +772,7 @@ The “Default Colors” button is used to replace the current colors with the d
 <p><img src="./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png" alt="Day and night times" /><br />
 The night times are displayed with a gray background.</p>
 <h2 id="reverse-track-direction"><span class="header-section-number">9.9</span> Reverse track direction</h2>
-<p><strong>Course Generator</strong> can reverse the direction of any given track. To perform this action select “Tools&gt;Reverse track”. After the operation, it is necessary to redefine the fatigue coefficients and cut-off time and then restart a calculation (button <img src="./images/Toolbar/refresh_data.png" /> or [F5]).</p>
+<p><strong>Course Generator</strong> can reverse the direction of any given track. To perform this action select “Tools&gt;Reverse track”. After the operation, it is necessary to redefine the fatigue coefficients and cut-off time and then restart a calculation (button <img src="./images/Toolbar/refresh.png" /> or [F5]).</p>
 <h2 id="set-a-new-starting-point-on-a-looped-track"><span class="header-section-number">9.10</span> Set a new starting point on a looped track</h2>
 <p><strong>Course Generator</strong> offers the possibility, if the track loaded in memory is a loop, to define a new starting point.</p>
 <p>The procedure is as follows:</p>
@@ -792,16 +783,25 @@ The night times are displayed with a gray background.</p>
 <img src="./images/CG40_Dlg_Confirm_New_Start.png" alt="Confirm new start dialog" /></li>
 <li>Confirm the order by clicking on “Yes”.</li>
 </ul>
-<p>After the operation it is necessary to redefine the fatigue coefficients and cut-off times and then restart a calculation (button <img src="./images/Toolbar/refresh_data.png" /> or [F5]).</p>
+<p>After the operation it is necessary to redefine the fatigue coefficients and cut-off times and then restart a calculation (button <img src="./images/Toolbar/refresh.png" /> or [F5]).</p>
 <h2 id="the-general-parameters-of-course-generator"><span class="header-section-number">9.11</span> The general parameters of Course Generator</h2>
-<p>The “Settings&gt;Course Generator Settings” menu displays the following window:<br />
-<img src="./images/CG40_Settings.png" alt="Global settings dialog" /></p>
+<p>Le menu “Paramètres&gt;Paramètres de Course Generator” affiche la fenêtre de configuration du logiciel. The “Settings&gt;Course Generator Settings” menu displays the software configuration window.</p>
+<h3 id="general-tab"><span class="header-section-number">9.11.1</span> “General” tab</h3>
+<p><img src="./images/CG40_Settings_General.png" /></p>
 <p>The possible settings are:</p>
 <ul>
 <li>“language” : Selects the language used in the interface. “System” uses operating system settings to determine which language to use. If the system language is not managed by <strong>Course Generator</strong> then English is selected.</li>
 <li>“Units” : Chooses between “km/m” and “Miles/Feet”.</li>
 <li>“Speed format” : Chooses the type of speed to display (speed or pace).</li>
+<li>&quot;Threshold for position filter (in %) : Threshold, in%, from which the software asks if we want to apply a filter on GPS points when loading a track.</li>
 <li>“Check for update at startup” : Allows you to choose if you want to check for a newer version of <strong>Course Generator</strong> available at application startup.</li>
+</ul>
+<h3 id="display-tab"><span class="header-section-number">9.11.2</span> “Display” tab</h3>
+<p><img src="./images/CG40_Settings_Display.png" /></p>
+<p>The possible settings are:</p>
+<ul>
+<li>“Default font” : Allows you to choose the font that will be used for the display.</li>
+<li>Icons size : Specify the size of the interface icons.</li>
 </ul>
 <h2 id="import-and-export-marked-points"><span class="header-section-number">9.12</span> Import and export marked points</h2>
 <p>In some cases it is necessary to save only the marked points of the current track in a file. This allows, if you have a new version of the course, to import these points on the new track.</p>

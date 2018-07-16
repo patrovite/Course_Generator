@@ -149,73 +149,74 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 			}
 
 			int x = 0; // X position in the resulting image
+			int xoffset=settings.TagIconSize+2;
 
 			if (cmpt > 0) {
 				// -- Prepare the resulting image
-				BufferedImage combined = new BufferedImage(18 * cmpt, 16, BufferedImage.TYPE_INT_ARGB);
+				BufferedImage combined = new BufferedImage(xoffset * cmpt, settings.TagIconSize, BufferedImage.TYPE_INT_ARGB);
 				Graphics g = combined.getGraphics();
 
 				// Higher point
 				if ((tag & CgConst.TAG_HIGH_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"high_point.png",settings.DialogIconSize);
+					ImageIcon image = Utils.getIcon(this,"high_point.png",settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
-					x += 18;
+					x += xoffset;
 				}
 
 				// Lower point
 				if ((tag & CgConst.TAG_LOW_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"low_point.png",settings.DialogIconSize);
+					ImageIcon image = Utils.getIcon(this,"low_point.png",settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
-					x += 18;
+					x += xoffset;
 				}
 
 				// Station
 				if ((tag & CgConst.TAG_EAT_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"eat.png",settings.DialogIconSize);
+					ImageIcon image = Utils.getIcon(this,"eat.png",settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
-					x += 18;
+					x += xoffset;
 				}
 
 				// Drink
 				if ((tag & CgConst.TAG_WATER_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"drink.png",settings.DialogIconSize);
+					ImageIcon image = Utils.getIcon(this,"drink.png",settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
-					x += 18;
+					x += xoffset;
 				}
 
 				// Mark
 				if ((tag & CgConst.TAG_MARK) != 0) {
-					ImageIcon image = Utils.getIcon(this,"flag.png",settings.DialogIconSize);
+					ImageIcon image = Utils.getIcon(this,"flag.png",settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
-					x += 18;
+					x += xoffset;
 				}
 
 				// Roadbook
 				if ((tag & CgConst.TAG_ROADBOOK) != 0) {
-					ImageIcon image = Utils.getIcon(this,"roadbook.png",settings.DialogIconSize);
+					ImageIcon image = Utils.getIcon(this,"roadbook.png",settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
-					x += 18;
+					x += xoffset;
 				}
 
 				// Photo
 				if ((tag & CgConst.TAG_COOL_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"photo.png",settings.DialogIconSize);
+					ImageIcon image = Utils.getIcon(this,"photo.png",settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
-					x += 18;
+					x += xoffset;
 				}
 
 				// Note
 				if ((tag & CgConst.TAG_NOTE) != 0) {
-					ImageIcon image = Utils.getIcon(this,"note.png",settings.DialogIconSize);
+					ImageIcon image = Utils.getIcon(this,"note.png",settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
-					x += 18;
+					x += xoffset;
 				}
 
 				// Info
 				if ((tag & CgConst.TAG_INFO) != 0) {
-					ImageIcon image = Utils.getIcon(this,"info.png",settings.DialogIconSize);
+					ImageIcon image = Utils.getIcon(this,"info.png",settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
-					x += 18;
+					x += xoffset;
 				}
 
 				setIcon(new ImageIcon(combined));

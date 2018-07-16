@@ -80,7 +80,7 @@ Les statistiques concernent entre autre:
 * La distance parcourue en montée, sur le plat et en descente
 * La différence de température entre le point bas du parcours et le point haut. Cette valeur est purement indicative et théorique. Elle ne prend pas en compte la température ressentie (du au vent) et les phénomènes locaux. La base de calcul est 0.6°C par 100m de dénivelé.
 
-Le bouton ![](./images/Tabs/save.png) permet de sauver ces données au format HTML.  
+Le bouton ![](./images/Tabs/save_html.png) permet de sauver ces données au format HTML.  
 Le bouton ![](./images/Tabs/refresh.png) permet de rafraîchir les données.
 
 ## L'onglet "Analyse"
@@ -126,7 +126,7 @@ Deux courbes sont présentes:
 * Une courbe vitesse/pente (extrapolé)
 
 
-Le bouton ![](./images/Tabs/save.png) permet de sauvegarder la courbe résultat (courbe rouge) dans la bibliothèque des courbes vitesse/pente. Elle sera exploitable dans la fenêtre courbe.  
+Le bouton ![](./images/Tabs/save_curve.png) permet de sauvegarder la courbe résultat (courbe rouge) dans la bibliothèque des courbes vitesse/pente. Elle sera exploitable dans la fenêtre courbe.  
 
 La boite de dialogue suivante apparaît:  
 ![](./images/Tabs/CG40_Tab_Analyze_Speed_Slope_Save.png)  
@@ -165,5 +165,5 @@ Pour chaque ligne vous avez:
 * La vitesse moyenne depuis le dernier point.
 * Le commentaire sur le point marqué.
 
-Le bouton ![](./images/Tabs/save.png) permet de sauvegarder les données du tableau au format CSV afin de les exploiter dans un tableur (Excel, OpenOffice Calc...).  
+Le bouton ![](./images/Tabs/save_csv.png) permet de sauvegarder les données du tableau au format CSV afin de les exploiter dans un tableur (Excel, OpenOffice Calc...).  
 Le bouton ![](./images/Tabs/refresh.png) permet de rafraîchir les données.  

@@ -28,7 +28,7 @@ La boite dialogue suivante s'affiche:
 
 Le champ "Altitude" permet de saisir la nouvelle altitude.
 
-Il sera nécessaire de relancer un calcul avec le bouton ![](./images/Toolbar/refresh_data.png) afin de prendre en compte la nouvelle altitude.
+Il sera nécessaire de relancer un calcul avec le bouton ![](./images/Toolbar/refresh.png) afin de prendre en compte la nouvelle altitude.
 
 ## Fusionner deux parcours
 
@@ -46,7 +46,7 @@ La procédure est la suivante:
 
 Si vous avez d'autres parcours à fusionner au nouveau parcours, il vous suffit de recommencer la procédure.
 
-Après la fusion du ou des parcours vous faudra reprendre les réglages du coefficient de fatigue et relancer un calcul (bouton ![](./images/Toolbar/refresh_data.png) ou [F5]) car les données temporelles seront fausses.
+Après la fusion du ou des parcours vous faudra reprendre les réglages du coefficient de fatigue et relancer un calcul (bouton ![](./images/Toolbar/refresh.png) ou [F5]) car les données temporelles seront fausses.
 
 Une fois que vous avez terminé la fusion et relancé un calcul, vous pourrez sauvegarder le parcours.
 
@@ -129,7 +129,7 @@ Le type "Pente":
 ![](./images/MRB/CG40_MRB_Slope_Label.png)  
 Le profil met en évidence le degré de pente par un code de couleur.
 
-Les couleurs utilisées dans les mini roadbook sont paramétrable dans la fenêtre de configuration accessible via le bouton ![](./images/MRB/Toolbar/settings.png).
+Les couleurs utilisées dans les mini roadbook sont paramétrable dans la fenêtre de configuration accessible via le bouton ![](./images/MRB/Toolbar/setting.png).
 
 ### La barre d'icônes
 
@@ -137,7 +137,7 @@ Les couleurs utilisées dans les mini roadbook sont paramétrable dans la fenêt
 
 
 * ![](./images/MRB/Toolbar/save.png) : Permet de sauver le mini roadbook sous forme d'image. Le format disponible est PNG.
-* ![](./images/MRB/Toolbar/settings.png) : Permet d'ouvrir la fenêtre de configuration du mini roadbook
+* ![](./images/MRB/Toolbar/setting.png) : Permet d'ouvrir la fenêtre de configuration du mini roadbook
 * ![](./images/MRB/Toolbar/pipette.png) : Permet de copier la mise en forme d'une étiquette afin de la reproduire sur une ou plusieurs autres étiquettes. Cette fonction est aussi accessible avec le raccourci clavier CTRL+C
 * ![](./images/MRB/Toolbar/replicate.png) :  Permet de coller la mise en forme sur l'étiquette sélectionnée. Seules les propriétés sélectionnées dans la fenêtre de configuration de la fonction seront collées. Cette fonction est aussi accessible avec le raccourci clavier CTRL+V
 * ![](./images/MRB/Toolbar/replicate_config.png) : Ouvre une fenêtre permettant de configurer la fonction de duplication de la mise en forme. Cela ouvre la fenêtre suivante:  
@@ -151,8 +151,8 @@ Sélectionnez les paramètres que vous voulez utiliser lors de la copie.
     * Simple
     * Avec route/sentier
     * Avec pente
-* ![](./images/MRB/Toolbar/favoris1.png) ![](./images/MRB/Toolbar/favoris2.png) ![](./images/MRB/Toolbar/favoris3.png) ![](./images/MRB/Toolbar/favoris4.png)
-![](./images/MRB/Toolbar/favoris5.png) : Ces 5 boutons permettent de mémoriser des formats d'affichage.
+* ![](./images/MRB/Toolbar/favori1.png) ![](./images/MRB/Toolbar/favori2.png) ![](./images/MRB/Toolbar/favori3.png) ![](./images/MRB/Toolbar/favori4.png)
+![](./images/MRB/Toolbar/favori5.png) : Ces 5 boutons permettent de mémoriser des formats d'affichage.
     * Un clique droit sur un  bouton mémorise dans le bouton le réglage affiché dans le champ format.
     * Un clique gauche sur un bouton restitue dans le champ format, le format mémorisé dans le bouton.
 * "Largeur" : Permet de sélectionner la largeur du profil (Valeur maximum 4000).
@@ -167,7 +167,7 @@ Le réglage de la taille est faite par les champs "Largeur" et "Hauteur" situé 
 
 ### Configurer le mini roadbook
 
-L'icône ![](./images/MRB/Toolbar/settings.png) permet d'ouvrir la fenêtre de configuration.
+L'icône ![](./images/MRB/Toolbar/setting.png) permet d'ouvrir la fenêtre de configuration.
 
 L'onglet "Général" permet de:  
 ![](./images/MRB/CG40_MRB_Settings1.png)
@@ -242,7 +242,7 @@ Les zones de nuits apparaissent grâce au fond grisé.
 ## Inverser le sens du parcours
 
 **Course Generator** offre la possibilité d'inverser le sens du parcours. Afin de réaliser cette action il faut sélectionner "Outil>Inversion du parcours".
-Après l'opération, il est nécessaire de redéfinir les coefficients de fatigues et les barrières horaires puis de relancer un calcul (bouton ![](./images/Toolbar/refresh_data.png) ou [F5]).
+Après l'opération, il est nécessaire de redéfinir les coefficients de fatigues et les barrières horaires puis de relancer un calcul (bouton ![](./images/Toolbar/refresh.png) ou [F5]).
 
 ## Définir un nouveau point de départ sur un parcours en boucle
 
@@ -255,19 +255,31 @@ La procédure est la suivante:
 ![](./images/CG40_Dlg_Confirm_New_Start.png)
 * Confirmer la commande en cliquant sur "Oui".
 
-Après l'opération il est nécessaire de redéfinir les coefficients de fatigues et les barrières horaires puis de relancer un calcul (bouton ![](./images/Toolbar/refresh_data.png) ou [F5]).
+Après l'opération il est nécessaire de redéfinir les coefficients de fatigues et les barrières horaires puis de relancer un calcul (bouton ![](./images/Toolbar/refresh.png) ou [F5]).
 
 ## Les paramètres généraux de Course Generator
 
-Le menu "Paramètres>Paramètres de Course Generator" affiche la fenêtre suivante:  
-![](./images/CG40_Settings.png)
+Le menu "Paramètres>Paramètres de Course Generator" affiche la fenêtre de configuration du logiciel.
+
+### Onglet "Général"  
+![](./images/CG40_Settings_General.png)
 
 Les réglages possibles sont les suivants:
 
 * "Langues" : Permet de sélectionner la langue utilisée dans l'interface. "Système" utilise les réglages du système d'exploitation pour déterminer la langue à utiliser. Si la langue système n'est pas géré par **Course Generator** alors l'anglais est sélectionné.
 * "Unité" : Permet de choisir entre "km/m" et "Miles/Pieds".
 * "Format vitesse" : Permet de choisir le format de la vitesse (Vitesse ou Allure).
+* "Seuil pour filtre position (en %) : Seuil, en %, à partir duquel le logiciel demande si on veut appliquer un filtre sur les points GPS lors du chargement d'un parcours.
 * "Contrôle mise à jour au démarrage" : Permet de choisir si on veut contrôler la présence d'une mise à jour de l'application au démarrage.
+
+### Onglet "Affichage"  
+![](./images/CG40_Settings_Display.png)
+
+Les réglages possibles sont les suivants:
+
+* "Police de caractère par défaut" : Permet de choisir la police de caractère qui va être utilisée pour l'affichage.
+* Taille des icônes : Permet de spécifier la taille des icônes de l'interface.
+
 
 ## Importer et exporter les points marqués
 

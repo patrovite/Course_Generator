@@ -2,13 +2,11 @@
 
 ## Menu "Fichier"
 
-![Menu Fichier](./images/Menu/CG40_Menu_File.png)
-
 * **Ouvrir un fichier GPX** : Permet de charger un fichier au format GPX. Raccourci clavier: [MAJ+CTRL+O].
 
-* **Ouvrir un fichier CGX** : Permet de charger un fichier au format CGX. Raccourci clavier: [CTRL+O].
-
 * **Derniers fichiers GPX** : Permet l'affichage d'un sous-menu listant les 5 derniers fichiers GPX qui ont été ouvert. Un clic sur un de ces fichiers permet de l'ouvrir.
+
+* **Ouvrir un fichier CGX** : Permet de charger un fichier au format CGX. Raccourci clavier: [CTRL+O].
 
 * **Derniers fichiers CGX** : Permet l'affichage d'un sous-menu listant les 5 derniers fichiers CGX qui ont été ouvert. Un clic sur un de ces fichiers permet de l'ouvrir.
 
@@ -44,11 +42,11 @@ Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
 
 ## Menu "Edition"
 
-![Menu Edition](./images/Menu/CG40_Menu_Edit.png)
-
 * **Copier** : Permet de copier la cellule courante dans le presse papier. Raccourci clavier: [CTRL+C].
 
 * **Recherche d'un point...** : Permet de rechercher un point GPS par sa longitude et sa latitude. Le point le plus proche est sélectionné. Raccourci clavier: [CTRL+F].
+
+* **Mode lecture seul** :  Permet de sélectionner ou désélectionner le mode  "Lecture seul". Dans ce mode les modifications des paramètres du parcours sont impossibles. 
 
 * **Marquer la position courante** : Permet de mettre une marque sur la ligne courante. Si la ligne contient déjà une marque, elle est alors supprimée. Raccourci clavier: [F6].
 
@@ -58,13 +56,9 @@ Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
 
 ## Menu "Affichage"
 
-![Menu Affichage](./images/Menu/CG40_Menu_Display.png)
-
 * **Générer un mini roadbook** : Permet d'ouvrir une fenêtre permettant de créer un mini roadbook.
 
 ## Menu "Outils"
-
-![Menu Outils](./images/Menu/CG40_Menu_Tools.png)
 
 * **Détermination des mini/maxi** : Permet de déterminer les points haut et bas du parcours.
 
@@ -74,11 +68,11 @@ Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
 
 * **Estimer le temps de parcours** : Permet de lancer le calcul afin de déterminer le temps de passage pour chaque point GPS du parcours. Raccourci clavier: [F5].
 
+* **Mise à jour des courbes standards** : Les courbes standards "Vitesse/Pente" vont être mise à jour avec les réglages par défaut. Cela est nécessaire si vous avez modifié une courbe standard et que vous voulez revenir en arrière. Cela est aussi nécessaire après une mise à jour logicielle qui introduit de nouvelles courbes. Cela n'affecte pas les courbes personnalisées.
+
 * **Afficher le répertoire contenant les fichiers courbes vitesse/pente** : Ouvre l'explorateur de fichier et affiche le répertoire correspondant.
 
 ## Menu "Paramètres"
-
-![Menu Paramètres](./images/Menu/CG40_Menu_Settings.png)
 
 * **Paramètres du parcours...** : Permet d'ouvrir une fenêtre permettant de régler les paramètres de la course. Raccourci clavier: [F9].
 
@@ -87,8 +81,6 @@ Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
 * **Paramètres de Course Generator...** : Permet de régler les paramètres spécifique au logiciel **Course Generator**.
 
 ## Menu "Aide"
-
-![Menu Aide](./images/Menu/CG40_Menu_Help.png)
 
 * **Aide** : Affiche ce document.
 

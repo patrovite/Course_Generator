@@ -1,13 +1,11 @@
 # Menus
 ## "File" Menu
 
-![File Menu](./images/Menu/CG40_Menu_File.png)
-
 * **Open GPX** : Loads a GPX format file. Keyboard shortcut: [MAJ+CTRL+O].
 
-* **Open CGX** : Loads a CGX format file. Keyboard shortcut: [CTRL+O].
-
 * **Recent GPX files** : Displays a list of the last 5 GPX files that have been loaded. Clicking on one of those files will load them again.
+
+* **Open CGX** : Loads a CGX format file. Keyboard shortcut: [CTRL+O].
 
 * **Recent CGX files** : Displays a list of the last 5 CGX files that have been loaded. Clicking on one of those files will load them again.
 
@@ -43,11 +41,11 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 ## "Edit" Menu 
 
-![Edit Menu](./images/Menu/CG40_Menu_Edit.png)
-
 * **Copy** : Copies the selected line in the clipboard. Keyboard shortcut: [CTRL+C].
 
 * **Search a point...** : Searches a GPS point using longitude and latitude coordinates. The closest point found will be returned. Keyboard shortcut: [CTRL+F].
+
+* **Read only mode** : Select or unselect the read only mode. In this mode no parameters modification is allowed.
 
 * **Mark the current position** : Sets a mark on the selected line. If the line already has a mark, the mark will be deleted. Keyboard shortcut: [F6].
 
@@ -57,13 +55,9 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 ## "Display" Menu 
 
-![Display Menu](./images/Menu/CG40_Menu_Display.png)
-
 * **Generate mini roadbook** : Opens a window and displays the course's mini roadbook.
 
 ## "Tools" Menu
-
-![Tools Menu](./images/Menu/CG40_Menu_Tools.png)
 
 * **Find Min/Max** : Determines the highest and lowest course points.
 
@@ -73,21 +67,19 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 * **Estimate track time** : Compute the estimated time for each of the course's points. Keyboard shortcut: [F5].
 
+* **Update standard curves** : The standard "Speed/slope" will be updated with standard settings. It's necessary to use this menu if you modified a standard curve and you want to retrieve the standard settings. It's also necessary after a software update that introduce new standard curves. It doesn't affect the custom curves.  
+
 * **Open the "Speed/Slope" folder** : Opens the folder containing the speed curve files in File Explorer.
 
 ## "Parameters" Menu 
 
-![Parameters Menu](./images/Menu/CG40_Menu_Settings.png)
-
 * **Track settings...** : Opens the dialog to configure the course settings. Keyboard shortcut: [F9].
 
-* **Speed/Slope curves...** : Opens the dialog to choose, create, modify or delete a speed/slope cruve.
+* **Speed/Slope curves...** : Opens the dialog to choose, create, modify or delete a speed/slope curve.
 
 * **Course Generator settings...** : Opens the dialog to change the main settings of **Course Generator**.
 
 ## "Help" Menu 
-
-![Help Menu](./images/Menu/CG40_Menu_Help.png)
 
 * **Help** : Displays this current document.
 

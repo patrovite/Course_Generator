@@ -28,6 +28,7 @@ import java.awt.event.ActionEvent;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -340,20 +341,11 @@ public class frmTrackSettings extends javax.swing.JDialog {
 					timezone = Double.valueOf(res.TimeZone);
 					summertime = res.SummerTime;
 
-					Calendar calendar = Calendar.getInstance();
+					Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(res.TimeZoneId));
 					calendar.setTime(res.Sunrise.toDate());
-					calendar.add(Calendar.HOUR_OF_DAY, res.TimeZone);
-					if (summertime) {
-						calendar.add(Calendar.HOUR_OF_DAY, 1);
-					}
 
 					spinEndNightModel.setValue(calendar.getTime());
-
 					calendar.setTime(res.Sunset.toDate());
-					calendar.add(Calendar.HOUR_OF_DAY, res.TimeZone);
-					if (summertime) {
-						calendar.add(Calendar.HOUR_OF_DAY, 1);
-					}
 
 					spinStartNightModel.setValue(calendar.getTime());
 				}

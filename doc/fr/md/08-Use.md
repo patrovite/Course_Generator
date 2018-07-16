@@ -52,7 +52,7 @@ Si vous avez sélectionné la prise en compte de la nuit, vous pourrez constater
 
 Afin d'avoir une durée de parcours cohérente avec votre niveau, il faut choisir ou créer une courbe de vitesse par rapport à la pente. Cette courbe va de -50% de pente (descente) à +50% de pente (montée). Le choix de la courbe se fait par le choix de la vitesse que l'on veut "tenir" lorsque la pente est nulle (0%) sur un terrain goudronné. Un ensemble de courbes ont été créée afin de couvrir la plupart des utilisations en course à pied.
 
-Le menu "Paramètres>Courbes Vitesse/Pente..." ou le bouton ![](./images/Toolbar/curve.png) permettent d'afficher la boite de dialogue permettant de sélectionner et gérer les courbes.  
+Le menu "Paramètres>Courbes Vitesse/Pente..." ou le bouton ![](./images/Toolbar/chart_curve.png) permettent d'afficher la boite de dialogue permettant de sélectionner et gérer les courbes.  
 ![](./images/Curve/CG40_Dlg_Curves.png)
 
 Sur la gauche apparaît la liste des courbes déjà créée. Lors de la création, un nom explicite leur a été donné afin de les retrouver rapidement. Essayez de conserver ce principe si vous créez de nouvelles courbes.
@@ -185,7 +185,7 @@ Afin de gagner du temps des raccourcis clavier sont disponibles:
 
 ## Calculer le temps de parcours
 
-Une fois les paramètres du parcours saisis, il est nécessaire d'appuyer sur le bouton ![](./images/Toolbar/refresh_data.png) afin de lancer le calcul du temps de passage pour chaque point.
+Une fois les paramètres du parcours saisis, il est nécessaire d'appuyer sur le bouton ![](./images/Toolbar/refresh.png) afin de lancer le calcul du temps de passage pour chaque point.
 Les colonnes 'Temps' et 'Heure' sont alors mises à jour en fonction des réglages que vous avez réalisés précédemment.
 Dans la barre d'état, située en bas de la fenêtre, le temps total est mis à jour.
 

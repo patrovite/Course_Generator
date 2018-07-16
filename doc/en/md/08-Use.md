@@ -60,11 +60,11 @@ The menu "Settings>Speed/Slope curves..." or the button ![curve button](./images
 
 On the left appears the list of curves already created. During the creation, an explicit name was assigned to them to find them quickly. Try to preserve this principle if you create new curves.
 
-The button ![open curve button](./images/Curve/chart_curve_open.png) loads the data from the selected curve file into the list.
-The button ![edit curve button](./images/Curve/chart_curve_edit.png) allows you to modify the data of the selected curve.
-The button ![add curve button](./images/Curve/chart_curve_add.png) allows you to create a new curve.
-The button ![duplicate curve button](./images/Curve/chart_curve_duplicate.png) duplicates the selected curve.
-The button ![delete curve button](./images/Curve/chart_curve_delete.png) deletes the selected curve.
+The button ![open curve button](./images/Curve/chart_curve_open.png) loads the data from the selected curve file into the list.  
+The button ![edit curve button](./images/Curve/chart_curve_edit.png) allows you to modify the data of the selected curve.  
+The button ![add curve button](./images/Curve/chart_curve_add.png) allows you to create a new curve.  
+The button ![duplicate curve button](./images/Curve/chart_curve_duplicate.png) duplicates the selected curve.  
+The button ![delete curve button](./images/Curve/chart_curve_delete.png) deletes the selected curve.  
 
 > **How to choose a speed curve?**
 > This will depend on you, your goals... You can base yourself on a percentage of your vVO2max.

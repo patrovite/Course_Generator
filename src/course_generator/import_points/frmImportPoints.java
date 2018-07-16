@@ -187,11 +187,10 @@ public class frmImportPoints extends javax.swing.JDialog {
 		TableImport.getTableHeader()
 				.setDefaultRenderer(new ImportPtsHeaderRenderer(TableImport.getTableHeader().getDefaultRenderer()));
 		TableImport.getTableHeader().setReorderingAllowed(false);
-
 		TableImport.setDefaultRenderer(ImportPtsDataClass.class, new ImportPtsRenderer());
 
 		TableImport.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-		TableImport.setRowHeight(20);
+		TableImport.setRowHeight(settings.TagIconSize+4);
 		TableImport.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				TableMouseClicked(evt);
