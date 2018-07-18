@@ -166,4 +166,6 @@ Pour chaque ligne vous avez:
 * Le commentaire sur le point marqué.
 
 Le bouton ![](./images/Tabs/save_csv.png) permet de sauvegarder les données du tableau au format CSV afin de les exploiter dans un tableur (Excel, OpenOffice Calc...).  
-Le bouton ![](./images/Tabs/refresh.png) permet de rafraîchir les données.  
+Le bouton ![](./images/Tabs/refresh.png) permet de rafraîchir les données.
+
+Un double clic sur une ligne ouvre l'éditeur de ligne pour le point correspondant.

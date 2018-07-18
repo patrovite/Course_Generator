@@ -176,3 +176,5 @@ For each line you have:
 
 The button ![](./images/Tabs/save_csv.png) saves the table data in CSV format in order to be used in a spreadsheet (Excel, OpenOffice Calc ...).  
 The button ![](./images/Tabs/refresh.png) allows you to refresh the data.  
+
+A double clic on a line open's the line editor for the corresponding point.

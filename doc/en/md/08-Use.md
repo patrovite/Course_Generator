@@ -20,10 +20,10 @@ Two types of files can be opened by **Course Generator**.
 
 The loading of a track is done by the menu "File> Open GPX" or "File> Open CGX" according to the chosen format.
 
-When opening the file you may get the following message:
-((image message))
+If the track contain a too high density of GPS points, the software will ask you if you want to apply a filter to reduce the number of GPS points. A too high density of GPS points can disturb the distance calculations.
 
-This message appears because some files do not contain time data, which prevents **Course Generator** from displaying the time and time of passage for each point. These columns are then set to 0. Setting of parameters of the track then the execution of the calculation of the track are then necessary.
+If you load a GPX file that have no time data the **Course Generator** will the time for each point of the track at 0. It will be necessary to click on the button ![refresh button](./images/Toolbar/refresh.png) to start the calculation of the time for each point.
+
 
 ## Set up a track
 
@@ -153,7 +153,7 @@ The following dialog box is displayed:
 
 The "Cut-off time" fields are used to enter the cut-off time (hours, minutes and seconds). The "0" button allows you to reset the time to 00h00mm00s.
 
-In order to take into account the input it is necessary to run a calculation with the button  ![refresh button](./images/Toolbar/refresh_data.png). After the calculation if one of the position time exceeds a cut-off time then a red indicator "Cut-off time" will appear in the status bar. A click on the indicator will select the first line of the trackthe first line where the cut-off time has been exceeded.
+In order to take into account the input it is necessary to run a calculation with the button  ![refresh button](./images/Toolbar/refresh.png). After the calculation if one of the position time exceeds a cut-off time then a red indicator "Cut-off time" will appear in the status bar. A click on the indicator will select the first line of the trackthe first line where the cut-off time has been exceeded.
 
 ## Indicators or tags
 

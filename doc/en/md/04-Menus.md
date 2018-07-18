@@ -83,6 +83,10 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 * **Help** : Displays this current document.
 
+* **F.A.Q.** : Open your browser and display the Frequently Asked Question page about **Course Generator**. 
+
+* **Download courses** : Open your browser and display the Freemovin page where you can download tracks in CGX format.
+
 * **Check for update** : Check if a **Course Generator** update exists.
 
 * **Support the author...** : This menu opens your web browser and displays a webpage where a donation can be made to the author in order to support him continue developing **Course Generator**.

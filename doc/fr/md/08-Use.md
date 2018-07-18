@@ -20,10 +20,9 @@ Deux types de fichier peuvent être ouverts par **Course Generator**.
 
 Le chargement d'un parcours se fait par le menu "Fichier>Ouvrir un fichier GPX" ou "Fichier>Ouvrir un fichier CGX" en fonction du format choisi.
 
-Lors de l'ouverture du fichier vous pourriez avoir le message suivant:
-((image message))
+Si votre parcours contient une forte densité de point GPS, le logiciel vous demandera si vous voulez appliquer un filtre afin de réduire le nombre de point du parcours. Une trop forte densité de points peut pertuber le calcul des distances.
 
-Ce message apparaît car certain fichiers ne contiennent pas de donnée temporelle ce qui empêche **Course Generator** d'afficher le temps et l'heure de passage pour chaque point. Ces colonnes sont alors mises à 0 et un réglage des paramètres du parcours puis l'exécution du calcul du parcours sont alors nécessaire.
+Si vous chargez un fichier GPX qui n'a pas de donnée temporelle alors **Course Generator** mettra les temps de passage pour chaque à 0. Il sera nécessaire de cliquer sur le bouton ![refresh button](./images/Toolbar/refresh.png) pour lancer le calcul temps pour chaque point du parcours.
 
 ## Paramétrer un parcours
 
@@ -152,7 +151,7 @@ La boite dialogue suivante s'affiche:
 
 Les champs "Barrière horaire" permettent de saisir la barrière horaire (heures, minutes et secondes). Le bouton "0" permet de remettre le temps à 00h00mm00s.
 
-Afin de prendre en compte la saisie il est nécessaire de lancer un calcul avec le bouton  ![](./images/Toolbar/refresh_data.png). Après l'exécution du calcul si un des temps de passage dépasse une barrière horaire alors un indicateur rouge "Barrière horaire" apparaîtra dans la barre inférieure. Un clique sur l'indicateur sélectionnera la première ligne du parcours ayant un dépassement de temps.
+Afin de prendre en compte la saisie il est nécessaire de lancer un calcul avec le bouton  ![](./images/Toolbar/refresh.png). Après l'exécution du calcul si un des temps de passage dépasse une barrière horaire alors un indicateur rouge "Barrière horaire" apparaîtra dans la barre inférieure. Un clique sur l'indicateur sélectionnera la première ligne du parcours ayant un dépassement de temps.
 
 ## Les indicateurs ou tags
 
