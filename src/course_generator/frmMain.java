@@ -1377,11 +1377,8 @@ public class frmMain extends javax.swing.JFrame {
 		menuCGFaq.setText(bundle.getString("frmMain.menuCGFaq.text"));
 		menuCGFaq.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				String faqUrl = CurrentLanguage == "en" ? "https://techandrun.com/course-generator-2/faq/"
-						: "https://techandrun.com/course-generator/faq/";
 				try {
-
-					Desktop.getDesktop().browse(new URI(faqUrl));
+					Desktop.getDesktop().browse(new URI(bundle.getString("frmMain.menuCGFaq.url")));
 				} catch (IOException | URISyntaxException e) {
 					e.printStackTrace();
 				}
@@ -1396,10 +1393,8 @@ public class frmMain extends javax.swing.JFrame {
 		menuCGCoursesLibrary.setText(bundle.getString("frmMain.menuCGCoursesLibrary.text"));
 		menuCGCoursesLibrary.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				String coursesUrl = "http://www.freemovin.com/index.php/course-generator/";
 				try {
-
-					Desktop.getDesktop().browse(new URI(coursesUrl));
+					Desktop.getDesktop().browse(new URI(bundle.getString("frmMain.menuCGCoursesLibrary.url")));
 				} catch (IOException | URISyntaxException e) {
 					e.printStackTrace();
 				}
