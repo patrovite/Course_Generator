@@ -224,7 +224,10 @@ public class frmEditCurve extends javax.swing.JDialog {
 		model.clear();
 
 		for (int i = 0; i < files.length; i++) {
-			if (files[i].isFile()) {
+			String fileName = files[i].getName();
+
+			if (files[i].isFile() && (settings.Unit == CgConst.UNIT_METER && fileName.contains("km_h"))
+					|| settings.Unit == CgConst.UNIT_MILES_FEET && fileName.contains("mile")) {
 				model.addElement(Utils.getFileNameWithoutExtension(files[i].getName()));
 			}
 		}
@@ -810,7 +813,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 					return;
 				}
 
-				// -- Add the 2 extrem points to the list and sort the list (not really
+				// -- Add the 2 extreme points to the list and sort the list (not really
 				// necessary...)
 				param = new ParamData();
 				param.name = tfName.getText();
