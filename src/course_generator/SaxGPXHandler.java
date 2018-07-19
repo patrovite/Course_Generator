@@ -40,37 +40,37 @@ import course_generator.utils.CgConst;
  */
 public class SaxGPXHandler extends DefaultHandler {
 
-	private int trk_nb = 0;
-	private int trkseg_nb = 0;
+	// private int trk_nb = 0;
+	// private int trkseg_nb = 0;
 	private String characters = "";
-	private String trk_name = "";
+	// private String trk_name = "";
 	private double trkpt_lat = 0.0;
 	private double trkpt_lon = 0.0;
 	private double trkpt_ele = 0.0;
-	private String trkpt_name = "";
+	// private String trkpt_name = "";
 	private DateTime trkpt_time;
 	private int level = 0;
-	private final int LEVEL_GPX = 1;
+	// private final int LEVEL_GPX = 1;
 	private final int LEVEL_TRK = 2;
-	private final int LEVEL_TRKSEG = 3;
+	// private final int LEVEL_TRKSEG = 3;
 	private final int LEVEL_TRKPT = 4;
-	private double gpx_version = 0;
+	// private double gpx_version = 0;
 
 	private double mLat;
 	private double mLon;
-	private double mEle;
+	// private double mEle;
 	private DateTime old_time;
 
-	private int errcode = 0;
+	// private int errcode = 0;
 	private Locator locator;
 	private int errline = 0;
 
-	private final int ERR_READ_NO = 0;
-	private final int ERR_READ_LAT = -1;
-	private final int ERR_READ_LON = -2;
-	private final int ERR_READ_ELE = -3;
-	private final int ERR_READ_TIME = -4;
-	private final int ERR_READ_VERSION = -5;
+	// private final int ERR_READ_NO = 0;
+	// private final int ERR_READ_LAT = -1;
+	// private final int ERR_READ_LON = -2;
+	// private final int ERR_READ_ELE = -3;
+	// private final int ERR_READ_TIME = -4;
+	// private final int ERR_READ_VERSION = -5;
 	private final int ERR_READ_NOTEXIST = -6;
 	private TrackData trkdata;
 	private int mode = 0;
@@ -109,25 +109,25 @@ public class SaxGPXHandler extends DefaultHandler {
 
 		mode = readmode;
 		trkdata = TData;
-		trk_nb = 0;
-		trkseg_nb = 0;
+		// trk_nb = 0;
+		// trkseg_nb = 0;
 		characters = "";
-		trk_name = "";
+		// trk_name = "";
 		trkpt_lat = 0.0;
 		trkpt_lon = 0.0;
 		trkpt_ele = 0.0;
 		mLat = 0.0;
 		mLon = 0.0;
-		mEle = 0.0;
+		// mEle = 0.0;
 		Time_s = 0;
 		Cmpt = 0;
 		dTime_f = 0.0;
 
-		trkpt_name = "";
+		// trkpt_name = "";
 		trkpt_time = new DateTime(1970, 1, 1, 0, 0, 0);
 		level = 0;
-		errcode = ERR_READ_NO;
-		gpx_version = 0.0;
+		// errcode = ERR_READ_NO;
+		// gpx_version = 0.0;
 		first = true;
 		StartTime = new DateTime(1970, 1, 1, 0, 0, 0);
 
@@ -172,28 +172,26 @@ public class SaxGPXHandler extends DefaultHandler {
 			// Check all the attributes
 			for (int index = 0; index < attributs.getLength(); index++) {
 				if (attributs.getLocalName(index).equalsIgnoreCase("VERSION")) {
-					try {
-						gpx_version = Double.parseDouble(attributs.getValue(index));
-					} catch (NumberFormatException e) {
-						gpx_version = 0.0;
-					}
-					if (gpx_version != 1.1)
-						errcode = ERR_READ_VERSION;
+					/*
+					 * try { gpx_version = Double.parseDouble(attributs.getValue(index)); } catch
+					 * (NumberFormatException e) { gpx_version = 0.0; } if (gpx_version != 1.1)
+					 * errcode = ERR_READ_VERSION;
+					 */
 				} else if (attributs.getLocalName(index).equalsIgnoreCase("LON")) {
 					try {
 						trkpt_lon = Double.parseDouble(attributs.getValue(index));
 					} catch (NumberFormatException e) {
 						trkpt_lon = 0.0;
-						errcode = ERR_READ_LON;
+						// errcode = ERR_READ_LON;
 						errline = locator.getLineNumber();
 					}
 				}
 			}
 		} else if (qName.equalsIgnoreCase("TRK")) {
-			trk_nb++;
+			// trk_nb++;
 			level++;
 		} else if (qName.equalsIgnoreCase("TRKSEG")) {
-			trkseg_nb++;
+			// trkseg_nb++;
 			level++;
 		} else if (qName.equalsIgnoreCase("TRKPT")) {
 			level++;
@@ -203,7 +201,7 @@ public class SaxGPXHandler extends DefaultHandler {
 						trkpt_lat = Double.parseDouble(attributs.getValue(index));
 					} catch (NumberFormatException e) {
 						trkpt_lat = 0.0;
-						errcode = ERR_READ_LAT;
+						// errcode = ERR_READ_LAT;
 						errline = locator.getLineNumber();
 					}
 				} else if (attributs.getLocalName(index).equalsIgnoreCase("LON")) {
@@ -211,7 +209,7 @@ public class SaxGPXHandler extends DefaultHandler {
 						trkpt_lon = Double.parseDouble(attributs.getValue(index));
 					} catch (NumberFormatException e) {
 						trkpt_lon = 0.0;
-						errcode = ERR_READ_LON;
+						// errcode = ERR_READ_LON;
 						errline = locator.getLineNumber();
 					}
 				}
@@ -229,10 +227,10 @@ public class SaxGPXHandler extends DefaultHandler {
 		} else if (qName.equalsIgnoreCase("TRKSEG")) {
 			level--;
 		} else if ((level == LEVEL_TRK) && qName.equalsIgnoreCase("NAME")) {
-			trk_name = characters;
+			// trk_name = characters;
 			characters = "";
 		} else if ((level == LEVEL_TRKPT) && qName.equalsIgnoreCase("NAME")) {
-			trkpt_name = characters;
+			// trkpt_name = characters;
 			characters = "";
 		} else if ((level == LEVEL_TRKPT) && qName.equalsIgnoreCase("ELE")) {
 			try {
@@ -240,7 +238,7 @@ public class SaxGPXHandler extends DefaultHandler {
 				characters = "";
 			} catch (NumberFormatException e) {
 				trkpt_ele = 0.0;
-				errcode = ERR_READ_ELE;
+				// errcode = ERR_READ_ELE;
 				errline = locator.getLineNumber();
 				characters = "";
 			}
@@ -263,7 +261,7 @@ public class SaxGPXHandler extends DefaultHandler {
 				trkdata.isTimeLoaded = true;
 			} catch (IllegalArgumentException e) {
 				trkpt_time = new DateTime(1970, 1, 1, 0, 0, 0);
-				errcode = ERR_READ_TIME;
+				// errcode = ERR_READ_TIME;
 				errline = locator.getLineNumber();
 				characters = "";
 			}
@@ -340,7 +338,7 @@ public class SaxGPXHandler extends DefaultHandler {
 			}
 			mLat = trkpt_lat;
 			mLon = trkpt_lon;
-			mEle = trkpt_ele;
+			// mEle = trkpt_ele;
 			old_time = trkpt_time;
 		}
 	}

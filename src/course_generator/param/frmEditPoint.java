@@ -41,6 +41,7 @@ import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class frmEditPoint extends javax.swing.JDialog {
+	private static final long serialVersionUID = 7993667390549963347L;
 	private java.util.ResourceBundle bundle;
 	private boolean ok;
 	private JLabel lbSlope;
@@ -181,12 +182,14 @@ public class frmEditPoint extends javax.swing.JDialog {
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
 		};
 
+		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();

@@ -23,10 +23,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ResourceBundle;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JToolBar;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartMouseEvent;
@@ -55,12 +53,11 @@ import course_generator.settings.CgSettings;
 import course_generator.utils.Utils;
 
 public class JPanelAnalysisSpeed extends JPanel {
+	private static final long serialVersionUID = 8675654746142038326L;
 	private JFreeChart chart = null;
 	private XYSeriesCollection datasetSpeedReg = null;
 	private XYSeriesCollection datasetSpeed = null;
 	private ResourceBundle bundle;
-	private JToolBar toolBar;
-	private JButton btSpeedSave;
 	private JPanel jPanelSpeedInfo;
 	private JLabel lbSpeedInfoStartSpeed;
 	private JLabel lbSpeedInfoEndSpeed;

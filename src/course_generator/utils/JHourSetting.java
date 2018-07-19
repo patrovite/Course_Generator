@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class JHourSetting extends JPanel {
+	private static final long serialVersionUID = -1400176987840156912L;
 	private int hour;
 	private int minute;
 	private int second;

@@ -33,6 +33,9 @@ import course_generator.utils.Utils;
 
 public class ImportPtsRenderer extends DefaultTableCellRenderer {
 
+	private static final long serialVersionUID = -7441702492576267791L;
+
+
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
@@ -149,72 +152,73 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 			}
 
 			int x = 0; // X position in the resulting image
-			int xoffset=settings.TagIconSize+2;
+			int xoffset = settings.TagIconSize + 2;
 
 			if (cmpt > 0) {
 				// -- Prepare the resulting image
-				BufferedImage combined = new BufferedImage(xoffset * cmpt, settings.TagIconSize, BufferedImage.TYPE_INT_ARGB);
+				BufferedImage combined = new BufferedImage(xoffset * cmpt, settings.TagIconSize,
+						BufferedImage.TYPE_INT_ARGB);
 				Graphics g = combined.getGraphics();
 
 				// Higher point
 				if ((tag & CgConst.TAG_HIGH_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"high_point.png",settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "high_point.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Lower point
 				if ((tag & CgConst.TAG_LOW_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"low_point.png",settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "low_point.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Station
 				if ((tag & CgConst.TAG_EAT_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"eat.png",settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "eat.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Drink
 				if ((tag & CgConst.TAG_WATER_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"drink.png",settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "drink.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Mark
 				if ((tag & CgConst.TAG_MARK) != 0) {
-					ImageIcon image = Utils.getIcon(this,"flag.png",settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "flag.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Roadbook
 				if ((tag & CgConst.TAG_ROADBOOK) != 0) {
-					ImageIcon image = Utils.getIcon(this,"roadbook.png",settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "roadbook.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Photo
 				if ((tag & CgConst.TAG_COOL_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"photo.png",settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "photo.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Note
 				if ((tag & CgConst.TAG_NOTE) != 0) {
-					ImageIcon image = Utils.getIcon(this,"note.png",settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "note.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Info
 				if ((tag & CgConst.TAG_INFO) != 0) {
-					ImageIcon image = Utils.getIcon(this,"info.png",settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "info.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
@@ -265,5 +269,5 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 
 		return this;
 	}
-	
+
 }

@@ -64,6 +64,7 @@ import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class frmEditCurve extends javax.swing.JDialog {
+	private static final long serialVersionUID = 1466576207663718609L;
 	private boolean ok;
 	private boolean bEditMode;
 	private TrackData track;
@@ -235,6 +236,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 	/**
 	 * This method is called to initialize the form.
 	 */
+	@SuppressWarnings("unchecked")
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle(bundle.getString("frmEditCurve.title"));

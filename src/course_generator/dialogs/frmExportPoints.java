@@ -27,7 +27,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -42,6 +41,7 @@ import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class frmExportPoints extends javax.swing.JDialog {
+	private static final long serialVersionUID = -1550046376301650415L;
 	private ResourceBundle bundle;
 	private CgSettings settings;
 	private boolean ok;
@@ -77,7 +77,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 	 * Creates new form frmSettings
 	 */
 	public frmExportPoints(CgSettings settings) {
-		this.settings=settings;
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
@@ -155,12 +155,14 @@ public class frmExportPoints extends javax.swing.JDialog {
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
 		};
 
+		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();
@@ -214,8 +216,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		lbIncludeHightPt = new JLabel(bundle.getString("frmExportPoints.lbIncludeHightPt"), // Include high points
-				Utils.getIcon(this,"high_point.png",settings.DialogIconSize),
-				JLabel.LEFT);
+				Utils.getIcon(this, "high_point.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelMain, lbIncludeHightPt, 1, 0, 1, 1, 1, 0, 0, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
@@ -225,8 +226,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		lbIncludeLowPt = new JLabel(bundle.getString("frmExportPoints.lbIncludeLowPt"), // Include low points
-				Utils.getIcon(this,"low_point.png",settings.DialogIconSize),
-				JLabel.LEFT);
+				Utils.getIcon(this, "low_point.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelMain, lbIncludeLowPt, 1, 1, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
@@ -237,7 +237,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 
 		lbIncludeEatStation = new JLabel(bundle.getString("frmExportPoints.lbIncludeEatStation"), // Include eat station
 																									// points
-				Utils.getIcon(this,"eat.png",settings.DialogIconSize), JLabel.LEFT);
+				Utils.getIcon(this, "eat.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelMain, lbIncludeEatStation, 1, 2, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
@@ -249,7 +249,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 		lbIncludeDrinkStation = new JLabel(bundle.getString("frmExportPoints.lbIncludeDrinkStation"), // Include drink
 																										// station
 																										// points
-				Utils.getIcon(this,"drink.png",settings.DialogIconSize), JLabel.LEFT);
+				Utils.getIcon(this, "drink.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelMain, lbIncludeDrinkStation, 1, 3, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
@@ -259,7 +259,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		lbIncludeMark = new JLabel(bundle.getString("frmExportPoints.lbIncludeMark"), // Include mark points
-				Utils.getIcon(this,"flag.png",settings.DialogIconSize), JLabel.LEFT);
+				Utils.getIcon(this, "flag.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelMain, lbIncludeMark, 1, 4, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
@@ -269,7 +269,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		lbIncludePhoto = new JLabel(bundle.getString("frmExportPoints.lbIncludePhoto"), // Include photo points
-				Utils.getIcon(this,"photo.png",settings.DialogIconSize), JLabel.LEFT);
+				Utils.getIcon(this, "photo.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelMain, lbIncludePhoto, 1, 5, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
@@ -279,8 +279,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		lbIncludeRoadbook = new JLabel(bundle.getString("frmExportPoints.lbIncludeRoadbook"), // Include roadbook points
-				Utils.getIcon(this,"roadbook.png",settings.DialogIconSize),
-				JLabel.LEFT);
+				Utils.getIcon(this, "roadbook.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelMain, lbIncludeRoadbook, 1, 6, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
@@ -290,7 +289,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		lbIncludeInfo = new JLabel(bundle.getString("frmExportPoints.lbIncludeInfo"), // Include information points
-				Utils.getIcon(this,"info.png",settings.DialogIconSize), JLabel.LEFT);
+				Utils.getIcon(this, "info.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelMain, lbIncludeInfo, 1, 7, 1, 1, 1, 0, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
@@ -300,7 +299,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		lbIncludeNotes = new JLabel(bundle.getString("frmExportPoints.lbIncludeNotes"), // Include notes points
-				Utils.getIcon(this,"note.png",settings.DialogIconSize), JLabel.LEFT);
+				Utils.getIcon(this, "note.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelMain, lbIncludeNotes, 1, 8, 1, 1, 1, 1, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
@@ -312,7 +311,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(Utils.getIcon(this,"cancel.png",settings.DialogIconSize));
+		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -321,7 +320,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(Utils.getIcon(this,"valid.png",settings.DialogIconSize));
+		btOk.setIcon(Utils.getIcon(this, "valid.png", settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());
@@ -340,6 +339,5 @@ public class frmExportPoints extends javax.swing.JDialog {
 
 		setLocationRelativeTo(null);
 	}
-	
 
 }

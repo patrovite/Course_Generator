@@ -24,10 +24,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ResourceBundle;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JToolBar;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartMouseEvent;
@@ -56,6 +54,7 @@ import course_generator.settings.CgSettings;
 import course_generator.utils.Utils;
 
 public class JPanelAnalysisTimeDist extends JPanel {
+	private static final long serialVersionUID = -5411000318387926611L;
 	private JFreeChart chart = null;
 	private XYSeriesCollection datasetElevDist = null;
 	private XYSeriesCollection datasetTimeDist = null;
@@ -63,8 +62,6 @@ public class JPanelAnalysisTimeDist extends JPanel {
 	private TrackData track = null;
 	private CgSettings settings = null;
 
-	private JToolBar toolBar;
-	private JButton btTimeDistSave;
 	private JPanel jPanelTimeDistInfo;
 	private JLabel lbTimeDistInfoDistance;
 	private JLabel lbTimeDistInfoElevation;

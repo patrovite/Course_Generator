@@ -31,7 +31,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -48,6 +47,7 @@ import course_generator.utils.Utils;
 
 public class frmFillDiff extends javax.swing.JDialog {
 
+	private static final long serialVersionUID = -9161763648568192762L;
 	private ResourceBundle bundle;
 	private boolean ok;
 	private int start;
@@ -56,7 +56,6 @@ public class frmFillDiff extends javax.swing.JDialog {
 	private JPanel jPanelButtons;
 	private JButton btCancel;
 	private JButton btOk;
-	private TrackData track;
 	// private CgData data;
 	private JPanel panelStart;
 	private JPanel panelEnd;
@@ -90,7 +89,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 	 * Creates new form frmSettings
 	 */
 	public frmFillDiff(CgSettings settings) {
-		this.settings=settings;
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
@@ -112,7 +111,6 @@ public class frmFillDiff extends javax.swing.JDialog {
 	 */
 	public EditDiffResult showDialog(CgSettings settings, TrackData track, int start_line, int end_line) {
 		this.settings = settings;
-		this.track = track;
 
 		if (start_line == -1) {
 			this.start = 1;
@@ -182,12 +180,14 @@ public class frmFillDiff extends javax.swing.JDialog {
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
 		};
 
+		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();
@@ -396,7 +396,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(Utils.getIcon(this,"cancel.png",settings.DialogIconSize));
+		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -405,7 +405,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(Utils.getIcon(this,"valid.png",settings.DialogIconSize));
+		btOk.setIcon(Utils.getIcon(this, "valid.png", settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());
@@ -425,7 +425,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-	
+
 	protected void Refresh() {
 		spinFromLine.setEnabled(rbFromLine.isSelected());
 		spinToLine.setEnabled(rbToLine.isSelected());

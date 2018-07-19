@@ -43,14 +43,14 @@ public class SaxCGPHandler extends DefaultHandler {
 	private final int LEVEL_PTS = 2;
 	private final int LEVEL_PT = 3;
 
-	private double cgp_version = 0;
-	private int errcode = 0;
+	// private double cgp_version = 0;
+	// private int errcode = 0;
 	private Locator locator;
 	private int errline = 0;
-	private final int ERR_READ_NO = 0;
+	// private final int ERR_READ_NO = 0;
 	private final int ERR_READ_DOUBLE = -1;
 	private final int ERR_READ_INT = -2;
-	private final int ERR_READ_VERSION = -3;
+	// private final int ERR_READ_VERSION = -3;
 	private final int ERR_READ_NOTEXIST = -4;
 
 	private ImportPtsData ptsdata;
@@ -96,8 +96,8 @@ public class SaxCGPHandler extends DefaultHandler {
 		characters = "";
 
 		level = 0;
-		errcode = ERR_READ_NO;
-		cgp_version = 0.0;
+		// errcode = ERR_READ_NO;
+		// cgp_version = 0.0;
 
 		ptsdata.ReadError = 0;
 
@@ -152,7 +152,7 @@ public class SaxCGPHandler extends DefaultHandler {
 			characters = "";
 			return d;
 		} catch (NumberFormatException e) {
-			errcode = _errcode;
+			// errcode = _errcode;
 			errline = locator.getLineNumber();
 			characters = "";
 			return _default;
@@ -175,7 +175,7 @@ public class SaxCGPHandler extends DefaultHandler {
 			characters = "";
 			return i;
 		} catch (NumberFormatException e) {
-			errcode = _errcode;
+			// errcode = _errcode;
 			errline = locator.getLineNumber();
 			characters = "";
 			return _default;
@@ -198,13 +198,11 @@ public class SaxCGPHandler extends DefaultHandler {
 			// Check all the attributes
 			for (int index = 0; index < attributs.getLength(); index++) {
 				if (attributs.getLocalName(index).equalsIgnoreCase("VERSION")) {
-					try {
-						cgp_version = Double.parseDouble(attributs.getValue(index));
-					} catch (NumberFormatException e) {
-						cgp_version = 0.0;
-					}
-					if (cgp_version != 1.0)
-						errcode = ERR_READ_VERSION;
+					/*
+					 * try { cgp_version = Double.parseDouble(attributs.getValue(index)); } catch
+					 * (NumberFormatException e) { cgp_version = 0.0; } if (cgp_version != 1.0)
+					 * errcode = ERR_READ_VERSION;
+					 */
 				}
 			}
 		} else if (qName.equalsIgnoreCase("POINTS")) {

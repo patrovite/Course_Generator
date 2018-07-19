@@ -27,6 +27,7 @@ import javax.swing.SpinnerNumberModel;
 
 public class CgSpinnerDouble extends JSpinner {
 
+	private static final long serialVersionUID = 9175478829047990286L;
 	private SpinnerNumberModel model;
 	private double step;
 	private double min;

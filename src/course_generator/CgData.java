@@ -213,12 +213,6 @@ public class CgData {
 	}
 
 
-	// -------------------------------
-	private double getElevation() {
-		return Elevation;
-	}
-
-
 	public double getElevation(int unit) {
 		switch (unit) {
 		case CgConst.UNIT_METER:
@@ -274,12 +268,6 @@ public class CgData {
 	}
 
 
-	// -------------------------------
-	private double getDist() {
-		return Dist;
-	}
-
-
 	public double getDist(int unit) {
 		switch (unit) {
 		case CgConst.UNIT_METER:
@@ -323,12 +311,6 @@ public class CgData {
 
 	public void setDist(double dist) {
 		Dist = dist;
-	}
-
-
-	// -------------------------------
-	private double getTotal() {
-		return Total;
 	}
 
 
@@ -486,12 +468,6 @@ public class CgData {
 
 	public void setSpeed(double speed) {
 		Speed = speed;
-	}
-
-
-	// -------------------------------
-	private double getdElevation() {
-		return dElevation;
 	}
 
 

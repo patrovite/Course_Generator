@@ -36,6 +36,7 @@ import javax.swing.Timer;
 import course_generator.utils.Utils;
 
 public class frmAbout extends javax.swing.JDialog {
+	private static final long serialVersionUID = -5627816444009982186L;
 	private javax.swing.JLabel lbLogo;
 	private javax.swing.JLabel lbVersion;
 	private javax.swing.JLabel lbWebSite;
@@ -43,7 +44,6 @@ public class frmAbout extends javax.swing.JDialog {
 	private JLabel lbMessage2;
 
 	private ResourceBundle bundle;
-	private Timer timer;
 	private JTextArea taCopyright;
 	private JScrollPane jScrollPaneCopyright;
 

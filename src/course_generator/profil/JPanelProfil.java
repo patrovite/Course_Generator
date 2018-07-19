@@ -61,6 +61,7 @@ import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class JPanelProfil extends JPanel {
+	private static final long serialVersionUID = -5027735307707525354L;
 	private ResourceBundle bundle;
 	private TrackData track = null;
 	private CgSettings settings = null;

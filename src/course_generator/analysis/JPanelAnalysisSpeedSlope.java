@@ -65,6 +65,7 @@ import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class JPanelAnalysisSpeedSlope extends JPanel {
+	private static final long serialVersionUID = 4187021605744043506L;
 	private JFreeChart chart = null;
 	private XYSeriesCollection datasetSpeedSlopePoint = null;
 	private XYSeriesCollection datasetSpeedSlopeLine = null;

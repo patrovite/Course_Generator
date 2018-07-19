@@ -44,6 +44,7 @@ import course_generator.utils.Utils;
 
 public class FrmExportWaypoints extends javax.swing.JDialog {
 
+	private static final long serialVersionUID = -3459915439978014364L;
 	private ResourceBundle bundle;
 	private boolean ok;
 	private int tag;
@@ -149,12 +150,14 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
 		};
 
+		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();

@@ -41,6 +41,7 @@ import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
 public class JPanelStatistics extends JPanel {
+	private static final long serialVersionUID = -7168142806619093218L;
 	private ResourceBundle bundle;
 	private TrackData track = null;
 	private CgSettings settings = null;

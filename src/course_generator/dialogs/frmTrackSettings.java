@@ -58,6 +58,7 @@ import course_generator.utils.Utils;
 
 public class frmTrackSettings extends javax.swing.JDialog {
 
+	private static final long serialVersionUID = 4203790672206475952L;
 	private ResourceBundle bundle;
 	private boolean ok;
 	private Double timezone;
@@ -172,12 +173,14 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
 		};
 
+		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();

@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 public class CgSpinner extends JSpinner {
+	private static final long serialVersionUID = 2583265016542926568L;
 	private SpinnerNumberModel model;
 	private int min;
 	private int max;
