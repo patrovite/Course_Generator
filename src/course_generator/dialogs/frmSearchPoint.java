@@ -49,6 +49,7 @@ import course_generator.utils.JTextFieldLimit;
 import course_generator.utils.Utils;
 
 public class frmSearchPoint extends javax.swing.JDialog {
+	private static final long serialVersionUID = 3806825690379556313L;
 	private boolean ok;
 	private CgSettings settings;
 	private TrackData track;
@@ -75,7 +76,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 	 */
 	public frmSearchPoint(CgSettings settings) {
 		super();
-		this.settings=settings;
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
@@ -113,6 +114,7 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		JRootPane rootPane = new JRootPane();
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);

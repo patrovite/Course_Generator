@@ -18,10 +18,10 @@
 
 package course_generator.trackdata_table;
 
+import javax.swing.table.AbstractTableModel;
+
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
-
-import javax.swing.table.AbstractTableModel;
 
 /**
  *
@@ -29,6 +29,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class TrackDataModel extends AbstractTableModel {
 
+	private static final long serialVersionUID = -1530666127472331439L;
 	private final String header[];
 	private TrackData track;
 	private CgSettings settings;

@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class JTimeSetting extends JPanel {
+	private static final long serialVersionUID = 6478983820522316796L;
 	private int hour;
 	private int minute;
 	private int second;

@@ -23,6 +23,7 @@ import javax.swing.table.AbstractTableModel;
 import course_generator.settings.CgSettings;
 
 public class MrbTableDataModel extends AbstractTableModel {
+	private static final long serialVersionUID = 1331668693602830853L;
 	private java.util.ResourceBundle bundle;
 	private MrbDataList list;
 	private CgSettings settings;

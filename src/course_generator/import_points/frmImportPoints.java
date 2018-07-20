@@ -30,7 +30,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -47,10 +46,10 @@ import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
 public class frmImportPoints extends javax.swing.JDialog {
+	private static final long serialVersionUID = -595132508327677732L;
 	private ResourceBundle bundle;
 	private CgSettings settings;
 	private TrackData track;
-	private String name;
 	private boolean ok;
 	private JTable TableImport;
 	private ImportPtsDataModel Model;
@@ -70,7 +69,6 @@ public class frmImportPoints extends javax.swing.JDialog {
 	 */
 	public frmImportPoints(CgSettings settings) {
 		this.settings = settings;
-		this.name = "";
 		list = new ImportPtsData();
 		Model = new ImportPtsDataModel(settings, list);
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
@@ -80,7 +78,6 @@ public class frmImportPoints extends javax.swing.JDialog {
 
 
 	public int showDialog(String name, TrackData track) {
-		this.name = name;
 		this.track = track;
 
 		// -- read the CGP file
@@ -135,12 +132,14 @@ public class frmImportPoints extends javax.swing.JDialog {
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
 		};
 
+		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();
@@ -190,7 +189,7 @@ public class frmImportPoints extends javax.swing.JDialog {
 		TableImport.setDefaultRenderer(ImportPtsDataClass.class, new ImportPtsRenderer());
 
 		TableImport.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-		TableImport.setRowHeight(settings.TagIconSize+4);
+		TableImport.setRowHeight(settings.TagIconSize + 4);
 		TableImport.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				TableMouseClicked(evt);
@@ -215,7 +214,7 @@ public class frmImportPoints extends javax.swing.JDialog {
 				GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH);
 
 		btSelAll = new javax.swing.JButton();
-		btSelAll.setIcon(Utils.getIcon(this,"select_all.png",settings.DialogIconSize));
+		btSelAll.setIcon(Utils.getIcon(this, "select_all.png", settings.DialogIconSize));
 		btSelAll.setToolTipText(bundle.getString("frmImportPoints.btSelAll.toolTipText"));
 		btSelAll.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -226,7 +225,7 @@ public class frmImportPoints extends javax.swing.JDialog {
 				GridBagConstraints.VERTICAL);
 
 		btUnselAll = new javax.swing.JButton();
-		btUnselAll.setIcon(Utils.getIcon(this,"unselect_all.png",settings.DialogIconSize));
+		btUnselAll.setIcon(Utils.getIcon(this, "unselect_all.png", settings.DialogIconSize));
 		btUnselAll.setToolTipText(bundle.getString("frmImportPoints.btUnselAll.toolTipText"));
 		btUnselAll.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -237,7 +236,7 @@ public class frmImportPoints extends javax.swing.JDialog {
 				GridBagConstraints.VERTICAL);
 
 		btHelp = new javax.swing.JButton();
-		btHelp.setIcon(Utils.getIcon(this,"help_dialog.png",settings.DialogIconSize));
+		btHelp.setIcon(Utils.getIcon(this, "help_dialog.png", settings.DialogIconSize));
 		btHelp.setToolTipText(bundle.getString("frmImportPoints.btHelp.toolTipText"));
 		Utils.addComponent(panelSmallButtons, btHelp, 2, 0, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.VERTICAL);
@@ -250,7 +249,7 @@ public class frmImportPoints extends javax.swing.JDialog {
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(Utils.getIcon(this,"cancel.png",settings.DialogIconSize));
+		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,7 +258,7 @@ public class frmImportPoints extends javax.swing.JDialog {
 		});
 
 		btImport = new javax.swing.JButton();
-		btImport.setIcon(Utils.getIcon(this,"import.png",settings.DialogIconSize));
+		btImport.setIcon(Utils.getIcon(this, "import.png", settings.DialogIconSize));
 		btImport.setText(bundle.getString("frmImportPoints.btImport.text"));
 		// btImport.setMinimumSize(btCancel.getMinimumSize());
 		// btImport.setPreferredSize(btCancel.getPreferredSize());
@@ -369,7 +368,7 @@ public class frmImportPoints extends javax.swing.JDialog {
 		}
 	}
 
-	
+
 	/**
 	 * Refresh the table
 	 */

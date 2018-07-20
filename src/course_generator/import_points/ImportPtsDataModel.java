@@ -24,6 +24,7 @@ import course_generator.settings.CgSettings;
 
 public class ImportPtsDataModel extends AbstractTableModel {
 
+	private static final long serialVersionUID = 298180821343433680L;
 	private final String header[];
 	private ImportPtsData importPts;
 	private CgSettings settings;

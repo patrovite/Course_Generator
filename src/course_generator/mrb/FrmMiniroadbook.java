@@ -52,6 +52,7 @@ import course_generator.utils.Utils;
 //public class FrmMiniroadbook extends javax.swing.JDialog implements FocusListener {
 public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener {
 
+	private static final long serialVersionUID = 2901789821816767187L;
 	private ResourceBundle bundle;
 	private boolean ok;
 	private CgSettings settings;
@@ -79,7 +80,6 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 	private JCheckBox chkSelect;
 	private JLabel lbPosition;
 	private CgSpinner spinPosition;
-	private JPanel pnlData;
 	private JSplitPane SplitPane;
 	private JPanel pnlTop;
 	private JPanel pnlBottom;
@@ -227,7 +227,6 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		return ok;
 	}
 
-
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -260,20 +259,16 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 	// return rootPane;
 	// }
 
+
 	/**
 	 * To call before a normal closing of he dialog
 	 */
-	private void RequestToClose() {
-		boolean param_valid = true;
-		// check that the parameters are ok
-
-		// -- Ok?
-		if (param_valid) {
-			ok = true;
-			setVisible(false);
-		}
-	}
-
+	/*
+	 * private void RequestToClose() { boolean param_valid = true; // check that the
+	 * parameters are ok
+	 * 
+	 * // -- Ok? if (param_valid) { ok = true; setVisible(false); } }
+	 */
 
 	/**
 	 * Create the toolbar

@@ -25,6 +25,7 @@ import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class ParamPointsModel extends AbstractTableModel {
+	private static final long serialVersionUID = -972678605120520023L;
 	private java.util.ResourceBundle bundle;
 	private ParamData param;
 	private CgSettings settings;

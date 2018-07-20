@@ -160,6 +160,8 @@ import course_generator.utils.Utils.CalcLineResult;
  * @author pierre.delore
  */
 public class frmMain extends javax.swing.JFrame {
+	private static final long serialVersionUID = 6484405417503538528L;
+
 	private final String Version = "4.0.2";
 
 	public static boolean inEclipse = false;
@@ -3836,7 +3838,6 @@ public class frmMain extends javax.swing.JFrame {
 	private javax.swing.JPanel jPanelLeft;
 	// -- Don't remove!!! May be one day I'll use it ;) (see comment block in
 	// "initcomponent")
-	private javax.swing.JTree jTreeMain;
 	// --
 	private javax.swing.JMenu mnuLastCGX;
 	private javax.swing.JMenu mnuLastGPX;

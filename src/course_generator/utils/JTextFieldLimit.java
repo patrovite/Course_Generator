@@ -29,6 +29,7 @@ import javax.swing.text.PlainDocument;
  * @author pierre.delore
  */
 public class JTextFieldLimit extends JTextField {
+	private static final long serialVersionUID = 7607169487202233565L;
 	private int limit;
 
 
@@ -44,6 +45,9 @@ public class JTextFieldLimit extends JTextField {
 	}
 
 	private class LimitDocument extends PlainDocument {
+
+		private static final long serialVersionUID = -7611942577732373603L;
+
 
 		@Override
 		public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {

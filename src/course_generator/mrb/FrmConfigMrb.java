@@ -47,6 +47,7 @@ import course_generator.utils.Utils;
 
 public class FrmConfigMrb extends javax.swing.JDialog {
 
+	private static final long serialVersionUID = -3560107066619391286L;
 	private ResourceBundle bundle;
 	private CgSettings settings;
 	private boolean ok;
@@ -59,7 +60,6 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 	private JPanel panelSlope;
 	private JPanel panelRoadTrack;
 	// private JLabel lbNbCharPerLine;
-	private CgSpinner spinCharPerLine;
 	private JLabel lbCurveFilter;
 	private CgSpinner spinCurveFilter;
 	private JLabel lbTopSize;
@@ -116,7 +116,7 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 	 * Creates new form frmSettings
 	 */
 	public FrmConfigMrb(CgSettings settings) {
-		this.settings=settings;
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
@@ -183,12 +183,14 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
 		};
 
+		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();
@@ -306,7 +308,7 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 		btSimpleFillColor = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btSimpleFillColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSimpleFill = FrmColorChooser.showDialog("", ColorSimpleFill,settings);
+				ColorSimpleFill = FrmColorChooser.showDialog("", ColorSimpleFill, settings);
 				Refresh();
 			}
 		});
@@ -327,7 +329,7 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 		btSimplePenColor = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btSimplePenColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSimpleBorder = FrmColorChooser.showDialog("", ColorSimpleBorder,settings);
+				ColorSimpleBorder = FrmColorChooser.showDialog("", ColorSimpleBorder, settings);
 				Refresh();
 			}
 		});
@@ -370,7 +372,7 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 		btRTTrackFillColor = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btRTTrackFillColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorRSPath = FrmColorChooser.showDialog("", ColorRSPath,settings);
+				ColorRSPath = FrmColorChooser.showDialog("", ColorRSPath, settings);
 				Refresh();
 			}
 		});
@@ -391,7 +393,7 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 		btRTRoadFillColor = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btRTRoadFillColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorRSRoad = FrmColorChooser.showDialog("", ColorRSRoad,settings);
+				ColorRSRoad = FrmColorChooser.showDialog("", ColorRSRoad, settings);
 				Refresh();
 			}
 		});
@@ -412,7 +414,7 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 		btRTPenColor = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btRTPenColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorRSBorder = FrmColorChooser.showDialog("", ColorRSBorder,settings);
+				ColorRSBorder = FrmColorChooser.showDialog("", ColorRSBorder, settings);
 				Refresh();
 			}
 		});
@@ -456,7 +458,7 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 		btSlopeInf5 = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btSlopeInf5.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSlopeInf5 = FrmColorChooser.showDialog("", ColorSlopeInf5,settings);
+				ColorSlopeInf5 = FrmColorChooser.showDialog("", ColorSlopeInf5, settings);
 				Refresh();
 			}
 		});
@@ -477,7 +479,7 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 		btSlopeInf10 = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btSlopeInf10.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSlopeInf10 = FrmColorChooser.showDialog("", ColorSlopeInf10,settings);
+				ColorSlopeInf10 = FrmColorChooser.showDialog("", ColorSlopeInf10, settings);
 				Refresh();
 			}
 		});
@@ -498,7 +500,7 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 		btSlopeInf15 = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btSlopeInf15.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSlopeInf15 = FrmColorChooser.showDialog("", ColorSlopeInf15,settings);
+				ColorSlopeInf15 = FrmColorChooser.showDialog("", ColorSlopeInf15, settings);
 				Refresh();
 			}
 		});
@@ -519,7 +521,7 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 		btSlopeSup15 = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btSlopeSup15.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSlopeSup15 = FrmColorChooser.showDialog("", ColorSlopeSup15,settings);
+				ColorSlopeSup15 = FrmColorChooser.showDialog("", ColorSlopeSup15, settings);
 				Refresh();
 			}
 		});
@@ -540,7 +542,7 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 		btSlopePenColor = new JButton(bundle.getString("FrmConfigMrb.btColor.text"));
 		btSlopePenColor.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ColorSlopeBorder = FrmColorChooser.showDialog("", ColorSlopeBorder,settings);
+				ColorSlopeBorder = FrmColorChooser.showDialog("", ColorSlopeBorder, settings);
 				Refresh();
 			}
 		});
@@ -575,7 +577,7 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 				GridBagConstraints.BOTH);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(Utils.getIcon(this,"cancel.png", settings.DialogIconSize));
+		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {

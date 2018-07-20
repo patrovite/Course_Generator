@@ -31,7 +31,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -49,6 +48,7 @@ import course_generator.utils.Utils;
 
 public class frmFillCoeff extends javax.swing.JDialog {
 
+	private static final long serialVersionUID = -1674891041755069073L;
 	private ResourceBundle bundle;
 	private boolean ok;
 	private int start;
@@ -58,7 +58,6 @@ public class frmFillCoeff extends javax.swing.JDialog {
 	private JPanel jPanelButtons;
 	private JButton btCancel;
 	private JButton btOk;
-	private TrackData track;
 	// private CgData data;
 	private JPanel panelStart;
 	private JPanel panelEnd;
@@ -104,7 +103,7 @@ public class frmFillCoeff extends javax.swing.JDialog {
 	 * Creates new form frmSettings
 	 */
 	public frmFillCoeff(CgSettings settings) {
-		this.settings=settings;
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		estimatedCoeff = 100;
 		initComponents();
@@ -114,7 +113,6 @@ public class frmFillCoeff extends javax.swing.JDialog {
 
 	public EditCoeffResult showDialog(CgSettings settings, TrackData track, int start_line, int end_line) {
 		this.settings = settings;
-		this.track = track;
 
 		if (start_line == -1) {
 			this.start = 1;
@@ -178,12 +176,14 @@ public class frmFillCoeff extends javax.swing.JDialog {
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
 		};
 
+		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();
@@ -399,7 +399,7 @@ public class frmFillCoeff extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(Utils.getIcon(this,"cancel.png",settings.DialogIconSize));
+		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -408,7 +408,7 @@ public class frmFillCoeff extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(Utils.getIcon(this,"valid.png",settings.DialogIconSize));
+		btOk.setIcon(Utils.getIcon(this, "valid.png", settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());
@@ -440,7 +440,7 @@ public class frmFillCoeff extends javax.swing.JDialog {
 			estimatedCoeff = 0;
 	}
 
-		
+
 	protected void Refresh() {
 		spinFromLine.setEnabled(rbFromLine.isSelected());
 		spinToLine.setEnabled(rbToLine.isSelected());

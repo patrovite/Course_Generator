@@ -43,6 +43,7 @@ import course_generator.utils.Utils;
 //import org.joda.time.DateTime;
 
 public class FrmImportChoice extends javax.swing.JDialog {
+	private static final long serialVersionUID = -820897454788636345L;
 	public final static int RESULT_CANCEL = 0;
 	public final static int RESULT_AT_BEGIN = 1;
 	public final static int RESULT_AT_END = 2;
@@ -102,12 +103,14 @@ public class FrmImportChoice extends javax.swing.JDialog {
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
 		};
 
+		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();
@@ -176,7 +179,7 @@ public class FrmImportChoice extends javax.swing.JDialog {
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(Utils.getIcon(this,"valid.png", settings.DialogIconSize));
+		btOk.setIcon(Utils.getIcon(this, "valid.png", settings.DialogIconSize));
 		btOk.setText(bundle.getString("Global.btOk.text"));
 		btOk.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,7 +188,7 @@ public class FrmImportChoice extends javax.swing.JDialog {
 		});
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(Utils.getIcon(this,"cancel.png", settings.DialogIconSize));
+		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -19,6 +19,7 @@
 package course_generator;
 
 import java.awt.Color;
+
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 
 /**
@@ -27,6 +28,7 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
  */
 public class CgCoordinate extends Coordinate {
 
+	private static final long serialVersionUID = -4926982997021073873L;
 	private Color _color;
 
 

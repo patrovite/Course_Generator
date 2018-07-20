@@ -23,7 +23,9 @@ import java.util.Collections;
 
 import javax.swing.AbstractListModel;
 
+@SuppressWarnings("rawtypes")
 public class ParamListModel extends AbstractListModel {
+	private static final long serialVersionUID = 1179121524708948486L;
 	private ArrayList<String> names;
 
 

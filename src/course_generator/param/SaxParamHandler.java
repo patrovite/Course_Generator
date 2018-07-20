@@ -42,13 +42,7 @@ public class SaxParamHandler extends DefaultHandler {
 	private int errline = 0;
 	private final int ERR_READ_NO = 0;
 	private final int ERR_READ_DOUBLE = -1;
-	private final int ERR_READ_INT = -2;
-	private final int ERR_READ_BOOL = -3;
-	private final int ERR_READ_TIME = -4;
-	private final int ERR_READ_VERSION = -5;
 	private final int ERR_READ_NOTEXIST = -6;
-	private final int ERR_READ_COLOR = -7;
-	private int Cmpt = 0;
 	private double slope = 0.0;
 	private String speed = "0.0";
 
@@ -79,7 +73,6 @@ public class SaxParamHandler extends DefaultHandler {
 
 		level = 0;
 		errcode = ERR_READ_NO;
-		Cmpt = 0;
 
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser = factory.newSAXParser();
@@ -163,16 +156,11 @@ public class SaxParamHandler extends DefaultHandler {
 	 *            Error code if a parse error occure
 	 * @return Return the parsed value
 	 */
-	private int ManageInt(int _default, int _errcode) {
-		try {
-			return Integer.parseInt(characters);
-		} catch (NumberFormatException e) {
-			errcode = _errcode;
-			errline = locator.getLineNumber();
-			return _default;
-		}
-	}
-
+	/*
+	 * private int ManageInt(int _default, int _errcode) { try { return
+	 * Integer.parseInt(characters); } catch (NumberFormatException e) { errcode =
+	 * _errcode; errline = locator.getLineNumber(); return _default; } }
+	 */
 
 	/**
 	 * Parse a boolean element
@@ -180,19 +168,14 @@ public class SaxParamHandler extends DefaultHandler {
 	 * @param _default
 	 *            Default value
 	 * @param _errcode
-	 *            Error code if a parse error occure
+	 *            Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
-	private boolean ManageBoolean(boolean _default, int _errcode) {
-		try {
-			return Boolean.parseBoolean(characters);
-		} catch (NumberFormatException e) {
-			errcode = _errcode;
-			errline = locator.getLineNumber();
-			return _default;
-		}
-	}
-
+	/*
+	 * private boolean ManageBoolean(boolean _default, int _errcode) { try { return
+	 * Boolean.parseBoolean(characters); } catch (NumberFormatException e) { errcode
+	 * = _errcode; errline = locator.getLineNumber(); return _default; } }
+	 */
 
 	@Override
 	public void endElement(String uri, String localname, String qName) throws SAXException {

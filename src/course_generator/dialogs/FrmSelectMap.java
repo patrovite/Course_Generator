@@ -40,6 +40,7 @@ import course_generator.settings.CgSettings;
 import course_generator.utils.Utils;
 
 public class FrmSelectMap extends javax.swing.JDialog {
+	private static final long serialVersionUID = -4051940235554192032L;
 	private ResourceBundle bundle;
 	private boolean ok;
 	private CgSettings settings;
@@ -113,12 +114,14 @@ public class FrmSelectMap extends javax.swing.JDialog {
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
 		};
 
+		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();

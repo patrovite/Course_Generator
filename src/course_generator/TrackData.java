@@ -800,27 +800,19 @@ public class TrackData {
 	}
 
 
-	private void AltitudeFilter() {
-		if (data.size() <= 1) {
-			return;
-		}
-
-		CgData r = null;
-		double threshold = 4.0;
-
-		double oldAlt = data.get(0).getElevation(CgConst.UNIT_METER);
-
-		// We dn't use the first and last point
-		for (int i = 1; i < data.size() - 2; i++) {
-			r = data.get(i);
-
-			if (Math.abs(r.getElevation(CgConst.UNIT_METER) - oldAlt) < threshold)
-				r.setElevation(oldAlt);
-			else
-				oldAlt = r.getElevation(CgConst.UNIT_METER);
-		}
-	}
-
+	/*
+	 * private void AltitudeFilter() { if (data.size() <= 1) { return; }
+	 * 
+	 * CgData r = null; double threshold = 4.0;
+	 * 
+	 * double oldAlt = data.get(0).getElevation(CgConst.UNIT_METER);
+	 * 
+	 * // We don't use the first and last point for (int i = 1; i < data.size() - 2;
+	 * i++) { r = data.get(i);
+	 * 
+	 * if (Math.abs(r.getElevation(CgConst.UNIT_METER) - oldAlt) < threshold)
+	 * r.setElevation(oldAlt); else oldAlt = r.getElevation(CgConst.UNIT_METER); } }
+	 */
 
 	/**
 	 * Position filter

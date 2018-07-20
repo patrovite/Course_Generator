@@ -43,6 +43,7 @@ import course_generator.utils.Utils;
 
 public class FrmConfigMrbDuplicate extends javax.swing.JDialog {
 
+	private static final long serialVersionUID = 6438591521547084961L;
 	private ResourceBundle bundle;
 	private CgSettings settings;
 	private boolean ok;
@@ -63,7 +64,7 @@ public class FrmConfigMrbDuplicate extends javax.swing.JDialog {
 	 * Creates new form frmSettings
 	 */
 	public FrmConfigMrbDuplicate(CgSettings settings) {
-		this.settings=settings;
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
@@ -115,12 +116,14 @@ public class FrmConfigMrbDuplicate extends javax.swing.JDialog {
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
 		};
 
+		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();
@@ -198,7 +201,7 @@ public class FrmConfigMrbDuplicate extends javax.swing.JDialog {
 				GridBagConstraints.BOTH);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(Utils.getIcon(this,"cancel.png", settings.DialogIconSize));
+		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {

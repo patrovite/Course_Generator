@@ -46,8 +46,8 @@ import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class JPanelResume extends JPanel {
+	private static final long serialVersionUID = 6484073042332238986L;
 	private int old_row_resume = -1;
-	private int selectedRow = -1;
 	private TrackData Track = null;
 	private final ResumeModel ModelTableResume;
 	private JTable TableResume;
@@ -113,7 +113,6 @@ public class JPanelResume extends JPanel {
 
 				if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() >= 2 && !evt.isConsumed()) {
 					evt.consume();
-					selectedRow = TableResume.rowAtPoint(evt.getPoint());
 					notifyDoubleClick();
 				} else
 					TableResumeMouseClicked(evt);

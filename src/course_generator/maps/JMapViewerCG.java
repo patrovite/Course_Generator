@@ -32,6 +32,7 @@ import org.openstreetmap.gui.jmapviewer.MemoryTileCache;
  *
  */
 public class JMapViewerCG extends JMapViewer {
+	private static final long serialVersionUID = -8826616041157348692L;
 	public CGMapController CGMapController;
 
 

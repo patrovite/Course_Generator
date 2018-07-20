@@ -39,6 +39,7 @@ import course_generator.utils.Utils;
 
 public class FrmColorChooser extends javax.swing.JDialog {
 
+	private static final long serialVersionUID = -4716070964472437081L;
 	private CgSettings settings;
 	private javax.swing.JButton btCancel;
 	private javax.swing.JButton btOk;
@@ -84,12 +85,14 @@ public class FrmColorChooser extends javax.swing.JDialog {
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
 		};
 
+		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();

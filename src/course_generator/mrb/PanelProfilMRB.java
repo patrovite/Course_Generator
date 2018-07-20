@@ -47,6 +47,7 @@ import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
 
 public class PanelProfilMRB extends JPanel {
+	private static final long serialVersionUID = -2862978741208110562L;
 	private boolean WithHighlight;
 	private float transparence;
 	private TrackData track;
@@ -70,21 +71,18 @@ public class PanelProfilMRB extends JPanel {
 	/** Horizontal margin in pixel from the right border **/
 	private int rMargin = 25;
 	/** Number of pixel per horizontal unit (kilometer or miles) **/
-	private double PixelPerHUnit = 8;
+	// private double PixelPerHUnit = 8;
 	/** Number of pixel per vertical unit (meter) **/
-	private double PixelPerVUnit = 0.1;
+	// private double PixelPerVUnit = 0.1;
 	// private int ConfigReplication = CgConst.MRB_REP_POS |
 	// CgConst.MRB_REP_ALIGN | CgConst.MRB_REP_FORMAT |
 	// CgConst.MRB_REP_SIZE | CgConst.MRB_REP_TAGS;
 
 	/** Base line for the duplicate feature **/
-	private int RepLine = 0;
-	private Boolean isGridInit = false;
-	private int xSel1 = 0;
-	private int xSel2 = 0;
-	private int ySel1 = 0;
+	// private int xSel1 = 0;
+	// private int xSel2 = 0;
+	// private int ySel1 = 0;
 	private int ySel2 = 0;
-	private int yDelta = -1;
 	String[] MemoFormat;
 	private BasicStroke myPenDot;
 	private BasicStroke PenSimpleBorder;
@@ -260,7 +258,8 @@ public class PanelProfilMRB extends JPanel {
 
 		// Calculate the profile width
 		wp = width - offx - rMargin;
-		PixelPerHUnit = wp / ((int) (track.getTotalDistance(settings.Unit) / 1000.0));
+		// PixelPerHUnit = wp / ((int) (track.getTotalDistance(settings.Unit) /
+		// 1000.0));
 
 		// Calculate the profile height
 
@@ -273,7 +272,7 @@ public class PanelProfilMRB extends JPanel {
 		}
 
 		hp = height - offy - track.TopMargin;
-		PixelPerVUnit = dElev / hp;
+		// PixelPerVUnit = dElev / hp;
 
 		// Font FontSmall = new Font("ARIAL", Font.PLAIN, 7);
 		Font FontGraduation = new Font("ARIAL", Font.PLAIN, 10);
@@ -591,9 +590,9 @@ public class PanelProfilMRB extends JPanel {
 				g2d.setClip(offx + posx, height - offy - posy, w, drawStringMulti.getHeight() + htags + 4);
 
 				if (miniRoadBookGridIndex == SelLine) {
-					xSel1 = offx + posx;
-					ySel1 = height - offy - posy;
-					xSel2 = xSel1 + w;
+					// xSel1 = offx + posx;
+					// ySel1 = height - offy - posy;
+					// xSel2 = xSel1 + w;
 					ySel2 = ySel2 + htext + htags + 4;
 				}
 

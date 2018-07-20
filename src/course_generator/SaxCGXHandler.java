@@ -85,7 +85,7 @@ public class SaxCGXHandler extends DefaultHandler {
 	private int trkpt_timesecond = 0;
 	private int trkpt_eattime = 0;
 	private int trkpt_timelimit = 0;
-	private double trkpt_dtime = 0.0;
+	// private double trkpt_dtime = 0.0;
 	private int trkpt_optmrb = 0;
 	private int trkpt_vposmrb = 0;
 	private String trkpt_commentmrb = "";
@@ -106,13 +106,12 @@ public class SaxCGXHandler extends DefaultHandler {
 
 	private TrackData trkdata;
 	private int mode = 0;
-	private int errcode = 0;
+	// private int errcode = 0;
 	private int errline = 0;
-	private final int ERR_READ_NO = 0;
+	// private final int ERR_READ_NO = 0;
 	private final int ERR_READ_DOUBLE = -1;
 	private final int ERR_READ_INT = -2;
 	private final int ERR_READ_BOOL = -3;
-	private final int ERR_READ_TIME = -4;
 	private final int ERR_READ_VERSION = -5;
 	private final int ERR_READ_NOTEXIST = -6;
 	private final int ERR_READ_COLOR = -7;
@@ -261,7 +260,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			characters = "";
 			return d;
 		} catch (NumberFormatException e) {
-			errcode = _errcode;
+			// errcode = _errcode;
 			errline = locator.getLineNumber();
 			characters = "";
 			return _default;
@@ -284,7 +283,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			characters = "";
 			return i;
 		} catch (NumberFormatException e) {
-			errcode = _errcode;
+			// errcode = _errcode;
 			errline = locator.getLineNumber();
 			characters = "";
 			return _default;
@@ -307,7 +306,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			characters = "";
 			return (v == 1 ? true : false);
 		} catch (NumberFormatException e) {
-			errcode = _errcode;
+			// errcode = _errcode;
 			errline = locator.getLineNumber();
 			characters = "";
 			return _default;
@@ -330,7 +329,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			characters = "";
 			return new Color(v);
 		} catch (NumberFormatException e) {
-			errcode = _errcode;
+			// errcode = _errcode;
 			errline = locator.getLineNumber();
 			characters = "";
 			return _default;
@@ -349,7 +348,7 @@ public class SaxCGXHandler extends DefaultHandler {
 				cgx_version = ManageDouble(0.0, ERR_READ_VERSION);
 
 				if (cgx_version > CgConst.MAX_CGX_VERSION_TO_READ) {
-					errcode = ERR_READ_VERSION;
+					// errcode = ERR_READ_VERSION;
 					errline = locator.getLineNumber();
 				}
 			} else if (qName.equalsIgnoreCase("TOTALDISTANCE")) {
@@ -369,7 +368,7 @@ public class SaxCGXHandler extends DefaultHandler {
 						trkdata.StartTime = new DateTime();
 				} catch (IllegalArgumentException e) {
 					trkdata.StartTime = new DateTime();
-					errcode = ERR_READ_TIME;
+					// errcode = ERR_READ_TIME;
 					errline = locator.getLineNumber();
 					characters = "";
 				}
@@ -385,7 +384,7 @@ public class SaxCGXHandler extends DefaultHandler {
 					characters = "";
 				} catch (IllegalArgumentException e) {
 					trkdata.StartNightTime = new DateTime();
-					errcode = ERR_READ_TIME;
+					// errcode = ERR_READ_TIME;
 					errline = locator.getLineNumber();
 					characters = "";
 				}
@@ -395,7 +394,7 @@ public class SaxCGXHandler extends DefaultHandler {
 					characters = "";
 				} catch (IllegalArgumentException e) {
 					trkdata.EndNightTime = new DateTime();
-					errcode = ERR_READ_TIME;
+					// errcode = ERR_READ_TIME;
 					errline = locator.getLineNumber();
 					characters = "";
 				}
@@ -489,7 +488,7 @@ public class SaxCGXHandler extends DefaultHandler {
 				trkpt_timesecond = ManageInt(0, ERR_READ_INT);
 				trkdata.isTimeLoaded = true;
 			} else if (qName.equalsIgnoreCase("DELTATIMESECONDE")) {
-				trkpt_dtime = ManageDouble(0.0, ERR_READ_DOUBLE);
+				// trkpt_dtime = ManageDouble(0.0, ERR_READ_DOUBLE);
 				// TODO used?
 			} else if (qName.equalsIgnoreCase("TIMELIMIT")) {
 				trkpt_timelimit = ManageInt(0, ERR_READ_INT);

@@ -38,6 +38,9 @@ import course_generator.utils.Utils;
 
 public class TrackDataRenderer extends DefaultTableCellRenderer {
 
+	private static final long serialVersionUID = 6346080430098644037L;
+
+
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
@@ -52,10 +55,10 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		switch (column) {
 		case 0: // Num
 			data = (CgData) value;
-			
-			if (data==null)
+
+			if (data == null)
 				return this;
-			
+
 			Double num = data.getNum();
 
 			// -- Set the value
@@ -73,7 +76,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		case 1: // Latitude
 			data = (CgData) value;
 
-			if (data==null)
+			if (data == null)
 				return this;
 
 			Double lat = data.getLatitude();
@@ -93,7 +96,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		case 2: // Longitude
 			data = (CgData) value;
 
-			if (data==null)
+			if (data == null)
 				return this;
 
 			Double lon = data.getLongitude();
@@ -113,7 +116,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		case 3: // Elevation
 			data = (CgData) value;
 
-			if (data==null)
+			if (data == null)
 				return this;
 
 			Double slope = data.getSlope();
@@ -122,7 +125,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			setHorizontalAlignment(CENTER);
 
 			// -- Set the icon next to the elevation value
-			
+
 			if (slope > 1.0) {
 				setIcon(Utils.getIcon(this, "up_elev.png", settings.TagIconSize));
 			} else if (slope < -1.0) {
@@ -162,10 +165,10 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 
 		case 4: // Tags
 			data = (CgData) value;
-			
-			if (data==null) 
+
+			if (data == null)
 				return this;
-			
+
 			int tag = data.getTag();
 
 			// -- Count the number of active tag
@@ -178,72 +181,73 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			}
 
 			int x = 0; // X position in the resulting image
-			int xoffset=settings.TagIconSize+2;
-			
+			int xoffset = settings.TagIconSize + 2;
+
 			if (cmpt > 0) {
 				// -- Prepare the resulting image
-				BufferedImage combined = new BufferedImage(xoffset * cmpt, settings.TagIconSize, BufferedImage.TYPE_INT_ARGB);
+				BufferedImage combined = new BufferedImage(xoffset * cmpt, settings.TagIconSize,
+						BufferedImage.TYPE_INT_ARGB);
 				Graphics g = combined.getGraphics();
 
 				// Higher point
 				if ((tag & CgConst.TAG_HIGH_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"high_point.png", settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "high_point.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Lower point
 				if ((tag & CgConst.TAG_LOW_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"low_point.png", settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "low_point.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Station
 				if ((tag & CgConst.TAG_EAT_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"eat.png", settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "eat.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Drink
 				if ((tag & CgConst.TAG_WATER_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"drink.png", settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "drink.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Mark
 				if ((tag & CgConst.TAG_MARK) != 0) {
-					ImageIcon image = Utils.getIcon(this,"flag.png", settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "flag.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Roadbook
 				if ((tag & CgConst.TAG_ROADBOOK) != 0) {
-					ImageIcon image = Utils.getIcon(this,"roadbook.png", settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "roadbook.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Photo
 				if ((tag & CgConst.TAG_COOL_PT) != 0) {
-					ImageIcon image = Utils.getIcon(this,"photo.png", settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "photo.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Note
 				if ((tag & CgConst.TAG_NOTE) != 0) {
-					ImageIcon image = Utils.getIcon(this,"note.png", settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "note.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
 
 				// Info
 				if ((tag & CgConst.TAG_INFO) != 0) {
-					ImageIcon image = Utils.getIcon(this,"info.png", settings.TagIconSize);
+					ImageIcon image = Utils.getIcon(this, "info.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
@@ -267,7 +271,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		case 5: // Distance
 			data = (CgData) value;
 
-			if (data==null)
+			if (data == null)
 				return this;
 
 			setText(data.getDistString(settings.Unit, false));
@@ -284,7 +288,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		case 6: // Total distance
 			data = (CgData) value;
 
-			if (data==null)
+			if (data == null)
 				return this;
 
 			Double total = data.getTotal(settings.Unit);
@@ -297,14 +301,14 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(CgConst.CL_TRACK_TABLE_TOTAL);//new Color(221, 255, 155));
+				setBackground(CgConst.CL_TRACK_TABLE_TOTAL);// new Color(221, 255, 155));
 
 			return this;
 
 		case 7: // Difficulty
 			data = (CgData) value;
 
-			if (data==null)
+			if (data == null)
 				return this;
 
 			Double diff = data.getDiff();
@@ -316,13 +320,13 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			// -- Set the background color
 			Color clDiff = Color.WHITE;
 			if ((diff <= CgConst.DIFF_VERYEASY) && (diff > CgConst.DIFF_EASY)) {
-				clDiff = CgConst.CL_DIFF_VERYEASY; 
+				clDiff = CgConst.CL_DIFF_VERYEASY;
 			} else if ((diff <= CgConst.DIFF_EASY) && (diff > CgConst.DIFF_AVERAGE)) {
-				clDiff = CgConst.CL_DIFF_EASY; 
+				clDiff = CgConst.CL_DIFF_EASY;
 			} else if ((diff <= CgConst.DIFF_AVERAGE) && (diff > CgConst.DIFF_HARD)) {
 				clDiff = CgConst.CL_DIFF_AVERAGE;
 			} else if ((diff <= CgConst.DIFF_HARD) && (diff > CgConst.DIFF_VERYHARD)) {
-				clDiff = CgConst.CL_DIFF_HARD; 
+				clDiff = CgConst.CL_DIFF_HARD;
 			} else if (diff <= CgConst.DIFF_VERYHARD) {
 				clDiff = CgConst.CL_DIFF_VERYHARD;
 			}
@@ -337,7 +341,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		case 8: // Coeff
 			data = (CgData) value;
 
-			if (data==null)
+			if (data == null)
 				return this;
 
 			Double coeff = data.getCoeff();
@@ -357,7 +361,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		case 9: // Recovery
 			data = (CgData) value;
 
-			if (data==null)
+			if (data == null)
 				return this;
 
 			Double recup = data.getRecovery();
@@ -382,7 +386,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		case 10: // Time
 			data = (CgData) value;
 
-			if (data==null)
+			if (data == null)
 				return this;
 
 			// -- Set the value
@@ -399,7 +403,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		case 11: // Time limit
 			data = (CgData) value;
 
-			if (data==null)
+			if (data == null)
 				return this;
 
 			int timelimit = data.getTimeLimit();
@@ -424,7 +428,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		case 12: // Hour
 			TrackData track = (TrackData) value;
 
-			if (track==null)
+			if (track == null)
 				return this;
 
 			DateTime hour = track.data.get(row).getHour();
@@ -434,13 +438,13 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			setHorizontalAlignment(CENTER);
 
 			// -- Set the background color
-			Color clHour = CgConst.CL_TRACK_TABLE_HOUR_DAY; //new Color(221, 255, 155); // Color.LightGreen;
+			Color clHour = CgConst.CL_TRACK_TABLE_HOUR_DAY; // new Color(221, 255, 155); // Color.LightGreen;
 
 			int ts_val = hour.getSecondOfDay();
 			int ts_start = track.StartNightTime.getSecondOfDay();
 			int ts_end = track.EndNightTime.getSecondOfDay();
 			if ((track.bNightCoeff) && ((ts_val > ts_start) || (ts_val < ts_end)))
-				clHour = CgConst.CL_TRACK_TABLE_HOUR_NIGHT; //new Color(0, 128, 255);// 95,158,160); //CadetBlue;
+				clHour = CgConst.CL_TRACK_TABLE_HOUR_NIGHT; // new Color(0, 128, 255);// 95,158,160); //CadetBlue;
 
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
@@ -452,7 +456,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		case 13: // Station time
 			data = (CgData) value;
 
-			if (data==null)
+			if (data == null)
 				return this;
 
 			// -- Set the value
@@ -470,7 +474,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		case 14: // Name
 			data = (CgData) value;
 
-			if (data==null)
+			if (data == null)
 				return this;
 
 			// -- Set the value
@@ -488,7 +492,7 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 		case 15: // Comment
 			data = (CgData) value;
 
-			if (data==null)
+			if (data == null)
 				return this;
 
 			// -- Set the value
@@ -507,6 +511,5 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 
 		return this;
 	}
-	
 
 }

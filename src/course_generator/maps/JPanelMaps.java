@@ -51,6 +51,7 @@ import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
 public class JPanelMaps extends JPanel {
+	private static final long serialVersionUID = 8019423088047841193L;
 	private TrackData Track = null;
 	private String DataDir;
 	private ResourceBundle bundle;

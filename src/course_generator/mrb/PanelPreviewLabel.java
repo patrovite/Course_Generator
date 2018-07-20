@@ -33,6 +33,7 @@ import course_generator.utils.DrawStringMultiLine;
 import course_generator.utils.Utils;
 
 public class PanelPreviewLabel extends JPanel {
+	private static final long serialVersionUID = 3671566966345811405L;
 	private CgData data;
 	private TrackData track;
 	private CgSettings settings;

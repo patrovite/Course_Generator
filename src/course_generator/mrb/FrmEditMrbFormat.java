@@ -26,10 +26,10 @@ import course_generator.settings.CgSettings;
 import course_generator.utils.Utils;
 
 public class FrmEditMrbFormat extends javax.swing.JDialog {
+	private static final long serialVersionUID = -8114019639948346916L;
 	private ResourceBundle bundle;
 	private boolean ok;
 	private CgSettings settings;
-	private String format = "";
 	private TrackData track;
 	private CgData data;
 	private JLabel lbLabelFormat;
@@ -87,11 +87,10 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 	 * @return Object containing the result
 	 */
 	public String showDialog(CgData r, TrackData track, String format) {
-		this.format = format;
 		this.track = track;
 		this.data = r;
 
-		// Set fieds
+		// Set fields
 		tfLabelFormat.setText(format);
 
 		// End set field
@@ -120,12 +119,14 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
 		};
 
+		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();
@@ -407,7 +408,7 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				GridBagConstraints.NORTHWEST, GridBagConstraints.BOTH);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(Utils.getIcon(this,"cancel.png", settings.DialogIconSize));
+		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {

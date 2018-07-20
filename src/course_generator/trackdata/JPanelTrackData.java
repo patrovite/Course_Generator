@@ -39,6 +39,7 @@ import course_generator.trackdata_table.TrackDataRenderer;
 import course_generator.utils.CgConst;
 
 public class JPanelTrackData extends JPanel {
+	private static final long serialVersionUID = -4782000758357046437L;
 	private TrackData track = null;
 	private CgSettings settings = null;
 	private List<JPanelTrackDataListener> listeners = new ArrayList<JPanelTrackDataListener>();
@@ -93,7 +94,7 @@ public class JPanelTrackData extends JPanel {
 		TableMain.setDefaultRenderer(TrackDataClass.class, new TrackDataRenderer());
 
 		TableMain.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-		TableMain.setRowHeight(settings.TagIconSize+4);
+		TableMain.setRowHeight(settings.TagIconSize + 4);
 		TableMain.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				if (evt.getButton() == MouseEvent.BUTTON1 && evt.getClickCount() >= 2 && !evt.isConsumed()) {
@@ -150,7 +151,7 @@ public class JPanelTrackData extends JPanel {
 	 * Refresh the content of the data table
 	 */
 	public void refresh() {
-		TableMain.setRowHeight(settings.TagIconSize+4);
+		TableMain.setRowHeight(settings.TagIconSize + 4);
 		int r = TableMain.getSelectedRow();
 		ModelTableMain.fireTableDataChanged();
 		if (r >= 0)

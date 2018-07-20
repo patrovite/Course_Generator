@@ -24,6 +24,7 @@ import course_generator.ResumeData;
 import course_generator.settings.CgSettings;
 
 public class ResumeModel extends AbstractTableModel {
+	private static final long serialVersionUID = -7645275879053388708L;
 	private final String header[];
 	private ResumeData resume;
 	private CgSettings settings;

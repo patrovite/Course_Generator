@@ -30,16 +30,12 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import course_generator.utils.Utils;
-
 /**
  *
  * @author pierre.delore
  */
 public class SaxConfigHandler extends DefaultHandler {
 
-	private int trk_nb = 0;
-	private int trkseg_nb = 0;
 	private String characters = "";
 	private int level = 0;
 	private final int LEVEL_CONFIG = 1;
@@ -51,8 +47,6 @@ public class SaxConfigHandler extends DefaultHandler {
 	private final int ERR_READ_DOUBLE = -1;
 	private final int ERR_READ_INT = -2;
 	private final int ERR_READ_BOOL = -3;
-	private final int ERR_READ_TIME = -4;
-	private final int ERR_READ_VERSION = -5;
 	private final int ERR_READ_NOTEXIST = -6;
 	private CgSettings Settings;
 
@@ -84,8 +78,6 @@ public class SaxConfigHandler extends DefaultHandler {
 			throws SAXException, IOException, ParserConfigurationException {
 
 		Settings = _Settings;
-		trk_nb = 0;
-		trkseg_nb = 0;
 		characters = "";
 		level = 0;
 		Settings.ReadError = ERR_READ_NO;
@@ -315,8 +307,7 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.DefaultFontStyle = ManageInt(0, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("DEFAULTFONTSIZE")) {
 				Settings.DefaultFontSize = ManageInt(14, ERR_READ_INT);
-				
-				
+
 			} else if (qName.equalsIgnoreCase("STATUSBARICONSIZE")) {
 				Settings.StatusbarIconSize = ManageInt(22, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("TABICONSIZE")) {
@@ -335,8 +326,8 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.MapIconSize = ManageInt(20, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("CURVEBUTTONSICONSIZE")) {
 				Settings.CurveButtonsIconSize = ManageInt(32, ERR_READ_INT);
-			}			
-			
+			}
+
 			else if (qName.equalsIgnoreCase("CONFIG")) {
 				level--;
 			}

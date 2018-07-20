@@ -55,6 +55,7 @@ import net.iakovlev.timeshape.TimeZoneEngine;
 
 public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 
+	private static final long serialVersionUID = -7369059663122216737L;
 	private ResourceBundle bundle;
 	private boolean ok;
 	private double longitude;
@@ -167,12 +168,14 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
 		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
 
+		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
 		};
 
+		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();
