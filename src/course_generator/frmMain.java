@@ -162,7 +162,7 @@ import course_generator.utils.Utils.CalcLineResult;
 public class frmMain extends javax.swing.JFrame {
 	private static final long serialVersionUID = 6484405417503538528L;
 
-	private final String Version = "4.1.0";
+	private final static String Version = "4.1.0";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -3810,12 +3810,16 @@ public class frmMain extends javax.swing.JFrame {
 	 * @param remoteVersionNumber
 	 *            The current version on the server.
 	 */
-	private boolean isRemoteVersionNewer(String remoteVersionNumber) {
+	public static boolean isRemoteVersionNewer(String remoteVersionNumber) {
 		StringTokenizer localVersion = new StringTokenizer(Version, ".");
 		StringTokenizer remoteVersion = new StringTokenizer(remoteVersionNumber, ".");
 		while (localVersion.hasMoreTokens() && remoteVersion.hasMoreTokens()) {
-			if (Integer.parseInt(localVersion.nextToken()) < Integer.parseInt(remoteVersion.nextToken()))
+			int remoteVersionCurrentToken = Integer.parseInt(remoteVersion.nextToken());
+			int localVersionCurrentToken = Integer.parseInt(localVersion.nextToken());
+			if (remoteVersionCurrentToken > localVersionCurrentToken)
 				return true;
+			else if (remoteVersionCurrentToken < localVersionCurrentToken)
+				return false;
 		}
 		return false;
 	}
