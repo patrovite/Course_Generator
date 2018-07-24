@@ -42,6 +42,8 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.joda.time.DateTime;
 
+import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
+
 import course_generator.param.ParamData;
 import course_generator.settings.CgSettings;
 /*
@@ -463,7 +465,8 @@ public class TrackData {
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
 			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(name));
-			XMLStreamWriter writer = factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
+			XMLStreamWriter writer = new IndentingXMLStreamWriter(
+					factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8"));
 
 			// writer.writeStartDocument("UTF-8", "1.0");
 			// writer.writeComment("Course Generator (C) Pierre DELORE");
@@ -604,7 +607,8 @@ public class TrackData {
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
 			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(name));
-			XMLStreamWriter writer = factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
+			XMLStreamWriter writer = new IndentingXMLStreamWriter(
+					factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8"));
 
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("gpx");
@@ -685,7 +689,8 @@ public class TrackData {
 		// -- Save the data in the home directory
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
-			XMLStreamWriter writer = factory.createXMLStreamWriter(new FileOutputStream(name), "UTF-8");
+			XMLStreamWriter writer = new IndentingXMLStreamWriter(
+					factory.createXMLStreamWriter(new FileOutputStream(name), "UTF-8"));
 
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("COURSEGENERATOR");
@@ -1767,7 +1772,8 @@ public class TrackData {
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
 			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(name));
-			XMLStreamWriter writer = factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
+			XMLStreamWriter writer = new IndentingXMLStreamWriter(
+					factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8"));
 
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("COURSEGENERATOR");

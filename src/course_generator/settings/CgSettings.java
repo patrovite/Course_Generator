@@ -33,6 +33,8 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.xml.sax.SAXException;
 
+import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
+
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
@@ -68,7 +70,7 @@ public class CgSettings {
 
 	/** Threshold where CG ask if a position filter must be apply (m) **/
 	public int PosFilterAskThreshold = 10;
-	
+
 	public int Unit = CgConst.UNIT_METER; // Unit for the display 0=meter
 											// 1=Miles/feet
 	public boolean isPace = false; // 'true' the speed is display as pace
@@ -81,11 +83,11 @@ public class CgSettings {
 	public String previousGPXDirectory;
 	public String previousCGXDirectory;
 	public String previousCSVDirectory;
-	
+
 	public String DefaultFontName;
 	public int DefaultFontStyle;
 	public int DefaultFontSize;
-	
+
 	public int StatusbarIconSize;
 	public int TabIconSize;
 	public int ToolbarIconSize;
@@ -95,10 +97,8 @@ public class CgSettings {
 	public int DialogIconSize;
 	public int MapIconSize;
 	public int CurveButtonsIconSize;
-	
-	
-	
-	
+
+
 	public CgSettings() {
 		int i = 0;
 
@@ -145,20 +145,20 @@ public class CgSettings {
 		offlineMap = true;
 		map = 0;
 		PosFilterAskThreshold = 5;
-		
+
 		DefaultFontName = "Arial";
-		DefaultFontStyle = 0; //Normal
+		DefaultFontStyle = 0; // Normal
 		DefaultFontSize = 14;
-		
-		StatusbarIconSize=22;
-		TabIconSize=20;
-		ToolbarIconSize=22;
-		MapToolbarIconSize=22;
-		MapIconSize=32;
-		MenuIconSize=22;
-		TagIconSize=16;
-		DialogIconSize=20;
-		CurveButtonsIconSize=32;
+
+		StatusbarIconSize = 22;
+		TabIconSize = 20;
+		ToolbarIconSize = 22;
+		MapToolbarIconSize = 22;
+		MapIconSize = 32;
+		MenuIconSize = 22;
+		TagIconSize = 16;
+		DialogIconSize = 20;
+		CurveButtonsIconSize = 32;
 	}
 
 
@@ -185,7 +185,8 @@ public class CgSettings {
 		try {
 			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
 					new FileOutputStream(path + "/config.xml"));
-			XMLStreamWriter writer = factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
+			XMLStreamWriter writer = new IndentingXMLStreamWriter(
+					factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8"));
 
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeComment("Course Generator (C) Pierre DELORE");
@@ -246,23 +247,23 @@ public class CgSettings {
 
 			Utils.WriteDoubleToXML(writer, "DISTNEAR", DistNear);
 			Utils.WriteDoubleToXML(writer, "DISTFAR", DistFar);
-			
-			Utils.WriteIntToXML(writer, "POSFILTERASKTHRESHOLD", PosFilterAskThreshold);
-			
-			Utils.WriteStringToXML(writer, "DEFAULTFONTNAME",DefaultFontName);
-			Utils.WriteIntToXML(writer, "DEFAULTFONTSTYLE",DefaultFontStyle);
-			Utils.WriteIntToXML(writer, "DEFAULTFONTSIZE",DefaultFontSize);
 
-			Utils.WriteIntToXML(writer, "STATUSBARICONSIZE",StatusbarIconSize);
-			Utils.WriteIntToXML(writer, "TABICONSIZE",TabIconSize);
-			Utils.WriteIntToXML(writer, "TOOLBARICONSIZE",ToolbarIconSize);
-			Utils.WriteIntToXML(writer, "MAPTOOLBARICONSIZE",MapToolbarIconSize);
-			Utils.WriteIntToXML(writer, "MENUICONSIZE",MenuIconSize);
-			Utils.WriteIntToXML(writer, "TAGICONSIZE",TagIconSize);
-			Utils.WriteIntToXML(writer, "DIALOGICONSIZE",DialogIconSize);
-			Utils.WriteIntToXML(writer, "MAPICONSIZE",MapIconSize);
-			Utils.WriteIntToXML(writer, "CURVEBUTTONSICONSIZE",CurveButtonsIconSize);
-			
+			Utils.WriteIntToXML(writer, "POSFILTERASKTHRESHOLD", PosFilterAskThreshold);
+
+			Utils.WriteStringToXML(writer, "DEFAULTFONTNAME", DefaultFontName);
+			Utils.WriteIntToXML(writer, "DEFAULTFONTSTYLE", DefaultFontStyle);
+			Utils.WriteIntToXML(writer, "DEFAULTFONTSIZE", DefaultFontSize);
+
+			Utils.WriteIntToXML(writer, "STATUSBARICONSIZE", StatusbarIconSize);
+			Utils.WriteIntToXML(writer, "TABICONSIZE", TabIconSize);
+			Utils.WriteIntToXML(writer, "TOOLBARICONSIZE", ToolbarIconSize);
+			Utils.WriteIntToXML(writer, "MAPTOOLBARICONSIZE", MapToolbarIconSize);
+			Utils.WriteIntToXML(writer, "MENUICONSIZE", MenuIconSize);
+			Utils.WriteIntToXML(writer, "TAGICONSIZE", TagIconSize);
+			Utils.WriteIntToXML(writer, "DIALOGICONSIZE", DialogIconSize);
+			Utils.WriteIntToXML(writer, "MAPICONSIZE", MapIconSize);
+			Utils.WriteIntToXML(writer, "CURVEBUTTONSICONSIZE", CurveButtonsIconSize);
+
 			writer.writeEndElement();
 			writer.writeEndDocument();
 

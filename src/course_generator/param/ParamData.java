@@ -28,6 +28,8 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
+
 import course_generator.utils.Utils;
 
 /**
@@ -77,7 +79,8 @@ public class ParamData {
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
 			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(fname));
-			XMLStreamWriter writer = factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
+			XMLStreamWriter writer = new IndentingXMLStreamWriter(
+					factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8"));
 
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("Project");
