@@ -273,9 +273,6 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 
 				double speed = datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue();
 
-				if (settings.Unit == CgConst.UNIT_MILES_FEET)
-					speed = Utils.Miles2Km(speed);
-
 				Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", speed));
 
 				writer.writeEndElement(); // Item
@@ -416,7 +413,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 			if (btSpeedSlopeFilter.isSelected())
 				s = r.tmp1;
 			else
-				s = r.getSpeed(settings.Unit);
+				s = r.getSpeed();
 
 			if (btSpeedSlopeCorr.isSelected()) {
 				coeff = r.getCoeff() / 100.0;
@@ -473,7 +470,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 				if (btSpeedSlopeFilter.isSelected())
 					s = r.tmp1;
 				else
-					s = r.getSpeed(settings.Unit);
+					s = r.getSpeed();
 
 				if (btSpeedSlopeCorr.isSelected()) {
 					coeff = r.getCoeff() / 100.0;
