@@ -274,7 +274,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 				double speed = datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue();
 
 				if (settings.Unit == CgConst.UNIT_MILES_FEET)
-					Utils.Miles2Km(speed);
+					speed = Utils.Miles2Km(speed);
 
 				Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", speed));
 
