@@ -57,6 +57,8 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
+
 import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.dialogs.frmSaveSSCurve;
@@ -256,7 +258,8 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		try {
 			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
 					new FileOutputStream(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + name + ".par"));
-			XMLStreamWriter writer = factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8");
+			XMLStreamWriter writer = new IndentingXMLStreamWriter(
+					factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8"));
 
 			writer.writeStartDocument("UTF-8", "1.0");
 			writer.writeStartElement("Project");
@@ -268,19 +271,9 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 				Utils.WriteStringToXML(writer, "Slope",
 						String.format(Locale.ROOT, "%f", datasetSpeedSlopeLine.getSeries(0).getX(i)));
 
-				if (settings.Unit == CgConst.UNIT_MILES_FEET) {
-					if (settings.isPace)
-						Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", Utils
-								.Miles2Km(Utils.Pace2Speed(datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue()))));
-					else
-						Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f",
-								Utils.Miles2Km(datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue())));
-				} else if (settings.isPace)
-					Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f",
-							Utils.Pace2Speed(datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue())));
-				else
-					Utils.WriteStringToXML(writer, "Speed",
-							String.format(Locale.ROOT, "%f", datasetSpeedSlopeLine.getSeries(0).getY(i)));
+				double speed = datasetSpeedSlopeLine.getSeries(0).getY(i).doubleValue();
+
+				Utils.WriteStringToXML(writer, "Speed", String.format(Locale.ROOT, "%f", speed));
 
 				writer.writeEndElement(); // Item
 			}
@@ -420,7 +413,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 			if (btSpeedSlopeFilter.isSelected())
 				s = r.tmp1;
 			else
-				s = r.getSpeed(settings.Unit);
+				s = r.getSpeed();
 
 			if (btSpeedSlopeCorr.isSelected()) {
 				coeff = r.getCoeff() / 100.0;
@@ -477,7 +470,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 				if (btSpeedSlopeFilter.isSelected())
 					s = r.tmp1;
 				else
-					s = r.getSpeed(settings.Unit);
+					s = r.getSpeed();
 
 				if (btSpeedSlopeCorr.isSelected()) {
 					coeff = r.getCoeff() / 100.0;

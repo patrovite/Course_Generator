@@ -471,6 +471,16 @@ public class CgData {
 	}
 
 
+	/**
+	 * Returns the speed as a double
+	 * 
+	 * @return A double containing the speed.
+	 */
+	public double getSpeed() {
+		return Speed;
+	}
+
+
 	public double getdElevation(int unit) {
 		switch (unit) {
 		case CgConst.UNIT_METER:
