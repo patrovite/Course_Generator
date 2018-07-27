@@ -2,6 +2,7 @@
 build/classes/**
 bin/**
 target/**
+installer/Course_Generator_Installer/obj/**
 
 *.class
 
