@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include Config.wxi ?>
-  <Product Id="*" Name="Course Generator" Language="1033" Version="4.0.1.0" Manufacturer="Course Generator" UpgradeCode="1eef5cdf-2657-4db9-bd4f-b88f2e254f91">
+  <Product Id="*" Name="Course Generator" Language="1033" Version="4.1.0.0" Manufacturer="Course Generator" UpgradeCode="1eef5cdf-2657-4db9-bd4f-b88f2e254f91">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
     <Media Id="1" Cabinet="Course_Generator.cab" EmbedCab="yes" />
     <Icon Id="icon.ico" SourceFile="..\..\build\CG.ico"/>
