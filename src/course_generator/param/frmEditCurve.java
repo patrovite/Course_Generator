@@ -225,10 +225,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		model.clear();
 
 		for (int i = 0; i < files.length; i++) {
-			String fileName = files[i].getName();
-
-			if (files[i].isFile() && (settings.Unit == CgConst.UNIT_METER && fileName.contains("km_h"))
-					|| settings.Unit == CgConst.UNIT_MILES_FEET && fileName.contains("mile")) {
+			if (files[i].isFile()) {
 				model.addElement(Utils.getFileNameWithoutExtension(files[i].getName()));
 			}
 		}
