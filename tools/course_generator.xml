@@ -13,7 +13,7 @@
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>
   <manifest></manifest>
-  <icon>..\src\course_generator\images\CG.ico</icon>
+  <icon>..\src\course_generator\images\other\cg.ico</icon>
   <singleInstance>
     <mutexName>CG_1_instance</mutexName>
     <windowTitle>Course Generator</windowTitle>
