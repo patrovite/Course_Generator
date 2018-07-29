@@ -4,6 +4,7 @@ bin/**
 target/**
 
 *.class
+*.msi
 
 
 ##########
