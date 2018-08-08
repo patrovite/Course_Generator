@@ -169,7 +169,7 @@ public class JPanelStatistics extends JPanel {
 
 		track.CalcRoad();
 
-		sb = Utils.sbReplace(sb, "@500", String.format("%1.3f " + Utils.uLDist2String(settings.Unit),
+		sb = Utils.sbReplace(sb, "@500", String.format("%1.1f " + Utils.uLDist2String(settings.Unit),
 				track.getTotalDistance(settings.Unit) / 1000));
 		sb = Utils.sbReplace(sb, "@501",
 				String.format("%1.0f " + Utils.uElev2String(settings.Unit), track.getClimbP(settings.Unit)));
@@ -201,10 +201,10 @@ public class JPanelStatistics extends JPanel {
 		sb = Utils.sbReplace(sb, "@514", track.CourseName);
 		sb = Utils.sbReplace(sb, "@515", track.Description);
 
-		// -- Speed, distance and time vs slope
+		// -- Speed, distance and time versus slope
 		for (int i = 1; i <= 13; i++)
 			sb = Utils.sbReplace(sb, String.format("@%03d", i),
-					CalcVMoy(track.StatSlope[i - 1].getDist(settings.Unit), track.StatSlope[i - 1].Time));
+					CalcVMoy(track.StatSlope[i - 1].getDistance(), track.StatSlope[i - 1].Time));
 
 		for (int i = 21; i <= 33; i++)
 			sb = Utils.sbReplace(sb, String.format("@%03d", i),
@@ -221,7 +221,7 @@ public class JPanelStatistics extends JPanel {
 		// -- Speed, distance and time vs elevation
 		for (int i = 100; i <= 105; i++)
 			sb = Utils.sbReplace(sb, String.format("@%03d", i),
-					CalcVMoy(track.StatElev[i - 100].getDist(settings.Unit), track.StatElev[i - 100].Time));
+					CalcVMoy(track.StatElev[i - 100].getDistance(), track.StatElev[i - 100].Time));
 
 		for (int i = 110; i <= 115; i++)
 			sb = Utils.sbReplace(sb, String.format("@%03d", i),
@@ -238,7 +238,7 @@ public class JPanelStatistics extends JPanel {
 		// -- Speed, distance and track time vs the elevation (day)
 		for (int i = 200; i <= 205; i++)
 			sb = Utils.sbReplace(sb, String.format("@%03d", i),
-					CalcVMoy(track.StatElevDay[i - 200].getDist(settings.Unit), track.StatElevDay[i - 200].Time));
+					CalcVMoy(track.StatElevDay[i - 200].getDistance(), track.StatElevDay[i - 200].Time));
 
 		for (int i = 210; i <= 215; i++)
 			sb = Utils.sbReplace(sb, String.format("@%03d", i),
@@ -255,7 +255,7 @@ public class JPanelStatistics extends JPanel {
 		// -- Speed, distance and track time vs the elevation (night)
 		for (int i = 300; i <= 305; i++)
 			sb = Utils.sbReplace(sb, String.format("@%03d", i),
-					CalcVMoy(track.StatElevNight[i - 300].getDist(settings.Unit), track.StatElevNight[i - 300].Time));
+					CalcVMoy(track.StatElevNight[i - 300].getDistance(), track.StatElevNight[i - 300].Time));
 
 		for (int i = 310; i <= 315; i++)
 			sb = Utils.sbReplace(sb, String.format("@%03d", i),
@@ -279,7 +279,7 @@ public class JPanelStatistics extends JPanel {
 		int k1 = (int) track.tInDay.Time;
 		sb = Utils.sbReplace(sb, "@420", Utils.Second2DateString(k1));
 
-		sb = Utils.sbReplace(sb, "@401", CalcVMoy(track.tInNight.getDist(settings.Unit), track.tInNight.Time));
+		sb = Utils.sbReplace(sb, "@401", CalcVMoy(track.tInNight.getDistance(), track.tInNight.Time));
 		sb = Utils.sbReplace(sb, "@411",
 				String.format("%1.3f " + Utils.uLDist2String(settings.Unit),
 						track.tInNight.getDist(settings.Unit) / 1000) + ' '
