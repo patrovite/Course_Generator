@@ -151,6 +151,15 @@ public class StatData {
 
 
 	/**
+	 * Get the distance.
+	 * 
+	 */
+	public double getDistance() {
+		return Dist;
+	}
+
+
+	/**
 	 * Get the dist as a string
 	 * 
 	 * @param unit

@@ -270,7 +270,7 @@ public class JPanelStatistics extends JPanel {
 		}
 
 		// -- Speed, distance and track time during day and night
-		sb = Utils.sbReplace(sb, "@400", CalcVMoy(track.tInDay.getDist(settings.Unit), track.tInDay.Time));
+		sb = Utils.sbReplace(sb, "@400", CalcVMoy(track.tInDay.getDistance(), track.tInDay.Time));
 		sb = Utils.sbReplace(sb, "@410",
 				String.format("%1.3f " + Utils.uLDist2String(settings.Unit), track.tInDay.getDist(settings.Unit) / 1000)
 						+ ' ' + String.format("(%1.1f%%)",
@@ -327,7 +327,7 @@ public class JPanelStatistics extends JPanel {
 	 *            The distance in the user preferred format (metric vs imperial).
 	 * @param time
 	 *            The total time.
-	 * @return A string containing the avergage time and its corresponding unit.
+	 * @return A string containing the average time and its corresponding unit.
 	 */
 	private String CalcVMoy(double distance, double time) {
 		double averageSpeed = 0.0;
