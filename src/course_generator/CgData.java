@@ -331,22 +331,22 @@ public class CgData {
 
 		Double d = getTotal(unit) / 1000.0;
 
-		String s = "";
+		String s;
 
 		// -- Set the value
 		switch (unit) {
 		case CgConst.UNIT_METER:
-			s = String.format("%1.3f ", d);
+			s = String.format("%1.1f ", d);
 			if (withunit)
 				s = s + "km";
 			break;
 		case CgConst.UNIT_MILES_FEET:
-			s = String.format("%1.3f ", d);
+			s = String.format("%1.1f ", d);
 			if (withunit)
 				s = s + "miles";
 			break;
 		default:
-			s = String.format("%1.3f ", d);
+			s = String.format("%1.1f ", d);
 			if (withunit)
 				s = s + "km";
 			break;

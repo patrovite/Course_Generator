@@ -184,18 +184,18 @@ public class JPanelStatistics extends JPanel {
 		sb = Utils.sbReplace(sb, "@506", String.format("%1.1f%%", casr.AvrSlopeP));
 		sb = Utils.sbReplace(sb, "@507", String.format("%1.1f%%", casr.AvrSlopeM));
 		sb = Utils.sbReplace(sb, "@508",
-				String.format("%1.3f " + Utils.uLDist2String(settings.Unit), casr.getTotClimbP(settings.Unit) / 1000));
+				String.format("%1.1f " + Utils.uLDist2String(settings.Unit), casr.getTotClimbP(settings.Unit) / 1000));
 		sb = Utils.sbReplace(sb, "@509",
-				String.format("%1.3f " + Utils.uLDist2String(settings.Unit), casr.getTotFlat(settings.Unit) / 1000));
+				String.format("%1.1f " + Utils.uLDist2String(settings.Unit), casr.getTotFlat(settings.Unit) / 1000));
 		sb = Utils.sbReplace(sb, "@510",
-				String.format("%1.3f " + Utils.uLDist2String(settings.Unit), casr.getTotClimbM(settings.Unit) / 1000));
+				String.format("%1.1f " + Utils.uLDist2String(settings.Unit), casr.getTotClimbM(settings.Unit) / 1000));
 		sb = Utils.sbReplace(sb, "@511",
 				Utils.FormatSpeed(speedResult.getAvrspeed(), settings.Unit, settings.isPace, true));
 
 		double tmpdbl = (track.getDistRoad(settings.Unit) * 100 / track.getTotalDistance(settings.Unit));
-		sb = Utils.sbReplace(sb, "@512", String.format("%1.0f%% / %1.3f " + Utils.uLDist2String(settings.Unit), tmpdbl,
+		sb = Utils.sbReplace(sb, "@512", String.format("%1.0f%% / %1.1f " + Utils.uLDist2String(settings.Unit), tmpdbl,
 				track.getDistRoad(settings.Unit) / 1000));
-		sb = Utils.sbReplace(sb, "@513", String.format("%1.0f%% / %1.3f " + Utils.uLDist2String(settings.Unit),
+		sb = Utils.sbReplace(sb, "@513", String.format("%1.0f%% / %1.1f " + Utils.uLDist2String(settings.Unit),
 				100.0 - tmpdbl, (track.getTotalDistance(settings.Unit) - track.getDistRoad(settings.Unit)) / 1000));
 
 		sb = Utils.sbReplace(sb, "@514", track.CourseName);
@@ -208,7 +208,7 @@ public class JPanelStatistics extends JPanel {
 
 		for (int i = 21; i <= 33; i++)
 			sb = Utils.sbReplace(sb, String.format("@%03d", i),
-					String.format("%1.3f " + Utils.uLDist2String(settings.Unit),
+					String.format("%1.1f " + Utils.uLDist2String(settings.Unit),
 							track.StatSlope[i - 21].getDist(settings.Unit) / 1000) + ' '
 							+ String.format("(%1.1f%%)", track.StatSlope[i - 21].getDist(settings.Unit)
 									/ track.getTotalDistance(settings.Unit) * 100));
@@ -225,7 +225,7 @@ public class JPanelStatistics extends JPanel {
 
 		for (int i = 110; i <= 115; i++)
 			sb = Utils.sbReplace(sb, String.format("@%03d", i),
-					String.format("%1.3f " + Utils.uLDist2String(settings.Unit),
+					String.format("%1.1f " + Utils.uLDist2String(settings.Unit),
 							track.StatElev[i - 110].getDist(settings.Unit) / 1000) + ' '
 							+ String.format("(%1.1f%%)", track.StatElev[i - 110].getDist(settings.Unit)
 									/ track.getTotalDistance(settings.Unit) * 100));
@@ -242,7 +242,7 @@ public class JPanelStatistics extends JPanel {
 
 		for (int i = 210; i <= 215; i++)
 			sb = Utils.sbReplace(sb, String.format("@%03d", i),
-					String.format("%1.3f " + Utils.uLDist2String(settings.Unit),
+					String.format("%1.1f " + Utils.uLDist2String(settings.Unit),
 							track.StatElevDay[i - 210].getDist(settings.Unit) / 1000) + ' '
 							+ String.format("(%1.1f%%)", track.StatElevDay[i - 210].getDist(settings.Unit)
 									/ track.getTotalDistance(settings.Unit) * 100));
@@ -259,7 +259,7 @@ public class JPanelStatistics extends JPanel {
 
 		for (int i = 310; i <= 315; i++)
 			sb = Utils.sbReplace(sb, String.format("@%03d", i),
-					String.format("%1.3f " + Utils.uLDist2String(settings.Unit),
+					String.format("%1.1f " + Utils.uLDist2String(settings.Unit),
 							track.StatElevNight[i - 310].getDist(settings.Unit) / 1000) + ' '
 							+ String.format("(%1.1f%%)", track.StatElevNight[i - 310].getDist(settings.Unit)
 									/ track.getTotalDistance(settings.Unit) * 100));
@@ -272,7 +272,7 @@ public class JPanelStatistics extends JPanel {
 		// -- Speed, distance and track time during day and night
 		sb = Utils.sbReplace(sb, "@400", CalcVMoy(track.tInDay.getDistance(), track.tInDay.Time));
 		sb = Utils.sbReplace(sb, "@410",
-				String.format("%1.3f " + Utils.uLDist2String(settings.Unit), track.tInDay.getDist(settings.Unit) / 1000)
+				String.format("%1.1f " + Utils.uLDist2String(settings.Unit), track.tInDay.getDist(settings.Unit) / 1000)
 						+ ' ' + String.format("(%1.1f%%)",
 								track.tInDay.getDist(settings.Unit) / track.getTotalDistance(settings.Unit) * 100));
 
@@ -281,7 +281,7 @@ public class JPanelStatistics extends JPanel {
 
 		sb = Utils.sbReplace(sb, "@401", CalcVMoy(track.tInNight.getDistance(), track.tInNight.Time));
 		sb = Utils.sbReplace(sb, "@411",
-				String.format("%1.3f " + Utils.uLDist2String(settings.Unit),
+				String.format("%1.1f " + Utils.uLDist2String(settings.Unit),
 						track.tInNight.getDist(settings.Unit) / 1000) + ' '
 						+ String.format("(%1.1f%%)",
 								track.tInNight.getDist(settings.Unit) / track.getTotalDistance(settings.Unit) * 100));

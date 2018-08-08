@@ -1810,15 +1810,11 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Separator
 		StatusBar.add(createStatusbarSeparator());
 
-		// -- Total distance
+		// -- Total distance of the track
 		// ----------------------------------------------------
 		LbInfoTotalDist = new javax.swing.JLabel();
 		LbInfoTotalDist.setIcon(Utils.getIcon(this, "distance.png", Settings.StatusbarIconSize));
-		LbInfoTotalDist.setToolTipText(bundle.getString("frmMain.LbInfoTotalDist.toolTipText")); // Total
-																									// distance
-																									// of
-																									// the
-																									// track
+		LbInfoTotalDist.setToolTipText(bundle.getString("frmMain.LbInfoTotalDist.toolTipText"));
 		StatusBar.add(LbInfoTotalDist);
 
 		// -- Total distance - value
@@ -2647,7 +2643,7 @@ public class frmMain extends javax.swing.JFrame {
 		jPanelAnalyze.add(TabbedPaneAnalysis, java.awt.BorderLayout.CENTER);
 
 		// -- Tab Analysis : Time/Dist
-		jPanelTimeDist = new JPanelAnalysisTimeDist();
+		jPanelTimeDist = new JPanelAnalysisTimeDist(Settings);
 		addTab(TabbedPaneAnalysis, jPanelTimeDist, bundle.getString("frmMain.TabTimeDist.tabTitle"), null);
 
 		// -- Tab Analysis : Speed
@@ -3430,7 +3426,7 @@ public class frmMain extends javax.swing.JFrame {
 	private void RefreshStatusbar(TrackData tdata) {
 
 		// -- Distance
-		LbInfoTotalDistVal.setText(String.format("%1.3f ", tdata.getTotalDistance(Settings.Unit) / 1000.0)
+		LbInfoTotalDistVal.setText(String.format("%1.1f ", tdata.getTotalDistance(Settings.Unit) / 1000.0)
 				+ Settings.getDistanceUnitString());
 
 		// -- Ascent
