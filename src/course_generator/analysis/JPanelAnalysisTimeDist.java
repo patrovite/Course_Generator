@@ -72,10 +72,10 @@ public class JPanelAnalysisTimeDist extends JPanel {
 	private Crosshair xCrosshair;
 
 
-	public JPanelAnalysisTimeDist() {
+	public JPanelAnalysisTimeDist(CgSettings settings) {
 		super();
 		track = null;
-		settings = null;
+		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		datasetElevDist = new XYSeriesCollection();
 		datasetTimeDist = new XYSeriesCollection();
@@ -98,8 +98,8 @@ public class JPanelAnalysisTimeDist extends JPanel {
 		lbTimeDistInfoDistance = new javax.swing.JLabel();
 		lbTimeDistInfoDistance.setOpaque(true);
 		lbTimeDistInfoDistance.setBackground(Color.WHITE);
-		lbTimeDistInfoDistance
-				.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistInfoDistance.text") + "=0.000km ");
+		lbTimeDistInfoDistance.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistInfoDistance.text")
+				+ "=0.0 " + Utils.uLDist2String(settings.Unit) + " ");
 		lbTimeDistInfoDistance.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelTimeDistInfo, lbTimeDistInfoDistance, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.WEST, GridBagConstraints.BOTH);
@@ -108,8 +108,8 @@ public class JPanelAnalysisTimeDist extends JPanel {
 		lbTimeDistInfoElevation = new javax.swing.JLabel();
 		lbTimeDistInfoElevation.setOpaque(true);
 		lbTimeDistInfoElevation.setBackground(Color.WHITE);
-		lbTimeDistInfoElevation
-				.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistInfoElevation.text") + "=0m ");
+		lbTimeDistInfoElevation.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistInfoElevation.text")
+				+ "=0 " + Utils.uElev2String(settings.Unit) + " ");
 		lbTimeDistInfoElevation.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelTimeDistInfo, lbTimeDistInfoElevation, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.WEST, GridBagConstraints.BOTH);
