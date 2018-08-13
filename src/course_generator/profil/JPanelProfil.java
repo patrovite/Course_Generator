@@ -215,7 +215,8 @@ public class JPanelProfil extends JPanel {
 		lbProfilDistance = new javax.swing.JLabel();
 		lbProfilDistance.setOpaque(true);
 		lbProfilDistance.setBackground(Color.WHITE);
-		lbProfilDistance.setText(" " + bundle.getString("frmMain.lbProfilDistance.text") + "=0.000km ");
+		lbProfilDistance.setText(" " + bundle.getString("frmMain.lbProfilDistance.text") + "=0.0 "
+				+ Utils.uLDist2String(settings.Unit) + " ");
 		lbProfilDistance.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelProfilInfo, lbProfilDistance, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
 				GridBagConstraints.BOTH);
@@ -256,7 +257,8 @@ public class JPanelProfil extends JPanel {
 		lbProfilElevation = new javax.swing.JLabel();
 		lbProfilElevation.setOpaque(true);
 		lbProfilElevation.setBackground(Color.WHITE);
-		lbProfilElevation.setText(" " + bundle.getString("frmMain.lbProfilElevation.text") + "=0m ");
+		lbProfilElevation.setText(" " + bundle.getString("frmMain.lbProfilElevation.text") + "=0 "
+				+ Utils.uElev2String(settings.Unit) + " ");
 		lbProfilElevation.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 		Utils.addComponent(jPanelProfilInfo, lbProfilElevation, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.EAST,
 				GridBagConstraints.BOTH);
