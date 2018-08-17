@@ -5,6 +5,7 @@ target/**
 
 *.class
 *.msi
+*.zip
 
 
 ##########
