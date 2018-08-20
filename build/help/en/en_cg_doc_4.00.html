@@ -330,6 +330,9 @@ Wikipedia source</p>
 <li><img src="./images/Tags/note.png" /> : Indicates a note.</li>
 <li><img src="./images/Tags/info.png" /> : Indicates information.</li>
 <li><img src="./images/Tags/roadbook.png" /> : Indicates the beginning or the end of a roadbook section.</li>
+<li><img src="./images/Tags/dropbag.png" /> : Indicates a drop bag</li>
+<li><img src="./images/Tags/crew.png" /> : Indicates the presence of crew</li>
+<li><img src="./images/Tags/first_aid.png" /> : Indicates a first aid</li>
 </ul></li>
 <li><strong>Dist</strong> : Contains the distance, in meters/miles, since the previous point.</li>
 <li><strong>Total</strong> : Contains the distance, in kilometers/miles, that has been traveled to this point.</li>
@@ -488,7 +491,7 @@ The button <img src="./images/Tabs/refresh.png" /> allows you to refresh the dat
 <p>Once the setting is completed, press “Ok” to validate. If you have chosen to take into account the night effect, you will see that the “Time” column shows a blue background during the night and green periods during the daytime periods.</p>
 <h2 id="set-the-speedslope-curve"><span class="header-section-number">8.3</span> Set the speed/slope curve</h2>
 <p>In order to have a track time consistent with your speed, you have to choose or create a speed curve according to the slope. This curve goes from -50% slope (downhill) to + 50% slope (climb). The choice of the curve is made by the choice of the speed that one wants to “hold” when the slope is null (0%) on a road. A set of curves has been created to cover most running speeds.</p>
-<p>The menu “Settings&gt;Speed/Slope curves…” or the button <img src="./images/Toolbar/curve.png" alt="curve button" /> will display the dialog box for selecting and managing curves.</p>
+<p>The menu “Settings&gt;Speed/Slope curves…” or the button <img src="./images/Toolbar/chart_curve.png" alt="curve button" /> will display the dialog box for selecting and managing curves.</p>
 <figure>
 <img src="./images/Curve/CG40_Dlg_Curves.png" alt="Curves dialog" /><figcaption>Curves dialog</figcaption>
 </figure>
@@ -566,6 +569,9 @@ After modifying the “Recovery” column, it is necessary to restart a global c
 <li><img src="./images/Tags/note.png" alt="note indicator" /> : Indicates a note.</li>
 <li><img src="./images/Tags/info.png" alt="info indicator" /> : Indicates information.</li>
 <li><img src="./images/Tags/roadbook.png" alt="roadbook indicator" /> : Indicates the beginning of a new part of the roadbook.</li>
+<li><img src="./images/Tags/dropbag.png" /> : Indicates a drop bag</li>
+<li><img src="./images/Tags/crew.png" /> : Indicates the presence of crew</li>
+<li><img src="./images/Tags/first_aid.png" /> : Indicates a first aid</li>
 </ul>
 <p>To set the indicators for a position, select the corresponding cell and open the line editor by double-clicking.</p>
 <p>The following dialog box is displayed:</p>
@@ -580,7 +586,7 @@ After modifying the “Recovery” column, it is necessary to restart a global c
 <li>[Ctrl+F7] allows you to move quickly to the previous line containing an indicator.</li>
 </ul>
 <h2 id="calculate-the-track-time"><span class="header-section-number">8.10</span> Calculate the track time</h2>
-<p>Once the track parameters have been entered, it is necessary to click on the button <img src="./images/Toolbar/refresh_data.png" alt="refresh button" /> to start the calculation of the time for each point. The columns ‘Time’ and ‘Hours’ are then updated according to the settings you have made previously. In the status bar at the bottom of the window, the total time is updated.</p>
+<p>Once the track parameters have been entered, it is necessary to click on the button <img src="./images/Toolbar/refresh.png" alt="refresh button" /> to start the calculation of the time for each point. The columns ‘Time’ and ‘Hours’ are then updated according to the settings you have made previously. In the status bar at the bottom of the window, the total time is updated.</p>
 <h2 id="save-the-track"><span class="header-section-number">8.11</span> Save the track</h2>
 <p><strong>Course Generator</strong> offers the possibility to save your track in several formats.</p>
 <ul>
@@ -658,15 +664,15 @@ Each found position is marked with an indicator <img src="./images/Tags/high_poi
 <li>Fill in the fatigue coefficient, refueling times, cut-off times, names of important points.</li>
 <li>Having the calculation updated (F5 key).</li>
 <li>Having marked the important positions with the indicator <img src="./images/Tags/roadbook.png" alt="mark indicator" />.</li>
-<li>Having marked the important points with one or more of the following indicators: <img src="./images/Tags/high_point.png" alt="hight point" /> <img src="./images/Tags/low_point.png" alt="low point" /> <img src="./images/Tags/eat.png" alt="eat" /> <img src="./images/Tags/drink.png" alt="drink" /> <img src="./images/Tags/flag.png" alt="flag" /></li>
+<li>Having marked the important points with one or more of the following indicators: <img src="./images/Tags/high_point.png" alt="hight point" /> <img src="./images/Tags/low_point.png" alt="low point" /> <img src="./images/Tags/eat.png" alt="eat" /> <img src="./images/Tags/drink.png" alt="drink" /> <img src="./images/Tags/flag.png" alt="flag" /> <img src="./images/Tags/dropbag.png" /> <img src="./images/Tags/crew.png" /> <img src="./images/Tags/first_aid.png" /></li>
 </ul>
 <h3 id="presentation"><span class="header-section-number">9.8.1</span> Presentation</h3>
-<p>“Display&gt;Generate mini roadbook” or the button <img src="./images/Toolbar/mrb.png" alt="mrb" /> displays the following window:<br />
+<p>“Display&gt;Generate mini roadbook” or the button <img src="./images/Toolbar/roadbook.png" alt="mrb" /> displays the following window:<br />
 <img src="./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png" alt="Mini raodbook dialog" /></p>
 <p>It contains the following elements:</p>
 <ul>
 <li>Top: the toolbar to perform actions</li>
-<li>Middle right: Contains a table with all the rows of the track table that contained the indicator <img src="./images/Tags/roadbook.png" alt="roadbook" /> and one or more of the following indicators: <img src="./images/Tags/high_point.png" /> <img src="./images/Tags/low_point.png" /> <img src="./images/Tags/eat.png" /> <img src="./images/Tags/drink.png" /> <img src="./images/Tags/flag.png" />. Each line generates a label in the mini roadbook</li>
+<li>Middle right: Contains a table with all the rows of the track table that contained the indicator <img src="./images/Tags/roadbook.png" alt="roadbook" /> and one or more of the following indicators: <img src="./images/Tags/high_point.png" /> <img src="./images/Tags/low_point.png" /> <img src="./images/Tags/eat.png" /> <img src="./images/Tags/drink.png" /> <img src="./images/Tags/flag.png" /> <img src="./images/Tags/dropbag.png" /> <img src="./images/Tags/crew.png" /> <img src="./images/Tags/first_aid.png" />. Each line generates a label in the mini roadbook</li>
 <li>Middle left: This area allows you to change the content of the currently selected table row</li>
 <li>Bottom: Contains the mini roadbook with tags</li>
 </ul>

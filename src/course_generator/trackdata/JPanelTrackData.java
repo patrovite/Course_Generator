@@ -247,6 +247,23 @@ public class JPanelTrackData extends JPanel {
 				// Note
 				if ((tag & CgConst.TAG_NOTE) != 0)
 					s = s + "Note ";
+				
+				// Roadbook
+				if ((tag & CgConst.TAG_ROADBOOK) != 0)
+					s = s + "Roadbook ";
+				
+				// Drop bag
+				if ((tag & CgConst.TAG_DROPBAG) != 0)
+					s = s + "Drop bag ";
+
+				// Crew
+				if ((tag & CgConst.TAG_CREW) != 0)
+					s = s + "Crew ";
+				
+				// First aid
+				if ((tag & CgConst.TAG_FIRST_AID) != 0)
+					s = s + "First aid ";
+
 				break;
 			case 5: // Distance
 				s = track.data.get(row).getDistString(settings.Unit, false);

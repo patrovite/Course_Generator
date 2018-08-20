@@ -32,6 +32,9 @@ Le détail des colonnes est décrit ci-dessous:
     * ![](./images/Tags/note.png) : Indique une note.
     * ![](./images/Tags/info.png) : Indique une information.
     * ![](./images/Tags/roadbook.png) : Indique le début ou la fin d'une section de roadbook.
+    * ![](./images/Tags/dropbag.png) : Indique la présence d'un sac d'allègement.
+    * ![](./images/Tags/crew.png) : Indique la présence d'une assistance
+    * ![](./images/Tags/first_aid.png) : Indique un point de secours
 * **Dist** : Contient la distance, en mètre/miles, avec le point précédent.
 * **Total** : Contient la distance, en kilomètre/miles, qui a été parcouru jusqu'à ce point.
 * **Diff** : Contient la difficulté du terrain entre le point précédent et ce point. La valeur initiale est de 100, cela correspond à une route plate goudronnée. Plus la valeur diminue, plus le terrain est accidenté. Si vous mettez 80, cela indique que par rapport à une route goudronnée plate vous allez mettre 20% de temps en plus pour parcourir la distance. Le bouton ![](./images/Toolbar/fill_diff.png) permet de remplir rapidement un ensemble de position. Vous trouverez ci-dessous les valeurs utilisés par Softrun (www.softrun.fr). Merci à Rémi Poisvert pour ces informations.

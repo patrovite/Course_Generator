@@ -72,6 +72,12 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 	private JLabel lbRoadbook;
 	private JCheckBox chkMark;
 	private JLabel lbMark;
+	private JCheckBox chkDropBag;
+	private JLabel lbDropBag;
+	private JCheckBox chkCrew;
+	private JLabel lbCrew;
+	private JCheckBox chkFirstAid;
+	private JLabel lbFirstAid;
 
 
 	/**
@@ -134,6 +140,18 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 			// Info
 			if (chkInfo.isSelected())
 				tag = tag | CgConst.TAG_INFO;
+
+			// Drop bag
+			if (chkDropBag.isSelected())
+				tag = tag | CgConst.TAG_DROPBAG;
+
+			// Crew
+			if (chkCrew.isSelected())
+				tag = tag | CgConst.TAG_CREW;
+			
+			// First aid
+			if (chkFirstAid.isSelected())
+				tag = tag | CgConst.TAG_FIRST_AID;
 
 		}
 		return ok;
@@ -287,6 +305,33 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 		lbRoadbook = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbRoadbook.Text"),
 				Utils.getIcon(this, "roadbook.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelTags, lbRoadbook, 1, 8, 1, 1, 1, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+		
+		// -- Tag : Drop bag
+		chkDropBag = new JCheckBox();
+		Utils.addComponent(panelTags, chkDropBag, 0, 9, 1, 1, 0, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+		lbDropBag = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbDropBag.Text"),
+				Utils.getIcon(this, "dropbag.png", settings.DialogIconSize), JLabel.LEFT);
+		Utils.addComponent(panelTags, lbDropBag, 1, 9, 1, 1, 1, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+		
+		// -- Tag : Crew
+		chkCrew = new JCheckBox();
+		Utils.addComponent(panelTags, chkCrew, 0, 10, 1, 1, 0, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+		lbCrew = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbCrew.Text"),
+				Utils.getIcon(this, "crew.png", settings.DialogIconSize), JLabel.LEFT);
+		Utils.addComponent(panelTags, lbCrew, 1, 10, 1, 1, 1, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+		
+		// -- Tag : First aid
+		chkFirstAid = new JCheckBox();
+		Utils.addComponent(panelTags, chkFirstAid, 0, 11, 1, 1, 0, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+		lbFirstAid = new javax.swing.JLabel(bundle.getString("FrmExportWaypoints.lbFirstAid.Text"),
+				Utils.getIcon(this, "first_aid.png", settings.DialogIconSize), JLabel.LEFT);
+		Utils.addComponent(panelTags, lbFirstAid, 1, 11, 1, 1, 1, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
 		// == BUTTONS

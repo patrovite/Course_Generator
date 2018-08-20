@@ -286,7 +286,7 @@ Source Wikipédia</p>
 <li><img src="./images/Statusbar/CG40_Statusbar_Curve.png" /> : Courbe ‘Vitesse/Pente’ sélectionnée.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Timelimit.png" /> : Indique qu’une barrière horaire a été dépassée à un endroit du parcours. Un clic sur cet indicateur positionne la sélection du tableau sur la première ligne concernée.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Modified.png" /> : Le parcours a été modifié. Il est nécessaire de le sauvegarder.</li>
-<li><img src="./images/Statusbar/CG40_Statusbar_Calc.png" /> : Le parcours a été modifié. Il est nécessaire de relancer le calcul (bouton <img src="./images/Toolbar/refresh_data.png" /> ou [F5]).</li>
+<li><img src="./images/Statusbar/CG40_Statusbar_Calc.png" /> : Le parcours a été modifié. Il est nécessaire de relancer le calcul (bouton <img src="./images/Toolbar/refresh.png" /> ou [F5]).</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Online.png" /> : Indique l’état de la connexion internet.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Unit.png" /> : Indique les unités de mesures utilisées.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Map_Size.png" /> : Indique la taille disque utilisée par les cartes.</li>
@@ -328,6 +328,9 @@ Source Wikipédia</p>
 <li><img src="./images/Tags/note.png" /> : Indique une note.</li>
 <li><img src="./images/Tags/info.png" /> : Indique une information.</li>
 <li><img src="./images/Tags/roadbook.png" /> : Indique le début ou la fin d’une section de roadbook.</li>
+<li><img src="./images/Tags/dropbag.png" /> : Indique la présence d’un sac d’allègement.</li>
+<li><img src="./images/Tags/crew.png" /> : Indique la présence d’une assistance</li>
+<li><img src="./images/Tags/first_aid.png" /> : Indique un point de secours</li>
 </ul></li>
 <li><strong>Dist</strong> : Contient la distance, en mètre/miles, avec le point précédent.</li>
 <li><strong>Total</strong> : Contient la distance, en kilomètre/miles, qui a été parcouru jusqu’à ce point.</li>
@@ -556,6 +559,9 @@ Après avoir modifié la colonne “Récup.”, il est nécessaire de relancer u
 <li><img src="./images/Tags/note.png" /> : Indique une note.</li>
 <li><img src="./images/Tags/info.png" /> : Indique une information</li>
 <li><img src="./images/Tags/roadbook.png" /> : Indique le début d’une nouvelle étape du roadbook</li>
+<li><img src="./images/Tags/dropbag.png" /> : Indique la présence d’un sac d’allègement.</li>
+<li><img src="./images/Tags/crew.png" /> : Indique la présence d’une assistance</li>
+<li><img src="./images/Tags/first_aid.png" /> : Indique un point de secours</li>
 </ul>
 <p>Pour sélectionner les indicateurs d’une position il faut sélectionner la cellule concernée et ouvrir l’éditeur de ligne en faisant un double clique.</p>
 <p>La boite dialogue suivante s’affiche:<br />
@@ -642,15 +648,15 @@ Chaque position trouvée est marquée avec un indicateur <img src="./images/Tags
 <li>Avoir renseigné le coefficient de fatigue, les temps de ravitaillements, les barrières horaires, les noms des points importants.</li>
 <li>Avoir le calcul de vos temps de passage à jour (touche F5).</li>
 <li>Avoir marqué les positions importantes avec l’indicateur <img src="./images/Tags/roadbook.png" />.</li>
-<li>Avoir marqué les points importants avec un ou plusieurs des indicateurs suivant: <img src="./images/Tags/high_point.png" /> <img src="./images/Tags/low_point.png" /> <img src="./images/Tags/eat.png" /> <img src="./images/Tags/drink.png" /> <img src="./images/Tags/flag.png" /></li>
+<li>Avoir marqué les points importants avec un ou plusieurs des indicateurs suivant: <img src="./images/Tags/high_point.png" /> <img src="./images/Tags/low_point.png" /> <img src="./images/Tags/eat.png" /> <img src="./images/Tags/drink.png" /> <img src="./images/Tags/flag.png" /> <img src="./images/Tags/dropbag.png" /> <img src="./images/Tags/crew.png" /> <img src="./images/Tags/first_aid.png" /></li>
 </ul>
 <h3 id="présentation"><span class="header-section-number">9.8.1</span> Présentation</h3>
-<p>“Affichage&gt;Mini roadbook” ou le bouton <img src="./images/Toolbar/mrb.png" /> affiche la fenêtre suivante:<br />
+<p>“Affichage&gt;Mini roadbook” ou le bouton <img src="./images/Toolbar/roadbook.png" /> affiche la fenêtre suivante:<br />
 <img src="./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png" /></p>
 <p>Elle contient les éléments suivants:</p>
 <ul>
 <li>En haut: la barre d’icônes permettant de réaliser des actions</li>
-<li>Au milieu à droite: Contient un tableau avec toutes les lignes du tableau général qui contenaient l’indicateur <img src="./images/Tags/roadbook.png" /> et un ou plusieurs des indicateurs suivant: <img src="./images/Tags/high_point.png" /> <img src="./images/Tags/low_point.png" /> <img src="./images/Tags/eat.png" /> <img src="./images/Tags/drink.png" /> <img src="./images/Tags/flag.png" />. Chaque ligne génère une étiquette dans le mini roadbook</li>
+<li>Au milieu à droite: Contient un tableau avec toutes les lignes du tableau général qui contenaient l’indicateur <img src="./images/Tags/roadbook.png" /> et un ou plusieurs des indicateurs suivant: <img src="./images/Tags/high_point.png" /> <img src="./images/Tags/low_point.png" /> <img src="./images/Tags/eat.png" /> <img src="./images/Tags/drink.png" /> <img src="./images/Tags/flag.png" /> <img src="./images/Tags/dropbag.png" /> <img src="./images/Tags/crew.png" /> <img src="./images/Tags/first_aid.png" />. Chaque ligne génère une étiquette dans le mini roadbook</li>
 <li>Au milieu à gauche: Cette zone permet de modifier le contenu de la ligne du tableau qui actuellement sélectionnée</li>
 <li>En bas: Contient le mini roadbook avec les étiquettes</li>
 </ul>

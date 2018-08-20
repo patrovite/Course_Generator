@@ -96,18 +96,18 @@ To be able to use the mini roadbook it is necessary to have previously set the p
 * Fill in the fatigue coefficient, refueling times, cut-off times, names of important points.
 * Having the calculation updated (F5 key).
 * Having marked the important positions with the indicator ![mark indicator](./images/Tags/roadbook.png).
-* Having marked the important points with one or more of the following indicators: ![hight point](./images/Tags/high_point.png) ![low point](./images/Tags/low_point.png) ![eat](./images/Tags/eat.png) ![drink](./images/Tags/drink.png) ![flag](./images/Tags/flag.png)
+* Having marked the important points with one or more of the following indicators: ![hight point](./images/Tags/high_point.png) ![low point](./images/Tags/low_point.png) ![eat](./images/Tags/eat.png) ![drink](./images/Tags/drink.png) ![flag](./images/Tags/flag.png) ![](./images/Tags/dropbag.png) ![](./images/Tags/crew.png) ![](./images/Tags/first_aid.png)
 
 
 ### Presentation
 
-"Display>Generate mini roadbook" or the button ![mrb](./images/Toolbar/mrb.png) displays the following window:  
+"Display>Generate mini roadbook" or the button ![mrb](./images/Toolbar/roadbook.png) displays the following window:  
 ![Mini raodbook dialog](./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png)
 
 It contains the following elements:
 
 * Top: the toolbar to perform actions
-* Middle right: Contains a table with all the rows of the track table that contained the indicator ![roadbook](./images/Tags/roadbook.png) and one or more of the following indicators: ![](./images/Tags/high_point.png) ![](./images/Tags/low_point.png) ![](./images/Tags/eat.png) ![](./images/Tags/drink.png) ![](./images/Tags/flag.png). Each line generates a label in the mini roadbook
+* Middle right: Contains a table with all the rows of the track table that contained the indicator ![roadbook](./images/Tags/roadbook.png) and one or more of the following indicators: ![](./images/Tags/high_point.png) ![](./images/Tags/low_point.png) ![](./images/Tags/eat.png) ![](./images/Tags/drink.png) ![](./images/Tags/flag.png) ![](./images/Tags/dropbag.png) ![](./images/Tags/crew.png) ![](./images/Tags/first_aid.png). Each line generates a label in the mini roadbook
 * Middle left: This area allows you to change the content of the currently selected table row
 * Bottom: Contains the mini roadbook with tags
 

@@ -707,6 +707,9 @@ public class TrackData {
 						|| (((mask & CgConst.TAG_COOL_PT) != 0) && ((r.getTag() & CgConst.TAG_COOL_PT) != 0))
 						|| (((mask & CgConst.TAG_NOTE) != 0) && ((r.getTag() & CgConst.TAG_NOTE) != 0))
 						|| (((mask & CgConst.TAG_ROADBOOK) != 0) && ((r.getTag() & CgConst.TAG_ROADBOOK) != 0))
+						|| (((mask & CgConst.TAG_DROPBAG) != 0) && ((r.getTag() & CgConst.TAG_DROPBAG) != 0))
+						|| (((mask & CgConst.TAG_CREW) != 0) && ((r.getTag() & CgConst.TAG_CREW) != 0))
+						|| (((mask & CgConst.TAG_FIRST_AID) != 0) && ((r.getTag() & CgConst.TAG_FIRST_AID) != 0))
 						|| (((mask & CgConst.TAG_INFO) != 0) && ((r.getTag() & CgConst.TAG_INFO) != 0))) {
 					// <Pt>
 					writer.writeStartElement("Pt");
