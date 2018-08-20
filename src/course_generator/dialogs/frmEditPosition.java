@@ -133,6 +133,12 @@ public class frmEditPosition extends javax.swing.JDialog {
 	private JLabel lbTimelimitHelp;
 	private JLabel lbStationHelp;
 	private JLabel lbCoeffHelp;
+	private JLabel lbDropBag;
+	private JCheckBox chkDropBag;
+	private JLabel lbCrew;
+	private JCheckBox chkCrew;
+	private JLabel lbFirstAid;
+	private JCheckBox chkFirstAid;
 
 
 	/**
@@ -166,6 +172,10 @@ public class frmEditPosition extends javax.swing.JDialog {
 		chkPhoto.setSelected((data.getTag() & CgConst.TAG_COOL_PT) != 0);
 		chkNote.setSelected((data.getTag() & CgConst.TAG_NOTE) != 0);
 		chkInfo.setSelected((data.getTag() & CgConst.TAG_INFO) != 0);
+		
+		chkDropBag.setSelected((data.getTag() & CgConst.TAG_DROPBAG) != 0);
+		chkCrew.setSelected((data.getTag() & CgConst.TAG_CREW) != 0);
+		chkFirstAid.setSelected((data.getTag() & CgConst.TAG_FIRST_AID) != 0);
 
 		// End set field
 		ok = false;
@@ -215,6 +225,19 @@ public class frmEditPosition extends javax.swing.JDialog {
 			// Info
 			if (chkInfo.isSelected())
 				tag = tag | CgConst.TAG_INFO;
+			
+			// Drop bag
+			if (chkDropBag.isSelected())
+				tag = tag | CgConst.TAG_DROPBAG;
+			
+			// Crew
+			if (chkCrew.isSelected())
+				tag = tag | CgConst.TAG_CREW;
+			
+			// First aid
+			if (chkFirstAid.isSelected())
+				tag = tag | CgConst.TAG_FIRST_AID;
+
 			track.data.get(line).setTag(tag);
 
 			track.data.get(line).setElevation(spinElevation.getValueAsDouble(settings.Unit)); // CgConst.UNIT_METER));
@@ -566,6 +589,36 @@ public class frmEditPosition extends javax.swing.JDialog {
 		Utils.addComponent(panelRight, chkRoadbook, 2, line++, 1, 1, 0, 0, 5, 5, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
+		// -- Tag : Drop bag
+		lbDropBag = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbDropBag.Text"), 
+				Utils.getIcon(this, "dropbag.png", settings.DialogIconSize), JLabel.LEFT);
+		Utils.addComponent(panelRight, lbDropBag, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		chkDropBag = new javax.swing.JCheckBox();
+		Utils.addComponent(panelRight, chkDropBag, 2, line++, 1, 1, 0, 0, 5, 5, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+		
+		// -- Tag : Crew
+		lbCrew = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbCrew.Text"), 
+				Utils.getIcon(this, "crew.png", settings.DialogIconSize), JLabel.LEFT);
+		Utils.addComponent(panelRight, lbCrew, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		chkCrew = new javax.swing.JCheckBox();
+		Utils.addComponent(panelRight, chkCrew, 2, line++, 1, 1, 0, 0, 5, 5, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+		
+		// -- Tag : First aid
+		lbFirstAid = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbFirstAid.Text"), 
+				Utils.getIcon(this, "first_aid.png", settings.DialogIconSize), JLabel.LEFT);
+		Utils.addComponent(panelRight, lbFirstAid, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+
+		chkFirstAid = new javax.swing.JCheckBox();
+		Utils.addComponent(panelRight, chkFirstAid, 2, line++, 1, 1, 0, 0, 5, 5, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
+		
 		// -- Diff
 		lbDiff = new javax.swing.JLabel();
 		lbDiff.setFont(font);

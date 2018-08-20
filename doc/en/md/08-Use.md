@@ -54,7 +54,7 @@ If you have chosen to take into account the night effect, you will see that the 
 
 In order to have a track time consistent with your speed, you have to choose or create a speed curve according to the slope. This curve goes from -50% slope (downhill) to + 50% slope (climb). The choice of the curve is made by the choice of the speed that one wants to "hold" when the slope is null (0%) on a road. A set of curves has been created to cover most running speeds.
 
-The menu "Settings>Speed/Slope curves..." or the button ![curve button](./images/Toolbar/curve.png) will display the dialog box for selecting and managing curves.
+The menu "Settings>Speed/Slope curves..." or the button ![curve button](./images/Toolbar/chart_curve.png) will display the dialog box for selecting and managing curves.
 
 ![Curves dialog](./images/Curve/CG40_Dlg_Curves.png)
 
@@ -170,6 +170,9 @@ The different indicators are as follows:
 * ![note indicator](./images/Tags/note.png) : Indicates a note.
 * ![info indicator](./images/Tags/info.png) : Indicates information.
 * ![roadbook indicator](./images/Tags/roadbook.png) : Indicates the beginning of a new part of the roadbook.
+* ![](./images/Tags/dropbag.png) : Indicates a drop bag
+* ![](./images/Tags/crew.png) : Indicates the presence of crew
+* ![](./images/Tags/first_aid.png) : Indicates a first aid
 
 To set the indicators for a position, select the corresponding cell and open the line editor by double-clicking.
 
@@ -187,7 +190,7 @@ In order to save time, keyboard shortcuts are available:
 
 ## Calculate the track time
 
-Once the track parameters have been entered, it is necessary to click on the button ![refresh button](./images/Toolbar/refresh_data.png) to start the calculation of the time for each point.
+Once the track parameters have been entered, it is necessary to click on the button ![refresh button](./images/Toolbar/refresh.png) to start the calculation of the time for each point.
 The columns 'Time' and 'Hours' are then updated according to the settings you have made previously. In the status bar at the bottom of the window, the total time is updated.
 
 ## Save the track

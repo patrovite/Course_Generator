@@ -33,6 +33,9 @@ The details of the columns are described below:
     * ![](./images/Tags/note.png) : Indicates a note.
     * ![](./images/Tags/info.png) : Indicates information.
     * ![](./images/Tags/roadbook.png) : Indicates the beginning or the end of a roadbook section.
+    * ![](./images/Tags/dropbag.png) : Indicates a drop bag
+    * ![](./images/Tags/crew.png) : Indicates the presence of crew
+    * ![](./images/Tags/first_aid.png) : Indicates a first aid
 * **Dist** : Contains the distance, in meters/miles, since the previous point.
 * **Total** : Contains the distance, in kilometers/miles, that has been traveled to this point.
 * **Diff** : Contains the field difficulty between the previous point and this point. The initial value is 100, this corresponds to a flat road. The lower the value, the more rugged it is. If you enter 80, this indicates that compared to a flat road you will spend 20% more time to cover the distance. The button ![](./images/Toolbar/fill_diff.png) allows you to quickly fill a set of position. You will find below the values ​​used by Softrun (www.softrun.fr). Thanks to Rémi Poisvert for these informations.

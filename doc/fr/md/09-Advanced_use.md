@@ -95,18 +95,18 @@ Pour pouvoir utiliser le mini roadbook il faut avoir préalablement renseigné v
 * Avoir renseigné le coefficient de fatigue, les temps de ravitaillements, les barrières horaires, les noms des points importants.
 * Avoir le calcul de vos temps de passage à jour (touche F5).
 * Avoir marqué les positions importantes avec l'indicateur ![](./images/Tags/roadbook.png).
-* Avoir marqué les points importants avec un ou plusieurs des indicateurs suivant: ![](./images/Tags/high_point.png) ![](./images/Tags/low_point.png) ![](./images/Tags/eat.png) ![](./images/Tags/drink.png) ![](./images/Tags/flag.png)
+* Avoir marqué les points importants avec un ou plusieurs des indicateurs suivant: ![](./images/Tags/high_point.png) ![](./images/Tags/low_point.png) ![](./images/Tags/eat.png) ![](./images/Tags/drink.png) ![](./images/Tags/flag.png) ![](./images/Tags/dropbag.png) ![](./images/Tags/crew.png) ![](./images/Tags/first_aid.png)
 
 
 ### Présentation
 
-"Affichage>Mini roadbook" ou le bouton ![](./images/Toolbar/mrb.png) affiche la fenêtre suivante:  
+"Affichage>Mini roadbook" ou le bouton ![](./images/Toolbar/roadbook.png) affiche la fenêtre suivante:  
 ![](./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png)
 
 Elle contient les éléments suivants:
 
 * En haut: la barre d'icônes permettant de réaliser des actions
-* Au milieu à droite: Contient un tableau avec toutes les lignes du tableau général qui contenaient l'indicateur ![](./images/Tags/roadbook.png) et un ou plusieurs des indicateurs suivant: ![](./images/Tags/high_point.png) ![](./images/Tags/low_point.png) ![](./images/Tags/eat.png) ![](./images/Tags/drink.png) ![](./images/Tags/flag.png). Chaque ligne génère une étiquette dans le mini roadbook
+* Au milieu à droite: Contient un tableau avec toutes les lignes du tableau général qui contenaient l'indicateur ![](./images/Tags/roadbook.png) et un ou plusieurs des indicateurs suivant: ![](./images/Tags/high_point.png) ![](./images/Tags/low_point.png) ![](./images/Tags/eat.png) ![](./images/Tags/drink.png) ![](./images/Tags/flag.png) ![](./images/Tags/dropbag.png) ![](./images/Tags/crew.png) ![](./images/Tags/first_aid.png). Chaque ligne génère une étiquette dans le mini roadbook
 * Au milieu à gauche: Cette zone permet de modifier le contenu de la ligne du tableau qui actuellement sélectionnée
 * En bas: Contient le mini roadbook avec les étiquettes
 

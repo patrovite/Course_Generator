@@ -649,15 +649,31 @@ public class PanelProfilMRB extends JPanel {
 						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
+					
+					if ((r.getTag() & CgConst.TAG_DROPBAG) != 0) {
+						Image img = getIcon("dropbag.png");
+						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
+						m += 18;
+					}
+					
+					if ((r.getTag() & CgConst.TAG_CREW) != 0) {
+						Image img = getIcon("crew.png");
+						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
+						m += 18;
+					}
+					if ((r.getTag() & CgConst.TAG_FIRST_AID) != 0) {
+						Image img = getIcon("first_aid.png");
+						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
+						m += 18;
+					}
+					
 				}
 			}
 			miniRoadBookGridIndex++;
 		}
 
 		// -- Copyright --
-		// Image img = Toolkit.getDefaultToolkit()
-		// .getImage(getClass().getResource("/course_generator/images/copyright.png"));
-		Image img = getIcon("copyright.png");
+		Image img = getIcon_old("copyright.png");
 		g2d.drawImage(img, width - 15, (height - offy - img.getHeight(null)) / 2, this);
 
 		g2d.dispose();
@@ -1047,6 +1063,12 @@ public class PanelProfilMRB extends JPanel {
 			n++;
 		if ((Value & CgConst.TAG_INFO) != 0)
 			n++;
+		if ((Value & CgConst.TAG_DROPBAG) != 0)
+			n++;
+		if ((Value & CgConst.TAG_CREW) != 0)
+			n++;
+		if ((Value & CgConst.TAG_FIRST_AID) != 0)
+			n++;		
 		// if ((Value | CgConst.TAG_ROADBOOK) != 0) n++;
 		return n;
 	}
@@ -1064,6 +1086,10 @@ public class PanelProfilMRB extends JPanel {
 
 
 	private Image getIcon(String name) {
+		return Toolkit.getDefaultToolkit().getImage(getClass().getResource("/course_generator/images/16/" + name));
+	}
+
+	private Image getIcon_old(String name) {
 		return Toolkit.getDefaultToolkit().getImage(getClass().getResource("/course_generator/images/old/" + name));
 	}
 

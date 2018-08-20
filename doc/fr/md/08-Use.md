@@ -168,7 +168,10 @@ Les différents indicateurs sont les suivants:
 * ![](./images/Tags/note.png) : Indique une note.
 * ![](./images/Tags/info.png) : Indique une information
 * ![](./images/Tags/roadbook.png) : Indique le début d'une nouvelle étape du roadbook
-
+* ![](./images/Tags/dropbag.png) : Indique la présence d'un sac d'allègement.
+* ![](./images/Tags/crew.png) : Indique la présence d'une assistance
+* ![](./images/Tags/first_aid.png) : Indique un point de secours
+  
 Pour sélectionner les indicateurs d'une position il faut sélectionner la cellule concernée et ouvrir l'éditeur de ligne en faisant un double clique.
 
 La boite dialogue suivante s'affiche:  

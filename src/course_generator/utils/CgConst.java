@@ -44,7 +44,10 @@ public class CgConst {
 	public static final int TAG_NOTE = 64;
 	public static final int TAG_INFO = 128;
 	public static final int TAG_ROADBOOK = 256;
-
+	public static final int TAG_DROPBAG = 512;
+	public static final int TAG_CREW = 1024;
+	public static final int TAG_FIRST_AID = 2048;
+	
 	/** Minimum value of the slope for the curve **/
 	public static final double MIN_CLIMB = -50.0;
 	/** Maximum value of the slope for the curve **/
