@@ -213,6 +213,8 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.previousGPXDirectory = ManageString();
 			} else if (qName.equalsIgnoreCase("PREVIOUSCSVDIR")) {
 				Settings.previousCSVDirectory = ManageString();
+			} else if (qName.equalsIgnoreCase("PREVIOUSPNGDIR")) {
+				Settings.previousPNGDirectory = ManageString();
 			} else if (qName.equalsIgnoreCase("MEMOFORMAT1")) {
 				Settings.MemoFormat[0] = ManageString();
 			} else if (qName.equalsIgnoreCase("MEMOFORMAT2")) {
