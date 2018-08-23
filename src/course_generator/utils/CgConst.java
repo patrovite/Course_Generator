@@ -20,6 +20,8 @@ package course_generator.utils;
 
 import java.awt.Color;
 
+import course_generator.settings.CgSettings;
+
 public class CgConst {
 	/** Unit is meter **/
 	public static final int UNIT_METER = 0;
@@ -81,7 +83,10 @@ public class CgConst {
 	public static final int MRBOPT_RIGHT = 0x0008;
 	public static final int MRBOPT_SHOWTAGS = 0x0080;
 
-	public static final String DEFAULTMRBFORMAT = "%N%L%Am%L%Dkm%L%H";
+	public static final String getDefaultMrbFormat(CgSettings settings)
+	{
+		return "%N%L%A"+ Utils.uElev2String(settings.Unit) +"%L%D"+Utils.uLDist2String(settings.Unit)+"%L%H";
+	}
 	public static final int DEFAULTMRBFONTSIZE = 10;
 
 	public static final int MRB_DUP_POS = 0x0001;
