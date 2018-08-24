@@ -62,8 +62,8 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
-
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
+			
 			return this;
 
 		case 1: // Name
@@ -77,7 +77,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -92,7 +92,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -104,7 +104,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -116,7 +116,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -128,7 +128,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -140,7 +140,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -152,7 +152,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -164,7 +164,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -176,7 +176,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -188,7 +188,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -200,7 +200,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -212,7 +212,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -224,7 +224,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -236,7 +236,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -248,7 +248,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -260,7 +260,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -272,7 +272,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -284,7 +284,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -296,7 +296,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 
@@ -311,7 +311,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 			if (isSelected)
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
-				setBackground(new Color(255, 255, 255));
+				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
 
 			return this;
 		} // switch
