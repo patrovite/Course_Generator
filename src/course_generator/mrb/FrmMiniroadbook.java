@@ -675,11 +675,13 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		if (track.data.isEmpty())
 			return;
 
-		s = Utils.SaveDialog(this, settings.LastDir, "", ".png", bundle.getString("FrmMiniroadbook.PNGFile"), true,
+		s = Utils.SaveDialog(this, settings.previousPNGDirectory, "", ".png", bundle.getString("FrmMiniroadbook.PNGFile"), true,
 				bundle.getString("FrmMiniroadbook.FileExist"));
 
 		if (!s.isEmpty()) {
 			pnlProfil.save(s);
+			
+			settings.previousPNGDirectory = Utils.GetDirFromFilename(s);
 		}
 	}
 

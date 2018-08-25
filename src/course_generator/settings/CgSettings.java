@@ -83,6 +83,7 @@ public class CgSettings {
 	public String previousGPXDirectory;
 	public String previousCGXDirectory;
 	public String previousCSVDirectory;
+	public String previousPNGDirectory;
 
 	public String DefaultFontName;
 	public int DefaultFontStyle;
@@ -141,6 +142,7 @@ public class CgSettings {
 		previousCGXDirectory = "";
 		previousGPXDirectory = "";
 		previousCSVDirectory = "";
+		previousPNGDirectory = "";
 
 		offlineMap = true;
 		map = 0;
@@ -198,6 +200,7 @@ public class CgSettings {
 			Utils.WriteStringToXML(writer, "PREVIOUSCGXDIR", previousCGXDirectory);
 			Utils.WriteStringToXML(writer, "PREVIOUSGPXDIR", previousGPXDirectory);
 			Utils.WriteStringToXML(writer, "PREVIOUSCSVDIR", previousCSVDirectory);
+			Utils.WriteStringToXML(writer, "PREVIOUSPNGDIR", previousPNGDirectory);
 
 			Utils.WriteStringToXML(writer, "MEMOFORMAT1", MemoFormat[0]);
 			Utils.WriteStringToXML(writer, "MEMOFORMAT2", MemoFormat[1]);
@@ -368,3 +371,4 @@ public class CgSettings {
 	}
 
 }
+
