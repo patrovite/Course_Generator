@@ -81,7 +81,7 @@ public class CgConst {
 	public static final int MRBOPT_RIGHT = 0x0008;
 	public static final int MRBOPT_SHOWTAGS = 0x0080;
 
-	public static final String DEFAULTMRBFORMAT = "%N%L%Am%L%Dkm%L%H";
+	public static final String DEFAULTMRBFORMAT = "%N%L%A%L%D%L%H";
 
 	public static final int DEFAULTMRBFONTSIZE = 10;
 
