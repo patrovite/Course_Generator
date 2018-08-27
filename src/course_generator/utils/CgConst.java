@@ -20,8 +20,6 @@ package course_generator.utils;
 
 import java.awt.Color;
 
-import course_generator.settings.CgSettings;
-
 public class CgConst {
 	/** Unit is meter **/
 	public static final int UNIT_METER = 0;
@@ -49,7 +47,7 @@ public class CgConst {
 	public static final int TAG_DROPBAG = 512;
 	public static final int TAG_CREW = 1024;
 	public static final int TAG_FIRST_AID = 2048;
-	
+
 	/** Minimum value of the slope for the curve **/
 	public static final double MIN_CLIMB = -50.0;
 	/** Maximum value of the slope for the curve **/
@@ -83,10 +81,8 @@ public class CgConst {
 	public static final int MRBOPT_RIGHT = 0x0008;
 	public static final int MRBOPT_SHOWTAGS = 0x0080;
 
-	public static final String getDefaultMrbFormat(CgSettings settings)
-	{
-		return "%N%L%A"+ Utils.uElev2String(settings.Unit) +"%L%D"+Utils.uLDist2String(settings.Unit)+"%L%H";
-	}
+	public static final String DEFAULTMRBFORMAT = "%N%L%Am%L%Dkm%L%H";
+
 	public static final int DEFAULTMRBFONTSIZE = 10;
 
 	public static final int MRB_DUP_POS = 0x0001;
@@ -101,7 +97,7 @@ public class CgConst {
 
 	public static final Color CL_LINE_SELECTION = new Color(151, 153, 255);
 	public static final Color CL_RESUME_ALTERNATE_LINE = new Color(220, 220, 220);
-	
+
 	public static final Color CL_PROFIL_SIMPLE_FILL = new Color(0xAB, 0xF9, 0x2F);
 	public static final Color CL_PROFIL_SIMPLE_BORDER = new Color(0x05, 0x82, 0x05);
 
@@ -115,22 +111,22 @@ public class CgConst {
 	public static final Color CL_PROFIL_SLOPE_SUP15 = new Color(0xA6, 0x55, 0x00);
 	public static final Color CL_PROFIL_SLOPE_BORDER = new Color(0xA6, 0x55, 0x00);
 
-	public static final Color CL_DIFF_VERYEASY = new Color(188,211,95); //-- Green
-	public static final Color CL_DIFF_EASY = new Color(137,160,44);	//-- Dark green
-	public static final Color CL_DIFF_AVERAGE = new Color(42,127,255); //-- Blue
-	public static final Color CL_DIFF_HARD = new Color(255, 0, 0); //-- Red
-	public static final Color CL_DIFF_VERYHARD = new Color(77, 77, 77); //-- Black
+	public static final Color CL_DIFF_VERYEASY = new Color(188, 211, 95); // -- Green
+	public static final Color CL_DIFF_EASY = new Color(137, 160, 44); // -- Dark green
+	public static final Color CL_DIFF_AVERAGE = new Color(42, 127, 255); // -- Blue
+	public static final Color CL_DIFF_HARD = new Color(255, 0, 0); // -- Red
+	public static final Color CL_DIFF_VERYHARD = new Color(77, 77, 77); // -- Black
 
 	public static final Color CL_MAP_DIFF_VERYEASY = new Color(0, 210, 0); // -- Green
 	public static final Color CL_MAP_DIFF_EASY = new Color(0, 128, 0); // -- Dark Green
 	public static final Color CL_MAP_DIFF_AVERAGE = new Color(0, 0, 210); // -- Blue
 	public static final Color CL_MAP_DIFF_HARD = new Color(255, 0, 0); // -- Red
 	public static final Color CL_MAP_DIFF_VERYHARD = new Color(0, 0, 0); // -- Black
-	
+
 	public static final Color CL_TRACK_TABLE_HOUR_DAY = new Color(221, 255, 155);
 	public static final Color CL_TRACK_TABLE_HOUR_NIGHT = new Color(0, 128, 255);
-	public static final Color CL_TRACK_TABLE_TOTAL = new Color(221,233,175);
-	public static final Color CL_TRACK_TABLE_LAT = new Color(244,238,215);
+	public static final Color CL_TRACK_TABLE_TOTAL = new Color(221, 233, 175);
+	public static final Color CL_TRACK_TABLE_LAT = new Color(244, 238, 215);
 	public static final Color CL_TRACK_TABLE_LON = new Color(255, 242, 193);
-	
+
 }

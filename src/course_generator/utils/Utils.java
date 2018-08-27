@@ -1067,15 +1067,17 @@ public class Utils {
 						step = 0;
 						break;
 
-					// A:Elevation
+					// %A:Elevation
 					case 'A':
-						sr = sr + String.format("%.0f", r.getElevation(settings.Unit));
+						sr = sr + String.format("%.0f", r.getElevation(settings.Unit))
+								+ Utils.uElev2String(settings.Unit);
 						step = 0;
 						break;
 
 					// %D:Distance from the start
 					case 'D':
-						sr = sr + String.format("%.1f", r.getTotal(settings.Unit) / 1000.0);
+						sr = sr + String.format("%.1f", r.getTotal(settings.Unit) / 1000.0)
+								+ Utils.uLDist2String(settings.Unit);
 						step = 0;
 						break;
 

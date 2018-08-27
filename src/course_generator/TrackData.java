@@ -368,7 +368,7 @@ public class TrackData {
 	public boolean OpenGPX(String name, int mode, double PosFilterAskThreshold) throws Exception {
 		SaxGPXHandler GPXhandler = new SaxGPXHandler();
 
-		int ret = GPXhandler.readDataFromGPX(name, this, mode, Settings);
+		int ret = GPXhandler.readDataFromGPX(name, this, mode);
 		if (ret != 0)
 			CgLog.error("TrackData.OpenGPX : Error while reading '" + name + "'. Line =" + GPXhandler.getErrLine());
 

@@ -32,7 +32,6 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 
 /**
@@ -80,8 +79,6 @@ public class SaxGPXHandler extends DefaultHandler {
 	private int Time_s;
 	private double dTime_f;
 	private int Cmpt = 0;
-	
-	private CgSettings settings;
 
 
 	/**
@@ -107,7 +104,7 @@ public class SaxGPXHandler extends DefaultHandler {
 	 * @throws IOException
 	 * @throws ParserConfigurationException
 	 */
-	public int readDataFromGPX(String filename, TrackData TData, int readmode, CgSettings settings)
+	public int readDataFromGPX(String filename, TrackData TData, int readmode)
 			throws SAXException, IOException, ParserConfigurationException {
 
 		mode = readmode;
@@ -133,8 +130,6 @@ public class SaxGPXHandler extends DefaultHandler {
 		// gpx_version = 0.0;
 		first = true;
 		StartTime = new DateTime(1970, 1, 1, 0, 0, 0);
-		
-		this.settings = settings;
 
 		trkdata.ReadError = 0;
 
@@ -300,7 +295,7 @@ public class SaxGPXHandler extends DefaultHandler {
 							"", // String Comment
 							0.0, // double tmp1
 							0.0, // double tmp2
-							CgConst.getDefaultMrbFormat(settings), // String FmtLbMiniRoadbook
+							CgConst.DEFAULTMRBFORMAT, // String FmtLbMiniRoadbook
 							CgConst.MRBOPT_SEL | CgConst.MRBOPT_LEFT | CgConst.MRBOPT_SHOWTAGS, // int
 																								// OptionMiniRoadbook
 							0, // int VPosMiniRoadbook
@@ -331,7 +326,7 @@ public class SaxGPXHandler extends DefaultHandler {
 							"", // String Comment
 							0.0, // double tmp1
 							0.0, // double tmp2
-							CgConst.getDefaultMrbFormat(settings), // String FmtLbMiniRoadbook
+							CgConst.DEFAULTMRBFORMAT, // String FmtLbMiniRoadbook
 							CgConst.MRBOPT_SEL | CgConst.MRBOPT_LEFT | CgConst.MRBOPT_SHOWTAGS, // int
 																								// OptionMiniRoadbook
 							0, // int VPosMiniRoadbook
