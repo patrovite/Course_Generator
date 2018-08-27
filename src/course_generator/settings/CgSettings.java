@@ -99,6 +99,8 @@ public class CgSettings {
 	public int MapIconSize;
 	public int CurveButtonsIconSize;
 
+	private String ThunderForestApiKey;
+
 
 	public CgSettings() {
 		int i = 0;
@@ -161,6 +163,8 @@ public class CgSettings {
 		TagIconSize = 16;
 		DialogIconSize = 20;
 		CurveButtonsIconSize = 32;
+
+		ThunderForestApiKey = "";
 	}
 
 
@@ -266,6 +270,7 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "DIALOGICONSIZE", DialogIconSize);
 			Utils.WriteIntToXML(writer, "MAPICONSIZE", MapIconSize);
 			Utils.WriteIntToXML(writer, "CURVEBUTTONSICONSIZE", CurveButtonsIconSize);
+			Utils.WriteStringToXML(writer, "THUNDERFORESTAPIKEY", ThunderForestApiKey);
 
 			writer.writeEndElement();
 			writer.writeEndDocument();
@@ -370,5 +375,25 @@ public class CgSettings {
 		}
 	}
 
-}
 
+	/**
+	 * Returns the user's thunderforest's API Key
+	 * 
+	 * @return string with the key
+	 */
+	public String getThunderForestApiKey() {
+		return ThunderForestApiKey == null ? "" : ThunderForestApiKey;
+	}
+
+
+	/**
+	 * Sets the user's thunderforest's API Key
+	 * 
+	 * @param key
+	 *            The entered key
+	 */
+	public void setThunderForestApiKey(String key) {
+		ThunderForestApiKey = key;
+	}
+
+}

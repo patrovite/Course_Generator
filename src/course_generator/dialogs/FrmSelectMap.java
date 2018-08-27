@@ -51,6 +51,7 @@ public class FrmSelectMap extends javax.swing.JDialog {
 	private JPanel panelMain;
 	private JRadioButton rbOpenStreetMap;
 	private JRadioButton rbOpenTopoMap;
+	private JRadioButton rbOutdoors;
 	private ButtonGroup groupMap;
 	private JRadioButton rbBingAerialMap;
 
@@ -82,6 +83,9 @@ public class FrmSelectMap extends javax.swing.JDialog {
 			rbOpenTopoMap.setSelected(true);
 			break;
 		case 2:
+			rbOutdoors.setSelected(true);
+			break;
+		case 3:
 			rbBingAerialMap.setSelected(true);
 			break;
 		default:
@@ -97,8 +101,10 @@ public class FrmSelectMap extends javax.swing.JDialog {
 				return 0;
 			if (rbOpenTopoMap.isSelected())
 				return 1;
-			if (rbBingAerialMap.isSelected())
+			if (rbOutdoors.isSelected())
 				return 2;
+			if (rbBingAerialMap.isSelected())
+				return 3;
 		}
 		return -1;
 	}
@@ -177,13 +183,18 @@ public class FrmSelectMap extends javax.swing.JDialog {
 		Utils.addComponent(panelMain, rbOpenTopoMap, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
+		rbOutdoors = new JRadioButton(bundle.getString("FrmSelectMap.rbOutdoors.Text"));
+		Utils.addComponent(panelMain, rbOutdoors, 0, 2, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
 		rbBingAerialMap = new JRadioButton(bundle.getString("FrmSelectMap.rbBingAerialMap.Text"));
-		Utils.addComponent(panelMain, rbBingAerialMap, 0, 2, 1, 1, 1, 1, 0, 0, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelMain, rbBingAerialMap, 0, 3, 1, 1, 1, 1, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
 		groupMap = new ButtonGroup();
 		groupMap.add(rbOpenStreetMap);
 		groupMap.add(rbOpenTopoMap);
+		groupMap.add(rbOutdoors);
 		groupMap.add(rbBingAerialMap);
 
 		// == BUTTONS

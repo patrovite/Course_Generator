@@ -39,6 +39,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
 import course_generator.dialogs.FontChooser;
@@ -74,6 +75,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private JTabbedPane TabbedPaneGlobal;
 	private JPanel panelGeneral;
 	private JPanel panelDisplay;
+	private JPanel panelMaps;
 	private JLabel lbStatusBarIconSize;
 	private JComboBox<Object> cbStatusBarIconSize;
 	private JLabel lbTabIconSize;
@@ -92,6 +94,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private JComboBox<Object> cbMapIconSize;
 	private JLabel lbCurveButtonsIconSize;
 	private JComboBox<Object> cbCurveButtonsIconSize;
+	private JTextArea btApiKey;
 
 	private int fontSize[] = { 16, 20, 22, 24, 32, 64, 96, 128 };
 
@@ -151,6 +154,8 @@ public class frmSettings extends javax.swing.JDialog {
 		cbDialogIconSize.setSelectedIndex(FontSize2Index(settings.DialogIconSize));
 		cbMapIconSize.setSelectedIndex(FontSize2Index(settings.MapIconSize));
 		cbCurveButtonsIconSize.setSelectedIndex(FontSize2Index(settings.CurveButtonsIconSize));
+
+		btApiKey.setText(settings.getThunderForestApiKey());
 
 		// End set field
 		ok = false;
@@ -246,6 +251,11 @@ public class frmSettings extends javax.swing.JDialog {
 					|| (OldDialogIconSize != settings.DialogIconSize) || (OldMapIconSize != settings.MapIconSize)
 					|| (OldCurveButtonsIconSize != settings.CurveButtonsIconSize))
 				JOptionPane.showMessageDialog(this, bundle.getString("frmSettings.MsgRestart"));
+
+			// Maps
+			if (btApiKey.getText() != "" && btApiKey.getText() != settings.getThunderForestApiKey()) {
+				settings.setThunderForestApiKey(btApiKey.getText());
+			}
 		}
 		return ok;
 	}
@@ -514,6 +524,24 @@ public class frmSettings extends javax.swing.JDialog {
 
 		addTab(TabbedPaneGlobal, panelDisplay, bundle.getString("frmSettings.TabDisplay.tabTitle"), null);
 
+		// ## Tab "Maps" ##
+		panelMaps = new JPanel();
+		panelMaps.setLayout(new GridBagLayout());
+
+		line = 0;
+
+		// Thunderforest API Key
+		JLabel lbThunderForestApiKey = new javax.swing.JLabel();
+		lbThunderForestApiKey.setText(bundle.getString("frmSettings.lbThunderForestApiKey.text"));
+		Utils.addComponent(panelMaps, lbThunderForestApiKey, 1, 10, 1, 1, 0, 0, 5, 0, 0, 0,
+				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
+
+		btApiKey = new javax.swing.JTextArea(3, 0);
+		Utils.addComponent(panelMaps, btApiKey, 2, 10, 1, 1, 5, 5, 5, 5, 5, 10, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.HORIZONTAL);
+
+		addTab(TabbedPaneGlobal, panelMaps, bundle.getString("frmSettings.TabMaps.tabTitle"), null);
+
 		// -- Separator
 		// -- NOCONNECTIONONSTARTUP - Boolean -bNoConnectOnStartup
 		// -- CONNECTIONTIMEOUT - int - ConnectionTimeout
@@ -626,4 +654,14 @@ public class frmSettings extends javax.swing.JDialog {
 		return fontSize[value];
 	}
 
+
+	/**
+	 * Checks the API key validity and save it in the user's settings
+	 * 
+	 * @param
+	 * @return
+	 */
+	private void SaveApiKey() {
+		int toto = 0;
+	}
 }
