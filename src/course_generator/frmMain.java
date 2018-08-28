@@ -616,6 +616,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * Create the main menu
 	 */
 
+	@SuppressWarnings("deprecation")
 	private void Create_MenuBarMain() {
 		// Create the menu
 		mnuMain = new javax.swing.JMenuBar();
