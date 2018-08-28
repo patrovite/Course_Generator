@@ -46,6 +46,7 @@ import course_generator.dialogs.FrmSelectMap;
 import course_generator.settings.CgSettings;
 import course_generator.tiles.openstreetmap.OpenStreetMap;
 import course_generator.tiles.opentopomap.OpenTopoMap;
+import course_generator.tiles.thunderforest.Outdoors;
 import course_generator.utils.CgConst;
 import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
@@ -642,6 +643,9 @@ public class JPanelMaps extends JPanel {
 			MapViewer.setTileSource(new OpenTopoMap());
 			break;
 		case 2:
+			MapViewer.setTileSource(new Outdoors(Settings));
+			break;
+		case 3:
 			MapViewer.setTileSource(new BingAerialTileSource());
 			break;
 		default:
