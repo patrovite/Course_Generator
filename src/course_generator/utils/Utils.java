@@ -619,11 +619,11 @@ public class Utils {
 	 *            Number of second to convert
 	 * @return Result string
 	 */
-	public static String Second2DateString_HM(int v) {
+	private static String Second2DateString_HM(int v) {
 		int nbh = v / 3600;
 		int nbm = (v % 3600) / 60;
 
-		return String.format("%02d:%02d ", nbh, nbm);
+		return String.format("%02d:%02d", nbh, nbm);
 	}
 
 
