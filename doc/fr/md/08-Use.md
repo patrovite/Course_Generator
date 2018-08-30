@@ -45,7 +45,10 @@ La fenêtre suivante s'affiche:
 Saisissez le fuseau horaire (1 pour la France). L'heure de levée et de couché du soleil sont alors affichées.
 
 Une fois le réglage terminé, appuyez sur "Valider" afin de valider votre saisie.    
-Si vous avez sélectionné la prise en compte de la nuit, vous pourrez constater que la colonne "Heure" à un fond bleu durant les périodes de nuit et vert durant les périodes de jour.
+Si vous avez sélectionné la prise en compte de la nuit, vous pourrez constater que :
+
+* la colonne "Heure" à un fond bleu durant les périodes de nuit et vert durant les périodes de jour.
+* sur la carte les zones parcourues de nuit ont un tracé mis en évidence. 
 
 ## Paramétrer la courbe de vitesse/pente
 

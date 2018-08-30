@@ -48,7 +48,10 @@ The following window appears:
 Enter the time zone (1 for France).
 
 Once the setting is completed, press "Ok" to validate.
-If you have chosen to take into account the night effect, you will see that the "Time" column shows a blue background during the night and green periods during the daytime periods.
+If you have chosen to take into account the night effect, you will see that :
+
+* the "Time" column shows a blue background during the night and green periods during the daytime periods.
+* on the map the areas traveled at night have a highlighted plot.
 
 ## Set the speed/slope curve
 

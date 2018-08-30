@@ -89,6 +89,8 @@ public class CgData {
 	public String CommentMiniRoadbook;
 	/** Font size of this position in the mini roadbook **/
 	public int FontSizeMiniRoadbook;
+	//** Indicate that this position is in the night period **/
+	private boolean isNight;
 
 	public boolean ToDelete;
 
@@ -129,6 +131,8 @@ public class CgData {
 			this.FontSizeMiniRoadbook = CgConst.DEFAULTMRBFONTSIZE;
 		else
 			this.FontSizeMiniRoadbook = FontSizeMiniRoadbook;
+		this.ToDelete = false;
+		this.isNight=false;
 	}
 
 
@@ -162,6 +166,7 @@ public class CgData {
 		this.CommentMiniRoadbook = "";
 		this.FontSizeMiniRoadbook = 10;
 		this.ToDelete = false;
+		this.isNight=false;
 	}
 
 
@@ -632,7 +637,18 @@ public class CgData {
 		ElevationMemo = elevationMemo;
 	}
 
+	// -------------------------------
+	public boolean getNight() {
+		return isNight;
+	}
+	
+	
+	public void setNight(boolean night)	{
+		isNight = night;
+	}
 
+	
+	// -------------------------------
 	public CgData CopyTo(CgData d) {
 		d.Num = Num;
 		d.Latitude = Latitude;
@@ -662,6 +678,7 @@ public class CgData {
 		d.VPosMiniRoadbook = VPosMiniRoadbook;
 		d.CommentMiniRoadbook = CommentMiniRoadbook;
 		d.FontSizeMiniRoadbook = FontSizeMiniRoadbook;
+		d.isNight = isNight;
 		return d;
 	}
 
