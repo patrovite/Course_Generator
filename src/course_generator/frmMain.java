@@ -604,11 +604,16 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Refresh statusbar
 		RefreshStatusbar(Track);
+		
 		panelTrackData.refresh();
 		PanelResume.refresh();
 		panelStatistics.refresh();
 		jPanelSpeed.Refresh(Track, Settings);
 		jPanelSpeedSlope.Refresh(Track, Settings);
+		
+		// Refresh map
+		panelMap.RefreshTrack(Track, true);
+
 	}
 
 
@@ -3004,6 +3009,8 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshMainToolbar();
 		// Refresh the main menu
 		RefreshMainMenu();
+		// Refresh map
+		panelMap.RefreshTrack(Track, true);
 
 		bNoBackup = true;
 
@@ -3115,6 +3122,10 @@ public class frmMain extends javax.swing.JFrame {
 		panelTrackData.setSelectedRow(0);
 		panelTrackData.setTrack(Track);
 		panelTrackData.setSelectedRow(0);
+		
+		// Refresh map
+		panelMap.RefreshTrack(Track, true);
+
 		RefreshMruCGX();
 		bNoBackup = true;
 

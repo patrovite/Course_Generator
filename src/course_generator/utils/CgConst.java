@@ -57,7 +57,8 @@ public class CgConst {
 	public static final double MIN_ELEV = 10.0;
 
 	/** Tickness of the track on the map **/
-	public static final int TRACK_TICKNESS = 3;
+	public static final int TRACK_NORMAL_TICKNESS = 3;
+	public static final int TRACK_NIGHT_TICKNESS = 9;
 
 	public static final double DIST_MAX_MINMAX = 1000.0;
 	public static final double MIN_ELEV_MINMAX = 50.0;
@@ -122,11 +123,13 @@ public class CgConst {
 	public static final Color CL_MAP_DIFF_AVERAGE = new Color(0, 0, 210); // -- Blue
 	public static final Color CL_MAP_DIFF_HARD = new Color(255, 0, 0); // -- Red
 	public static final Color CL_MAP_DIFF_VERYHARD = new Color(0, 0, 0); // -- Black
-
+	public static final Color CL_MAP_NIGHT_HIGHLIGHT = new Color(0.0f, 0.0f, 0.7f, 0.25f );
+	
 	public static final Color CL_TRACK_TABLE_HOUR_DAY = new Color(221, 255, 155);
 	public static final Color CL_TRACK_TABLE_HOUR_NIGHT = new Color(0, 128, 255);
 	public static final Color CL_TRACK_TABLE_TOTAL = new Color(221, 233, 175);
 	public static final Color CL_TRACK_TABLE_LAT = new Color(244, 238, 215);
 	public static final Color CL_TRACK_TABLE_LON = new Color(255, 242, 193);
+	
 
 }

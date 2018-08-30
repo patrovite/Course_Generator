@@ -414,6 +414,8 @@ public class TrackData {
 		MinElev = resMinMaxElev.min;
 		MaxElev = resMinMaxElev.max;
 
+		SetNightBit();
+		
 		isCalculated = true;
 		Name = new File(name).getName();
 
@@ -1358,12 +1360,16 @@ public class TrackData {
 					&& ((Utils.CompareHMS(t, StartNightTime) >= 0) || (Utils.CompareHMS(t, EndNightTime) <= 0))) {
 				if (r.getSlope() < -2.0) {
 					night = 100.0 / NightCoeffDesc;
+					r.setNight(true);
 				} else {
 					night = 100.0 / NightCoeffAsc;
+					r.setNight(true);
 				}
 			} else {
 				night = 1;
+				r.setNight(false);
 			}
+			
 			// --Elev effect --
 			if (bElevEffect && ((double) r.getElevation(CgConst.UNIT_METER) > 1500.0)) {
 				ef = 1.0 + (Math.round(((double) r.getElevation(CgConst.UNIT_METER) - 1500.0) / 100.0) / 100.0);
@@ -1407,6 +1413,24 @@ public class TrackData {
 		isCalculated = true;
 		isModified = true;
 	} // Calculate
+
+	
+	
+	/**
+	 * Set night bit. Used when we load a track to avoid to launch a new calculation to have the night display on the map
+	 */
+	public void SetNightBit() {
+		// -- Calculation loop --
+		for (CgData r : data) {
+			DateTime t = r.getHour();
+			if (bNightCoeff
+					&& ((Utils.CompareHMS(t, StartNightTime) >= 0) || (Utils.CompareHMS(t, EndNightTime) <= 0))) {
+				r.setNight(true);
+			} else {
+				r.setNight(false);
+			}
+		} 	
+	} // SetNightBit
 
 
 	/**
@@ -1734,6 +1758,8 @@ public class TrackData {
 		MinElev = resMinMaxElev.min;
 		MaxElev = resMinMaxElev.max;
 
+		SetNightBit();
+		
 		CheckTimeLimit();
 		isCalculated = true;
 
