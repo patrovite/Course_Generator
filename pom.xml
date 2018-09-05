@@ -70,5 +70,15 @@
 			<artifactId>txwc2</artifactId>
 			<version>20110809</version>
 		</dependency>
+		<dependency>
+			<groupId>tk.plogitech</groupId>
+			<artifactId>darksky-forecast-api</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
+		</dependency>
 	</dependencies>
 </project>

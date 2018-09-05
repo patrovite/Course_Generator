@@ -330,6 +330,8 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.CurveButtonsIconSize = ManageInt(32, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("THUNDERFORESTAPIKEY")) {
 				Settings.setThunderForestApiKey(ManageString());
+			} else if (qName.equalsIgnoreCase("DARKSKYAPIKEY")) {
+				Settings.setDarkSkyApiKey(ManageString());
 			}
 
 			else if (qName.equalsIgnoreCase("CONFIG")) {

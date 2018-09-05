@@ -112,6 +112,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 
+import org.joda.time.DateTime;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.OsmFileCacheTileLoader;
 
@@ -153,6 +154,7 @@ import course_generator.utils.FileTypeFilter;
 import course_generator.utils.OsCheck;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
+import course_generator.weather.JPanelWeather;
 
 /**
  * This is the main class of the project.
@@ -266,6 +268,8 @@ public class frmMain extends javax.swing.JFrame {
 	private JPanelResume PanelResume;
 
 	private JPanelStatistics panelStatistics;
+
+	private JPanelWeather panelWeather;
 
 	private JPanelProfil panelProfil;
 
@@ -604,13 +608,13 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Refresh statusbar
 		RefreshStatusbar(Track);
-		
+
 		panelTrackData.refresh();
 		PanelResume.refresh();
 		panelStatistics.refresh();
 		jPanelSpeed.Refresh(Track, Settings);
 		jPanelSpeedSlope.Refresh(Track, Settings);
-		
+
 		// Refresh map
 		panelMap.RefreshTrack(Track, true);
 
@@ -1608,6 +1612,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
+					panelWeather.refresh();
 
 					Settings.previousCGXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
@@ -2637,6 +2642,12 @@ public class frmMain extends javax.swing.JFrame {
 		addTab(TabbedPaneMain, panelStatistics, bundle.getString("frmMain.TabStatistic.tabTitle"),
 				Utils.getIcon(this, "stat.png", Settings.TabIconSize));
 
+		// -- Tab - Weather
+		// ---------------------------------------------------
+		panelWeather = new JPanelWeather(Settings);
+		addTab(TabbedPaneMain, panelWeather, bundle.getString("frmMain.TabWeather.tabTitle"),
+				Utils.getIcon(this, "stat.png", Settings.TabIconSize));
+
 		// -- Tab - Analysis
 		// ----------------------------------------------------
 		jPanelAnalyze = new javax.swing.JPanel();
@@ -2660,7 +2671,7 @@ public class frmMain extends javax.swing.JFrame {
 		jPanelSpeedSlope = new JPanelAnalysisSpeedSlope(Settings);
 		addTab(TabbedPaneAnalysis, jPanelSpeedSlope, bundle.getString("frmMain.TabSpeedSlope.tabTitle"), null);
 
-		// -- Tab - Resume
+		// -- Tab - Summary
 		// ------------------------------------------------------
 		PanelResume = new JPanelResume(Resume, Settings);
 
@@ -2919,6 +2930,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
+					panelWeather.refresh();
 					Settings.previousGPXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
 				} catch (Exception e) {
@@ -3122,9 +3134,15 @@ public class frmMain extends javax.swing.JFrame {
 		panelTrackData.setSelectedRow(0);
 		panelTrackData.setTrack(Track);
 		panelTrackData.setSelectedRow(0);
-		
+
 		// Refresh map
 		panelMap.RefreshTrack(Track, true);
+
+		CgData firstTrackPoint = Track.data.get(0);
+		DateTime hour = firstTrackPoint.getHour();
+		hour = hour.minusYears(1);
+		panelWeather.SetParameters(firstTrackPoint.getLatitude(), firstTrackPoint.getLongitude(), hour);
+		panelWeather.refresh();
 
 		RefreshMruCGX();
 		bNoBackup = true;

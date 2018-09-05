@@ -100,6 +100,7 @@ public class CgSettings {
 	public int CurveButtonsIconSize;
 
 	private String ThunderForestApiKey;
+	private String DarkSkyApiKey;
 
 
 	public CgSettings() {
@@ -271,6 +272,7 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "MAPICONSIZE", MapIconSize);
 			Utils.WriteIntToXML(writer, "CURVEBUTTONSICONSIZE", CurveButtonsIconSize);
 			Utils.WriteStringToXML(writer, "THUNDERFORESTAPIKEY", ThunderForestApiKey);
+			Utils.WriteStringToXML(writer, "DARKSKYAPIKEY", DarkSkyApiKey);
 
 			writer.writeEndElement();
 			writer.writeEndDocument();
@@ -394,6 +396,27 @@ public class CgSettings {
 	 */
 	public void setThunderForestApiKey(String key) {
 		ThunderForestApiKey = key;
+	}
+
+
+	/**
+	 * Returns the user's Dark Sky API Key
+	 * 
+	 * @return string with the key
+	 */
+	public String getDarkSkyApiKey() {
+		return DarkSkyApiKey == null ? "" : DarkSkyApiKey;
+	}
+
+
+	/**
+	 * Sets the user's Dark Sky API Key
+	 * 
+	 * @param key
+	 *            The entered key
+	 */
+	public void setDarkSkyApiKey(String key) {
+		DarkSkyApiKey = key;
 	}
 
 }

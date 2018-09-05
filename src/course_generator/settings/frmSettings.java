@@ -94,7 +94,8 @@ public class frmSettings extends javax.swing.JDialog {
 	private JComboBox<Object> cbMapIconSize;
 	private JLabel lbCurveButtonsIconSize;
 	private JComboBox<Object> cbCurveButtonsIconSize;
-	private JTextArea btApiKey;
+	private JTextArea ThunderForestApiKey;
+	private JTextArea DarkSkyApiKey;
 
 	private int fontSize[] = { 16, 20, 22, 24, 32, 64, 96, 128 };
 
@@ -155,7 +156,9 @@ public class frmSettings extends javax.swing.JDialog {
 		cbMapIconSize.setSelectedIndex(FontSize2Index(settings.MapIconSize));
 		cbCurveButtonsIconSize.setSelectedIndex(FontSize2Index(settings.CurveButtonsIconSize));
 
-		btApiKey.setText(settings.getThunderForestApiKey());
+		// Maps & Weather tab
+		ThunderForestApiKey.setText(settings.getThunderForestApiKey());
+		DarkSkyApiKey.setText(settings.getDarkSkyApiKey());
 
 		// End set field
 		ok = false;
@@ -252,9 +255,14 @@ public class frmSettings extends javax.swing.JDialog {
 					|| (OldCurveButtonsIconSize != settings.CurveButtonsIconSize))
 				JOptionPane.showMessageDialog(this, bundle.getString("frmSettings.MsgRestart"));
 
-			// Maps
-			if (btApiKey.getText() != "" && btApiKey.getText() != settings.getThunderForestApiKey()) {
-				settings.setThunderForestApiKey(btApiKey.getText());
+			// Maps & Weather
+			if (ThunderForestApiKey.getText() != ""
+					&& ThunderForestApiKey.getText() != settings.getThunderForestApiKey()) {
+				settings.setThunderForestApiKey(ThunderForestApiKey.getText());
+			}
+
+			if (DarkSkyApiKey.getText() != "" && DarkSkyApiKey.getText() != settings.getDarkSkyApiKey()) {
+				settings.setDarkSkyApiKey(DarkSkyApiKey.getText());
 			}
 		}
 		return ok;
@@ -533,11 +541,22 @@ public class frmSettings extends javax.swing.JDialog {
 		// Thunderforest API Key
 		JLabel lbThunderForestApiKey = new javax.swing.JLabel();
 		lbThunderForestApiKey.setText(bundle.getString("frmSettings.lbThunderForestApiKey.text"));
-		Utils.addComponent(panelMaps, lbThunderForestApiKey, 1, 10, 1, 1, 0, 0, 5, 0, 0, 0,
+		Utils.addComponent(panelMaps, lbThunderForestApiKey, 1, line, 1, 1, 0, 0, 5, 0, 0, 0,
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
-		btApiKey = new javax.swing.JTextArea(3, 0);
-		Utils.addComponent(panelMaps, btApiKey, 2, 10, 1, 1, 5, 5, 5, 5, 5, 10, GridBagConstraints.NORTHWEST,
+		ThunderForestApiKey = new JTextArea();
+		Utils.addComponent(panelMaps, ThunderForestApiKey, 2, line, 1, 1, 5, 5, 5, 5, 5, 5,
+				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
+
+		++line;
+		// Dark Sky API Key
+		JLabel lbDarkSkyApiKey = new javax.swing.JLabel();
+		lbDarkSkyApiKey.setText(bundle.getString("frmSettings.lbDarkSkyApiKey.text"));
+		Utils.addComponent(panelMaps, lbDarkSkyApiKey, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.HORIZONTAL);
+
+		DarkSkyApiKey = new JTextArea();
+		Utils.addComponent(panelMaps, DarkSkyApiKey, 2, line, 1, 1, 5, 5, 5, 5, 5, 5, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.HORIZONTAL);
 
 		addTab(TabbedPaneGlobal, panelMaps, bundle.getString("frmSettings.TabMaps.tabTitle"), null);
@@ -654,14 +673,13 @@ public class frmSettings extends javax.swing.JDialog {
 		return fontSize[value];
 	}
 
-
 	/**
 	 * Checks the API key validity and save it in the user's settings
 	 * 
 	 * @param
 	 * @return
 	 */
-	private void SaveApiKey() {
-		int toto = 0;
-	}
+	// private void SaveApiKey() {
+	// int toto = 0;
+	// }
 }
