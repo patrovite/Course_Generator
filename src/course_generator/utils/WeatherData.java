@@ -22,7 +22,7 @@ public class WeatherData {
 
 	/** The time for the weather data request **/
 	private DateTime Time;
-	/** Counter **/
+	/** A human-readable text summary of this data point **/
 	private String Summary;// : "Overcast until afternoon.",
 	// "icon": "cloudy",
 	// "sunriseTime": 1473859401,
@@ -32,8 +32,10 @@ public class WeatherData {
 	// "precipIntensity": 0,
 	// "precipIntensityMax": 0,
 	// "precipProbability": 0,
-	private String TemperatureHigh;// ":54.27,
+	/** The daytime high temperature. **/
+	private String TemperatureHigh;
 	// "temperatureHighTime": 1473894000,
+	/** The overnight low temperature. **/
 	private String TemperatureLow;// ":32.42,
 	// "temperatureLowTime": 1473944400,
 	// "apparentTemperatureHigh": 54.27,
@@ -43,6 +45,7 @@ public class WeatherData {
 	// "dewPoint": 32.57,
 	// "humidity": 0.63,
 	// "pressure": 1016.68,
+	/** The wind speed in miles per hour. **/
 	private String WindSpeed;// ":0.7,
 	// "windGust": 7.19,
 	// "windGustTime": 1473883200,
@@ -51,8 +54,10 @@ public class WeatherData {
 	// "uvIndex": 4,
 	// "uvIndexTime": 1473879600,
 	// "visibility": 3.97,
+	/** The minimum temperature during a given date **/
 	private String TemperatureMin;// ":38.41,
 	// "temperatureMinTime": 1473854400,
+	/** The maximum temperature during a given date **/
 	private String TemperatureMax;// ":54.27,
 	// "temperatureMaxTime": 1473894000,
 	// "apparentTemperatureMin": 38.41,
