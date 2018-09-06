@@ -28,6 +28,8 @@ import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
@@ -48,12 +50,14 @@ public class JPanelWeather extends JPanel {
 	private JEditorPane editorStat;
 	private JScrollPane scrollPaneStat;
 	private JToolBar toolBar;
-	private JButton btStatisticSave;
-	private JButton btStatisticRefresh;
+	private JButton btWeatherDataSave;
+	private JButton btWeatherRefresh;
+	private JLabel lbInformation;
+	private JMenuItem InformationWarning;
 
 	private Double Latitude;
 	private Double Longitude;
-	private Instant StartTime;
+	private DateTime StartTime;
 
 
 	public JPanelWeather(CgSettings settings) {
@@ -91,16 +95,16 @@ public class JPanelWeather extends JPanel {
 
 		// -- Save
 		// --------------------------------------------------------------
-		btStatisticSave = new javax.swing.JButton();
-		btStatisticSave.setIcon(Utils.getIcon(this, "save_html.png", settings.ToolbarIconSize));
-		btStatisticSave.setToolTipText(bundle.getString("JPanelStastistics.btStatisticSave.toolTipText"));
-		btStatisticSave.setFocusable(false);
-		btStatisticSave.addActionListener(new java.awt.event.ActionListener() {
+		btWeatherDataSave = new javax.swing.JButton();
+		btWeatherDataSave.setIcon(Utils.getIcon(this, "save_html.png", settings.ToolbarIconSize));
+		btWeatherDataSave.setToolTipText(bundle.getString("JPanelWeather.btWeatherDataSave.toolTipText"));
+		btWeatherDataSave.setFocusable(false);
+		btWeatherDataSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				// SaveStat();
 			}
 		});
-		toolBar.add(btStatisticSave);
+		toolBar.add(btWeatherDataSave);
 
 		// -- Separator
 		// ---------------------------------------------------------
@@ -108,16 +112,26 @@ public class JPanelWeather extends JPanel {
 
 		// -- Refresh
 		// --------------------------------------------------------------
-		btStatisticRefresh = new javax.swing.JButton();
-		btStatisticRefresh.setIcon(Utils.getIcon(this, "refresh.png", settings.ToolbarIconSize));
-		btStatisticRefresh.setToolTipText(bundle.getString("JPanelStastistics.btStatisticRefresh.toolTipText"));
-		btStatisticRefresh.setFocusable(false);
-		btStatisticRefresh.addActionListener(new java.awt.event.ActionListener() {
+		btWeatherRefresh = new javax.swing.JButton();
+		btWeatherRefresh.setIcon(Utils.getIcon(this, "refresh.png", settings.ToolbarIconSize));
+		btWeatherRefresh.setToolTipText(bundle.getString("JPanelWeather.btWeatherRefresh.toolTipText"));
+		btWeatherRefresh.setFocusable(false);
+		btWeatherRefresh.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				refresh();
 			}
 		});
-		toolBar.add(btStatisticRefresh);
+		toolBar.add(btWeatherRefresh);
+
+		// -- Tab information
+		// --------------------------------------------------------------
+		InformationWarning = new JMenuItem(Utils.getIcon(this, "cancel.png", settings.TagIconSize));
+		InformationWarning.setVisible(false);
+		toolBar.add(InformationWarning);
+
+		lbInformation = new JLabel();
+		lbInformation.setVisible(false);
+		toolBar.add(lbInformation);
 	}
 
 
@@ -154,19 +168,56 @@ public class JPanelWeather extends JPanel {
 			e.printStackTrace();
 		}
 
-		WeatherData previousWeatherData = new WeatherData(settings);
-		previousWeatherData.RetrieveWeatherData(Latitude, Longitude, StartTime);
-		int index = 600;
+		lbInformation.setText("");
+		if (!Utils.isInternetReachable()) {
+			lbInformation.setText(bundle.getString("JPanelWeather.lbInformationMissingInternetConnection.Text"));
+			lbInformation.setVisible(true);
+			InformationWarning.setVisible(true);
+			return;
+		}
+		if (!settings.isDarkSkyApiKeyValid()) {
+			if (lbInformation.getText() != "") {
+				lbInformation.setText(", ");
+			}
+			lbInformation.setText(
+					lbInformation.getText().concat(bundle.getString("JPanelWeather.lbInformationMissingApiKey.Text")));
+			lbInformation.setVisible(true);
+			InformationWarning.setVisible(true);
+			return;
+		}
+		lbInformation.setVisible(false);
+		InformationWarning.setVisible(false);
+		// if(not online or api key missing, update the label and display the waring)
+
+		WeatherData previousWeatherData = new WeatherData(settings, Latitude, Longitude);
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
-		sb = Utils.sbReplace(sb, "@" + index++, fmt.print(previousWeatherData.getDate()));
-		sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getSummary());
-		sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getMoonPhase());
-		sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getTemperatureHigh());
-		sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getTemperatureLow());
-		sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getWindSpeed());
-		sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getTemperatureMin());
-		sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getTemperatureMax());
+		sb = Utils.sbReplace(sb, "@0", Utils.uTemperatureToString(settings.Unit));
+		sb = Utils.sbReplace(sb, "@1", Utils.uTemperatureToString(settings.Unit));
+		sb = Utils.sbReplace(sb, "@2", Utils.uSpeed2String(settings.Unit, false));
+		sb = Utils.sbReplace(sb, "@3", Utils.uTemperatureToString(settings.Unit));
+		sb = Utils.sbReplace(sb, "@4", Utils.uTemperatureToString(settings.Unit));
+
+		for (int totalForecasts = 0; totalForecasts < 3; ++totalForecasts) {
+			previousWeatherData
+					.RetrieveWeatherData(Instant.ofEpochMilli(StartTime.minusYears(totalForecasts + 1).getMillis()));
+
+			int index = 600 + totalForecasts * 100;
+
+			sb = Utils.sbReplace(sb, "@" + index++, fmt.print(previousWeatherData.getDate()));
+			sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getSummary());
+			sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getMoonPhase());
+			sb = Utils.sbReplace(sb, "@" + index++,
+					Utils.FormatTemperature(Double.valueOf(previousWeatherData.getTemperatureHigh()), settings.Unit));
+			sb = Utils.sbReplace(sb, "@" + index++,
+					Utils.FormatTemperature(Double.valueOf(previousWeatherData.getTemperatureLow()), settings.Unit));
+			sb = Utils.sbReplace(sb, "@" + index++,
+					Utils.FormatSpeed(Double.valueOf(previousWeatherData.getWindSpeed()), settings.Unit, false, false));
+			sb = Utils.sbReplace(sb, "@" + index++,
+					Utils.FormatTemperature(Double.valueOf(previousWeatherData.getTemperatureMin()), settings.Unit));
+			sb = Utils.sbReplace(sb, "@" + index++,
+					Utils.FormatTemperature(Double.valueOf(previousWeatherData.getTemperatureMax()), settings.Unit));
+		}
 
 		// -- Refresh the view and set the cursor position
 		editorStat.setText(sb.toString());
@@ -174,9 +225,9 @@ public class JPanelWeather extends JPanel {
 	}
 
 
-	public void SetParameters(Double latitude, Double longitude, DateTime time) {
+	public void SetParameters(Double latitude, Double longitude, DateTime startTime) {
 		Latitude = latitude;
 		Longitude = longitude;
-		StartTime = Instant.ofEpochMilli(time.getMillis());
+		StartTime = startTime;
 	}
 }

@@ -17,6 +17,10 @@ import tk.plogitech.darksky.forecast.model.Longitude;
 
 public class WeatherData {
 
+	// See here for the field descriptions :
+	// https://darksky.net/dev/docs#response-format
+
+	/** The time for the weather data request **/
 	private DateTime Time;
 	/** Counter **/
 	private String Summary;// : "Overcast until afternoon.",
@@ -57,18 +61,22 @@ public class WeatherData {
 	// "apparentTemperatureMaxTime": 1473894000
 
 	private CgSettings Settings;
+	private double Latitude;
+	private double Longitude;
 
 
-	public WeatherData(CgSettings settings) {
+	public WeatherData(CgSettings settings, Double latitude, Double longitude) {
 		Settings = settings;
+		Latitude = latitude;
+		Longitude = longitude;
 	}
 
 
-	public void RetrieveWeatherData(Double latitude, Double longitude, Instant time) {
+	public void RetrieveWeatherData(Instant time) {
 		ForecastRequest request = new ForecastRequestBuilder().key(new APIKey(Settings.getDarkSkyApiKey())).time(time)
 				.language(ForecastRequestBuilder.Language.en).units(ForecastRequestBuilder.Units.si)
 				.exclude(ForecastRequestBuilder.Block.minutely).extendHourly()
-				.location(new GeoCoordinates(new Longitude(longitude), new Latitude(latitude))).build();
+				.location(new GeoCoordinates(new Longitude(Longitude), new Latitude(Latitude))).build();
 
 		DarkSkyClient client = new DarkSkyClient();
 		try {

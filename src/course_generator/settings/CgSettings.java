@@ -271,6 +271,7 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "DIALOGICONSIZE", DialogIconSize);
 			Utils.WriteIntToXML(writer, "MAPICONSIZE", MapIconSize);
 			Utils.WriteIntToXML(writer, "CURVEBUTTONSICONSIZE", CurveButtonsIconSize);
+
 			Utils.WriteStringToXML(writer, "THUNDERFORESTAPIKEY", ThunderForestApiKey);
 			Utils.WriteStringToXML(writer, "DARKSKYAPIKEY", DarkSkyApiKey);
 
@@ -417,6 +418,20 @@ public class CgSettings {
 	 */
 	public void setDarkSkyApiKey(String key) {
 		DarkSkyApiKey = key;
+	}
+
+
+	/**
+	 * Verifies that the Dark Sky API Key is a valid one
+	 * 
+	 */
+	public boolean isDarkSkyApiKeyValid() {
+		boolean isKeyValid = false;
+
+		if (DarkSkyApiKey.length() == 32)
+			isKeyValid = true;
+
+		return isKeyValid;
 	}
 
 }

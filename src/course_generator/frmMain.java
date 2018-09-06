@@ -3139,9 +3139,8 @@ public class frmMain extends javax.swing.JFrame {
 		panelMap.RefreshTrack(Track, true);
 
 		CgData firstTrackPoint = Track.data.get(0);
-		DateTime hour = firstTrackPoint.getHour();
-		hour = hour.minusYears(1);
-		panelWeather.SetParameters(firstTrackPoint.getLatitude(), firstTrackPoint.getLongitude(), hour);
+		DateTime startTime = firstTrackPoint.getHour();
+		panelWeather.SetParameters(firstTrackPoint.getLatitude(), firstTrackPoint.getLongitude(), startTime);
 		panelWeather.refresh();
 
 		RefreshMruCGX();
