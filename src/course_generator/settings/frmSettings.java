@@ -40,6 +40,7 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import course_generator.dialogs.FontChooser;
@@ -94,9 +95,10 @@ public class frmSettings extends javax.swing.JDialog {
 	private JComboBox<Object> cbMapIconSize;
 	private JLabel lbCurveButtonsIconSize;
 	private JComboBox<Object> cbCurveButtonsIconSize;
-	private JTextArea btApiKey;
+	private JTextField edThunderForestApiKey;
 
 	private int fontSize[] = { 16, 20, 22, 24, 32, 64, 96, 128 };
+	private JLabel lbThunderForestApiKey;
 
 
 	/**
@@ -155,7 +157,7 @@ public class frmSettings extends javax.swing.JDialog {
 		cbMapIconSize.setSelectedIndex(FontSize2Index(settings.MapIconSize));
 		cbCurveButtonsIconSize.setSelectedIndex(FontSize2Index(settings.CurveButtonsIconSize));
 
-		btApiKey.setText(settings.getThunderForestApiKey());
+		edThunderForestApiKey.setText(settings.getThunderForestApiKey());
 
 		// End set field
 		ok = false;
@@ -181,10 +183,6 @@ public class frmSettings extends javax.swing.JDialog {
 			default: // Default
 				settings.Language = "";
 			}
-
-			// if (!old_language.equalsIgnoreCase(settings.Language))
-			// JOptionPane.showMessageDialog(this,
-			// bundle.getString("frmSettings.MsgRestart"));
 
 			// -- Units
 			switch (cbUnit.getSelectedIndex()) {
@@ -243,6 +241,10 @@ public class frmSettings extends javax.swing.JDialog {
 			settings.MapIconSize = Index2FontSize(cbMapIconSize.getSelectedIndex());
 			settings.CurveButtonsIconSize = Index2FontSize(cbCurveButtonsIconSize.getSelectedIndex());
 
+			//-- Maps
+			settings.setThunderForestApiKey(edThunderForestApiKey.getText());
+
+			//-- Restart of the application needed?
 			if ((!old_language.equalsIgnoreCase(settings.Language))
 					|| (OldStatusbarIconSize != settings.StatusbarIconSize) || (OldTabIconSize != settings.TabIconSize)
 					|| (OldToolbarIconSize != settings.ToolbarIconSize)
@@ -252,10 +254,6 @@ public class frmSettings extends javax.swing.JDialog {
 					|| (OldCurveButtonsIconSize != settings.CurveButtonsIconSize))
 				JOptionPane.showMessageDialog(this, bundle.getString("frmSettings.MsgRestart"));
 
-			// Maps
-			if (btApiKey.getText() != "" && btApiKey.getText() != settings.getThunderForestApiKey()) {
-				settings.setThunderForestApiKey(btApiKey.getText());
-			}
 		}
 		return ok;
 	}
@@ -522,24 +520,32 @@ public class frmSettings extends javax.swing.JDialog {
 		Utils.addComponent(panelDisplay, cbCurveButtonsIconSize, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
+		// ## Tab "Maps" ##
 		addTab(TabbedPaneGlobal, panelDisplay, bundle.getString("frmSettings.TabDisplay.tabTitle"), null);
 
-		// ## Tab "Maps" ##
 		panelMaps = new JPanel();
 		panelMaps.setLayout(new GridBagLayout());
 
 		line = 0;
 
 		// Thunderforest API Key
-		JLabel lbThunderForestApiKey = new javax.swing.JLabel();
+		lbThunderForestApiKey = new javax.swing.JLabel();
 		lbThunderForestApiKey.setText(bundle.getString("frmSettings.lbThunderForestApiKey.text"));
-		Utils.addComponent(panelMaps, lbThunderForestApiKey, 1, 10, 1, 1, 0, 0, 5, 0, 0, 0,
+		Utils.addComponent(panelMaps, lbThunderForestApiKey,
+				0, line, 
+				1, 1, 
+				0, 1, 
+				10, 10, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
+		edThunderForestApiKey = new javax.swing.JTextField();
+		Utils.addComponent(panelMaps, edThunderForestApiKey, 
+				1, line++, 
+				1, 1, 
+				1, 1, 
+				10, 5, 0, 10, 
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
-
-		btApiKey = new javax.swing.JTextArea(3, 0);
-		Utils.addComponent(panelMaps, btApiKey, 2, 10, 1, 1, 5, 5, 5, 5, 5, 10, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.HORIZONTAL);
-
+		
 		addTab(TabbedPaneGlobal, panelMaps, bundle.getString("frmSettings.TabMaps.tabTitle"), null);
 
 		// -- Separator

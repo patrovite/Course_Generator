@@ -52,6 +52,7 @@ import course_generator.settings.CgSettings;
 import course_generator.utils.CgSpinner;
 import course_generator.utils.Utils;
 import net.iakovlev.timeshape.TimeZoneEngine;
+//import net.iakovlev.timeshape.*;
 
 public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 
