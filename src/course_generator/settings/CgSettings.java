@@ -18,6 +18,7 @@
 
 package course_generator.settings;
 
+import java.awt.Color;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -101,7 +102,18 @@ public class CgSettings {
 
 	private String ThunderForestApiKey;
 
-
+	public Color Color_Diff_VeryEasy;
+	public Color Color_Diff_Easy;
+	public Color Color_Diff_Average;
+	public Color Color_Diff_Hard;
+	public Color Color_Diff_VeryHard;
+	public Color Color_Map_NightHighlight;
+	public int NormalTrackWidth;
+	public int NightTrackWidth;
+	public double NormalTrackTransparency;
+	public double NightTrackTransparency;
+	
+	
 	public CgSettings() {
 		int i = 0;
 
@@ -165,6 +177,17 @@ public class CgSettings {
 		CurveButtonsIconSize = 32;
 
 		ThunderForestApiKey = "";
+
+		Color_Diff_VeryEasy=CgConst.CL_DIFF_VERYEASY;
+		Color_Diff_Easy=CgConst.CL_DIFF_EASY;
+		Color_Diff_Average=CgConst.CL_DIFF_AVERAGE;
+		Color_Diff_Hard=CgConst.CL_DIFF_HARD;
+		Color_Diff_VeryHard=CgConst.CL_DIFF_VERYHARD;
+		Color_Map_NightHighlight=CgConst.CL_MAP_NIGHT_HIGHLIGHT;
+		NormalTrackWidth=CgConst.TRACK_NORMAL_TICKNESS;
+		NightTrackWidth=CgConst.TRACK_NIGHT_TICKNESS;
+		NormalTrackTransparency=CgConst.NORMAL_TRACK_TRANSPARENCY;
+		NightTrackTransparency=CgConst.NIGHT_TRACK_TRANSPARENCY;		
 	}
 
 
@@ -272,6 +295,19 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "CURVEBUTTONSICONSIZE", CurveButtonsIconSize);
 			Utils.WriteStringToXML(writer, "THUNDERFORESTAPIKEY", ThunderForestApiKey);
 
+			Utils.WriteIntToXML(writer, "COLORDIFFVERYEASY",Color_Diff_VeryEasy.getRGB());
+			Utils.WriteIntToXML(writer, "COLORDIFFEASY",Color_Diff_Easy.getRGB());
+			Utils.WriteIntToXML(writer, "COLORDIFFAVERAGE",Color_Diff_Average.getRGB());
+			Utils.WriteIntToXML(writer, "COLORDIFFHARD",Color_Diff_Hard.getRGB());
+			Utils.WriteIntToXML(writer, "COLORDIFFVERYHARD",Color_Diff_VeryHard.getRGB());
+			Utils.WriteIntToXML(writer, "COLORMAPNIGHTHIGHLIGHT",Color_Map_NightHighlight.getRGB());
+			
+			Utils.WriteIntToXML(writer, "NORMALTRACKWIDTH",NormalTrackWidth);
+			Utils.WriteIntToXML(writer, "NIGHTTRACKWIDTH",NightTrackWidth);
+			
+			Utils.WriteDoubleToXML(writer, "NORMALTRACKTRANSPARENCY",NormalTrackTransparency);
+			Utils.WriteDoubleToXML(writer, "NIGHTTRACKTRANSPARENCY",NightTrackTransparency);
+			
 			writer.writeEndElement();
 			writer.writeEndDocument();
 

@@ -18,6 +18,7 @@
 
 package course_generator.settings;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 
@@ -29,6 +30,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import course_generator.utils.CgConst;
+import course_generator.utils.Utils;
 
 /**
  *
@@ -48,6 +52,7 @@ public class SaxConfigHandler extends DefaultHandler {
 	private final int ERR_READ_INT = -2;
 	private final int ERR_READ_BOOL = -3;
 	private final int ERR_READ_NOTEXIST = -6;
+	private final int ERR_READ_COLOR = -7;
 	private CgSettings Settings;
 
 
@@ -176,6 +181,28 @@ public class SaxConfigHandler extends DefaultHandler {
 		} catch (NumberFormatException e) {
 			Settings.ReadError = _errcode;
 			errline = locator.getLineNumber();
+			return _default;
+		}
+	}
+
+	/**
+	 * Parse a color element
+	 * 
+	 * @param _default
+	 *            Default value
+	 * @param _errcode
+	 *            Error code if a parse error occur
+	 * @return Return the parsed color
+	 */
+	private Color ManageColor(Color _default, int _errcode) {
+		try {
+			int v = Integer.parseInt(characters);
+			characters = "";
+			return new Color(v);
+		} catch (NumberFormatException e) {
+			// errcode = _errcode;
+			errline = locator.getLineNumber();
+			characters = "";
 			return _default;
 		}
 	}
@@ -330,8 +357,28 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.CurveButtonsIconSize = ManageInt(32, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("THUNDERFORESTAPIKEY")) {
 				Settings.setThunderForestApiKey(ManageString().trim());
+			} else if (qName.equalsIgnoreCase("COLORDIFFVERYEASY")) {
+				Settings.Color_Diff_VeryEasy = ManageColor(CgConst.CL_DIFF_VERYEASY, ERR_READ_COLOR);
+			} else if (qName.equalsIgnoreCase("COLORDIFFEASY")) {
+				Settings.Color_Diff_Easy = ManageColor(CgConst.CL_DIFF_EASY, ERR_READ_COLOR);
+			} else if (qName.equalsIgnoreCase("COLORDIFFAVERAGE")) {
+				Settings.Color_Diff_Average = ManageColor(CgConst.CL_DIFF_AVERAGE, ERR_READ_COLOR);
+			} else if (qName.equalsIgnoreCase("COLORDIFFHARD")) {
+				Settings.Color_Diff_Hard = ManageColor(CgConst.CL_DIFF_HARD, ERR_READ_COLOR);
+			} else if (qName.equalsIgnoreCase("COLORDIFFVERYHARD")) {
+				Settings.Color_Diff_VeryHard = ManageColor(CgConst.CL_DIFF_VERYHARD, ERR_READ_COLOR);
+			} else if (qName.equalsIgnoreCase("COLORMAPNIGHTHIGHLIGHT")) {
+				Settings.Color_Map_NightHighlight = ManageColor(CgConst.CL_MAP_NIGHT_HIGHLIGHT, ERR_READ_COLOR);
+			} else if (qName.equalsIgnoreCase("NORMALTRACKWIDTH")) {
+				Settings.NormalTrackWidth = ManageInt(CgConst.TRACK_NORMAL_TICKNESS, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("NIGHTTRACKWIDTH")) {
+				Settings.NightTrackWidth = ManageInt(CgConst.TRACK_NIGHT_TICKNESS, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("NORMALTRACKTRANSPARENCY")) {
+				Settings.NormalTrackTransparency = ManageDouble(CgConst.NORMAL_TRACK_TRANSPARENCY, ERR_READ_DOUBLE);
+			} else if (qName.equalsIgnoreCase("NIGHTTRACKTRANSPARENCY")) {
+				Settings.NightTrackTransparency = ManageDouble(CgConst.NIGHT_TRACK_TRANSPARENCY, ERR_READ_DOUBLE);
 			}
-
+			
 			else if (qName.equalsIgnoreCase("CONFIG")) {
 				level--;
 			}
