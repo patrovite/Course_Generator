@@ -1345,6 +1345,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelProfil.RefreshProfilInfo(row);
 
 				panelTrackData.refresh();
+				panelMap.RefreshTrack(Track, false);
 				PanelResume.RefreshTableResume();
 			}
 		});

@@ -110,8 +110,8 @@ public class CgSettings {
 	public Color Color_Map_NightHighlight;
 	public int NormalTrackWidth;
 	public int NightTrackWidth;
-	public double NormalTrackTransparency;
-	public double NightTrackTransparency;
+	public int NormalTrackTransparency;
+	public int NightTrackTransparency;
 	
 	
 	public CgSettings() {
@@ -305,8 +305,8 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "NORMALTRACKWIDTH",NormalTrackWidth);
 			Utils.WriteIntToXML(writer, "NIGHTTRACKWIDTH",NightTrackWidth);
 			
-			Utils.WriteDoubleToXML(writer, "NORMALTRACKTRANSPARENCY",NormalTrackTransparency);
-			Utils.WriteDoubleToXML(writer, "NIGHTTRACKTRANSPARENCY",NightTrackTransparency);
+			Utils.WriteIntToXML(writer, "NORMALTRACKTRANSPARENCY",NormalTrackTransparency);
+			Utils.WriteIntToXML(writer, "NIGHTTRACKTRANSPARENCY",NightTrackTransparency);
 			
 			writer.writeEndElement();
 			writer.writeEndDocument();

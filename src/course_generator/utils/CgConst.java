@@ -60,8 +60,8 @@ public class CgConst {
 	public static final int TRACK_NORMAL_TICKNESS = 3;
 	public static final int TRACK_NIGHT_TICKNESS = 9;
 
-	public static final double NORMAL_TRACK_TRANSPARENCY = 1.0;
-	public static final double NIGHT_TRACK_TRANSPARENCY = 0.25;
+	public static final int NORMAL_TRACK_TRANSPARENCY = 255;
+	public static final int NIGHT_TRACK_TRANSPARENCY = 64;
 
 	public static final double DIST_MAX_MINMAX = 1000.0;
 	public static final double MIN_ELEV_MINMAX = 50.0;

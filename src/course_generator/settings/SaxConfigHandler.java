@@ -374,9 +374,9 @@ public class SaxConfigHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("NIGHTTRACKWIDTH")) {
 				Settings.NightTrackWidth = ManageInt(CgConst.TRACK_NIGHT_TICKNESS, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("NORMALTRACKTRANSPARENCY")) {
-				Settings.NormalTrackTransparency = ManageDouble(CgConst.NORMAL_TRACK_TRANSPARENCY, ERR_READ_DOUBLE);
+				Settings.NormalTrackTransparency = ManageInt(CgConst.NORMAL_TRACK_TRANSPARENCY, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("NIGHTTRACKTRANSPARENCY")) {
-				Settings.NightTrackTransparency = ManageDouble(CgConst.NIGHT_TRACK_TRANSPARENCY, ERR_READ_DOUBLE);
+				Settings.NightTrackTransparency = ManageInt(CgConst.NIGHT_TRACK_TRANSPARENCY, ERR_READ_INT);
 			}
 			
 			else if (qName.equalsIgnoreCase("CONFIG")) {

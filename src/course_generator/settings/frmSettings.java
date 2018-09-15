@@ -26,6 +26,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -112,6 +114,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private Color ColorAverage;
 	private Color ColorHard;
 	private Color ColorVeryHard;
+	private Color ColorNight;
 
 	private JButton btDefaultColor;
 	private JLabel lbColorsEmpty;
@@ -135,6 +138,9 @@ public class frmSettings extends javax.swing.JDialog {
 	private CgSpinner spinNormalTrackTransparency;
 	private JLabel lbNightTrackTransparency;
 	private CgSpinner spinNightTrackTransparency;
+	private JLabel lbNightColor;
+	private JLabel lbNightColorView;
+	private JButton btNightColor;
 
 	/**
 	 * Creates new form frmSettings
@@ -200,12 +206,13 @@ public class frmSettings extends javax.swing.JDialog {
 		ColorAverage=settings.Color_Diff_Average;
 		ColorHard=settings.Color_Diff_Hard;
 		ColorVeryHard=settings.Color_Diff_VeryHard;
+		ColorNight=settings.Color_Map_NightHighlight;
 
 		// -- Track width
 		spinNormalTrackWidth.setValue((int) settings.NormalTrackWidth);
 		spinNightTrackWidth.setValue((int) settings.NightTrackWidth);
-		spinNormalTrackTransparency.setValue((int) (settings.NormalTrackTransparency*100.0));
-		spinNightTrackTransparency.setValue((int) (settings.NightTrackTransparency*100.0));
+		spinNormalTrackTransparency.setValue((int) (settings.NormalTrackTransparency*100/255));
+		spinNightTrackTransparency.setValue((int) (settings.NightTrackTransparency*100/255));
 
 		//--
 		Refresh(); 
@@ -301,12 +308,13 @@ public class frmSettings extends javax.swing.JDialog {
 			settings.Color_Diff_Average=ColorAverage;
 			settings.Color_Diff_Hard=ColorHard;
 			settings.Color_Diff_VeryHard=ColorVeryHard;
+			settings.Color_Map_NightHighlight=ColorNight;
 		
 			//-- Track width
 			settings.NormalTrackWidth=spinNormalTrackWidth.getValueAsInt();
 			settings.NightTrackWidth=spinNightTrackWidth.getValueAsInt();
-			settings.NormalTrackTransparency=(spinNormalTrackTransparency.getValueAsInt()/100.0);
-			settings.NightTrackTransparency=(spinNightTrackTransparency.getValueAsInt()/100.0);
+			settings.NormalTrackTransparency=spinNormalTrackTransparency.getValueAsInt()*255/100;
+			settings.NightTrackTransparency=spinNightTrackTransparency.getValueAsInt()*255/100;
 			
 			//-- Restart of the application needed?
 			if ((!old_language.equalsIgnoreCase(settings.Language))
@@ -630,26 +638,19 @@ public class frmSettings extends javax.swing.JDialog {
 		lbVeryEasyColorView = new JLabel("          ");
 		lbVeryEasyColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbVeryEasyColorView.setOpaque(true);
-		Utils.addComponent(panelColors, lbVeryEasyColorView, 
-				1, line, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH);
-
-		btVeryEasyColor = new JButton(bundle.getString("frmSettings.btColor.text"));
-		btVeryEasyColor.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		lbVeryEasyColorView.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseClicked(MouseEvent e) {
 				ColorVeryEasy = FrmColorChooser.showDialog("", ColorVeryEasy, settings);
 				Refresh();
-			}
+            }
 		});
-		Utils.addComponent(panelColors, btVeryEasyColor, 
+		Utils.addComponent(panelColors, lbVeryEasyColorView, 
 				2, line++, 
 				1, 1, 
 				0, 0, 
-				10, 10, 0, 10, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
-
+				10, 10, 0, 10, GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		
 		//-- Easy Color
 		lbEasyColor = new JLabel(" " + bundle.getString("frmSettings.lbEasyColor.text") + " ");
 		Utils.addComponent(panelColors, lbEasyColor, 
@@ -662,26 +663,19 @@ public class frmSettings extends javax.swing.JDialog {
 		lbEasyColorView = new JLabel("          ");
 		lbEasyColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbEasyColorView.setOpaque(true);
-		Utils.addComponent(panelColors, lbEasyColorView, 
-				1, line, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH);
-
-		btEasyColor = new JButton(bundle.getString("frmSettings.btColor.text"));
-		btEasyColor.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		lbEasyColorView.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseClicked(MouseEvent e) {
 				ColorEasy = FrmColorChooser.showDialog("", ColorEasy, settings);
 				Refresh();
-			}
+            }
 		});
-		Utils.addComponent(panelColors, btEasyColor, 
+		Utils.addComponent(panelColors, lbEasyColorView, 
 				2, line++, 
 				1, 1, 
 				0, 0, 
-				10, 10, 0, 10, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
-
+				10, 10, 0, 10, GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		
 		//-- Average Color
 		lbAverageColor = new JLabel(" " + bundle.getString("frmSettings.lbAverageColor.text") + " ");
 		Utils.addComponent(panelColors, lbAverageColor, 
@@ -694,26 +688,20 @@ public class frmSettings extends javax.swing.JDialog {
 		lbAverageColorView = new JLabel("          ");
 		lbAverageColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbAverageColorView.setOpaque(true);
-		Utils.addComponent(panelColors, lbAverageColorView, 
-				1, line, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH);
-
-		btAverageColor = new JButton(bundle.getString("frmSettings.btColor.text"));
-		btAverageColor.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		lbAverageColorView.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseClicked(MouseEvent e) {
 				ColorAverage = FrmColorChooser.showDialog("", ColorAverage, settings);
 				Refresh();
-			}
+            }
 		});
-		Utils.addComponent(panelColors, btAverageColor, 
+		Utils.addComponent(panelColors, lbAverageColorView, 
 				2, line++, 
 				1, 1, 
 				0, 0, 
-				10, 10, 0, 10, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+				10, 10, 0, 10, GridBagConstraints.WEST, GridBagConstraints.BOTH);
 
+		
 		//-- Hard Color
 		lbHardColor = new JLabel(" " + bundle.getString("frmSettings.lbHardColor.text") + " ");
 		Utils.addComponent(panelColors, lbHardColor, 
@@ -726,26 +714,19 @@ public class frmSettings extends javax.swing.JDialog {
 		lbHardColorView = new JLabel("          ");
 		lbHardColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbHardColorView.setOpaque(true);
-		Utils.addComponent(panelColors, lbHardColorView, 
-				1, line, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH);
-
-		btHardColor = new JButton(bundle.getString("frmSettings.btColor.text"));
-		btHardColor.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		lbHardColorView.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseClicked(MouseEvent e) {
 				ColorHard = FrmColorChooser.showDialog("", ColorHard, settings);
 				Refresh();
-			}
+            }
 		});
-		Utils.addComponent(panelColors, btHardColor, 
+		Utils.addComponent(panelColors, lbHardColorView, 
 				2, line++, 
 				1, 1, 
 				0, 0, 
-				10, 10, 0, 10, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
-		
+				10, 10, 0, 10, GridBagConstraints.WEST, GridBagConstraints.BOTH);
+
 		//-- Very Hard Color
 		lbVeryHardColor = new JLabel(" " + bundle.getString("frmSettings.lbVeryHardColor.text") + " ");
 		Utils.addComponent(panelColors, lbVeryHardColor, 
@@ -758,26 +739,44 @@ public class frmSettings extends javax.swing.JDialog {
 		lbVeryHardColorView = new JLabel("          ");
 		lbVeryHardColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbVeryHardColorView.setOpaque(true);
-		Utils.addComponent(panelColors, lbVeryHardColorView, 
-				1, line, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 0, GridBagConstraints.WEST, GridBagConstraints.BOTH);
-
-		btVeryHardColor = new JButton(bundle.getString("frmSettings.btColor.text"));
-		btVeryHardColor.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		lbVeryHardColorView.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseClicked(MouseEvent e) {
 				ColorVeryHard = FrmColorChooser.showDialog("", ColorVeryHard, settings);
 				Refresh();
-			}
+            }
 		});
-		Utils.addComponent(panelColors, btVeryHardColor, 
+		Utils.addComponent(panelColors, lbVeryHardColorView, 
 				2, line++, 
 				1, 1, 
 				0, 0, 
-				10, 10, 0, 10, 
+				10, 10, 0, 10, GridBagConstraints.WEST, GridBagConstraints.BOTH);
+
+		//-- NightHighLight Color
+		lbNightColor = new JLabel(" " + bundle.getString("frmSettings.lbNightColor.text") + " ");
+		Utils.addComponent(panelColors, lbNightColor, 
+				0, line, 
+				1, 1, 
+				1, 0, 
+				10, 10, 0, 0, 
 				GridBagConstraints.WEST, GridBagConstraints.BOTH);
-		
+
+		lbNightColorView = new JLabel("          ");
+		lbNightColorView.setBorder(BorderFactory.createLineBorder(Color.black));
+		lbNightColorView.setOpaque(true);
+		lbNightColorView.addMouseListener(new MouseAdapter() {
+			@Override
+            public void mouseClicked(MouseEvent e) {
+				ColorNight = FrmColorChooser.showDialog("", ColorNight, settings);
+				Refresh();
+            }
+		});
+		Utils.addComponent(panelColors, lbNightColorView, 
+				2, line++, 
+				1, 1, 
+				0, 0, 
+				10, 10, 0, 10, GridBagConstraints.WEST, GridBagConstraints.BOTH);
+
 		// -- Default colors
 		btDefaultColor = new JButton(bundle.getString("frmSettings.btDefaultColors.text"));
 		btDefaultColor.addActionListener(new java.awt.event.ActionListener() {
@@ -994,17 +993,6 @@ public class frmSettings extends javax.swing.JDialog {
 		return fontSize[value];
 	}
 
-
-	/**
-	 * Checks the API key validity and save it in the user's settings
-	 * 
-	 * @param
-	 * @return
-	 */
-	private void SaveApiKey() {
-		int toto = 0;
-	}
-	
 	
 	/**
 	 * Refresh some dialog contents
@@ -1015,6 +1003,7 @@ public class frmSettings extends javax.swing.JDialog {
 		lbAverageColorView.setBackground(ColorAverage);
 		lbHardColorView.setBackground(ColorHard);
 		lbVeryHardColorView.setBackground(ColorVeryHard);
+		lbNightColorView.setBackground(ColorNight);
 	}
 	
 }
