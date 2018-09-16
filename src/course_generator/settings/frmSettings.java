@@ -928,7 +928,7 @@ public class frmSettings extends javax.swing.JDialog {
 	 * Display the font chooser dialog
 	 */
 	private void ChooseFont() {
-		Font res = FontChooser.showDialog("", DefaultFont);
+		Font res = FontChooser.showDialog(this, "", DefaultFont);
 		if (res != null)
 			DefaultFont = res;
 	}

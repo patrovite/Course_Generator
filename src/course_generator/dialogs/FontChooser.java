@@ -22,6 +22,7 @@ import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.ListModel;
 
@@ -47,7 +48,8 @@ public class FontChooser extends javax.swing.JDialog {
 	/**
 	 * Creates new form FontChooser
 	 */
-	public FontChooser() {
+	public FontChooser(JDialog parent) {
+		super(parent);
 		initComponents();
 		setModal(true);
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle"); // NOI18N
@@ -392,8 +394,8 @@ public class FontChooser extends javax.swing.JDialog {
 	 *         that user has selected. If user didn't click OK button - return
 	 *         "null".
 	 */
-	public static Font showDialog(String title, Font font) {
-		FontChooser dlg = new FontChooser();
+	public static Font showDialog(JDialog parent, String title, Font font) {
+		FontChooser dlg = new FontChooser(parent);
 		if (title != null) {
 			dlg.setTitle(title);
 		}
