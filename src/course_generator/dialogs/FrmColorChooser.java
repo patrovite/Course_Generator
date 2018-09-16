@@ -23,6 +23,7 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 
@@ -30,9 +31,11 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 
 import course_generator.settings.CgSettings;
 import course_generator.utils.Utils;
@@ -52,18 +55,23 @@ public class FrmColorChooser extends javax.swing.JDialog {
 	/**
 	 * Creates new form DialogColorChooser
 	 */
-	public FrmColorChooser(CgSettings settings) {
+	public FrmColorChooser(JDialog parent, String title, CgSettings settings) {
+		super(parent, title);
 		this.settings = settings;
+		if (title != null)
+			setTitle(title);
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
+		
+		setAlwaysOnTop(true);
 	}
 
 
-	public static Color showDialog(String title, Color c, CgSettings settings) {
-		FrmColorChooser dlg = new FrmColorChooser(settings);
-		if (title != null)
-			dlg.setTitle(title);
+	public static Color showDialog(JDialog parent, String title, Color c, CgSettings settings) {
+		FrmColorChooser dlg = new FrmColorChooser(parent, title, settings);
+		//if (title != null)
+		//	dlg.setTitle(title);
 		dlg.jColorChooser1.setColor(c);
 		dlg.ok = false;
 

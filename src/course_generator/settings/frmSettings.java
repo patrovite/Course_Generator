@@ -25,6 +25,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -641,7 +642,8 @@ public class frmSettings extends javax.swing.JDialog {
 		lbVeryEasyColorView.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-				ColorVeryEasy = FrmColorChooser.showDialog("", ColorVeryEasy, settings);
+				//ColorVeryEasy = FrmColorChooser.showDialog("", ColorVeryEasy, settings);
+				ColorVeryEasy = ChooseColor(ColorVeryEasy);
 				Refresh();
             }
 		});
@@ -666,7 +668,8 @@ public class frmSettings extends javax.swing.JDialog {
 		lbEasyColorView.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-				ColorEasy = FrmColorChooser.showDialog("", ColorEasy, settings);
+				//ColorEasy = FrmColorChooser.showDialog("", ColorEasy, settings);
+				ColorEasy = ChooseColor(ColorEasy);
 				Refresh();
             }
 		});
@@ -691,7 +694,8 @@ public class frmSettings extends javax.swing.JDialog {
 		lbAverageColorView.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-				ColorAverage = FrmColorChooser.showDialog("", ColorAverage, settings);
+				//ColorAverage = FrmColorChooser.showDialog("", ColorAverage, settings);
+				ColorAverage = ChooseColor(ColorAverage);
 				Refresh();
             }
 		});
@@ -717,7 +721,8 @@ public class frmSettings extends javax.swing.JDialog {
 		lbHardColorView.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-				ColorHard = FrmColorChooser.showDialog("", ColorHard, settings);
+				//ColorHard = FrmColorChooser.showDialog(this,"", ColorHard, settings);
+				ColorHard = ChooseColor(ColorHard);
 				Refresh();
             }
 		});
@@ -742,7 +747,8 @@ public class frmSettings extends javax.swing.JDialog {
 		lbVeryHardColorView.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-				ColorVeryHard = FrmColorChooser.showDialog("", ColorVeryHard, settings);
+				//ColorVeryHard = FrmColorChooser.showDialog("", ColorVeryHard, settings);
+				ColorVeryHard = ChooseColor(ColorVeryHard);
 				Refresh();
             }
 		});
@@ -767,7 +773,8 @@ public class frmSettings extends javax.swing.JDialog {
 		lbNightColorView.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-				ColorNight = FrmColorChooser.showDialog("", ColorNight, settings);
+				//ColorNight = FrmColorChooser.showDialog("", ColorNight, settings);
+				ColorNight = ChooseColor(ColorNight);
 				Refresh();
             }
 		});
@@ -993,6 +1000,15 @@ public class frmSettings extends javax.swing.JDialog {
 		return fontSize[value];
 	}
 
+	/**
+	 * Open the color chooser dialog
+	 * @param cl Current color
+	 * @return Color choose
+	 */
+	private Color ChooseColor(Color cl)
+	{
+		return FrmColorChooser.showDialog(this,"", cl, settings);
+	}
 	
 	/**
 	 * Refresh some dialog contents
