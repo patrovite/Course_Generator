@@ -142,6 +142,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private JLabel lbNightColor;
 	private JLabel lbNightColorView;
 	private JButton btNightColor;
+	private JLabel lbDisplayEmpty;
 
 	/**
 	 * Creates new form frmSettings
@@ -593,6 +594,15 @@ public class frmSettings extends javax.swing.JDialog {
 		Utils.addComponent(panelDisplay, cbCurveButtonsIconSize, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
+		// -- Empty line for resize purpose (not the best solution but it's simple ;) )
+		lbDisplayEmpty = new JLabel();
+		Utils.addComponent(panelDisplay, lbDisplayEmpty, 
+				0, line++, 
+				1, 1, 
+				0, 1, 
+				10, 10, 0, 0, 
+				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		
 		addTab(TabbedPaneGlobal, panelDisplay, bundle.getString("frmSettings.TabDisplay.tabTitle"), null);
 
 		// ## Tab "Maps" ##
