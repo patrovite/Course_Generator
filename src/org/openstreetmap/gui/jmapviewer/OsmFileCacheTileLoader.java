@@ -197,6 +197,8 @@ public class OsmFileCacheTileLoader extends OsmTileLoader implements CachedTileL
 		protected void loadOrUpdateTile() {
 			try {
 				URLConnection urlConn = loadTileFromOsm(tile);
+				//System.out.println("(loadOrUpdateTile) >>>"+urlConn.getURL());
+				
 				if (tileFile != null) {
 					switch (tile.getSource().getTileUpdate()) {
 					case IfModifiedSince:
@@ -271,7 +273,8 @@ public class OsmFileCacheTileLoader extends OsmTileLoader implements CachedTileL
 				listener.tileLoadingFinished(tile, false);
 				if (input == null) {
 					try {
-						System.err.println("Failed loading " + tile.getUrl() + ": " + e.getMessage());
+						//System.err.println("Failed loading " + tile.getUrl() + ": " + e.getMessage());
+						System.err.println("(OsmFileCacheTileLoader) Failed loading tile at url : " + tile.getUrl() +" - Message=" + e.getMessage());
 					} catch (IOException i) {
 					}
 				}
