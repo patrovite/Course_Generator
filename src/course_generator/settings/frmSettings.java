@@ -642,7 +642,6 @@ public class frmSettings extends javax.swing.JDialog {
 		lbVeryEasyColorView.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-				//ColorVeryEasy = FrmColorChooser.showDialog("", ColorVeryEasy, settings);
 				ColorVeryEasy = ChooseColor(ColorVeryEasy);
 				Refresh();
             }
@@ -668,7 +667,6 @@ public class frmSettings extends javax.swing.JDialog {
 		lbEasyColorView.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-				//ColorEasy = FrmColorChooser.showDialog("", ColorEasy, settings);
 				ColorEasy = ChooseColor(ColorEasy);
 				Refresh();
             }
@@ -694,7 +692,6 @@ public class frmSettings extends javax.swing.JDialog {
 		lbAverageColorView.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-				//ColorAverage = FrmColorChooser.showDialog("", ColorAverage, settings);
 				ColorAverage = ChooseColor(ColorAverage);
 				Refresh();
             }
@@ -721,7 +718,6 @@ public class frmSettings extends javax.swing.JDialog {
 		lbHardColorView.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-				//ColorHard = FrmColorChooser.showDialog(this,"", ColorHard, settings);
 				ColorHard = ChooseColor(ColorHard);
 				Refresh();
             }
@@ -747,7 +743,6 @@ public class frmSettings extends javax.swing.JDialog {
 		lbVeryHardColorView.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-				//ColorVeryHard = FrmColorChooser.showDialog("", ColorVeryHard, settings);
 				ColorVeryHard = ChooseColor(ColorVeryHard);
 				Refresh();
             }
@@ -773,7 +768,6 @@ public class frmSettings extends javax.swing.JDialog {
 		lbNightColorView.addMouseListener(new MouseAdapter() {
 			@Override
             public void mouseClicked(MouseEvent e) {
-				//ColorNight = FrmColorChooser.showDialog("", ColorNight, settings);
 				ColorNight = ChooseColor(ColorNight);
 				Refresh();
             }
