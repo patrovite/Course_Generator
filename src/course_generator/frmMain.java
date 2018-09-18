@@ -1180,7 +1180,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuFindMinMax.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				BackupInCGX();
-				Track.CalcMinMax();
+				Track.CalcMinMaxElevation();
 			}
 		});
 		mnuTools.add(mnuFindMinMax);
