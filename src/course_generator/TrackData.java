@@ -1206,13 +1206,18 @@ public class TrackData {
 
 
 	// -- Calculate road distance (in meter) --
-	public void CalcRoad() {
-		DistRoad = 0.0;
-		for (CgData r : data) {
+	public double CalcRoad(int start, int end) {
+		double road = 0.0;
+		//DistRoad = 0.0;
+		//for (CgData r : data) {
+		for (int i=start; i<end; i++) {
+			CgData r = data.get(i);
 			if (r.getDiff() == 100) {
-				DistRoad = DistRoad + r.getDist(CgConst.UNIT_METER);
+				//DistRoad = DistRoad + r.getDist(CgConst.UNIT_METER);
+				road = road + r.getDist(CgConst.UNIT_METER);
 			}
 		}
+		return road;
 	}
 
 	class SearchMinMaxElevationResult {
@@ -1409,6 +1414,9 @@ public class TrackData {
 			r.setHour(StartTime.plusSeconds((int) (Math.round(dt))));
 		} // End of the calculation loop --
 
+		//-- Update the road distance for the track
+		DistRoad = CalcRoad(0, data.size()-1);
+		
 		TotalTime = (int) Math.round(dt);
 		isCalculated = true;
 		isModified = true;
