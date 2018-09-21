@@ -341,15 +341,15 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			// -- Set the background color
 			Color clDiff = Color.WHITE;
 			if ((diff <= CgConst.DIFF_VERYEASY) && (diff > CgConst.DIFF_EASY)) {
-				clDiff = CgConst.CL_DIFF_VERYEASY;
+				clDiff = settings.Color_Diff_VeryEasy; // CgConst.CL_DIFF_VERYEASY;
 			} else if ((diff <= CgConst.DIFF_EASY) && (diff > CgConst.DIFF_AVERAGE)) {
-				clDiff = CgConst.CL_DIFF_EASY;
+				clDiff = settings.Color_Diff_Easy;  //CgConst.CL_DIFF_EASY;
 			} else if ((diff <= CgConst.DIFF_AVERAGE) && (diff > CgConst.DIFF_HARD)) {
-				clDiff = CgConst.CL_DIFF_AVERAGE;
+				clDiff = settings.Color_Diff_Average; //CgConst.CL_DIFF_AVERAGE;
 			} else if ((diff <= CgConst.DIFF_HARD) && (diff > CgConst.DIFF_VERYHARD)) {
-				clDiff = CgConst.CL_DIFF_HARD;
+				clDiff = settings.Color_Diff_Hard; //CgConst.CL_DIFF_HARD;
 			} else if (diff <= CgConst.DIFF_VERYHARD) {
-				clDiff = CgConst.CL_DIFF_VERYHARD;
+				clDiff = settings.Color_Diff_VeryHard; //CgConst.CL_DIFF_VERYHARD;
 			}
 
 			if (isSelected)

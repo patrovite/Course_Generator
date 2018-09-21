@@ -638,7 +638,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btVeryEasy = new javax.swing.JButton();
 		btVeryEasy.setOpaque(true);
-		btVeryEasy.setBackground(CgConst.CL_DIFF_VERYEASY);
+		btVeryEasy.setBackground(settings.Color_Diff_VeryEasy);  //CgConst.CL_DIFF_VERYEASY);
 		btVeryEasy.setToolTipText(bundle.getString("frmEditPosition.btVeryEasy.toolTipText"));
 		btVeryEasy.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -650,7 +650,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btEasy = new javax.swing.JButton();
 		btEasy.setOpaque(true);
-		btEasy.setBackground(CgConst.CL_DIFF_EASY);
+		btEasy.setBackground(settings.Color_Diff_Easy);//CgConst.CL_DIFF_EASY);
 		btEasy.setToolTipText(bundle.getString("frmEditPosition.btEasy.toolTipText"));
 		btEasy.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -662,7 +662,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btAverage = new javax.swing.JButton();
 		btAverage.setOpaque(true);
-		btAverage.setBackground(CgConst.CL_DIFF_AVERAGE);
+		btAverage.setBackground(settings.Color_Diff_Average); //CgConst.CL_DIFF_AVERAGE);
 		btAverage.setToolTipText(bundle.getString("frmEditPosition.btAverage.toolTipText"));
 		btAverage.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -674,7 +674,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btHard = new javax.swing.JButton();
 		btHard.setOpaque(true);
-		btHard.setBackground(CgConst.CL_DIFF_HARD);
+		btHard.setBackground(settings.Color_Diff_Hard); //CgConst.CL_DIFF_HARD);
 		btHard.setToolTipText(bundle.getString("frmEditPosition.btHard.toolTipText"));
 		btHard.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -686,7 +686,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btVeryHard = new javax.swing.JButton();
 		btVeryHard.setOpaque(true);
-		btVeryHard.setBackground(CgConst.CL_DIFF_VERYHARD);
+		btVeryHard.setBackground(settings.Color_Diff_VeryHard); //CgConst.CL_DIFF_VERYHARD);
 		btVeryHard.setToolTipText(bundle.getString("frmEditPosition.btVeryHard.toolTipText"));
 		btVeryHard.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {

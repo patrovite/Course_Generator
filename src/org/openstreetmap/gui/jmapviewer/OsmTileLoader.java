@@ -70,7 +70,7 @@ public class OsmTileLoader implements TileLoader {
                     listener.tileLoadingFinished(tile, false);
                     if (input == null) {
                         try {
-                            System.err.println("Failed loading " + tile.getUrl() +": " + e.getMessage());
+                            System.err.println("(OsmTileLoader) Failed loading tile at url : " + tile.getUrl() +" - Message=" + e.getMessage());
                         } catch(IOException i) {
                         }
                     }
@@ -89,6 +89,8 @@ public class OsmTileLoader implements TileLoader {
     protected URLConnection loadTileFromOsm(Tile tile) throws IOException {
         URL url;
         url = new URL(tile.getUrl());
+        //System.out.println("(loadTileFromOsm) >>>"+url);
+        
         URLConnection urlConn = url.openConnection();
         if (urlConn instanceof HttpURLConnection) {
             prepareHttpUrlConnection((HttpURLConnection)urlConn);
