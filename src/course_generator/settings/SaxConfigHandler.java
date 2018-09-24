@@ -32,7 +32,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import course_generator.utils.CgConst;
-import course_generator.utils.Utils;
 
 /**
  *
@@ -184,6 +183,7 @@ public class SaxConfigHandler extends DefaultHandler {
 			return _default;
 		}
 	}
+
 
 	/**
 	 * Parse a color element
@@ -357,6 +357,8 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.CurveButtonsIconSize = ManageInt(32, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("THUNDERFORESTAPIKEY")) {
 				Settings.setThunderForestApiKey(ManageString().trim());
+			} else if (qName.equalsIgnoreCase("DARKSKYAPIKEY")) {
+				Settings.setDarkSkyApiKey(ManageString().trim());
 			} else if (qName.equalsIgnoreCase("COLORDIFFVERYEASY")) {
 				Settings.Color_Diff_VeryEasy = ManageColor(CgConst.CL_DIFF_VERYEASY, ERR_READ_COLOR);
 			} else if (qName.equalsIgnoreCase("COLORDIFFEASY")) {
@@ -378,7 +380,7 @@ public class SaxConfigHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("NIGHTTRACKTRANSPARENCY")) {
 				Settings.NightTrackTransparency = ManageInt(CgConst.NIGHT_TRACK_TRANSPARENCY, ERR_READ_INT);
 			}
-			
+
 			else if (qName.equalsIgnoreCase("CONFIG")) {
 				level--;
 			}
