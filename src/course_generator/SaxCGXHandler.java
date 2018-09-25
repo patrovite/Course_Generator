@@ -83,6 +83,7 @@ public class SaxCGXHandler extends DefaultHandler {
 	private double trkpt_recup = 0;
 	private double trkpt_speed = 0;
 	private int trkpt_timesecond = 0;
+	private double trkpt_temperature = 0.0;
 	private int trkpt_eattime = 0;
 	private int trkpt_timelimit = 0;
 	// private double trkpt_dtime = 0.0;
@@ -487,6 +488,8 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("TIMESECONDE")) {
 				trkpt_timesecond = ManageInt(0, ERR_READ_INT);
 				trkdata.isTimeLoaded = true;
+			} else if (qName.equalsIgnoreCase("TEMPERATURE")) {
+				trkpt_temperature = ManageDouble(0, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("DELTATIMESECONDE")) {
 				// trkpt_dtime = ManageDouble(0.0, ERR_READ_DOUBLE);
 				// TODO used?
@@ -530,9 +533,10 @@ public class SaxCGXHandler extends DefaultHandler {
 							trkpt_speed, // double Speed
 							0.0, // double dElevation
 							trkpt_timesecond, // int Time
+							trkpt_temperature, // Temperature
 							trkpt_timesecond - old_time, // double dTime_f
 							trkpt_timelimit, // int TimeLimit
-							new DateTime(), // DateTime Hour
+							new DateTime(), // DateTime Hour,
 							trkpt_eattime, // int Station
 							trkpt_name, // String Name
 							trkpt_comment, // String Comment
@@ -561,6 +565,7 @@ public class SaxCGXHandler extends DefaultHandler {
 							trkpt_speed, // double Speed
 							0.0, // double dElevation
 							trkpt_timesecond, // int Time
+							trkpt_temperature, // Temperature
 							trkpt_timesecond - old_time, // double dTime_f
 							trkpt_timelimit, // int TimeLimit
 							new DateTime(), // DateTime Hour

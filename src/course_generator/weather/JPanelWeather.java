@@ -38,10 +38,11 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import course_generator.CgData;
+import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
-import course_generator.utils.WeatherData;
 
 public class JPanelWeather extends JPanel {
 	private static final long serialVersionUID = -7168142806619093218L;
@@ -54,6 +55,7 @@ public class JPanelWeather extends JPanel {
 	private JButton btWeatherRefresh;
 	private JLabel lbInformation;
 	private JMenuItem InformationWarning;
+	private TrackData track = null;
 
 	private Double Latitude;
 	private Double Longitude;
@@ -118,7 +120,7 @@ public class JPanelWeather extends JPanel {
 		btWeatherRefresh.setFocusable(false);
 		btWeatherRefresh.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				refresh();
+				refresh(track);
 			}
 		});
 		toolBar.add(btWeatherRefresh);
@@ -138,7 +140,15 @@ public class JPanelWeather extends JPanel {
 	/**
 	 * Refresh the statistic tab
 	 */
-	public void refresh() {
+	public void refresh(TrackData track) {
+		if (track == null)
+			return;
+
+		if (track.data.isEmpty())
+			return;
+
+		this.track = track;
+
 		StringBuilder sb = new StringBuilder();
 
 		// -- Get current language
@@ -189,7 +199,7 @@ public class JPanelWeather extends JPanel {
 		InformationWarning.setVisible(false);
 		// if(not online or api key missing, update the label and display the waring)
 
-		WeatherData previousWeatherData = new WeatherData(settings, Latitude, Longitude);
+		WeatherHistory previousWeatherData = new WeatherHistory(settings, Latitude, Longitude);
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
 		sb = Utils.sbReplace(sb, "@0", Utils.uTemperatureToString(settings.Unit));
@@ -202,21 +212,34 @@ public class JPanelWeather extends JPanel {
 			previousWeatherData
 					.RetrieveWeatherData(Instant.ofEpochMilli(StartTime.minusYears(totalForecasts + 1).getMillis()));
 
+			// We save the forecast from the year before
+			// TODO : IF the temperature was not already in the GPX file ?
+			if (totalForecasts == 0) {
+				for (WeatherData hourlyData : previousWeatherData.getHourlyWeather()) {
+					CgData r;
+					r = track.getClosestElement(hourlyData.getTime());
+					if (r != null) {
+						r.setTemperature(Double.valueOf(hourlyData.getTemperature()));
+					}
+				}
+			}
+
 			int index = 600 + totalForecasts * 100;
 
-			sb = Utils.sbReplace(sb, "@" + index++, fmt.print(previousWeatherData.getDate()));
-			sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getSummary());
-			sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getMoonPhase());
+			sb = Utils.sbReplace(sb, "@" + index++, fmt.print(previousWeatherData.getDailyWeatherData().getDate()));
+			sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getDailyWeatherData().getSummary());
+			sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getDailyWeatherData().getMoonPhase());
+			sb = Utils.sbReplace(sb, "@" + index++, Utils.FormatTemperature(
+					Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureHigh()), settings.Unit));
+			sb = Utils.sbReplace(sb, "@" + index++, Utils.FormatTemperature(
+					Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureLow()), settings.Unit));
 			sb = Utils.sbReplace(sb, "@" + index++,
-					Utils.FormatTemperature(Double.valueOf(previousWeatherData.getTemperatureHigh()), settings.Unit));
-			sb = Utils.sbReplace(sb, "@" + index++,
-					Utils.FormatTemperature(Double.valueOf(previousWeatherData.getTemperatureLow()), settings.Unit));
-			sb = Utils.sbReplace(sb, "@" + index++,
-					Utils.FormatSpeed(Double.valueOf(previousWeatherData.getWindSpeed()), settings.Unit, false, false));
-			sb = Utils.sbReplace(sb, "@" + index++,
-					Utils.FormatTemperature(Double.valueOf(previousWeatherData.getTemperatureMin()), settings.Unit));
-			sb = Utils.sbReplace(sb, "@" + index++,
-					Utils.FormatTemperature(Double.valueOf(previousWeatherData.getTemperatureMax()), settings.Unit));
+					Utils.FormatSpeed(Double.valueOf(previousWeatherData.getDailyWeatherData().getWindSpeed()),
+							settings.Unit, false, false));
+			sb = Utils.sbReplace(sb, "@" + index++, Utils.FormatTemperature(
+					Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureMin()), settings.Unit));
+			sb = Utils.sbReplace(sb, "@" + index++, Utils.FormatTemperature(
+					Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureMax()), settings.Unit));
 		}
 
 		// -- Refresh the view and set the cursor position
