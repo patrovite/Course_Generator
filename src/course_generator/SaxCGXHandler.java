@@ -239,7 +239,7 @@ public class SaxCGXHandler extends DefaultHandler {
 	 * @return Return the parsed value
 	 */
 	private String ManageString() {
-		String S = characters;
+		String S = characters.trim();
 		characters = "";
 		return S;
 	}
