@@ -445,6 +445,32 @@ public class Utils {
 
 
 	/**
+	 * Return the temperature unit as string (ºC or ºF)
+	 * 
+	 * @param unit
+	 *            Unit
+	 * @return String with the unit
+	 */
+
+	public static String uTemperatureToString(int unit) {
+		String unitString;
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			unitString = "ºC";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			unitString = "ºF";
+			break;
+		default:
+			unitString = "ºC";
+			break;
+		}
+
+		return unitString;
+	}
+
+
+	/**
 	 * Returns a given speed in the correct unit and format (km/h, miles/h, min/km
 	 * or min/mile)
 	 * 
@@ -1497,4 +1523,53 @@ public class Utils {
 		return success;
 	}
 
-} // Class
+
+	/**
+	 * Returns a given temperature in the correct unit (Celsius or Fahrenheit)
+	 * 
+	 * @param temperature
+	 *            temperature in Celsius
+	 * @return Converted value
+	 */
+	public static String FormatTemperature(double temperature, int unit) {
+		temperature = unit == CgConst.UNIT_MILES_FEET ? temperature * 9 / 5 + 32 : temperature;
+
+		return String.format("%3.0f", temperature);
+	}
+
+
+	/**
+	 * Converts a given temperature to the correct unit (Celsius or Fahrenheit)
+	 * 
+	 * @param temperature
+	 *            temperature in Celsius
+	 * @return Converted value
+	 */
+	public static double CelsiusToFahrenheit(double temperature) {
+		return ((temperature - 32) * 5) / 9;
+	}
+
+
+	/**
+	 * Compares two DateTime objects, using their time portion only, completely
+	 * ignoring Year, Month and Day.
+	 * 
+	 * @param d1
+	 *            a DateTimeobject
+	 * @param d2
+	 *            a DateTimeobject
+	 * @return the difference, in seconds, between the DateTimes
+	 * 
+	 * @see https://stackoverflow.com/questions/7676149/compare-only-the-time-portion-of-two-dates-ignoring-the-date-part#7676307
+	 * 
+	 */
+	public static int compareTimes(DateTime d1, DateTime d2) {
+		int t1;
+		int t2;
+
+		t1 = (int) (d1.toDate().getTime() % (24 * 60 * 60 * 1000L));
+		t2 = (int) (d2.toDate().getTime() % (24 * 60 * 60 * 1000L));
+		return (t1 - t2);
+	}
+
+}

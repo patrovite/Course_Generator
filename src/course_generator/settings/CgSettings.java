@@ -101,6 +101,7 @@ public class CgSettings {
 	public int CurveButtonsIconSize;
 
 	private String ThunderForestApiKey;
+	private String DarkSkyApiKey;
 
 	public Color Color_Diff_VeryEasy;
 	public Color Color_Diff_Easy;
@@ -293,7 +294,9 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "DIALOGICONSIZE", DialogIconSize);
 			Utils.WriteIntToXML(writer, "MAPICONSIZE", MapIconSize);
 			Utils.WriteIntToXML(writer, "CURVEBUTTONSICONSIZE", CurveButtonsIconSize);
+
 			Utils.WriteStringToXML(writer, "THUNDERFORESTAPIKEY", ThunderForestApiKey);
+			Utils.WriteStringToXML(writer, "DARKSKYAPIKEY", DarkSkyApiKey);
 
 			Utils.WriteIntToXML(writer, "COLORDIFFVERYEASY",Color_Diff_VeryEasy.getRGB());
 			Utils.WriteIntToXML(writer, "COLORDIFFEASY",Color_Diff_Easy.getRGB());
@@ -430,6 +433,41 @@ public class CgSettings {
 	 */
 	public void setThunderForestApiKey(String key) {
 		ThunderForestApiKey = key;
+	}
+
+
+	/**
+	 * Returns the user's Dark Sky API Key
+	 * 
+	 * @return string with the key
+	 */
+	public String getDarkSkyApiKey() {
+		return DarkSkyApiKey == null ? "" : DarkSkyApiKey;
+	}
+
+
+	/**
+	 * Sets the user's Dark Sky API Key
+	 * 
+	 * @param key
+	 *            The entered key
+	 */
+	public void setDarkSkyApiKey(String key) {
+		DarkSkyApiKey = key;
+	}
+
+
+	/**
+	 * Verifies that the Dark Sky API Key is a valid one
+	 * 
+	 */
+	public boolean isDarkSkyApiKeyValid() {
+		boolean isKeyValid = false;
+
+		if (DarkSkyApiKey.length() == 32)
+			isKeyValid = true;
+
+		return isKeyValid;
 	}
 
 }

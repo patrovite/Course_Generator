@@ -25,7 +25,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -102,6 +101,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private JLabel lbCurveButtonsIconSize;
 	private JComboBox<Object> cbCurveButtonsIconSize;
 	private JTextField edThunderForestApiKey;
+	private JTextArea DarkSkyApiKey;
 
 	private int fontSize[] = { 16, 20, 22, 24, 32, 64, 96, 128 };
 	private JLabel lbThunderForestApiKey;
@@ -143,6 +143,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private JLabel lbNightColorView;
 	private JButton btNightColor;
 	private JLabel lbDisplayEmpty;
+
 
 	/**
 	 * Creates new form frmSettings
@@ -200,25 +201,27 @@ public class frmSettings extends javax.swing.JDialog {
 		cbMapIconSize.setSelectedIndex(FontSize2Index(settings.MapIconSize));
 		cbCurveButtonsIconSize.setSelectedIndex(FontSize2Index(settings.CurveButtonsIconSize));
 
+		// Maps & Weather tab
 		edThunderForestApiKey.setText(settings.getThunderForestApiKey());
+		DarkSkyApiKey.setText(settings.getDarkSkyApiKey());
 
-		//-- Colors
-		ColorVeryEasy=settings.Color_Diff_VeryEasy;
-		ColorEasy=settings.Color_Diff_Easy;
-		ColorAverage=settings.Color_Diff_Average;
-		ColorHard=settings.Color_Diff_Hard;
-		ColorVeryHard=settings.Color_Diff_VeryHard;
-		ColorNight=settings.Color_Map_NightHighlight;
+		// -- Colors
+		ColorVeryEasy = settings.Color_Diff_VeryEasy;
+		ColorEasy = settings.Color_Diff_Easy;
+		ColorAverage = settings.Color_Diff_Average;
+		ColorHard = settings.Color_Diff_Hard;
+		ColorVeryHard = settings.Color_Diff_VeryHard;
+		ColorNight = settings.Color_Map_NightHighlight;
 
 		// -- Track width
 		spinNormalTrackWidth.setValue((int) settings.NormalTrackWidth);
 		spinNightTrackWidth.setValue((int) settings.NightTrackWidth);
-		spinNormalTrackTransparency.setValue((int) (settings.NormalTrackTransparency*100/255));
-		spinNightTrackTransparency.setValue((int) (settings.NightTrackTransparency*100/255));
+		spinNormalTrackTransparency.setValue((int) (settings.NormalTrackTransparency * 100 / 255));
+		spinNightTrackTransparency.setValue((int) (settings.NightTrackTransparency * 100 / 255));
 
-		//--
-		Refresh(); 
-		
+		// --
+		Refresh();
+
 		// End set field
 		ok = false;
 
@@ -301,24 +304,24 @@ public class frmSettings extends javax.swing.JDialog {
 			settings.MapIconSize = Index2FontSize(cbMapIconSize.getSelectedIndex());
 			settings.CurveButtonsIconSize = Index2FontSize(cbCurveButtonsIconSize.getSelectedIndex());
 
-			//-- Maps
+			// -- Maps
 			settings.setThunderForestApiKey(edThunderForestApiKey.getText());
 
-			//-- Colors
-			settings.Color_Diff_VeryEasy=ColorVeryEasy;
-			settings.Color_Diff_Easy=ColorEasy;
-			settings.Color_Diff_Average=ColorAverage;
-			settings.Color_Diff_Hard=ColorHard;
-			settings.Color_Diff_VeryHard=ColorVeryHard;
-			settings.Color_Map_NightHighlight=ColorNight;
-		
-			//-- Track width
-			settings.NormalTrackWidth=spinNormalTrackWidth.getValueAsInt();
-			settings.NightTrackWidth=spinNightTrackWidth.getValueAsInt();
-			settings.NormalTrackTransparency=spinNormalTrackTransparency.getValueAsInt()*255/100;
-			settings.NightTrackTransparency=spinNightTrackTransparency.getValueAsInt()*255/100;
-			
-			//-- Restart of the application needed?
+			// -- Colors
+			settings.Color_Diff_VeryEasy = ColorVeryEasy;
+			settings.Color_Diff_Easy = ColorEasy;
+			settings.Color_Diff_Average = ColorAverage;
+			settings.Color_Diff_Hard = ColorHard;
+			settings.Color_Diff_VeryHard = ColorVeryHard;
+			settings.Color_Map_NightHighlight = ColorNight;
+
+			// -- Track width
+			settings.NormalTrackWidth = spinNormalTrackWidth.getValueAsInt();
+			settings.NightTrackWidth = spinNightTrackWidth.getValueAsInt();
+			settings.NormalTrackTransparency = spinNormalTrackTransparency.getValueAsInt() * 255 / 100;
+			settings.NightTrackTransparency = spinNightTrackTransparency.getValueAsInt() * 255 / 100;
+
+			// -- Restart of the application needed?
 			if ((!old_language.equalsIgnoreCase(settings.Language))
 					|| (OldStatusbarIconSize != settings.StatusbarIconSize) || (OldTabIconSize != settings.TabIconSize)
 					|| (OldToolbarIconSize != settings.ToolbarIconSize)
@@ -328,6 +331,15 @@ public class frmSettings extends javax.swing.JDialog {
 					|| (OldCurveButtonsIconSize != settings.CurveButtonsIconSize))
 				JOptionPane.showMessageDialog(this, bundle.getString("frmSettings.MsgRestart"));
 
+			// Maps & Weather
+			if (edThunderForestApiKey.getText() != ""
+					&& edThunderForestApiKey.getText() != settings.getThunderForestApiKey()) {
+				settings.setThunderForestApiKey(edThunderForestApiKey.getText());
+			}
+
+			if (DarkSkyApiKey.getText() != "" && DarkSkyApiKey.getText() != settings.getDarkSkyApiKey()) {
+				settings.setDarkSkyApiKey(DarkSkyApiKey.getText());
+			}
 		}
 		return ok;
 	}
@@ -596,13 +608,9 @@ public class frmSettings extends javax.swing.JDialog {
 
 		// -- Empty line for resize purpose (not the best solution but it's simple ;) )
 		lbDisplayEmpty = new JLabel();
-		Utils.addComponent(panelDisplay, lbDisplayEmpty, 
-				0, line++, 
-				1, 1, 
-				0, 1, 
-				10, 10, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
-		
+		Utils.addComponent(panelDisplay, lbDisplayEmpty, 0, line++, 1, 1, 0, 1, 10, 10, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
+
 		addTab(TabbedPaneGlobal, panelDisplay, bundle.getString("frmSettings.TabDisplay.tabTitle"), null);
 
 		// ## Tab "Maps" ##
@@ -614,179 +622,138 @@ public class frmSettings extends javax.swing.JDialog {
 		// Thunderforest API Key
 		lbThunderForestApiKey = new javax.swing.JLabel();
 		lbThunderForestApiKey.setText(bundle.getString("frmSettings.lbThunderForestApiKey.text"));
-		Utils.addComponent(panelMaps, lbThunderForestApiKey,
-				0, line, 
-				1, 1, 
-				0, 1, 
-				10, 10, 0, 0,
+		Utils.addComponent(panelMaps, lbThunderForestApiKey, 0, line, 1, 1, 0, 1, 10, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		edThunderForestApiKey = new javax.swing.JTextField();
-		Utils.addComponent(panelMaps, edThunderForestApiKey, 
-				1, line++, 
-				1, 1, 
-				1, 1, 
-				10, 5, 0, 10, 
+		Utils.addComponent(panelMaps, edThunderForestApiKey, 1, line++, 1, 1, 1, 1, 10, 5, 0, 10,
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
-		
+
 		addTab(TabbedPaneGlobal, panelMaps, bundle.getString("frmSettings.TabMaps.tabTitle"), null);
+
+		// Dark Sky API Key
+		JLabel lbDarkSkyApiKey = new javax.swing.JLabel();
+		lbDarkSkyApiKey.setText(bundle.getString("frmSettings.lbDarkSkyApiKey.text"));
+		Utils.addComponent(panelMaps, lbDarkSkyApiKey, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.HORIZONTAL);
+
+		DarkSkyApiKey = new JTextArea();
+		Utils.addComponent(panelMaps, DarkSkyApiKey, 2, line, 1, 1, 5, 5, 5, 5, 5, 5, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.HORIZONTAL);
 
 		// ## Tab "Color" ##
 		panelColors = new JPanel();
 		panelColors.setLayout(new GridBagLayout());
 
 		line = 0;
-		
-		//-- VeryEasy Color
+
+		// -- VeryEasy Color
 		lbVeryEasyColor = new JLabel(" " + bundle.getString("frmSettings.lbVeryEasyColor.text") + " ");
-		Utils.addComponent(panelColors, lbVeryEasyColor, 
-				0, line, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		Utils.addComponent(panelColors, lbVeryEasyColor, 0, line, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
 
 		lbVeryEasyColorView = new JLabel("          ");
 		lbVeryEasyColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbVeryEasyColorView.setOpaque(true);
 		lbVeryEasyColorView.addMouseListener(new MouseAdapter() {
 			@Override
-            public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				ColorVeryEasy = ChooseColor(ColorVeryEasy);
 				Refresh();
-            }
+			}
 		});
-		Utils.addComponent(panelColors, lbVeryEasyColorView, 
-				2, line++, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST, GridBagConstraints.BOTH);
-		
-		//-- Easy Color
-		lbEasyColor = new JLabel(" " + bundle.getString("frmSettings.lbEasyColor.text") + " ");
-		Utils.addComponent(panelColors, lbEasyColor, 
-				0, line, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, 
+		Utils.addComponent(panelColors, lbVeryEasyColorView, 2, line++, 1, 1, 0, 0, 10, 10, 0, 10,
 				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+
+		// -- Easy Color
+		lbEasyColor = new JLabel(" " + bundle.getString("frmSettings.lbEasyColor.text") + " ");
+		Utils.addComponent(panelColors, lbEasyColor, 0, line, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
 
 		lbEasyColorView = new JLabel("          ");
 		lbEasyColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbEasyColorView.setOpaque(true);
 		lbEasyColorView.addMouseListener(new MouseAdapter() {
 			@Override
-            public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				ColorEasy = ChooseColor(ColorEasy);
 				Refresh();
-            }
+			}
 		});
-		Utils.addComponent(panelColors, lbEasyColorView, 
-				2, line++, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST, GridBagConstraints.BOTH);
-		
-		//-- Average Color
+		Utils.addComponent(panelColors, lbEasyColorView, 2, line++, 1, 1, 0, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
+
+		// -- Average Color
 		lbAverageColor = new JLabel(" " + bundle.getString("frmSettings.lbAverageColor.text") + " ");
-		Utils.addComponent(panelColors, lbAverageColor, 
-				0, line, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		Utils.addComponent(panelColors, lbAverageColor, 0, line, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
 
 		lbAverageColorView = new JLabel("          ");
 		lbAverageColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbAverageColorView.setOpaque(true);
 		lbAverageColorView.addMouseListener(new MouseAdapter() {
 			@Override
-            public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				ColorAverage = ChooseColor(ColorAverage);
 				Refresh();
-            }
+			}
 		});
-		Utils.addComponent(panelColors, lbAverageColorView, 
-				2, line++, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST, GridBagConstraints.BOTH);
-
-		
-		//-- Hard Color
-		lbHardColor = new JLabel(" " + bundle.getString("frmSettings.lbHardColor.text") + " ");
-		Utils.addComponent(panelColors, lbHardColor, 
-				0, line, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, 
+		Utils.addComponent(panelColors, lbAverageColorView, 2, line++, 1, 1, 0, 0, 10, 10, 0, 10,
 				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+
+		// -- Hard Color
+		lbHardColor = new JLabel(" " + bundle.getString("frmSettings.lbHardColor.text") + " ");
+		Utils.addComponent(panelColors, lbHardColor, 0, line, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
 
 		lbHardColorView = new JLabel("          ");
 		lbHardColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbHardColorView.setOpaque(true);
 		lbHardColorView.addMouseListener(new MouseAdapter() {
 			@Override
-            public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				ColorHard = ChooseColor(ColorHard);
 				Refresh();
-            }
+			}
 		});
-		Utils.addComponent(panelColors, lbHardColorView, 
-				2, line++, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		Utils.addComponent(panelColors, lbHardColorView, 2, line++, 1, 1, 0, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
 
-		//-- Very Hard Color
+		// -- Very Hard Color
 		lbVeryHardColor = new JLabel(" " + bundle.getString("frmSettings.lbVeryHardColor.text") + " ");
-		Utils.addComponent(panelColors, lbVeryHardColor, 
-				0, line, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		Utils.addComponent(panelColors, lbVeryHardColor, 0, line, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
 
 		lbVeryHardColorView = new JLabel("          ");
 		lbVeryHardColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbVeryHardColorView.setOpaque(true);
 		lbVeryHardColorView.addMouseListener(new MouseAdapter() {
 			@Override
-            public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				ColorVeryHard = ChooseColor(ColorVeryHard);
 				Refresh();
-            }
+			}
 		});
-		Utils.addComponent(panelColors, lbVeryHardColorView, 
-				2, line++, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST, GridBagConstraints.BOTH);
-
-		//-- NightHighLight Color
-		lbNightColor = new JLabel(" " + bundle.getString("frmSettings.lbNightColor.text") + " ");
-		Utils.addComponent(panelColors, lbNightColor, 
-				0, line, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0, 
+		Utils.addComponent(panelColors, lbVeryHardColorView, 2, line++, 1, 1, 0, 0, 10, 10, 0, 10,
 				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+
+		// -- NightHighLight Color
+		lbNightColor = new JLabel(" " + bundle.getString("frmSettings.lbNightColor.text") + " ");
+		Utils.addComponent(panelColors, lbNightColor, 0, line, 1, 1, 1, 0, 10, 10, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
 
 		lbNightColorView = new JLabel("          ");
 		lbNightColorView.setBorder(BorderFactory.createLineBorder(Color.black));
 		lbNightColorView.setOpaque(true);
 		lbNightColorView.addMouseListener(new MouseAdapter() {
 			@Override
-            public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				ColorNight = ChooseColor(ColorNight);
 				Refresh();
-            }
+			}
 		});
-		Utils.addComponent(panelColors, lbNightColorView, 
-				2, line++, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		Utils.addComponent(panelColors, lbNightColorView, 2, line++, 1, 1, 0, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
 
 		// -- Default colors
 		btDefaultColor = new JButton(bundle.getString("frmSettings.btDefaultColors.text"));
@@ -800,98 +767,56 @@ public class frmSettings extends javax.swing.JDialog {
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelColors, btDefaultColor, 
-				0, line++, 
-				GridBagConstraints.REMAINDER, 1, 
-				0, 0, 
-				10, 10, 0, 10, 
+		Utils.addComponent(panelColors, btDefaultColor, 0, line++, GridBagConstraints.REMAINDER, 1, 0, 0, 10, 10, 0, 10,
 				GridBagConstraints.EAST, GridBagConstraints.VERTICAL);
 
-		
-		//-- Width of track
+		// -- Width of track
 		lbNormalTrackWidth = new javax.swing.JLabel();
 		lbNormalTrackWidth.setText(bundle.getString("frmSettings.lbNormalTrackWidth.Text"));
-		Utils.addComponent(panelColors, lbNormalTrackWidth, 
-				0, line, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0,
+		Utils.addComponent(panelColors, lbNormalTrackWidth, 0, line, 1, 1, 1, 0, 10, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		spinNormalTrackWidth = new CgSpinner(1, 1, 100, 1);
-		Utils.addComponent(panelColors, spinNormalTrackWidth, 
-				2, line++, 
-				1, 1, 
-				0, 0, 
-				10, 5, 0, 10,
+		Utils.addComponent(panelColors, spinNormalTrackWidth, 2, line++, 1, 1, 0, 0, 10, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
-		//-- Transparency of track
+		// -- Transparency of track
 		lbNormalTrackTransparency = new javax.swing.JLabel();
 		lbNormalTrackTransparency.setText(bundle.getString("frmSettings.lbNormalTrackTransparency.Text"));
-		Utils.addComponent(panelColors, lbNormalTrackTransparency, 
-				0, line, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0,
+		Utils.addComponent(panelColors, lbNormalTrackTransparency, 0, line, 1, 1, 1, 0, 10, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		spinNormalTrackTransparency = new CgSpinner(100, 0, 100, 1);
-		Utils.addComponent(panelColors, spinNormalTrackTransparency, 
-				2, line++, 
-				1, 1, 
-				0, 0, 
-				10, 5, 0, 10,
+		Utils.addComponent(panelColors, spinNormalTrackTransparency, 2, line++, 1, 1, 0, 0, 10, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-				
-		//-- Width of night track
+
+		// -- Width of night track
 		lbNightTrackWidth = new javax.swing.JLabel();
 		lbNightTrackWidth.setText(bundle.getString("frmSettings.lbNightTrackWidth.Text"));
-		Utils.addComponent(panelColors, lbNightTrackWidth, 
-				0, line, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0,
+		Utils.addComponent(panelColors, lbNightTrackWidth, 0, line, 1, 1, 1, 0, 10, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		spinNightTrackWidth = new CgSpinner(1, 1, 100, 1);
-		Utils.addComponent(panelColors, spinNightTrackWidth, 
-				2, line++, 
-				1, 1, 
-				0, 0, 
-				10, 5, 0, 10,
+		Utils.addComponent(panelColors, spinNightTrackWidth, 2, line++, 1, 1, 0, 0, 10, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
-		//-- Transparency of night track
+
+		// -- Transparency of night track
 		lbNightTrackTransparency = new javax.swing.JLabel();
 		lbNightTrackTransparency.setText(bundle.getString("frmSettings.lbNightTrackTransparency.Text"));
-		Utils.addComponent(panelColors, lbNightTrackTransparency, 
-				0, line, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 0,
+		Utils.addComponent(panelColors, lbNightTrackTransparency, 0, line, 1, 1, 1, 0, 10, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		spinNightTrackTransparency = new CgSpinner(100, 0, 100, 1);
-		Utils.addComponent(panelColors, spinNightTrackTransparency, 
-				2, line++, 
-				1, 1, 
-				0, 0, 
-				10, 5, 0, 10,
+		Utils.addComponent(panelColors, spinNightTrackTransparency, 2, line++, 1, 1, 0, 0, 10, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		// -- Empty line for resize purpose (not the best solution but it's simple ;) )
 		lbColorsEmpty = new JLabel();
-		Utils.addComponent(panelColors, lbColorsEmpty, 
-				0, line++, 
-				1, 1, 
-				0, 1, 
-				10, 10, 0, 0, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		Utils.addComponent(panelColors, lbColorsEmpty, 0, line++, 1, 1, 0, 1, 10, 10, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
 
 		addTab(TabbedPaneGlobal, panelColors, bundle.getString("frmSettings.TabColors.tabTitle"), null);
-		
-		
+
 		// -- Separator
 		// -- NOCONNECTIONONSTARTUP - Boolean -bNoConnectOnStartup
 		// -- CONNECTIONTIMEOUT - int - ConnectionTimeout
@@ -1004,16 +929,12 @@ public class frmSettings extends javax.swing.JDialog {
 		return fontSize[value];
 	}
 
-	/**
-	 * Open the color chooser dialog
-	 * @param cl Current color
-	 * @return Color choose
-	 */
-	private Color ChooseColor(Color cl)
-	{
-		return FrmColorChooser.showDialog(this,"", cl, settings);
+
+	private Color ChooseColor(Color cl) {
+		return FrmColorChooser.showDialog(this, "", cl, settings);
 	}
-	
+
+
 	/**
 	 * Refresh some dialog contents
 	 */
@@ -1025,5 +946,5 @@ public class frmSettings extends javax.swing.JDialog {
 		lbVeryHardColorView.setBackground(ColorVeryHard);
 		lbNightColorView.setBackground(ColorNight);
 	}
-	
+
 }

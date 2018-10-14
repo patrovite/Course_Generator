@@ -34,7 +34,7 @@ public class MrbData extends CgData {
 	public MrbData(double Num, double Latitude, double Longitude, double Elevation, double ElevationMemo, int Tag,
 			double Dist, double Total, double Diff, double Coeff, double Recup, double Slope, double Speed,
 			double dElevation, int Time, // Time in second
-			double dTime_f, // Time this part of the track in second (with decimal)
+			double Temperature, double dTime_f, // Time this part of the track in second (with decimal)
 			int TimeLimit, // Time limit
 			DateTime Hour, // Date and time at this point
 			int Station, String Name, String Comment, double tmp1, double tmp2, String FmtLbMiniRoadbook,
@@ -43,7 +43,7 @@ public class MrbData extends CgData {
 
 		super(Num, Latitude, Longitude, Elevation, ElevationMemo, Tag, Dist, Total, Diff, Coeff, Recup, Slope, Speed,
 				dElevation, Time, // Time in second
-				dTime_f, // Time this part of the track in second (with decimal)
+				Temperature, dTime_f, // Time this part of the track in second (with decimal)
 				TimeLimit, // Time limit
 				Hour, // Date and time at this point
 				Station, Name, Comment, tmp1, tmp2, FmtLbMiniRoadbook, OptionMiniRoadbook, VPosMiniRoadbook,

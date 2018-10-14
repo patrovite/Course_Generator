@@ -69,6 +69,8 @@ public class CgData {
 	private DateTime Hour;
 	/** Time stayed at this position. Rest, eat, drink... (in s) **/
 	private int Station;
+	/** Temperature at this position for the current time (in °C) **/
+	private double Temperature;
 	/** Name of the position **/
 	private String Name;
 	/** Comment of the position **/
@@ -89,7 +91,7 @@ public class CgData {
 	public String CommentMiniRoadbook;
 	/** Font size of this position in the mini roadbook **/
 	public int FontSizeMiniRoadbook;
-	//** Indicate that this position is in the night period **/
+	// ** Indicate that this position is in the night period **/
 	private boolean isNight;
 
 	public boolean ToDelete;
@@ -97,8 +99,8 @@ public class CgData {
 
 	public CgData(double Num, double Latitude, double Longitude, double Elevation, double ElevationMemo, int Tag,
 			double Dist, double Total, double Diff, double Coeff, double Recup, double Slope, double Speed,
-			double dElevation, int Time, double dTime_f, int TimeLimit, DateTime Hour, int Station, String Name,
-			String Comment, double tmp1, double tmp2, String FmtLbMiniRoadbook, int OptionMiniRoadbook,
+			double dElevation, int Time, double temperature, double dTime_f, int TimeLimit, DateTime Hour, int Station,
+			String Name, String Comment, double tmp1, double tmp2, String FmtLbMiniRoadbook, int OptionMiniRoadbook,
 			int VPosMiniRoadbook, String CommentMiniRoadbook, int FontSizeMiniRoadbook) {
 		this.Num = Num;
 		this.Latitude = Latitude;
@@ -115,6 +117,7 @@ public class CgData {
 		this.Speed = Speed;
 		this.dElevation = dElevation;
 		this.Time = Time; // Total time in second
+		this.Temperature = temperature;
 		this.dTime_f = dTime_f; // partial time in second (with digit)
 		this.TimeLimit = TimeLimit; // Time limit
 		this.Hour = Hour; // Date and time at this position
@@ -132,7 +135,7 @@ public class CgData {
 		else
 			this.FontSizeMiniRoadbook = FontSizeMiniRoadbook;
 		this.ToDelete = false;
-		this.isNight=false;
+		this.isNight = false;
 	}
 
 
@@ -166,7 +169,7 @@ public class CgData {
 		this.CommentMiniRoadbook = "";
 		this.FontSizeMiniRoadbook = 10;
 		this.ToDelete = false;
-		this.isNight=false;
+		this.isNight = false;
 	}
 
 
@@ -362,6 +365,41 @@ public class CgData {
 
 	public void setTotal(double total) {
 		Total = total;
+	}
+
+
+	/**
+	 * Returns the temperature, if any, in the desired unit
+	 * 
+	 * @param unit
+	 *            the unit to use
+	 * @return The temperature, converted if necessary, in double format
+	 */
+	public double getTemperature(int unit) {
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			return Temperature;
+		case CgConst.UNIT_MILES_FEET:
+			return Utils.CelsiusToFahrenheit(Temperature);
+		default:
+			return Temperature;
+		}
+	}
+
+
+	public double getTemperature() {
+		return Temperature;
+	}
+
+
+	/**
+	 * Sets the temperature in ºC
+	 * 
+	 * @param temperature
+	 *            the temperature
+	 */
+	public void setTemperature(double temperature) {
+		Temperature = temperature;
 	}
 
 
@@ -637,17 +675,18 @@ public class CgData {
 		ElevationMemo = elevationMemo;
 	}
 
+
 	// -------------------------------
 	public boolean getNight() {
 		return isNight;
 	}
-	
-	
-	public void setNight(boolean night)	{
+
+
+	public void setNight(boolean night) {
 		isNight = night;
 	}
 
-	
+
 	// -------------------------------
 	public CgData CopyTo(CgData d) {
 		d.Num = Num;

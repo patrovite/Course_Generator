@@ -415,7 +415,7 @@ public class TrackData {
 		MaxElev = resMinMaxElev.max;
 
 		SetNightBit();
-		
+
 		isCalculated = true;
 		Name = new File(name).getName();
 
@@ -1369,7 +1369,7 @@ public class TrackData {
 				night = 1;
 				r.setNight(false);
 			}
-			
+
 			// --Elev effect --
 			if (bElevEffect && ((double) r.getElevation(CgConst.UNIT_METER) > 1500.0)) {
 				ef = 1.0 + (Math.round(((double) r.getElevation(CgConst.UNIT_METER) - 1500.0) / 100.0) / 100.0);
@@ -1414,10 +1414,10 @@ public class TrackData {
 		isModified = true;
 	} // Calculate
 
-	
-	
+
 	/**
-	 * Set night bit. Used when we load a track to avoid to launch a new calculation to have the night display on the map
+	 * Set night bit. Used when we load a track to avoid to launch a new calculation
+	 * to have the night display on the map
 	 */
 	public void SetNightBit() {
 		// -- Calculation loop --
@@ -1429,7 +1429,7 @@ public class TrackData {
 			} else {
 				r.setNight(false);
 			}
-		} 	
+		}
 	} // SetNightBit
 
 
@@ -1620,8 +1620,8 @@ public class TrackData {
 						data.get(n).getdElevation(CgConst.UNIT_METER), // dElevation
 																		// -
 																		// double
-						data.get(n).getTime(), // Time - int
-						data.get(n).getdTime_f(), // dTime_f - double
+						data.get(n).getTime(), // Time - int,
+						data.get(n).getTemperature(), data.get(n).getdTime_f(), // dTime_f - double
 						data.get(n).getTimeLimit(), // TimeLimit - int
 						data.get(n).getHour(), // Hour - DateTime
 						data.get(n).getStation(), // Station - int
@@ -1759,7 +1759,7 @@ public class TrackData {
 		MaxElev = resMinMaxElev.max;
 
 		SetNightBit();
-		
+
 		CheckTimeLimit();
 		isCalculated = true;
 
@@ -1906,6 +1906,7 @@ public class TrackData {
 				Utils.WriteStringToXML(writer, "COEFF", nf.format(r.getCoeff()));
 				Utils.WriteStringToXML(writer, "RECUP", nf.format(r.getRecovery()));
 				Utils.WriteIntToXML(writer, "TIMESECONDE", r.getTime());
+				Utils.WriteDoubleToXML(writer, "TEMPERATURE", r.getTemperature());
 				Utils.WriteIntToXML(writer, "EATTIME", r.getStation());
 				Utils.WriteIntToXML(writer, "TIMELIMIT", r.getTimeLimit());
 				Utils.WriteStringToXML(writer, "COMMENT", r.getComment());
@@ -2499,6 +2500,26 @@ public class TrackData {
 	 */
 	public void setDistRoad(double distRoad) {
 		DistRoad = distRoad;
+	}
+
+
+	/**
+	 * Retrieves the track data for which the time is the closest match with the
+	 * given time
+	 * 
+	 * @param time
+	 *            A specific time
+	 * @return If found, the track data point. Null otherwise.
+	 */
+	public CgData getClosestElement(DateTime time) {
+		for (CgData r : data) {
+			int difference = Utils.compareTimes(r.getHour(), time.hourOfDay().getDateTime());
+			if (difference >= 0 && difference <= 30000) {
+				return r;
+			}
+		}
+
+		return null;
 	}
 
 
