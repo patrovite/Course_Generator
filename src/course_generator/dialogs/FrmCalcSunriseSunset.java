@@ -39,6 +39,7 @@ import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
@@ -52,6 +53,7 @@ import course_generator.settings.CgSettings;
 import course_generator.utils.CgSpinner;
 import course_generator.utils.Utils;
 import net.iakovlev.timeshape.TimeZoneEngine;
+//import net.iakovlev.timeshape.*;
 
 public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 
@@ -100,7 +102,8 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 	 * @param settings
 	 *            Object containing the settings
 	 */
-	public FrmCalcSunriseSunset(CgSettings settings) {
+	public FrmCalcSunriseSunset(JDialog parent, CgSettings settings) {
+		super(parent);
 		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
@@ -110,6 +113,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 
 	public ResCalcSunriseSunset showDialog(double longitude, double latitude, DateTime starttime, int timezone,
 			boolean useDayLightSaving) {
+		
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.date = starttime;

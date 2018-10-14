@@ -347,15 +347,6 @@ public class JPanelMaps extends JPanel {
 		// Find the nearest point
 		Coordinate c = MapViewer.getPosition(evt.getX(), evt.getY());
 
-		// int i = Track.FindNearestPoint(c.getLat(), c.getLon());
-		// //Selection the position on the data grid
-		// panelTrackData.setSelectedRow(i);
-		//
-		// //Refresh profil position
-		// panelProfil.RefreshProfilInfo(i);
-		// panelProfil.setCrosshairPosition(Track.data.get(i).getTotal(Settings.Unit) /
-		// 1000.0, Track.data.get(i).getElevation(Settings.Unit));
-
 		// Refresh position marker on the map
 		int i = Track.FindNearestPoint(c.getLat(), c.getLon());
 		RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
@@ -379,6 +370,8 @@ public class JPanelMaps extends JPanel {
 	public void RefreshTrack(TrackData tdata, boolean zoom2fit) {
 		if (tdata == null)
 			return;
+		if (tdata.data.size()<=0) 
+			return;
 
 		// Enabling the map tools
 		btMapAddMarker.setEnabled(true);
@@ -397,6 +390,13 @@ public class JPanelMaps extends JPanel {
 		boolean found=false;
 		List<Coordinate> routeNight=null;
 		MapPolyLine polyLineNight=null;
+		
+		Color cl_Transp= new Color(
+				Settings.Color_Map_NightHighlight.getRed(),
+				Settings.Color_Map_NightHighlight.getGreen(), 
+				Settings.Color_Map_NightHighlight.getBlue(), 
+				Settings.NightTrackTransparency);
+		
 		for(int i=0; i<tdata.data.size(); i++)
 		{
 			CgData r = tdata.data.get(i);
@@ -407,9 +407,9 @@ public class JPanelMaps extends JPanel {
 				routeNight.add(new Coordinate(r.getLatitude(), r.getLongitude()));
 				
 				polyLineNight = new MapPolyLine(routeNight);
-				polyLineNight.setColor(CgConst.CL_MAP_NIGHT_HIGHLIGHT);
+				polyLineNight.setColor(cl_Transp); // CgConst.CL_MAP_NIGHT_HIGHLIGHT);
 				
-				polyLineNight.setStroke(new BasicStroke(CgConst.TRACK_NIGHT_TICKNESS));
+				polyLineNight.setStroke(new BasicStroke(Settings.NightTrackWidth)); //CgConst.TRACK_NIGHT_TICKNESS));
 				found=true;
 			}
 			else if (r.getNight() && found) {
@@ -424,6 +424,7 @@ public class JPanelMaps extends JPanel {
 		// -- Create the tracks (over the night tracks if necessary)
 		List<Coordinate> routeNormal = new ArrayList<Coordinate>();
 		double last_diff = tdata.data.get(0).getDiff();
+		Color cl=Color.green;
 		
 		for (CgData r : tdata.data) {
 			if (r.getDiff() == last_diff) {
@@ -432,19 +433,22 @@ public class JPanelMaps extends JPanel {
 				routeNormal.add(new Coordinate(r.getLatitude(), r.getLongitude()));
 				MapPolyLine polyLineNormal = new MapPolyLine(routeNormal);
 				// -- Set the line color
-				if (last_diff == 100.0)
-					polyLineNormal.setColor(CgConst.CL_MAP_DIFF_VERYEASY);
-				else if (last_diff >= 98.0)
-					polyLineNormal.setColor(CgConst.CL_MAP_DIFF_EASY);
-				else if (last_diff >= 95.0)
-					polyLineNormal.setColor(CgConst.CL_MAP_DIFF_AVERAGE);
-				else if (last_diff >= 88)
-					polyLineNormal.setColor(CgConst.CL_MAP_DIFF_HARD);
+				if (last_diff == CgConst.DIFF_VERYEASY)
+					cl=Settings.Color_Diff_VeryEasy; //  CgConst.CL_MAP_DIFF_VERYEASY);
+				else if (last_diff >= CgConst.DIFF_EASY)
+					cl=Settings.Color_Diff_Easy; //CgConst.CL_MAP_DIFF_EASY);
+				else if (last_diff >= CgConst.DIFF_AVERAGE)
+					cl=Settings.Color_Diff_Average; // CgConst.CL_MAP_DIFF_AVERAGE);
+				else if (last_diff >= CgConst.DIFF_HARD)
+					cl=Settings.Color_Diff_Hard; // CgConst.CL_MAP_DIFF_HARD);
 				else
-					polyLineNormal.setColor(CgConst.CL_MAP_DIFF_VERYHARD);
+					cl=Settings.Color_Diff_VeryHard; //CgConst.CL_MAP_DIFF_VERYHARD);
 
+				cl= new Color(cl.getRed(), cl.getGreen(), cl.getBlue(), Settings.NormalTrackTransparency);
+				polyLineNormal.setColor(cl);
+				
 				// -- Track width
-				polyLineNormal.setStroke(new BasicStroke(CgConst.TRACK_NORMAL_TICKNESS));
+				polyLineNormal.setStroke(new BasicStroke(Settings.NormalTrackWidth)); //CgConst.TRACK_NORMAL_TICKNESS));
 
 				// -- Upddate the viewer
 				MapViewer.addMapPolygon(polyLineNormal);
@@ -456,21 +460,24 @@ public class JPanelMaps extends JPanel {
 		}
 		
 		// -- Add the last polyline
-		MapPolyLine polyLine1 = new MapPolyLine(routeNormal);
+		MapPolyLine polyLineEnd = new MapPolyLine(routeNormal);
 		// -- Set the line color
-		if (last_diff >= 98.0)
-			polyLine1.setColor(Color.GREEN);
-		else if (last_diff >= 95.0)
-			polyLine1.setColor(Color.BLUE);
-		else if (last_diff >= 88)
-			polyLine1.setColor(Color.RED);
+		if (last_diff == CgConst.DIFF_VERYEASY)
+			cl=Settings.Color_Diff_VeryHard; //  CgConst.CL_MAP_DIFF_VERYEASY);
+		else if (last_diff >= CgConst.DIFF_EASY)
+			cl=Settings.Color_Diff_Easy; //CgConst.CL_MAP_DIFF_EASY);
+		else if (last_diff >= CgConst.DIFF_AVERAGE)
+			cl=Settings.Color_Diff_Average; // CgConst.CL_MAP_DIFF_AVERAGE);
+		else if (last_diff >= CgConst.DIFF_HARD)
+			cl=Settings.Color_Diff_Hard; // CgConst.CL_MAP_DIFF_HARD);
 		else
-			polyLine1.setColor(Color.BLACK);
+			cl=Settings.Color_Diff_VeryHard; //CgConst.CL_MAP_DIFF_VERYHARD);
+		polyLineEnd.setColor(cl);
 		
 		// -- Set the stroke
-		polyLine1.setStroke(new BasicStroke(CgConst.TRACK_NORMAL_TICKNESS));
+		polyLineEnd.setStroke(new BasicStroke(Settings.NormalTrackWidth)); //CgConst.TRACK_NORMAL_TICKNESS));
 		// -- Upddate the viewer
-		MapViewer.addMapPolygon(polyLine1);
+		MapViewer.addMapPolygon(polyLineEnd);
 
 		// -- Zoom to display the track
 		if (zoom2fit)

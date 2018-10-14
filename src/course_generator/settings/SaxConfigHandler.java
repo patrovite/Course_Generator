@@ -18,6 +18,7 @@
 
 package course_generator.settings;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 
@@ -29,6 +30,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import course_generator.utils.CgConst;
+import course_generator.utils.Utils;
 
 /**
  *
@@ -48,6 +52,7 @@ public class SaxConfigHandler extends DefaultHandler {
 	private final int ERR_READ_INT = -2;
 	private final int ERR_READ_BOOL = -3;
 	private final int ERR_READ_NOTEXIST = -6;
+	private final int ERR_READ_COLOR = -7;
 	private CgSettings Settings;
 
 
@@ -180,6 +185,28 @@ public class SaxConfigHandler extends DefaultHandler {
 		}
 	}
 
+	/**
+	 * Parse a color element
+	 * 
+	 * @param _default
+	 *            Default value
+	 * @param _errcode
+	 *            Error code if a parse error occur
+	 * @return Return the parsed color
+	 */
+	private Color ManageColor(Color _default, int _errcode) {
+		try {
+			int v = Integer.parseInt(characters);
+			characters = "";
+			return new Color(v);
+		} catch (NumberFormatException e) {
+			// errcode = _errcode;
+			errline = locator.getLineNumber();
+			characters = "";
+			return _default;
+		}
+	}
+
 
 	@Override
 	public void setDocumentLocator(final Locator locator) {
@@ -200,21 +227,21 @@ public class SaxConfigHandler extends DefaultHandler {
 	public void endElement(String uri, String localname, String qName) throws SAXException {
 		if (level == LEVEL_CONFIG) {
 			if (qName.equalsIgnoreCase("PARAMFILE")) {
-				Settings.ParamFile = ManageString();
+				Settings.ParamFile = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("NOCONNECTIONONSTARTUP")) {
 				Settings.bNoConnectOnStartup = ManageBoolean(true, ERR_READ_BOOL);
 			} else if (qName.equalsIgnoreCase("CONNECTIONTIMEOUT")) {
 				Settings.ConnectionTimeout = ManageInt(10000, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("LASTDIR")) {
-				Settings.LastDir = ManageString();
+				Settings.LastDir = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("PREVIOUSCGXDIR")) {
-				Settings.previousCGXDirectory = ManageString();
+				Settings.previousCGXDirectory = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("PREVIOUSGPXDIR")) {
-				Settings.previousGPXDirectory = ManageString();
+				Settings.previousGPXDirectory = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("PREVIOUSCSVDIR")) {
-				Settings.previousCSVDirectory = ManageString();
+				Settings.previousCSVDirectory = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("PREVIOUSPNGDIR")) {
-				Settings.previousPNGDirectory = ManageString();
+				Settings.previousPNGDirectory = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("MEMOFORMAT1")) {
 				Settings.MemoFormat[0] = ManageString();
 			} else if (qName.equalsIgnoreCase("MEMOFORMAT2")) {
@@ -222,29 +249,29 @@ public class SaxConfigHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("MEMOFORMAT3")) {
 				Settings.MemoFormat[2] = ManageString();
 			} else if (qName.equalsIgnoreCase("MEMOFORMAT4")) {
-				Settings.MemoFormat[3] = ManageString();
+				Settings.MemoFormat[3] = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("MEMOFORMAT5")) {
 				Settings.MemoFormat[4] = ManageString();
 			} else if (qName.equalsIgnoreCase("MRUGPX1")) {
-				Settings.mruGPX[0] = ManageString();
+				Settings.mruGPX[0] = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("MRUGPX2")) {
-				Settings.mruGPX[1] = ManageString();
+				Settings.mruGPX[1] = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("MRUGPX3")) {
-				Settings.mruGPX[2] = ManageString();
+				Settings.mruGPX[2] = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("MRUGPX4")) {
-				Settings.mruGPX[3] = ManageString();
+				Settings.mruGPX[3] = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("MRUGPX5")) {
-				Settings.mruGPX[4] = ManageString();
+				Settings.mruGPX[4] = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("MRUCGX1")) {
-				Settings.mruCGX[0] = ManageString();
+				Settings.mruCGX[0] = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("MRUCGX2")) {
-				Settings.mruCGX[1] = ManageString();
+				Settings.mruCGX[1] = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("MRUCGX3")) {
-				Settings.mruCGX[2] = ManageString();
+				Settings.mruCGX[2] = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("MRUCGX4")) {
-				Settings.mruCGX[3] = ManageString();
+				Settings.mruCGX[3] = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("MRUCGX5")) {
-				Settings.mruCGX[4] = ManageString();
+				Settings.mruCGX[4] = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("TABLEMAINCOLWIDTH01")) {
 				Settings.TableMainColWidth[0] = ManageInt(60, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("TABLEMAINCOLWIDTH02")) {
@@ -284,7 +311,7 @@ public class SaxConfigHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("CHECK4UPDATEATSTART")) {
 				Settings.Check4UpdateAtStart = ManageBoolean(false, ERR_READ_BOOL);
 			} else if (qName.equalsIgnoreCase("LANGUAGE")) {
-				Settings.Language = ManageString();
+				Settings.Language = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("MAINWINDOWSWIDTH")) {
 				Settings.MainWindowWidth = ManageInt(0, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("MAINWINDOWSHEIGHT")) {
@@ -304,7 +331,7 @@ public class SaxConfigHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("POSFILTERASKTHRESHOLD")) {
 				Settings.PosFilterAskThreshold = ManageInt(5, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("DEFAULTFONTNAME")) {
-				Settings.DefaultFontName = ManageString();
+				Settings.DefaultFontName = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("DEFAULTFONTSTYLE")) {
 				Settings.DefaultFontStyle = ManageInt(0, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("DEFAULTFONTSIZE")) {
@@ -329,9 +356,29 @@ public class SaxConfigHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("CURVEBUTTONSICONSIZE")) {
 				Settings.CurveButtonsIconSize = ManageInt(32, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("THUNDERFORESTAPIKEY")) {
-				Settings.setThunderForestApiKey(ManageString());
+				Settings.setThunderForestApiKey(ManageString().trim());
+			} else if (qName.equalsIgnoreCase("COLORDIFFVERYEASY")) {
+				Settings.Color_Diff_VeryEasy = ManageColor(CgConst.CL_DIFF_VERYEASY, ERR_READ_COLOR);
+			} else if (qName.equalsIgnoreCase("COLORDIFFEASY")) {
+				Settings.Color_Diff_Easy = ManageColor(CgConst.CL_DIFF_EASY, ERR_READ_COLOR);
+			} else if (qName.equalsIgnoreCase("COLORDIFFAVERAGE")) {
+				Settings.Color_Diff_Average = ManageColor(CgConst.CL_DIFF_AVERAGE, ERR_READ_COLOR);
+			} else if (qName.equalsIgnoreCase("COLORDIFFHARD")) {
+				Settings.Color_Diff_Hard = ManageColor(CgConst.CL_DIFF_HARD, ERR_READ_COLOR);
+			} else if (qName.equalsIgnoreCase("COLORDIFFVERYHARD")) {
+				Settings.Color_Diff_VeryHard = ManageColor(CgConst.CL_DIFF_VERYHARD, ERR_READ_COLOR);
+			} else if (qName.equalsIgnoreCase("COLORMAPNIGHTHIGHLIGHT")) {
+				Settings.Color_Map_NightHighlight = ManageColor(CgConst.CL_MAP_NIGHT_HIGHLIGHT, ERR_READ_COLOR);
+			} else if (qName.equalsIgnoreCase("NORMALTRACKWIDTH")) {
+				Settings.NormalTrackWidth = ManageInt(CgConst.TRACK_NORMAL_TICKNESS, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("NIGHTTRACKWIDTH")) {
+				Settings.NightTrackWidth = ManageInt(CgConst.TRACK_NIGHT_TICKNESS, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("NORMALTRACKTRANSPARENCY")) {
+				Settings.NormalTrackTransparency = ManageInt(CgConst.NORMAL_TRACK_TRANSPARENCY, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("NIGHTTRACKTRANSPARENCY")) {
+				Settings.NightTrackTransparency = ManageInt(CgConst.NIGHT_TRACK_TRANSPARENCY, ERR_READ_INT);
 			}
-
+			
 			else if (qName.equalsIgnoreCase("CONFIG")) {
 				level--;
 			}

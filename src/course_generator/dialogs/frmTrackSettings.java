@@ -331,13 +331,16 @@ public class frmTrackSettings extends javax.swing.JDialog {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
+				ResCalcSunriseSunset res = ShowCalcSunriseSunset();
+/*
 				if (calcSunriseSunset == null)
 					calcSunriseSunset = new FrmCalcSunriseSunset(settings);
 
 				ResCalcSunriseSunset res = calcSunriseSunset.showDialog(track.data.get(0).getLongitude(),
 						track.data.get(0).getLatitude(), track.StartTime, track.TrackTimeZone.intValue(),
 						track.TrackUseDaylightSaving);
-
+*/
+				
 				setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 
 				if (res.valid) {
@@ -410,7 +413,15 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
+	private ResCalcSunriseSunset ShowCalcSunriseSunset() {
+		if (calcSunriseSunset == null)
+			calcSunriseSunset = new FrmCalcSunriseSunset(this, settings);
 
+		return calcSunriseSunset.showDialog(track.data.get(0).getLongitude(),
+			track.data.get(0).getLatitude(), track.StartTime, track.TrackTimeZone.intValue(),
+			track.TrackUseDaylightSaving);
+	}
+	
 	protected void Refresh() {
 		spinStartNight.setEnabled(chkNightEffect.isSelected());
 		spinEndNight.setEnabled(chkNightEffect.isSelected());

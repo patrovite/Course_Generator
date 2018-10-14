@@ -38,6 +38,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -227,48 +228,6 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		return ok;
 	}
 
-	/**
-	 * Manage low level key strokes ESCAPE : Close the window
-	 *
-	 * @return
-	 */
-	// protected JRootPane createRootPane() {
-	// JRootPane rootPane = new JRootPane();
-	// KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
-	// KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
-	//
-	// Action actionListener = new AbstractAction() {
-	// public void actionPerformed(ActionEvent actionEvent) {
-	// setVisible(false);
-	// }
-	// };
-	//
-	// Action actionListenerEnter = new AbstractAction() {
-	// public void actionPerformed(ActionEvent actionEvent) {
-	// RequestToClose();
-	// }
-	// };
-	//
-	// InputMap inputMap = rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-	// inputMap.put(strokeEscape, "ESCAPE");
-	// rootPane.getActionMap().put("ESCAPE", actionListener);
-	//
-	// inputMap.put(strokeEnter, "ENTER");
-	// rootPane.getActionMap().put("ENTER", actionListenerEnter);
-	//
-	// return rootPane;
-	// }
-
-
-	/**
-	 * To call before a normal closing of he dialog
-	 */
-	/*
-	 * private void RequestToClose() { boolean param_valid = true; // check that the
-	 * parameters are ok
-	 * 
-	 * // -- Ok? if (param_valid) { ok = true; setVisible(false); } }
-	 */
 
 	/**
 	 * Create the toolbar
@@ -305,8 +264,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btConfig.setFocusable(false);
 		btConfig.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				FrmConfigMrb frm = new FrmConfigMrb(settings);
-				frm.showDialog(track);
+				ShowConfigMrbDialog();
 
 				track.isModified = true;
 				pnlProfil.setTrack(track);
@@ -352,8 +310,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		btPasteFormatConfig.setFocusable(false);
 		btPasteFormatConfig.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				FrmConfigMrbDuplicate frm = new FrmConfigMrbDuplicate(settings);
-				ConfigDuplication = frm.showDialog(ConfigDuplication);
+				ShowConfigMrbDuplicate();
 			}
 		});
 		ToolBarMRB.add(btPasteFormatConfig);
@@ -930,8 +887,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 					return;
 				int line = (int) datalist.data.get(row).getNum() - 1;
 
-				FrmEditMrbFormat frm = new FrmEditMrbFormat(settings);
-				tfFormat.setText(frm.showDialog(track.data.get(line), track, tfFormat.getText()));
+				tfFormat.setText(ShowEditMrbFormatDialog(line));
 
 				track.data.get(line).FmtLbMiniRoadbook = tfFormat.getText();
 				datalist.data.get(row).FmtLbMiniRoadbook = tfFormat.getText();
@@ -1176,4 +1132,20 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 			TableData.setRowSelectionInterval(0, 0);
 	}
 
+	private void ShowConfigMrbDialog() {
+		FrmConfigMrb frm = new FrmConfigMrb(SwingUtilities.windowForComponent(this), settings);
+		frm.showDialog(track);
+	}
+	
+	
+	private void ShowConfigMrbDuplicate() {
+		FrmConfigMrbDuplicate frm = new FrmConfigMrbDuplicate(SwingUtilities.windowForComponent(this), settings);
+		ConfigDuplication = frm.showDialog(ConfigDuplication);
+	}
+	
+	private String ShowEditMrbFormatDialog(int line) {
+		FrmEditMrbFormat frm = new FrmEditMrbFormat(SwingUtilities.windowForComponent(this), settings);
+		return frm.showDialog(track.data.get(line), track, tfFormat.getText());
+	}
+	
 }

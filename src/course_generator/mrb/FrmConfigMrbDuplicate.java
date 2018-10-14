@@ -23,6 +23,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 
@@ -63,7 +64,8 @@ public class FrmConfigMrbDuplicate extends javax.swing.JDialog {
 	/**
 	 * Creates new form frmSettings
 	 */
-	public FrmConfigMrbDuplicate(CgSettings settings) {
+	public FrmConfigMrbDuplicate(Window parent, CgSettings settings) {
+		super(parent);
 		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();

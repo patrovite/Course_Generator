@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 
@@ -65,7 +66,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 	/**
 	 * Creates new form frmSettings
 	 */
-	public FrmEditMrbFormat(CgSettings settings) {
+	public FrmEditMrbFormat(Window parent, CgSettings settings) {
+		super(parent); 
 		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
