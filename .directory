@@ -1,5 +1,7 @@
 [Dolphin]
 PreviewsShown=false
-Timestamp=2018,4,28,22,45,42
+Timestamp=2018,10,10,21,12,28
 Version=4
-ViewMode=1
+
+[Settings]
+HiddenFilesShown=true
