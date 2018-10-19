@@ -94,6 +94,11 @@ public class frmAbout extends javax.swing.JDialog {
 			StringBuilder sb = new StringBuilder();
 			sb.append(" Thanks to the contributors :\n");
 			sb.append(" - Frédéric Bard (frederic@freemovin.com)\n\n");
+			
+			sb.append(" Translators\n");
+			sb.append(" - Spanish: victorhck@opensuse.org\n");
+			sb.append(" - English: Frédéric Bard (frederic@freemovin.com)\n\n");
+			
 			sb.append(" .oO Copyrights Oo.\n");
 			sb.append(" Used libraries:\n");
 			sb.append(
