@@ -1,0 +1,497 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+	      <STYLE TYPE="text/css">
+		H1
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 24pt;
+			COLOR: black;
+			FONT-FAMILY: Arial;
+			TEXT-ALIGN: left;
+                        PADDING-LEFT: 10px;
+		}
+		H2
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 16pt;
+			COLOR: black;
+			FONT-FAMILY: Arial;
+			TEXT-ALIGN: left;
+                        PADDING-LEFT: 10px;
+		}
+		H3
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 14pt;
+			COLOR: black;
+			FONT-FAMILY: Arial;
+			TEXT-ALIGN: left;
+                        PADDING: 0px 0px 0px 0px;
+		}
+		table {
+			PADDING-LEFT: 10px;
+		}
+		span.header
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 15pt;
+			FONT-FAMILY: Arial;
+			BACKGROUND-COLOR: #ffffff;
+			text-align: left;
+		}
+		span.item
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 14pt;
+			FONT-FAMILY: Arial;
+			BACKGROUND-COLOR: #ffffff;
+			text-align: left;
+		}
+		span.value
+		{
+			FONT-WEIGHT: normal;
+			FONT-SIZE: 14pt;
+			FONT-FAMILY: Arial;
+			BACKGROUND-COLOR: #ffffff;
+			TEXT-ALIGN: left;
+		}
+		span.separator
+		{
+			FONT-WEIGHT: normal;
+			FONT-SIZE: 14pt;
+			FONT-FAMILY: Arial;
+			BACKGROUND-COLOR: #ffffff;
+			TEXT-ALIGN: left;
+		}
+		P
+		{
+			FONT-SIZE: 14pt;
+			COLOR: black;
+			FONT-FAMILY: Arial;
+			TEXT-DECORATION: none
+                        PADDING-LEFT: 30px;
+		}
+
+              </STYLE>
+   	      <title>Estadísticas de la ruta</title>
+	</head>
+
+	<body>
+		<H1>ESTADÍSTICAS DE LA RUTA</H1>
+		<table cellSpacing="5" cellPadding="0" border="0">
+			<tbody>
+				<TR>
+					<TD><SPAN class="item">Nombre de la ruta</SPAN></TD>
+					<TD><SPAN class="value">: @514</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Descripción</SPAN></TD>
+					<TD><SPAN class="value">: @515</SPAN></TD>
+				</TR>
+			</tbody>
+                </table>
+                &nbsp<BR>
+
+		<table cellSpacing="5" cellPadding="0" border="0">
+			<tbody>
+				<TR>
+					<TD><SPAN class="item">Distancia total</SPAN></TD>
+					<TD><SPAN class="value">: @500</SPAN></TD>
+				</TR>
+ 
+				<TR>
+					<TD><SPAN class="item">Desnivel de subida</SPAN></TD>
+					<TD><SPAN class="value">: @501</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Pendiente positiva media</SPAN></TD>
+					<TD><SPAN class="value">: @506</SPAN></TD>
+				</TR>
+ 
+
+				<TR>
+					<TD><SPAN class="item">Desnivel de bajada</SPAN></TD>
+					<TD><SPAN class="value">: @502</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Pendiente negativa media</SPAN></TD>
+					<TD><SPAN class="value">: @507</SPAN></TD>
+				</TR>
+ 
+				<TR>
+					<TD><SPAN class="item">Ascenso (Desnivel > 2%)</SPAN></TD>
+					<TD><SPAN class="value">: @508</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Plano (Desnivel entre -2% y 2%)</SPAN></TD>
+					<TD><SPAN class="value">: @509</SPAN></TD>
+				</TR>
+ 
+				<TR>
+					<TD><SPAN class="item">Descenso (Desnivel &lt; -2%)</SPAN></TD>
+					<TD><SPAN class="value">: @510</SPAN></TD>
+				</TR>				
+
+				<TR>
+					<TD><SPAN class="item">Altitud mínima</SPAN></TD>
+					<TD><SPAN class="value">: @503</SPAN></TD>
+				</TR>				
+
+				<TR>
+					<TD><SPAN class="item">Altitud máxima</SPAN></TD>
+					<TD><SPAN class="value">: @504</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Diferencia de temperatura (teórica)*</SPAN></TD>
+					<TD><SPAN class="value">: @505</SPAN></TD>
+				</TR>
+
+				<TR>
+					<TD><SPAN class="item">Velocidad media</SPAN></TD>
+					<TD><SPAN class="value">: @511</SPAN></TD>
+				</TR>
+
+				<TR>
+					<TD><SPAN class="item">% de caminos</SPAN></TD>
+					<TD><SPAN class="value">: @512</SPAN></TD>
+				</TR>
+
+				<TR>
+					<TD><SPAN class="item">% de senderos</SPAN></TD>
+					<TD><SPAN class="value">: @513</SPAN></TD>
+				</TR>
+
+			</tbody>
+		</table>
+		&nbsp<BR>
+		
+		<H2>Velocidad, distancia y tiempo vs desnivel</H2>
+		
+		<table cellSpacing="8" cellPadding="0" border="0">
+			<tbody>
+				<TR>
+					<TD><SPAN class="header">Desnivel</SPAN></TD>
+					<TD><SPAN class="header"></SPAN></TD>
+					<TD><SPAN class="header">Velocidad media</SPAN></TD>
+					<TD><SPAN class="header">Distancia</SPAN></TD>
+					<TD><SPAN class="header">Tiempo</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Desnivel &lt; -40%</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@001</SPAN></TD>
+					<TD><SPAN class="value">@021</SPAN></TD>
+					<TD><SPAN class="value">@041</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Desnivel entre -40% y -30%</SPAN></TD>
+					<TD><SPAN class="separator">:</SPAN></TD>
+                                        <TD><SPAN class="value">@002</SPAN></TD>
+					<TD><SPAN class="value">@022</SPAN></TD>
+					<TD><SPAN class="value">@042</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Desnivel entre -30% y -20%</SPAN></TD>
+					<TD><SPAN class="separator">:</SPAN></TD>
+                                        <TD><SPAN class="value">@003</SPAN></TD>
+					<TD><SPAN class="value">@023</SPAN></TD>
+					<TD><SPAN class="value">@043</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Desnivel entre -20% y -10%</SPAN></TD>
+					<TD><SPAN class="separator">:</SPAN></TD>
+                                        <TD><SPAN class="value">@004</SPAN></TD>
+					<TD><SPAN class="value">@024</SPAN></TD>
+					<TD><SPAN class="value">@044</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Desnivel entre -10% y -5%</SPAN></TD>
+					<TD><SPAN class="separator">:</SPAN></TD>
+                                        <TD><SPAN class="value">@005</SPAN></TD>
+					<TD><SPAN class="value">@025</SPAN></TD>
+					<TD><SPAN class="value">@045</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Desnivel entre -5% y -2%</SPAN></TD>
+					<TD><SPAN class="separator">:</SPAN></TD>
+                                        <TD><SPAN class="value">@006</SPAN></TD>
+					<TD><SPAN class="value">@026</SPAN></TD>
+					<TD><SPAN class="value">@046</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Desnivel entre -2% y 2%</SPAN></TD>
+					<TD><SPAN class="separator">:</SPAN></TD>
+                                        <TD><SPAN class="value">@007</SPAN></TD>
+					<TD><SPAN class="value">@027</SPAN></TD>
+					<TD><SPAN class="value">@047</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Desnivel entre 2% y 5%</SPAN></TD>
+					<TD><SPAN class="separator">:</SPAN></TD>
+                                        <TD><SPAN class="value">@008</SPAN></TD>
+					<TD><SPAN class="value">@028</SPAN></TD>
+					<TD><SPAN class="value">@048</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Desnivel entre 5% y 10%</SPAN></TD>
+					<TD><SPAN class="separator">:</SPAN></TD>
+                                        <TD><SPAN class="value">@009</SPAN></TD>
+					<TD><SPAN class="value">@029</SPAN></TD>
+					<TD><SPAN class="value">@049</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Desnivel entre 10% y 20%</SPAN></TD>
+					<TD><SPAN class="separator">:</SPAN></TD>
+                                        <TD><SPAN class="value">@010</SPAN></TD>
+					<TD><SPAN class="value">@030</SPAN></TD>
+					<TD><SPAN class="value">@050</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Desnivel entre 20% y 30%</SPAN></TD>
+					<TD><SPAN class="separator">:</SPAN></TD>
+                                        <TD><SPAN class="value">@011</SPAN></TD>
+					<TD><SPAN class="value">@031</SPAN></TD>
+					<TD><SPAN class="value">@051</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Desnivel entre 30% y 40%</SPAN></TD>
+					<TD><SPAN class="separator">:</SPAN></TD>
+                                        <TD><SPAN class="value">@012</SPAN></TD>
+					<TD><SPAN class="value">@032</SPAN></TD>
+					<TD><SPAN class="value">@052</SPAN></TD>
+				</TR>
+				
+				<TR>
+					<TD><SPAN class="item">Desnivel > 40%</SPAN></TD>
+					<TD><SPAN class="separator">:</SPAN></TD>
+                                        <TD><SPAN class="value">@013</SPAN></TD>
+					<TD><SPAN class="value">@033</SPAN></TD>
+					<TD><SPAN class="value">@053</SPAN></TD>
+				</TR>
+			</tbody>
+		</table>
+
+		&nbsp<BR>
+
+		<H2>Velocidad, distancia y tiempo vs elevación</H2>
+
+		<table cellSpacing="8" cellPadding="0" border="0">
+			<tbody>
+				<TR>
+					<TD><SPAN class="header">Elevación</SPAN></TD>
+                                        <TD><SPAN class="header"></SPAN></TD>
+					<TD><SPAN class="header">Velocidad media</SPAN></TD>
+					<TD><SPAN class="header">Distancia</SPAN></TD>
+					<TD><SPAN class="header">Tiempo</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación &lt; @900</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@100</SPAN></TD>
+					<TD><SPAN class="value">@110</SPAN></TD>
+					<TD><SPAN class="value">@120</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación entre @900 y @901</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@101</SPAN></TD>
+					<TD><SPAN class="value">@111</SPAN></TD>
+					<TD><SPAN class="value">@121</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación entre @901 y @902</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@102</SPAN></TD>
+					<TD><SPAN class="value">@112</SPAN></TD>
+					<TD><SPAN class="value">@122</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación entre @902 y @903</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@103</SPAN></TD>
+					<TD><SPAN class="value">@113</SPAN></TD>
+					<TD><SPAN class="value">@123</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación entre @903 y @904</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@104</SPAN></TD>
+					<TD><SPAN class="value">@114</SPAN></TD>
+					<TD><SPAN class="value">@124</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación > @904</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@105</SPAN></TD>
+					<TD><SPAN class="value">@115</SPAN></TD>
+					<TD><SPAN class="value">@125</SPAN></TD>
+				</TR>
+			</tbody>
+		</table>
+
+		&nbsp<BR>
+
+		<H2>Velocidad, distancia y tiempo vs elevation (día)</H2>
+
+		<table cellSpacing="8" cellPadding="0" border="0">
+			<tbody>
+				<TR>
+					<TD><SPAN class="header">Elevación</SPAN></TD>
+                                        <TD><SPAN class="header"></SPAN></TD>
+					<TD><SPAN class="header">Velocidad media</SPAN></TD>
+					<TD><SPAN class="header">Distancia</SPAN></TD>
+					<TD><SPAN class="header">Tiempo</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación &lt; @900</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@200</SPAN></TD>
+					<TD><SPAN class="value">@210</SPAN></TD>
+					<TD><SPAN class="value">@220</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación entre @900 y @901</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@201</SPAN></TD>
+					<TD><SPAN class="value">@211</SPAN></TD>
+					<TD><SPAN class="value">@221</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación entre @901 y @902</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@202</SPAN></TD>
+					<TD><SPAN class="value">@212</SPAN></TD>
+					<TD><SPAN class="value">@222</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación entre @902 y @903</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@203</SPAN></TD>
+					<TD><SPAN class="value">@213</SPAN></TD>
+					<TD><SPAN class="value">@223</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación entre @903 y @904</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@204</SPAN></TD>
+					<TD><SPAN class="value">@214</SPAN></TD>
+					<TD><SPAN class="value">@224</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación > @904</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@205</SPAN></TD>
+					<TD><SPAN class="value">@215</SPAN></TD>
+					<TD><SPAN class="value">@225</SPAN></TD>
+				</TR>
+			</tbody>
+		</table>
+
+		&nbsp<BR>
+
+		<H2>Velocidad, distancia y tiempo vs elevación (noche)</H2>
+
+		<table cellSpacing="8" cellPadding="0" border="0">
+			<tbody>
+				<TR>
+					<TD><SPAN class="header">Elevación</SPAN></TD>
+                                        <TD><SPAN class="header"></SPAN></TD>
+					<TD><SPAN class="header">Velocidad media</SPAN></TD>
+					<TD><SPAN class="header">Distancia</SPAN></TD>
+					<TD><SPAN class="header">Tiempo</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación &lt; @900</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@300</SPAN></TD>
+					<TD><SPAN class="value">@310</SPAN></TD>
+					<TD><SPAN class="value">@320</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación entre @900 y @901</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@301</SPAN></TD>
+					<TD><SPAN class="value">@311</SPAN></TD>
+					<TD><SPAN class="value">@321</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación entre @901 y @902</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@302</SPAN></TD>
+					<TD><SPAN class="value">@312</SPAN></TD>
+					<TD><SPAN class="value">@322</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación entre @902 y @903</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@303</SPAN></TD>
+					<TD><SPAN class="value">@313</SPAN></TD>
+					<TD><SPAN class="value">@323</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación entre @903 y @904</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@304</SPAN></TD>
+					<TD><SPAN class="value">@314</SPAN></TD>
+					<TD><SPAN class="value">@324</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Elevación > @904</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@305</SPAN></TD>
+					<TD><SPAN class="value">@315</SPAN></TD>
+					<TD><SPAN class="value">@325</SPAN></TD>
+				</TR>
+			</tbody>
+		</table>
+
+		&nbsp<BR>
+
+		<H2>Velocidad, distancia y tiempo (día y noche)</H2>
+
+		<table cellSpacing="8" cellPadding="0" border="0">
+			<tbody>
+				<TR>
+					<TD><SPAN class="header"></SPAN></TD>
+					<TD><SPAN class="header"></SPAN></TD>
+                                        <TD><SPAN class="header">Velocidad media</SPAN></TD>
+					<TD><SPAN class="header">Distancia</SPAN></TD>
+					<TD><SPAN class="header">Tiempo</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Carrera de día</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@400</SPAN></TD>
+					<TD><SPAN class="value">@410</SPAN></TD>
+					<TD><SPAN class="value">@420</SPAN></TD>
+				</TR>
+				<TR>
+					<TD><SPAN class="item">Carrera de noche</SPAN></TD>
+                                        <TD><SPAN class="separator">:</SPAN></TD>
+					<TD><SPAN class="value">@401</SPAN></TD>
+					<TD><SPAN class="value">@411</SPAN></TD>
+					<TD><SPAN class="value">@421</SPAN></TD>
+				</TR>	
+			</tbody>
+		</table>
+
+		<P>* Indicación teórica (0.6°C/100m o 1.8°F/328 pies). No se tiene en cuenta el viento ni los fenómenos ambientales locales.</P>
+	</body>
+</html>
