@@ -28,6 +28,12 @@ public class CgConst {
 
 	/** Course Generator config and curve directory **/
 	public static final String CG_DIR = ".course_generator";
+	
+	public static final String OPENSTREETMAP_CACHE_DIR = "openstreetmap";
+	public static final String OPENTOPOMAP_CACHE_DIR = "opentopomap";
+	public static final String OUTDOORS_CACHE_DIR = "outdoors";
+	public static final String BING_CACHE_DIR = "bing";
+	
 	/** Maximum version of the CGX file to read **/
 	public static final int MAX_CGX_VERSION_TO_READ = 5;
 	/** Maximum value of health coefficient **/

@@ -130,13 +130,12 @@ public class JPanelMaps extends JPanel {
 		// MapViewer = new org.openstreetmap.gui.jmapviewer.JMapViewer();
 		MapViewer = new JMapViewerCG();
 
-		// DefaultMapController mapc = new DefaultMapController(MapViewer);
-		// mapc.setMovementMouseButton(MouseEvent.BUTTON1);
 		// -- Tile cache definition
 		try {
-			File cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "OpenStreetMapTileCache");
-			CgLog.info("Config Directory = " + DataDir + "/" + CgConst.CG_DIR + ", cacheDir=" + cacheDir);
-			cacheDir.mkdirs();
+//			File cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "OpenStreetMapTileCache/"+CgConst.OPENSTREETMAP_CACHE_DIR);
+//			cacheDir.mkdirs();
+			
+			File cacheDir=getTileCacheDir();
 			offlineTileCache = new OsmFileCacheTileLoader(MapViewer, cacheDir);
 			MapViewer.setTileLoader(offlineTileCache);
 		} catch (IOException ex) {
@@ -677,21 +676,41 @@ public class JPanelMaps extends JPanel {
 		switch (Settings.map) {
 		case 0:
 			MapViewer.setTileSource(new OpenStreetMap());
+			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR+"/TileCache/"+CgConst.OPENSTREETMAP_CACHE_DIR);
 			break;
 		case 1:
 			MapViewer.setTileSource(new OpenTopoMap());
+			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR+"/TileCache/"+CgConst.OPENTOPOMAP_CACHE_DIR);
 			break;
 		case 2:
 			MapViewer.setTileSource(new Outdoors(Settings));
+			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR+"/TileCache/"+CgConst.OUTDOORS_CACHE_DIR);
 			break;
 		case 3:
 			MapViewer.setTileSource(new BingAerialTileSource());
+			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR+"/TileCache/"+CgConst.BING_CACHE_DIR);
 			break;
 		default:
 			MapViewer.setTileSource(new OpenStreetMap());
+			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR+"/TileCache/"+CgConst.OPENSTREETMAP_CACHE_DIR);
 		}
 	}
 
+	
+	public File getTileCacheDir() {
+		switch (Settings.map) {
+		case 0:
+			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OPENSTREETMAP_CACHE_DIR);
+		case 1:
+			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OPENTOPOMAP_CACHE_DIR);
+		case 2:
+			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OUTDOORS_CACHE_DIR);
+		case 3:
+			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.BING_CACHE_DIR);
+		default:
+			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OPENSTREETMAP_CACHE_DIR);
+		}		
+	}
 
 	/**
 	 * Refresh the marker on the map
