@@ -1,48 +1,48 @@
-# The principle
+# El principio
 
-To work, **Course Generator** needs, as input, data containing a sequence of GPS points representing a track.
+Para funcionar, **Course Generator** necesita, como entrada, datos que contengan una secuencia de puntos GPS representando una ruta
 
-This data can be:
+Estos datos pueden ser:
 
-* A file in GPX format. This file contains the data of a track that has been created or downloaded on websites,
-* A file in CGX format which is the recording format of **Course Generator**.
+* Un archivo en formato GPX. Este archivo contiene los datos de la ruta que ha sido creada o descargada desde algún sitio web,
+* Un archivo en formato CGX que es el formato de grabación de **Course Generator**.
 
-## What is a GPX file?
+## ¿Qué es un archivo GPX?
 
-The GPX format is a standard cartographic data exchange format created by GARMIN.These data are either from a GPS or from a software or website.
+El formato GPX es un dato de intercambio estándar en cartografía creado por GARMIN. Estos datos provienen tanto de un GPS, de un software o de un sitio web.
 
-It allows to exchange:
+Permite intercambiar:
 
-* Waypoints. These are GPS points, containing latitude, longitude and altitude, which is associated with information such as a name or symbol. The number of waypoints is usually limited on GPS (often 500 waypoints on GARMIN GPS).
-* Routes. They consist of a set of waypoints. They are therefore limited by the number of waypoints that can contain a GPS.
-* Tracks. A track consists of a set of GPS points (and not waypoints). Each GPS point contains at least the latitude and longitude of the point. Altitude and recording time are generally included in each point.
+* Puntos de referencia. Estos son puntos GPS, que contienen la latitud, longitud y altitud que está asociado con información como un nombre o un símbolo. El número de puntos de referencia está normalmente limitado en el GPS (a menudo solo admite hasta 500 puntos en un GPS GARMIN).
+* Rutas. Consisten en un conjunto de puntos de referencia. Están por tanto limitadas por el número de referencia que puede contener un GPS.
+* Pistas. Una ruta consiste en una serie de puntos GPS (y no puntos de referencia). Cada punto GPS contiene al menos la latitud y la longitud de cada punto. La altitud y el tiempo de grabación generalmente están incluidos en cada punto.
 
-![Image Wikipedia](./images/CG40_GPX.png)  
-Wikipedia source
+![Imagen de Wikipedia](./images/CG40_GPX.png) 
+Fuente: Wikipedia
 
-When opening a GPX file, **Course Generator** only read tracks. Other type of data are ignored.
+Cuando abre un archivo GPS, **Course Generator** solo lee las pistas. Otros tipos de datos son ignorados.
 
-## The CGX format
+## El formato CGX
 
-The CGX format is the native format of **Course Generator**. It allows in addition to the latitude, longitude and altitude, to store all specific data of **Course Generator**. This includes for example: ground difficulty, aid station, comments, mini-roadbook data ... This format allows you to exchange a track with a complete set of information about it.
+El formato CGX es el formato nativo de **Course Generator**. Permite además de la latitud, longitud y altitud, almacenar datos específicos de **Course Generator**. Esto incluye por ejemplo: la dificultad del terreno, estaciones de ayuda, comentarios, datos de un mini libro de ruta, ... Este formato te permite intercambiar una pista con un conjunto completo de información sobre ella.
 
-## The operating principle of Course Generator
+## El principio de funcionamiento de Course Generator
 
-The diagram below shows the operating principle of **Course Generator**.
+El siguiente diagrama muestra el principio de funcionamiento de **Course Generator**.
 
-![Principle of operation](./images/CG40_Principe.png)
+![Principio de funcionamiento](./images/CG40_Principe.png)
 
-## Use cases
+## Casos de uso
 
-The following use cases could be considered (non-exhaustive list):
+Se pueden considerar los siguientes casos de uso (no trata de ser una lista exhaustiva):
 
-* Prepare a race. After downloading the race GPS track you will adjust your parameters, adjust the terrain "quality", indicate the aid station and the planned downtime, add comments and many other things. Finally, **Course Generator** will calculate your time of passage for each point of the track. This will allow you to have your time at each point of the track, statistics (for example time spent at more than 2000m at night) and generate a mini-roadbook.
-* For a race direction to share the track in which they would have indicated for the terrain "quality", the aid station, the cut-off times.
-* Generation of a GPX file with pre-calculated time data to use the GARMIN GPS virtual partner. This allows to have a virtual partner running with you. If you have chosen the right parameters, you will be able to run at his side. This function also displays your position and the partner's position on the track and on the track profile. It gives you the remaining track time as well as the remaining distance. It's very convenient to manage your effort. The screenshot below shows you the profile view in virtual partner mode on a Forerunner 205/305. The dark point is you and the clear point is the virtual partner.
+* Preparar una carrera. Después de descargar las pistas GPS de la carrera, ajustarás tus parámetros, ajustarás la "calidad" del terreno, indicarás las estaciones de ayuda y los tiempos planeados de descanso, podrás añadir comentarios y muchas otras cosas. Finalmente, **Course Generator** calculará el tiempo para pasar por cada punto de la pista. Esto te permitirá obtener tu tiempo en cada punto, estadísticas (por ejemplo el tiempo pasado a más de 2000m por la noche) y generar un mini libro de ruta.
+* Para la dirección de la carrera, el poder compartir la ruta en la que podrán indicar la "calidad" del terreno, las estaciones de ayuda y los tiempos límite.
+* Generar un archivo GPX con los datos de los tiempos precalculados para utilizar el acompañante virtual del GPS GARMIN. Esto te permite tener un compañero virtual que corra contigo. Si has escogido los parámetros correctos, podrás ser capaz de correr a su lado. Esta función también muestra tu posición y la posición del compañero en la ruta y en los perfiles de la ruta. Te ofrece el tiempo que queda de la ruta y también la distancia que falta. Es muy conveniente a la hora de gestionar tu esfuerzo. La captura de pantalla que se muestra a continuación muestra la vista del perfil en el modo de acompañante virtual en un Forerunner 205/305. El punto oscuro eres tu mismo y el punto claro es el acompañante virtual.
 
 ![](./images/CG40_Virtual_Partner.jpg)
 
 
-> __Do I need to own a Garmin GPS device to use **Course Generator**?__
+> __¿Necesito tener un GPS Garmin para utilizar **Course Generator**?__
 >
-> No! But it's a plus if you want to use the virtual partner feature. That's what pushed me to create **Course Generator** (even though now I almost don't use this feature anymore).
+> ¡No! Pero es un extra si quieres utilizar la característica del acompañante virtual. Eso es lo que me llevó a crear **Course Generator** (incluso aunque ahora no utilice ya esa característica).
