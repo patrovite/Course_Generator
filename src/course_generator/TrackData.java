@@ -1863,6 +1863,7 @@ public class TrackData {
 				Utils.WriteStringToXML(writer, "COEFF", nf.format(r.getCoeff()));
 				Utils.WriteStringToXML(writer, "RECUP", nf.format(r.getRecovery()));
 				Utils.WriteIntToXML(writer, "TIMESECONDE", r.getTime());
+				Utils.WriteDoubleToXML(writer, "TEMPERATURE", r.getTemperature()); 
 				Utils.WriteIntToXML(writer, "EATTIME", r.getStation());
 				Utils.WriteIntToXML(writer, "TIMELIMIT", r.getTimeLimit());
 				Utils.WriteStringToXML(writer, "COMMENT", r.getComment());
@@ -2564,5 +2565,26 @@ public class TrackData {
 		d.ReadOnly = ReadOnly;
 		return d;
 	}
+
+
+	/** 
+	 * Retrieves the track data for which the time is the closest match with the 
+	 * given time 
+	 *  
+	 * @param time 
+	 *            A specific time 
+	 * @return If found, the track data point. Null otherwise. 
+	 */ 
+
+	public CgData getClosestElement(DateTime time) { 
+		for (CgData r : data) { 
+			int difference = Utils.compareTimes(r.getHour(), time.hourOfDay().getDateTime()); 
+			if (difference >= 0 && difference <= 30000) { 
+				return r; 
+			} 
+		} 
+		
+		return null; 
+	} 
 
 } // TrackData
