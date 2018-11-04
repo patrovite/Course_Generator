@@ -85,6 +85,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Scanner;
@@ -306,7 +309,7 @@ public class frmMain extends javax.swing.JFrame {
 				cmptMinute = 0;
 				// -- Check every minute if we need to switch log file
 				CgLog.checkFileSize();
-				CheckOfflineMapsSize();
+				CalcOfflineMapsSize();
 			}
 
 		}
@@ -328,6 +331,17 @@ public class frmMain extends javax.swing.JFrame {
 		ProgDir = ProgDir.replaceAll("\\\\", "/");
 		if (ProgDir.endsWith("/."))
 			ProgDir = ProgDir.substring(0, ProgDir.length() - 2);
+
+		
+		//-- Create the tiles cache folders if necessary
+		File cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OPENSTREETMAP_CACHE_DIR);
+		cacheDir.mkdirs();
+		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OPENTOPOMAP_CACHE_DIR);
+		cacheDir.mkdirs();
+		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OUTDOORS_CACHE_DIR);
+		cacheDir.mkdirs();
+		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.BING_CACHE_DIR);
+		cacheDir.mkdirs();
 
 		// -- Initialize data
 		Resume = new ResumeData();
@@ -381,7 +395,9 @@ public class frmMain extends javax.swing.JFrame {
 			if (Settings.Language.equalsIgnoreCase("FR")) {
 				Locale.setDefault(Locale.FRANCE);
 			} else if (Settings.Language.equalsIgnoreCase("EN")) {
-				Locale.setDefault(Locale.US);
+				Locale.setDefault(Locale.US);	
+			} else if (Settings.Language.equalsIgnoreCase("ES")) {
+				Locale.setDefault(new Locale("es","ES"));					
 			} else {
 				Locale.setDefault(Locale.US);
 			}
@@ -440,7 +456,7 @@ public class frmMain extends javax.swing.JFrame {
 		setExtendedState(getExtendedState() | MAXIMIZED_BOTH);
 
 		// -- Check the maps dir size
-		CheckOfflineMapsSize();
+		CalcOfflineMapsSize();
 
 		// -- Set the horizontal splitter position
 		SplitPaneMainRight.setDividerLocation(Settings.HorizSplitPosition);
@@ -468,6 +484,18 @@ public class frmMain extends javax.swing.JFrame {
 		panelMap.RefreshMapButtons();
 		panelProfil.RefreshProfilButtons();
 
+		//
+		String tmpstr = DataDir + "/" + CgConst.CG_DIR + "/OpenStreetMapTileCache";
+		Path DataFolder = Paths.get(tmpstr);
+		if (Files.exists(DataFolder)) {
+			//String s = "Le répertoire %s n'est plus utile.\nVous pouvez le supprimer afin de gagner de l'espace disque."; 
+			JOptionPane.showMessageDialog(this, String.format(bundle.getString("frmMain.UnusedTileCacheDir"),tmpstr), "Course Generator", JOptionPane.INFORMATION_MESSAGE);
+//			JOptionPane.showConfirmDialog(this, bundle.getString("frmMain.QuestionInstallCurves"), "",
+//					JOptionPane.OK_OPTION);
+			//JOptionPane.showConfirmDialog(this, "Le répertoire "+tmpstr+ " n'est plus utile. Vous pouvez le supprimer afin de gagner de l'espace disque.", "",
+			//		JOptionPane.OK_OPTION);
+		}
+		
 		ExportCurvesFromResource(false);
 
 		// -- Display the splash screen
@@ -1186,7 +1214,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuFindMinMax.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				BackupInCGX();
-				Track.CalcMinMax();
+				Track.CalcMinMaxElevation();
 			}
 		});
 		mnuTools.add(mnuFindMinMax);
@@ -1329,6 +1357,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Settings Course Generator
 		// -----------------------------------------
 		mnuCGSettings = new javax.swing.JMenuItem();
+		mnuCGSettings.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, java.awt.event.InputEvent.SHIFT_MASK));
 		mnuCGSettings.setIcon(Utils.getIcon(this, "setting.png", Settings.MenuIconSize));
 		mnuCGSettings.setText(bundle.getString("frmMain.mnuCGSettings.text"));
 		mnuCGSettings.addActionListener(new java.awt.event.ActionListener() {
@@ -3231,10 +3260,13 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
-	private void CheckOfflineMapsSize() {
+	
+	/**
+	 * Calculate the offline map directories size
+	 */
+	private void CalcOfflineMapsSize() {
 		StrMapsDirSize = Utils.humanReadableByteCount(
-				Utils.folderSize(new File(DataDir + "/" + CgConst.CG_DIR + "/OpenStreetMapTileCache")), true);
+				Utils.folderSize(new File(DataDir + "/" + CgConst.CG_DIR + "/TileCache")), true);
 	}
 
 

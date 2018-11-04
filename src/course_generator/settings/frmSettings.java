@@ -166,6 +166,9 @@ public class frmSettings extends javax.swing.JDialog {
 			cbLanguage.setSelectedIndex(1);
 		else if (settings.Language.equalsIgnoreCase("FR"))
 			cbLanguage.setSelectedIndex(2);
+		else if (settings.Language.equalsIgnoreCase("ES"))
+			cbLanguage.setSelectedIndex(3);
+		
 
 		// -- Units
 		if (settings.Unit == CgConst.UNIT_METER)
@@ -243,6 +246,9 @@ public class frmSettings extends javax.swing.JDialog {
 			case 2: // French
 				settings.Language = "FR";
 				break;
+			case 3: // Spanish
+				settings.Language = "ES";
+				break;				
 			default: // Default
 				settings.Language = "";
 			}
@@ -431,7 +437,8 @@ public class frmSettings extends javax.swing.JDialog {
 
 		cbLanguage = new javax.swing.JComboBox<>();
 		String language[] = { bundle.getString("frmSettings.LanguageDefault"),
-				bundle.getString("frmSettings.LanguageEN"), bundle.getString("frmSettings.LanguageFR") };
+				bundle.getString("frmSettings.LanguageEN"), bundle.getString("frmSettings.LanguageFR"), 
+				bundle.getString("frmSettings.LanguageES") };
 		cbLanguage.setModel(new javax.swing.DefaultComboBoxModel<>(language));
 		Utils.addComponent(panelGeneral, cbLanguage, 1, line++, 1, 1, 0, 0, 10, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);

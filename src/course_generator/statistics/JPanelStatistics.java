@@ -167,7 +167,7 @@ public class JPanelStatistics extends JPanel {
 		CalcAvrSpeedResult speedResult = new CalcAvrSpeedResult();
 		speedResult = track.CalcAvrSpeed(0, track.data.size() - 1, speedResult);
 
-		track.CalcRoad();
+		track.setDistRoad(track.CalcRoad(0, track.data.size() - 1));
 
 		sb = Utils.sbReplace(sb, "@500", String.format("%1.1f " + Utils.uLDist2String(settings.Unit),
 				track.getTotalDistance(settings.Unit) / 1000));
