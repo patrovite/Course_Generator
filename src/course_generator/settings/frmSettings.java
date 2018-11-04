@@ -101,7 +101,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private JLabel lbCurveButtonsIconSize;
 	private JComboBox<Object> cbCurveButtonsIconSize;
 	private JTextField edThunderForestApiKey;
-	private JTextArea DarkSkyApiKey;
+	private JTextField DarkSkyApiKey;
 
 	private int fontSize[] = { 16, 20, 22, 24, 32, 64, 96, 128 };
 	private JLabel lbThunderForestApiKey;
@@ -625,28 +625,32 @@ public class frmSettings extends javax.swing.JDialog {
 		panelMaps.setLayout(new GridBagLayout());
 
 		line = 0;
-
+		
 		// Thunderforest API Key
 		lbThunderForestApiKey = new javax.swing.JLabel();
 		lbThunderForestApiKey.setText(bundle.getString("frmSettings.lbThunderForestApiKey.text"));
-		Utils.addComponent(panelMaps, lbThunderForestApiKey, 0, line, 1, 1, 0, 1, 10, 10, 0, 0,
+		Utils.addComponent(panelMaps, lbThunderForestApiKey, 0, line, 1, 1, 1, 0, 10, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		edThunderForestApiKey = new javax.swing.JTextField();
-		Utils.addComponent(panelMaps, edThunderForestApiKey, 1, line++, 1, 1, 1, 1, 10, 5, 0, 10,
-				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(panelMaps, edThunderForestApiKey, 1, line++, 1, 1, 2, 0, 10, 5, 0, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
-		addTab(TabbedPaneGlobal, panelMaps, bundle.getString("frmSettings.TabMaps.tabTitle"), null);
-
+		line++;
+		
 		// Dark Sky API Key
 		JLabel lbDarkSkyApiKey = new javax.swing.JLabel();
 		lbDarkSkyApiKey.setText(bundle.getString("frmSettings.lbDarkSkyApiKey.text"));
-		Utils.addComponent(panelMaps, lbDarkSkyApiKey, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(panelMaps, lbDarkSkyApiKey, 0, line, 1, 1, 1, 1, 7, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
+						GridBagConstraints.HORIZONTAL);
 
-		DarkSkyApiKey = new JTextArea();
-		Utils.addComponent(panelMaps, DarkSkyApiKey, 2, line, 1, 1, 5, 5, 5, 5, 5, 5, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.HORIZONTAL);
+		DarkSkyApiKey = new javax.swing.JTextField();
+		Utils.addComponent(panelMaps, DarkSkyApiKey, 1, line++, 1, 1, 2, 0, 7, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
+						GridBagConstraints.HORIZONTAL);
+		
+		
+		addTab(TabbedPaneGlobal, panelMaps, bundle.getString("frmSettings.TabMaps.tabTitle"), null);	
+		
 
 		// ## Tab "Color" ##
 		panelColors = new JPanel();
