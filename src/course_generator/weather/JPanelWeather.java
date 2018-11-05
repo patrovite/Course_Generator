@@ -38,7 +38,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgLog;
@@ -211,18 +210,6 @@ public class JPanelWeather extends JPanel {
 		for (int totalForecasts = 0; totalForecasts < 3; ++totalForecasts) {
 			previousWeatherData
 					.RetrieveWeatherData(Instant.ofEpochMilli(StartTime.minusYears(totalForecasts + 1).getMillis()));
-
-			// We save the forecast from the year before
-			// TODO : IF the temperature was not already in the GPX file ?
-			if (totalForecasts == 0) {
-				for (WeatherData hourlyData : previousWeatherData.getHourlyWeather()) {
-					CgData r;
-					r = track.getClosestElement(hourlyData.getTime());
-					if (r != null) {
-						r.setTemperature(Double.valueOf(hourlyData.getTemperature()));
-					}
-				}
-			}
 
 			int index = 600 + totalForecasts * 100;
 

@@ -415,7 +415,7 @@ public class TrackData {
 		MaxElev = resMinMaxElev.max;
 
 		SetNightBit();
-		
+
 		isCalculated = true;
 		Name = new File(name).getName();
 
@@ -1208,12 +1208,12 @@ public class TrackData {
 	// -- Calculate road distance (in meter) --
 	public double CalcRoad(int start, int end) {
 		double road = 0.0;
-		//DistRoad = 0.0;
-		//for (CgData r : data) {
-		for (int i=start; i<end; i++) {
+		// DistRoad = 0.0;
+		// for (CgData r : data) {
+		for (int i = start; i < end; i++) {
 			CgData r = data.get(i);
 			if (r.getDiff() == 100) {
-				//DistRoad = DistRoad + r.getDist(CgConst.UNIT_METER);
+				// DistRoad = DistRoad + r.getDist(CgConst.UNIT_METER);
 				road = road + r.getDist(CgConst.UNIT_METER);
 			}
 		}
@@ -1374,7 +1374,7 @@ public class TrackData {
 				night = 1;
 				r.setNight(false);
 			}
-			
+
 			// --Elev effect --
 			if (bElevEffect && ((double) r.getElevation(CgConst.UNIT_METER) > 1500.0)) {
 				ef = 1.0 + (Math.round(((double) r.getElevation(CgConst.UNIT_METER) - 1500.0) / 100.0) / 100.0);
@@ -1414,18 +1414,18 @@ public class TrackData {
 			r.setHour(StartTime.plusSeconds((int) (Math.round(dt))));
 		} // End of the calculation loop --
 
-		//-- Update the road distance for the track
-		DistRoad = CalcRoad(0, data.size()-1);
-		
+		// -- Update the road distance for the track
+		DistRoad = CalcRoad(0, data.size() - 1);
+
 		TotalTime = (int) Math.round(dt);
 		isCalculated = true;
 		isModified = true;
 	} // Calculate
 
-	
-	
+
 	/**
-	 * Set night bit. Used when we load a track to avoid to launch a new calculation to have the night display on the map
+	 * Set night bit. Used when we load a track to avoid to launch a new calculation
+	 * to have the night display on the map
 	 */
 	public void SetNightBit() {
 		// -- Calculation loop --
@@ -1437,7 +1437,7 @@ public class TrackData {
 			} else {
 				r.setNight(false);
 			}
-		} 	
+		}
 	} // SetNightBit
 
 
@@ -1461,11 +1461,11 @@ public class TrackData {
 		CgData r2 = null;
 		CgData r3 = null;
 
-		//-- Reset bit 0 & 1 of 'Tag' variable
+		// -- Reset bit 0 & 1 of 'Tag' variable
 		for (CgData r : data)
 			r.setTag((int) r.getTag() & 0xFC);
 
-		//-- Main loop
+		// -- Main loop
 		for (i = 0; i < data.size(); i++) {
 			r1 = data.get(i);
 
@@ -1545,7 +1545,7 @@ public class TrackData {
 				r1.setTag(r1.getTag() | CgConst.TAG_LOW_PT);
 			}
 
-		} //Main loop
+		} // Main loop
 	} // CalcMinMax
 
 
@@ -1605,36 +1605,17 @@ public class TrackData {
 			int n = start;
 			int nb = 0;
 			while (nb < data.size()) {
-				datatmp.add(new CgData((double) (nb + 1),
-						data.get(n).getLatitude(),
-						data.get(n).getLongitude(),
-						data.get(n).getElevation(CgConst.UNIT_METER), 
-						data.get(n).getElevationMemo(), 
-						data.get(n).getTag(), 
-						data.get(n).getDist(CgConst.UNIT_METER), 
-						data.get(n).getTotal(CgConst.UNIT_METER), 
-						data.get(n).getDiff(), 
-						data.get(n).getCoeff(),
-						0.0, 
-						data.get(n).getSlope(), 
-						data.get(n).getSpeed(CgConst.UNIT_METER), 
-						data.get(n).getdElevation(CgConst.UNIT_METER), 
-						data.get(n).getTime(), 
-						data.get(n).getTemperature(),
-						data.get(n).getdTime_f(), 
-						data.get(n).getTimeLimit(), 
-						data.get(n).getHour(), 
-						data.get(n).getStation(),
-						data.get(n).getName(), 
-						data.get(n).getComment(), 
-						0.0, 
-						0.0, 
-						data.get(n).FmtLbMiniRoadbook, 
-						data.get(n).OptionMiniRoadbook, 
-						data.get(n).VPosMiniRoadbook, 
-						data.get(n).CommentMiniRoadbook, 
-						data.get(n).FontSizeMiniRoadbook 
-				));
+				datatmp.add(new CgData((double) (nb + 1), data.get(n).getLatitude(), data.get(n).getLongitude(),
+						data.get(n).getElevation(CgConst.UNIT_METER), data.get(n).getElevationMemo(),
+						data.get(n).getTag(), data.get(n).getDist(CgConst.UNIT_METER),
+						data.get(n).getTotal(CgConst.UNIT_METER), data.get(n).getDiff(), data.get(n).getCoeff(), 0.0,
+						data.get(n).getSlope(), data.get(n).getSpeed(CgConst.UNIT_METER),
+						data.get(n).getdElevation(CgConst.UNIT_METER), data.get(n).getTime(),
+						data.get(n).getTemperature(), data.get(n).getdTime_f(), data.get(n).getTimeLimit(),
+						data.get(n).getHour(), data.get(n).getStation(), data.get(n).getName(),
+						data.get(n).getComment(), 0.0, 0.0, data.get(n).FmtLbMiniRoadbook,
+						data.get(n).OptionMiniRoadbook, data.get(n).VPosMiniRoadbook, data.get(n).CommentMiniRoadbook,
+						data.get(n).FontSizeMiniRoadbook));
 				nb++;
 				n++;
 				if (n >= data.size()) {
@@ -1644,26 +1625,26 @@ public class TrackData {
 
 			n = 0;
 			for (CgData r : data) {
-				r.setNum(datatmp.get(n).getNum()); 
-				r.setLatitude(datatmp.get(n).getLatitude()); 
-				r.setLongitude(datatmp.get(n).getLongitude()); 
-				r.setElevation(datatmp.get(n).getElevation(CgConst.UNIT_METER)); 
-				r.setElevationMemo(datatmp.get(n).getElevationMemo()); 
-				r.setTag(datatmp.get(n).getTag()); 
-				r.setDist(datatmp.get(n).getDist(CgConst.UNIT_METER)); 
-				r.setTotal(datatmp.get(n).getTotal(CgConst.UNIT_METER)); 
-				r.setDiff(datatmp.get(n).getDiff()); 
-				r.setCoeff(datatmp.get(n).getCoeff()); 
-				r.setSlope(datatmp.get(n).getSlope()); 
-				r.setSpeed(datatmp.get(n).getSpeed(CgConst.UNIT_METER)); 
-				r.setdElevation(datatmp.get(n).getdElevation(CgConst.UNIT_METER)); 
-				r.setTime(datatmp.get(n).getTime()); 
-				r.setdTime_f(datatmp.get(n).getdTime_f()); 
+				r.setNum(datatmp.get(n).getNum());
+				r.setLatitude(datatmp.get(n).getLatitude());
+				r.setLongitude(datatmp.get(n).getLongitude());
+				r.setElevation(datatmp.get(n).getElevation(CgConst.UNIT_METER));
+				r.setElevationMemo(datatmp.get(n).getElevationMemo());
+				r.setTag(datatmp.get(n).getTag());
+				r.setDist(datatmp.get(n).getDist(CgConst.UNIT_METER));
+				r.setTotal(datatmp.get(n).getTotal(CgConst.UNIT_METER));
+				r.setDiff(datatmp.get(n).getDiff());
+				r.setCoeff(datatmp.get(n).getCoeff());
+				r.setSlope(datatmp.get(n).getSlope());
+				r.setSpeed(datatmp.get(n).getSpeed(CgConst.UNIT_METER));
+				r.setdElevation(datatmp.get(n).getdElevation(CgConst.UNIT_METER));
+				r.setTime(datatmp.get(n).getTime());
+				r.setdTime_f(datatmp.get(n).getdTime_f());
 				r.setTimeLimit(datatmp.get(n).getTimeLimit());
-				r.setHour(datatmp.get(n).getHour()); 
-				r.setStation(datatmp.get(n).getStation()); 
-				r.setName(datatmp.get(n).getName()); 
-				r.setComment(datatmp.get(n).getComment()); 
+				r.setHour(datatmp.get(n).getHour());
+				r.setStation(datatmp.get(n).getStation());
+				r.setName(datatmp.get(n).getName());
+				r.setComment(datatmp.get(n).getComment());
 				r.FmtLbMiniRoadbook = data.get(n).FmtLbMiniRoadbook;
 				r.OptionMiniRoadbook = data.get(n).OptionMiniRoadbook;
 				r.VPosMiniRoadbook = data.get(n).VPosMiniRoadbook;
@@ -1755,7 +1736,7 @@ public class TrackData {
 		MaxElev = resMinMaxElev.max;
 
 		SetNightBit();
-		
+
 		CheckTimeLimit();
 		isCalculated = true;
 
@@ -1863,7 +1844,7 @@ public class TrackData {
 				Utils.WriteStringToXML(writer, "COEFF", nf.format(r.getCoeff()));
 				Utils.WriteStringToXML(writer, "RECUP", nf.format(r.getRecovery()));
 				Utils.WriteIntToXML(writer, "TIMESECONDE", r.getTime());
-				Utils.WriteDoubleToXML(writer, "TEMPERATURE", r.getTemperature()); 
+				Utils.WriteDoubleToXML(writer, "TEMPERATURE", r.getTemperature());
 				Utils.WriteIntToXML(writer, "EATTIME", r.getStation());
 				Utils.WriteIntToXML(writer, "TIMELIMIT", r.getTimeLimit());
 				Utils.WriteStringToXML(writer, "COMMENT", r.getComment());
@@ -2433,8 +2414,9 @@ public class TrackData {
 
 	/**
 	 * Return the road distance on the track
-	 * @param unit 
-	 * 		Unit for the returned value
+	 * 
+	 * @param unit
+	 *            Unit for the returned value
 	 * @return Road distance in meter
 	 */
 	public double getDistRoad(int unit) {
@@ -2463,10 +2445,10 @@ public class TrackData {
 
 	/**
 	 * Copy the current track to another
-	 * @param d 
-	 * 		track object where to copy the current track
-	 * @return
-	 * 		track object where the current is copied
+	 * 
+	 * @param d
+	 *            track object where to copy the current track
+	 * @return track object where the current is copied
 	 */
 	public TrackData CopyTo(TrackData d) {
 		int i = 0;
@@ -2565,26 +2547,5 @@ public class TrackData {
 		d.ReadOnly = ReadOnly;
 		return d;
 	}
-
-
-	/** 
-	 * Retrieves the track data for which the time is the closest match with the 
-	 * given time 
-	 *  
-	 * @param time 
-	 *            A specific time 
-	 * @return If found, the track data point. Null otherwise. 
-	 */ 
-
-	public CgData getClosestElement(DateTime time) { 
-		for (CgData r : data) { 
-			int difference = Utils.compareTimes(r.getHour(), time.hourOfDay().getDateTime()); 
-			if (difference >= 0 && difference <= 30000) { 
-				return r; 
-			} 
-		} 
-		
-		return null; 
-	} 
 
 } // TrackData
