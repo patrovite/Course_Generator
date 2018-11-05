@@ -43,7 +43,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
@@ -82,6 +81,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private JPanel panelGeneral;
 	private JPanel panelDisplay;
 	private JPanel panelMaps;
+	private JPanel panelWeather;
 	private JLabel lbStatusBarIconSize;
 	private JComboBox<Object> cbStatusBarIconSize;
 	private JLabel lbTabIconSize;
@@ -168,7 +168,6 @@ public class frmSettings extends javax.swing.JDialog {
 			cbLanguage.setSelectedIndex(2);
 		else if (settings.Language.equalsIgnoreCase("ES"))
 			cbLanguage.setSelectedIndex(3);
-		
 
 		// -- Units
 		if (settings.Unit == CgConst.UNIT_METER)
@@ -248,7 +247,7 @@ public class frmSettings extends javax.swing.JDialog {
 				break;
 			case 3: // Spanish
 				settings.Language = "ES";
-				break;				
+				break;
 			default: // Default
 				settings.Language = "";
 			}
@@ -437,7 +436,7 @@ public class frmSettings extends javax.swing.JDialog {
 
 		cbLanguage = new javax.swing.JComboBox<>();
 		String language[] = { bundle.getString("frmSettings.LanguageDefault"),
-				bundle.getString("frmSettings.LanguageEN"), bundle.getString("frmSettings.LanguageFR"), 
+				bundle.getString("frmSettings.LanguageEN"), bundle.getString("frmSettings.LanguageFR"),
 				bundle.getString("frmSettings.LanguageES") };
 		cbLanguage.setModel(new javax.swing.DefaultComboBoxModel<>(language));
 		Utils.addComponent(panelGeneral, cbLanguage, 1, line++, 1, 1, 0, 0, 10, 5, 0, 10,
@@ -625,32 +624,18 @@ public class frmSettings extends javax.swing.JDialog {
 		panelMaps.setLayout(new GridBagLayout());
 
 		line = 0;
-		
+
 		// Thunderforest API Key
 		lbThunderForestApiKey = new javax.swing.JLabel();
 		lbThunderForestApiKey.setText(bundle.getString("frmSettings.lbThunderForestApiKey.text"));
-		Utils.addComponent(panelMaps, lbThunderForestApiKey, 0, line, 1, 1, 1, 0, 10, 10, 0, 0,
+		Utils.addComponent(panelMaps, lbThunderForestApiKey, 0, line, 1, 1, 1, 1, 10, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		edThunderForestApiKey = new javax.swing.JTextField();
-		Utils.addComponent(panelMaps, edThunderForestApiKey, 1, line++, 1, 1, 2, 0, 10, 5, 0, 10,
+		Utils.addComponent(panelMaps, edThunderForestApiKey, 1, line++, 1, 1, 2, 1, 10, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
-		line++;
-		
-		// Dark Sky API Key
-		JLabel lbDarkSkyApiKey = new javax.swing.JLabel();
-		lbDarkSkyApiKey.setText(bundle.getString("frmSettings.lbDarkSkyApiKey.text"));
-		Utils.addComponent(panelMaps, lbDarkSkyApiKey, 0, line, 1, 1, 1, 1, 7, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
-						GridBagConstraints.HORIZONTAL);
-
-		DarkSkyApiKey = new javax.swing.JTextField();
-		Utils.addComponent(panelMaps, DarkSkyApiKey, 1, line++, 1, 1, 2, 0, 7, 5, 0, 10, GridBagConstraints.BASELINE_LEADING,
-						GridBagConstraints.HORIZONTAL);
-		
-		
-		addTab(TabbedPaneGlobal, panelMaps, bundle.getString("frmSettings.TabMaps.tabTitle"), null);	
-		
+		addTab(TabbedPaneGlobal, panelMaps, bundle.getString("frmSettings.TabMaps.tabTitle"), null);
 
 		// ## Tab "Color" ##
 		panelColors = new JPanel();
@@ -827,6 +812,24 @@ public class frmSettings extends javax.swing.JDialog {
 				GridBagConstraints.BOTH);
 
 		addTab(TabbedPaneGlobal, panelColors, bundle.getString("frmSettings.TabColors.tabTitle"), null);
+
+		// ## Tab "Weather" ##
+		panelWeather = new JPanel();
+		panelWeather.setLayout(new GridBagLayout());
+
+		line = 0;
+
+		// Dark Sky API Key
+		JLabel lbDarkSkyApiKey = new javax.swing.JLabel();
+		lbDarkSkyApiKey.setText(bundle.getString("frmSettings.lbDarkSkyApiKey.text"));
+		Utils.addComponent(panelWeather, lbDarkSkyApiKey, 0, line, 1, 1, 1, 1, 10, 10, 0, 0, GridBagConstraints.NORTH,
+				GridBagConstraints.HORIZONTAL);
+
+		DarkSkyApiKey = new javax.swing.JTextField();
+		Utils.addComponent(panelWeather, DarkSkyApiKey, 1, line++, 1, 1, 2, 1, 10, 5, 0, 10, GridBagConstraints.NORTH,
+				GridBagConstraints.HORIZONTAL);
+
+		addTab(TabbedPaneGlobal, panelWeather, bundle.getString("frmSettings.TabWeather.tabTitle"), null);
 
 		// -- Separator
 		// -- NOCONNECTIONONSTARTUP - Boolean -bNoConnectOnStartup
