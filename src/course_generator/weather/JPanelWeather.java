@@ -204,33 +204,38 @@ public class JPanelWeather extends JPanel {
 		for (int totalForecasts = 0; totalForecasts < 3; ++totalForecasts) {
 			previousWeatherData
 					.RetrieveWeatherData(Instant.ofEpochMilli(StartTime.minusYears(totalForecasts + 1).getMillis()));
-			WeatherData currentDailyWeather = previousWeatherData.getDailyWeatherData();
+			WeatherData previousDailyWeather = previousWeatherData.getDailyWeatherData();
 
-			// TODO Add a function to convert unix time to string
 //TODO Add thermometer and precip type icons
+			// TODO add a row "Daylight hours??????
 
 			int index = 600 + totalForecasts * 100;
 
-			sb = Utils.sbReplace(sb, "@" + index++, fmt.print(currentDailyWeather.getDate()));
+			sb = Utils.sbReplace(sb, "@" + index++, fmt.print(previousDailyWeather.getDate()));
 			sb = Utils.sbReplace(sb, "@" + index++, addImage(previousWeatherData.getSummaryIconFilePath()));
-			sb = Utils.sbReplace(sb, "@" + index++, currentDailyWeather.getSummary());
+			sb = Utils.sbReplace(sb, "@" + index++, previousDailyWeather.getSummary());
 			// "<img
 			// src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==\"/>");//previousWeatherData.getMoonPhase());
+			sb = Utils.sbReplace(sb, "@" + index++, displayTemperatureInformation(
+					previousDailyWeather.getTemperatureHigh(), previousDailyWeather.getTemperatureHighTime()));
+			sb = Utils.sbReplace(sb, "@" + index++, displayTemperatureInformation(
+					previousDailyWeather.getTemperatureLow(), previousDailyWeather.getTemperatureLowTime()));
+
+			sb = Utils.sbReplace(sb, "@" + index++, Utils
+					.FormatSpeed(Double.valueOf(previousDailyWeather.getWindSpeed()), settings.Unit, false, false));
+
 			sb = Utils.sbReplace(sb, "@" + index++,
-					Utils.FormatTemperature(Double.valueOf(currentDailyWeather.getTemperatureHigh()), settings.Unit)
-							+ ", " + Utils.FormatTemperature(
-									Double.valueOf(currentDailyWeather.getTemperatureHighTime()), settings.Unit));
+					displayTemperatureInformation(previousDailyWeather.getApparentTemperatureHigh(),
+							previousDailyWeather.getApparentTemperatureHighTime()));
+
 			sb = Utils.sbReplace(sb, "@" + index++,
-					currentDailyWeather.getTemperatureLow() + ", " + currentDailyWeather.getTemperatureLowTime());
-			sb = Utils.sbReplace(sb, "@" + index++,
-					Utils.FormatSpeed(Double.valueOf(currentDailyWeather.getWindSpeed()), settings.Unit, false, false));
-			sb = Utils.sbReplace(sb, "@" + index++, currentDailyWeather.getApparentTemperatureHigh() + ", "
-					+ currentDailyWeather.getApparentTemperatureHighTime());
-			sb = Utils.sbReplace(sb, "@" + index++, currentDailyWeather.getApparentTemperatureLow() + ", "
-					+ currentDailyWeather.getApparentTemperatureLowTime());
-			sb = Utils.sbReplace(sb, "@" + index++, currentDailyWeather.getPrecipType());
-			sb = Utils.sbReplace(sb, "@" + index++, currentDailyWeather.getPrecipAccumulation());
-			sb = Utils.sbReplace(sb, "@" + index++, currentDailyWeather.getMoonPhase());
+					displayTemperatureInformation(previousDailyWeather.getApparentTemperatureLow(),
+							previousDailyWeather.getApparentTemperatureLowTime()));
+
+			sb = Utils.sbReplace(sb, "@" + index++, addImage(previousWeatherData.getPrecipitationTypeIconFilePath()));
+			sb = Utils.sbReplace(sb, "@" + index++, previousDailyWeather.getPrecipAccumulation());
+
+			sb = Utils.sbReplace(sb, "@" + index++, previousDailyWeather.getMoonPhase());
 		}
 
 		// -- Refresh the view and set the cursor position
@@ -252,7 +257,7 @@ public class JPanelWeather extends JPanel {
 		s = Utils.SaveDialog(this, settings.LastDir, "", ".html", bundle.getString("frmMain.HTMLFile"), true,
 				bundle.getString("frmMain.FileExist"));
 		// replace all the images by base64
-		// because JEditorpane doesnt support displaying base 64 but saving the htnl
+		// because JEditorpane doesnt support displaying base 64 but saving the html
 		// with the absolute path wont work because the images are in the jar.
 		if (!s.isEmpty()) {
 			// -- Save the statistics
@@ -270,7 +275,24 @@ public class JPanelWeather extends JPanel {
 		}
 	}
 
+	/**
+	 * Creates a String containing a temperature value with its unit and measured
+	 * time
+	 * 
+	 * @param temperatureValue The temperature value
+	 * @param temperatureTime  The time when the temperature was measured
+	 * @return A String containing a temperature information
+	 */
+
+	private String displayTemperatureInformation(String temperatureValue, String temperatureTime) {
+		return Utils.FormatTemperature(Double.valueOf(temperatureValue), settings.Unit)
+				+ Utils.uTemperatureToString(settings.Unit) + ", "
+				+ Utils.formatUnixTime(Long.valueOf(temperatureTime));
+	}
+
 	private String addImage(String iconFilePath) {
+		if (iconFilePath == "")
+			return "";
 		return "<img src=\"file:/" + iconFilePath + "\" width=\"50%\" height=\"50%\"/>";
 	}
 }
