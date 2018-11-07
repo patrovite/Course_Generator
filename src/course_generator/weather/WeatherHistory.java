@@ -164,10 +164,10 @@ public class WeatherHistory {
 			iconFileName = "";
 			break;
 		case "cloudy":
-			iconFileName = "";
+			iconFileName = "Cloud";
 			break;
 		case "partly-cloudy-day":
-			iconFileName = "";
+			iconFileName = "Cloud-Sun";
 			break;
 		case "partly-cloudy-night":
 			iconFileName = "";
@@ -175,8 +175,8 @@ public class WeatherHistory {
 		}
 		Path jnkjf = null;
 		try {
-			jnkjf = Paths.get(
-					getClass().getResource("/course_generator/images/climacons/SVG/" + iconFileName + ".png").toURI());
+			jnkjf = Paths.get(getClass()
+					.getResource("/course_generator/images/climacons/SVG/Converted/" + iconFileName + ".png").toURI());
 			System.out.println(jnkjf.toString());
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
