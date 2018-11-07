@@ -41,6 +41,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
+import course_generator.utils.CgConst;
 import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
@@ -210,7 +211,6 @@ public class JPanelWeather extends JPanel {
 					.RetrieveWeatherData(Instant.ofEpochMilli(StartTime.minusYears(totalForecasts + 1).getMillis()));
 			WeatherData previousDailyWeather = previousWeatherData.getDailyWeatherData();
 
-			// TODO Add thermometer and precip type icons
 			// TODO add a row "Daylight hours??????
 
 			int index = 600 + totalForecasts * 100;
@@ -220,21 +220,45 @@ public class JPanelWeather extends JPanel {
 			sb = Utils.sbReplace(sb, "@" + index++, previousDailyWeather.getSummary());
 			// "<img
 			// src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==\"/>");//previousWeatherData.getMoonPhase());
-			sb = Utils.sbReplace(sb, "@" + index++, displayTemperatureInformation(
-					previousDailyWeather.getTemperatureHigh(), previousDailyWeather.getTemperatureHighTime()));
-			sb = Utils.sbReplace(sb, "@" + index++, displayTemperatureInformation(
-					previousDailyWeather.getTemperatureLow(), previousDailyWeather.getTemperatureLowTime()));
 
-			sb = Utils.sbReplace(sb, "@" + index++, Utils
-					.FormatSpeed(Double.valueOf(previousDailyWeather.getWindSpeed()), settings.Unit, false, false));
+			sb = Utils.sbReplace(sb, "@" + index++, displayTemperature(previousDailyWeather.getTemperatureHigh()));
+			sb = Utils
+					.sbReplace(sb, "@" + index++,
+							addImage(previousWeatherData.getThermometerIconFilePath(
+									Utils.FormatTemperature(Double.valueOf(previousDailyWeather.getTemperatureHigh()),
+											CgConst.UNIT_MILES_FEET))));
+			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getTemperatureHighTime()));
+
+			sb = Utils.sbReplace(sb, "@" + index++, displayTemperature(previousDailyWeather.getTemperatureLow()));
+			sb = Utils
+					.sbReplace(sb, "@" + index++,
+							addImage(previousWeatherData.getThermometerIconFilePath(
+									Utils.FormatTemperature(Double.valueOf(previousDailyWeather.getTemperatureLow()),
+											CgConst.UNIT_MILES_FEET))));
+			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getTemperatureLowTime()));
+
+			// The wind speed is in meter/second. We convert it first in km/h (1 m/s =
+			// 3.6km/h)
+			sb = Utils.sbReplace(sb, "@" + index++, Utils.FormatSpeed(
+					3.6 * Double.valueOf(previousDailyWeather.getWindSpeed()), settings.Unit, false, false));
 
 			sb = Utils.sbReplace(sb, "@" + index++,
-					displayTemperatureInformation(previousDailyWeather.getApparentTemperatureHigh(),
-							previousDailyWeather.getApparentTemperatureHighTime()));
+					displayTemperature(previousDailyWeather.getApparentTemperatureHigh()));
+			sb = Utils
+					.sbReplace(sb, "@" + index++,
+							addImage(previousWeatherData.getThermometerIconFilePath(Utils.FormatTemperature(
+									Double.valueOf(previousDailyWeather.getApparentTemperatureHigh()),
+									CgConst.UNIT_MILES_FEET))));
+			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getApparentTemperatureHighTime()));
 
 			sb = Utils.sbReplace(sb, "@" + index++,
-					displayTemperatureInformation(previousDailyWeather.getApparentTemperatureLow(),
-							previousDailyWeather.getApparentTemperatureLowTime()));
+					displayTemperature(previousDailyWeather.getApparentTemperatureLow()));
+			sb = Utils
+					.sbReplace(sb, "@" + index++,
+							addImage(previousWeatherData.getThermometerIconFilePath(Utils.FormatTemperature(
+									Double.valueOf(previousDailyWeather.getApparentTemperatureLow()),
+									CgConst.UNIT_MILES_FEET))));
+			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getApparentTemperatureLowTime()));
 
 			sb = Utils.sbReplace(sb, "@" + index++, addImage(previousWeatherData.getPrecipitationTypeIconFilePath()));
 			sb = Utils.sbReplace(sb, "@" + index++, previousDailyWeather.getPrecipAccumulation());
@@ -283,20 +307,26 @@ public class JPanelWeather extends JPanel {
 
 
 	/**
-	 * Creates a String containing a temperature value with its unit and measured
-	 * time
+	 * Creates a String containing a temperature value.
 	 * 
 	 * @param temperatureValue
 	 *            The temperature value
-	 * @param temperatureTime
-	 *            The time when the temperature was measured
 	 * @return A String containing a temperature information
 	 */
+	private String displayTemperature(String temperatureValue) {
+		return Utils.FormatTemperature(Double.valueOf(temperatureValue), settings.Unit);
+	}
 
-	private String displayTemperatureInformation(String temperatureValue, String temperatureTime) {
-		return Utils.FormatTemperature(Double.valueOf(temperatureValue), settings.Unit)
-				+ Utils.uTemperatureToString(settings.Unit) + ", "
-				+ Utils.formatUnixTime(Long.valueOf(temperatureTime));
+
+	/**
+	 * Creates a String containing a measured time.
+	 * 
+	 * @param time
+	 *            A Unix time.
+	 * @return A String containing a time information.
+	 */
+	private String displayTime(String time) {
+		return Utils.formatUnixTime(Long.valueOf(time));
 	}
 
 

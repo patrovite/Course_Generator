@@ -29,6 +29,7 @@ public class WeatherHistory {
 	private double Latitude;
 	private double Longitude;
 
+
 	public WeatherHistory(CgSettings settings, Double latitude, Double longitude) {
 		Settings = settings;
 		Latitude = latitude;
@@ -36,6 +37,7 @@ public class WeatherHistory {
 		Daily = new WeatherData();
 		Hourly = new ArrayList<WeatherData>();
 	}
+
 
 	public void RetrieveWeatherData(Instant time) {
 		ForecastRequest request = new ForecastRequestBuilder().key(new APIKey(Settings.getDarkSkyApiKey())).time(time)
@@ -56,6 +58,7 @@ public class WeatherHistory {
 					+ "'");
 		}
 	}
+
 
 	private void PopulateFields(String forecastData) {
 
@@ -94,6 +97,7 @@ public class WeatherHistory {
 
 	}
 
+
 	private String retrieveStringElement(JSONObject forecastData, String element) {
 		String result;
 		try {
@@ -104,6 +108,7 @@ public class WeatherHistory {
 		}
 		return result;
 	}
+
 
 	private String retrieveDoubleElement(JSONObject forecastData, String element) {
 		String result;
@@ -116,6 +121,7 @@ public class WeatherHistory {
 		return result;
 	}
 
+
 	private String retrieveLongElement(JSONObject forecastData, String element) {
 		String result;
 		try {
@@ -126,6 +132,7 @@ public class WeatherHistory {
 		}
 		return result;
 	}
+
 
 	private DateTime retrieveDateTimeElement(JSONObject forecastData, String element) {
 		DateTime result;
@@ -140,13 +147,16 @@ public class WeatherHistory {
 		return result;
 	}
 
+
 	public ArrayList<WeatherData> getHourlyWeather() {
 		return Hourly;
 	}
 
+
 	public WeatherData getDailyWeatherData() {
 		return Daily;
 	}
+
 
 	public String getSummaryIconFilePath() {
 		String iconFileName = "";
@@ -186,43 +196,33 @@ public class WeatherHistory {
 		return getFilePathFromFileName(iconFileName + ".png");
 	}
 
-	public String getThermometerIconFilePath() {
+
+	/**
+	 * Retrieves the appropriate icon name given a temperature value.
+	 * 
+	 * @param temperatureValue
+	 *            A temperature value in Fahrenheit.
+	 * @return The icon file name.
+	 */
+	public String getThermometerIconFilePath(String temperatureValue) {
 		String iconFileName = "";
-		switch (Daily.getIcon().toLowerCase()) {
-		case "clear-day":
-			iconFileName = "Sun";
-			break;
-		case "clear-night":
-			iconFileName = "Moon";
-			break;
-		case "rain":
-			iconFileName = "Cloud-Rain";
-			break;
-		case "snow":
-		case "sleet":
-			iconFileName = "Cloud-Snow";
-			break;
-		case "wind":
-			iconFileName = "Wind";
-			break;
-		case "fog":
-			iconFileName = "Cloud-Fog";
-			break;
-		case "cloudy":
-			iconFileName = "Cloud";
-			break;
-		case "partly-cloudy-day":
-			iconFileName = "Cloud-Sun";
-			break;
-		case "partly-cloudy-night":
-			iconFileName = "Cloud-Moon";
-			break;
-		default:
-			return "";
+		int temperature = Integer.valueOf(temperatureValue);
+
+		if (temperature <= 0) {
+			iconFileName = "Thermometer-Zero";
+		} else if (temperature <= 25) {
+			iconFileName = "Thermometer-25";
+		} else if (temperature <= 50) {
+			iconFileName = "Thermometer-50";
+		} else if (temperature <= 75) {
+			iconFileName = "Thermometer-75";
+		} else if (temperature >= 100) {
+			iconFileName = "Thermometer-100";
 		}
 
 		return getFilePathFromFileName(iconFileName + ".png");
 	}
+
 
 	public String getPrecipitationTypeIconFilePath() {
 		String iconFileName = "";
@@ -240,6 +240,7 @@ public class WeatherHistory {
 
 		return getFilePathFromFileName(iconFileName + ".png");
 	}
+
 
 	private String getFilePathFromFileName(String fileName) {
 		Path filePath = null;
