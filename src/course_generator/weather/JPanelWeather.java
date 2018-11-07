@@ -61,12 +61,14 @@ public class JPanelWeather extends JPanel {
 	private Double Longitude;
 	private DateTime StartTime;
 
+
 	public JPanelWeather(CgSettings settings) {
 		super();
 		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
+
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -82,6 +84,7 @@ public class JPanelWeather extends JPanel {
 		scrollPaneStat = new JScrollPane(editorStat);
 		add(scrollPaneStat, java.awt.BorderLayout.CENTER);
 	}
+
 
 	/**
 	 * Create the status toolbar
@@ -132,6 +135,7 @@ public class JPanelWeather extends JPanel {
 		lbInformation.setVisible(false);
 		toolBar.add(lbInformation);
 	}
+
 
 	/**
 	 * Refresh the statistic tab
@@ -196,7 +200,7 @@ public class JPanelWeather extends JPanel {
 		// if(not online or api key missing, update the label and display the waring)
 
 		WeatherHistory previousWeatherData = new WeatherHistory(settings, Latitude, Longitude);
-		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("EE yyyy-MM-dd HH:mm");
 
 		sb = Utils.sbReplace(sb, "@0", Utils.uTemperatureToString(settings.Unit));
 		sb = Utils.sbReplace(sb, "@1", Utils.uSpeed2String(settings.Unit, false));
@@ -206,7 +210,7 @@ public class JPanelWeather extends JPanel {
 					.RetrieveWeatherData(Instant.ofEpochMilli(StartTime.minusYears(totalForecasts + 1).getMillis()));
 			WeatherData previousDailyWeather = previousWeatherData.getDailyWeatherData();
 
-//TODO Add thermometer and precip type icons
+			// TODO Add thermometer and precip type icons
 			// TODO add a row "Daylight hours??????
 
 			int index = 600 + totalForecasts * 100;
@@ -243,11 +247,13 @@ public class JPanelWeather extends JPanel {
 		editorStat.setCaretPosition(0);
 	}
 
+
 	public void SetParameters(Double latitude, Double longitude, DateTime startTime) {
 		Latitude = latitude;
 		Longitude = longitude;
 		StartTime = startTime;
 	}
+
 
 	/**
 	 * Save the statistics in TXT format
@@ -275,12 +281,15 @@ public class JPanelWeather extends JPanel {
 		}
 	}
 
+
 	/**
 	 * Creates a String containing a temperature value with its unit and measured
 	 * time
 	 * 
-	 * @param temperatureValue The temperature value
-	 * @param temperatureTime  The time when the temperature was measured
+	 * @param temperatureValue
+	 *            The temperature value
+	 * @param temperatureTime
+	 *            The time when the temperature was measured
 	 * @return A String containing a temperature information
 	 */
 
@@ -289,6 +298,7 @@ public class JPanelWeather extends JPanel {
 				+ Utils.uTemperatureToString(settings.Unit) + ", "
 				+ Utils.formatUnixTime(Long.valueOf(temperatureTime));
 	}
+
 
 	private String addImage(String iconFilePath) {
 		if (iconFilePath == "")
