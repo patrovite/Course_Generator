@@ -9,8 +9,8 @@ public class WeatherData {
 	/** The time for the weather data request **/
 	private DateTime Time;
 	/** A human-readable text summary of this data point **/
-	private String Summary;// : "Overcast until afternoon.",
-	// "icon": "cloudy",
+	private String Summary; // : "Overcast until afternoon.",
+	private String Icon; // "icon": "cloudy",
 	// "sunriseTime": 1473859401,
 	// "sunsetTime": 1473904638,
 	/** Moon phase **/
@@ -22,7 +22,7 @@ public class WeatherData {
 	private String TemperatureHigh;
 	// "temperatureHighTime": 1473894000,
 	/** The overnight low temperature. **/
-	private String TemperatureLow;// ":32.42,
+	private String TemperatureLow; // ":32.42,
 	// "temperatureLowTime": 1473944400,
 	// "apparentTemperatureHigh": 54.27,
 	// "apparentTemperatureHighTime": 1473894000,
@@ -67,6 +67,16 @@ public class WeatherData {
 
 	public void setSummary(String summary) {
 		Summary = summary;
+	}
+
+
+	public void setIcon(String icon) {
+		Icon = icon;
+	}
+
+
+	public String getIcon() {
+		return Icon;
 	}
 
 

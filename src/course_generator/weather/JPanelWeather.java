@@ -19,6 +19,7 @@
 package course_generator.weather;
 
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -44,22 +45,21 @@ import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
 public class JPanelWeather extends JPanel {
-	private static final long serialVersionUID = -7168142806619093218L;
-	private ResourceBundle bundle;
-	private CgSettings settings = null;
-	private JEditorPane editorStat;
-	private JScrollPane scrollPaneStat;
-	private JToolBar toolBar;
-	private JButton btWeatherDataSave;
-	private JButton btWeatherRefresh;
-	private JLabel lbInformation;
-	private JMenuItem InformationWarning;
-	private TrackData track = null;
+	private static final long	serialVersionUID	= -7168142806619093218L;
+	private ResourceBundle		bundle;
+	private CgSettings			settings				= null;
+	private JEditorPane			editorStat;
+	private JScrollPane			scrollPaneStat;
+	private JToolBar				toolBar;
+	private JButton				btWeatherDataSave;
+	private JButton				btWeatherRefresh;
+	private JLabel					lbInformation;
+	private JMenuItem				InformationWarning;
+	private TrackData				track					= null;
 
-	private Double Latitude;
-	private Double Longitude;
-	private DateTime StartTime;
-
+	private Double					Latitude;
+	private Double					Longitude;
+	private DateTime				StartTime;
 
 	public JPanelWeather(CgSettings settings) {
 		super();
@@ -67,7 +67,6 @@ public class JPanelWeather extends JPanel {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
-
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -83,7 +82,6 @@ public class JPanelWeather extends JPanel {
 		scrollPaneStat = new JScrollPane(editorStat);
 		add(scrollPaneStat, java.awt.BorderLayout.CENTER);
 	}
-
 
 	/**
 	 * Create the status toolbar
@@ -102,7 +100,7 @@ public class JPanelWeather extends JPanel {
 		btWeatherDataSave.setFocusable(false);
 		btWeatherDataSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				// SaveStat();
+				SaveStat();
 			}
 		});
 		toolBar.add(btWeatherDataSave);
@@ -134,7 +132,6 @@ public class JPanelWeather extends JPanel {
 		lbInformation.setVisible(false);
 		toolBar.add(lbInformation);
 	}
-
 
 	/**
 	 * Refresh the statistic tab
@@ -214,19 +211,40 @@ public class JPanelWeather extends JPanel {
 			int index = 600 + totalForecasts * 100;
 
 			sb = Utils.sbReplace(sb, "@" + index++, fmt.print(previousWeatherData.getDailyWeatherData().getDate()));
+
+			sb = Utils.sbReplace(sb,
+					"@602",
+					addImage(previousWeatherData.getIconFilePath()));
+			//"<img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==\"/>");//previousWeatherData.getMoonPhase());
+
 			sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getDailyWeatherData().getSummary());
 			sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getDailyWeatherData().getMoonPhase());
-			sb = Utils.sbReplace(sb, "@" + index++, Utils.FormatTemperature(
-					Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureHigh()), settings.Unit));
-			sb = Utils.sbReplace(sb, "@" + index++, Utils.FormatTemperature(
-					Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureLow()), settings.Unit));
-			sb = Utils.sbReplace(sb, "@" + index++,
+			sb = Utils.sbReplace(sb,
+					"@" + index++,
+					Utils.FormatTemperature(
+							Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureHigh()),
+							settings.Unit));
+			sb = Utils.sbReplace(sb,
+					"@" + index++,
+					Utils.FormatTemperature(
+							Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureLow()),
+							settings.Unit));
+			sb = Utils.sbReplace(sb,
+					"@" + index++,
 					Utils.FormatSpeed(Double.valueOf(previousWeatherData.getDailyWeatherData().getWindSpeed()),
-							settings.Unit, false, false));
-			sb = Utils.sbReplace(sb, "@" + index++, Utils.FormatTemperature(
-					Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureMin()), settings.Unit));
-			sb = Utils.sbReplace(sb, "@" + index++, Utils.FormatTemperature(
-					Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureMax()), settings.Unit));
+							settings.Unit,
+							false,
+							false));
+			sb = Utils.sbReplace(sb,
+					"@" + index++,
+					Utils.FormatTemperature(
+							Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureMin()),
+							settings.Unit));
+			sb = Utils.sbReplace(sb,
+					"@" + index++,
+					Utils.FormatTemperature(
+							Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureMax()),
+							settings.Unit));
 		}
 
 		// -- Refresh the view and set the cursor position
@@ -234,10 +252,43 @@ public class JPanelWeather extends JPanel {
 		editorStat.setCaretPosition(0);
 	}
 
-
 	public void SetParameters(Double latitude, Double longitude, DateTime startTime) {
 		Latitude = latitude;
 		Longitude = longitude;
 		StartTime = startTime;
+	}
+
+	/**
+	 * Save the statistics in TXT format
+	 */
+	private void SaveStat() {
+		String s;
+		s = Utils.SaveDialog(this,
+				settings.LastDir,
+				"",
+				".html",
+				bundle.getString("frmMain.HTMLFile"),
+				true,
+				bundle.getString("frmMain.FileExist"));
+		//replace all the images by base64
+		// because JEditorpane doesnt support displaying base 64 but saving the htnl with the absolute path wont work because the images are in the jar.
+		if (!s.isEmpty()) {
+			// -- Save the statistics
+			// track.SaveCGX(s, 0, track.data.size() - 1);
+			try {
+				FileWriter out = new FileWriter(s);
+				out.write(editorStat.getText());
+				out.close();
+			} catch (Exception f) {
+				CgLog.error("SaveStat : impossible to save the statistic file");
+				f.printStackTrace();
+			}
+			// -- Store the directory
+			settings.LastDir = Utils.GetDirFromFilename(s);
+		}
+	}
+
+	private String addImage(String iconFilePath) {
+		return "<img src=\"file:/" + iconFilePath + "\" width=\"50%\" height=\"50%\"/>";
 	}
 }

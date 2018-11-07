@@ -1,5 +1,8 @@
 package course_generator.weather;
 
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,6 +77,7 @@ public class WeatherHistory {
 
 			Daily.setTime(retrieveDateTimeElement(dailyData, "time"));
 			Daily.setSummary(retrieveStringElement(dailyData, "summary"));
+			Daily.setIcon(retrieveStringElement(dailyData, "icon"));
 			Daily.setMoonPhase(retrieveDoubleElement(dailyData, "moonPhase"));
 			Daily.setTemperatureHigh(retrieveDoubleElement(dailyData, "temperatureHigh"));
 			Daily.setTemperatureLow(retrieveDoubleElement(dailyData, "temperatureLow"));
@@ -132,6 +136,53 @@ public class WeatherHistory {
 
 	public WeatherData getDailyWeatherData() {
 		return Daily;
+	}
+
+
+	public String getIconFilePath() {
+		String iconFileName = "";
+		switch (Daily.getIcon()) {
+		case "clear-day":
+			iconFileName = "Sun";
+			break;
+		case "clear-night":
+			iconFileName = "";
+			break;
+		case "rain":
+			iconFileName = "";
+			break;
+		case "snow":
+			iconFileName = "";
+			break;
+		case "sleet":
+			iconFileName = "";
+			break;
+		case "wind":
+			iconFileName = "";
+			break;
+		case "fog":
+			iconFileName = "";
+			break;
+		case "cloudy":
+			iconFileName = "";
+			break;
+		case "partly-cloudy-day":
+			iconFileName = "";
+			break;
+		case "partly-cloudy-night":
+			iconFileName = "";
+			break;
+		}
+		Path jnkjf = null;
+		try {
+			jnkjf = Paths.get(
+					getClass().getResource("/course_generator/images/climacons/SVG/" + iconFileName + ".png").toURI());
+			System.out.println(jnkjf.toString());
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jnkjf.toString();
 	}
 
 }
