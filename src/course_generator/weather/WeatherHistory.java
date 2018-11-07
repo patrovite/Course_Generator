@@ -29,7 +29,6 @@ public class WeatherHistory {
 	private double Latitude;
 	private double Longitude;
 
-
 	public WeatherHistory(CgSettings settings, Double latitude, Double longitude) {
 		Settings = settings;
 		Latitude = latitude;
@@ -37,7 +36,6 @@ public class WeatherHistory {
 		Daily = new WeatherData();
 		Hourly = new ArrayList<WeatherData>();
 	}
-
 
 	public void RetrieveWeatherData(Instant time) {
 		ForecastRequest request = new ForecastRequestBuilder().key(new APIKey(Settings.getDarkSkyApiKey())).time(time)
@@ -59,7 +57,6 @@ public class WeatherHistory {
 		}
 	}
 
-
 	private void PopulateFields(String forecastData) {
 
 		try {
@@ -79,17 +76,23 @@ public class WeatherHistory {
 			Daily.setSummary(retrieveStringElement(dailyData, "summary"));
 			Daily.setIcon(retrieveStringElement(dailyData, "icon"));
 			Daily.setMoonPhase(retrieveDoubleElement(dailyData, "moonPhase"));
+			Daily.setPrecipAccumulation(retrieveDoubleElement(dailyData, "precipAccumulation"));
+			Daily.setPrecipType(retrieveStringElement(dailyData, "precipType"));
 			Daily.setTemperatureHigh(retrieveDoubleElement(dailyData, "temperatureHigh"));
+			Daily.setTemperatureHighTime(retrieveDoubleElement(dailyData, "temperatureHighTime"));
 			Daily.setTemperatureLow(retrieveDoubleElement(dailyData, "temperatureLow"));
+			Daily.setTemperatureLowTime(retrieveDoubleElement(dailyData, "temperatureLowTime"));
+			Daily.setApparentTemperatureHigh(retrieveDoubleElement(dailyData, "apparentTemperatureHigh"));
+			Daily.setApparentTemperatureHighTime(retrieveDoubleElement(dailyData, "apparentTemperatureHighTime"));
+			Daily.setApparentTemperatureLow(retrieveDoubleElement(dailyData, "apparentTemperatureLow"));
+			Daily.setApparentTemperatureLowTime(retrieveDoubleElement(dailyData, "apparentTemperatureLowTime"));
 			Daily.setWindSpeed(retrieveDoubleElement(dailyData, "windSpeed"));
-			Daily.setTemperatureMin(retrieveDoubleElement(dailyData, "temperatureMin"));
-			Daily.setTemperatureMax(retrieveDoubleElement(dailyData, "temperatureMax"));
+
 		} catch (Exception e) {
 			CgLog.error("WeatherData.PopulateFields : Error while reading the weather data '" + e.getMessage() + "'");
 		}
 
 	}
-
 
 	private String retrieveStringElement(JSONObject forecastData, String element) {
 		String result;
@@ -102,7 +105,6 @@ public class WeatherHistory {
 		return result;
 	}
 
-
 	private String retrieveDoubleElement(JSONObject forecastData, String element) {
 		String result;
 		try {
@@ -113,7 +115,6 @@ public class WeatherHistory {
 		}
 		return result;
 	}
-
 
 	private DateTime retrieveDateTimeElement(JSONObject forecastData, String element) {
 		DateTime result;
@@ -128,40 +129,35 @@ public class WeatherHistory {
 		return result;
 	}
 
-
 	public ArrayList<WeatherData> getHourlyWeather() {
 		return Hourly;
 	}
-
 
 	public WeatherData getDailyWeatherData() {
 		return Daily;
 	}
 
-
-	public String getIconFilePath() {
+	public String getSummaryIconFilePath() {
 		String iconFileName = "";
 		switch (Daily.getIcon()) {
 		case "clear-day":
 			iconFileName = "Sun";
 			break;
 		case "clear-night":
-			iconFileName = "";
+			iconFileName = "Moon";
 			break;
 		case "rain":
-			iconFileName = "";
+			iconFileName = "Cloud-Rain";
 			break;
 		case "snow":
-			iconFileName = "";
-			break;
 		case "sleet":
-			iconFileName = "";
+			iconFileName = "Cloud-Snow";
 			break;
 		case "wind":
-			iconFileName = "";
+			iconFileName = "Wind";
 			break;
 		case "fog":
-			iconFileName = "";
+			iconFileName = "Cloud-Fog";
 			break;
 		case "cloudy":
 			iconFileName = "Cloud";
@@ -170,19 +166,95 @@ public class WeatherHistory {
 			iconFileName = "Cloud-Sun";
 			break;
 		case "partly-cloudy-night":
-			iconFileName = "";
+			iconFileName = "Cloud-Moon";
 			break;
 		}
-		Path jnkjf = null;
+
+		return getFilePathFromFileName(iconFileName + ".png");
+	}
+
+	public String getThermometerIconFilePath() {
+		String iconFileName = "";
+		switch (Daily.getIcon()) {
+		case "clear-day":
+			iconFileName = "Sun";
+			break;
+		case "clear-night":
+			iconFileName = "Moon";
+			break;
+		case "rain":
+			iconFileName = "Cloud-Rain";
+			break;
+		case "snow":
+		case "sleet":
+			iconFileName = "Cloud-Snow";
+			break;
+		case "wind":
+			iconFileName = "Wind";
+			break;
+		case "fog":
+			iconFileName = "Cloud-Fog";
+			break;
+		case "cloudy":
+			iconFileName = "Cloud";
+			break;
+		case "partly-cloudy-day":
+			iconFileName = "Cloud-Sun";
+			break;
+		case "partly-cloudy-night":
+			iconFileName = "Cloud-Moon";
+			break;
+		}
+
+		return getFilePathFromFileName(iconFileName + ".png");
+	}
+
+	public String getPrecipitationTypeIconFilePath() {
+		String iconFileName = "";
+		switch (Daily.getIcon()) {
+		case "clear-day":
+			iconFileName = "Sun";
+			break;
+		case "clear-night":
+			iconFileName = "Moon";
+			break;
+		case "rain":
+			iconFileName = "Cloud-Rain";
+			break;
+		case "snow":
+		case "sleet":
+			iconFileName = "Cloud-Snow";
+			break;
+		case "wind":
+			iconFileName = "Wind";
+			break;
+		case "fog":
+			iconFileName = "Cloud-Fog";
+			break;
+		case "cloudy":
+			iconFileName = "Cloud";
+			break;
+		case "partly-cloudy-day":
+			iconFileName = "Cloud-Sun";
+			break;
+		case "partly-cloudy-night":
+			iconFileName = "Cloud-Moon";
+			break;
+		}
+
+		return getFilePathFromFileName(iconFileName + ".png");
+	}
+
+	private String getFilePathFromFileName(String fileName) {
+		Path filePath = null;
 		try {
-			jnkjf = Paths.get(getClass()
-					.getResource("/course_generator/images/climacons/SVG/Converted/" + iconFileName + ".png").toURI());
-			System.out.println(jnkjf.toString());
+			filePath = Paths.get(
+					getClass().getResource("/course_generator/images/climacons/SVG/Converted/" + fileName).toURI());
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return jnkjf.toString();
+		return filePath.toString();
 	}
 
 }

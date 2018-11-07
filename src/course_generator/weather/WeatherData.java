@@ -17,17 +17,20 @@ public class WeatherData {
 	private String MoonPhase;// :0.43,
 	// "precipIntensity": 0,
 	// "precipIntensityMax": 0,
+	// "precipIntensityMaxTime": 255657600,
 	// "precipProbability": 0,
+	private String PrecipAccumulation; // ": 7.337,
+	private String PrecipType; // ": "snow",
 	/** The daytime high temperature. **/
 	private String TemperatureHigh;
-	// "temperatureHighTime": 1473894000,
+	private String TemperatureHighTime;// ": 1473894000,
 	/** The overnight low temperature. **/
 	private String TemperatureLow; // ":32.42,
-	// "temperatureLowTime": 1473944400,
-	// "apparentTemperatureHigh": 54.27,
-	// "apparentTemperatureHighTime": 1473894000,
-	// "apparentTemperatureLow": 32.42,
-	// "apparentTemperatureLowTime": 1473944400,
+	private String TemperatureLowTime;// ": 1473944400,
+	private String ApparentTemperatureHigh; // ": 54.27,
+	private String ApparentTemperatureHighTime; // ": 1473894000,
+	private String ApparentTemperatureLow; // ": 32.42,
+	private String ApparentTemperatureLowTime; // ": 1473944400,
 	// "dewPoint": 32.57,
 	// "humidity": 0.63,
 	// "pressure": 1016.68,
@@ -41,122 +44,149 @@ public class WeatherData {
 	// "uvIndexTime": 1473879600,
 	// "visibility": 3.97,
 	/** The minimum temperature during a given date **/
-	private String TemperatureMin;// ":38.41,
-	// "temperatureMinTime": 1473854400,
+	// DEPRECATED "TemperatureMin:38.41,
+	// DEPRECATED "temperatureMinTime": 1473854400,
 	/** The maximum temperature during a given date **/
-	private String TemperatureMax;// ":54.27,
-	// "temperatureMaxTime": 1473894000,
-	// "apparentTemperatureMin": 38.41,
-	// "apparentTemperatureMinTime": 1473854400,
-	// "apparentTemperatureMax": 54.27,
-	// "apparentTemperatureMaxTime": 1473894000
+	// DEPRECATED "emperatureMax":54.27,
+	// DEPRECATED "temperatureMaxTime": 1473894000,
+	// DEPRECATED "apparentTemperatureMin": 38.41,
+	// DEPRECATED "apparentTemperatureMinTime": 1473854400,
+	// DEPRECATED "apparentTemperatureMax": 54.27,
+	// DEPRECATED "apparentTemperatureMaxTime": 1473894000
 
 	// Hourly data points
 	private String Temperature;
-
 
 	public DateTime getTime() {
 		return Time;
 	}
 
-
 	public void setTime(DateTime time) {
 		Time = time;
 	}
-
 
 	public void setSummary(String summary) {
 		Summary = summary;
 	}
 
-
 	public void setIcon(String icon) {
 		Icon = icon;
 	}
-
 
 	public String getIcon() {
 		return Icon;
 	}
 
-
 	public DateTime getDate() {
 		return Time;
 	}
-
 
 	public String getSummary() {
 		return Summary;
 	}
 
-
 	public String getMoonPhase() {
 		return MoonPhase;
 	}
-
 
 	public void setMoonPhase(String moonPhase) {
 		MoonPhase = moonPhase;
 	}
 
-
 	public String getTemperature() {
 		return Temperature;
 	}
-
 
 	public void setTemperature(String temperature) {
 		Temperature = temperature;
 	}
 
-
 	public String getTemperatureHigh() {
 		return TemperatureHigh;
 	}
-
 
 	public void setTemperatureHigh(String temperatureHigh) {
 		TemperatureHigh = temperatureHigh;
 	}
 
+	public String getTemperatureHighTime() {
+		return TemperatureHighTime;
+	}
+
+	public void setTemperatureHighTime(String temperatureHighTime) {
+		TemperatureHighTime = temperatureHighTime;
+	}
 
 	public String getTemperatureLow() {
 		return TemperatureLow;
 	}
 
-
 	public void setTemperatureLow(String temperatureLow) {
 		TemperatureLow = temperatureLow;
 	}
 
+	public String getTemperatureLowTime() {
+		return TemperatureLowTime;
+	}
+
+	public void setTemperatureLowTime(String temperatureLowTime) {
+		TemperatureLowTime = temperatureLowTime;
+	}
+
+	public String getApparentTemperatureHigh() {
+		return ApparentTemperatureHigh;
+	}
+
+	public void setApparentTemperatureHigh(String apparentTemperatureHigh) {
+		ApparentTemperatureHigh = apparentTemperatureHigh;
+	}
+
+	public String getApparentTemperatureHighTime() {
+		return ApparentTemperatureHighTime;
+	}
+
+	public void setApparentTemperatureHighTime(String apparentTemperatureHighTime) {
+		ApparentTemperatureHighTime = apparentTemperatureHighTime;
+	}
+
+	public String getApparentTemperatureLow() {
+		return ApparentTemperatureLow;
+	}
+
+	public void setApparentTemperatureLow(String apparentTemperatureLow) {
+		ApparentTemperatureLow = apparentTemperatureLow;
+	}
+
+	public String getApparentTemperatureLowTime() {
+		return ApparentTemperatureLowTime;
+	}
+
+	public void setApparentTemperatureLowTime(String apparentTemperatureLowTime) {
+		ApparentTemperatureLowTime = apparentTemperatureLowTime;
+	}
 
 	public String getWindSpeed() {
 		return WindSpeed;
 	}
 
-
 	public void setWindSpeed(String windSpeed) {
 		WindSpeed = windSpeed;
 	}
 
-
-	public String getTemperatureMin() {
-		return TemperatureMin;
+	public String getPrecipAccumulation() {
+		return PrecipAccumulation;
 	}
 
-
-	public void setTemperatureMin(String temperatureMin) {
-		TemperatureMin = temperatureMin;
+	public void setPrecipAccumulation(String precipAccumulation) {
+		PrecipAccumulation = precipAccumulation;
 	}
 
-
-	public String getTemperatureMax() {
-		return TemperatureMax;
+	public String getPrecipType() {
+		return PrecipType;
 	}
 
-
-	public void setTemperatureMax(String temperatureMax) {
-		TemperatureMax = temperatureMax;
+	public void setPrecipType(String precipType) {
+		PrecipType = precipType;
 	}
 
 }

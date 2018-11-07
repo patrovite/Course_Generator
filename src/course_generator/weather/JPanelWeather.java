@@ -45,21 +45,21 @@ import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
 public class JPanelWeather extends JPanel {
-	private static final long	serialVersionUID	= -7168142806619093218L;
-	private ResourceBundle		bundle;
-	private CgSettings			settings				= null;
-	private JEditorPane			editorStat;
-	private JScrollPane			scrollPaneStat;
-	private JToolBar				toolBar;
-	private JButton				btWeatherDataSave;
-	private JButton				btWeatherRefresh;
-	private JLabel					lbInformation;
-	private JMenuItem				InformationWarning;
-	private TrackData				track					= null;
+	private static final long serialVersionUID = -7168142806619093218L;
+	private ResourceBundle bundle;
+	private CgSettings settings = null;
+	private JEditorPane editorStat;
+	private JScrollPane scrollPaneStat;
+	private JToolBar toolBar;
+	private JButton btWeatherDataSave;
+	private JButton btWeatherRefresh;
+	private JLabel lbInformation;
+	private JMenuItem InformationWarning;
+	private TrackData track = null;
 
-	private Double					Latitude;
-	private Double					Longitude;
-	private DateTime				StartTime;
+	private Double Latitude;
+	private Double Longitude;
+	private DateTime StartTime;
 
 	public JPanelWeather(CgSettings settings) {
 		super();
@@ -199,52 +199,38 @@ public class JPanelWeather extends JPanel {
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
 		sb = Utils.sbReplace(sb, "@0", Utils.uTemperatureToString(settings.Unit));
-		sb = Utils.sbReplace(sb, "@1", Utils.uTemperatureToString(settings.Unit));
-		sb = Utils.sbReplace(sb, "@2", Utils.uSpeed2String(settings.Unit, false));
-		sb = Utils.sbReplace(sb, "@3", Utils.uTemperatureToString(settings.Unit));
-		sb = Utils.sbReplace(sb, "@4", Utils.uTemperatureToString(settings.Unit));
+		sb = Utils.sbReplace(sb, "@1", Utils.uSpeed2String(settings.Unit, false));
 
 		for (int totalForecasts = 0; totalForecasts < 3; ++totalForecasts) {
 			previousWeatherData
 					.RetrieveWeatherData(Instant.ofEpochMilli(StartTime.minusYears(totalForecasts + 1).getMillis()));
+			WeatherData currentDailyWeather = previousWeatherData.getDailyWeatherData();
+
+			// TODO Add a function to convert unix time to string
+//TODO Add thermometer and precip type icons
 
 			int index = 600 + totalForecasts * 100;
 
-			sb = Utils.sbReplace(sb, "@" + index++, fmt.print(previousWeatherData.getDailyWeatherData().getDate()));
-
-			sb = Utils.sbReplace(sb,
-					"@602",
-					addImage(previousWeatherData.getIconFilePath()));
-			//"<img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==\"/>");//previousWeatherData.getMoonPhase());
-
-			sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getDailyWeatherData().getSummary());
-			sb = Utils.sbReplace(sb, "@" + index++, previousWeatherData.getDailyWeatherData().getMoonPhase());
-			sb = Utils.sbReplace(sb,
-					"@" + index++,
-					Utils.FormatTemperature(
-							Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureHigh()),
-							settings.Unit));
-			sb = Utils.sbReplace(sb,
-					"@" + index++,
-					Utils.FormatTemperature(
-							Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureLow()),
-							settings.Unit));
-			sb = Utils.sbReplace(sb,
-					"@" + index++,
-					Utils.FormatSpeed(Double.valueOf(previousWeatherData.getDailyWeatherData().getWindSpeed()),
-							settings.Unit,
-							false,
-							false));
-			sb = Utils.sbReplace(sb,
-					"@" + index++,
-					Utils.FormatTemperature(
-							Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureMin()),
-							settings.Unit));
-			sb = Utils.sbReplace(sb,
-					"@" + index++,
-					Utils.FormatTemperature(
-							Double.valueOf(previousWeatherData.getDailyWeatherData().getTemperatureMax()),
-							settings.Unit));
+			sb = Utils.sbReplace(sb, "@" + index++, fmt.print(currentDailyWeather.getDate()));
+			sb = Utils.sbReplace(sb, "@" + index++, addImage(previousWeatherData.getSummaryIconFilePath()));
+			sb = Utils.sbReplace(sb, "@" + index++, currentDailyWeather.getSummary());
+			// "<img
+			// src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==\"/>");//previousWeatherData.getMoonPhase());
+			sb = Utils.sbReplace(sb, "@" + index++,
+					Utils.FormatTemperature(Double.valueOf(currentDailyWeather.getTemperatureHigh()), settings.Unit)
+							+ ", " + Utils.FormatTemperature(
+									Double.valueOf(currentDailyWeather.getTemperatureHighTime()), settings.Unit));
+			sb = Utils.sbReplace(sb, "@" + index++,
+					currentDailyWeather.getTemperatureLow() + ", " + currentDailyWeather.getTemperatureLowTime());
+			sb = Utils.sbReplace(sb, "@" + index++,
+					Utils.FormatSpeed(Double.valueOf(currentDailyWeather.getWindSpeed()), settings.Unit, false, false));
+			sb = Utils.sbReplace(sb, "@" + index++, currentDailyWeather.getApparentTemperatureHigh() + ", "
+					+ currentDailyWeather.getApparentTemperatureHighTime());
+			sb = Utils.sbReplace(sb, "@" + index++, currentDailyWeather.getApparentTemperatureLow() + ", "
+					+ currentDailyWeather.getApparentTemperatureLowTime());
+			sb = Utils.sbReplace(sb, "@" + index++, currentDailyWeather.getPrecipType());
+			sb = Utils.sbReplace(sb, "@" + index++, currentDailyWeather.getPrecipAccumulation());
+			sb = Utils.sbReplace(sb, "@" + index++, currentDailyWeather.getMoonPhase());
 		}
 
 		// -- Refresh the view and set the cursor position
@@ -263,15 +249,11 @@ public class JPanelWeather extends JPanel {
 	 */
 	private void SaveStat() {
 		String s;
-		s = Utils.SaveDialog(this,
-				settings.LastDir,
-				"",
-				".html",
-				bundle.getString("frmMain.HTMLFile"),
-				true,
+		s = Utils.SaveDialog(this, settings.LastDir, "", ".html", bundle.getString("frmMain.HTMLFile"), true,
 				bundle.getString("frmMain.FileExist"));
-		//replace all the images by base64
-		// because JEditorpane doesnt support displaying base 64 but saving the htnl with the absolute path wont work because the images are in the jar.
+		// replace all the images by base64
+		// because JEditorpane doesnt support displaying base 64 but saving the htnl
+		// with the absolute path wont work because the images are in the jar.
 		if (!s.isEmpty()) {
 			// -- Save the statistics
 			// track.SaveCGX(s, 0, track.data.size() - 1);
