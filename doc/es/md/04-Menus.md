@@ -1,96 +1,96 @@
-# Menus
-## "File" Menu
+# Menús
+## Menú "Archivo"
 
-* **Open GPX** : Loads a GPX format file. Keyboard shortcut: [MAJ+CTRL+O].
+* **Abrir GPX** : Carga un archivo en formato GPX. Atajo de teclado: [MAJ+CTRL+O].
 
-* **Recent GPX files** : Displays a list of the last 5 GPX files that have been loaded. Clicking on one of those files will load them again.
+* **Archivos GPX recientes** : Muestra una lista de los 5 últimos archivos GPX que han sido abiertos. Haciendo clic en uno de esos archivos se volverá a abrir de nuevo.
 
-* **Open CGX** : Loads a CGX format file. Keyboard shortcut: [CTRL+O].
+* **Abrir CGX** : Carga un archivo en formato CGX. Atajo de teclado: [CTRL+O].
 
-* **Recent CGX files** : Displays a list of the last 5 CGX files that have been loaded. Clicking on one of those files will load them again.
+* **Recent CGX files** : Muestra una lista de los 5 últimos archivos CGX que han sido abiertos. Haciendo clic en uno de esos archivos se volverá a abrir de nuevo.
 
-* **Save as CGX** : Saves the course data in CGX format.
-All the course data (difficulty, fatigue coefficient, aid station time...) will be asved. Keyboard shortcut: [CTRL+S].
+* **Guardar como CGX** : Guarda los datos de la ruta en formato CGX.
+Todos los datos de la ruta (dificultad, coeficiente de fatiga, tiempo a la estación de ayuda...) serán guardados. Atajo de teclado: [CTRL+S].
 
-* **Save as GPX** : Saves the course data in GPX format.
-Warning! Only latitude, longitude and altitude data will be saved.
+* **Guardar como GPX** : Guarda los datos de la ruta en formato GPX.
+¡Atención! Solo serán guardados los datos de latitud, longitud y datos de altitud.
 
-* **Save as CSV** : Saves the course data in CSV format.
-The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
+* **Guardar como CSV** : Guarda los datos de la ruta en formato CSV.
+El archivo guardado podrá ser abierto como una hoja de cálculo mediante Excel o LibreOffice Calc.
 
-* **Import a GPX file** : Imports a GPX file at the beginning or end of the current course
+* **Importar un archivo GPX** : Importa un archivo GPX al inicio o al final de la ruta actual.
 
-* **Import a CGX file** : Imports a CGX file at the beginning or end of the current course.
+* **Import a CGX file** : Importa un archivo CGX al inicio o al final de la ruta actual.
 
-* **Save selection as CGX** : Saves the selected line(s) in a CGX file.
-All the course data (difficulties, fatigue coefficient, aid station time....) will be saved.
+* **Guardar la selección como CGX** : Guarda la(s) línea(s) seleccionadas en un archivo CGX.
+Todos los datos de la ruta (dificultad, coeficiente de fatiga....) serán guardados.
 
-* **Save selection as GPX** : Saves the selected lines in a GPX file.
-Warning! Only latitude, longitude and altitude data will be saved.
+* **Guardar la selección como GPX** : Guarda la(s) línea(s) seleccionadas en un archivo GPX.
+¡Atención! Solo serán guardados los datos de latitud, longitud y datos de altitud.
 
-* **Save selection as CSV** : Saves the selected lines in a CSV file.
-The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
+* **Guardar la selección como CSV** : Guarda las líneas seleccionadas en un archivo CSV.
+El fichero guardado podrá ser abierto como una hoja de cálculo mediante Excel o LibreOffice Calc.
 
-* **Import points** : Imports waypoints as CGP format.
+* **Importar puntos** : Importa puntos de referencia en formato CGP.
 
-* **Export points** : Saves the selected waypoints in a CGP file.
+* **Exportar puntos** : Guarda los puntos de referencia seleccionados en un archivo CGP.
 
-* **Export tags as waypoints** : Saves the selected tags as waypoints in a GPX file. This allows to benefitiate, when using a GPS device, additional information on top of the course.
+* **Exportar etiquetas como puntos de referencia** : Guarda las etiquetas seleccionadas como puntos de referencia en un archivo GPX. Esto permite ser de utilidad cuando se utilice un dispositivo GPS, como información adicional de la ruta.
 
-* **Exit Course Generator** : Exits **Course Generator**. Keyboard shortcut: [Alt+F4].
+* **Salir de Course Generator** : Sale de **Course Generator**. Atajo de teclado: [Alt+F4].
 
-## "Edit" Menu 
+## Menú "Editar"
 
-* **Copy** : Copies the selected line in the clipboard. Keyboard shortcut: [CTRL+C].
+* **Copiar** : Copia la línea deleccionada en el portapapeles. Atajo de teclado: [CTRL+C].
 
-* **Search a point...** : Searches a GPS point using longitude and latitude coordinates. The closest point found will be returned. Keyboard shortcut: [CTRL+F].
+* **Buscar un punto...** : Busca un punto GPS utilizando las coordenadas de longitud y latitud. Se mostrará el punto encontrado más cercano. Atajo de teclado: [CTRL+F].
 
-* **Read only mode** : Select or unselect the read only mode. In this mode no parameters modification is allowed.
+* **Modo solo lectura** : Selecciona o deselecciona el modo de solo lectura. En este modo no se permiten modificaciones de parámetros.
 
-* **Mark the current position** : Sets a mark on the selected line. If the line already has a mark, the mark will be deleted. Keyboard shortcut: [F6].
+* **Marcar la posición actual** : Establece una marca en la línea seleccionada. Si la línea ya tenía una marca, la marca será eliminada. Atajo de teclado: [F6].
 
-* **Go to the next mark** : Locates and selects the next mark. Keyboard shortcut: [F7].
+* **Ir a la marca siguiente** : Localiza y selecciona la marca siguiente. Atajo de teclado: [F7].
 
-* **Go to the previous mark** : Locates and selects the previous mark. Keyboard shortcut: [Ctrl+F7].
+* **Ir a la marca previa** : Localiza y selecciona la marca previa. Atajo de teclado: [Ctrl+F7].
 
-## "Display" Menu 
+## Menú "Mostrar" 
 
-* **Generate mini roadbook** : Opens a window and displays the course's mini roadbook.
+* **Generar mini libro de ruta** : Abre una ventana y muestra el mini libro de ruta.
 
-## "Tools" Menu
+## Menú "Herramientas"
 
-* **Find Min/Max** : Determines the highest and lowest course points.
+* **Encontrar Min/Max** : Determina los puntos más altos y bajos de la ruta.
 
-* **Reverse track** : Reverse the course direction.
+* **Ruta inversa** : Invierte la dirección de la ruta.
 
-* **Define a new start**: For a given course as a loop, sets the selected point as the start of the course.
+* **Definir un nuevo comienzo** : Para una ruta establecida como un bucle, establece el punto seleccionado como el comienzo de la ruta.
 
-* **Estimate track time** : Compute the estimated time for each of the course's points. Keyboard shortcut: [F5].
+* **Tiempo estimado de la ruta** : Calcula el tiempo estimado para cada punto de la ruta. Atajo de teclado: [F5].
 
-* **Update standard curves** : The standard "Speed/slope" will be updated with standard settings. It's necessary to use this menu if you modified a standard curve and you want to retrieve the standard settings. It's also necessary after a software update that introduce new standard curves. It doesn't affect the custom curves.  
+* **Actualizar las curvas estándar** : El estándar "Velocidad/Desnivel" será actualizado con los ajustes estándar. Es necesario utilizar este menú si modificaste un estándar de una curva y quieres regresarlo a los ajustes estándar. También es necesario después de una actualización del software que introduzca un nuevo estándar de curvas. No afecta a las curvas personalizadas.
 
-* **Open the "Speed/Slope" folder** : Opens the folder containing the speed curve files in File Explorer.
+* **Abrir la carpeta de "Velocidad/Desnivel"** : Abre una carpeta que contenga los archivos de la velocidad de curva en el navegador de archivos.
 
-## "Parameters" Menu 
+## Menú "Parámetros"
 
-* **Track settings...** : Opens the dialog to configure the course settings. Keyboard shortcut: [F9].
+* **Ajustes de la ruta...** : Abre el diálogo para configurar los ajustes de la ruta. Atajo de teclado: [F9].
 
-* **Speed/Slope curves...** : Opens the dialog to choose, create, modify or delete a speed/slope curve.
+* **Curvas Velocidad/Desnivel...** : Abre el diálogo para escoger, crear, modificar o eliminar una curva de Velocidad/Desnivel.
 
-* **Course Generator settings...** : Opens the dialog to change the main settings of **Course Generator**.
+* **Ajustes de Course Generator...** : Abre el diálogo para cambiar los ajustes principales de **Course Generator**.
 
-## "Help" Menu 
+## Menú "Ayuda"
 
-* **Help** : Displays this current document.
+* **Ayuda** : Muestra el documento actual.
 
-* **F.A.Q.** : Open your browser and display the Frequently Asked Question page about **Course Generator**. 
+* **F.A.Q.** : Abre tu navegador y muestra la página de las preguntas más frecuentes de **Course Generator**. 
 
-* **Download courses** : Open your browser and display the Freemovin page where you can download tracks in CGX format.
+* **Descargar rutas** : Abre tu navegador y muestra la página de Freemovin desde donde poder descargar rutas en formato CGX.
 
-* **Check for update** : Check if a **Course Generator** update exists.
+* **Comprobar actualizaciones** : Comprueba si existe una actualización de **Course Generator**.
 
-* **Support the author...** : This menu opens your web browser and displays a webpage where a donation can be made to the author in order to support him continue developing **Course Generator**.
+* **Apoyar al autor...** : Este menú abre tu navegador y muestra un sitio web donde podrás realizar una donación para apoyar al autor a continuar desarrollando **Course Generator**.
 
-* **Course Generator webpage...** : This menu opens your web browser onto the main webpage of **Course Generator**.
+* **Sitio web de Course Generator...** : Este menú abre en tu navegador la página web de **Course Generator**.
 
-* **About...** : Displays the copyright and version information of **Course Generator**.
+* **Acerca de...** : Muestra la licencia y la información de la versión de **Course Generator**.
