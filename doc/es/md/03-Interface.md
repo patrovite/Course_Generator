@@ -1,12 +1,12 @@
-﻿# The GUI
-Upon starting the software, the following window is displayed : 
+﻿# La interfaz gráfica del usuario (o GUI por su siglas en inglés)
+Una vez arrancado el software, se mostrará la siguiente ventana: 
 
-![Main GUI](./images/CG40_Main.png)
+![GUI principal](./images/CG40_Main.png)
 
-The software's GUI is made of (from top to bottom):
+La interfaz del software se compone de (de arriba abajo):
 
-* A ribbon on top of the window.
-* A toolbar containing the most used tools.
-* Several tabs giving access, for a given course, to the profile, data, summary, statistics and analysis.
-* A map.
-* A footer showing quick important information.
+* Una franja en la parte superior de la ventana.
+* Una barra de herramientas que incluye las herramientas más utilizadas.
+* Varias pestañas que dan acceso, a una ruta, al perfil, datos, resumen, estadísticas y análisis.
+* Un mapa.
+* Un pie de página que muestra de manera rápida información importánte.
