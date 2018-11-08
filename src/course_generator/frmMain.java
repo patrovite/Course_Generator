@@ -332,15 +332,14 @@ public class frmMain extends javax.swing.JFrame {
 		if (ProgDir.endsWith("/."))
 			ProgDir = ProgDir.substring(0, ProgDir.length() - 2);
 
-		
-		//-- Create the tiles cache folders if necessary
-		File cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OPENSTREETMAP_CACHE_DIR);
+		// -- Create the tiles cache folders if necessary
+		File cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
 		cacheDir.mkdirs();
-		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OPENTOPOMAP_CACHE_DIR);
+		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENTOPOMAP_CACHE_DIR);
 		cacheDir.mkdirs();
-		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OUTDOORS_CACHE_DIR);
+		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OUTDOORS_CACHE_DIR);
 		cacheDir.mkdirs();
-		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.BING_CACHE_DIR);
+		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.BING_CACHE_DIR);
 		cacheDir.mkdirs();
 
 		// -- Initialize data
@@ -395,9 +394,9 @@ public class frmMain extends javax.swing.JFrame {
 			if (Settings.Language.equalsIgnoreCase("FR")) {
 				Locale.setDefault(Locale.FRANCE);
 			} else if (Settings.Language.equalsIgnoreCase("EN")) {
-				Locale.setDefault(Locale.US);	
+				Locale.setDefault(Locale.US);
 			} else if (Settings.Language.equalsIgnoreCase("ES")) {
-				Locale.setDefault(new Locale("es","ES"));					
+				Locale.setDefault(new Locale("es", "ES"));
 			} else {
 				Locale.setDefault(Locale.US);
 			}
@@ -488,14 +487,18 @@ public class frmMain extends javax.swing.JFrame {
 		String tmpstr = DataDir + "/" + CgConst.CG_DIR + "/OpenStreetMapTileCache";
 		Path DataFolder = Paths.get(tmpstr);
 		if (Files.exists(DataFolder)) {
-			//String s = "Le répertoire %s n'est plus utile.\nVous pouvez le supprimer afin de gagner de l'espace disque."; 
-			JOptionPane.showMessageDialog(this, String.format(bundle.getString("frmMain.UnusedTileCacheDir"),tmpstr), "Course Generator", JOptionPane.INFORMATION_MESSAGE);
-//			JOptionPane.showConfirmDialog(this, bundle.getString("frmMain.QuestionInstallCurves"), "",
-//					JOptionPane.OK_OPTION);
-			//JOptionPane.showConfirmDialog(this, "Le répertoire "+tmpstr+ " n'est plus utile. Vous pouvez le supprimer afin de gagner de l'espace disque.", "",
-			//		JOptionPane.OK_OPTION);
+			// String s = "Le répertoire %s n'est plus utile.\nVous pouvez le supprimer
+			// afin de gagner de l'espace disque.";
+			JOptionPane.showMessageDialog(this, String.format(bundle.getString("frmMain.UnusedTileCacheDir"), tmpstr),
+					"Course Generator", JOptionPane.INFORMATION_MESSAGE);
+			// JOptionPane.showConfirmDialog(this,
+			// bundle.getString("frmMain.QuestionInstallCurves"), "",
+			// JOptionPane.OK_OPTION);
+			// JOptionPane.showConfirmDialog(this, "Le répertoire "+tmpstr+ " n'est plus
+			// utile. Vous pouvez le supprimer afin de gagner de l'espace disque.", "",
+			// JOptionPane.OK_OPTION);
 		}
-		
+
 		ExportCurvesFromResource(false);
 
 		// -- Display the splash screen
@@ -1357,7 +1360,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Settings Course Generator
 		// -----------------------------------------
 		mnuCGSettings = new javax.swing.JMenuItem();
-		mnuCGSettings.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, java.awt.event.InputEvent.SHIFT_MASK));
+		mnuCGSettings.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9,
+				java.awt.event.InputEvent.SHIFT_MASK));
 		mnuCGSettings.setIcon(Utils.getIcon(this, "setting.png", Settings.MenuIconSize));
 		mnuCGSettings.setText(bundle.getString("frmMain.mnuCGSettings.text"));
 		mnuCGSettings.addActionListener(new java.awt.event.ActionListener() {
@@ -1648,7 +1652,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
-					panelWeather.refresh(Track);
+					panelWeather.refresh(Track, false);
 
 					Settings.previousCGXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
@@ -2976,7 +2980,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
-					panelWeather.refresh(Track);
+					panelWeather.refresh(Track, false);
 					Settings.previousGPXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
 				} catch (Exception e) {
@@ -3075,7 +3079,7 @@ public class frmMain extends javax.swing.JFrame {
 		CgData firstTrackPoint = Track.data.get(0);
 		DateTime startTime = firstTrackPoint.getHour();
 		panelWeather.SetParameters(firstTrackPoint.getLatitude(), firstTrackPoint.getLongitude(), startTime);
-		panelWeather.refresh(Track);
+		panelWeather.refresh(Track, false);
 
 		bNoBackup = true;
 
@@ -3196,7 +3200,7 @@ public class frmMain extends javax.swing.JFrame {
 		CgData firstTrackPoint = Track.data.get(0);
 		DateTime startTime = firstTrackPoint.getHour();
 		panelWeather.SetParameters(firstTrackPoint.getLatitude(), firstTrackPoint.getLongitude(), startTime);
-		panelWeather.refresh(Track);
+		panelWeather.refresh(Track, false);
 
 		RefreshMruCGX();
 		bNoBackup = true;
@@ -3260,7 +3264,7 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-	
+
 	/**
 	 * Calculate the offline map directories size
 	 */

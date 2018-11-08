@@ -23,7 +23,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -121,7 +121,7 @@ public class JPanelWeather extends JPanel {
 		btWeatherRefresh.setFocusable(false);
 		btWeatherRefresh.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				refresh(track);
+				refresh(track, true);
 			}
 		});
 		toolBar.add(btWeatherRefresh);
@@ -141,7 +141,7 @@ public class JPanelWeather extends JPanel {
 	/**
 	 * Refresh the statistic tab
 	 */
-	public void refresh(TrackData track) {
+	public void refresh(TrackData track, boolean retrieveOnlineData) {
 		if (track == null)
 			return;
 
@@ -200,23 +200,41 @@ public class JPanelWeather extends JPanel {
 		InformationWarning.setVisible(false);
 		// if(not online or api key missing, update the label and display the waring)
 
-		WeatherHistory previousWeatherData = new WeatherHistory(settings, Latitude, Longitude);
+		ArrayList<WeatherHistory> previousWeatherHistory = new ArrayList<WeatherHistory>();
+		if (retrieveOnlineData) {
+			for (int totalForecasts = 0; totalForecasts < 3; ++totalForecasts) {
+				WeatherHistory previousWeatherData = new WeatherHistory(settings, track, Latitude, Longitude,
+						totalForecasts + 1);
+
+				previousWeatherData.RetrieveWeatherData();
+				previousWeatherHistory.add(previousWeatherData);
+			}
+		} else {
+			// deserialize the track
+			// previousWeatherHistory = track.getHistoricalWeather();
+		}
+
+		if (previousWeatherHistory.size() == 0) {
+			// -- Refresh the view and set the cursor position
+			editorStat.setText("");
+			editorStat.setCaretPosition(0);
+			return;
+		}
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("EE yyyy-MM-dd HH:mm");
 
 		sb = Utils.sbReplace(sb, "@0", Utils.uTemperatureToString(settings.Unit));
 		sb = Utils.sbReplace(sb, "@1", Utils.uSpeed2String(settings.Unit, false));
 
 		for (int totalForecasts = 0; totalForecasts < 3; ++totalForecasts) {
-			previousWeatherData
-					.RetrieveWeatherData(Instant.ofEpochMilli(StartTime.minusYears(totalForecasts + 1).getMillis()));
-			WeatherData previousDailyWeather = previousWeatherData.getDailyWeatherData();
+
+			WeatherData previousDailyWeather = previousWeatherHistory.get(totalForecasts).getDailyWeatherData();
 
 			// TODO add a row "Daylight hours??????
 
 			int index = 600 + totalForecasts * 100;
 
 			sb = Utils.sbReplace(sb, "@" + index++, fmt.print(previousDailyWeather.getDate()));
-			sb = Utils.sbReplace(sb, "@" + index++, addImage(previousWeatherData.getSummaryIconFilePath()));
+			sb = Utils.sbReplace(sb, "@" + index++, addImage(previousDailyWeather.getSummaryIconFilePath()));
 			sb = Utils.sbReplace(sb, "@" + index++, previousDailyWeather.getSummary());
 			// "<img
 			// src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==\"/>");//previousWeatherData.getMoonPhase());
@@ -224,7 +242,7 @@ public class JPanelWeather extends JPanel {
 			sb = Utils.sbReplace(sb, "@" + index++, displayTemperature(previousDailyWeather.getTemperatureHigh()));
 			sb = Utils
 					.sbReplace(sb, "@" + index++,
-							addImage(previousWeatherData.getThermometerIconFilePath(
+							addImage(previousDailyWeather.getThermometerIconFilePath(
 									Utils.FormatTemperature(Double.valueOf(previousDailyWeather.getTemperatureHigh()),
 											CgConst.UNIT_MILES_FEET))));
 			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getTemperatureHighTime()));
@@ -232,7 +250,7 @@ public class JPanelWeather extends JPanel {
 			sb = Utils.sbReplace(sb, "@" + index++, displayTemperature(previousDailyWeather.getTemperatureLow()));
 			sb = Utils
 					.sbReplace(sb, "@" + index++,
-							addImage(previousWeatherData.getThermometerIconFilePath(
+							addImage(previousDailyWeather.getThermometerIconFilePath(
 									Utils.FormatTemperature(Double.valueOf(previousDailyWeather.getTemperatureLow()),
 											CgConst.UNIT_MILES_FEET))));
 			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getTemperatureLowTime()));
@@ -246,7 +264,7 @@ public class JPanelWeather extends JPanel {
 					displayTemperature(previousDailyWeather.getApparentTemperatureHigh()));
 			sb = Utils
 					.sbReplace(sb, "@" + index++,
-							addImage(previousWeatherData.getThermometerIconFilePath(Utils.FormatTemperature(
+							addImage(previousDailyWeather.getThermometerIconFilePath(Utils.FormatTemperature(
 									Double.valueOf(previousDailyWeather.getApparentTemperatureHigh()),
 									CgConst.UNIT_MILES_FEET))));
 			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getApparentTemperatureHighTime()));
@@ -255,12 +273,12 @@ public class JPanelWeather extends JPanel {
 					displayTemperature(previousDailyWeather.getApparentTemperatureLow()));
 			sb = Utils
 					.sbReplace(sb, "@" + index++,
-							addImage(previousWeatherData.getThermometerIconFilePath(Utils.FormatTemperature(
+							addImage(previousDailyWeather.getThermometerIconFilePath(Utils.FormatTemperature(
 									Double.valueOf(previousDailyWeather.getApparentTemperatureLow()),
 									CgConst.UNIT_MILES_FEET))));
 			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getApparentTemperatureLowTime()));
 
-			sb = Utils.sbReplace(sb, "@" + index++, addImage(previousWeatherData.getPrecipitationTypeIconFilePath()));
+			sb = Utils.sbReplace(sb, "@" + index++, addImage(previousDailyWeather.getPrecipitationTypeIconFilePath()));
 			sb = Utils.sbReplace(sb, "@" + index++, previousDailyWeather.getPrecipAccumulation());
 
 			sb = Utils.sbReplace(sb, "@" + index++, previousDailyWeather.getMoonPhase());

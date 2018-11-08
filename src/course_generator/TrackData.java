@@ -65,6 +65,8 @@ import course_generator.utils.CgLog;
 import course_generator.utils.StatData;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
+import course_generator.weather.WeatherData;
+import course_generator.weather.WeatherHistory;
 
 /**
  *
@@ -81,6 +83,9 @@ public class TrackData {
 
 	/** Arraylist containing the main data **/
 	public ArrayList<CgData> data;
+
+	/** Arraylist containing the historical weather data **/
+	public ArrayList<WeatherHistory> weatherData;
 
 	/** Statistics data for 'in night' **/
 	public StatData tInNight;
@@ -210,6 +215,7 @@ public class TrackData {
 		param = new ParamData();
 		Paramfile = "Default";
 		data = new ArrayList<CgData>();
+		weatherData = new ArrayList<WeatherHistory>(3);
 		tInNight = new StatData();
 		tInDay = new StatData();
 		StatSlope = new StatData[13]; // : Array [0..12] of TStat;
@@ -1831,6 +1837,7 @@ public class TrackData {
 			nf.setGroupingUsed(false);
 			nf.setMaximumFractionDigits(7);
 
+			writer.writeStartElement("TRACKPOINTS");
 			int cmpt = 0;
 			for (int i = start; i <= end; i++) {
 				CgData r = data.get(i);
@@ -1844,7 +1851,6 @@ public class TrackData {
 				Utils.WriteStringToXML(writer, "COEFF", nf.format(r.getCoeff()));
 				Utils.WriteStringToXML(writer, "RECUP", nf.format(r.getRecovery()));
 				Utils.WriteIntToXML(writer, "TIMESECONDE", r.getTime());
-				Utils.WriteDoubleToXML(writer, "TEMPERATURE", r.getTemperature());
 				Utils.WriteIntToXML(writer, "EATTIME", r.getStation());
 				Utils.WriteIntToXML(writer, "TIMELIMIT", r.getTimeLimit());
 				Utils.WriteStringToXML(writer, "COMMENT", r.getComment());
@@ -1859,6 +1865,38 @@ public class TrackData {
 				writer.writeEndElement();
 				cmpt++;
 			} // for
+				// TRACKPOINT
+			writer.writeEndElement();
+
+			// HISTORICAL WEATHER DATA
+			writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINTS");
+			for (int i = 0; i < 3; i++) {
+				WeatherData currentWeatherData = weatherData.get(i).getDailyWeatherData();
+				writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINT");
+				Utils.WriteStringToXML(writer, "DATE", nf.format(currentWeatherData.getDate()));
+				Utils.WriteStringToXML(writer, "SUMMARY", nf.format(currentWeatherData.getSummary()));
+				Utils.WriteStringToXML(writer, "HIGH_TEMPERATURE", currentWeatherData.getTemperatureHigh());
+				Utils.WriteStringToXML(writer, "HIGH_TEMPERATURE_TIME", currentWeatherData.getTemperatureHighTime());
+				Utils.WriteStringToXML(writer, "LOW_TEMPERATURE", currentWeatherData.getTemperatureLow());
+				Utils.WriteStringToXML(writer, "LOW_TEMPERATURE_TIME", currentWeatherData.getTemperatureLowTime());
+				Utils.WriteStringToXML(writer, "WIND_SPEED", currentWeatherData.getWindSpeed());
+				Utils.WriteStringToXML(writer, "APPARENT_HIGH_TEMPERATURE",
+						currentWeatherData.getApparentTemperatureHigh());
+				Utils.WriteStringToXML(writer, "APPARENT_HIGH_TEMPERATURE_TIME",
+						currentWeatherData.getApparentTemperatureHighTime());
+				Utils.WriteStringToXML(writer, "APARENT_LOW_TEMPERATURE",
+						currentWeatherData.getApparentTemperatureLow());
+				Utils.WriteStringToXML(writer, "APARENT_LOW_TEMPERATURE_TIME",
+						currentWeatherData.getApparentTemperatureLowTime());
+				Utils.WriteStringToXML(writer, "PRECIPITATION_TYPE", currentWeatherData.getPrecipType());
+				Utils.WriteStringToXML(writer, "PRECIPITATION_ACCUMULATION",
+						currentWeatherData.getPrecipAccumulation());
+				Utils.WriteStringToXML(writer, "MOON_PHASE", currentWeatherData.getMoonPhase());
+
+				writer.writeEndElement();
+			}
+			writer.writeEndElement();
+
 			writer.writeEndElement();
 
 			writer.writeEndDocument();
@@ -2546,6 +2584,16 @@ public class TrackData {
 		d.bShowNightDay = bShowNightDay;
 		d.ReadOnly = ReadOnly;
 		return d;
+	}
+
+
+	public ArrayList<WeatherHistory> getHistoricalWeather() {
+		return weatherData;
+	}
+
+
+	public void setDailyWeatherData(WeatherHistory weatherHistory, int i) {
+		weatherData.set(i, weatherHistory);
 	}
 
 } // TrackData
