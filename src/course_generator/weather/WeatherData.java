@@ -49,7 +49,6 @@ public class WeatherData {
 	// "visibility": 3.97,
 	/** The minimum temperature during a given date **/
 
-
 	// DEPRECATED "TemperatureMin:38.41,
 	// DEPRECATED "temperatureMinTime": 1473854400,
 	/** The maximum temperature during a given date **/
@@ -67,51 +66,41 @@ public class WeatherData {
 		return Time;
 	}
 
-
 	public void setTime(DateTime time) {
 		Time = time;
 	}
-
 
 	public void setSummary(String summary) {
 		Summary = summary;
 	}
 
-
 	public void setIcon(String icon) {
 		Icon = icon;
 	}
-
 
 	public String getIcon() {
 		return Icon;
 	}
 
-
 	public DateTime getDate() {
 		return Time;
 	}
-
 
 	public void setDate(DateTime date) {
 		Time = date;
 	}
 
-
 	public String getSummary() {
 		return Summary;
 	}
-
 
 	public String getMoonPhase() {
 		return MoonPhase;
 	}
 
-
 	public void setMoonPhase(String moonPhase) {
 		MoonPhase = moonPhase;
 	}
-
 
 	/*
 	 * public String getTemperature() { return Temperature; }
@@ -123,111 +112,89 @@ public class WeatherData {
 		return TemperatureHigh;
 	}
 
-
 	public void setTemperatureHigh(String temperatureHigh) {
 		TemperatureHigh = temperatureHigh;
 	}
-
 
 	public String getTemperatureHighTime() {
 		return TemperatureHighTime;
 	}
 
-
 	public void setTemperatureHighTime(String temperatureHighTime) {
 		TemperatureHighTime = temperatureHighTime;
 	}
-
 
 	public String getTemperatureLow() {
 		return TemperatureLow;
 	}
 
-
 	public void setTemperatureLow(String temperatureLow) {
 		TemperatureLow = temperatureLow;
 	}
-
 
 	public String getTemperatureLowTime() {
 		return TemperatureLowTime;
 	}
 
-
 	public void setTemperatureLowTime(String temperatureLowTime) {
 		TemperatureLowTime = temperatureLowTime;
 	}
-
 
 	public String getApparentTemperatureHigh() {
 		return ApparentTemperatureHigh;
 	}
 
-
 	public void setApparentTemperatureHigh(String apparentTemperatureHigh) {
 		ApparentTemperatureHigh = apparentTemperatureHigh;
 	}
-
 
 	public String getApparentTemperatureHighTime() {
 		return ApparentTemperatureHighTime;
 	}
 
-
 	public void setApparentTemperatureHighTime(String apparentTemperatureHighTime) {
 		ApparentTemperatureHighTime = apparentTemperatureHighTime;
 	}
-
 
 	public String getApparentTemperatureLow() {
 		return ApparentTemperatureLow;
 	}
 
-
 	public void setApparentTemperatureLow(String apparentTemperatureLow) {
 		ApparentTemperatureLow = apparentTemperatureLow;
 	}
-
 
 	public String getApparentTemperatureLowTime() {
 		return ApparentTemperatureLowTime;
 	}
 
-
 	public void setApparentTemperatureLowTime(String apparentTemperatureLowTime) {
 		ApparentTemperatureLowTime = apparentTemperatureLowTime;
 	}
-
 
 	public String getWindSpeed() {
 		return WindSpeed;
 	}
 
-
 	public void setWindSpeed(String windSpeed) {
 		WindSpeed = windSpeed;
 	}
-
 
 	public String getPrecipAccumulation() {
 		return PrecipAccumulation;
 	}
 
-
 	public void setPrecipAccumulation(String precipAccumulation) {
 		PrecipAccumulation = precipAccumulation;
 	}
-
 
 	public String getPrecipType() {
 		return PrecipType;
 	}
 
-
 	public void setPrecipType(String precipType) {
 		PrecipType = precipType;
 	}
-
 
 	public String getSummaryIconFilePath() {
 		String iconFileName = "";
@@ -267,12 +234,10 @@ public class WeatherData {
 		return getFilePathFromFileName(iconFileName + ".png");
 	}
 
-
 	/**
 	 * Retrieves the appropriate icon name given a temperature value.
 	 * 
-	 * @param temperatureValue
-	 *            A temperature value in Fahrenheit.
+	 * @param temperatureValue A temperature value in Fahrenheit.
 	 * @return The icon file name.
 	 */
 	public String getThermometerIconFilePath(String temperatureValue) {
@@ -294,7 +259,6 @@ public class WeatherData {
 		return getFilePathFromFileName(iconFileName + ".png");
 	}
 
-
 	public String getPrecipitationTypeIconFilePath() {
 		String iconFileName = "";
 		switch (PrecipType.toLowerCase()) {
@@ -312,12 +276,10 @@ public class WeatherData {
 		return getFilePathFromFileName(iconFileName + ".png");
 	}
 
-
 	private String getFilePathFromFileName(String fileName) {
 		Path filePath = null;
 		try {
-			filePath = Paths.get(
-					getClass().getResource("/course_generator/images/climacons/SVG/Converted/" + fileName).toURI());
+			filePath = Paths.get(getClass().getResource("/course_generator/images/climacons/PNG/" + fileName).toURI());
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

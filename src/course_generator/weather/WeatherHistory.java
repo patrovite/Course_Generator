@@ -30,7 +30,6 @@ public class WeatherHistory {
 	private double Longitude;
 	private int PreviousYearNumber;
 
-
 	public WeatherHistory(CgSettings settings, TrackData track, Double latitude, Double longitude,
 			int previousYearNumber) {
 		Settings = settings;
@@ -42,6 +41,9 @@ public class WeatherHistory {
 		PreviousYearNumber = previousYearNumber;
 	}
 
+	public WeatherHistory(int temp) {
+
+	}
 
 	public void RetrieveWeatherData() {
 		CgData firstTrackPoint = Track.data.get(0);
@@ -66,7 +68,6 @@ public class WeatherHistory {
 					+ "'");
 		}
 	}
-
 
 	private void PopulateFields(String forecastData) {
 
@@ -106,14 +107,9 @@ public class WeatherHistory {
 
 	}
 
-
 	private void UpdateTrackWeatherData() {
-		if (Track.weatherData.get(PreviousYearNumber - 1) != null) {
-			Track.setDailyWeatherData(this, PreviousYearNumber - 1);
-
-		}
+		Track.setDailyWeatherData(this, PreviousYearNumber - 1);
 	}
-
 
 	private String retrieveStringElement(JSONObject forecastData, String element) {
 		String result;
@@ -126,7 +122,6 @@ public class WeatherHistory {
 		return result;
 	}
 
-
 	private String retrieveDoubleElement(JSONObject forecastData, String element) {
 		String result;
 		try {
@@ -138,7 +133,6 @@ public class WeatherHistory {
 		return result;
 	}
 
-
 	private String retrieveLongElement(JSONObject forecastData, String element) {
 		String result;
 		try {
@@ -149,7 +143,6 @@ public class WeatherHistory {
 		}
 		return result;
 	}
-
 
 	private DateTime retrieveDateTimeElement(JSONObject forecastData, String element) {
 		DateTime result;
@@ -164,11 +157,9 @@ public class WeatherHistory {
 		return result;
 	}
 
-
 	public ArrayList<WeatherData> getHourlyWeather() {
 		return Hourly;
 	}
-
 
 	public WeatherData getDailyWeatherData() {
 		return Daily;
