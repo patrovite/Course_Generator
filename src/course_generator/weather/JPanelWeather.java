@@ -221,7 +221,7 @@ public class JPanelWeather extends JPanel {
 		sb = Utils.sbReplace(sb, "@0", Utils.uTemperatureToString(settings.Unit));
 		sb = Utils.sbReplace(sb, "@1", Utils.uSpeed2String(settings.Unit, false));
 
-		for (int totalForecasts = 0; totalForecasts < 3; ++totalForecasts) {
+		for (int totalForecasts = 0; totalForecasts < previousWeatherHistory.size(); ++totalForecasts) {
 
 			WeatherData previousDailyWeather = previousWeatherHistory.get(totalForecasts).getDailyWeatherData();
 

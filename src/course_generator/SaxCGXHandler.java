@@ -38,6 +38,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
+import course_generator.weather.WeatherData;
 import course_generator.weather.WeatherHistory;
 
 public class SaxCGXHandler extends DefaultHandler {
@@ -99,6 +100,20 @@ public class SaxCGXHandler extends DefaultHandler {
 
 	// Historical weather data
 	private String weather_summary;
+	private String weather_date;
+	private String weather_icon;
+	private String weather_moonPhase;
+	private String weather_precipAccumulation;
+	private String weather_precipType;
+	private String weather_temperatureHigh;
+	private String weather_temperatureHighTime;
+	private String weather_temperatureLow;
+	private String weather_temperatureLowTime;
+	private String weather_apparentTemperatureHigh;
+	private String weather_apparentTemperatureHighTime;
+	private String weather_apparentTemperatureLow;
+	private String weather_apparentTemperatureLowTime;
+	private String weather_windSpeed;
 
 	// private int trk_nb=0;
 	// private int trkseg_nb=0;
@@ -196,8 +211,10 @@ public class SaxCGXHandler extends DefaultHandler {
 
 		File f = new File(filename);
 		if (f.isFile() && f.canRead()) {
-			if (mode == 0)
+			if (mode == 0) {
 				trkdata.data.clear();
+				trkdata.historicWeatherData.clear();
+			}
 			parser.parse(f, this);
 		} else
 			trkdata.ReadError = ERR_READ_NOTEXIST;
@@ -575,10 +592,45 @@ public class SaxCGXHandler extends DefaultHandler {
 			}
 		} // End LEVEL_TRACKPOINT
 		else if (level == HISTORICAL_WEATHER_DATA_POINT) {
-			if (qName.equalsIgnoreCase("SUMMARY")) {
+			if (qName.equalsIgnoreCase("DATE")) {
+				weather_date = ManageString();
+			} else if (qName.equalsIgnoreCase("SUMMARY")) {
 				weather_summary = ManageString();
+			} else if (qName.equalsIgnoreCase("ICON")) {
+				weather_icon = ManageString();
+			} else if (qName.equalsIgnoreCase("MOON_PHASE")) {
+				weather_moonPhase = ManageString();
+			} else if (qName.equalsIgnoreCase("PRECIPITATION_ACCUMULATION")) {
+				weather_precipAccumulation = ManageString();
+			} else if (qName.equalsIgnoreCase("PRECIPITATION_TYPE")) {
+				weather_precipType = ManageString();
+			} else if (qName.equalsIgnoreCase("HIGH_TEMPERATURE")) {
+				weather_temperatureHigh = ManageString();
+			} else if (qName.equalsIgnoreCase("HIGH_TEMPERATURE_TIME")) {
+				weather_temperatureHighTime = ManageString();
+			} else if (qName.equalsIgnoreCase("LOW_TEMPERATURE")) {
+				weather_temperatureLow = ManageString();
+			} else if (qName.equalsIgnoreCase("LOW_TEMPERATURE_TIME")) {
+				weather_temperatureLowTime = ManageString();
+			} else if (qName.equalsIgnoreCase("APPARENT_HIGH_TEMPERATURE")) {
+				weather_apparentTemperatureHigh = ManageString();
+			} else if (qName.equalsIgnoreCase("APPARENT_HIGH_TEMPERATURE_TIME")) {
+				weather_apparentTemperatureHighTime = ManageString();
+			} else if (qName.equalsIgnoreCase("APARENT_LOW_TEMPERATURE")) {
+				weather_apparentTemperatureLow = ManageString();
+			} else if (qName.equalsIgnoreCase("APARENT_LOW_TEMPERATURE_TIME")) {
+				weather_apparentTemperatureLowTime = ManageString();
+			} else if (qName.equalsIgnoreCase("WIND_SPEED")) {
+				weather_windSpeed = ManageString();
+
 			} else if (qName.equalsIgnoreCase("HISTORICAL_WEATHER_DATA_POINT")) {
-				trkdata.historicWeatherData.add(new WeatherHistory(10));
+				level--;
+				WeatherData dailyWeatherData = new WeatherData(weather_date, weather_summary, weather_icon,
+						weather_moonPhase, weather_precipAccumulation, weather_precipType, weather_temperatureHigh,
+						weather_temperatureHighTime, weather_temperatureLow, weather_temperatureLowTime,
+						weather_apparentTemperatureHigh, weather_apparentTemperatureHighTime,
+						weather_apparentTemperatureLow, weather_apparentTemperatureLowTime, weather_windSpeed);
+				trkdata.historicWeatherData.add(new WeatherHistory(dailyWeatherData));
 			}
 		}
 	}

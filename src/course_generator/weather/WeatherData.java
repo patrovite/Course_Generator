@@ -62,6 +62,30 @@ public class WeatherData {
 	// Hourly data points
 	// private String Temperature;
 
+	public WeatherData() {
+	}
+
+	public WeatherData(String time, String summary, String icon, String moonPhase, String precipAccumulation,
+			String precipType, String temperatureHigh, String temperatureHighTime, String temperatureLow,
+			String temperatureLowTime, String apparentTemperatureHigh, String apparentTemperatureHighTime,
+			String apparentTemperatureLow, String apparentTemperatureLowTime, String windSpeed) {
+		Time = DateTime.parse(time);
+		Summary = summary;
+		Icon = icon;
+		MoonPhase = moonPhase;
+		PrecipAccumulation = precipAccumulation;
+		PrecipType = precipType;
+		TemperatureHigh = temperatureHigh;
+		TemperatureHighTime = temperatureHighTime;
+		TemperatureLow = temperatureLow;
+		TemperatureLowTime = temperatureLowTime;
+		ApparentTemperatureHigh = apparentTemperatureHigh;
+		ApparentTemperatureHighTime = apparentTemperatureHighTime;
+		ApparentTemperatureLow = apparentTemperatureLow;
+		ApparentTemperatureLowTime = apparentTemperatureLowTime;
+		WindSpeed = windSpeed;
+	}
+
 	public DateTime getTime() {
 		return Time;
 	}
@@ -197,6 +221,9 @@ public class WeatherData {
 	}
 
 	public String getSummaryIconFilePath() {
+		if (Icon == null || Icon.length() == 0)
+			return "";
+
 		String iconFileName = "";
 		switch (Icon.toLowerCase()) {
 		case "clear-day":
@@ -244,13 +271,13 @@ public class WeatherData {
 		String iconFileName = "";
 		int temperature = Integer.valueOf(temperatureValue);
 
-		if (temperature <= 0) {
+		if (temperature < 25) {
 			iconFileName = "Thermometer-Zero";
-		} else if (temperature <= 25) {
+		} else if (temperature >= 25) {
 			iconFileName = "Thermometer-25";
-		} else if (temperature <= 50) {
+		} else if (temperature >= 50) {
 			iconFileName = "Thermometer-50";
-		} else if (temperature <= 75) {
+		} else if (temperature >= 75) {
 			iconFileName = "Thermometer-75";
 		} else if (temperature >= 100) {
 			iconFileName = "Thermometer-100";

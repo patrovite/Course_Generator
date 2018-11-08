@@ -1818,6 +1818,7 @@ public class TrackData {
 				writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINT");
 				Utils.WriteStringToXML(writer, "DATE", currentWeatherData.getDate().toString());
 				Utils.WriteStringToXML(writer, "SUMMARY", currentWeatherData.getSummary());
+				Utils.WriteStringToXML(writer, "ICON", currentWeatherData.getIcon());
 				Utils.WriteStringToXML(writer, "HIGH_TEMPERATURE", currentWeatherData.getTemperatureHigh());
 				Utils.WriteStringToXML(writer, "HIGH_TEMPERATURE_TIME", currentWeatherData.getTemperatureHighTime());
 				Utils.WriteStringToXML(writer, "LOW_TEMPERATURE", currentWeatherData.getTemperatureLow());

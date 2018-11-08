@@ -41,8 +41,8 @@ public class WeatherHistory {
 		PreviousYearNumber = previousYearNumber;
 	}
 
-	public WeatherHistory(int temp) {
-
+	public WeatherHistory(WeatherData dailyData) {
+		Daily = dailyData;
 	}
 
 	public void RetrieveWeatherData() {
