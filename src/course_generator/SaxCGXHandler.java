@@ -99,21 +99,21 @@ public class SaxCGXHandler extends DefaultHandler {
 	private int trkpt_FontSizemrb = 0;
 
 	// Historical weather data
+	private long weather_time;
 	private String weather_summary;
-	private String weather_date;
 	private String weather_icon;
-	private String weather_moonPhase;
-	private String weather_precipAccumulation;
+	private double weather_moonPhase;
+	private double weather_precipAccumulation;
 	private String weather_precipType;
-	private String weather_temperatureHigh;
-	private String weather_temperatureHighTime;
-	private String weather_temperatureLow;
-	private String weather_temperatureLowTime;
-	private String weather_apparentTemperatureHigh;
-	private String weather_apparentTemperatureHighTime;
-	private String weather_apparentTemperatureLow;
-	private String weather_apparentTemperatureLowTime;
-	private String weather_windSpeed;
+	private double weather_temperatureHigh;
+	private long weather_temperatureHighTime;
+	private double weather_temperatureLow;
+	private long weather_temperatureLowTime;
+	private double weather_apparentTemperatureHigh;
+	private long weather_apparentTemperatureHighTime;
+	private double weather_apparentTemperatureLow;
+	private long weather_apparentTemperatureLowTime;
+	private double weather_windSpeed;
 
 	// private int trk_nb=0;
 	// private int trkseg_nb=0;
@@ -132,6 +132,7 @@ public class SaxCGXHandler extends DefaultHandler {
 	private int errline = 0;
 	// private final int ERR_READ_NO = 0;
 	private final int ERR_READ_DOUBLE = -1;
+	private final int ERR_READ_LONG = -1;
 	private final int ERR_READ_INT = -2;
 	private final int ERR_READ_BOOL = -3;
 	private final int ERR_READ_VERSION = -5;
@@ -283,6 +284,29 @@ public class SaxCGXHandler extends DefaultHandler {
 	private double ManageDouble(double _default, int _errcode) {
 		try {
 			Double d = Double.parseDouble(characters);
+			characters = "";
+			return d;
+		} catch (NumberFormatException e) {
+			// errcode = _errcode;
+			errline = locator.getLineNumber();
+			characters = "";
+			return _default;
+		}
+	}
+
+
+	/**
+	 * Parse a long element
+	 * 
+	 * @param _default
+	 *            Default value
+	 * @param _errcode
+	 *            Error code if a parse error occur
+	 * @return Return the parsed value
+	 */
+	private long ManageLong(long _default, int _errcode) {
+		try {
+			long d = Long.parseLong(characters);
 			characters = "";
 			return d;
 		} catch (NumberFormatException e) {
@@ -612,40 +636,40 @@ public class SaxCGXHandler extends DefaultHandler {
 			}
 		} // End LEVEL_TRACKPOINT
 		else if (level == 2 && levelName.equals(LEVEL_WEATHER)) {
-			if (qName.equalsIgnoreCase("DATE")) {
-				weather_date = ManageString();
+			if (qName.equalsIgnoreCase("TIME")) {
+				weather_time = ManageLong(0, ERR_READ_LONG);
 			} else if (qName.equalsIgnoreCase("SUMMARY")) {
 				weather_summary = ManageString();
 			} else if (qName.equalsIgnoreCase("ICON")) {
 				weather_icon = ManageString();
 			} else if (qName.equalsIgnoreCase("MOON_PHASE")) {
-				weather_moonPhase = ManageString();
+				weather_moonPhase = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("PRECIPITATION_ACCUMULATION")) {
-				weather_precipAccumulation = ManageString();
+				weather_precipAccumulation = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("PRECIPITATION_TYPE")) {
 				weather_precipType = ManageString();
 			} else if (qName.equalsIgnoreCase("HIGH_TEMPERATURE")) {
-				weather_temperatureHigh = ManageString();
+				weather_temperatureHigh = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("HIGH_TEMPERATURE_TIME")) {
-				weather_temperatureHighTime = ManageString();
+				weather_temperatureHighTime = ManageLong(0, ERR_READ_LONG);
 			} else if (qName.equalsIgnoreCase("LOW_TEMPERATURE")) {
-				weather_temperatureLow = ManageString();
+				weather_temperatureLow = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("LOW_TEMPERATURE_TIME")) {
-				weather_temperatureLowTime = ManageString();
+				weather_temperatureLowTime = ManageLong(0, ERR_READ_LONG);
 			} else if (qName.equalsIgnoreCase("APPARENT_HIGH_TEMPERATURE")) {
-				weather_apparentTemperatureHigh = ManageString();
+				weather_apparentTemperatureHigh = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("APPARENT_HIGH_TEMPERATURE_TIME")) {
-				weather_apparentTemperatureHighTime = ManageString();
+				weather_apparentTemperatureHighTime = ManageLong(0, ERR_READ_LONG);
 			} else if (qName.equalsIgnoreCase("APARENT_LOW_TEMPERATURE")) {
-				weather_apparentTemperatureLow = ManageString();
+				weather_apparentTemperatureLow = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("APARENT_LOW_TEMPERATURE_TIME")) {
-				weather_apparentTemperatureLowTime = ManageString();
+				weather_apparentTemperatureLowTime = ManageLong(0, ERR_READ_LONG);
 			} else if (qName.equalsIgnoreCase("WIND_SPEED")) {
-				weather_windSpeed = ManageString();
+				weather_windSpeed = ManageDouble(0.0, ERR_READ_DOUBLE);
 
 			} else if (qName.equalsIgnoreCase("HISTORICAL_WEATHER_DATA_POINT")) {
 				level--;
-				WeatherData dailyWeatherData = new WeatherData(weather_date, weather_summary, weather_icon,
+				WeatherData dailyWeatherData = new WeatherData(weather_time, weather_summary, weather_icon,
 						weather_moonPhase, weather_precipAccumulation, weather_precipType, weather_temperatureHigh,
 						weather_temperatureHighTime, weather_temperatureLow, weather_temperatureLowTime,
 						weather_apparentTemperatureHigh, weather_apparentTemperatureHighTime,

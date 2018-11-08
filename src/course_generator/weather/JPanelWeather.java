@@ -60,7 +60,6 @@ public class JPanelWeather extends JPanel {
 
 	private Double Latitude;
 	private Double Longitude;
-	private DateTime StartTime;
 
 
 	public JPanelWeather(CgSettings settings) {
@@ -198,19 +197,20 @@ public class JPanelWeather extends JPanel {
 		}
 		lbInformation.setVisible(false);
 		InformationWarning.setVisible(false);
-		// if(not online or api key missing, update the label and display the waring)
+		// TODO if(not online or api key missing, update the label and display the
+		// waring)
 
 		ArrayList<WeatherHistory> previousWeatherHistory = new ArrayList<WeatherHistory>();
 		if (retrieveOnlineData) {
-			for (int totalForecasts = 0; totalForecasts < 3; ++totalForecasts) {
+			for (int forecastIndex = 0; forecastIndex < 3; ++forecastIndex) {
 				WeatherHistory previousWeatherData = new WeatherHistory(settings, track, Latitude, Longitude,
-						totalForecasts + 1);
+						forecastIndex + 1);
 
 				previousWeatherData.RetrieveWeatherData();
 				previousWeatherHistory.add(previousWeatherData);
 			}
 		} else {
-			// deserialize the track
+			// If exists, get the historical weather from the CGX course
 			previousWeatherHistory = track.getHistoricalWeather();
 		}
 
@@ -233,11 +233,10 @@ public class JPanelWeather extends JPanel {
 
 			int index = 600 + totalForecasts * 100;
 
-			sb = Utils.sbReplace(sb, "@" + index++, fmt.print(previousDailyWeather.getDate()));
+			sb = Utils.sbReplace(sb, "@" + index++,
+					fmt.print(Utils.unixTimeToDateTime(previousDailyWeather.getTime())));
 			sb = Utils.sbReplace(sb, "@" + index++, addImage(previousDailyWeather.getSummaryIconFilePath()));
 			sb = Utils.sbReplace(sb, "@" + index++, previousDailyWeather.getSummary());
-			// "<img
-			// src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==\"/>");//previousWeatherData.getMoonPhase());
 
 			sb = Utils.sbReplace(sb, "@" + index++, displayTemperature(previousDailyWeather.getTemperatureHigh()));
 			sb = Utils
@@ -279,9 +278,9 @@ public class JPanelWeather extends JPanel {
 			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getApparentTemperatureLowTime()));
 
 			sb = Utils.sbReplace(sb, "@" + index++, addImage(previousDailyWeather.getPrecipitationTypeIconFilePath()));
-			sb = Utils.sbReplace(sb, "@" + index++, previousDailyWeather.getPrecipAccumulation());
+			sb = Utils.sbReplace(sb, "@" + index++, String.valueOf(previousDailyWeather.getPrecipAccumulation()));
 
-			sb = Utils.sbReplace(sb, "@" + index++, previousDailyWeather.getMoonPhase());
+			sb = Utils.sbReplace(sb, "@" + index++, String.valueOf(previousDailyWeather.getMoonPhase()));
 		}
 
 		// -- Refresh the view and set the cursor position
@@ -293,7 +292,6 @@ public class JPanelWeather extends JPanel {
 	public void SetParameters(Double latitude, Double longitude, DateTime startTime) {
 		Latitude = latitude;
 		Longitude = longitude;
-		StartTime = startTime;
 	}
 
 
@@ -304,6 +302,9 @@ public class JPanelWeather extends JPanel {
 		String s;
 		s = Utils.SaveDialog(this, settings.LastDir, "", ".html", bundle.getString("frmMain.HTMLFile"), true,
 				bundle.getString("frmMain.FileExist"));
+		// "<img
+		// src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==\"/>");//previousWeatherData.getMoonPhase());
+
 		// replace all the images by base64
 		// because JEditorpane doesnt support displaying base 64 but saving the html
 		// with the absolute path wont work because the images are in the jar.
@@ -331,8 +332,8 @@ public class JPanelWeather extends JPanel {
 	 *            The temperature value
 	 * @return A String containing a temperature information
 	 */
-	private String displayTemperature(String temperatureValue) {
-		return Utils.FormatTemperature(Double.valueOf(temperatureValue), settings.Unit);
+	private String displayTemperature(double temperatureValue) {
+		return Utils.FormatTemperature(temperatureValue, settings.Unit);
 	}
 
 
@@ -343,8 +344,12 @@ public class JPanelWeather extends JPanel {
 	 *            A Unix time.
 	 * @return A String containing a time information.
 	 */
-	private String displayTime(String time) {
-		return Utils.formatUnixTime(Long.valueOf(time));
+	private String displayTime(long time) {
+		DateTime dateTime = Utils.unixTimeToDateTime(time);
+		DateTimeFormatter format = DateTimeFormat.forPattern("HH:mm");
+
+		// Printing the date
+		return format.print(dateTime);
 	}
 
 
