@@ -2,7 +2,6 @@ package course_generator.weather;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.joda.time.DateTime;
 import org.json.JSONArray;
@@ -30,6 +29,7 @@ public class WeatherHistory {
 	private double Longitude;
 	private int PreviousYearNumber;
 
+
 	public WeatherHistory(CgSettings settings, TrackData track, Double latitude, Double longitude,
 			int previousYearNumber) {
 		Settings = settings;
@@ -41,9 +41,11 @@ public class WeatherHistory {
 		PreviousYearNumber = previousYearNumber;
 	}
 
+
 	public WeatherHistory(WeatherData dailyData) {
 		Daily = dailyData;
 	}
+
 
 	public void RetrieveWeatherData() {
 		CgData firstTrackPoint = Track.data.get(0);
@@ -69,6 +71,7 @@ public class WeatherHistory {
 		}
 	}
 
+
 	private void PopulateFields(String forecastData) {
 
 		try {
@@ -76,7 +79,7 @@ public class WeatherHistory {
 			JSONArray hourlyData = root.getJSONObject("hourly").getJSONArray("data");
 			for (int index = 0; index < hourlyData.length(); ++index) {
 				WeatherData hourlyWeatherData = new WeatherData();
-				hourlyWeatherData.setTime(retrieveDateTimeElement(hourlyData.getJSONObject(index), "time"));
+				hourlyWeatherData.setTime(retrieveLongElement(hourlyData.getJSONObject(index), "time"));
 				// hourlyWeatherData.setTemperature(retrieveDoubleElement(hourlyData.getJSONObject(index),
 				// "temperature"));
 
@@ -85,7 +88,7 @@ public class WeatherHistory {
 
 			JSONObject dailyData = root.getJSONObject("daily").getJSONArray("data").getJSONObject(0);
 
-			Daily.setTime(retrieveDateTimeElement(dailyData, "time"));
+			Daily.setTime(retrieveLongElement(dailyData, "time"));
 			Daily.setSummary(retrieveStringElement(dailyData, "summary"));
 			Daily.setIcon(retrieveStringElement(dailyData, "icon"));
 			Daily.setMoonPhase(retrieveDoubleElement(dailyData, "moonPhase"));
@@ -107,9 +110,11 @@ public class WeatherHistory {
 
 	}
 
+
 	private void UpdateTrackWeatherData() {
 		Track.setDailyWeatherData(this, PreviousYearNumber - 1);
 	}
+
 
 	private String retrieveStringElement(JSONObject forecastData, String element) {
 		String result;
@@ -122,44 +127,44 @@ public class WeatherHistory {
 		return result;
 	}
 
-	private String retrieveDoubleElement(JSONObject forecastData, String element) {
-		String result;
+
+	private double retrieveDoubleElement(JSONObject forecastData, String element) {
+		double result;
 		try {
-			result = String.valueOf(forecastData.getDouble(element));
+			result = forecastData.getDouble(element);
 
 		} catch (Exception e) {
-			result = "";
+			result = 0.0;
 		}
 		return result;
 	}
 
-	private String retrieveLongElement(JSONObject forecastData, String element) {
-		String result;
+
+	private long retrieveLongElement(JSONObject forecastData, String element) {
+		long result;
 		try {
-			result = String.valueOf(forecastData.getLong(element));
+			result = forecastData.getLong(element);
 
 		} catch (Exception e) {
-			result = "";
+			result = 0;
 		}
 		return result;
 	}
 
-	private DateTime retrieveDateTimeElement(JSONObject forecastData, String element) {
-		DateTime result;
-		try {
-			long unixtime = forecastData.getLong(element);
-			Date millis = new java.util.Date(unixtime * 1000);
-			result = new DateTime(millis);
 
-		} catch (Exception e) {
-			result = null;
-		}
-		return result;
-	}
+	/*
+	 * private long retrieveTimeElement(JSONObject forecastData, String element) {
+	 * long result; try { //long unixtime = forecastData.getLong(element); // Date
+	 * millis = new java.util.Date(unixtime * 1000); //result = new
+	 * DateTime(millis);
+	 * 
+	 * } catch (Exception e) { result = null; } return result; }
+	 */
 
 	public ArrayList<WeatherData> getHourlyWeather() {
 		return Hourly;
 	}
+
 
 	public WeatherData getDailyWeatherData() {
 		return Daily;

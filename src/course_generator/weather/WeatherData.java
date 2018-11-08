@@ -4,42 +4,40 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.joda.time.DateTime;
-
 public class WeatherData {
 	// See here for the field descriptions :
 	// https://darksky.net/dev/docs#response-format
 
 	/** The time for the weather data request **/
-	private DateTime Time;
+	private long Time; // 1520751600
 	/** A human-readable text summary of this data point **/
 	private String Summary; // : "Overcast until afternoon.",
 	private String Icon; // "icon": "cloudy",
 	// "sunriseTime": 1473859401,
 	// "sunsetTime": 1473904638,
 	/** Moon phase **/
-	private String MoonPhase;// :0.43,
+	private double MoonPhase;// :0.43,
 	// "precipIntensity": 0,
 	// "precipIntensityMax": 0,
 	// "precipIntensityMaxTime": 255657600,
 	// "precipProbability": 0,
-	private String PrecipAccumulation; // ": 7.337,
+	private double PrecipAccumulation; // ": 7.337,
 	private String PrecipType; // ": "snow",
 	/** The daytime high temperature. **/
-	private String TemperatureHigh;
-	private String TemperatureHighTime;// ": 1473894000,
+	private double TemperatureHigh;
+	private long TemperatureHighTime;// ": 1473894000,
 	/** The overnight low temperature. **/
-	private String TemperatureLow; // ":32.42,
-	private String TemperatureLowTime;// ": 1473944400,
-	private String ApparentTemperatureHigh; // ": 54.27,
-	private String ApparentTemperatureHighTime; // ": 1473894000,
-	private String ApparentTemperatureLow; // ": 32.42,
-	private String ApparentTemperatureLowTime; // ": 1473944400,
+	private double TemperatureLow; // ":32.42,
+	private long TemperatureLowTime;// ": 1473944400,
+	private double ApparentTemperatureHigh; // ": 54.27,
+	private long ApparentTemperatureHighTime; // ": 1473894000,
+	private double ApparentTemperatureLow; // ": 32.42,
+	private long ApparentTemperatureLowTime; // ": 1473944400,
 	// "dewPoint": 32.57,
 	// "humidity": 0.63,
 	// "pressure": 1016.68,
 	/** The wind speed in miles per hour. **/
-	private String WindSpeed;// ":0.7,
+	private double WindSpeed;// ":0.7,
 	// "windGust": 7.19,
 	// "windGustTime": 1473883200,
 	// "windBearing": 336,
@@ -48,6 +46,7 @@ public class WeatherData {
 	// "uvIndexTime": 1473879600,
 	// "visibility": 3.97,
 	/** The minimum temperature during a given date **/
+
 
 	// DEPRECATED "TemperatureMin:38.41,
 	// DEPRECATED "temperatureMinTime": 1473854400,
@@ -65,11 +64,12 @@ public class WeatherData {
 	public WeatherData() {
 	}
 
-	public WeatherData(String time, String summary, String icon, String moonPhase, String precipAccumulation,
-			String precipType, String temperatureHigh, String temperatureHighTime, String temperatureLow,
-			String temperatureLowTime, String apparentTemperatureHigh, String apparentTemperatureHighTime,
-			String apparentTemperatureLow, String apparentTemperatureLowTime, String windSpeed) {
-		Time = DateTime.parse(time);
+
+	public WeatherData(long time, String summary, String icon, double moonPhase, double precipAccumulation,
+			String precipType, double temperatureHigh, long temperatureHighTime, double temperatureLow,
+			long temperatureLowTime, double apparentTemperatureHigh, long apparentTemperatureHighTime,
+			double apparentTemperatureLow, long apparentTemperatureLowTime, double windSpeed) {
+		Time = time;
 		Summary = summary;
 		Icon = icon;
 		MoonPhase = moonPhase;
@@ -86,45 +86,46 @@ public class WeatherData {
 		WindSpeed = windSpeed;
 	}
 
-	public DateTime getTime() {
+
+	public long getTime() {
 		return Time;
 	}
 
-	public void setTime(DateTime time) {
+
+	public void setTime(long time) {
 		Time = time;
 	}
+
 
 	public void setSummary(String summary) {
 		Summary = summary;
 	}
 
+
 	public void setIcon(String icon) {
 		Icon = icon;
 	}
+
 
 	public String getIcon() {
 		return Icon;
 	}
 
-	public DateTime getDate() {
-		return Time;
-	}
-
-	public void setDate(DateTime date) {
-		Time = date;
-	}
 
 	public String getSummary() {
 		return Summary;
 	}
 
-	public String getMoonPhase() {
+
+	public double getMoonPhase() {
 		return MoonPhase;
 	}
 
-	public void setMoonPhase(String moonPhase) {
+
+	public void setMoonPhase(double moonPhase) {
 		MoonPhase = moonPhase;
 	}
+
 
 	/*
 	 * public String getTemperature() { return Temperature; }
@@ -132,93 +133,115 @@ public class WeatherData {
 	 * public void setTemperature(String temperature) { Temperature = temperature; }
 	 */
 
-	public String getTemperatureHigh() {
+	public double getTemperatureHigh() {
 		return TemperatureHigh;
 	}
 
-	public void setTemperatureHigh(String temperatureHigh) {
+
+	public void setTemperatureHigh(double temperatureHigh) {
 		TemperatureHigh = temperatureHigh;
 	}
 
-	public String getTemperatureHighTime() {
+
+	public long getTemperatureHighTime() {
 		return TemperatureHighTime;
 	}
 
-	public void setTemperatureHighTime(String temperatureHighTime) {
+
+	public void setTemperatureHighTime(long temperatureHighTime) {
 		TemperatureHighTime = temperatureHighTime;
 	}
 
-	public String getTemperatureLow() {
+
+	public double getTemperatureLow() {
 		return TemperatureLow;
 	}
 
-	public void setTemperatureLow(String temperatureLow) {
+
+	public void setTemperatureLow(double temperatureLow) {
 		TemperatureLow = temperatureLow;
 	}
 
-	public String getTemperatureLowTime() {
+
+	public long getTemperatureLowTime() {
 		return TemperatureLowTime;
 	}
 
-	public void setTemperatureLowTime(String temperatureLowTime) {
+
+	public void setTemperatureLowTime(long temperatureLowTime) {
 		TemperatureLowTime = temperatureLowTime;
 	}
 
-	public String getApparentTemperatureHigh() {
+
+	public double getApparentTemperatureHigh() {
 		return ApparentTemperatureHigh;
 	}
 
-	public void setApparentTemperatureHigh(String apparentTemperatureHigh) {
+
+	public void setApparentTemperatureHigh(double apparentTemperatureHigh) {
 		ApparentTemperatureHigh = apparentTemperatureHigh;
 	}
 
-	public String getApparentTemperatureHighTime() {
+
+	public long getApparentTemperatureHighTime() {
 		return ApparentTemperatureHighTime;
 	}
 
-	public void setApparentTemperatureHighTime(String apparentTemperatureHighTime) {
+
+	public void setApparentTemperatureHighTime(long apparentTemperatureHighTime) {
 		ApparentTemperatureHighTime = apparentTemperatureHighTime;
 	}
 
-	public String getApparentTemperatureLow() {
+
+	public double getApparentTemperatureLow() {
 		return ApparentTemperatureLow;
 	}
 
-	public void setApparentTemperatureLow(String apparentTemperatureLow) {
+
+	public void setApparentTemperatureLow(double apparentTemperatureLow) {
 		ApparentTemperatureLow = apparentTemperatureLow;
 	}
 
-	public String getApparentTemperatureLowTime() {
+
+	public long getApparentTemperatureLowTime() {
 		return ApparentTemperatureLowTime;
 	}
 
-	public void setApparentTemperatureLowTime(String apparentTemperatureLowTime) {
+
+	public void setApparentTemperatureLowTime(long apparentTemperatureLowTime) {
 		ApparentTemperatureLowTime = apparentTemperatureLowTime;
 	}
 
-	public String getWindSpeed() {
+
+	public double getWindSpeed() {
 		return WindSpeed;
 	}
 
-	public void setWindSpeed(String windSpeed) {
+
+	public void setWindSpeed(double windSpeed) {
 		WindSpeed = windSpeed;
 	}
 
-	public String getPrecipAccumulation() {
+
+	public double getPrecipAccumulation() {
 		return PrecipAccumulation;
 	}
 
-	public void setPrecipAccumulation(String precipAccumulation) {
+
+	public void setPrecipAccumulation(double precipAccumulation) {
 		PrecipAccumulation = precipAccumulation;
 	}
+
 
 	public String getPrecipType() {
 		return PrecipType;
 	}
 
+
 	public void setPrecipType(String precipType) {
 		PrecipType = precipType;
 	}
+
 
 	public String getSummaryIconFilePath() {
 		if (Icon == null || Icon.length() == 0)
@@ -261,10 +284,12 @@ public class WeatherData {
 		return getFilePathFromFileName(iconFileName + ".png");
 	}
 
+
 	/**
 	 * Retrieves the appropriate icon name given a temperature value.
 	 * 
-	 * @param temperatureValue A temperature value in Fahrenheit.
+	 * @param temperatureValue
+	 *            A temperature value in Fahrenheit.
 	 * @return The icon file name.
 	 */
 	public String getThermometerIconFilePath(String temperatureValue) {
@@ -286,6 +311,7 @@ public class WeatherData {
 		return getFilePathFromFileName(iconFileName + ".png");
 	}
 
+
 	public String getPrecipitationTypeIconFilePath() {
 		String iconFileName = "";
 		switch (PrecipType.toLowerCase()) {
@@ -302,6 +328,7 @@ public class WeatherData {
 
 		return getFilePathFromFileName(iconFileName + ".png");
 	}
+
 
 	private String getFilePathFromFileName(String fileName) {
 		Path filePath = null;

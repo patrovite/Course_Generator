@@ -49,6 +49,7 @@ import javax.xml.stream.XMLStreamWriter;
 
 //import org.jdom2.Element;
 import org.joda.time.DateTime;
+import org.joda.time.Instant;
 
 import course_generator.CgData;
 import course_generator.TrackData;
@@ -795,6 +796,17 @@ public class Utils {
 		try {
 			writer.writeStartElement(Element);
 			writer.writeCharacters(String.format(Locale.ROOT, "%f", Data));
+			writer.writeEndElement();
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public static void WriteLongToXML(XMLStreamWriter writer, String Element, long Data) {
+		try {
+			writer.writeStartElement(Element);
+			writer.writeCharacters(String.valueOf(Data));
 			writer.writeEndElement();
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
@@ -1574,18 +1586,15 @@ public class Utils {
 
 
 	/**
-	 * Extracts the time from a Unix time as hh:mm:ss.
+	 * Converts a Unix time to a Joda-Time.
 	 * 
 	 * @param unixTime
 	 *            A Unix time as a long.
-	 * @return A String containing the time of a given Unix time.
+	 * @return A DateTime.
 	 * 
 	 */
-	public static String formatUnixTime(long unixTime) {
-		// TODO FIX
-		DateTime dateTime = new DateTime(unixTime);
-		int defe = dateTime.getHourOfDay() * 3600 + dateTime.getMinuteOfDay() * 60 + dateTime.getSecondOfDay();
-		return Second2DateString_HM(defe);
+	public static DateTime unixTimeToDateTime(long unixTime) {
+		return new DateTime(Instant.ofEpochMilli(unixTime * 1000));
 	}
 
 }
