@@ -62,12 +62,14 @@ public class JPanelWeather extends JPanel {
 	private Double Longitude;
 	private DateTime StartTime;
 
+
 	public JPanelWeather(CgSettings settings) {
 		super();
 		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
+
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -83,6 +85,7 @@ public class JPanelWeather extends JPanel {
 		scrollPaneStat = new JScrollPane(editorStat);
 		add(scrollPaneStat, java.awt.BorderLayout.CENTER);
 	}
+
 
 	/**
 	 * Create the status toolbar
@@ -133,6 +136,7 @@ public class JPanelWeather extends JPanel {
 		lbInformation.setVisible(false);
 		toolBar.add(lbInformation);
 	}
+
 
 	/**
 	 * Refresh the statistic tab
@@ -210,7 +214,7 @@ public class JPanelWeather extends JPanel {
 			previousWeatherHistory = track.getHistoricalWeather();
 		}
 
-		if (previousWeatherHistory.size() == 0) {
+		if (previousWeatherHistory.isEmpty()) {
 			// -- Refresh the view and set the cursor position
 			editorStat.setText("");
 			editorStat.setCaretPosition(0);
@@ -285,11 +289,13 @@ public class JPanelWeather extends JPanel {
 		editorStat.setCaretPosition(0);
 	}
 
+
 	public void SetParameters(Double latitude, Double longitude, DateTime startTime) {
 		Latitude = latitude;
 		Longitude = longitude;
 		StartTime = startTime;
 	}
+
 
 	/**
 	 * Save the statistics in TXT format
@@ -317,25 +323,30 @@ public class JPanelWeather extends JPanel {
 		}
 	}
 
+
 	/**
 	 * Creates a String containing a temperature value.
 	 * 
-	 * @param temperatureValue The temperature value
+	 * @param temperatureValue
+	 *            The temperature value
 	 * @return A String containing a temperature information
 	 */
 	private String displayTemperature(String temperatureValue) {
 		return Utils.FormatTemperature(Double.valueOf(temperatureValue), settings.Unit);
 	}
 
+
 	/**
 	 * Creates a String containing a measured time.
 	 * 
-	 * @param time A Unix time.
+	 * @param time
+	 *            A Unix time.
 	 * @return A String containing a time information.
 	 */
 	private String displayTime(String time) {
 		return Utils.formatUnixTime(Long.valueOf(time));
 	}
+
 
 	private String addImage(String iconFilePath) {
 		if (iconFilePath == "")
