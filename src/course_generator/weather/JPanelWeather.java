@@ -181,29 +181,33 @@ public class JPanelWeather extends JPanel {
 		}
 
 		lbInformation.setText("");
-		if (!Utils.isInternetReachable()) {
-			lbInformation.setText(bundle.getString("JPanelWeather.lbInformationMissingInternetConnection.Text"));
-			lbInformation.setVisible(true);
-			InformationWarning.setVisible(true);
-			return;
-		}
-		if (!settings.isDarkSkyApiKeyValid()) {
-			if (lbInformation.getText() != "") {
-				lbInformation.setText(", ");
-			}
-			lbInformation.setText(
-					lbInformation.getText().concat(bundle.getString("JPanelWeather.lbInformationMissingApiKey.Text")));
-			lbInformation.setVisible(true);
-			InformationWarning.setVisible(true);
-			return;
-		}
 		lbInformation.setVisible(false);
 		InformationWarning.setVisible(false);
-		// TODO if(not online or api key missing, update the label and display the
-		// waring)
 
 		ArrayList<WeatherHistory> previousWeatherHistory = new ArrayList<WeatherHistory>();
 		if (retrieveOnlineData) {
+
+			if (!Utils.isInternetReachable()) {
+				lbInformation.setText(bundle.getString("JPanelWeather.lbInformationMissingInternetConnection.Text"));
+				lbInformation.setVisible(true);
+				InformationWarning.setVisible(true);
+				return;
+			}
+
+			if (!settings.isDarkSkyApiKeyValid()) {
+				if (lbInformation.getText() != "") {
+					lbInformation.setText(", ");
+				}
+				lbInformation.setText(lbInformation.getText()
+						.concat(bundle.getString("JPanelWeather.lbInformationMissingApiKey.Text")));
+				lbInformation.setVisible(true);
+				InformationWarning.setVisible(true);
+				return;
+			}
+
+			// TODO if(not online or api key missing, update the label and display the
+			// waring)
+
 			for (int forecastIndex = 0; forecastIndex < 3; ++forecastIndex) {
 				WeatherHistory previousWeatherData = new WeatherHistory(settings, track, Latitude, Longitude,
 						forecastIndex + 1);
