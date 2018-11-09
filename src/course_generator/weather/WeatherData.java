@@ -21,14 +21,15 @@ public class WeatherData {
 	// "precipIntensityMax": 0,
 	// "precipIntensityMaxTime": 255657600,
 	// "precipProbability": 0,
-	private double PrecipAccumulation; // ": 7.337,
+	// "precipAccumulation; // ": 7.337, The amount of snowfall accumulation
+	// expected to occur
 	private String PrecipType; // ": "snow",
 	/** The daytime high temperature. **/
 	private double TemperatureHigh;
-	private long TemperatureHighTime;// ": 1473894000,
+	private long TemperatureHighTime; // ": 1473894000,
 	/** The overnight low temperature. **/
 	private double TemperatureLow; // ":32.42,
-	private long TemperatureLowTime;// ": 1473944400,
+	private long TemperatureLowTime; // ": 1473944400,
 	private double ApparentTemperatureHigh; // ": 54.27,
 	private long ApparentTemperatureHighTime; // ": 1473894000,
 	private double ApparentTemperatureLow; // ": 32.42,
@@ -65,15 +66,14 @@ public class WeatherData {
 	}
 
 
-	public WeatherData(long time, String summary, String icon, double moonPhase, double precipAccumulation,
-			String precipType, double temperatureHigh, long temperatureHighTime, double temperatureLow,
-			long temperatureLowTime, double apparentTemperatureHigh, long apparentTemperatureHighTime,
-			double apparentTemperatureLow, long apparentTemperatureLowTime, double windSpeed) {
+	public WeatherData(long time, String summary, String icon, double moonPhase, String precipType,
+			double temperatureHigh, long temperatureHighTime, double temperatureLow, long temperatureLowTime,
+			double apparentTemperatureHigh, long apparentTemperatureHighTime, double apparentTemperatureLow,
+			long apparentTemperatureLowTime, double windSpeed) {
 		Time = time;
 		Summary = summary;
 		Icon = icon;
 		MoonPhase = moonPhase;
-		PrecipAccumulation = precipAccumulation;
 		PrecipType = precipType;
 		TemperatureHigh = temperatureHigh;
 		TemperatureHighTime = temperatureHighTime;
@@ -126,12 +126,6 @@ public class WeatherData {
 		MoonPhase = moonPhase;
 	}
 
-
-	/*
-	 * public String getTemperature() { return Temperature; }
-	 * 
-	 * public void setTemperature(String temperature) { Temperature = temperature; }
-	 */
 
 	public double getTemperatureHigh() {
 		return TemperatureHigh;
@@ -220,16 +214,6 @@ public class WeatherData {
 
 	public void setWindSpeed(double windSpeed) {
 		WindSpeed = windSpeed;
-	}
-
-
-	public double getPrecipAccumulation() {
-		return PrecipAccumulation;
-	}
-
-
-	public void setPrecipAccumulation(double precipAccumulation) {
-		PrecipAccumulation = precipAccumulation;
 	}
 
 

@@ -69,7 +69,6 @@ import course_generator.weather.WeatherData;
 import course_generator.weather.WeatherHistory;
 
 /**
- *
  * @author pierre.delore
  */
 public class TrackData {
@@ -103,7 +102,7 @@ public class TrackData {
 
 	/** Track name **/
 	public String Name; // Track
-						// name
+	// name
 	/** Name of the track that appear in the track setting **/
 	public String CourseName = "";
 	/** Total distance in meters **/
@@ -404,7 +403,7 @@ public class TrackData {
 
 		CalcClimbResult resClimb = new CalcClimbResult();
 		CalcClimb(0, data.size() - 1, resClimb); // ref ClimbP, ref ClimbM, ref
-													// AscTime, ref DescTime);
+		// AscTime, ref DescTime);
 		ClimbP = resClimb.cp;
 		ClimbM = resClimb.cm;
 		AscTime = resClimb.tp;
@@ -414,9 +413,9 @@ public class TrackData {
 
 		SearchMinMaxElevationResult resMinMaxElev = new SearchMinMaxElevationResult();
 		resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev); // ref
-																					// MinElev,
-																					// ref
-																					// MaxElev);
+		// MinElev,
+		// ref
+		// MaxElev);
 		MinElev = resMinMaxElev.min;
 		MaxElev = resMinMaxElev.max;
 
@@ -769,7 +768,6 @@ public class TrackData {
 	 * Class used to store the result of a point search
 	 * 
 	 * @author pierre
-	 *
 	 */
 	public static class SearchPointResult {
 
@@ -817,16 +815,11 @@ public class TrackData {
 
 
 	/*
-	 * private void AltitudeFilter() { if (data.size() <= 1) { return; }
-	 * 
-	 * CgData r = null; double threshold = 4.0;
-	 * 
-	 * double oldAlt = data.get(0).getElevation(CgConst.UNIT_METER);
-	 * 
-	 * // We don't use the first and last point for (int i = 1; i < data.size() - 2;
-	 * i++) { r = data.get(i);
-	 * 
-	 * if (Math.abs(r.getElevation(CgConst.UNIT_METER) - oldAlt) < threshold)
+	 * private void AltitudeFilter() { if (data.size() <= 1) { return; } CgData r =
+	 * null; double threshold = 4.0; double oldAlt =
+	 * data.get(0).getElevation(CgConst.UNIT_METER); // We don't use the first and
+	 * last point for (int i = 1; i < data.size() - 2; i++) { r = data.get(i); if
+	 * (Math.abs(r.getElevation(CgConst.UNIT_METER) - oldAlt) < threshold)
 	 * r.setElevation(oldAlt); else oldAlt = r.getElevation(CgConst.UNIT_METER); } }
 	 */
 
@@ -1892,8 +1885,6 @@ public class TrackData {
 				Utils.WriteLongToXML(writer, "APARENT_LOW_TEMPERATURE_TIME",
 						currentWeatherData.getApparentTemperatureLowTime());
 				Utils.WriteStringToXML(writer, "PRECIPITATION_TYPE", currentWeatherData.getPrecipType());
-				Utils.WriteDoubleToXML(writer, "PRECIPITATION_ACCUMULATION",
-						currentWeatherData.getPrecipAccumulation());
 				Utils.WriteDoubleToXML(writer, "MOON_PHASE", currentWeatherData.getMoonPhase());
 
 				writer.writeEndElement();

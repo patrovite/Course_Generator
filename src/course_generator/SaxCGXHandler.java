@@ -103,7 +103,6 @@ public class SaxCGXHandler extends DefaultHandler {
 	private String weather_summary;
 	private String weather_icon;
 	private double weather_moonPhase;
-	private double weather_precipAccumulation;
 	private String weather_precipType;
 	private double weather_temperatureHigh;
 	private long weather_temperatureHighTime;
@@ -243,7 +242,7 @@ public class SaxCGXHandler extends DefaultHandler {
 	@Override
 	public void setDocumentLocator(final Locator locator) {
 		this.locator = locator; // Save the locator, so that it can be used later for line tracking when
-								// traversing nodes.
+		// traversing nodes.
 	}
 
 
@@ -644,8 +643,6 @@ public class SaxCGXHandler extends DefaultHandler {
 				weather_icon = ManageString();
 			} else if (qName.equalsIgnoreCase("MOON_PHASE")) {
 				weather_moonPhase = ManageDouble(0.0, ERR_READ_DOUBLE);
-			} else if (qName.equalsIgnoreCase("PRECIPITATION_ACCUMULATION")) {
-				weather_precipAccumulation = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("PRECIPITATION_TYPE")) {
 				weather_precipType = ManageString();
 			} else if (qName.equalsIgnoreCase("HIGH_TEMPERATURE")) {
@@ -670,10 +667,10 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("HISTORICAL_WEATHER_DATA_POINT")) {
 				level--;
 				WeatherData dailyWeatherData = new WeatherData(weather_time, weather_summary, weather_icon,
-						weather_moonPhase, weather_precipAccumulation, weather_precipType, weather_temperatureHigh,
-						weather_temperatureHighTime, weather_temperatureLow, weather_temperatureLowTime,
-						weather_apparentTemperatureHigh, weather_apparentTemperatureHighTime,
-						weather_apparentTemperatureLow, weather_apparentTemperatureLowTime, weather_windSpeed);
+						weather_moonPhase, weather_precipType, weather_temperatureHigh, weather_temperatureHighTime,
+						weather_temperatureLow, weather_temperatureLowTime, weather_apparentTemperatureHigh,
+						weather_apparentTemperatureHighTime, weather_apparentTemperatureLow,
+						weather_apparentTemperatureLowTime, weather_windSpeed);
 				trkdata.historicWeatherData.add(new WeatherHistory(dailyWeatherData));
 			}
 		}

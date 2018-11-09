@@ -92,7 +92,6 @@ public class WeatherHistory {
 			Daily.setSummary(retrieveStringElement(dailyData, "summary"));
 			Daily.setIcon(retrieveStringElement(dailyData, "icon"));
 			Daily.setMoonPhase(retrieveDoubleElement(dailyData, "moonPhase"));
-			Daily.setPrecipAccumulation(retrieveDoubleElement(dailyData, "precipAccumulation"));
 			Daily.setPrecipType(retrieveStringElement(dailyData, "precipType"));
 			Daily.setTemperatureHigh(retrieveDoubleElement(dailyData, "temperatureHigh"));
 			Daily.setTemperatureHighTime(retrieveLongElement(dailyData, "temperatureHighTime"));
@@ -156,9 +155,7 @@ public class WeatherHistory {
 	 * private long retrieveTimeElement(JSONObject forecastData, String element) {
 	 * long result; try { //long unixtime = forecastData.getLong(element); // Date
 	 * millis = new java.util.Date(unixtime * 1000); //result = new
-	 * DateTime(millis);
-	 * 
-	 * } catch (Exception e) { result = null; } return result; }
+	 * DateTime(millis); } catch (Exception e) { result = null; } return result; }
 	 */
 
 	public ArrayList<WeatherData> getHourlyWeather() {

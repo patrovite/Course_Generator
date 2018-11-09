@@ -280,7 +280,6 @@ public class JPanelWeather extends JPanel {
 			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getApparentTemperatureLowTime()));
 
 			sb = Utils.sbReplace(sb, "@" + index++, addImage(previousDailyWeather.getPrecipitationTypeIconFilePath()));
-			sb = Utils.sbReplace(sb, "@" + index++, String.valueOf(previousDailyWeather.getPrecipAccumulation()));
 
 			sb = Utils.sbReplace(sb, "@" + index++, String.valueOf(previousDailyWeather.getMoonPhase()));
 		}
