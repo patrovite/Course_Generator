@@ -38,6 +38,8 @@ import javax.swing.JToolBar;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
@@ -302,18 +304,16 @@ public class JPanelWeather extends JPanel {
 		String s;
 		s = Utils.SaveDialog(this, settings.LastDir, "", ".html", bundle.getString("frmMain.HTMLFile"), true,
 				bundle.getString("frmMain.FileExist"));
-		// "<img
-		// src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==\"/>");//previousWeatherData.getMoonPhase());
 
-		// replace all the images by base64
-		// because JEditorpane doesnt support displaying base 64 but saving the html
-		// with the absolute path wont work because the images are in the jar.
 		if (!s.isEmpty()) {
 			// -- Save the statistics
 			// track.SaveCGX(s, 0, track.data.size() - 1);
 			try {
 				FileWriter out = new FileWriter(s);
-				out.write(editorStat.getText());
+
+				String text = ReplaceImages(editorStat.getText());
+
+				out.write(text);
 				out.close();
 			} catch (Exception f) {
 				CgLog.error("SaveStat : impossible to save the statistic file");
@@ -357,5 +357,35 @@ public class JPanelWeather extends JPanel {
 		if (iconFilePath == "")
 			return "";
 		return "<img src=\"file:/" + iconFilePath + "\" width=\"50%\" height=\"50%\"/>";
+	}
+
+
+	/**
+	 * Because the image paths in the original HTML reference images in the Course
+	 * Generator jar (i.e: not accessible by any browser), we convert all the images
+	 * references to their actual Base64 value. Why we can't use the Base64
+	 * representation in Course Generator : Because Swing's (default) HTML support
+	 * does not extend to Base 64 encoded images.
+	 * 
+	 * @param originalText
+	 *            The original HTML page
+	 * @return The HTML page containing base64 representations of each image.
+	 */
+	private String ReplaceImages(String originalText) {
+		Document document = Jsoup.parse(originalText);
+
+		document.select("img[src]").forEach(e -> {
+			System.out.println(e.text());
+
+			String absoluteFilePath = e.attr("src");
+
+			// We remove the string "file:/"
+			absoluteFilePath = absoluteFilePath.substring(6);
+			String base64 = Utils.getFileBase64(absoluteFilePath);
+
+			e.attr("src", "data:image/png;base64," + base64);
+		});
+
+		return document.toString();
 	}
 }

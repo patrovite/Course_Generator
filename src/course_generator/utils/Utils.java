@@ -27,6 +27,8 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -36,6 +38,7 @@ import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Locale;
 import java.util.Map;
 
@@ -166,6 +169,29 @@ public class Utils {
 	public static ImageIcon getIcon(Component Parent, String name, int size) {
 		return new javax.swing.ImageIcon(
 				Parent.getClass().getResource("/course_generator/images/" + size + "/" + name));
+	}
+
+
+	public static String getFileBase64(String absoluteFilePath) {
+		String encodedfile = null;
+		try {
+			File file = new File(absoluteFilePath);
+			FileInputStream fileInputStreamReader = new FileInputStream(file);
+			byte[] bytes = new byte[(int) file.length()];
+			fileInputStreamReader.read(bytes);
+			encodedfile = Base64.getEncoder().encodeToString(bytes);
+
+			fileInputStreamReader.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+		}
+
+		return encodedfile;
 	}
 
 
