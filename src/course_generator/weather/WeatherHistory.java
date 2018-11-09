@@ -9,7 +9,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -17,6 +16,7 @@ import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgLog;
+import course_generator.utils.Utils;
 import tk.plogitech.darksky.forecast.APIKey;
 import tk.plogitech.darksky.forecast.DarkSkyClient;
 import tk.plogitech.darksky.forecast.ForecastRequest;
@@ -58,8 +58,7 @@ public class WeatherHistory {
 	public void RetrieveWeatherData() {
 		CgData firstTrackPoint = Track.data.get(0);
 
-		DateTimeZone trackTimeZone = DateTimeZone.forOffsetHours(Track.TrackTimeZone);
-		DateTime startTime = firstTrackPoint.getHour().withZone(trackTimeZone);
+		DateTime startTime = new DateTime(Utils.DateTimetoSpinnerDate(firstTrackPoint.getHour()));
 		Instant time = Instant.ofEpochMilli(startTime.minusYears(PreviousYearNumber).getMillis());
 
 		ForecastRequest request = new ForecastRequestBuilder().key(new APIKey(Settings.getDarkSkyApiKey())).time(time)
