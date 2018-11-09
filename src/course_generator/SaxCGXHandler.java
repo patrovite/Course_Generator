@@ -100,6 +100,7 @@ public class SaxCGXHandler extends DefaultHandler {
 
 	// Historical weather data
 	private long weather_time;
+	private String weather_timezone;
 	private String weather_summary;
 	private String weather_icon;
 	private double weather_moonPhase;
@@ -456,7 +457,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("ENDGLOBALCOEFF")) {
 				trkdata.EndGlobalCoeff = ManageDouble(100.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("TIMEZONE")) {
-				trkdata.TrackTimeZone = ManageDouble(0.0, ERR_READ_DOUBLE);
+				trkdata.TrackTimeZone = ManageInt(0, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("USESUMMERTIME")) {
 				trkdata.TrackUseDaylightSaving = ManageBoolean(false, ERR_READ_BOOL);
 			} else if (qName.equalsIgnoreCase("CURVE")) {
@@ -637,6 +638,9 @@ public class SaxCGXHandler extends DefaultHandler {
 		else if (level == 2 && levelName.equals(LEVEL_WEATHER)) {
 			if (qName.equalsIgnoreCase("TIME")) {
 				weather_time = ManageLong(0, ERR_READ_LONG);
+			}
+			if (qName.equalsIgnoreCase("TIMEZONE")) {
+				weather_timezone = ManageString();
 			} else if (qName.equalsIgnoreCase("SUMMARY")) {
 				weather_summary = ManageString();
 			} else if (qName.equalsIgnoreCase("ICON")) {
@@ -671,7 +675,7 @@ public class SaxCGXHandler extends DefaultHandler {
 						weather_temperatureLow, weather_temperatureLowTime, weather_apparentTemperatureHigh,
 						weather_apparentTemperatureHighTime, weather_apparentTemperatureLow,
 						weather_apparentTemperatureLowTime, weather_windSpeed);
-				trkdata.historicWeatherData.add(new WeatherHistory(dailyWeatherData));
+				trkdata.historicWeatherData.add(new WeatherHistory(weather_timezone, dailyWeatherData));
 			}
 		}
 	}

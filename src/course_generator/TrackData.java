@@ -144,7 +144,7 @@ public class TrackData {
 	/** Indicate where the timelimit has been reached (-1 if none) **/
 	public int TimeLimit_Line = -1;
 	/** Timezone for the sunrise/sunset calculation **/
-	public Double TrackTimeZone = 0.0;
+	public int TrackTimeZone = 0;
 	/** Are we using the daylight saving time for the sunrise/sunset calculation **/
 	public boolean TrackUseDaylightSaving = false;
 	public double StartSpeed = 0.0;
@@ -1802,7 +1802,7 @@ public class TrackData {
 			Utils.WriteStringToXML(writer, "NIGHTCOEFFDESC", String.format(Locale.ROOT, "%f", NightCoeffDesc));
 			Utils.WriteStringToXML(writer, "STARTGLOBALCOEFF", String.format(Locale.ROOT, "%f", StartGlobalCoeff));
 			Utils.WriteStringToXML(writer, "ENDGLOBALCOEFF", String.format(Locale.ROOT, "%f", EndGlobalCoeff));
-			Utils.WriteStringToXML(writer, "TIMEZONE", String.format(Locale.ROOT, "%f", TrackTimeZone));
+			Utils.WriteIntToXML(writer, "TIMEZONE", TrackTimeZone);
 			Utils.WriteStringToXML(writer, "USESUMMERTIME", (TrackUseDaylightSaving ? "1" : "0"));
 			Utils.WriteStringToXML(writer, "CURVE", Paramfile);
 			Utils.WriteIntToXML(writer, "MRBSIZEW", MrbSizeW);
@@ -1864,32 +1864,36 @@ public class TrackData {
 			writer.writeEndElement();
 
 			// HISTORICAL WEATHER DATA
-			writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINTS");
-			for (int i = 0; i < 3; i++) {
-				WeatherData currentWeatherData = historicWeatherData.get(i).getDailyWeatherData();
-				writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINT");
-				Utils.WriteLongToXML(writer, "TIME", currentWeatherData.getTime());
-				Utils.WriteStringToXML(writer, "SUMMARY", currentWeatherData.getSummary());
-				Utils.WriteStringToXML(writer, "ICON", currentWeatherData.getIcon());
-				Utils.WriteDoubleToXML(writer, "HIGH_TEMPERATURE", currentWeatherData.getTemperatureHigh());
-				Utils.WriteLongToXML(writer, "HIGH_TEMPERATURE_TIME", currentWeatherData.getTemperatureHighTime());
-				Utils.WriteDoubleToXML(writer, "LOW_TEMPERATURE", currentWeatherData.getTemperatureLow());
-				Utils.WriteLongToXML(writer, "LOW_TEMPERATURE_TIME", currentWeatherData.getTemperatureLowTime());
-				Utils.WriteDoubleToXML(writer, "WIND_SPEED", currentWeatherData.getWindSpeed());
-				Utils.WriteDoubleToXML(writer, "APPARENT_HIGH_TEMPERATURE",
-						currentWeatherData.getApparentTemperatureHigh());
-				Utils.WriteLongToXML(writer, "APPARENT_HIGH_TEMPERATURE_TIME",
-						currentWeatherData.getApparentTemperatureHighTime());
-				Utils.WriteDoubleToXML(writer, "APARENT_LOW_TEMPERATURE",
-						currentWeatherData.getApparentTemperatureLow());
-				Utils.WriteLongToXML(writer, "APARENT_LOW_TEMPERATURE_TIME",
-						currentWeatherData.getApparentTemperatureLowTime());
-				Utils.WriteStringToXML(writer, "PRECIPITATION_TYPE", currentWeatherData.getPrecipType());
-				Utils.WriteDoubleToXML(writer, "MOON_PHASE", currentWeatherData.getMoonPhase());
 
+			if (!historicWeatherData.isEmpty()) {
+				writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINTS");
+				for (int i = 0; i < 3; i++) {
+					WeatherData currentWeatherData = historicWeatherData.get(i).getDailyWeatherData();
+					writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINT");
+					Utils.WriteLongToXML(writer, "TIME", currentWeatherData.getTime());
+					Utils.WriteStringToXML(writer, "TIMEZONE", historicWeatherData.get(i).getTimeZone());
+					Utils.WriteStringToXML(writer, "SUMMARY", currentWeatherData.getSummary());
+					Utils.WriteStringToXML(writer, "ICON", currentWeatherData.getIcon());
+					Utils.WriteDoubleToXML(writer, "HIGH_TEMPERATURE", currentWeatherData.getTemperatureHigh());
+					Utils.WriteLongToXML(writer, "HIGH_TEMPERATURE_TIME", currentWeatherData.getTemperatureHighTime());
+					Utils.WriteDoubleToXML(writer, "LOW_TEMPERATURE", currentWeatherData.getTemperatureLow());
+					Utils.WriteLongToXML(writer, "LOW_TEMPERATURE_TIME", currentWeatherData.getTemperatureLowTime());
+					Utils.WriteDoubleToXML(writer, "WIND_SPEED", currentWeatherData.getWindSpeed());
+					Utils.WriteDoubleToXML(writer, "APPARENT_HIGH_TEMPERATURE",
+							currentWeatherData.getApparentTemperatureHigh());
+					Utils.WriteLongToXML(writer, "APPARENT_HIGH_TEMPERATURE_TIME",
+							currentWeatherData.getApparentTemperatureHighTime());
+					Utils.WriteDoubleToXML(writer, "APARENT_LOW_TEMPERATURE",
+							currentWeatherData.getApparentTemperatureLow());
+					Utils.WriteLongToXML(writer, "APARENT_LOW_TEMPERATURE_TIME",
+							currentWeatherData.getApparentTemperatureLowTime());
+					Utils.WriteStringToXML(writer, "PRECIPITATION_TYPE", currentWeatherData.getPrecipType());
+					Utils.WriteDoubleToXML(writer, "MOON_PHASE", currentWeatherData.getMoonPhase());
+
+					writer.writeEndElement();
+				}
 				writer.writeEndElement();
 			}
-			writer.writeEndElement();
 
 			writer.writeEndElement();
 

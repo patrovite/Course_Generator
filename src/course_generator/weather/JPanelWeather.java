@@ -23,6 +23,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -228,8 +229,8 @@ public class JPanelWeather extends JPanel {
 		sb = Utils.sbReplace(sb, "@1", Utils.uSpeed2String(settings.Unit, false));
 
 		for (int totalForecasts = 0; totalForecasts < previousWeatherHistory.size(); ++totalForecasts) {
-
-			WeatherData previousDailyWeather = previousWeatherHistory.get(totalForecasts).getDailyWeatherData();
+			WeatherHistory currentPreviousWeatherHistory = previousWeatherHistory.get(totalForecasts);
+			WeatherData previousDailyWeather = currentPreviousWeatherHistory.getDailyWeatherData();
 
 			// TODO add a row "Daylight hours??????
 
@@ -246,7 +247,8 @@ public class JPanelWeather extends JPanel {
 							addImage(previousDailyWeather.getThermometerIconFilePath(
 									Utils.FormatTemperature(Double.valueOf(previousDailyWeather.getTemperatureHigh()),
 											CgConst.UNIT_MILES_FEET))));
-			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getTemperatureHighTime()));
+			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getTemperatureHighTime(),
+					currentPreviousWeatherHistory.getTimeZone()));
 
 			sb = Utils.sbReplace(sb, "@" + index++, displayTemperature(previousDailyWeather.getTemperatureLow()));
 			sb = Utils
@@ -254,7 +256,8 @@ public class JPanelWeather extends JPanel {
 							addImage(previousDailyWeather.getThermometerIconFilePath(
 									Utils.FormatTemperature(Double.valueOf(previousDailyWeather.getTemperatureLow()),
 											CgConst.UNIT_MILES_FEET))));
-			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getTemperatureLowTime()));
+			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getTemperatureLowTime(),
+					currentPreviousWeatherHistory.getTimeZone()));
 
 			// The wind speed is in meter/second. We convert it first in km/h (1 m/s =
 			// 3.6km/h)
@@ -268,7 +271,8 @@ public class JPanelWeather extends JPanel {
 							addImage(previousDailyWeather.getThermometerIconFilePath(Utils.FormatTemperature(
 									Double.valueOf(previousDailyWeather.getApparentTemperatureHigh()),
 									CgConst.UNIT_MILES_FEET))));
-			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getApparentTemperatureHighTime()));
+			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getApparentTemperatureHighTime(),
+					currentPreviousWeatherHistory.getTimeZone()));
 
 			sb = Utils.sbReplace(sb, "@" + index++,
 					displayTemperature(previousDailyWeather.getApparentTemperatureLow()));
@@ -277,7 +281,8 @@ public class JPanelWeather extends JPanel {
 							addImage(previousDailyWeather.getThermometerIconFilePath(Utils.FormatTemperature(
 									Double.valueOf(previousDailyWeather.getApparentTemperatureLow()),
 									CgConst.UNIT_MILES_FEET))));
-			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getApparentTemperatureLowTime()));
+			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getApparentTemperatureLowTime(),
+					currentPreviousWeatherHistory.getTimeZone()));
 
 			sb = Utils.sbReplace(sb, "@" + index++, addImage(previousDailyWeather.getPrecipitationTypeIconFilePath()));
 
@@ -343,12 +348,9 @@ public class JPanelWeather extends JPanel {
 	 *            A Unix time.
 	 * @return A String containing a time information.
 	 */
-	private String displayTime(long time) {
-		DateTime dateTime = Utils.unixTimeToDateTime(time);
-		DateTimeFormatter format = DateTimeFormat.forPattern("HH:mm");
-
-		// Printing the date
-		return format.print(dateTime);
+	private String displayTime(long time, String timeZone) {
+		ZonedDateTime dateTime = Utils.unixTimeToZonedDateTime(time, timeZone);
+		return dateTime.getHour() + ":" + dateTime.getMinute();
 	}
 
 

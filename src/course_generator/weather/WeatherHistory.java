@@ -1,9 +1,15 @@
 package course_generator.weather;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.time.Instant;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,6 +27,7 @@ import tk.plogitech.darksky.forecast.model.Longitude;
 
 public class WeatherHistory {
 
+	private String TimeZone;
 	private ArrayList<WeatherData> Hourly;
 	private WeatherData Daily;
 	private CgSettings Settings;
@@ -42,14 +49,17 @@ public class WeatherHistory {
 	}
 
 
-	public WeatherHistory(WeatherData dailyData) {
+	public WeatherHistory(String timeZone, WeatherData dailyData) {
+		TimeZone = timeZone;
 		Daily = dailyData;
 	}
 
 
 	public void RetrieveWeatherData() {
 		CgData firstTrackPoint = Track.data.get(0);
-		DateTime startTime = firstTrackPoint.getHour();
+
+		DateTimeZone trackTimeZone = DateTimeZone.forOffsetHours(Track.TrackTimeZone);
+		DateTime startTime = firstTrackPoint.getHour().withZone(trackTimeZone);
 		Instant time = Instant.ofEpochMilli(startTime.minusYears(PreviousYearNumber).getMillis());
 
 		ForecastRequest request = new ForecastRequestBuilder().key(new APIKey(Settings.getDarkSkyApiKey())).time(time)
@@ -60,6 +70,28 @@ public class WeatherHistory {
 		DarkSkyClient client = new DarkSkyClient();
 		try {
 			String forecast = client.forecastJsonString(request);
+
+			BufferedWriter bufferedWriter = null;
+			try {
+				File myFile = new File(
+						"C:/Users/frederic/git/mytourbook/forecastupdated" + PreviousYearNumber + ".json");
+				// check if file exist, otherwise create the file before writing
+				if (!myFile.exists()) {
+					myFile.createNewFile();
+				}
+				Writer writer = new FileWriter(myFile);
+				bufferedWriter = new BufferedWriter(writer);
+				bufferedWriter.write(forecast);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (bufferedWriter != null)
+						bufferedWriter.close();
+				} catch (Exception ex) {
+
+				}
+			}
 
 			PopulateFields(forecast);
 
@@ -85,6 +117,8 @@ public class WeatherHistory {
 
 				Hourly.add(hourlyWeatherData);
 			}
+
+			TimeZone = root.getString("timezone");
 
 			JSONObject dailyData = root.getJSONObject("daily").getJSONArray("data").getJSONObject(0);
 
@@ -165,6 +199,11 @@ public class WeatherHistory {
 
 	public WeatherData getDailyWeatherData() {
 		return Daily;
+	}
+
+
+	public String getTimeZone() {
+		return TimeZone;
 	}
 
 }

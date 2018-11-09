@@ -37,6 +37,9 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Locale;
@@ -1621,6 +1624,28 @@ public class Utils {
 	 */
 	public static DateTime unixTimeToDateTime(long unixTime) {
 		return new DateTime(Instant.ofEpochMilli(unixTime * 1000));
+	}
+
+
+	/**
+	 * Converts a Unix time to a ZonedDateTime
+	 * 
+	 * @param unixTime
+	 *            A Unix time as a long.
+	 * @param timeZone
+	 *            A time zone.
+	 * @return A ZonedDateTime.
+	 * 
+	 */
+	public static ZonedDateTime unixTimeToZonedDateTime(long unixTime, String timeZone) {
+		DateTime dateTime = unixTimeToDateTime(unixTime);
+		ZoneId zoneId = ZoneId.of(timeZone);
+
+		ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.of(dateTime.getYear(), dateTime.getMonthOfYear(),
+				dateTime.getDayOfMonth(), dateTime.getHourOfDay(), dateTime.getMinuteOfHour(),
+				dateTime.getSecondOfMinute(), dateTime.getMillisOfSecond() * 1_000_000), zoneId);
+
+		return zonedDateTime;
 	}
 
 }
