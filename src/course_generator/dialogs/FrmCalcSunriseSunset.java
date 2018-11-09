@@ -117,7 +117,6 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		long hoursOffsetFromUTC = Utils.hoursUTCOffsetFromLatLon(latitude, longitude);
 		courseStartZone = Utils.getTimeZoneFromLatLon(latitude, longitude);
 		String timeZoneId = courseStartZone.getID();
-		boolean useDaylightTime = Utils.useDaylightTime(latitude, longitude);
 
 		// Set field
 		lbLongitudeVal.setText(String.format("%10.7f°", longitude));
@@ -125,7 +124,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		lbSunriseVal.setText("00:00");
 		lbSunsetVal.setText("00:00");
 		spinTimeZone.setValue(hoursOffsetFromUTC);
-		chkSummerTime.setSelected(useDaylightTime);
+		chkSummerTime.setSelected(courseStartZone.useDaylightTime());
 
 		lbDateVal.setText(this.date.toString("dd/MM/yyyy", getLocale()));
 

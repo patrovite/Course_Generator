@@ -1529,12 +1529,6 @@ public class Utils {
 	}
 
 
-	public static boolean useDaylightTime(double latitude, double longitude) {
-		TimeZone gpsPointTimeZone = getTimeZoneFromLatLon(latitude, longitude);
-		return gpsPointTimeZone.useDaylightTime();
-	}
-
-
 	/**
 	 * Converts a Joda-Time to a date for a SpinnerDateModel. The particularity of
 	 * the SpinnerDateModel is that it is time zone agnostic. Hence we need to keep
