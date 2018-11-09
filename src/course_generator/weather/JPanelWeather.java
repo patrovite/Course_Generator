@@ -23,7 +23,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -241,21 +240,21 @@ public class JPanelWeather extends JPanel {
 			sb = Utils.sbReplace(sb, "@" + index++, addImage(previousDailyWeather.getSummaryIconFilePath()));
 			sb = Utils.sbReplace(sb, "@" + index++, previousDailyWeather.getSummary());
 
-			sb = Utils.sbReplace(sb, "@" + index++, displayTemperature(previousDailyWeather.getTemperatureHigh()));
 			sb = Utils
 					.sbReplace(sb, "@" + index++,
 							addImage(previousDailyWeather.getThermometerIconFilePath(
 									Utils.FormatTemperature(Double.valueOf(previousDailyWeather.getTemperatureHigh()),
 											CgConst.UNIT_MILES_FEET))));
+			sb = Utils.sbReplace(sb, "@" + index++, displayTemperature(previousDailyWeather.getTemperatureHigh()));
 			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getTemperatureHighTime(),
 					currentPreviousWeatherHistory.getTimeZone()));
 
-			sb = Utils.sbReplace(sb, "@" + index++, displayTemperature(previousDailyWeather.getTemperatureLow()));
 			sb = Utils
 					.sbReplace(sb, "@" + index++,
 							addImage(previousDailyWeather.getThermometerIconFilePath(
 									Utils.FormatTemperature(Double.valueOf(previousDailyWeather.getTemperatureLow()),
 											CgConst.UNIT_MILES_FEET))));
+			sb = Utils.sbReplace(sb, "@" + index++, displayTemperature(previousDailyWeather.getTemperatureLow()));
 			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getTemperatureLowTime(),
 					currentPreviousWeatherHistory.getTimeZone()));
 
@@ -264,23 +263,23 @@ public class JPanelWeather extends JPanel {
 			sb = Utils.sbReplace(sb, "@" + index++, Utils.FormatSpeed(
 					3.6 * Double.valueOf(previousDailyWeather.getWindSpeed()), settings.Unit, false, false));
 
-			sb = Utils.sbReplace(sb, "@" + index++,
-					displayTemperature(previousDailyWeather.getApparentTemperatureHigh()));
 			sb = Utils
 					.sbReplace(sb, "@" + index++,
 							addImage(previousDailyWeather.getThermometerIconFilePath(Utils.FormatTemperature(
 									Double.valueOf(previousDailyWeather.getApparentTemperatureHigh()),
 									CgConst.UNIT_MILES_FEET))));
+			sb = Utils.sbReplace(sb, "@" + index++,
+					displayTemperature(previousDailyWeather.getApparentTemperatureHigh()));
 			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getApparentTemperatureHighTime(),
 					currentPreviousWeatherHistory.getTimeZone()));
 
-			sb = Utils.sbReplace(sb, "@" + index++,
-					displayTemperature(previousDailyWeather.getApparentTemperatureLow()));
 			sb = Utils
 					.sbReplace(sb, "@" + index++,
 							addImage(previousDailyWeather.getThermometerIconFilePath(Utils.FormatTemperature(
 									Double.valueOf(previousDailyWeather.getApparentTemperatureLow()),
 									CgConst.UNIT_MILES_FEET))));
+			sb = Utils.sbReplace(sb, "@" + index++,
+					displayTemperature(previousDailyWeather.getApparentTemperatureLow()));
 			sb = Utils.sbReplace(sb, "@" + index++, displayTime(previousDailyWeather.getApparentTemperatureLowTime(),
 					currentPreviousWeatherHistory.getTimeZone()));
 
@@ -310,8 +309,6 @@ public class JPanelWeather extends JPanel {
 				bundle.getString("frmMain.FileExist"));
 
 		if (!s.isEmpty()) {
-			// -- Save the statistics
-			// track.SaveCGX(s, 0, track.data.size() - 1);
 			try {
 				FileWriter out = new FileWriter(s);
 
@@ -337,7 +334,7 @@ public class JPanelWeather extends JPanel {
 	 * @return A String containing a temperature information
 	 */
 	private String displayTemperature(double temperatureValue) {
-		return Utils.FormatTemperature(temperatureValue, settings.Unit);
+		return Utils.FormatTemperature(temperatureValue, settings.Unit) + Utils.uTemperatureToString(settings.Unit);
 	}
 
 
@@ -349,8 +346,11 @@ public class JPanelWeather extends JPanel {
 	 * @return A String containing a time information.
 	 */
 	private String displayTime(long time, String timeZone) {
-		ZonedDateTime dateTime = Utils.unixTimeToZonedDateTime(time, timeZone);
-		return dateTime.getHour() + ":" + dateTime.getMinute();
+		DateTime dateTime = Utils.unixTimeToDateTime(time, timeZone);
+
+		DateTimeFormatter dtfOut = DateTimeFormat.forPattern("HH:mm");
+
+		return dtfOut.print(dateTime);
 	}
 
 

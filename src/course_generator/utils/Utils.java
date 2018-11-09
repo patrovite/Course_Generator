@@ -38,9 +38,6 @@ import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
@@ -57,6 +54,7 @@ import javax.xml.stream.XMLStreamWriter;
 
 //import org.jdom2.Element;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.Instant;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -1632,24 +1630,19 @@ public class Utils {
 
 
 	/**
-	 * Converts a Unix time to a ZonedDateTime
+	 * Converts a Unix time to a Joda-Time
 	 * 
 	 * @param unixTime
 	 *            A Unix time as a long.
-	 * @param timeZone
+	 * @param timeZoneId
 	 *            A time zone.
-	 * @return A ZonedDateTime.
+	 * @return A Joda-Time.
 	 * 
 	 */
-	public static ZonedDateTime unixTimeToZonedDateTime(long unixTime, String timeZone) {
-		DateTime dateTime = unixTimeToDateTime(unixTime);
-		ZoneId zoneId = ZoneId.of(timeZone);
+	public static DateTime unixTimeToDateTime(long unixTime, String timeZoneId) {
+		DateTime dateTime = new DateTime(unixTimeToDateTime(unixTime)).withZone(DateTimeZone.forID(timeZoneId));
 
-		ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.of(dateTime.getYear(), dateTime.getMonthOfYear(),
-				dateTime.getDayOfMonth(), dateTime.getHourOfDay(), dateTime.getMinuteOfHour(),
-				dateTime.getSecondOfMinute(), dateTime.getMillisOfSecond() * 1_000_000), zoneId);
-
-		return zonedDateTime;
+		return dateTime;
 	}
 
 

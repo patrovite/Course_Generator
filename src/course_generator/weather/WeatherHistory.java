@@ -1,10 +1,5 @@
 package course_generator.weather;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
 import java.time.Instant;
 import java.util.ArrayList;
 
@@ -69,28 +64,6 @@ public class WeatherHistory {
 		DarkSkyClient client = new DarkSkyClient();
 		try {
 			String forecast = client.forecastJsonString(request);
-
-			BufferedWriter bufferedWriter = null;
-			try {
-				File myFile = new File(
-						"C:/Users/frederic/git/mytourbook/forecastupdated" + PreviousYearNumber + ".json");
-				// check if file exist, otherwise create the file before writing
-				if (!myFile.exists()) {
-					myFile.createNewFile();
-				}
-				Writer writer = new FileWriter(myFile);
-				bufferedWriter = new BufferedWriter(writer);
-				bufferedWriter.write(forecast);
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (bufferedWriter != null)
-						bufferedWriter.close();
-				} catch (Exception ex) {
-
-				}
-			}
 
 			PopulateFields(forecast);
 
