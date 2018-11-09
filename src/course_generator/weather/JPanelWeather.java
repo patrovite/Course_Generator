@@ -222,7 +222,7 @@ public class JPanelWeather extends JPanel {
 			editorStat.setCaretPosition(0);
 			return;
 		}
-		DateTimeFormatter fmt = DateTimeFormat.forPattern("EE yyyy-MM-dd HH:mm");
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("EE yyyy-MM-dd");
 
 		sb = Utils.sbReplace(sb, "@0", Utils.uTemperatureToString(settings.Unit));
 		sb = Utils.sbReplace(sb, "@1", Utils.uSpeed2String(settings.Unit, false));

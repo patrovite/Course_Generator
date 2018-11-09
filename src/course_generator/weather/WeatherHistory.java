@@ -54,7 +54,7 @@ public class WeatherHistory {
 		CgData firstTrackPoint = Track.data.get(0);
 
 		DateTime startTime = new DateTime(Utils.DateTimetoSpinnerDate(firstTrackPoint.getHour()));
-		Instant time = Instant.ofEpochMilli(startTime.minusYears(PreviousYearNumber).getMillis());
+		Instant time = Instant.ofEpochMilli(startTime.minusDays(PreviousYearNumber * 364).getMillis());
 
 		ForecastRequest request = new ForecastRequestBuilder().key(new APIKey(Settings.getDarkSkyApiKey())).time(time)
 				.language(ForecastRequestBuilder.Language.en).units(ForecastRequestBuilder.Units.si)
@@ -84,8 +84,6 @@ public class WeatherHistory {
 			for (int index = 0; index < hourlyData.length(); ++index) {
 				WeatherData hourlyWeatherData = new WeatherData();
 				hourlyWeatherData.setTime(retrieveLongElement(hourlyData.getJSONObject(index), "time"));
-				// hourlyWeatherData.setTemperature(retrieveDoubleElement(hourlyData.getJSONObject(index),
-				// "temperature"));
 
 				Hourly.add(hourlyWeatherData);
 			}
