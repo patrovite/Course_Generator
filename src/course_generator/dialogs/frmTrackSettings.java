@@ -28,7 +28,6 @@ import java.awt.event.ActionEvent;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.TimeZone;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -118,7 +117,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		jMonthView.setSelectionDate(this.track.StartTime.toDate());
 		jMonthView.ensureDateVisible(this.track.StartTime.toDate());
 
-		spinStartTimeModel.setValue(this.track.StartTime.toDate());
+		Date date = Utils.DateTimetoSpinnerDate(this.track.StartTime);
+		spinStartTimeModel.setValue(date);
 		chkElevationEffect.setSelected(this.track.bElevEffect);
 		chkNightEffect.setSelected(this.track.bNightCoeff);
 		spinStartNightModel.setValue(this.track.StartNightTime.toDate());
@@ -332,28 +332,27 @@ public class frmTrackSettings extends javax.swing.JDialog {
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 				ResCalcSunriseSunset res = ShowCalcSunriseSunset();
-/*
-				if (calcSunriseSunset == null)
-					calcSunriseSunset = new FrmCalcSunriseSunset(settings);
+				/*
+				 * if (calcSunriseSunset == null) calcSunriseSunset = new
+				 * FrmCalcSunriseSunset(settings);
+				 * 
+				 * ResCalcSunriseSunset res =
+				 * calcSunriseSunset.showDialog(track.data.get(0).getLongitude(),
+				 * track.data.get(0).getLatitude(), track.StartTime,
+				 * track.TrackTimeZone.intValue(), track.TrackUseDaylightSaving);
+				 */
 
-				ResCalcSunriseSunset res = calcSunriseSunset.showDialog(track.data.get(0).getLongitude(),
-						track.data.get(0).getLatitude(), track.StartTime, track.TrackTimeZone.intValue(),
-						track.TrackUseDaylightSaving);
-*/
-				
 				setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 
 				if (res.valid) {
 					timezone = Double.valueOf(res.TimeZone);
 					summertime = res.SummerTime;
 
-					Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(res.TimeZoneId));
-					calendar.setTime(res.Sunrise.toDate());
+					Date date = Utils.DateTimetoSpinnerDate(res.Sunrise);
+					spinEndNightModel.setValue(date);
+					date = Utils.DateTimetoSpinnerDate(res.Sunset);
+					spinStartNightModel.setValue(date);
 
-					spinEndNightModel.setValue(calendar.getTime());
-					calendar.setTime(res.Sunset.toDate());
-
-					spinStartNightModel.setValue(calendar.getTime());
 				}
 			}
 		});
@@ -413,15 +412,16 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
+
 	private ResCalcSunriseSunset ShowCalcSunriseSunset() {
 		if (calcSunriseSunset == null)
 			calcSunriseSunset = new FrmCalcSunriseSunset(this, settings);
 
-		return calcSunriseSunset.showDialog(track.data.get(0).getLongitude(),
-			track.data.get(0).getLatitude(), track.StartTime, track.TrackTimeZone.intValue(),
-			track.TrackUseDaylightSaving);
+		return calcSunriseSunset.showDialog(track.data.get(0).getLongitude(), track.data.get(0).getLatitude(),
+				track.StartTime, track.TrackTimeZone.intValue(), track.TrackUseDaylightSaving);
 	}
-	
+
+
 	protected void Refresh() {
 		spinStartNight.setEnabled(chkNightEffect.isSelected());
 		spinEndNight.setEnabled(chkNightEffect.isSelected());
