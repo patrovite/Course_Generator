@@ -65,9 +65,10 @@ import course_generator.utils.CgLog;
 import course_generator.utils.StatData;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
+import course_generator.weather.WeatherData;
+import course_generator.weather.WeatherHistory;
 
 /**
- *
  * @author pierre.delore
  */
 public class TrackData {
@@ -81,6 +82,9 @@ public class TrackData {
 
 	/** Arraylist containing the main data **/
 	public ArrayList<CgData> data;
+
+	/** Arraylist containing the historical weather data **/
+	public ArrayList<WeatherHistory> historicWeatherData;
 
 	/** Statistics data for 'in night' **/
 	public StatData tInNight;
@@ -98,7 +102,7 @@ public class TrackData {
 
 	/** Track name **/
 	public String Name; // Track
-						// name
+	// name
 	/** Name of the track that appear in the track setting **/
 	public String CourseName = "";
 	/** Total distance in meters **/
@@ -140,7 +144,7 @@ public class TrackData {
 	/** Indicate where the timelimit has been reached (-1 if none) **/
 	public int TimeLimit_Line = -1;
 	/** Timezone for the sunrise/sunset calculation **/
-	public Double TrackTimeZone = 0.0;
+	public int TrackTimeZone = 0;
 	/** Are we using the daylight saving time for the sunrise/sunset calculation **/
 	public boolean TrackUseDaylightSaving = false;
 	public double StartSpeed = 0.0;
@@ -210,6 +214,7 @@ public class TrackData {
 		param = new ParamData();
 		Paramfile = "Default";
 		data = new ArrayList<CgData>();
+		historicWeatherData = new ArrayList<WeatherHistory>(3);
 		tInNight = new StatData();
 		tInDay = new StatData();
 		StatSlope = new StatData[13]; // : Array [0..12] of TStat;
@@ -397,8 +402,8 @@ public class TrackData {
 		CalcSlope();
 
 		CalcClimbResult resClimb = new CalcClimbResult();
-		CalcClimb(0, data.size() - 1, resClimb); // ref ClimbP, ref ClimbM, ref
-													// AscTime, ref DescTime);
+		CalcClimb(0, data.size() - 1, resClimb);
+
 		StartTime = data.get(0).getHour();
 
 		ClimbP = resClimb.cp;
@@ -410,9 +415,9 @@ public class TrackData {
 
 		SearchMinMaxElevationResult resMinMaxElev = new SearchMinMaxElevationResult();
 		resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev); // ref
-																					// MinElev,
-																					// ref
-																					// MaxElev);
+		// MinElev,
+		// ref
+		// MaxElev);
 		MinElev = resMinMaxElev.min;
 		MaxElev = resMinMaxElev.max;
 
@@ -765,7 +770,6 @@ public class TrackData {
 	 * Class used to store the result of a point search
 	 * 
 	 * @author pierre
-	 *
 	 */
 	public static class SearchPointResult {
 
@@ -813,16 +817,11 @@ public class TrackData {
 
 
 	/*
-	 * private void AltitudeFilter() { if (data.size() <= 1) { return; }
-	 * 
-	 * CgData r = null; double threshold = 4.0;
-	 * 
-	 * double oldAlt = data.get(0).getElevation(CgConst.UNIT_METER);
-	 * 
-	 * // We don't use the first and last point for (int i = 1; i < data.size() - 2;
-	 * i++) { r = data.get(i);
-	 * 
-	 * if (Math.abs(r.getElevation(CgConst.UNIT_METER) - oldAlt) < threshold)
+	 * private void AltitudeFilter() { if (data.size() <= 1) { return; } CgData r =
+	 * null; double threshold = 4.0; double oldAlt =
+	 * data.get(0).getElevation(CgConst.UNIT_METER); // We don't use the first and
+	 * last point for (int i = 1; i < data.size() - 2; i++) { r = data.get(i); if
+	 * (Math.abs(r.getElevation(CgConst.UNIT_METER) - oldAlt) < threshold)
 	 * r.setElevation(oldAlt); else oldAlt = r.getElevation(CgConst.UNIT_METER); } }
 	 */
 
@@ -1612,9 +1611,14 @@ public class TrackData {
 						data.get(n).getTag(), data.get(n).getDist(CgConst.UNIT_METER),
 						data.get(n).getTotal(CgConst.UNIT_METER), data.get(n).getDiff(), data.get(n).getCoeff(), 0.0,
 						data.get(n).getSlope(), data.get(n).getSpeed(CgConst.UNIT_METER),
-						data.get(n).getdElevation(CgConst.UNIT_METER), data.get(n).getTime(), data.get(n).getdTime_f(),
-						data.get(n).getTimeLimit(), data.get(n).getHour(), data.get(n).getStation(),
-						data.get(n).getName(), data.get(n).getComment(), 0.0, 0.0, data.get(n).FmtLbMiniRoadbook,
+
+						data.get(n).getdElevation(CgConst.UNIT_METER),
+            data.get(n).getTime(),
+						data.get(n).getTemperature(), 
+            data.get(n).getdTime_f(), 
+            data.get(n).getTimeLimit(),
+						data.get(n).getHour(), data.get(n).getStation(), data.get(n).getName(),
+						data.get(n).getComment(), 0.0, 0.0, data.get(n).FmtLbMiniRoadbook,
 						data.get(n).OptionMiniRoadbook, data.get(n).VPosMiniRoadbook, data.get(n).CommentMiniRoadbook,
 						data.get(n).FontSizeMiniRoadbook));
 				nb++;
@@ -1708,6 +1712,8 @@ public class TrackData {
 		 * " positions after positions filter.");
 		 */
 
+		// String moon =
+		// historicWeatherData.get(0).getDailyWeatherData().getMoonPhase();
 		// -- Set the line number
 		int cmpt = 1;
 		for (CgData r : data) {
@@ -1802,7 +1808,7 @@ public class TrackData {
 			Utils.WriteStringToXML(writer, "NIGHTCOEFFDESC", String.format(Locale.ROOT, "%f", NightCoeffDesc));
 			Utils.WriteStringToXML(writer, "STARTGLOBALCOEFF", String.format(Locale.ROOT, "%f", StartGlobalCoeff));
 			Utils.WriteStringToXML(writer, "ENDGLOBALCOEFF", String.format(Locale.ROOT, "%f", EndGlobalCoeff));
-			Utils.WriteStringToXML(writer, "TIMEZONE", String.format(Locale.ROOT, "%f", TrackTimeZone));
+			Utils.WriteIntToXML(writer, "TIMEZONE", TrackTimeZone);
 			Utils.WriteStringToXML(writer, "USESUMMERTIME", (TrackUseDaylightSaving ? "1" : "0"));
 			Utils.WriteStringToXML(writer, "CURVE", Paramfile);
 			Utils.WriteIntToXML(writer, "MRBSIZEW", MrbSizeW);
@@ -1832,6 +1838,7 @@ public class TrackData {
 			nf.setGroupingUsed(false);
 			nf.setMaximumFractionDigits(7);
 
+			writer.writeStartElement("TRACKPOINTS");
 			int cmpt = 0;
 			for (int i = start; i <= end; i++) {
 				CgData r = data.get(i);
@@ -1859,6 +1866,41 @@ public class TrackData {
 				writer.writeEndElement();
 				cmpt++;
 			} // for
+				// TRACKPOINT
+			writer.writeEndElement();
+
+			// HISTORICAL WEATHER DATA
+
+			if (!historicWeatherData.isEmpty()) {
+				writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINTS");
+				for (int i = 0; i < 3; i++) {
+					WeatherData currentWeatherData = historicWeatherData.get(i).getDailyWeatherData();
+					writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINT");
+					Utils.WriteLongToXML(writer, "TIME", currentWeatherData.getTime());
+					Utils.WriteStringToXML(writer, "TIMEZONE", historicWeatherData.get(i).getTimeZone());
+					Utils.WriteStringToXML(writer, "SUMMARY", currentWeatherData.getSummary());
+					Utils.WriteStringToXML(writer, "ICON", currentWeatherData.getIcon());
+					Utils.WriteDoubleToXML(writer, "HIGH_TEMPERATURE", currentWeatherData.getTemperatureHigh());
+					Utils.WriteLongToXML(writer, "HIGH_TEMPERATURE_TIME", currentWeatherData.getTemperatureHighTime());
+					Utils.WriteDoubleToXML(writer, "LOW_TEMPERATURE", currentWeatherData.getTemperatureLow());
+					Utils.WriteLongToXML(writer, "LOW_TEMPERATURE_TIME", currentWeatherData.getTemperatureLowTime());
+					Utils.WriteDoubleToXML(writer, "WIND_SPEED", currentWeatherData.getWindSpeed());
+					Utils.WriteDoubleToXML(writer, "APPARENT_HIGH_TEMPERATURE",
+							currentWeatherData.getApparentTemperatureHigh());
+					Utils.WriteLongToXML(writer, "APPARENT_HIGH_TEMPERATURE_TIME",
+							currentWeatherData.getApparentTemperatureHighTime());
+					Utils.WriteDoubleToXML(writer, "APARENT_LOW_TEMPERATURE",
+							currentWeatherData.getApparentTemperatureLow());
+					Utils.WriteLongToXML(writer, "APARENT_LOW_TEMPERATURE_TIME",
+							currentWeatherData.getApparentTemperatureLowTime());
+					Utils.WriteStringToXML(writer, "PRECIPITATION_TYPE", currentWeatherData.getPrecipType());
+					Utils.WriteDoubleToXML(writer, "MOON_PHASE", currentWeatherData.getMoonPhase());
+
+					writer.writeEndElement();
+				}
+				writer.writeEndElement();
+			}
+
 			writer.writeEndElement();
 
 			writer.writeEndDocument();
@@ -2546,6 +2588,20 @@ public class TrackData {
 		d.bShowNightDay = bShowNightDay;
 		d.ReadOnly = ReadOnly;
 		return d;
+	}
+
+
+	public ArrayList<WeatherHistory> getHistoricalWeather() {
+		return historicWeatherData;
+	}
+
+
+	public void setDailyWeatherData(WeatherHistory weatherHistory, int index) {
+		if (historicWeatherData.size() <= index) {
+			historicWeatherData.add(index, weatherHistory);
+		} else {
+			historicWeatherData.set(index, weatherHistory);
+		}
 	}
 
 } // TrackData

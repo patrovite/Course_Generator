@@ -152,9 +152,10 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 						r.getElevation(CgConst.UNIT_METER), r.getElevationMemo(), r.getTag(),
 						r.getDist(CgConst.UNIT_METER), r.getTotal(CgConst.UNIT_METER), r.getDiff(), r.getCoeff(),
 						r.getRecovery(), r.getSlope(), r.getSpeed(CgConst.UNIT_METER),
-						r.getdElevation(CgConst.UNIT_METER), r.getTime(), r.getdTime_f(), r.getTimeLimit(), r.getHour(),
-						r.getStation(), r.getName(), r.getComment(), 0, 0, r.FmtLbMiniRoadbook, r.OptionMiniRoadbook,
-						r.VPosMiniRoadbook, r.CommentMiniRoadbook, r.FontSizeMiniRoadbook, 0, 0);
+						r.getdElevation(CgConst.UNIT_METER), r.getTime(), r.getTemperature(), r.getdTime_f(),
+						r.getTimeLimit(), r.getHour(), r.getStation(), r.getName(), r.getComment(), 0, 0,
+						r.FmtLbMiniRoadbook, r.OptionMiniRoadbook, r.VPosMiniRoadbook, r.CommentMiniRoadbook,
+						r.FontSizeMiniRoadbook, 0, 0);
 				datalist.data.add(d);
 			}
 		}
@@ -632,12 +633,12 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		if (track.data.isEmpty())
 			return;
 
-		s = Utils.SaveDialog(this, settings.previousPNGDirectory, "", ".png", bundle.getString("FrmMiniroadbook.PNGFile"), true,
-				bundle.getString("FrmMiniroadbook.FileExist"));
+		s = Utils.SaveDialog(this, settings.previousPNGDirectory, "", ".png",
+				bundle.getString("FrmMiniroadbook.PNGFile"), true, bundle.getString("FrmMiniroadbook.FileExist"));
 
 		if (!s.isEmpty()) {
 			pnlProfil.save(s);
-			
+
 			settings.previousPNGDirectory = Utils.GetDirFromFilename(s);
 		}
 	}
@@ -1132,20 +1133,22 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 			TableData.setRowSelectionInterval(0, 0);
 	}
 
+
 	private void ShowConfigMrbDialog() {
 		FrmConfigMrb frm = new FrmConfigMrb(SwingUtilities.windowForComponent(this), settings);
 		frm.showDialog(track);
 	}
-	
-	
+
+
 	private void ShowConfigMrbDuplicate() {
 		FrmConfigMrbDuplicate frm = new FrmConfigMrbDuplicate(SwingUtilities.windowForComponent(this), settings);
 		ConfigDuplication = frm.showDialog(ConfigDuplication);
 	}
-	
+
+
 	private String ShowEditMrbFormatDialog(int line) {
 		FrmEditMrbFormat frm = new FrmEditMrbFormat(SwingUtilities.windowForComponent(this), settings);
 		return frm.showDialog(track.data.get(line), track, tfFormat.getText());
 	}
-	
+
 }
