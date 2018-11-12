@@ -117,7 +117,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		jMonthView.setSelectionDate(this.track.StartTime.toDate());
 		jMonthView.ensureDateVisible(this.track.StartTime.toDate());
 
-		spinStartTimeModel.setValue(this.track.StartTime.toDate());
+		Date date = Utils.DateTimetoSpinnerDate(this.track.StartTime);
+		spinStartTimeModel.setValue(date);
 		chkElevationEffect.setSelected(this.track.bElevEffect);
 		chkNightEffect.setSelected(this.track.bNightCoeff);
 		spinStartNightModel.setValue(this.track.StartNightTime.toDate());
@@ -350,9 +351,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 					Date date = Utils.DateTimetoSpinnerDate(res.Sunrise);
 
 					spinEndNightModel.setValue(date);
-
 					date = Utils.DateTimetoSpinnerDate(res.Sunset);
-
 					spinStartNightModel.setValue(date);
 				}
 			}
@@ -419,7 +418,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 			calcSunriseSunset = new FrmCalcSunriseSunset(this, settings);
 
 		return calcSunriseSunset.showDialog(track.data.get(0).getLongitude(), track.data.get(0).getLatitude(),
-				track.StartTime, track.TrackTimeZone, track.TrackUseDaylightSaving);
+				track.StartTime, track.TrackTimeZone.intValue(), track.TrackUseDaylightSaving);
 	}
 
 

@@ -38,11 +38,16 @@ import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+//import java.util.Arrays;
+//import java.util.Base64;
+import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -52,7 +57,6 @@ import javax.swing.filechooser.FileFilter;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-//import org.jdom2.Element;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Instant;
@@ -63,6 +67,7 @@ import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.TrackData.CalcClimbResult;
 import course_generator.settings.CgSettings;
+import net.iakovlev.timeshape.TimeZoneEngine;
 
 /**
  *
@@ -71,6 +76,8 @@ import course_generator.settings.CgSettings;
 public class Utils {
 
 	public static final String htmlDocFile = "cg_doc_4.00.html";
+
+	private static TimeZoneEngine timeZoneEngine;
 
 
 	/**
@@ -477,7 +484,7 @@ public class Utils {
 
 
 	/**
-	 * Return the temperature unit as string (ºC or ºF)
+	 * Return the temperature unit as string (ï¿½C or ï¿½F)
 	 * 
 	 * @param unit
 	 *            Unit
@@ -488,13 +495,13 @@ public class Utils {
 		String unitString;
 		switch (unit) {
 		case CgConst.UNIT_METER:
-			unitString = "ºC";
+			unitString = "ï¿½C";
 			break;
 		case CgConst.UNIT_MILES_FEET:
-			unitString = "ºF";
+			unitString = "ï¿½F";
 			break;
 		default:
-			unitString = "ºC";
+			unitString = "ï¿½C";
 			break;
 		}
 
@@ -1567,6 +1574,7 @@ public class Utils {
 	}
 
 
+  
 	/**
 	 * Returns a given temperature in the correct unit (Celsius or Fahrenheit)
 	 * 
@@ -1574,11 +1582,11 @@ public class Utils {
 	 *            temperature in Celsius
 	 * @return Converted value
 	 */
-	public static String FormatTemperature(double temperature, int unit) {
-		temperature = unit == CgConst.UNIT_MILES_FEET ? temperature * 9 / 5 + 32 : temperature;
+	//public static String FormatTemperature(double temperature, int unit) {
+	//	temperature = unit == CgConst.UNIT_MILES_FEET ? temperature * 9 / 5 + 32 : temperature;
 
-		return String.format("%3.0f", temperature).trim();
-	}
+	//	return String.format("%3.0f", temperature).trim();
+	//}
 
 
 	/**
@@ -1588,9 +1596,9 @@ public class Utils {
 	 *            temperature in Celsius
 	 * @return Converted value
 	 */
-	public static double CelsiusToFahrenheit(double temperature) {
-		return ((temperature - 32) * 5) / 9;
-	}
+	//public static double CelsiusToFahrenheit(double temperature) {
+	//	return ((temperature - 32) * 5) / 9;
+	//}
 
 
 	/**
@@ -1606,14 +1614,14 @@ public class Utils {
 	 * @see https://stackoverflow.com/questions/7676149/compare-only-the-time-portion-of-two-dates-ignoring-the-date-part#7676307
 	 * 
 	 */
-	public static int compareTimes(DateTime d1, DateTime d2) {
-		int t1;
-		int t2;
+	//public static int compareTimes(DateTime d1, DateTime d2) {
+	//	int t1;
+	//	int t2;
 
-		t1 = (int) (d1.toDate().getTime() % (24 * 60 * 60 * 1000L));
-		t2 = (int) (d2.toDate().getTime() % (24 * 60 * 60 * 1000L));
-		return (t1 - t2);
-	}
+	//	t1 = (int) (d1.toDate().getTime() % (24 * 60 * 60 * 1000L));
+	//	t2 = (int) (d2.toDate().getTime() % (24 * 60 * 60 * 1000L));
+	//	return (t1 - t2);
+	//}
 
 
 	/**
@@ -1624,9 +1632,9 @@ public class Utils {
 	 * @return A DateTime.
 	 * 
 	 */
-	public static DateTime unixTimeToDateTime(long unixTime) {
-		return new DateTime(Instant.ofEpochMilli(unixTime * 1000));
-	}
+	//public static DateTime unixTimeToDateTime(long unixTime) {
+	//	return new DateTime(Instant.ofEpochMilli(unixTime * 1000));
+	//}
 
 
 	/**
@@ -1639,10 +1647,30 @@ public class Utils {
 	 * @return A Joda-Time.
 	 * 
 	 */
-	public static DateTime unixTimeToDateTime(long unixTime, String timeZoneId) {
-		DateTime dateTime = new DateTime(unixTimeToDateTime(unixTime)).withZone(DateTimeZone.forID(timeZoneId));
+	//public static DateTime unixTimeToDateTime(long unixTime, String timeZoneId) {
+	//	DateTime dateTime = new DateTime(unixTimeToDateTime(unixTime)).withZone(DateTimeZone.forID(timeZoneId));
 
-		return dateTime;
+	//	return dateTime;
+   
+//NEw
+	public static TimeZone getTimeZoneFromLatLon(double latitude, double longitude) {
+		if (timeZoneEngine == null) {
+			// Initialize the time zone engine
+			timeZoneEngine = TimeZoneEngine.initialize();
+		}
+
+		Optional<ZoneId> courseStartZoneId = timeZoneEngine.query(latitude, longitude);
+		String timeZoneId = courseStartZoneId.get().getId();
+		return TimeZone.getTimeZone(timeZoneId);
+	}
+
+
+	public static int hoursUTCOffsetFromLatLon(double latitude, double longitude) {
+		TimeZone gpsPointTimeZone = getTimeZoneFromLatLon(latitude, longitude);
+		long hoursOffsetFromUTC = TimeUnit.MILLISECONDS.toHours(gpsPointTimeZone.getRawOffset());
+
+		return (int) hoursOffsetFromUTC;
+//end new
 	}
 
 
@@ -1660,10 +1688,8 @@ public class Utils {
 	public static Date DateTimetoSpinnerDate(DateTime dateTime) {
 		Date spinnerDate = null;
 		String datePattern = "yyyy-MM-dd HH:mm:ss";
-
 		DateTimeFormatter fmt = DateTimeFormat.forPattern(datePattern);
 		String date = fmt.print(dateTime);
-
 		SimpleDateFormat parser = new SimpleDateFormat(datePattern);
 		try {
 			spinnerDate = parser.parse(date);
@@ -1671,7 +1697,8 @@ public class Utils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return spinnerDate;
 	}
-}
+  
+  
+} //Class

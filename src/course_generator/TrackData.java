@@ -402,8 +402,10 @@ public class TrackData {
 		CalcSlope();
 
 		CalcClimbResult resClimb = new CalcClimbResult();
-		CalcClimb(0, data.size() - 1, resClimb); // ref ClimbP, ref ClimbM, ref
-		// AscTime, ref DescTime);
+		CalcClimb(0, data.size() - 1, resClimb);
+
+		StartTime = data.get(0).getHour();
+
 		ClimbP = resClimb.cp;
 		ClimbM = resClimb.cm;
 		AscTime = resClimb.tp;
@@ -1609,8 +1611,12 @@ public class TrackData {
 						data.get(n).getTag(), data.get(n).getDist(CgConst.UNIT_METER),
 						data.get(n).getTotal(CgConst.UNIT_METER), data.get(n).getDiff(), data.get(n).getCoeff(), 0.0,
 						data.get(n).getSlope(), data.get(n).getSpeed(CgConst.UNIT_METER),
-						data.get(n).getdElevation(CgConst.UNIT_METER), data.get(n).getTime(),
-						data.get(n).getTemperature(), data.get(n).getdTime_f(), data.get(n).getTimeLimit(),
+
+						data.get(n).getdElevation(CgConst.UNIT_METER),
+            data.get(n).getTime(),
+						data.get(n).getTemperature(), 
+            data.get(n).getdTime_f(), 
+            data.get(n).getTimeLimit(),
 						data.get(n).getHour(), data.get(n).getStation(), data.get(n).getName(),
 						data.get(n).getComment(), 0.0, 0.0, data.get(n).FmtLbMiniRoadbook,
 						data.get(n).OptionMiniRoadbook, data.get(n).VPosMiniRoadbook, data.get(n).CommentMiniRoadbook,
