@@ -35,9 +35,15 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -49,11 +55,14 @@ import javax.xml.stream.XMLStreamWriter;
 
 //import org.jdom2.Element;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.TrackData.CalcClimbResult;
 import course_generator.settings.CgSettings;
+import net.iakovlev.timeshape.TimeZoneEngine;
 
 /**
  *
@@ -62,6 +71,8 @@ import course_generator.settings.CgSettings;
 public class Utils {
 
 	public static final String htmlDocFile = "cg_doc_4.00.html";
+
+	private static TimeZoneEngine timeZoneEngine;
 
 
 	/**
@@ -1495,6 +1506,53 @@ public class Utils {
 			CgLog.info("The help file '" + helpFilePath + "' was not found.");
 		}
 		return success;
+	}
+
+
+	public static TimeZone getTimeZoneFromLatLon(double latitude, double longitude) {
+		if (timeZoneEngine == null) {
+			// Initialize the time zone engine
+			timeZoneEngine = TimeZoneEngine.initialize();
+		}
+
+		Optional<ZoneId> courseStartZoneId = timeZoneEngine.query(latitude, longitude);
+		String timeZoneId = courseStartZoneId.get().getId();
+		return TimeZone.getTimeZone(timeZoneId);
+	}
+
+
+	public static int hoursUTCOffsetFromLatLon(double latitude, double longitude) {
+		TimeZone gpsPointTimeZone = getTimeZoneFromLatLon(latitude, longitude);
+		long hoursOffsetFromUTC = TimeUnit.MILLISECONDS.toHours(gpsPointTimeZone.getRawOffset());
+
+		return (int) hoursOffsetFromUTC;
+	}
+
+
+	/**
+	 * Converts a Joda-Time to a date for a SpinnerDateModel. The particularity of
+	 * the SpinnerDateModel is that it is time zone agnostic. Hence we need to keep
+	 * the time at the given time zone but pretend that its time zone is UTC.
+	 * Example : Input : 07:50:00 UTC-7 ==> Output : 07:50:00 UTC
+	 * 
+	 * @param dateTime
+	 *            A Joda-Time.
+	 * @return A Date.
+	 * 
+	 */
+	public static Date DateTimetoSpinnerDate(DateTime dateTime) {
+		Date spinnerDate = null;
+		String datePattern = "yyyy-MM-dd HH:mm:ss";
+		DateTimeFormatter fmt = DateTimeFormat.forPattern(datePattern);
+		String date = fmt.print(dateTime);
+		SimpleDateFormat parser = new SimpleDateFormat(datePattern);
+		try {
+			spinnerDate = parser.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return spinnerDate;
 	}
 
 } // Class
