@@ -424,7 +424,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 			calcSunriseSunset = new FrmCalcSunriseSunset(this, settings);
 
 		return calcSunriseSunset.showDialog(track.data.get(0).getLongitude(),
-			track.data.get(0).getLatitude(), track.StartTime, track.TrackTimeZone.intValue(),
+			track.data.get(0).getLatitude(), track.StartTime, track.TrackTimeZone,
 			track.TrackUseDaylightSaving);
 	}
 	
