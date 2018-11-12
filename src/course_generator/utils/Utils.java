@@ -27,6 +27,8 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -35,6 +37,10 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+//import java.util.Arrays;
+//import java.util.Base64;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
@@ -47,8 +53,11 @@ import javax.swing.filechooser.FileFilter;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-//import org.jdom2.Element;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.Instant;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import course_generator.CgData;
 import course_generator.TrackData;
@@ -165,6 +174,29 @@ public class Utils {
 	public static ImageIcon getIcon(Component Parent, String name, int size) {
 		return new javax.swing.ImageIcon(
 				Parent.getClass().getResource("/course_generator/images/" + size + "/" + name));
+	}
+
+
+	public static String getFileBase64(String absoluteFilePath) {
+		String encodedfile = null;
+		try {
+			File file = new File(absoluteFilePath);
+			FileInputStream fileInputStreamReader = new FileInputStream(file);
+			byte[] bytes = new byte[(int) file.length()];
+			fileInputStreamReader.read(bytes);
+			encodedfile = Base64.getEncoder().encodeToString(bytes);
+
+			fileInputStreamReader.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+		}
+
+		return encodedfile;
 	}
 
 
@@ -437,6 +469,32 @@ public class Utils {
 			break;
 		default:
 			unitString = "km/h";
+			break;
+		}
+
+		return unitString;
+	}
+
+
+	/**
+	 * Return the temperature unit as string (�C or �F)
+	 * 
+	 * @param unit
+	 *            Unit
+	 * @return String with the unit
+	 */
+
+	public static String uTemperatureToString(int unit) {
+		String unitString;
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			unitString = "�C";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			unitString = "�F";
+			break;
+		default:
+			unitString = "�C";
 			break;
 		}
 
@@ -769,6 +827,17 @@ public class Utils {
 		try {
 			writer.writeStartElement(Element);
 			writer.writeCharacters(String.format(Locale.ROOT, "%f", Data));
+			writer.writeEndElement();
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public static void WriteLongToXML(XMLStreamWriter writer, String Element, long Data) {
+		try {
+			writer.writeStartElement(Element);
+			writer.writeCharacters(String.valueOf(Data));
 			writer.writeEndElement();
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
@@ -1496,5 +1565,131 @@ public class Utils {
 		}
 		return success;
 	}
+  
+	/**
+	 * Returns a given temperature in the correct unit (Celsius or Fahrenheit)
+	 * 
+	 * @param temperature
+	 *            temperature in Celsius
+	 * @return Converted value
+	 */
+	//public static String FormatTemperature(double temperature, int unit) {
+	//	temperature = unit == CgConst.UNIT_MILES_FEET ? temperature * 9 / 5 + 32 : temperature;
 
-} // Class
+	//	return String.format("%3.0f", temperature).trim();
+	//}
+
+
+	/**
+	 * Converts a given temperature to the correct unit (Celsius or Fahrenheit)
+	 * 
+	 * @param temperature
+	 *            temperature in Celsius
+	 * @return Converted value
+	 */
+	//public static double CelsiusToFahrenheit(double temperature) {
+	//	return ((temperature - 32) * 5) / 9;
+	//}
+
+
+	/**
+	 * Compares two DateTime objects, using their time portion only, completely
+	 * ignoring Year, Month and Day.
+	 * 
+	 * @param d1
+	 *            a DateTimeobject
+	 * @param d2
+	 *            a DateTimeobject
+	 * @return the difference, in seconds, between the DateTimes
+	 * 
+	 * @see https://stackoverflow.com/questions/7676149/compare-only-the-time-portion-of-two-dates-ignoring-the-date-part#7676307
+	 * 
+	 */
+	//public static int compareTimes(DateTime d1, DateTime d2) {
+	//	int t1;
+	//	int t2;
+
+	//	t1 = (int) (d1.toDate().getTime() % (24 * 60 * 60 * 1000L));
+	//	t2 = (int) (d2.toDate().getTime() % (24 * 60 * 60 * 1000L));
+	//	return (t1 - t2);
+	//}
+
+
+	/**
+	 * Converts a Unix time to a Joda-Time.
+	 * 
+	 * @param unixTime
+	 *            A Unix time as a long.
+	 * @return A DateTime.
+	 * 
+	 */
+	//public static DateTime unixTimeToDateTime(long unixTime) {
+	//	return new DateTime(Instant.ofEpochMilli(unixTime * 1000));
+	//}
+
+
+	/**
+	 * Converts a Unix time to a Joda-Time
+	 * 
+	 * @param unixTime
+	 *            A Unix time as a long.
+	 * @param timeZoneId
+	 *            A time zone.
+	 * @return A Joda-Time.
+	 * 
+	 */
+	//public static DateTime unixTimeToDateTime(long unixTime, String timeZoneId) {
+	//	DateTime dateTime = new DateTime(unixTimeToDateTime(unixTime)).withZone(DateTimeZone.forID(timeZoneId));
+
+	//	return dateTime;
+   
+//NEw
+	public static TimeZone getTimeZoneFromLatLon(double latitude, double longitude) {
+		if (timeZoneEngine == null) {
+			// Initialize the time zone engine
+			timeZoneEngine = TimeZoneEngine.initialize();
+		}
+
+		Optional<ZoneId> courseStartZoneId = timeZoneEngine.query(latitude, longitude);
+		String timeZoneId = courseStartZoneId.get().getId();
+		return TimeZone.getTimeZone(timeZoneId);
+	}
+
+
+	public static int hoursUTCOffsetFromLatLon(double latitude, double longitude) {
+		TimeZone gpsPointTimeZone = getTimeZoneFromLatLon(latitude, longitude);
+		long hoursOffsetFromUTC = TimeUnit.MILLISECONDS.toHours(gpsPointTimeZone.getRawOffset());
+
+		return (int) hoursOffsetFromUTC;
+//end new
+	}
+
+
+	/**
+	 * Converts a Joda-Time to a date for a SpinnerDateModel. The particularity of
+	 * the SpinnerDateModel is that it is time zone agnostic. Hence we need to keep
+	 * the time at the given time zone but pretend that its time zone is UTC.
+	 * Example : Input : 07:50:00 UTC-7 ==> Output : 07:50:00 UTC
+	 * 
+	 * @param dateTime
+	 *            A Joda-Time.
+	 * @return A Date.
+	 * 
+	 */
+	public static Date DateTimetoSpinnerDate(DateTime dateTime) {
+		Date spinnerDate = null;
+		String datePattern = "yyyy-MM-dd HH:mm:ss";
+		DateTimeFormatter fmt = DateTimeFormat.forPattern(datePattern);
+		String date = fmt.print(dateTime);
+		SimpleDateFormat parser = new SimpleDateFormat(datePattern);
+		try {
+			spinnerDate = parser.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return spinnerDate;
+	}
+  
+  
+} //Class

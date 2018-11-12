@@ -38,6 +38,8 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
+import course_generator.weather.WeatherData;
+import course_generator.weather.WeatherHistory;
 
 public class SaxCGXHandler extends DefaultHandler {
 	private java.util.ResourceBundle bundle = null;
@@ -83,6 +85,7 @@ public class SaxCGXHandler extends DefaultHandler {
 	private double trkpt_recup = 0;
 	private double trkpt_speed = 0;
 	private int trkpt_timesecond = 0;
+	private double trkpt_temperature = 0.0;
 	private int trkpt_eattime = 0;
 	private int trkpt_timelimit = 0;
 	// private double trkpt_dtime = 0.0;
@@ -95,14 +98,33 @@ public class SaxCGXHandler extends DefaultHandler {
 	private String trkpt_fmtmrb = "";
 	private int trkpt_FontSizemrb = 0;
 
+	// Historical weather data
+	private long weather_time;
+	private String weather_timezone;
+	private String weather_summary;
+	private String weather_icon;
+	private double weather_moonPhase;
+	private String weather_precipType;
+	private double weather_temperatureHigh;
+	private long weather_temperatureHighTime;
+	private double weather_temperatureLow;
+	private long weather_temperatureLowTime;
+	private double weather_apparentTemperatureHigh;
+	private long weather_apparentTemperatureHighTime;
+	private double weather_apparentTemperatureLow;
+	private long weather_apparentTemperatureLowTime;
+	private double weather_windSpeed;
+
 	// private int trk_nb=0;
 	// private int trkseg_nb=0;
 	private String characters = "";
 	private int old_time = 0;
 
 	private int level = 0;
-	private final int LEVEL_COURSEGENERATOR = 1;
-	private final int LEVEL_TRACKPOINT = 2;
+	private String levelName;
+	private final String LEVEL_COURSEGENERATOR = "COURSEGENERATOR";
+	private final String LEVEL_TRACKPOINT = "TRACKPOINT";
+	private final String LEVEL_WEATHER = "HISTORICAL_WEATHER_DATA_POINT";
 
 	private TrackData trkdata;
 	private int mode = 0;
@@ -110,6 +132,7 @@ public class SaxCGXHandler extends DefaultHandler {
 	private int errline = 0;
 	// private final int ERR_READ_NO = 0;
 	private final int ERR_READ_DOUBLE = -1;
+	private final int ERR_READ_LONG = -1;
 	private final int ERR_READ_INT = -2;
 	private final int ERR_READ_BOOL = -3;
 	private final int ERR_READ_VERSION = -5;
@@ -192,8 +215,10 @@ public class SaxCGXHandler extends DefaultHandler {
 
 		File f = new File(filename);
 		if (f.isFile() && f.canRead()) {
-			if (mode == 0)
+			if (mode == 0) {
 				trkdata.data.clear();
+				trkdata.historicWeatherData.clear();
+			}
 			parser.parse(f, this);
 		} else
 			trkdata.ReadError = ERR_READ_NOTEXIST;
@@ -218,7 +243,7 @@ public class SaxCGXHandler extends DefaultHandler {
 	@Override
 	public void setDocumentLocator(final Locator locator) {
 		this.locator = locator; // Save the locator, so that it can be used later for line tracking when
-								// traversing nodes.
+		// traversing nodes.
 	}
 
 
@@ -226,9 +251,11 @@ public class SaxCGXHandler extends DefaultHandler {
 	public void startElement(String uri, String localname, String qName, Attributes attributs) throws SAXException {
 		if (qName.equalsIgnoreCase("COURSEGENERATOR")) {
 			level++;
-		} else if (qName.equalsIgnoreCase("TRACKPOINT")) {
+			levelName = qName;
+		} else if (qName.equalsIgnoreCase("TRACKPOINT") || qName.equalsIgnoreCase("HISTORICAL_WEATHER_DATA_POINT")) {
 			// trk_nb++;
 			level++;
+			levelName = qName;
 		}
 	}
 
@@ -257,6 +284,29 @@ public class SaxCGXHandler extends DefaultHandler {
 	private double ManageDouble(double _default, int _errcode) {
 		try {
 			Double d = Double.parseDouble(characters);
+			characters = "";
+			return d;
+		} catch (NumberFormatException e) {
+			// errcode = _errcode;
+			errline = locator.getLineNumber();
+			characters = "";
+			return _default;
+		}
+	}
+
+
+	/**
+	 * Parse a long element
+	 * 
+	 * @param _default
+	 *            Default value
+	 * @param _errcode
+	 *            Error code if a parse error occur
+	 * @return Return the parsed value
+	 */
+	private long ManageLong(long _default, int _errcode) {
+		try {
+			long d = Long.parseLong(characters);
 			characters = "";
 			return d;
 		} catch (NumberFormatException e) {
@@ -343,7 +393,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			level--;
 		}
 
-		if (level == LEVEL_COURSEGENERATOR) {
+		if (level == 1 && levelName.equals(LEVEL_COURSEGENERATOR)) {
 			if (qName.equalsIgnoreCase("VERSION")) {
 				cgx_version = ManageDouble(0.0, ERR_READ_VERSION);
 
@@ -407,7 +457,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("ENDGLOBALCOEFF")) {
 				trkdata.EndGlobalCoeff = ManageDouble(100.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("TIMEZONE")) {
-				trkdata.TrackTimeZone = ManageDouble(0.0, ERR_READ_DOUBLE);
+				trkdata.TrackTimeZone = ManageInt(0, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("USESUMMERTIME")) {
 				trkdata.TrackUseDaylightSaving = ManageBoolean(false, ERR_READ_BOOL);
 			} else if (qName.equalsIgnoreCase("CURVE")) {
@@ -455,7 +505,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			}
 		} // End LEVEL_COURSEGENERATOR
 
-		if (level == LEVEL_TRACKPOINT) {
+		if (level == 2 && levelName.equals(LEVEL_TRACKPOINT)) {
 			if (qName.equalsIgnoreCase("LATITUDEDEGREES")) {
 				trkpt_lat = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("LONGITUDEDEGREES")) {
@@ -487,6 +537,8 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("TIMESECONDE")) {
 				trkpt_timesecond = ManageInt(0, ERR_READ_INT);
 				trkdata.isTimeLoaded = true;
+			} else if (qName.equalsIgnoreCase("TEMPERATURE")) {
+				trkpt_temperature = ManageDouble(0, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("DELTATIMESECONDE")) {
 				// trkpt_dtime = ManageDouble(0.0, ERR_READ_DOUBLE);
 				// TODO used?
@@ -530,9 +582,10 @@ public class SaxCGXHandler extends DefaultHandler {
 							trkpt_speed, // double Speed
 							0.0, // double dElevation
 							trkpt_timesecond, // int Time
+							trkpt_temperature, // Temperature
 							trkpt_timesecond - old_time, // double dTime_f
 							trkpt_timelimit, // int TimeLimit
-							new DateTime(), // DateTime Hour
+							new DateTime(), // DateTime Hour,
 							trkpt_eattime, // int Station
 							trkpt_name, // String Name
 							trkpt_comment, // String Comment
@@ -561,6 +614,7 @@ public class SaxCGXHandler extends DefaultHandler {
 							trkpt_speed, // double Speed
 							0.0, // double dElevation
 							trkpt_timesecond, // int Time
+							trkpt_temperature, // Temperature
 							trkpt_timesecond - old_time, // double dTime_f
 							trkpt_timelimit, // int TimeLimit
 							new DateTime(), // DateTime Hour
@@ -577,10 +631,53 @@ public class SaxCGXHandler extends DefaultHandler {
 					));
 					Cmpt++;
 				} // else
+
 				old_time = trkpt_timesecond;
 			}
 		} // End LEVEL_TRACKPOINT
+		else if (level == 2 && levelName.equals(LEVEL_WEATHER)) {
+			if (qName.equalsIgnoreCase("TIME")) {
+				weather_time = ManageLong(0, ERR_READ_LONG);
+			}
+			if (qName.equalsIgnoreCase("TIMEZONE")) {
+				weather_timezone = ManageString();
+			} else if (qName.equalsIgnoreCase("SUMMARY")) {
+				weather_summary = ManageString();
+			} else if (qName.equalsIgnoreCase("ICON")) {
+				weather_icon = ManageString();
+			} else if (qName.equalsIgnoreCase("MOON_PHASE")) {
+				weather_moonPhase = ManageDouble(0.0, ERR_READ_DOUBLE);
+			} else if (qName.equalsIgnoreCase("PRECIPITATION_TYPE")) {
+				weather_precipType = ManageString();
+			} else if (qName.equalsIgnoreCase("HIGH_TEMPERATURE")) {
+				weather_temperatureHigh = ManageDouble(0.0, ERR_READ_DOUBLE);
+			} else if (qName.equalsIgnoreCase("HIGH_TEMPERATURE_TIME")) {
+				weather_temperatureHighTime = ManageLong(0, ERR_READ_LONG);
+			} else if (qName.equalsIgnoreCase("LOW_TEMPERATURE")) {
+				weather_temperatureLow = ManageDouble(0.0, ERR_READ_DOUBLE);
+			} else if (qName.equalsIgnoreCase("LOW_TEMPERATURE_TIME")) {
+				weather_temperatureLowTime = ManageLong(0, ERR_READ_LONG);
+			} else if (qName.equalsIgnoreCase("APPARENT_HIGH_TEMPERATURE")) {
+				weather_apparentTemperatureHigh = ManageDouble(0.0, ERR_READ_DOUBLE);
+			} else if (qName.equalsIgnoreCase("APPARENT_HIGH_TEMPERATURE_TIME")) {
+				weather_apparentTemperatureHighTime = ManageLong(0, ERR_READ_LONG);
+			} else if (qName.equalsIgnoreCase("APARENT_LOW_TEMPERATURE")) {
+				weather_apparentTemperatureLow = ManageDouble(0.0, ERR_READ_DOUBLE);
+			} else if (qName.equalsIgnoreCase("APARENT_LOW_TEMPERATURE_TIME")) {
+				weather_apparentTemperatureLowTime = ManageLong(0, ERR_READ_LONG);
+			} else if (qName.equalsIgnoreCase("WIND_SPEED")) {
+				weather_windSpeed = ManageDouble(0.0, ERR_READ_DOUBLE);
 
+			} else if (qName.equalsIgnoreCase("HISTORICAL_WEATHER_DATA_POINT")) {
+				level--;
+				WeatherData dailyWeatherData = new WeatherData(weather_time, weather_summary, weather_icon,
+						weather_moonPhase, weather_precipType, weather_temperatureHigh, weather_temperatureHighTime,
+						weather_temperatureLow, weather_temperatureLowTime, weather_apparentTemperatureHigh,
+						weather_apparentTemperatureHighTime, weather_apparentTemperatureLow,
+						weather_apparentTemperatureLowTime, weather_windSpeed);
+				trkdata.historicWeatherData.add(new WeatherHistory(weather_timezone, dailyWeatherData));
+			}
+		}
 	}
 
 

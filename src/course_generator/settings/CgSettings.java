@@ -101,6 +101,7 @@ public class CgSettings {
 	public int CurveButtonsIconSize;
 
 	private String ThunderForestApiKey;
+	private String DarkSkyApiKey;
 
 	public Color Color_Diff_VeryEasy;
 	public Color Color_Diff_Easy;
@@ -112,8 +113,8 @@ public class CgSettings {
 	public int NightTrackWidth;
 	public int NormalTrackTransparency;
 	public int NightTrackTransparency;
-	
-	
+
+
 	public CgSettings() {
 		int i = 0;
 
@@ -178,16 +179,16 @@ public class CgSettings {
 
 		ThunderForestApiKey = "";
 
-		Color_Diff_VeryEasy=CgConst.CL_DIFF_VERYEASY;
-		Color_Diff_Easy=CgConst.CL_DIFF_EASY;
-		Color_Diff_Average=CgConst.CL_DIFF_AVERAGE;
-		Color_Diff_Hard=CgConst.CL_DIFF_HARD;
-		Color_Diff_VeryHard=CgConst.CL_DIFF_VERYHARD;
-		Color_Map_NightHighlight=CgConst.CL_MAP_NIGHT_HIGHLIGHT;
-		NormalTrackWidth=CgConst.TRACK_NORMAL_TICKNESS;
-		NightTrackWidth=CgConst.TRACK_NIGHT_TICKNESS;
-		NormalTrackTransparency=CgConst.NORMAL_TRACK_TRANSPARENCY;
-		NightTrackTransparency=CgConst.NIGHT_TRACK_TRANSPARENCY;		
+		Color_Diff_VeryEasy = CgConst.CL_DIFF_VERYEASY;
+		Color_Diff_Easy = CgConst.CL_DIFF_EASY;
+		Color_Diff_Average = CgConst.CL_DIFF_AVERAGE;
+		Color_Diff_Hard = CgConst.CL_DIFF_HARD;
+		Color_Diff_VeryHard = CgConst.CL_DIFF_VERYHARD;
+		Color_Map_NightHighlight = CgConst.CL_MAP_NIGHT_HIGHLIGHT;
+		NormalTrackWidth = CgConst.TRACK_NORMAL_TICKNESS;
+		NightTrackWidth = CgConst.TRACK_NIGHT_TICKNESS;
+		NormalTrackTransparency = CgConst.NORMAL_TRACK_TRANSPARENCY;
+		NightTrackTransparency = CgConst.NIGHT_TRACK_TRANSPARENCY;
 	}
 
 
@@ -293,21 +294,23 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "DIALOGICONSIZE", DialogIconSize);
 			Utils.WriteIntToXML(writer, "MAPICONSIZE", MapIconSize);
 			Utils.WriteIntToXML(writer, "CURVEBUTTONSICONSIZE", CurveButtonsIconSize);
-			Utils.WriteStringToXML(writer, "THUNDERFORESTAPIKEY", ThunderForestApiKey);
 
-			Utils.WriteIntToXML(writer, "COLORDIFFVERYEASY",Color_Diff_VeryEasy.getRGB());
-			Utils.WriteIntToXML(writer, "COLORDIFFEASY",Color_Diff_Easy.getRGB());
-			Utils.WriteIntToXML(writer, "COLORDIFFAVERAGE",Color_Diff_Average.getRGB());
-			Utils.WriteIntToXML(writer, "COLORDIFFHARD",Color_Diff_Hard.getRGB());
-			Utils.WriteIntToXML(writer, "COLORDIFFVERYHARD",Color_Diff_VeryHard.getRGB());
-			Utils.WriteIntToXML(writer, "COLORMAPNIGHTHIGHLIGHT",Color_Map_NightHighlight.getRGB());
-			
-			Utils.WriteIntToXML(writer, "NORMALTRACKWIDTH",NormalTrackWidth);
-			Utils.WriteIntToXML(writer, "NIGHTTRACKWIDTH",NightTrackWidth);
-			
-			Utils.WriteIntToXML(writer, "NORMALTRACKTRANSPARENCY",NormalTrackTransparency);
-			Utils.WriteIntToXML(writer, "NIGHTTRACKTRANSPARENCY",NightTrackTransparency);
-			
+			Utils.WriteStringToXML(writer, "THUNDERFORESTAPIKEY", ThunderForestApiKey);
+			Utils.WriteStringToXML(writer, "DARKSKYAPIKEY", DarkSkyApiKey);
+
+			Utils.WriteIntToXML(writer, "COLORDIFFVERYEASY", Color_Diff_VeryEasy.getRGB());
+			Utils.WriteIntToXML(writer, "COLORDIFFEASY", Color_Diff_Easy.getRGB());
+			Utils.WriteIntToXML(writer, "COLORDIFFAVERAGE", Color_Diff_Average.getRGB());
+			Utils.WriteIntToXML(writer, "COLORDIFFHARD", Color_Diff_Hard.getRGB());
+			Utils.WriteIntToXML(writer, "COLORDIFFVERYHARD", Color_Diff_VeryHard.getRGB());
+			Utils.WriteIntToXML(writer, "COLORMAPNIGHTHIGHLIGHT", Color_Map_NightHighlight.getRGB());
+
+			Utils.WriteIntToXML(writer, "NORMALTRACKWIDTH", NormalTrackWidth);
+			Utils.WriteIntToXML(writer, "NIGHTTRACKWIDTH", NightTrackWidth);
+
+			Utils.WriteIntToXML(writer, "NORMALTRACKTRANSPARENCY", NormalTrackTransparency);
+			Utils.WriteIntToXML(writer, "NIGHTTRACKTRANSPARENCY", NightTrackTransparency);
+
 			writer.writeEndElement();
 			writer.writeEndDocument();
 
@@ -430,6 +433,41 @@ public class CgSettings {
 	 */
 	public void setThunderForestApiKey(String key) {
 		ThunderForestApiKey = key;
+	}
+
+
+	/**
+	 * Returns the user's Dark Sky API Key
+	 * 
+	 * @return string with the key
+	 */
+	public String getDarkSkyApiKey() {
+		return DarkSkyApiKey == null ? "" : DarkSkyApiKey;
+	}
+
+
+	/**
+	 * Sets the user's Dark Sky API Key
+	 * 
+	 * @param key
+	 *            The entered key
+	 */
+	public void setDarkSkyApiKey(String key) {
+		DarkSkyApiKey = key;
+	}
+
+
+	/**
+	 * Verifies that the Dark Sky API Key is a valid one
+	 * 
+	 */
+	public boolean isDarkSkyApiKeyValid() {
+		boolean isKeyValid = false;
+
+		if (DarkSkyApiKey != null && DarkSkyApiKey.length() == 32)
+			isKeyValid = true;
+
+		return isKeyValid;
 	}
 
 }

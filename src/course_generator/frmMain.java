@@ -115,6 +115,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 
+import org.joda.time.DateTime;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.OsmFileCacheTileLoader;
 
@@ -123,6 +124,7 @@ import course_generator.TrackData.SearchPointResult;
 import course_generator.analysis.JPanelAnalysisSpeed;
 import course_generator.analysis.JPanelAnalysisSpeedSlope;
 import course_generator.analysis.JPanelAnalysisTimeDist;
+import course_generator.analysis.JPanelAnalysisTimeTemperature;
 import course_generator.dialogs.FrmExportWaypoints;
 import course_generator.dialogs.FrmImportChoice;
 import course_generator.dialogs.frmEditPosition;
@@ -156,6 +158,7 @@ import course_generator.utils.FileTypeFilter;
 import course_generator.utils.OsCheck;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
+import course_generator.weather.JPanelWeather;
 
 /**
  * This is the main class of the project.
@@ -262,6 +265,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	private JTabbedPane TabbedPaneAnalysis;
 	private JPanelAnalysisTimeDist jPanelTimeDist;
+	private JPanelAnalysisTimeTemperature jPanelTimeTemperature;
 	private JPanelAnalysisSpeed jPanelSpeed;
 	private JPanelAnalysisSpeedSlope jPanelSpeedSlope;
 	// private JButton btMapOfflineSelection;
@@ -269,6 +273,8 @@ public class frmMain extends javax.swing.JFrame {
 	private JPanelResume PanelResume;
 
 	private JPanelStatistics panelStatistics;
+
+	private JPanelWeather panelWeather;
 
 	private JPanelProfil panelProfil;
 
@@ -326,15 +332,14 @@ public class frmMain extends javax.swing.JFrame {
 		if (ProgDir.endsWith("/."))
 			ProgDir = ProgDir.substring(0, ProgDir.length() - 2);
 
-		
-		//-- Create the tiles cache folders if necessary
-		File cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OPENSTREETMAP_CACHE_DIR);
+		// -- Create the tiles cache folders if necessary
+		File cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
 		cacheDir.mkdirs();
-		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OPENTOPOMAP_CACHE_DIR);
+		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENTOPOMAP_CACHE_DIR);
 		cacheDir.mkdirs();
-		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OUTDOORS_CACHE_DIR);
+		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OUTDOORS_CACHE_DIR);
 		cacheDir.mkdirs();
-		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.BING_CACHE_DIR);
+		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.BING_CACHE_DIR);
 		cacheDir.mkdirs();
 
 		// -- Initialize data
@@ -389,9 +394,9 @@ public class frmMain extends javax.swing.JFrame {
 			if (Settings.Language.equalsIgnoreCase("FR")) {
 				Locale.setDefault(Locale.FRANCE);
 			} else if (Settings.Language.equalsIgnoreCase("EN")) {
-				Locale.setDefault(Locale.US);	
+				Locale.setDefault(Locale.US);
 			} else if (Settings.Language.equalsIgnoreCase("ES")) {
-				Locale.setDefault(new Locale("es","ES"));					
+				Locale.setDefault(new Locale("es", "ES"));
 			} else {
 				Locale.setDefault(Locale.US);
 			}
@@ -482,14 +487,18 @@ public class frmMain extends javax.swing.JFrame {
 		String tmpstr = DataDir + "/" + CgConst.CG_DIR + "/OpenStreetMapTileCache";
 		Path DataFolder = Paths.get(tmpstr);
 		if (Files.exists(DataFolder)) {
-			//String s = "Le répertoire %s n'est plus utile.\nVous pouvez le supprimer afin de gagner de l'espace disque."; 
-			JOptionPane.showMessageDialog(this, String.format(bundle.getString("frmMain.UnusedTileCacheDir"),tmpstr), "Course Generator", JOptionPane.INFORMATION_MESSAGE);
-//			JOptionPane.showConfirmDialog(this, bundle.getString("frmMain.QuestionInstallCurves"), "",
-//					JOptionPane.OK_OPTION);
-			//JOptionPane.showConfirmDialog(this, "Le répertoire "+tmpstr+ " n'est plus utile. Vous pouvez le supprimer afin de gagner de l'espace disque.", "",
-			//		JOptionPane.OK_OPTION);
+			// String s = "Le répertoire %s n'est plus utile.\nVous pouvez le supprimer
+			// afin de gagner de l'espace disque.";
+			JOptionPane.showMessageDialog(this, String.format(bundle.getString("frmMain.UnusedTileCacheDir"), tmpstr),
+					"Course Generator", JOptionPane.INFORMATION_MESSAGE);
+			// JOptionPane.showConfirmDialog(this,
+			// bundle.getString("frmMain.QuestionInstallCurves"), "",
+			// JOptionPane.OK_OPTION);
+			// JOptionPane.showConfirmDialog(this, "Le répertoire "+tmpstr+ " n'est plus
+			// utile. Vous pouvez le supprimer afin de gagner de l'espace disque.", "",
+			// JOptionPane.OK_OPTION);
 		}
-		
+
 		ExportCurvesFromResource(false);
 
 		// -- Display the splash screen
@@ -632,13 +641,13 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Refresh statusbar
 		RefreshStatusbar(Track);
-		
+
 		panelTrackData.refresh();
 		PanelResume.refresh();
 		panelStatistics.refresh();
 		jPanelSpeed.Refresh(Track, Settings);
 		jPanelSpeedSlope.Refresh(Track, Settings);
-		
+
 		// Refresh map
 		panelMap.RefreshTrack(Track, true);
 
@@ -1226,6 +1235,7 @@ public class frmMain extends javax.swing.JFrame {
 					Track.Invert();
 					panelProfil.RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
+					jPanelTimeTemperature.Refresh(Track, Settings);
 					jPanelSpeed.Refresh(Track, Settings);
 					jPanelSpeedSlope.Refresh(Track, Settings);
 					RefreshStatusbar(Track);
@@ -1350,7 +1360,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Settings Course Generator
 		// -----------------------------------------
 		mnuCGSettings = new javax.swing.JMenuItem();
-		mnuCGSettings.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9, java.awt.event.InputEvent.SHIFT_MASK));
+		mnuCGSettings.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F9,
+				java.awt.event.InputEvent.SHIFT_MASK));
 		mnuCGSettings.setIcon(Utils.getIcon(this, "setting.png", Settings.MenuIconSize));
 		mnuCGSettings.setText(bundle.getString("frmMain.mnuCGSettings.text"));
 		mnuCGSettings.addActionListener(new java.awt.event.ActionListener() {
@@ -1365,6 +1376,7 @@ public class frmMain extends javax.swing.JFrame {
 				PanelResume.refresh();
 				panelProfil.RefreshProfilChart();
 				jPanelTimeDist.Refresh(Track, Settings);
+				jPanelTimeTemperature.Refresh(Track, Settings);
 				jPanelSpeed.Refresh(Track, Settings);
 				jPanelSpeedSlope.Refresh(Track, Settings);
 				panelStatistics.refresh();
@@ -1523,6 +1535,7 @@ public class frmMain extends javax.swing.JFrame {
 			RefreshTitle();
 			panelProfil.RefreshProfilChart();
 			jPanelTimeDist.Refresh(Track, Settings);
+			jPanelTimeTemperature.Refresh(Track, Settings);
 			jPanelSpeed.Refresh(Track, Settings);
 			jPanelSpeedSlope.Refresh(Track, Settings);
 			panelMap.RefreshTrack(Track, true);
@@ -1633,11 +1646,13 @@ public class frmMain extends javax.swing.JFrame {
 					RefreshTitle();
 					panelProfil.RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
+					jPanelTimeTemperature.Refresh(Track, Settings);
 					jPanelSpeed.Refresh(Track, Settings);
 					jPanelSpeedSlope.Refresh(Track, Settings);
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
+					panelWeather.refresh(Track, false);
 
 					Settings.previousCGXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
@@ -1687,6 +1702,7 @@ public class frmMain extends javax.swing.JFrame {
 		panelProfil.RefreshProfilChart();
 		// -- Refresh analysis tab
 		jPanelTimeDist.Refresh(Track, Settings);
+		jPanelTimeTemperature.Refresh(Track, Settings);
 		jPanelSpeed.Refresh(Track, Settings);
 		jPanelSpeedSlope.Refresh(Track, Settings);
 		// -- Refresh the form title
@@ -2232,6 +2248,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelTrackData.refresh();
 					panelProfil.RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
+					jPanelTimeTemperature.Refresh(Track, Settings);
 					jPanelSpeed.Refresh(Track, Settings);
 					jPanelSpeedSlope.Refresh(Track, Settings);
 					panelMap.RefreshTrack(Track, false);
@@ -2299,6 +2316,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelTrackData.refresh();
 					panelProfil.RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
+					jPanelTimeTemperature.Refresh(Track, Settings);
 					jPanelSpeed.Refresh(Track, Settings);
 					jPanelSpeedSlope.Refresh(Track, Settings);
 					RefreshStatusbar(Track);
@@ -2349,6 +2367,7 @@ public class frmMain extends javax.swing.JFrame {
 			panelTrackData.refresh();
 			panelProfil.RefreshProfilChart();
 			jPanelTimeDist.Refresh(Track, Settings);
+			jPanelTimeTemperature.Refresh(Track, Settings);
 			jPanelSpeed.Refresh(Track, Settings);
 			jPanelSpeedSlope.Refresh(Track, Settings);
 			RefreshTitle();
@@ -2667,6 +2686,12 @@ public class frmMain extends javax.swing.JFrame {
 		addTab(TabbedPaneMain, panelStatistics, bundle.getString("frmMain.TabStatistic.tabTitle"),
 				Utils.getIcon(this, "stat.png", Settings.TabIconSize));
 
+		// -- Tab - Weather
+		// ---------------------------------------------------
+		panelWeather = new JPanelWeather(Settings);
+		addTab(TabbedPaneMain, panelWeather, bundle.getString("frmMain.TabWeather.tabTitle"),
+				Utils.getIcon(this, "stat.png", Settings.TabIconSize));
+
 		// -- Tab - Analysis
 		// ----------------------------------------------------
 		jPanelAnalyze = new javax.swing.JPanel();
@@ -2678,9 +2703,14 @@ public class frmMain extends javax.swing.JFrame {
 		TabbedPaneAnalysis = new javax.swing.JTabbedPane(JTabbedPane.LEFT);
 		jPanelAnalyze.add(TabbedPaneAnalysis, java.awt.BorderLayout.CENTER);
 
-		// -- Tab Analysis : Time/Dist
+		// -- Tab Analysis : Time/Distance
 		jPanelTimeDist = new JPanelAnalysisTimeDist(Settings);
 		addTab(TabbedPaneAnalysis, jPanelTimeDist, bundle.getString("frmMain.TabTimeDist.tabTitle"), null);
+
+		// -- Tab Analysis : Time/Temperature
+		jPanelTimeTemperature = new JPanelAnalysisTimeTemperature(Settings);
+		addTab(TabbedPaneAnalysis, jPanelTimeTemperature, bundle.getString("frmMain.TabTimeTemperature.tabTitle"),
+				null);
 
 		// -- Tab Analysis : Speed
 		jPanelSpeed = new JPanelAnalysisSpeed(Settings);
@@ -2690,7 +2720,7 @@ public class frmMain extends javax.swing.JFrame {
 		jPanelSpeedSlope = new JPanelAnalysisSpeedSlope(Settings);
 		addTab(TabbedPaneAnalysis, jPanelSpeedSlope, bundle.getString("frmMain.TabSpeedSlope.tabTitle"), null);
 
-		// -- Tab - Resume
+		// -- Tab - Summary
 		// ------------------------------------------------------
 		PanelResume = new JPanelResume(Resume, Settings);
 
@@ -2944,11 +2974,13 @@ public class frmMain extends javax.swing.JFrame {
 					RefreshTitle();
 					panelProfil.RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
+					jPanelTimeTemperature.Refresh(Track, Settings);
 					jPanelSpeed.Refresh(Track, Settings);
 					jPanelSpeedSlope.Refresh(Track, Settings);
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
+					panelWeather.refresh(Track, false);
 					Settings.previousGPXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
 				} catch (Exception e) {
@@ -3031,6 +3063,7 @@ public class frmMain extends javax.swing.JFrame {
 		panelProfil.RefreshProfilChart();
 		// -- Refresh analysis tab
 		jPanelTimeDist.Refresh(Track, Settings);
+		jPanelTimeTemperature.Refresh(Track, Settings);
 		jPanelSpeed.Refresh(Track, Settings);
 		jPanelSpeedSlope.Refresh(Track, Settings);
 		// -- Refresh the form title
@@ -3041,6 +3074,12 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshMainMenu();
 		// Refresh map
 		panelMap.RefreshTrack(Track, true);
+
+		// Refresh weather
+		CgData firstTrackPoint = Track.data.get(0);
+		DateTime startTime = firstTrackPoint.getHour();
+		panelWeather.SetParameters(firstTrackPoint.getLatitude(), firstTrackPoint.getLongitude(), startTime);
+		panelWeather.refresh(Track, false);
 
 		bNoBackup = true;
 
@@ -3136,6 +3175,7 @@ public class frmMain extends javax.swing.JFrame {
 		panelProfil.RefreshProfilChart();
 		// -- Refresh analysis tab
 		jPanelTimeDist.Refresh(Track, Settings);
+		jPanelTimeTemperature.Refresh(Track, Settings);
 		jPanelSpeed.Refresh(Track, Settings);
 		jPanelSpeedSlope.Refresh(Track, Settings);
 		// -- Refresh the form title
@@ -3152,9 +3192,15 @@ public class frmMain extends javax.swing.JFrame {
 		panelTrackData.setSelectedRow(0);
 		panelTrackData.setTrack(Track);
 		panelTrackData.setSelectedRow(0);
-		
+
 		// Refresh map
 		panelMap.RefreshTrack(Track, true);
+
+		// Refresh weather
+		CgData firstTrackPoint = Track.data.get(0);
+		DateTime startTime = firstTrackPoint.getHour();
+		panelWeather.SetParameters(firstTrackPoint.getLatitude(), firstTrackPoint.getLongitude(), startTime);
+		panelWeather.refresh(Track, false);
 
 		RefreshMruCGX();
 		bNoBackup = true;
@@ -3218,7 +3264,7 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-	
+
 	/**
 	 * Calculate the offline map directories size
 	 */

@@ -61,7 +61,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	private static final long serialVersionUID = 4203790672206475952L;
 	private ResourceBundle bundle;
 	private boolean ok;
-	private Double timezone;
+	private int timezone;
 	private boolean summertime;
 	private CgSettings settings;
 	private JPanel jPanelButtons;
@@ -344,7 +344,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 				setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 
 				if (res.valid) {
-					timezone = Double.valueOf(res.TimeZone);
+					timezone = res.TimeZone;
 					summertime = res.SummerTime;
 
 					Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(res.TimeZoneId));
@@ -354,6 +354,12 @@ public class frmTrackSettings extends javax.swing.JDialog {
 					calendar.setTime(res.Sunset.toDate());
 
 					spinStartNightModel.setValue(calendar.getTime());
+
+					//Date date = Utils.DateTimetoSpinnerDate(res.Sunrise);
+
+					//spinEndNightModel.setValue(date);
+					//date = Utils.DateTimetoSpinnerDate(res.Sunset);
+					//spinStartNightModel.setValue(date);
 				}
 			}
 		});
