@@ -42,12 +42,8 @@ import java.text.SimpleDateFormat;
 //import java.util.Base64;
 import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -67,7 +63,6 @@ import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.TrackData.CalcClimbResult;
 import course_generator.settings.CgSettings;
-import net.iakovlev.timeshape.TimeZoneEngine;
 
 /**
  *
@@ -76,8 +71,6 @@ import net.iakovlev.timeshape.TimeZoneEngine;
 public class Utils {
 
 	public static final String htmlDocFile = "cg_doc_4.00.html";
-
-	private static TimeZoneEngine timeZoneEngine;
 
 
 	/**
@@ -1572,8 +1565,6 @@ public class Utils {
 		}
 		return success;
 	}
-
-
   
 	/**
 	 * Returns a given temperature in the correct unit (Celsius or Fahrenheit)

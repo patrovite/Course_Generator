@@ -20,14 +20,12 @@ package course_generator;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.TimeZone;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.joda.time.Interval;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
@@ -35,7 +33,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import course_generator.utils.CgConst;
-import course_generator.utils.Utils;
 
 /**
  *
@@ -251,12 +248,7 @@ public class SaxGPXHandler extends DefaultHandler {
 			try {
 				if (first) {
 					first = false;
-
-					// Fetch the timezone to populate for each track point time.
-					// Determine the course time zone
-					TimeZone timeZoneId = Utils.getTimeZoneFromLatLon(trkpt_lat, trkpt_lon);
-					trkpt_time = DateTime.parse(characters).withZone(DateTimeZone.forTimeZone(timeZoneId));
-
+					trkpt_time = DateTime.parse(characters);
 					StartTime = trkpt_time;
 					old_time = StartTime;
 					Time_s = 0;
