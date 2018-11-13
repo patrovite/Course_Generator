@@ -93,7 +93,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	private JPanel panelCoeff;
 	private static FrmCalcSunriseSunset calcSunriseSunset;
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -103,7 +102,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
-
 
 	public boolean showDialog(TrackData track) {
 		this.track = track;
@@ -117,7 +115,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		jMonthView.setSelectionDate(this.track.StartTime.toDate());
 		jMonthView.ensureDateVisible(this.track.StartTime.toDate());
 
-		spinStartTimeModel.setValue(this.track.StartTime.toDate());
+		Date date = Utils.DateTimetoSpinnerDate(this.track.StartTime);
+		spinStartTimeModel.setValue(date);
 		chkElevationEffect.setSelected(this.track.bElevEffect);
 		chkNightEffect.setSelected(this.track.bNightCoeff);
 		spinStartNightModel.setValue(this.track.StartNightTime.toDate());
@@ -161,7 +160,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		return ok;
 	}
 
-
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -196,7 +194,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -207,7 +204,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -413,7 +409,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-
 	private ResCalcSunriseSunset ShowCalcSunriseSunset() {
 		if (calcSunriseSunset == null)
 			calcSunriseSunset = new FrmCalcSunriseSunset(this, settings);
@@ -421,7 +416,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		return calcSunriseSunset.showDialog(track.data.get(0).getLongitude(), track.data.get(0).getLatitude(),
 				track.StartTime, track.TrackTimeZone, track.TrackUseDaylightSaving);
 	}
-
 
 	protected void Refresh() {
 		spinStartNight.setEnabled(chkNightEffect.isSelected());
