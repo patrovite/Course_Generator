@@ -56,7 +56,6 @@ import javax.swing.filechooser.FileFilter;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-//import org.jdom2.Element;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Instant;
@@ -1552,4 +1551,5 @@ public class Utils {
 
 		return (int) hoursOffsetFromUTC;
 	}
-}
+
+} // Class

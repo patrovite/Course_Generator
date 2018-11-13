@@ -52,7 +52,6 @@ public class SaxGPXHandler extends DefaultHandler {
 	private double trkpt_ele = 0.0;
 	// private String trkpt_name = "";
 	private DateTime trkpt_time;
-	private double trktpt_temperature;
 	private int level = 0;
 	// private final int LEVEL_GPX = 1;
 	private final int LEVEL_TRK = 2;
@@ -287,7 +286,6 @@ public class SaxGPXHandler extends DefaultHandler {
 							0.0, // double Speed
 							0.0, // double dElevation
 							Time_s, // int Time //Temps total en seconde,
-							trktpt_temperature, // Temperature
 							dTime_f, // double dTime_f //temps de parcours du tronçon en seconde (avec virgule)
 							0, // int TimeLimit //Barrière horaire
 							trkpt_time, // DateTime Hour //Contient la date et l'heure de passage
@@ -319,7 +317,6 @@ public class SaxGPXHandler extends DefaultHandler {
 							0.0, // double Speed
 							0.0, // double dElevation
 							Time_s, // int Time
-							trktpt_temperature, // Temperature
 							dTime_f, // double dTime_f
 							0, // int TimeLimit
 							trkpt_time, // DateTime Hour
