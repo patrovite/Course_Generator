@@ -151,7 +151,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 		slope = p.getSlope();
 		speed = p.getSpeedNumber();
 
-		double convertedSpeed = Utils.SpeedCurrentUnitsToMeters(speed, settings);
+		double convertedSpeed = Utils.SpeedMeterToCurrentUnits(speed, settings);
 
 		// Set field
 		tfSlope.setText(String.valueOf(slope));
@@ -165,7 +165,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 			// Copy fields
 			p.setSlope(slope);
 
-			convertedSpeed = Utils.SpeedMeterToCurrentUnits(speed, settings);
+			convertedSpeed = Utils.SpeedCurrentUnitsToMeters(speed, settings);
 
 			p.setSpeed(convertedSpeed);
 		}

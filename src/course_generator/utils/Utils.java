@@ -665,18 +665,12 @@ public class Utils {
 	public static double SpeedCurrentUnitsToMeters(double speedValue, CgSettings settings) {
 		double convertedSpeed = speedValue;
 
-		switch (settings.Unit) {
-		case CgConst.UNIT_MILES_FEET:
-			if (settings.isPace) {
-				convertedSpeed = Utils.Km2Miles(convertedSpeed);
-				speedValue = Utils.SpeedToPaceNumber(convertedSpeed);
-			}
-			break;
-		case CgConst.UNIT_METER:
-			if (settings.isPace) {
-				convertedSpeed = Utils.SpeedToPaceNumber(convertedSpeed);
-			}
-			break;
+		if (settings.isPace) {
+			convertedSpeed = Utils.Pace2Speed(convertedSpeed);
+		}
+
+		if (settings.Unit == CgConst.UNIT_MILES_FEET) {
+			convertedSpeed = Utils.Miles2Km(convertedSpeed);
 		}
 
 		return convertedSpeed;
@@ -695,18 +689,12 @@ public class Utils {
 	public static double SpeedMeterToCurrentUnits(double speedValue, CgSettings settings) {
 		double convertedSpeed = speedValue;
 
-		switch (settings.Unit) {
-		case CgConst.UNIT_MILES_FEET:
-			if (settings.isPace) {
-				convertedSpeed = Utils.Pace2Speed(convertedSpeed);
-				convertedSpeed = Utils.Miles2Km(convertedSpeed);
-			}
-			break;
-		case CgConst.UNIT_METER:
-			if (settings.isPace) {
-				convertedSpeed = Utils.Pace2Speed(convertedSpeed);
-			}
-			break;
+		if (settings.Unit == CgConst.UNIT_MILES_FEET) {
+			convertedSpeed = Utils.Km2Miles(convertedSpeed);
+		}
+
+		if (settings.isPace) {
+			return Utils.SpeedToPaceNumber(convertedSpeed);
 		}
 
 		return convertedSpeed;
