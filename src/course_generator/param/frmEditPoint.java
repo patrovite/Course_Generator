@@ -97,7 +97,8 @@ public class frmEditPoint extends javax.swing.JDialog {
 
 		// -- Speed
 		lbSpeed = new javax.swing.JLabel();
-		lbSpeed.setText(bundle.getString("frmEditPoint.lbSpeed.text") + " ");
+		lbSpeed.setText(bundle.getString("frmEditPoint.lbSpeed.text") + " " + "("
+				+ Utils.uSpeed2String(settings.Unit, settings.isPace) + ")");
 		Utils.addComponent(paneGlobal, lbSpeed, 0, 1, 1, 1, 0, 0, 0, 5, 5, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
@@ -151,11 +152,11 @@ public class frmEditPoint extends javax.swing.JDialog {
 		slope = p.getSlope();
 		speed = p.getSpeedNumber();
 
-		double convertedSpeed = Utils.SpeedMeterToCurrentUnits(speed, settings);
+		double speedToDisplay = Utils.SpeedMeterToCurrentUnits(speed, settings);
 
 		// Set field
 		tfSlope.setText(String.valueOf(slope));
-		tfSpeed.setText(String.valueOf(convertedSpeed));
+		tfSpeed.setText(String.valueOf(speedToDisplay));
 		// End set field
 		ok = false;
 
@@ -165,9 +166,9 @@ public class frmEditPoint extends javax.swing.JDialog {
 			// Copy fields
 			p.setSlope(slope);
 
-			convertedSpeed = Utils.SpeedCurrentUnitsToMeters(speed, settings);
+			double convertedInputSpeed = Utils.SpeedCurrentUnitsToMeters(speed, settings);
 
-			p.setSpeed(convertedSpeed);
+			p.setSpeed(convertedInputSpeed);
 		}
 		return ok;
 	}
