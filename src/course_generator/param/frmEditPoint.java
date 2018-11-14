@@ -37,7 +37,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import course_generator.settings.CgSettings;
-import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class frmEditPoint extends javax.swing.JDialog {
@@ -152,8 +151,7 @@ public class frmEditPoint extends javax.swing.JDialog {
 		slope = p.getSlope();
 		speed = p.getSpeedNumber();
 
-		double convertedSpeed = settings.Unit == CgConst.UNIT_MILES_FEET ? Utils.Km2Miles(p.getSpeedNumber())
-				: p.getSpeedNumber();
+		double convertedSpeed = Utils.SpeedCurrentUnitsToMeters(speed, settings);
 
 		// Set field
 		tfSlope.setText(String.valueOf(slope));
@@ -166,7 +164,10 @@ public class frmEditPoint extends javax.swing.JDialog {
 		if (ok) {
 			// Copy fields
 			p.setSlope(slope);
-			p.setSpeed(settings.Unit == CgConst.UNIT_MILES_FEET ? Utils.Miles2Km(speed) : speed);
+
+			convertedSpeed = Utils.SpeedMeterToCurrentUnits(speed, settings);
+
+			p.setSpeed(convertedSpeed);
 		}
 		return ok;
 	}

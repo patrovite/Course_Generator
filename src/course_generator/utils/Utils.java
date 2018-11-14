@@ -41,8 +41,6 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
-import java.time.ZoneId;
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
 
@@ -640,7 +638,7 @@ public class Utils {
 	 * Calculate the speed from a pace
 	 * 
 	 * @param pace
-	 *            Pace in min/km or min/mile (8.30min/mile =>8.3)
+	 *            Pace in min/km or min/mile (8.30min/mile => 8.3)
 	 * @return speed in km/h or miles/h
 	 */
 	public static double Pace2Speed(double pace) {
@@ -652,6 +650,66 @@ public class Utils {
 		double sec100 = sec60 / 0.6;
 
 		return 60 / (min + sec100);
+	}
+
+
+	/**
+	 * Converts a speed from the current chosen units to km/h.
+	 * 
+	 * @param speedValue
+	 *            A given speed in any units (min/km, km/h, min/mile, mph).
+	 * @param settings
+	 *            Object containing the current user settings.
+	 * @return The converted speed in km/h.
+	 */
+	public static double SpeedCurrentUnitsToMeters(double speedValue, CgSettings settings) {
+		double convertedSpeed = speedValue;
+
+		switch (settings.Unit) {
+		case CgConst.UNIT_MILES_FEET:
+			if (settings.isPace) {
+				convertedSpeed = Utils.Km2Miles(convertedSpeed);
+				speedValue = Utils.SpeedToPaceNumber(convertedSpeed);
+			}
+			break;
+		case CgConst.UNIT_METER:
+			if (settings.isPace) {
+				convertedSpeed = Utils.SpeedToPaceNumber(convertedSpeed);
+			}
+			break;
+		}
+
+		return convertedSpeed;
+	}
+
+
+	/**
+	 * Converts a speed from km/h to the current chosen units.
+	 * 
+	 * @param speedValue
+	 *            A given speed in km/h.
+	 * @param settings
+	 *            Object containing the current user settings.
+	 * @return The converted speed in the current chosen units.
+	 */
+	public static double SpeedMeterToCurrentUnits(double speedValue, CgSettings settings) {
+		double convertedSpeed = speedValue;
+
+		switch (settings.Unit) {
+		case CgConst.UNIT_MILES_FEET:
+			if (settings.isPace) {
+				convertedSpeed = Utils.Pace2Speed(convertedSpeed);
+				convertedSpeed = Utils.Miles2Km(convertedSpeed);
+			}
+			break;
+		case CgConst.UNIT_METER:
+			if (settings.isPace) {
+				convertedSpeed = Utils.Pace2Speed(convertedSpeed);
+			}
+			break;
+		}
+
+		return convertedSpeed;
 	}
 
 
@@ -1566,7 +1624,8 @@ public class Utils {
 		}
 		return success;
 	}
-  
+
+
 	/**
 	 * Returns a given temperature in the correct unit (Celsius or Fahrenheit)
 	 * 
@@ -1644,29 +1703,26 @@ public class Utils {
 
 		return dateTime;
 	}
-	
-//NEw
+
+
+	// NEw
 	/*
-	public static TimeZone getTimeZoneFromLatLon(double latitude, double longitude) {
-		if (timeZoneEngine == null) {
-			// Initialize the time zone engine
-			timeZoneEngine = TimeZoneEngine.initialize();
-		}
-
-		Optional<ZoneId> courseStartZoneId = timeZoneEngine.query(latitude, longitude);
-		String timeZoneId = courseStartZoneId.get().getId();
-		return TimeZone.getTimeZone(timeZoneId);
-	}
-
-
-	public static int hoursUTCOffsetFromLatLon(double latitude, double longitude) {
-		TimeZone gpsPointTimeZone = getTimeZoneFromLatLon(latitude, longitude);
-		long hoursOffsetFromUTC = TimeUnit.MILLISECONDS.toHours(gpsPointTimeZone.getRawOffset());
-
-		return (int) hoursOffsetFromUTC;
-//end new
-	}
-*/
+	 * public static TimeZone getTimeZoneFromLatLon(double latitude, double
+	 * longitude) { if (timeZoneEngine == null) { // Initialize the time zone engine
+	 * timeZoneEngine = TimeZoneEngine.initialize(); }
+	 * 
+	 * Optional<ZoneId> courseStartZoneId = timeZoneEngine.query(latitude,
+	 * longitude); String timeZoneId = courseStartZoneId.get().getId(); return
+	 * TimeZone.getTimeZone(timeZoneId); }
+	 * 
+	 * 
+	 * public static int hoursUTCOffsetFromLatLon(double latitude, double longitude)
+	 * { TimeZone gpsPointTimeZone = getTimeZoneFromLatLon(latitude, longitude);
+	 * long hoursOffsetFromUTC =
+	 * TimeUnit.MILLISECONDS.toHours(gpsPointTimeZone.getRawOffset());
+	 * 
+	 * return (int) hoursOffsetFromUTC; //end new }
+	 */
 
 	/**
 	 * Converts a Joda-Time to a date for a SpinnerDateModel. The particularity of
@@ -1693,6 +1749,5 @@ public class Utils {
 		}
 		return spinnerDate;
 	}
-  
-  
-} //Class
+
+} // Class
