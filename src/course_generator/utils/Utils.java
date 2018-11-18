@@ -1584,7 +1584,7 @@ public class Utils {
 		return spinnerDate;
 	}
 
-/*
+
 	public static TimeZone getTimeZoneFromLatLon(double latitude, double longitude) {
 		if (timeZoneEngine == null) {
 			// Initialize the time zone engine
@@ -1603,6 +1603,6 @@ public class Utils {
 
 		return (int) hoursOffsetFromUTC;
 	}
-*/
+
   
 } // Class
