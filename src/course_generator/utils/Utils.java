@@ -77,20 +77,16 @@ import net.iakovlev.timeshape.TimeZoneEngine;
  */
 public class Utils {
 
-	public static final String		htmlDocFile	= "cg_doc_4.00.html";
-	private static TimeZoneEngine	timeZoneEngine;
+	public static final String htmlDocFile = "cg_doc_4.00.html";
+	private static TimeZoneEngine timeZoneEngine;
 
 	/**
 	 * Display a load dialog
 	 * 
-	 * @param Parent
-	 *           Parent windows
-	 * @param Directory
-	 *           Directory to select when the dialog is displayed
-	 * @param Extension
-	 *           File extention (ie: ".myp")
-	 * @param FilterText
-	 *           Text filter
+	 * @param Parent     Parent windows
+	 * @param Directory  Directory to select when the dialog is displayed
+	 * @param Extension  File extention (ie: ".myp")
+	 * @param FilterText Text filter
 	 * @return Filename with path. Empty if cancel
 	 */
 	public static String LoadDialog(Component Parent, String Directory, String Extension, String FilterText) {
@@ -114,29 +110,18 @@ public class Utils {
 	/**
 	 * Display a save dialog
 	 * 
-	 * @param Parent
-	 *           Parent windows
-	 * @param Directory
-	 *           Directory to select when the dialog is displayed
-	 * @param DefaultFileName
-	 *           Default filename. Empty string if none
-	 * @param Extension
-	 *           File extention (ie: ".myp")
-	 * @param FilterText
-	 *           Text filter (ie: "File GPX (*.gpx)|*.gpx")
-	 * @param TestFileExist
-	 *           Test the file exist
-	 * @param FileExistText
-	 *           Text displayed if the selected file exist (Over write confirmation)
+	 * @param Parent          Parent windows
+	 * @param Directory       Directory to select when the dialog is displayed
+	 * @param DefaultFileName Default filename. Empty string if none
+	 * @param Extension       File extention (ie: ".myp")
+	 * @param FilterText      Text filter (ie: "File GPX (*.gpx)|*.gpx")
+	 * @param TestFileExist   Test the file exist
+	 * @param FileExistText   Text displayed if the selected file exist (Over write
+	 *                        confirmation)
 	 * @return Filename with path. Empty if cancel
 	 */
-	public static String SaveDialog(	Component Parent,
-												String Directory,
-												String DefaultFileName,
-												String Extension,
-												String FilterText,
-												Boolean TestFileExist,
-												String FileExistText) {
+	public static String SaveDialog(Component Parent, String Directory, String DefaultFileName, String Extension,
+			String FilterText, Boolean TestFileExist, String FileExistText) {
 		JFileChooser fileChooser = new JFileChooser();
 
 		if (DefaultFileName.isEmpty())
@@ -159,9 +144,7 @@ public class Utils {
 			}
 			boolean ok = true;
 			if (Utils.FileExist(selectedFile) && (TestFileExist)) {
-				if (JOptionPane.showConfirmDialog(Parent,
-						FileExistText,
-						"",
+				if (JOptionPane.showConfirmDialog(Parent, FileExistText, "",
 						JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 					ok = false;
 			}
@@ -176,10 +159,8 @@ public class Utils {
 	/**
 	 * Return the icon in the resource library
 	 * 
-	 * @param name
-	 *           name of the icon (ie "distance.png")
-	 * @param size
-	 *           size of the icon (16,24,32,48,64,96,128)
+	 * @param name name of the icon (ie "distance.png")
+	 * @param size size of the icon (16,24,32,48,64,96,128)
 	 * @return
 	 */
 	public static ImageIcon getIcon(Component Parent, String name, int size) {
@@ -203,7 +184,8 @@ public class Utils {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {}
+		} finally {
+		}
 
 		return encodedfile;
 	}
@@ -211,8 +193,7 @@ public class Utils {
 	/**
 	 * Parse a string containing a double. The separator can be "." or ","
 	 * 
-	 * @param s
-	 *           Input string containing the double
+	 * @param s Input string containing the double
 	 * @return Parsed value in double format
 	 * @throws ParseException
 	 */
@@ -307,49 +288,24 @@ public class Utils {
 	/**
 	 * Define the parameter for the gridbaglayout constraints
 	 * 
-	 * @param container
-	 *           Container where to place the component
-	 * @param component
-	 *           Component to place
-	 * @param xPos
-	 *           X position in the grid
-	 * @param yPos
-	 *           Y position in the grid
-	 * @param compWidth
-	 *           Component width
-	 * @param compHeight
-	 *           Component height
-	 * @param weightX
-	 *           X weight (1=can be resized in X)
-	 * @param weightY
-	 *           Y weight (1=can be resized in Y)
-	 * @param insetTop
-	 *           Inner top space in pixel
-	 * @param insetLeft
-	 *           Inner left space in pixel
-	 * @param insetBottom
-	 *           Inner bottom space in pixel
-	 * @param insetRight
-	 *           Inner right space in pixel
-	 * @param anchor
-	 *           Position of the component in the "cell"
-	 * @param stretch
-	 *           How the component will fill the "cell"
+	 * @param container   Container where to place the component
+	 * @param component   Component to place
+	 * @param xPos        X position in the grid
+	 * @param yPos        Y position in the grid
+	 * @param compWidth   Component width
+	 * @param compHeight  Component height
+	 * @param weightX     X weight (1=can be resized in X)
+	 * @param weightY     Y weight (1=can be resized in Y)
+	 * @param insetTop    Inner top space in pixel
+	 * @param insetLeft   Inner left space in pixel
+	 * @param insetBottom Inner bottom space in pixel
+	 * @param insetRight  Inner right space in pixel
+	 * @param anchor      Position of the component in the "cell"
+	 * @param stretch     How the component will fill the "cell"
 	 */
-	public static void addComponent(	Container container,
-												JComponent component,
-												int xPos,
-												int yPos,
-												int width,
-												int height,
-												double weightX,
-												double weightY,
-												int insetTop,
-												int insetLeft,
-												int insetBottom,
-												int insetRight,
-												int anchor,
-												int stretch) {
+	public static void addComponent(Container container, JComponent component, int xPos, int yPos, int width,
+			int height, double weightX, double weightY, int insetTop, int insetLeft, int insetBottom, int insetRight,
+			int anchor, int stretch) {
 
 		GridBagConstraints gridConstraints = new GridBagConstraints();
 
@@ -370,8 +326,7 @@ public class Utils {
 	/**
 	 * Convert meters in feet
 	 * 
-	 * @param m
-	 *           meters to convert
+	 * @param m meters to convert
 	 * @return Converted value
 	 */
 
@@ -382,8 +337,7 @@ public class Utils {
 	/**
 	 * Convert feet in meter
 	 * 
-	 * @param m
-	 *           feet to convert
+	 * @param m feet to convert
 	 * @return Converted value
 	 */
 	public static double Feet2Meter(double f) {
@@ -393,8 +347,7 @@ public class Utils {
 	/**
 	 * Convert meters in 1/1000 miles
 	 * 
-	 * @param m
-	 *           meters to convert
+	 * @param m meters to convert
 	 * @return Converted value
 	 */
 	public static double Meter2uMiles(double m) {
@@ -404,8 +357,7 @@ public class Utils {
 	/**
 	 * Convert miles in meters
 	 * 
-	 * @param m
-	 *           miles to convert
+	 * @param m miles to convert
 	 * @return Converted value
 	 */
 	public static double Miles2Meter(double m) {
@@ -415,8 +367,7 @@ public class Utils {
 	/**
 	 * Convert kilometers in miles
 	 * 
-	 * @param m
-	 *           kilometers to convert
+	 * @param m kilometers to convert
 	 * @return Converted value
 	 */
 	public static double Km2Miles(double m) {
@@ -426,8 +377,7 @@ public class Utils {
 	/**
 	 * Convert miles in kilometer
 	 * 
-	 * @param m
-	 *           Value in miles to convert
+	 * @param m Value in miles to convert
 	 * @return Converted value
 	 */
 	public static double Miles2Km(double m) {
@@ -435,22 +385,20 @@ public class Utils {
 	}
 
 	/**
-	 * Convert Â°C to Â°F
+	 * Convert °C to °F
 	 * 
-	 * @param c
-	 *           Temperature in Â°C
-	 * @return Temperature in Â°F
+	 * @param c Temperature in °C
+	 * @return Temperature in °F
 	 */
 	public static double C2F(double c) {
 		return c * 9 / 5 + 32;
 	}
 
 	/**
-	 * Convert Â°F to Â°C
+	 * Convert °F to °C
 	 * 
-	 * @param f
-	 *           Temperature in Â°F
-	 * @return Temperature in Â°C
+	 * @param f Temperature in °F
+	 * @return Temperature in °C
 	 */
 	public static double F2C(double f) {
 		return (f - 32) * 5 / 9;
@@ -459,11 +407,9 @@ public class Utils {
 	/**
 	 * Return the speed unit as string (km/h, miles/h, min/km or min/mile)
 	 * 
-	 * @param unit
-	 *           Unit
-	 * @param pace
-	 *           if "true" the speed type is pace (min/km or min/mile) otherwise it's a speed (km/h
-	 *           or miles/h)
+	 * @param unit Unit
+	 * @param pace if "true" the speed type is pace (min/km or min/mile) otherwise
+	 *             it's a speed (km/h or miles/h)
 	 * @return String with the unit
 	 */
 
@@ -485,10 +431,9 @@ public class Utils {
 	}
 
 	/**
-	 * Return the temperature unit as string (ï¿½C or ï¿½F)
+	 * Return the temperature unit as string (°C or °F)
 	 * 
-	 * @param unit
-	 *           Unit
+	 * @param unit Unit
 	 * @return String with the unit
 	 */
 
@@ -496,13 +441,13 @@ public class Utils {
 		String unitString;
 		switch (unit) {
 		case CgConst.UNIT_METER:
-			unitString = "ï¿½C";
+			unitString = "°C";
 			break;
 		case CgConst.UNIT_MILES_FEET:
-			unitString = "ï¿½F";
+			unitString = "°F";
 			break;
 		default:
-			unitString = "ï¿½C";
+			unitString = "°C";
 			break;
 		}
 
@@ -510,18 +455,15 @@ public class Utils {
 	}
 
 	/**
-	 * Returns a given speed in the correct unit and format (km/h, miles/h, min/km or min/mile)
+	 * Returns a given speed in the correct unit and format (km/h, miles/h, min/km
+	 * or min/mile)
 	 * 
-	 * @param speed
-	 *           The speed to be formatted.
-	 * @param unit
-	 *           The unit to use.
-	 * @param pace
-	 *           if "true" the speed type is pace (min/km or min/mile) otherwise it's a speed (km/h
-	 *           or miles/h).
-	 * @param withUnit
-	 *           Whether the unit string needs to be concatenated to the returned string. it's a
-	 *           speed (km/h or miles/h).
+	 * @param speed    The speed to be formatted.
+	 * @param unit     The unit to use.
+	 * @param pace     if "true" the speed type is pace (min/km or min/mile)
+	 *                 otherwise it's a speed (km/h or miles/h).
+	 * @param withUnit Whether the unit string needs to be concatenated to the
+	 *                 returned string. it's a speed (km/h or miles/h).
 	 * @return The given speed in the correct unit and format.
 	 */
 	public static String FormatSpeed(double speed, int unit, boolean pace, boolean withUnit) {
@@ -543,8 +485,7 @@ public class Utils {
 	/**
 	 * Return the (long) distance unit as string (km or miles)
 	 * 
-	 * @param unit
-	 *           Unit
+	 * @param unit Unit
 	 * @return String with the unit
 	 */
 	public static String uLDist2String(int unit) {
@@ -561,8 +502,7 @@ public class Utils {
 	/**
 	 * Return the elevation unit as string (m or feet)
 	 * 
-	 * @param unit
-	 *           Unit
+	 * @param unit Unit
 	 * @return String with the unit
 	 */
 	public static String uElev2String(int unit) {
@@ -579,8 +519,7 @@ public class Utils {
 	/**
 	 * Calculate the pace from a speed and return the result as a string
 	 * 
-	 * @param speed
-	 *           Speed in km/h or miles/h
+	 * @param speed Speed in km/h or miles/h
 	 * @return pace as string in min/km or min/mile (8:30min/mile =>"8:3")
 	 */
 	public static String SpeedToPace(double speed) {
@@ -596,8 +535,7 @@ public class Utils {
 	/**
 	 * Calculate the pace from a speed and returns the result as a double.
 	 * 
-	 * @param speed
-	 *           Speed in km/h or miles/h
+	 * @param speed Speed in km/h or miles/h
 	 * @return pace as string in min/km or min/mile (8:30min/mile =>"8.30")
 	 */
 	public static double SpeedToPaceNumber(double speed) {
@@ -615,8 +553,7 @@ public class Utils {
 	/**
 	 * Calculate the speed from a pace and return the result as a "per hour" number.
 	 * 
-	 * @param speed
-	 *           Speed in min/mile or min/km.
+	 * @param speed Speed in min/mile or min/km.
 	 * @return speed as a double.
 	 */
 	public static double PaceToSpeed(String speed) {
@@ -638,8 +575,7 @@ public class Utils {
 	/**
 	 * Calculate the speed from a pace
 	 * 
-	 * @param pace
-	 *           Pace in min/km or min/mile (8.30min/mile =>8.3)
+	 * @param pace Pace in min/km or min/mile (8.30min/mile =>8.3)
 	 * @return speed in km/h or miles/h
 	 */
 	public static double Pace2Speed(double pace) {
@@ -698,8 +634,7 @@ public class Utils {
 	/**
 	 * Convert the seconds in string. Format hh:mm:ss
 	 * 
-	 * @param v
-	 *           Number of second to convert
+	 * @param v Number of second to convert
 	 * @return Result string
 	 */
 	public static String Second2DateString(int v) {
@@ -713,8 +648,7 @@ public class Utils {
 	/**
 	 * Convert the seconds in string. Format hh:mm
 	 * 
-	 * @param v
-	 *           Number of second to convert
+	 * @param v Number of second to convert
 	 * @return Result string
 	 */
 	private static String Second2DateString_HM(int v) {
@@ -728,14 +662,10 @@ public class Utils {
 	 * Calculate the distance between two GPS points (without the elevation)
 	 * https://en.wikipedia.org/wiki/Great-circle_distance
 	 * 
-	 * @param lat1
-	 *           Latitude of the first point
-	 * @param lon1
-	 *           Longitude of the first point
-	 * @param lat2
-	 *           Latitude of the second point
-	 * @param lon2
-	 *           Longitude of the second point
+	 * @param lat1 Latitude of the first point
+	 * @param lon1 Longitude of the first point
+	 * @param lat2 Latitude of the second point
+	 * @param lon2 Longitude of the second point
 	 * @return Distance in meter
 	 */
 	public static double CalcDistance(double lat1, double lon1, double lat2, double lon2) {
@@ -777,16 +707,11 @@ public class Utils {
 	/**
 	 * Calculate 'a' and 'b' from Y=aX+b
 	 * 
-	 * @param x1
-	 *           X value of the first point
-	 * @param y1
-	 *           Y value of the first point
-	 * @param x2
-	 *           X value of the second point
-	 * @param y2
-	 *           Y value of the second point
-	 * @param r
-	 *           Result object
+	 * @param x1 X value of the first point
+	 * @param y1 Y value of the first point
+	 * @param x2 X value of the second point
+	 * @param y2 Y value of the second point
+	 * @param r  Result object
 	 * @return Result object
 	 */
 	public static CalcLineResult CalcLine(double x1, double y1, double x2, double y2, CalcLineResult r) {
@@ -798,10 +723,8 @@ public class Utils {
 	/**
 	 * Compare two DateTime
 	 * 
-	 * @param t1
-	 *           First DateTime
-	 * @param t2
-	 *           Second DateTime
+	 * @param t1 First DateTime
+	 * @param t2 Second DateTime
 	 * @return Return 0 if t1=t2 Return 1 if t1>t2 Return -1 if t1<t2
 	 */
 	public static int CompareHMS(DateTime t1, DateTime t2) {
@@ -942,10 +865,8 @@ public class Utils {
 	/**
 	 * Test if a bit of a word is true
 	 * 
-	 * @param Value
-	 *           Value of the word to test
-	 * @param Mask
-	 *           Mask of the bit
+	 * @param Value Value of the word to test
+	 * @param Mask  Mask of the bit
 	 * @return New value of the word
 	 */
 	public static boolean IsBitOn(int Value, byte Bit) {
@@ -955,10 +876,8 @@ public class Utils {
 	/**
 	 * Reset a bit of a word
 	 * 
-	 * @param Value
-	 *           Value of the word to modify
-	 * @param Mask
-	 *           Mask of the bit
+	 * @param Value Value of the word to modify
+	 * @param Mask  Mask of the bit
 	 * @return New value of the word
 	 */
 	public static int Reset(int Value, int Mask) {
@@ -968,10 +887,8 @@ public class Utils {
 	/**
 	 * Set a bit of a word
 	 * 
-	 * @param Value
-	 *           Value of the word to modify
-	 * @param Mask
-	 *           Mask of the bit
+	 * @param Value Value of the word to modify
+	 * @param Mask  Mask of the bit
 	 * @return New value of the word
 	 */
 	public static int Set(int Value, int Mask) {
@@ -981,12 +898,9 @@ public class Utils {
 	/**
 	 * Word wraps the given text to fit within the specified width.
 	 * 
-	 * @param s
-	 *           Text to be word wrapped
-	 * @param l
-	 *           Width, in characters, to which the text should be word wrapped
-	 * @param trim
-	 *           true=The text is trimmed -- false=no modification
+	 * @param s    Text to be word wrapped
+	 * @param l    Width, in characters, to which the text should be word wrapped
+	 * @param trim true=The text is trimmed -- false=no modification
 	 * @return The modified text
 	 */
 	public static String WordWrap(String s, int l, boolean trim) {
@@ -1123,11 +1037,12 @@ public class Utils {
 
 	public static String GenLabel(String s, CgData r, TrackData cd, CgSettings settings) {
 		/*
-		 * %N:Name %A:Elevation %D:Distance from the start %T:Time (hh:mm) %Ts:Time (hh:mm) %Tl:Time
-		 * (hh:mm:ss) %H: Hour (ddd hh:mm) %h: Hour (hh:mm) %hs:Hour (hh:mm) %hl:Hour (hh:mm:s) %B
-		 * :Time limit (hh:mm) -> Time from the start %b :Time limit (hh:mm) -> Limit hour %C :Comment
-		 * %c :Comment from the main data %L :Carriage return %R :Station time (hh:mm) %Rs:Station
-		 * time (hh:mm) %Rl:Station time (Duration) (hh:mm:ss) %+ :Sum ascend %- :Sum descend
+		 * %N:Name %A:Elevation %D:Distance from the start %T:Time (hh:mm) %Ts:Time
+		 * (hh:mm) %Tl:Time (hh:mm:ss) %H: Hour (ddd hh:mm) %h: Hour (hh:mm) %hs:Hour
+		 * (hh:mm) %hl:Hour (hh:mm:s) %B :Time limit (hh:mm) -> Time from the start %b
+		 * :Time limit (hh:mm) -> Limit hour %C :Comment %c :Comment from the main data
+		 * %L :Carriage return %R :Station time (hh:mm) %Rs:Station time (hh:mm)
+		 * %Rl:Station time (Duration) (hh:mm:ss) %+ :Sum ascend %- :Sum descend
 		 */
 		int i = 0;
 		int step = 0;
@@ -1331,8 +1246,8 @@ public class Utils {
 	public static String GetFileExtension(String fname) {
 		// String name = file.getName();
 		/*
-		 * try { return fname.substring(fname.lastIndexOf(".") + 1); } catch (Exception e) { return
-		 * ""; }
+		 * try { return fname.substring(fname.lastIndexOf(".") + 1); } catch (Exception
+		 * e) { return ""; }
 		 */
 		for (int i = fname.length() - 1; i >= 0; i--) {
 			if ((fname.charAt(i) == '.') && (i != fname.length() - 1)) {
@@ -1348,8 +1263,7 @@ public class Utils {
 	/**
 	 * Remove extension form the filename
 	 * 
-	 * @param filename
-	 *           Filename without path
+	 * @param filename Filename without path
 	 * @return filename without extension
 	 */
 	public static String getFileNameWithoutExtension(String filename) {
@@ -1375,8 +1289,7 @@ public class Utils {
 	/**
 	 * Return the path of a filename Cross platform??
 	 *
-	 * @param fname
-	 *           File name where to extract the path
+	 * @param fname File name where to extract the path
 	 * @return String containing the path
 	 */
 	public static String GetDirFromFilename(String fname) {
@@ -1387,8 +1300,7 @@ public class Utils {
 	/**
 	 * Return if a file exist
 	 * 
-	 * @param fname
-	 *           file with the full path to test
+	 * @param fname file with the full path to test
 	 * @return Return 'true' if the file exist
 	 */
 	public static boolean FileExist(String fname) {
@@ -1398,8 +1310,7 @@ public class Utils {
 	/**
 	 * Return if a directory exist
 	 * 
-	 * @param fname
-	 *           file with the full path to test
+	 * @param fname file with the full path to test
 	 * @return Return 'true' if the directory exist
 	 */
 	public static boolean DirExist(String fname) {
@@ -1407,8 +1318,8 @@ public class Utils {
 	}
 
 	/**
-	 * Returns true if the given name is a valid resource name on this operating system, and false
-	 * otherwise.
+	 * Returns true if the given name is a valid resource name on this operating
+	 * system, and false otherwise.
 	 */
 	public static boolean isFilenameValid(String name) {
 		String INVALID_RESOURCE_CHARACTERS;
@@ -1505,12 +1416,9 @@ public class Utils {
 	/**
 	 * Search and replace all strings in a stringbuilder object
 	 * 
-	 * @param sb
-	 *           StringBuilder object
-	 * @param from
-	 *           String to search
-	 * @param to
-	 *           Replacement string
+	 * @param sb   StringBuilder object
+	 * @param from String to search
+	 * @param to   Replacement string
 	 * @return StringBuilder object
 	 */
 	public static StringBuilder sbReplace(StringBuilder sb, String from, String to) {
@@ -1536,19 +1444,21 @@ public class Utils {
 		return ok;
 
 		/*
-		 * InputStream stream = null; OutputStream resStreamOut = null; boolean ok=false; String
-		 * jarFolder; try { stream = obj.getClass().getResourceAsStream(resourceName); if (stream ==
-		 * null) { throw new Exception ("Cannot get resource \"" + resourceName + "\" from jar file");
+		 * InputStream stream = null; OutputStream resStreamOut = null; boolean
+		 * ok=false; String jarFolder; try { stream =
+		 * obj.getClass().getResourceAsStream(resourceName); if (stream == null) { throw
+		 * new Exception ("Cannot get resource \"" + resourceName + "\" from jar file");
 		 * } int readBytes; byte[] buffer = new byte[4096]; String
-		 * s=obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI(). getPath();
-		 * System.out.println("resourceName="+resourceName); System.out.println("s="+s); //jarFolder =
-		 * new File(obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI
+		 * s=obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().
+		 * getPath(); System.out.println("resourceName="+resourceName);
+		 * System.out.println("s="+s); //jarFolder = new
+		 * File(obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI
 		 * ().getPath()).getParentFile().getPath().replace('\\', '/'); jarFolder = new
 		 * File(s).getParentFile().getPath().replace('\\', '/'); resStreamOut = new
 		 * FileOutputStream(dst); while ((readBytes = stream.read(buffer)) >0 ) {
-		 * resStreamOut.write(buffer, 0, readBytes); } ok=true; } catch (Exception ex) { throw ex; }
-		 * finally { if (stream!=null) stream.close(); if (resStreamOut!=null) resStreamOut.close(); }
-		 * return ok;
+		 * resStreamOut.write(buffer, 0, readBytes); } ok=true; } catch (Exception ex) {
+		 * throw ex; } finally { if (stream!=null) stream.close(); if
+		 * (resStreamOut!=null) resStreamOut.close(); } return ok;
 		 */
 	}
 
@@ -1576,8 +1486,7 @@ public class Utils {
 	/**
 	 * Returns a given temperature in the correct unit (Celsius or Fahrenheit)
 	 * 
-	 * @param temperature
-	 *           temperature in Celsius
+	 * @param temperature temperature in Celsius
 	 * @return Converted value
 	 */
 	public static String FormatTemperature(double temperature, int unit) {
@@ -1589,8 +1498,7 @@ public class Utils {
 	/**
 	 * Converts a given temperature to the correct unit (Celsius or Fahrenheit)
 	 * 
-	 * @param temperature
-	 *           temperature in Celsius
+	 * @param temperature temperature in Celsius
 	 * @return Converted value
 	 */
 	public static double CelsiusToFahrenheit(double temperature) {
@@ -1598,13 +1506,11 @@ public class Utils {
 	}
 
 	/**
-	 * Compares two DateTime objects, using their time portion only, completely ignoring Year, Month
-	 * and Day.
+	 * Compares two DateTime objects, using their time portion only, completely
+	 * ignoring Year, Month and Day.
 	 * 
-	 * @param d1
-	 *           a DateTimeobject
-	 * @param d2
-	 *           a DateTimeobject
+	 * @param d1 a DateTimeobject
+	 * @param d2 a DateTimeobject
 	 * @return the difference, in seconds, between the DateTimes
 	 * @see https://stackoverflow.com/questions/7676149/compare-only-the-time-portion-of-two-dates-ignoring-the-date-part#7676307
 	 */
@@ -1620,8 +1526,7 @@ public class Utils {
 	/**
 	 * Converts a Unix time to a Joda-Time.
 	 * 
-	 * @param unixTime
-	 *           A Unix time as a long.
+	 * @param unixTime A Unix time as a long.
 	 * @return A DateTime.
 	 */
 	public static DateTime unixTimeToDateTime(long unixTime) {
@@ -1631,10 +1536,8 @@ public class Utils {
 	/**
 	 * Converts a Unix time to a Joda-Time
 	 * 
-	 * @param unixTime
-	 *           A Unix time as a long.
-	 * @param timeZoneId
-	 *           A time zone.
+	 * @param unixTime   A Unix time as a long.
+	 * @param timeZoneId A time zone.
 	 * @return A Joda-Time.
 	 */
 	public static DateTime unixTimeToDateTime(long unixTime, String timeZoneId) {
@@ -1644,13 +1547,12 @@ public class Utils {
 	}
 
 	/**
-	 * Converts a Joda-Time to a date for a SpinnerDateModel. The particularity of the
-	 * SpinnerDateModel is that it is time zone agnostic. Hence we need to keep the time at the given
-	 * time zone but pretend that its time zone is UTC. Example : Input : 07:50:00 UTC-7 ==> Output :
-	 * 07:50:00 UTC
+	 * Converts a Joda-Time to a date for a SpinnerDateModel. The particularity of
+	 * the SpinnerDateModel is that it is time zone agnostic. Hence we need to keep
+	 * the time at the given time zone but pretend that its time zone is UTC.
+	 * Example : Input : 07:50:00 UTC-7 ==> Output : 07:50:00 UTC
 	 * 
-	 * @param dateTime
-	 *           A Joda-Time.
+	 * @param dateTime A Joda-Time.
 	 * @return A Date.
 	 */
 	public static Date DateTimetoSpinnerDate(DateTime dateTime) {
