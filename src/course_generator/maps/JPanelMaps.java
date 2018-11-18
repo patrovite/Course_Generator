@@ -423,61 +423,64 @@ public class JPanelMaps extends JPanel {
 		// -- Create the tracks (over the night tracks if necessary)
 		List<Coordinate> routeNormal = new ArrayList<Coordinate>();
 		double last_diff = tdata.data.get(0).getDiff();
-		Color cl=Color.green;
+		Color cl=getDiffColor(last_diff);
 		
 		for (CgData r : tdata.data) {
 			if (r.getDiff() == last_diff) {
+				//-- Add the point to the list
 				routeNormal.add(new Coordinate(r.getLatitude(), r.getLongitude()));
 			} else {
+				//-- Add the point to the list
 				routeNormal.add(new Coordinate(r.getLatitude(), r.getLongitude()));
+				
+				//-- Polyline creation
 				MapPolyLine polyLineNormal = new MapPolyLine(routeNormal);
-				// -- Set the line color
-				if (last_diff == CgConst.DIFF_VERYEASY)
-					cl=Settings.Color_Diff_VeryEasy; //  CgConst.CL_MAP_DIFF_VERYEASY);
-				else if (last_diff >= CgConst.DIFF_EASY)
-					cl=Settings.Color_Diff_Easy; //CgConst.CL_MAP_DIFF_EASY);
-				else if (last_diff >= CgConst.DIFF_AVERAGE)
-					cl=Settings.Color_Diff_Average; // CgConst.CL_MAP_DIFF_AVERAGE);
-				else if (last_diff >= CgConst.DIFF_HARD)
-					cl=Settings.Color_Diff_Hard; // CgConst.CL_MAP_DIFF_HARD);
-				else
-					cl=Settings.Color_Diff_VeryHard; //CgConst.CL_MAP_DIFF_VERYHARD);
-
+				//-- Set the line color
+				cl=getDiffColor(last_diff);
+				//-- Set the transparency
 				cl= new Color(cl.getRed(), cl.getGreen(), cl.getBlue(), Settings.NormalTrackTransparency);
 				polyLineNormal.setColor(cl);
-				
-				// -- Track width
-				polyLineNormal.setStroke(new BasicStroke(Settings.NormalTrackWidth)); //CgConst.TRACK_NORMAL_TICKNESS));
+				//-- Set the track width
+				polyLineNormal.setStroke(new BasicStroke(Settings.NormalTrackWidth));
 
-				// -- Upddate the viewer
+				//-- Add the polyline to the viewer
 				MapViewer.addMapPolygon(polyLineNormal);
 
+				//-- Start a new list of points
 				routeNormal = new ArrayList<Coordinate>();
 				routeNormal.add(new Coordinate(r.getLatitude(), r.getLongitude()));
 			}
 			last_diff = r.getDiff();
 		}
+
+		//-- Polyline creation
+		MapPolyLine polyLineNormal = new MapPolyLine(routeNormal);
+		//-- Set the line color
+		cl=getDiffColor(last_diff);
+		//-- Set the transparency
+		cl= new Color(cl.getRed(), cl.getGreen(), cl.getBlue(), Settings.NormalTrackTransparency);
+		polyLineNormal.setColor(cl);
+		//-- Set the track width
+		polyLineNormal.setStroke(new BasicStroke(Settings.NormalTrackWidth));
+
+		//-- Add the polyline to the viewer
+		MapViewer.addMapPolygon(polyLineNormal);
+
+		/*
 		
 		// -- Add the last polyline
 		MapPolyLine polyLineEnd = new MapPolyLine(routeNormal);
 		// -- Set the line color
-		if (last_diff == CgConst.DIFF_VERYEASY)
-			cl=Settings.Color_Diff_VeryHard; //  CgConst.CL_MAP_DIFF_VERYEASY);
-		else if (last_diff >= CgConst.DIFF_EASY)
-			cl=Settings.Color_Diff_Easy; //CgConst.CL_MAP_DIFF_EASY);
-		else if (last_diff >= CgConst.DIFF_AVERAGE)
-			cl=Settings.Color_Diff_Average; // CgConst.CL_MAP_DIFF_AVERAGE);
-		else if (last_diff >= CgConst.DIFF_HARD)
-			cl=Settings.Color_Diff_Hard; // CgConst.CL_MAP_DIFF_HARD);
-		else
-			cl=Settings.Color_Diff_VeryHard; //CgConst.CL_MAP_DIFF_VERYHARD);
+		cl=getDiffColor(last_diff);
+		cl= new Color(cl.getRed(), cl.getGreen(), cl.getBlue(), Settings.NormalTrackTransparency);
+
 		polyLineEnd.setColor(cl);
 		
 		// -- Set the stroke
 		polyLineEnd.setStroke(new BasicStroke(Settings.NormalTrackWidth)); //CgConst.TRACK_NORMAL_TICKNESS));
 		// -- Upddate the viewer
 		MapViewer.addMapPolygon(polyLineEnd);
-
+*/
 		// -- Zoom to display the track
 		if (zoom2fit)
 			MapViewer.setDisplayToFitMapPolygons();
@@ -499,7 +502,26 @@ public class JPanelMaps extends JPanel {
 		}
 	}
 
-
+	
+	/***
+	 * Return the color corresponding of the difficulty 
+	 * @param diff difficulty between 0..100
+	 * @return color corresponding to the difficulty
+	 */
+	private Color getDiffColor(double diff) {
+		if (diff >= CgConst.DIFF_VERYEASY)
+			return Settings.Color_Diff_VeryEasy; //  CgConst.CL_MAP_DIFF_VERYEASY);
+		else if (diff >= CgConst.DIFF_EASY)
+			return Settings.Color_Diff_Easy; //CgConst.CL_MAP_DIFF_EASY);
+		else if (diff >= CgConst.DIFF_AVERAGE)
+			return Settings.Color_Diff_Average; // CgConst.CL_MAP_DIFF_AVERAGE);
+		else if (diff >= CgConst.DIFF_HARD)
+			return Settings.Color_Diff_Hard; // CgConst.CL_MAP_DIFF_HARD);
+		else
+			return Settings.Color_Diff_VeryHard; //CgConst.CL_MAP_DIFF_VERYHARD);		
+	}
+	
+	
 	/**
 	 * Set the track difficulty
 	 * 

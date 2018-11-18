@@ -485,7 +485,7 @@ public class Utils {
 	}
 
 	/**
-	 * Return the temperature unit as string (ºC or ºF)
+	 * Return the temperature unit as string (ï¿½C or ï¿½F)
 	 * 
 	 * @param unit
 	 *           Unit
@@ -496,13 +496,13 @@ public class Utils {
 		String unitString;
 		switch (unit) {
 		case CgConst.UNIT_METER:
-			unitString = "ºC";
+			unitString = "ï¿½C";
 			break;
 		case CgConst.UNIT_MILES_FEET:
-			unitString = "ºF";
+			unitString = "ï¿½F";
 			break;
 		default:
-			unitString = "ºC";
+			unitString = "ï¿½C";
 			break;
 		}
 
@@ -651,6 +651,48 @@ public class Utils {
 		double sec100 = sec60 / 0.6;
 
 		return 60 / (min + sec100);
+	}
+
+	/**
+	 * Converts a speed from the current chosen units to km/h.
+	 * 
+	 * @param speedValue A given speed in any units (min/km, km/h, min/mile, mph).
+	 * @param settings   Object containing the current user settings.
+	 * @return The converted speed in km/h.
+	 */
+	public static double SpeedCurrentUnitsToMeters(double speedValue, CgSettings settings) {
+		double convertedSpeed = speedValue;
+
+		if (settings.isPace) {
+			convertedSpeed = Utils.Pace2Speed(convertedSpeed);
+		}
+
+		if (settings.Unit == CgConst.UNIT_MILES_FEET) {
+			convertedSpeed = Utils.Miles2Km(convertedSpeed);
+		}
+
+		return convertedSpeed;
+	}
+
+	/**
+	 * Converts a speed from km/h to the current chosen units.
+	 * 
+	 * @param speedValue A given speed in km/h.
+	 * @param settings   Object containing the current user settings.
+	 * @return The converted speed in the current chosen units.
+	 */
+	public static double SpeedMeterToCurrentUnits(double speedValue, CgSettings settings) {
+		double convertedSpeed = speedValue;
+
+		if (settings.Unit == CgConst.UNIT_MILES_FEET) {
+			convertedSpeed = Utils.Km2Miles(convertedSpeed);
+		}
+
+		if (settings.isPace) {
+			return Utils.SpeedToPaceNumber(convertedSpeed);
+		}
+
+		return convertedSpeed;
 	}
 
 	/**
