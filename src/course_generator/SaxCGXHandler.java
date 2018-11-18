@@ -85,7 +85,6 @@ public class SaxCGXHandler extends DefaultHandler {
 	private double trkpt_recup = 0;
 	private double trkpt_speed = 0;
 	private int trkpt_timesecond = 0;
-	private double trkpt_temperature = 0.0;
 	private int trkpt_eattime = 0;
 	private int trkpt_timelimit = 0;
 	// private double trkpt_dtime = 0.0;
@@ -152,12 +151,10 @@ public class SaxCGXHandler extends DefaultHandler {
 	private Locator locator;
 	DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
 
-
 	/**
 	 * Read the CGX file from disc
 	 * 
-	 * @param filename
-	 *            Name of the cgx file to read
+	 * @param filename Name of the cgx file to read
 	 * @return The error code Error explanation: ERR_READ_NO = No problem during the
 	 *         reading of the file ERR_READ_DOUBLE = Parsing error during the read
 	 *         of a double element ERR_READ_INT = Parsing error during the read of a
@@ -226,7 +223,6 @@ public class SaxCGXHandler extends DefaultHandler {
 		return trkdata.ReadError;
 	}
 
-
 	/*
 	 * @Override public void startDocument() throws SAXException {
 	 * //System.out.println("Start document"); }
@@ -239,13 +235,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		return errline;
 	}
 
-
 	@Override
 	public void setDocumentLocator(final Locator locator) {
 		this.locator = locator; // Save the locator, so that it can be used later for line tracking when
 		// traversing nodes.
 	}
-
 
 	@Override
 	public void startElement(String uri, String localname, String qName, Attributes attributs) throws SAXException {
@@ -259,7 +253,6 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a string element
 	 * 
@@ -271,14 +264,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		return S;
 	}
 
-
 	/**
 	 * Parse a double element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private double ManageDouble(double _default, int _errcode) {
@@ -294,14 +284,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a long element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private long ManageLong(long _default, int _errcode) {
@@ -317,14 +304,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a integer element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private int ManageInt(int _default, int _errcode) {
@@ -340,14 +324,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a boolean element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private boolean ManageBoolean(boolean _default, int _errcode) {
@@ -363,14 +344,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a color element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed color
 	 */
 	private Color ManageColor(Color _default, int _errcode) {
@@ -385,7 +363,6 @@ public class SaxCGXHandler extends DefaultHandler {
 			return _default;
 		}
 	}
-
 
 	@Override
 	public void endElement(String uri, String localname, String qName) throws SAXException {
@@ -537,8 +514,6 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("TIMESECONDE")) {
 				trkpt_timesecond = ManageInt(0, ERR_READ_INT);
 				trkdata.isTimeLoaded = true;
-			} else if (qName.equalsIgnoreCase("TEMPERATURE")) {
-				trkpt_temperature = ManageDouble(0, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("DELTATIMESECONDE")) {
 				// trkpt_dtime = ManageDouble(0.0, ERR_READ_DOUBLE);
 				// TODO used?
@@ -582,7 +557,6 @@ public class SaxCGXHandler extends DefaultHandler {
 							trkpt_speed, // double Speed
 							0.0, // double dElevation
 							trkpt_timesecond, // int Time
-							trkpt_temperature, // Temperature
 							trkpt_timesecond - old_time, // double dTime_f
 							trkpt_timelimit, // int TimeLimit
 							new DateTime(), // DateTime Hour,
@@ -614,7 +588,6 @@ public class SaxCGXHandler extends DefaultHandler {
 							trkpt_speed, // double Speed
 							0.0, // double dElevation
 							trkpt_timesecond, // int Time
-							trkpt_temperature, // Temperature
 							trkpt_timesecond - old_time, // double dTime_f
 							trkpt_timelimit, // int TimeLimit
 							new DateTime(), // DateTime Hour
@@ -679,7 +652,6 @@ public class SaxCGXHandler extends DefaultHandler {
 			}
 		}
 	}
-
 
 	@Override
 	public void characters(char[] chars, int start, int end) throws SAXException {

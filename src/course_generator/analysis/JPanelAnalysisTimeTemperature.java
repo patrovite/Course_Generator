@@ -71,7 +71,6 @@ public class JPanelAnalysisTimeTemperature extends JPanel {
 	private ChartPanel ChartPanelTimeDist;
 	private Crosshair xCrosshair;
 
-
 	public JPanelAnalysisTimeTemperature(CgSettings settings) {
 		super();
 		track = null;
@@ -82,7 +81,6 @@ public class JPanelAnalysisTimeTemperature extends JPanel {
 		chart = CreateChart(datasetElevTime, datasetTemperatureTime);
 		initComponents();
 	}
-
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -183,14 +181,12 @@ public class JPanelAnalysisTimeTemperature extends JPanel {
 				}
 			}
 
-
 			@Override
 			public void chartMouseMoved(ChartMouseEvent event) {
 			}
 		});
 		add(ChartPanelTimeDist, java.awt.BorderLayout.CENTER);
 	}
-
 
 	private void RefreshInfo(int i) {
 		if ((track == null) || (settings == null))
@@ -212,11 +208,7 @@ public class JPanelAnalysisTimeTemperature extends JPanel {
 
 		lbTimeDistInfoHour.setText(" " + bundle.getString("JPanelAnalysisTimeTemperature.lbTimeDistInfoHour.text") + "="
 				+ d.getHourString() + " ");
-
-		lbTimeDistSlope.setText(" " + bundle.getString("JPanelAnalysisTimeTemperature.lbTimeDistSlope.text") + "="
-				+ d.getTemperature() + " ");
 	}
-
 
 	private JFreeChart CreateChart(XYDataset dataset1, XYDataset dataset2) {
 		JFreeChart chart = ChartFactory.createXYLineChart("",
@@ -261,7 +253,6 @@ public class JPanelAnalysisTimeTemperature extends JPanel {
 		return chart;
 	}
 
-
 	/**
 	 * Update the Time/Distance chart
 	 */
@@ -289,9 +280,7 @@ public class JPanelAnalysisTimeTemperature extends JPanel {
 		for (CgData r : track.data) {
 			double x = r.getTotal(settings.Unit) / 1000;
 			double y = r.getElevation(settings.Unit);
-			double t = r.getTemperature(settings.Unit);
 			serie1.add(x, y);
-			serie2.add(x, t);
 		}
 		datasetElevTime.addSeries(serie1);
 		datasetTemperatureTime.addSeries(serie2);

@@ -108,7 +108,6 @@ public class frmSettings extends javax.swing.JDialog {
 	private JPanel panelColors;
 	private JLabel lbVeryEasyColor;
 	private JLabel lbVeryEasyColorView;
-	private JButton btVeryEasyColor;
 
 	private Color ColorVeryEasy;
 	private Color ColorEasy;
@@ -120,17 +119,13 @@ public class frmSettings extends javax.swing.JDialog {
 	private JButton btDefaultColor;
 	private JLabel lbColorsEmpty;
 	private JLabel lbEasyColorView;
-	private JButton btEasyColor;
 	private JLabel lbEasyColor;
 	private JLabel lbAverageColor;
 	private JLabel lbAverageColorView;
-	private JButton btAverageColor;
 	private JLabel lbHardColor;
 	private JLabel lbHardColorView;
-	private JButton btHardColor;
 	private JLabel lbVeryHardColor;
 	private JLabel lbVeryHardColorView;
-	private JButton btVeryHardColor;
 	private JLabel lbNormalTrackWidth;
 	private CgSpinner spinNormalTrackWidth;
 	private JLabel lbNightTrackWidth;
@@ -141,9 +136,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private CgSpinner spinNightTrackTransparency;
 	private JLabel lbNightColor;
 	private JLabel lbNightColorView;
-	private JButton btNightColor;
 	private JLabel lbDisplayEmpty;
-
 
 	/**
 	 * Creates new form frmSettings
@@ -154,7 +147,6 @@ public class frmSettings extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
-
 
 	public boolean showDialog() {
 		// Set field
@@ -349,7 +341,6 @@ public class frmSettings extends javax.swing.JDialog {
 		return ok;
 	}
 
-
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -384,7 +375,6 @@ public class frmSettings extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -395,7 +385,6 @@ public class frmSettings extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	/**
 	 * This method is called to initialize the form.
@@ -872,7 +861,6 @@ public class frmSettings extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-
 	/**
 	 * Display the font chooser dialog
 	 */
@@ -882,19 +870,14 @@ public class frmSettings extends javax.swing.JDialog {
 			DefaultFont = res;
 	}
 
-
 	/**
 	 * Add a tab to JTabbedPane. The icon is at the left of the text and there some
 	 * space between the icon and the label
 	 * 
-	 * @param tabbedPane
-	 *            JTabbedPane where we want to add the tab
-	 * @param tab
-	 *            Tab to add
-	 * @param title
-	 *            Title of the tab
-	 * @param icon
-	 *            Icon of the tab
+	 * @param tabbedPane JTabbedPane where we want to add the tab
+	 * @param tab        Tab to add
+	 * @param title      Title of the tab
+	 * @param icon       Icon of the tab
 	 */
 	private void addTab(JTabbedPane tabbedPane, Component tab, String title, Icon icon) {
 		tabbedPane.add(tab);
@@ -911,13 +894,11 @@ public class frmSettings extends javax.swing.JDialog {
 		tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 	}
 
-
 	/**
 	 * Return the index in the "fontSize" array of the value containing the font
 	 * size
 	 * 
-	 * @param value
-	 *            Font size
+	 * @param value Font size
 	 * @return Index in the "fontSize" array
 	 */
 	private int FontSize2Index(int value) {
@@ -928,12 +909,10 @@ public class frmSettings extends javax.swing.JDialog {
 		return 0; // Default value if not found
 	}
 
-
 	/**
 	 * Return the font size corresponding at an index
 	 * 
-	 * @param value
-	 *            index
+	 * @param value index
 	 * @return Font size
 	 */
 	private int Index2FontSize(int value) {
@@ -943,11 +922,9 @@ public class frmSettings extends javax.swing.JDialog {
 		return fontSize[value];
 	}
 
-
 	private Color ChooseColor(Color cl) {
 		return FrmColorChooser.showDialog(this, "", cl, settings);
 	}
-
 
 	/**
 	 * Refresh some dialog contents

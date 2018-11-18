@@ -26,11 +26,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
-import java.time.ZoneId;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -52,8 +49,6 @@ import org.shredzone.commons.suncalc.SunTimes;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgSpinner;
 import course_generator.utils.Utils;
-import net.iakovlev.timeshape.TimeZoneEngine;
-//import net.iakovlev.timeshape.*;
 
 public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 
@@ -82,7 +77,6 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 	private JCheckBox chkSummerTime;
 	private JLabel lbDate;
 	private JLabel lbDateVal;
-	private TimeZoneEngine timeZoneEngine;
 	private TimeZone courseStartZone;
 	private CgSettings settings = null;
 
@@ -95,12 +89,10 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		boolean valid;
 	}
 
-
 	/**
 	 * Creates new form frmSettings
 	 * 
-	 * @param settings
-	 *            Object containing the settings
+	 * @param settings Object containing the settings
 	 */
 	public FrmCalcSunriseSunset(JDialog parent, CgSettings settings) {
 		super(parent);
@@ -110,19 +102,17 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		setModal(true);
 	}
 
-
 	public ResCalcSunriseSunset showDialog(double longitude, double latitude, DateTime starttime, int timezone,
 			boolean useDayLightSaving) {
-		
+
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.date = starttime;
 
 		// Determine the course time zone
-		Optional<ZoneId> courseStartZoneId = timeZoneEngine.query(latitude, longitude);
-		String timeZoneId = courseStartZoneId.get().getId();
-		courseStartZone = TimeZone.getTimeZone(timeZoneId);
-		long hoursOffsetFromUTC = TimeUnit.MILLISECONDS.toHours(courseStartZone.getRawOffset());
+		long hoursOffsetFromUTC = Utils.hoursUTCOffsetFromLatLon(latitude, longitude);
+		courseStartZone = Utils.getTimeZoneFromLatLon(latitude, longitude);
+		String timeZoneId = courseStartZone.getID();
 
 		// Set field
 		lbLongitudeVal.setText(String.format("%10.7f°", longitude));
@@ -161,7 +151,6 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		return res;
 	}
 
-
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -196,7 +185,6 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -207,7 +195,6 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 		int line = 0;
@@ -223,9 +210,6 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 				formComponentShown(evt);
 			}
 		});
-
-		// Initialize the time zone engine
-		timeZoneEngine = TimeZoneEngine.initialize();
 
 		// -- Layout
 		// ------------------------------------------------------------
@@ -344,7 +328,6 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-
 	protected void Calc() {
 
 		SunTimes times = SunTimes.compute().on(date.toDate()).at(latitude, longitude).execute();
@@ -353,11 +336,9 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		sunset = new DateTime(times.getSet()).withZone(DateTimeZone.forTimeZone(courseStartZone));
 	}
 
-
 	protected void formComponentShown(ComponentEvent evt) {
 		repaint();
 	}
-
 
 	protected void Refresh() {
 		lbSunriseVal.setText(sunrise.toString("HH:mm"));

@@ -30,11 +30,10 @@ public class MrbData extends CgData {
 	/** Time from previous point **/
 	private int deltatime;
 
-
 	public MrbData(double Num, double Latitude, double Longitude, double Elevation, double ElevationMemo, int Tag,
 			double Dist, double Total, double Diff, double Coeff, double Recup, double Slope, double Speed,
 			double dElevation, int Time, // Time in second
-			double Temperature, double dTime_f, // Time this part of the track in second (with decimal)
+			double dTime_f, // Time this part of the track in second (with decimal)
 			int TimeLimit, // Time limit
 			DateTime Hour, // Date and time at this point
 			int Station, String Name, String Comment, double tmp1, double tmp2, String FmtLbMiniRoadbook,
@@ -43,7 +42,7 @@ public class MrbData extends CgData {
 
 		super(Num, Latitude, Longitude, Elevation, ElevationMemo, Tag, Dist, Total, Diff, Coeff, Recup, Slope, Speed,
 				dElevation, Time, // Time in second
-				Temperature, dTime_f, // Time this part of the track in second (with decimal)
+				dTime_f, // Time this part of the track in second (with decimal)
 				TimeLimit, // Time limit
 				Hour, // Date and time at this point
 				Station, Name, Comment, tmp1, tmp2, FmtLbMiniRoadbook, OptionMiniRoadbook, VPosMiniRoadbook,
@@ -53,11 +52,9 @@ public class MrbData extends CgData {
 		this.deltatime = deltatime;
 	}
 
-
 	public double getDeltaDist() {
 		return deltadistance;
 	}
-
 
 	public double getDeltaDist(int unit) {
 		switch (unit) {
@@ -70,7 +67,6 @@ public class MrbData extends CgData {
 			return deltadistance;
 		}
 	}
-
 
 	public String getDeltaDistString(int unit, boolean withunit) {
 
@@ -99,16 +95,13 @@ public class MrbData extends CgData {
 		return s;
 	}
 
-
 	public void setDeltaDist(double dist) {
 		deltadistance = dist;
 	}
 
-
 	public int getDeltaTime() {
 		return deltatime;
 	}
-
 
 	public String getDeltaTimeString() {
 		int time = getDeltaTime();
@@ -119,7 +112,6 @@ public class MrbData extends CgData {
 		int nbs = (time % 3600) % 60;
 		return String.format("%02d:%02d:%02d ", nbh, nbm, nbs);
 	}
-
 
 	public void setDeltaTime(int deltatime) {
 		this.deltatime = deltatime;
