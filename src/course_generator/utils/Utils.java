@@ -428,7 +428,7 @@ public class Utils {
 	}
 
 	/**
-	 * Return the temperature unit as string (ºC or ºF)
+	 * Return the temperature unit as string (ï¿½C or ï¿½F)
 	 * 
 	 * @param unit Unit
 	 * @return String with the unit
@@ -438,13 +438,13 @@ public class Utils {
 		String unitString;
 		switch (unit) {
 		case CgConst.UNIT_METER:
-			unitString = "ºC";
+			unitString = "ï¿½C";
 			break;
 		case CgConst.UNIT_MILES_FEET:
-			unitString = "ºF";
+			unitString = "ï¿½F";
 			break;
 		default:
-			unitString = "ºC";
+			unitString = "ï¿½C";
 			break;
 		}
 
@@ -572,7 +572,8 @@ public class Utils {
 	/**
 	 * Calculate the speed from a pace
 	 * 
-	 * @param pace Pace in min/km or min/mile (8.30min/mile =>8.3)
+	 * @param pace
+	 *            Pace in min/km or min/mile (8.30min/mile => 8.3)
 	 * @return speed in km/h or miles/h
 	 */
 	public static double Pace2Speed(double pace) {
@@ -585,6 +586,54 @@ public class Utils {
 
 		return 60 / (min + sec100);
 	}
+
+	/**
+	 * Converts a speed from the current chosen units to km/h.
+	 * 
+	 * @param speedValue
+	 *            A given speed in any units (min/km, km/h, min/mile, mph).
+	 * @param settings
+	 *            Object containing the current user settings.
+	 * @return The converted speed in km/h.
+	 */
+	public static double SpeedCurrentUnitsToMeters(double speedValue, CgSettings settings) {
+		double convertedSpeed = speedValue;
+
+		if (settings.isPace) {
+			convertedSpeed = Utils.Pace2Speed(convertedSpeed);
+		}
+
+		if (settings.Unit == CgConst.UNIT_MILES_FEET) {
+			convertedSpeed = Utils.Miles2Km(convertedSpeed);
+		}
+
+		return convertedSpeed;
+	}
+
+
+	/**
+	 * Converts a speed from km/h to the current chosen units.
+	 * 
+	 * @param speedValue
+	 *            A given speed in km/h.
+	 * @param settings
+	 *            Object containing the current user settings.
+	 * @return The converted speed in the current chosen units.
+	 */
+	public static double SpeedMeterToCurrentUnits(double speedValue, CgSettings settings) {
+		double convertedSpeed = speedValue;
+
+		if (settings.Unit == CgConst.UNIT_MILES_FEET) {
+			convertedSpeed = Utils.Km2Miles(convertedSpeed);
+		}
+
+		if (settings.isPace) {
+			return Utils.SpeedToPaceNumber(convertedSpeed);
+		}
+
+		return convertedSpeed;
+	}
+
 
 	/**
 	 * Convert the seconds in string. Format hh:mm:ss
@@ -1438,6 +1487,7 @@ public class Utils {
 		return success;
 	}
 
+
 	/**
 	 * Returns a given temperature in the correct unit (Celsius or Fahrenheit)
 	 * 
@@ -1505,6 +1555,7 @@ public class Utils {
 		return dateTime;
 	}
 
+
 	/**
 	 * Converts a Joda-Time to a date for a SpinnerDateModel. The particularity of
 	 * the SpinnerDateModel is that it is time zone agnostic. Hence we need to keep
@@ -1533,6 +1584,7 @@ public class Utils {
 		return spinnerDate;
 	}
 
+/*
 	public static TimeZone getTimeZoneFromLatLon(double latitude, double longitude) {
 		if (timeZoneEngine == null) {
 			// Initialize the time zone engine
@@ -1551,5 +1603,6 @@ public class Utils {
 
 		return (int) hoursOffsetFromUTC;
 	}
-
+*/
+  
 } // Class
