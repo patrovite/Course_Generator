@@ -37,7 +37,6 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 import course_generator.settings.CgSettings;
-import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
 public class frmEditPoint extends javax.swing.JDialog {
@@ -98,7 +97,8 @@ public class frmEditPoint extends javax.swing.JDialog {
 
 		// -- Speed
 		lbSpeed = new javax.swing.JLabel();
-		lbSpeed.setText(bundle.getString("frmEditPoint.lbSpeed.text") + " ");
+		lbSpeed.setText(bundle.getString("frmEditPoint.lbSpeed.text") + " " + "("
+				+ Utils.uSpeed2String(settings.Unit, settings.isPace) + ")");
 		Utils.addComponent(paneGlobal, lbSpeed, 0, 1, 1, 1, 0, 0, 0, 5, 5, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
@@ -152,12 +152,11 @@ public class frmEditPoint extends javax.swing.JDialog {
 		slope = p.getSlope();
 		speed = p.getSpeedNumber();
 
-		double convertedSpeed = settings.Unit == CgConst.UNIT_MILES_FEET ? Utils.Km2Miles(p.getSpeedNumber())
-				: p.getSpeedNumber();
+		double speedToDisplay = Utils.SpeedMeterToCurrentUnits(speed, settings);
 
 		// Set field
 		tfSlope.setText(String.valueOf(slope));
-		tfSpeed.setText(String.valueOf(convertedSpeed));
+		tfSpeed.setText(String.valueOf(speedToDisplay));
 		// End set field
 		ok = false;
 
@@ -166,7 +165,10 @@ public class frmEditPoint extends javax.swing.JDialog {
 		if (ok) {
 			// Copy fields
 			p.setSlope(slope);
-			p.setSpeed(settings.Unit == CgConst.UNIT_MILES_FEET ? Utils.Miles2Km(speed) : speed);
+
+			double convertedInputSpeed = Utils.SpeedCurrentUnitsToMeters(speed, settings);
+
+			p.setSpeed(convertedInputSpeed);
 		}
 		return ok;
 	}
