@@ -12,13 +12,6 @@ import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
-import tk.plogitech.darksky.forecast.APIKey;
-import tk.plogitech.darksky.forecast.DarkSkyClient;
-import tk.plogitech.darksky.forecast.ForecastRequest;
-import tk.plogitech.darksky.forecast.ForecastRequestBuilder;
-import tk.plogitech.darksky.forecast.GeoCoordinates;
-import tk.plogitech.darksky.forecast.model.Latitude;
-import tk.plogitech.darksky.forecast.model.Longitude;
 
 public class WeatherHistory {
 
@@ -56,16 +49,20 @@ public class WeatherHistory {
 		DateTime startTime = new DateTime(Utils.DateTimetoSpinnerDate(firstTrackPoint.getHour()));
 		Instant time = Instant.ofEpochMilli(startTime.minusDays(PreviousYearNumber * 364).getMillis());
 
-		ForecastRequest request = new ForecastRequestBuilder().key(new APIKey(Settings.getDarkSkyApiKey())).time(time)
-				.language(ForecastRequestBuilder.Language.en).units(ForecastRequestBuilder.Units.si)
-				.exclude(ForecastRequestBuilder.Block.minutely).extendHourly()
-				.location(new GeoCoordinates(new Longitude(Longitude), new Latitude(Latitude))).build();
-
-		DarkSkyClient client = new DarkSkyClient();
+		/*
+		 * ForecastRequest request = new ForecastRequestBuilder().key(new
+		 * APIKey(Settings.getNoaaToken())).time(time)
+		 * .language(ForecastRequestBuilder.Language.en).units(ForecastRequestBuilder.
+		 * Units.si) .exclude(ForecastRequestBuilder.Block.minutely).extendHourly()
+		 * .location(new GeoCoordinates(new Longitude(Longitude), new
+		 * Latitude(Latitude))).build();
+		 * 
+		 * DarkSkyClient client = new DarkSkyClient();
+		 */
 		try {
-			String forecast = client.forecastJsonString(request);
+			// String forecast = client.forecastJsonString(request);
 
-			PopulateFields(forecast);
+			// PopulateFields(forecast);
 
 			UpdateTrackWeatherData();
 

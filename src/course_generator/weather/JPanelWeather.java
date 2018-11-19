@@ -194,7 +194,7 @@ public class JPanelWeather extends JPanel {
 				return;
 			}
 
-			if (!settings.isDarkSkyApiKeyValid()) {
+			if (!settings.isNoaaTokenValid()) {
 				if (lbInformation.getText() != "") {
 					lbInformation.setText(", ");
 				}

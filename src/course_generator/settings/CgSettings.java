@@ -101,7 +101,7 @@ public class CgSettings {
 	public int CurveButtonsIconSize;
 
 	private String ThunderForestApiKey;
-	private String DarkSkyApiKey;
+	private String NoaaToken;
 
 	public Color Color_Diff_VeryEasy;
 	public Color Color_Diff_Easy;
@@ -296,7 +296,7 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "CURVEBUTTONSICONSIZE", CurveButtonsIconSize);
 
 			Utils.WriteStringToXML(writer, "THUNDERFORESTAPIKEY", ThunderForestApiKey);
-			Utils.WriteStringToXML(writer, "DARKSKYAPIKEY", DarkSkyApiKey);
+			Utils.WriteStringToXML(writer, "NOAATOKEN", NoaaToken);
 
 			Utils.WriteIntToXML(writer, "COLORDIFFVERYEASY", Color_Diff_VeryEasy.getRGB());
 			Utils.WriteIntToXML(writer, "COLORDIFFEASY", Color_Diff_Easy.getRGB());
@@ -437,37 +437,37 @@ public class CgSettings {
 
 
 	/**
-	 * Returns the user's Dark Sky API Key
+	 * Returns the user's NOAA token.
 	 * 
 	 * @return string with the key
 	 */
-	public String getDarkSkyApiKey() {
-		return DarkSkyApiKey == null ? "" : DarkSkyApiKey;
+	public String getNoaaToken() {
+		return NoaaToken == null ? "" : NoaaToken;
 	}
 
 
 	/**
-	 * Sets the user's Dark Sky API Key
+	 * Sets the user's NOAA token.
 	 * 
-	 * @param key
-	 *            The entered key
+	 * @param token
+	 *            The entered token
 	 */
-	public void setDarkSkyApiKey(String key) {
-		DarkSkyApiKey = key;
+	public void setNoaaToken(String token) {
+		NoaaToken = token;
 	}
 
 
 	/**
-	 * Verifies that the Dark Sky API Key is a valid one
+	 * Verifies that the NOAA token is a valid one
 	 * 
 	 */
-	public boolean isDarkSkyApiKeyValid() {
-		boolean isKeyValid = false;
+	public boolean isNoaaTokenValid() {
+		boolean isTokenValid = false;
 
-		if (DarkSkyApiKey != null && DarkSkyApiKey.length() == 32)
-			isKeyValid = true;
+		if (NoaaToken != null && NoaaToken.length() == 32)
+			isTokenValid = true;
 
-		return isKeyValid;
+		return isTokenValid;
 	}
 
 }

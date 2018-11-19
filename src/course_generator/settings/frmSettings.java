@@ -101,7 +101,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private JLabel lbCurveButtonsIconSize;
 	private JComboBox<Object> cbCurveButtonsIconSize;
 	private JTextField edThunderForestApiKey;
-	private JTextField DarkSkyApiKey;
+	private JTextField NoaaToken;
 
 	private int fontSize[] = { 16, 20, 22, 24, 32, 64, 96, 128 };
 	private JLabel lbThunderForestApiKey;
@@ -138,6 +138,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private JLabel lbNightColorView;
 	private JLabel lbDisplayEmpty;
 
+
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -147,6 +148,7 @@ public class frmSettings extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
+
 
 	public boolean showDialog() {
 		// Set field
@@ -195,9 +197,11 @@ public class frmSettings extends javax.swing.JDialog {
 		cbMapIconSize.setSelectedIndex(FontSize2Index(settings.MapIconSize));
 		cbCurveButtonsIconSize.setSelectedIndex(FontSize2Index(settings.CurveButtonsIconSize));
 
-		// Maps & Weather tab
+		// -- Thunderforest API key
 		edThunderForestApiKey.setText(settings.getThunderForestApiKey());
-		DarkSkyApiKey.setText(settings.getDarkSkyApiKey());
+
+		// -- NOAA token
+		NoaaToken.setText(settings.getNoaaToken());
 
 		// -- Colors
 		ColorVeryEasy = settings.Color_Diff_VeryEasy;
@@ -334,12 +338,13 @@ public class frmSettings extends javax.swing.JDialog {
 				settings.setThunderForestApiKey(edThunderForestApiKey.getText());
 			}
 
-			if (DarkSkyApiKey.getText() != "" && DarkSkyApiKey.getText() != settings.getDarkSkyApiKey()) {
-				settings.setDarkSkyApiKey(DarkSkyApiKey.getText());
+			if (NoaaToken.getText() != "" && NoaaToken.getText() != settings.getNoaaToken()) {
+				settings.setNoaaToken(NoaaToken.getText());
 			}
 		}
 		return ok;
 	}
+
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -375,6 +380,7 @@ public class frmSettings extends javax.swing.JDialog {
 		return rootPane;
 	}
 
+
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -385,6 +391,7 @@ public class frmSettings extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
+
 
 	/**
 	 * This method is called to initialize the form.
@@ -808,14 +815,14 @@ public class frmSettings extends javax.swing.JDialog {
 
 		line = 0;
 
-		// Dark Sky API Key
-		JLabel lbDarkSkyApiKey = new javax.swing.JLabel();
-		lbDarkSkyApiKey.setText(bundle.getString("frmSettings.lbDarkSkyApiKey.text"));
-		Utils.addComponent(panelWeather, lbDarkSkyApiKey, 0, line, 1, 1, 1, 1, 10, 10, 0, 0, GridBagConstraints.NORTH,
+		// NOAA API Token
+		JLabel lbNOAAToken = new javax.swing.JLabel();
+		lbNOAAToken.setText(bundle.getString("frmSettings.lbNOAAToken.text"));
+		Utils.addComponent(panelWeather, lbNOAAToken, 0, line, 1, 1, 1, 1, 10, 10, 0, 0, GridBagConstraints.NORTH,
 				GridBagConstraints.HORIZONTAL);
 
-		DarkSkyApiKey = new javax.swing.JTextField();
-		Utils.addComponent(panelWeather, DarkSkyApiKey, 1, line++, 1, 1, 2, 1, 10, 5, 0, 10, GridBagConstraints.NORTH,
+		NoaaToken = new javax.swing.JTextField();
+		Utils.addComponent(panelWeather, NoaaToken, 1, line++, 1, 1, 2, 1, 10, 5, 0, 10, GridBagConstraints.NORTH,
 				GridBagConstraints.HORIZONTAL);
 
 		addTab(TabbedPaneGlobal, panelWeather, bundle.getString("frmSettings.TabWeather.tabTitle"), null);
@@ -861,6 +868,7 @@ public class frmSettings extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
+
 	/**
 	 * Display the font chooser dialog
 	 */
@@ -870,14 +878,19 @@ public class frmSettings extends javax.swing.JDialog {
 			DefaultFont = res;
 	}
 
+
 	/**
 	 * Add a tab to JTabbedPane. The icon is at the left of the text and there some
 	 * space between the icon and the label
 	 * 
-	 * @param tabbedPane JTabbedPane where we want to add the tab
-	 * @param tab        Tab to add
-	 * @param title      Title of the tab
-	 * @param icon       Icon of the tab
+	 * @param tabbedPane
+	 *            JTabbedPane where we want to add the tab
+	 * @param tab
+	 *            Tab to add
+	 * @param title
+	 *            Title of the tab
+	 * @param icon
+	 *            Icon of the tab
 	 */
 	private void addTab(JTabbedPane tabbedPane, Component tab, String title, Icon icon) {
 		tabbedPane.add(tab);
@@ -894,11 +907,13 @@ public class frmSettings extends javax.swing.JDialog {
 		tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 	}
 
+
 	/**
 	 * Return the index in the "fontSize" array of the value containing the font
 	 * size
 	 * 
-	 * @param value Font size
+	 * @param value
+	 *            Font size
 	 * @return Index in the "fontSize" array
 	 */
 	private int FontSize2Index(int value) {
@@ -909,10 +924,12 @@ public class frmSettings extends javax.swing.JDialog {
 		return 0; // Default value if not found
 	}
 
+
 	/**
 	 * Return the font size corresponding at an index
 	 * 
-	 * @param value index
+	 * @param value
+	 *            index
 	 * @return Font size
 	 */
 	private int Index2FontSize(int value) {
@@ -922,9 +939,11 @@ public class frmSettings extends javax.swing.JDialog {
 		return fontSize[value];
 	}
 
+
 	private Color ChooseColor(Color cl) {
 		return FrmColorChooser.showDialog(this, "", cl, settings);
 	}
+
 
 	/**
 	 * Refresh some dialog contents
