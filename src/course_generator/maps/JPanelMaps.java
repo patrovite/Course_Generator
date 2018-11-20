@@ -173,7 +173,7 @@ public class JPanelMaps extends JPanel {
 
 		// -- Center map on screen
 		btMapCenterOnTrack = new javax.swing.JButton();
-		btMapCenterOnTrack.setIcon(Utils.getIcon(this, "search.png", Settings.MapToolbarIconSize));
+		btMapCenterOnTrack.setIcon(Utils.getIcon(this, "center.png", Settings.MapToolbarIconSize));
 		btMapCenterOnTrack.setToolTipText(bundle.getString("frmMain.btMapCenterOnTrack.toolTipText"));
 		btMapCenterOnTrack.setFocusable(false);
 		btMapCenterOnTrack.setEnabled(false);
