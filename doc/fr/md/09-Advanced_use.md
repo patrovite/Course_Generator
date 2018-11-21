@@ -318,6 +318,7 @@ Les données vont rester inchangées tant que vous ne demanderez pas un calcul d
 
 Sur la droite, une barre verticale de boutons permet de réaliser des actions sur cette carte.
 
+* ![](./images/Map/center.png) : Centre la carte sur la trace
 * ![](./images/Map/marker.png) : Permet d'ajouter une marque de début d'action à l'endroit sélectionné
 * ![](./images/Map/hide_marker.png) : Permet de supprimer la marque
 * ![](./images/Map/undo.png) : Permet d'annuler la dernière opération
