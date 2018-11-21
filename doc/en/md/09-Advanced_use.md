@@ -318,7 +318,8 @@ The data will remain unchanged until you ask for a calculation of the travel tim
 
 On the left, a vertical bar of buttons allows actions on this map.
 
-* ![](./images/Map/marker.png) : Adds an start mark to the selected location
+* ![](./images/Map/center.png) : Centers the track on the map
+* ![](./images/Map/marker.png) : Adds a start mark to the selected location
 * ![](./images/Map/hide_marker.png) : Deletes the mark
 * ![](./images/Map/undo.png) : Cancels the last operation
 * ![](./images/Map/track_very_easy.png) : Indicates that the field between ![](./images/Map/marker.png) and the current point is "Very easy"

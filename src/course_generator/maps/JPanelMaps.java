@@ -67,6 +67,7 @@ public class JPanelMaps extends JPanel {
 	private ArrayList<Double> UndoDiff;
 	private List<JPanelMapsListener> listeners = new ArrayList<JPanelMapsListener>();
 	private JToolBar jToolBarMapViewer;
+	private JButton btMapCenterOnTrack;
 	private JButton btMapAddMarker;
 	private JButton btMapHideMarker;
 	private JButton btMapTrackVeryEasy;
@@ -132,10 +133,11 @@ public class JPanelMaps extends JPanel {
 
 		// -- Tile cache definition
 		try {
-//			File cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "OpenStreetMapTileCache/"+CgConst.OPENSTREETMAP_CACHE_DIR);
-//			cacheDir.mkdirs();
-			
-			File cacheDir=getTileCacheDir();
+			// File cacheDir = new File(DataDir + "/" + CgConst.CG_DIR,
+			// "OpenStreetMapTileCache/"+CgConst.OPENSTREETMAP_CACHE_DIR);
+			// cacheDir.mkdirs();
+
+			File cacheDir = getTileCacheDir();
 			offlineTileCache = new OsmFileCacheTileLoader(MapViewer, cacheDir);
 			MapViewer.setTileLoader(offlineTileCache);
 		} catch (IOException ex) {
@@ -168,6 +170,19 @@ public class JPanelMaps extends JPanel {
 		jToolBarMapViewer.setFloatable(false);
 		jToolBarMapViewer.setOrientation(javax.swing.SwingConstants.VERTICAL);
 		jToolBarMapViewer.setRollover(true);
+
+		// -- Center map on screen
+		btMapCenterOnTrack = new javax.swing.JButton();
+		btMapCenterOnTrack.setIcon(Utils.getIcon(this, "center.png", Settings.MapToolbarIconSize));
+		btMapCenterOnTrack.setToolTipText(bundle.getString("frmMain.btMapCenterOnTrack.toolTipText"));
+		btMapCenterOnTrack.setFocusable(false);
+		btMapCenterOnTrack.setEnabled(false);
+		btMapCenterOnTrack.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				MapViewer.setDisplayToFitMapPolygons();
+			}
+		});
+		jToolBarMapViewer.add(btMapCenterOnTrack);
 
 		// -- Add marker
 		btMapAddMarker = new javax.swing.JButton();
@@ -369,10 +384,11 @@ public class JPanelMaps extends JPanel {
 	public void RefreshTrack(TrackData tdata, boolean zoom2fit) {
 		if (tdata == null)
 			return;
-		if (tdata.data.size()<=0) 
+		if (tdata.data.size() <= 0)
 			return;
 
 		// Enabling the map tools
+		btMapCenterOnTrack.setEnabled(true);
 		btMapAddMarker.setEnabled(true);
 		btMapMark.setEnabled(true);
 		btMapEat.setEnabled(true);
@@ -386,106 +402,98 @@ public class JPanelMaps extends JPanel {
 		CurrentPosMarker = null;
 
 		// -- Create the night tracks
-		boolean found=false;
-		List<Coordinate> routeNight=null;
-		MapPolyLine polyLineNight=null;
-		
-		Color cl_Transp= new Color(
-				Settings.Color_Map_NightHighlight.getRed(),
-				Settings.Color_Map_NightHighlight.getGreen(), 
-				Settings.Color_Map_NightHighlight.getBlue(), 
+		boolean found = false;
+		List<Coordinate> routeNight = null;
+		MapPolyLine polyLineNight = null;
+
+		Color cl_Transp = new Color(Settings.Color_Map_NightHighlight.getRed(),
+				Settings.Color_Map_NightHighlight.getGreen(), Settings.Color_Map_NightHighlight.getBlue(),
 				Settings.NightTrackTransparency);
-		
-		for(int i=0; i<tdata.data.size(); i++)
-		{
+
+		for (int i = 0; i < tdata.data.size(); i++) {
 			CgData r = tdata.data.get(i);
-			
-			if (r.getNight() && !found)
-			{
+
+			if (r.getNight() && !found) {
 				routeNight = new ArrayList<Coordinate>();
 				routeNight.add(new Coordinate(r.getLatitude(), r.getLongitude()));
-				
+
 				polyLineNight = new MapPolyLine(routeNight);
 				polyLineNight.setColor(cl_Transp); // CgConst.CL_MAP_NIGHT_HIGHLIGHT);
-				
-				polyLineNight.setStroke(new BasicStroke(Settings.NightTrackWidth)); //CgConst.TRACK_NIGHT_TICKNESS));
-				found=true;
-			}
-			else if (r.getNight() && found) {
-				routeNight.add(new Coordinate(r.getLatitude(), r.getLongitude()));				
-			}
-			else if (!r.getNight() && found) {
+
+				polyLineNight.setStroke(new BasicStroke(Settings.NightTrackWidth)); // CgConst.TRACK_NIGHT_TICKNESS));
+				found = true;
+			} else if (r.getNight() && found) {
+				routeNight.add(new Coordinate(r.getLatitude(), r.getLongitude()));
+			} else if (!r.getNight() && found) {
 				MapViewer.addMapPolygon(polyLineNight);
-				found=false;
+				found = false;
 			}
 		}
-		
+
 		// -- Create the tracks (over the night tracks if necessary)
 		List<Coordinate> routeNormal = new ArrayList<Coordinate>();
 		double last_diff = tdata.data.get(0).getDiff();
-		Color cl=getDiffColor(last_diff);
-		
+		Color cl = getDiffColor(last_diff);
+
 		for (CgData r : tdata.data) {
 			if (r.getDiff() == last_diff) {
-				//-- Add the point to the list
+				// -- Add the point to the list
 				routeNormal.add(new Coordinate(r.getLatitude(), r.getLongitude()));
 			} else {
-				//-- Add the point to the list
+				// -- Add the point to the list
 				routeNormal.add(new Coordinate(r.getLatitude(), r.getLongitude()));
-				
-				//-- Polyline creation
+
+				// -- Polyline creation
 				MapPolyLine polyLineNormal = new MapPolyLine(routeNormal);
-				//-- Set the line color
-				cl=getDiffColor(last_diff);
-				//-- Set the transparency
-				cl= new Color(cl.getRed(), cl.getGreen(), cl.getBlue(), Settings.NormalTrackTransparency);
+				// -- Set the line color
+				cl = getDiffColor(last_diff);
+				// -- Set the transparency
+				cl = new Color(cl.getRed(), cl.getGreen(), cl.getBlue(), Settings.NormalTrackTransparency);
 				polyLineNormal.setColor(cl);
-				//-- Set the track width
+				// -- Set the track width
 				polyLineNormal.setStroke(new BasicStroke(Settings.NormalTrackWidth));
 
-				//-- Add the polyline to the viewer
+				// -- Add the polyline to the viewer
 				MapViewer.addMapPolygon(polyLineNormal);
 
-				//-- Start a new list of points
+				// -- Start a new list of points
 				routeNormal = new ArrayList<Coordinate>();
 				routeNormal.add(new Coordinate(r.getLatitude(), r.getLongitude()));
 			}
 			last_diff = r.getDiff();
 		}
 
-		//-- Polyline creation
+		// -- Polyline creation
 		MapPolyLine polyLineNormal = new MapPolyLine(routeNormal);
-		//-- Set the line color
-		cl=getDiffColor(last_diff);
-		//-- Set the transparency
-		cl= new Color(cl.getRed(), cl.getGreen(), cl.getBlue(), Settings.NormalTrackTransparency);
+		// -- Set the line color
+		cl = getDiffColor(last_diff);
+		// -- Set the transparency
+		cl = new Color(cl.getRed(), cl.getGreen(), cl.getBlue(), Settings.NormalTrackTransparency);
 		polyLineNormal.setColor(cl);
-		//-- Set the track width
+		// -- Set the track width
 		polyLineNormal.setStroke(new BasicStroke(Settings.NormalTrackWidth));
 
-		//-- Add the polyline to the viewer
+		// -- Add the polyline to the viewer
 		MapViewer.addMapPolygon(polyLineNormal);
 
 		/*
-		
-		// -- Add the last polyline
-		MapPolyLine polyLineEnd = new MapPolyLine(routeNormal);
-		// -- Set the line color
-		cl=getDiffColor(last_diff);
-		cl= new Color(cl.getRed(), cl.getGreen(), cl.getBlue(), Settings.NormalTrackTransparency);
-
-		polyLineEnd.setColor(cl);
-		
-		// -- Set the stroke
-		polyLineEnd.setStroke(new BasicStroke(Settings.NormalTrackWidth)); //CgConst.TRACK_NORMAL_TICKNESS));
-		// -- Upddate the viewer
-		MapViewer.addMapPolygon(polyLineEnd);
-*/
+		 * 
+		 * // -- Add the last polyline MapPolyLine polyLineEnd = new
+		 * MapPolyLine(routeNormal); // -- Set the line color
+		 * cl=getDiffColor(last_diff); cl= new Color(cl.getRed(), cl.getGreen(),
+		 * cl.getBlue(), Settings.NormalTrackTransparency);
+		 * 
+		 * polyLineEnd.setColor(cl);
+		 * 
+		 * // -- Set the stroke polyLineEnd.setStroke(new
+		 * BasicStroke(Settings.NormalTrackWidth)); //CgConst.TRACK_NORMAL_TICKNESS));
+		 * // -- Upddate the viewer MapViewer.addMapPolygon(polyLineEnd);
+		 */
 		// -- Zoom to display the track
 		if (zoom2fit)
 			MapViewer.setDisplayToFitMapPolygons();
 
-		//-- Add marks
+		// -- Add marks
 		for (CgData r : tdata.data) {
 			int t = r.getTag();
 			int v = 0;
@@ -502,26 +510,28 @@ public class JPanelMaps extends JPanel {
 		}
 	}
 
-	
+
 	/***
-	 * Return the color corresponding of the difficulty 
-	 * @param diff difficulty between 0..100
+	 * Return the color corresponding of the difficulty
+	 * 
+	 * @param diff
+	 *            difficulty between 0..100
 	 * @return color corresponding to the difficulty
 	 */
 	private Color getDiffColor(double diff) {
 		if (diff >= CgConst.DIFF_VERYEASY)
-			return Settings.Color_Diff_VeryEasy; //  CgConst.CL_MAP_DIFF_VERYEASY);
+			return Settings.Color_Diff_VeryEasy; // CgConst.CL_MAP_DIFF_VERYEASY);
 		else if (diff >= CgConst.DIFF_EASY)
-			return Settings.Color_Diff_Easy; //CgConst.CL_MAP_DIFF_EASY);
+			return Settings.Color_Diff_Easy; // CgConst.CL_MAP_DIFF_EASY);
 		else if (diff >= CgConst.DIFF_AVERAGE)
 			return Settings.Color_Diff_Average; // CgConst.CL_MAP_DIFF_AVERAGE);
 		else if (diff >= CgConst.DIFF_HARD)
 			return Settings.Color_Diff_Hard; // CgConst.CL_MAP_DIFF_HARD);
 		else
-			return Settings.Color_Diff_VeryHard; //CgConst.CL_MAP_DIFF_VERYHARD);		
+			return Settings.Color_Diff_VeryHard; // CgConst.CL_MAP_DIFF_VERYHARD);
 	}
-	
-	
+
+
 	/**
 	 * Set the track difficulty
 	 * 
@@ -698,41 +708,46 @@ public class JPanelMaps extends JPanel {
 		switch (Settings.map) {
 		case 0:
 			MapViewer.setTileSource(new OpenStreetMap());
-			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR+"/TileCache/"+CgConst.OPENSTREETMAP_CACHE_DIR);
+			offlineTileCache
+					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
 			break;
 		case 1:
 			MapViewer.setTileSource(new OpenTopoMap());
-			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR+"/TileCache/"+CgConst.OPENTOPOMAP_CACHE_DIR);
+			offlineTileCache
+					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.OPENTOPOMAP_CACHE_DIR);
 			break;
 		case 2:
 			MapViewer.setTileSource(new Outdoors(Settings));
-			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR+"/TileCache/"+CgConst.OUTDOORS_CACHE_DIR);
+			offlineTileCache
+					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.OUTDOORS_CACHE_DIR);
 			break;
 		case 3:
 			MapViewer.setTileSource(new BingAerialTileSource());
-			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR+"/TileCache/"+CgConst.BING_CACHE_DIR);
+			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.BING_CACHE_DIR);
 			break;
 		default:
 			MapViewer.setTileSource(new OpenStreetMap());
-			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR+"/TileCache/"+CgConst.OPENSTREETMAP_CACHE_DIR);
+			offlineTileCache
+					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
 		}
 	}
 
-	
+
 	public File getTileCacheDir() {
 		switch (Settings.map) {
 		case 0:
-			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OPENSTREETMAP_CACHE_DIR);
+			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
 		case 1:
-			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OPENTOPOMAP_CACHE_DIR);
+			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENTOPOMAP_CACHE_DIR);
 		case 2:
-			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OUTDOORS_CACHE_DIR);
+			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OUTDOORS_CACHE_DIR);
 		case 3:
-			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.BING_CACHE_DIR);
+			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.BING_CACHE_DIR);
 		default:
-			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/"+CgConst.OPENSTREETMAP_CACHE_DIR);
-		}		
+			return new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
+		}
 	}
+
 
 	/**
 	 * Refresh the marker on the map
