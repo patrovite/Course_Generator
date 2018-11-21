@@ -296,7 +296,7 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "CURVEBUTTONSICONSIZE", CurveButtonsIconSize);
 
 			Utils.WriteStringToXML(writer, "THUNDERFORESTAPIKEY", ThunderForestApiKey);
-			Utils.WriteStringToXML(writer, "DARKSKYAPIKEY", DarkSkyApiKey);
+			// Utils.WriteStringToXML(writer, "DARKSKYAPIKEY", DarkSkyApiKey);
 
 			Utils.WriteIntToXML(writer, "COLORDIFFVERYEASY", Color_Diff_VeryEasy.getRGB());
 			Utils.WriteIntToXML(writer, "COLORDIFFEASY", Color_Diff_Easy.getRGB());
