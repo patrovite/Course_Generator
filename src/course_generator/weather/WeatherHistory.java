@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import course_generator.CgData;
@@ -15,13 +14,11 @@ import course_generator.utils.Utils;
 
 public class WeatherHistory {
 
-	private String TimeZone;
-	private ArrayList<WeatherData> Hourly;
-	private WeatherData Daily;
+	private NoaaDailyNormals dailyNormals;
+	private ArrayList<WeatherData> PreviousYears;
+	private WeatherData MonthlyNormals;
 	private CgSettings Settings;
 	private TrackData Track;
-	private double Latitude;
-	private double Longitude;
 	private int PreviousYearNumber;
 
 
@@ -29,40 +26,29 @@ public class WeatherHistory {
 			int previousYearNumber) {
 		Settings = settings;
 		Track = track;
-		Latitude = latitude;
-		Longitude = longitude;
-		Daily = new WeatherData();
-		Hourly = new ArrayList<WeatherData>();
+
 		PreviousYearNumber = previousYearNumber;
 	}
 
 
-	public WeatherHistory(String timeZone, WeatherData dailyData) {
-		TimeZone = timeZone;
-		Daily = dailyData;
-	}
-
-
 	public void RetrieveWeatherData() {
+		// TODO
+		// searchArea = CreateBox()
+
+		// Get the start point and furthest point
+		// Create a box that includes both of the points
+		// Find the center and the distance between the center and the end of the box
+
 		CgData firstTrackPoint = Track.data.get(0);
 
 		DateTime startTime = new DateTime(Utils.DateTimetoSpinnerDate(firstTrackPoint.getHour()));
 		Instant time = Instant.ofEpochMilli(startTime.minusDays(PreviousYearNumber * 364).getMillis());
 
-		/*
-		 * ForecastRequest request = new ForecastRequestBuilder().key(new
-		 * APIKey(Settings.getNoaaToken())).time(time)
-		 * .language(ForecastRequestBuilder.Language.en).units(ForecastRequestBuilder.
-		 * Units.si) .exclude(ForecastRequestBuilder.Block.minutely).extendHourly()
-		 * .location(new GeoCoordinates(new Longitude(Longitude), new
-		 * Latitude(Latitude))).build();
-		 * 
-		 * DarkSkyClient client = new DarkSkyClient();
-		 */
 		try {
-			// String forecast = client.forecastJsonString(request);
+			String weatherHistoryContent = NoaaWeatherHistoryRetriever.where(45, 115).when(firstTrackPoint.getHour())
+					.retrieve();
 
-			// PopulateFields(forecast);
+			PopulateFields(weatherHistoryContent);
 
 			UpdateTrackWeatherData();
 
@@ -75,39 +61,49 @@ public class WeatherHistory {
 
 	private void PopulateFields(String forecastData) {
 
-		try {
-			JSONObject root = new JSONObject(forecastData);
-			JSONArray hourlyData = root.getJSONObject("hourly").getJSONArray("data");
-			for (int index = 0; index < hourlyData.length(); ++index) {
-				WeatherData hourlyWeatherData = new WeatherData();
-				hourlyWeatherData.setTime(retrieveLongElement(hourlyData.getJSONObject(index), "time"));
+		// TODO Deserialize each single element Dailynormals....
 
-				Hourly.add(hourlyWeatherData);
-			}
-
-			TimeZone = root.getString("timezone");
-
-			JSONObject dailyData = root.getJSONObject("daily").getJSONArray("data").getJSONObject(0);
-
-			Daily.setTime(retrieveLongElement(dailyData, "time"));
-			Daily.setSummary(retrieveStringElement(dailyData, "summary"));
-			Daily.setIcon(retrieveStringElement(dailyData, "icon"));
-			Daily.setMoonPhase(retrieveDoubleElement(dailyData, "moonPhase"));
-			Daily.setPrecipType(retrieveStringElement(dailyData, "precipType"));
-			Daily.setTemperatureHigh(retrieveDoubleElement(dailyData, "temperatureHigh"));
-			Daily.setTemperatureHighTime(retrieveLongElement(dailyData, "temperatureHighTime"));
-			Daily.setTemperatureLow(retrieveDoubleElement(dailyData, "temperatureLow"));
-			Daily.setTemperatureLowTime(retrieveLongElement(dailyData, "temperatureLowTime"));
-			Daily.setApparentTemperatureHigh(retrieveDoubleElement(dailyData, "apparentTemperatureHigh"));
-			Daily.setApparentTemperatureHighTime(retrieveLongElement(dailyData, "apparentTemperatureHighTime"));
-			Daily.setApparentTemperatureLow(retrieveDoubleElement(dailyData, "apparentTemperatureLow"));
-			Daily.setApparentTemperatureLowTime(retrieveLongElement(dailyData, "apparentTemperatureLowTime"));
-			Daily.setWindSpeed(retrieveDoubleElement(dailyData, "windSpeed"));
-
-		} catch (Exception e) {
-			CgLog.error("WeatherData.PopulateFields : Error while reading the weather data '" + e.getMessage() + "'");
-		}
-
+		/*
+		 * try { JSONObject root = new JSONObject(forecastData); JSONArray hourlyData =
+		 * root.getJSONObject("hourly").getJSONArray("data"); for (int index = 0; index
+		 * < hourlyData.length(); ++index) { WeatherData hourlyWeatherData = new
+		 * WeatherData();
+		 * hourlyWeatherData.setTime(retrieveLongElement(hourlyData.getJSONObject(index)
+		 * , "time"));
+		 * 
+		 * Hourly.add(hourlyWeatherData); }
+		 * 
+		 * TimeZone = root.getString("timezone");
+		 * 
+		 * JSONObject dailyData =
+		 * root.getJSONObject("daily").getJSONArray("data").getJSONObject(0);
+		 * 
+		 * Daily.setTime(retrieveLongElement(dailyData, "time"));
+		 * Daily.setSummary(retrieveStringElement(dailyData, "summary"));
+		 * Daily.setIcon(retrieveStringElement(dailyData, "icon"));
+		 * Daily.setMoonPhase(retrieveDoubleElement(dailyData, "moonPhase"));
+		 * Daily.setPrecipType(retrieveStringElement(dailyData, "precipType"));
+		 * Daily.setTemperatureHigh(retrieveDoubleElement(dailyData,
+		 * "temperatureHigh"));
+		 * Daily.setTemperatureHighTime(retrieveLongElement(dailyData,
+		 * "temperatureHighTime"));
+		 * Daily.setTemperatureLow(retrieveDoubleElement(dailyData, "temperatureLow"));
+		 * Daily.setTemperatureLowTime(retrieveLongElement(dailyData,
+		 * "temperatureLowTime"));
+		 * Daily.setApparentTemperatureHigh(retrieveDoubleElement(dailyData,
+		 * "apparentTemperatureHigh"));
+		 * Daily.setApparentTemperatureHighTime(retrieveLongElement(dailyData,
+		 * "apparentTemperatureHighTime"));
+		 * Daily.setApparentTemperatureLow(retrieveDoubleElement(dailyData,
+		 * "apparentTemperatureLow"));
+		 * Daily.setApparentTemperatureLowTime(retrieveLongElement(dailyData,
+		 * "apparentTemperatureLowTime"));
+		 * Daily.setWindSpeed(retrieveDoubleElement(dailyData, "windSpeed"));
+		 * 
+		 * } catch (Exception e) { CgLog.
+		 * error("WeatherData.PopulateFields : Error while reading the weather data '" +
+		 * e.getMessage() + "'"); }
+		 */
 	}
 
 
@@ -151,26 +147,19 @@ public class WeatherHistory {
 		return result;
 	}
 
-
 	/*
 	 * private long retrieveTimeElement(JSONObject forecastData, String element) {
 	 * long result; try { //long unixtime = forecastData.getLong(element); // Date
 	 * millis = new java.util.Date(unixtime * 1000); //result = new
 	 * DateTime(millis); } catch (Exception e) { result = null; } return result; }
 	 */
-
-	public ArrayList<WeatherData> getHourlyWeather() {
-		return Hourly;
-	}
-
-
-	public WeatherData getDailyWeatherData() {
-		return Daily;
-	}
-
-
-	public String getTimeZone() {
-		return TimeZone;
-	}
-
+	/*
+	 * public ArrayList<WeatherData> getHourlyWeather() { return Hourly; }
+	 * 
+	 * 
+	 * public WeatherData getDailyWeatherData() { return Daily; }
+	 * 
+	 * 
+	 * public String getTimeZone() { return TimeZone; }
+	 */
 }

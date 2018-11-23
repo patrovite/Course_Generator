@@ -270,9 +270,10 @@ public class JPanelWeather extends JPanel {
 		// EVENT SUMMARY titles
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@100", "EVENT SUMMARY");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@101", "Date");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@102", "Sunrise/Sunset");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@102", "");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@103", "Daylight hours");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@104", "moonphase");
+		// TODO Store that i the CGX as well ?
 
 		// HISTORICAL WEATHER DATA titles
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@200", "HISTORICAL WEATHER DATA");
