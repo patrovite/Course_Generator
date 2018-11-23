@@ -15,7 +15,7 @@ import course_generator.utils.Utils;
 public class WeatherHistory {
 
 	private NoaaDailyNormals dailyNormals;
-	private ArrayList<WeatherData> PreviousYears;
+	private ArrayList<NoaaDailySummary> previousDailySummaries;
 	private WeatherData MonthlyNormals;
 	private CgSettings Settings;
 	private TrackData Track;
