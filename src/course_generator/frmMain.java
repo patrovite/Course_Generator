@@ -333,14 +333,19 @@ public class frmMain extends javax.swing.JFrame {
 			ProgDir = ProgDir.substring(0, ProgDir.length() - 2);
 
 		// -- Create the tiles cache folders if necessary
-		File cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
-		cacheDir.mkdirs();
-		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENTOPOMAP_CACHE_DIR);
-		cacheDir.mkdirs();
-		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OUTDOORS_CACHE_DIR);
-		cacheDir.mkdirs();
-		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.BING_CACHE_DIR);
-		cacheDir.mkdirs();
+		File dirs = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
+		dirs.mkdirs();
+		dirs = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENTOPOMAP_CACHE_DIR);
+		dirs.mkdirs();
+		dirs = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OUTDOORS_CACHE_DIR);
+		dirs.mkdirs();
+		dirs = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.BING_CACHE_DIR);
+		dirs.mkdirs();
+		
+		// -- Create the theme folders if necessary	
+		dirs = new File(DataDir + "/" + CgConst.CG_DIR, "themes/");
+		dirs.mkdirs();
+		
 
 		// -- Initialize data
 		Resume = new ResumeData();
