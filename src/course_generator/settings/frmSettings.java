@@ -810,8 +810,8 @@ public class frmSettings extends javax.swing.JDialog {
 		addTab(TabbedPaneGlobal, panelColors, bundle.getString("frmSettings.TabColors.tabTitle"), null);
 
 		// ## Tab "Weather" ##
-		// panelWeather = new JPanel();
-		// panelWeather.setLayout(new GridBagLayout());
+		panelWeather = new JPanel();
+		panelWeather.setLayout(new GridBagLayout());
 
 		// line = 0;
 
