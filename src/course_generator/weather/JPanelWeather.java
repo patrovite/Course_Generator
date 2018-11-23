@@ -18,11 +18,20 @@
 
 package course_generator.weather;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -30,7 +39,6 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
@@ -57,7 +65,8 @@ public class JPanelWeather extends JPanel {
 	private JButton btWeatherDataSave;
 	private JButton btWeatherRefresh;
 	private JLabel lbInformation;
-	private JMenuItem InformationWarning;
+	private JLabel InformationWarning;
+	private JLabel getNoaaTokenLink;
 	private TrackData track = null;
 
 	private Double Latitude;
@@ -96,12 +105,14 @@ public class JPanelWeather extends JPanel {
 		toolBar.setOrientation(javax.swing.SwingConstants.HORIZONTAL);
 		toolBar.setFloatable(false);
 		toolBar.setRollover(true);
+		toolBar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		// -- Save
 		// --------------------------------------------------------------
 		btWeatherDataSave = new javax.swing.JButton();
 		btWeatherDataSave.setIcon(Utils.getIcon(this, "save_html.png", settings.ToolbarIconSize));
 		btWeatherDataSave.setToolTipText(bundle.getString("JPanelWeather.btWeatherDataSave.toolTipText"));
+		btWeatherDataSave.setEnabled(false);
 		btWeatherDataSave.setFocusable(false);
 		btWeatherDataSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,6 +130,7 @@ public class JPanelWeather extends JPanel {
 		btWeatherRefresh = new javax.swing.JButton();
 		btWeatherRefresh.setIcon(Utils.getIcon(this, "refresh.png", settings.ToolbarIconSize));
 		btWeatherRefresh.setToolTipText(bundle.getString("JPanelWeather.btWeatherRefresh.toolTipText"));
+		btWeatherRefresh.setEnabled(false);
 		btWeatherRefresh.setFocusable(false);
 		btWeatherRefresh.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,13 +141,43 @@ public class JPanelWeather extends JPanel {
 
 		// -- Tab information
 		// --------------------------------------------------------------
-		InformationWarning = new JMenuItem(Utils.getIcon(this, "cancel.png", settings.TagIconSize));
+		InformationWarning = new JLabel(Utils.getIcon(this, "cancel.png", settings.ToolbarIconSize));
 		InformationWarning.setVisible(false);
+		InformationWarning.setFocusable(false);
 		toolBar.add(InformationWarning);
 
-		lbInformation = new JLabel();
+		lbInformation = new JLabel(" " + bundle.getString("JPanelWeather.lbInformationMissingNoaaToken.Text"));
+		Font boldFont = new Font(lbInformation.getFont().getName(), Font.BOLD, lbInformation.getFont().getSize());
+		lbInformation.setFont(boldFont);
+		InformationWarning.setFocusable(false);
 		lbInformation.setVisible(false);
 		toolBar.add(lbInformation);
+
+		getNoaaTokenLink = new JLabel(". " + bundle.getString("JPanelWeather.lbNOAARequestTokenLink.Text"));
+		getNoaaTokenLink.setForeground(Color.BLUE.darker());
+		boldFont = new Font(getNoaaTokenLink.getFont().getName(), Font.BOLD, getNoaaTokenLink.getFont().getSize());
+		getNoaaTokenLink.setFont(boldFont);
+		getNoaaTokenLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		getNoaaTokenLink.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+
+					Desktop.getDesktop().browse(new URI("https://www.ncdc.noaa.gov/cdo-web/token"));
+
+				} catch (IOException | URISyntaxException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		getNoaaTokenLink.setVisible(false);
+		toolBar.add(getNoaaTokenLink);
+	}
+
+
+	private void EnableButtons() {
+		btWeatherRefresh.setEnabled(true);
+		btWeatherDataSave.setEnabled(true);
 	}
 
 
@@ -143,11 +185,19 @@ public class JPanelWeather extends JPanel {
 	 * Refresh the statistic tab
 	 */
 	public void refresh(TrackData track, boolean retrieveOnlineData) {
-		if (track == null)
+		if (track == null || track.data.isEmpty())
 			return;
+		boolean isNoaaTokenInvalid = !settings.isNoaaTokenValid();
 
-		if (track.data.isEmpty())
+		InformationWarning.setVisible(isNoaaTokenInvalid);
+		lbInformation.setVisible(isNoaaTokenInvalid);
+		getNoaaTokenLink.setVisible(isNoaaTokenInvalid);
+
+		if (isNoaaTokenInvalid) {
 			return;
+		}
+
+		EnableButtons();
 
 		this.track = track;
 
@@ -193,20 +243,6 @@ public class JPanelWeather extends JPanel {
 				InformationWarning.setVisible(true);
 				return;
 			}
-
-			if (!settings.isNoaaTokenValid()) {
-				if (lbInformation.getText() != "") {
-					lbInformation.setText(", ");
-				}
-				lbInformation.setText(lbInformation.getText()
-						.concat(bundle.getString("JPanelWeather.lbInformationMissingApiKey.Text")));
-				lbInformation.setVisible(true);
-				InformationWarning.setVisible(true);
-				return;
-			}
-
-			// TODO if(not online or api key missing, update the label and display the
-			// waring)
 
 			for (int forecastIndex = 0; forecastIndex < 3; ++forecastIndex) {
 				WeatherHistory previousWeatherData = new WeatherHistory(settings, track, Latitude, Longitude,
