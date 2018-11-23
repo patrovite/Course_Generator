@@ -810,17 +810,16 @@ public class frmSettings extends javax.swing.JDialog {
 		addTab(TabbedPaneGlobal, panelColors, bundle.getString("frmSettings.TabColors.tabTitle"), null);
 
 		// ## Tab "Weather" ##
-		panelWeather = new JPanel();
-		panelWeather.setLayout(new GridBagLayout());
+		// panelWeather = new JPanel();
+		// panelWeather.setLayout(new GridBagLayout());
 
-		line = 0;
+		// line = 0;
 
 		// NOAA API Token
 		JLabel lbNOAAToken = new javax.swing.JLabel();
 		lbNOAAToken.setText(bundle.getString("frmSettings.lbNOAAToken.text"));
 		Utils.addComponent(panelWeather, lbNOAAToken, 0, line, 1, 1, 1, 1, 10, 10, 0, 0, GridBagConstraints.NORTH,
 				GridBagConstraints.HORIZONTAL);
-
 		NoaaToken = new javax.swing.JTextField();
 		Utils.addComponent(panelWeather, NoaaToken, 1, line++, 1, 1, 2, 1, 10, 5, 0, 10, GridBagConstraints.NORTH,
 				GridBagConstraints.HORIZONTAL);
