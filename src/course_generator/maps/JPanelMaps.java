@@ -84,11 +84,14 @@ public class JPanelMaps extends JPanel {
 	private OsmFileCacheTileLoader offlineTileCache;
 	private JScrollPane jScrollPanelMap;
 	private JButton btMapUndo;
+	private JButton btShowHideMarkers;
+	private boolean ShowMarkers;
 
 
 	public JPanelMaps(CgSettings settings) {
 		super();
 		Settings = settings;
+		ShowMarkers=true;
 		DataDir = Utils.GetHomeDir();
 		UndoDiff = new ArrayList<Double>();
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
@@ -331,6 +334,22 @@ public class JPanelMaps extends JPanel {
 
 		// -- Separator
 		jToolBarMapViewer.add(new javax.swing.JToolBar.Separator());
+				
+		// -- Center map on screen
+		btShowHideMarkers = new javax.swing.JButton();
+		btShowHideMarkers.setIcon(Utils.getIcon(this, "show_hide_markers.png", Settings.MapToolbarIconSize));
+		btShowHideMarkers.setToolTipText(bundle.getString("frmMain.btShowHideMarkers.toolTipText"));
+		btShowHideMarkers.setFocusable(false);
+		btShowHideMarkers.setEnabled(false);
+		btShowHideMarkers.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ShowHideMarkers();
+			}
+		});
+		jToolBarMapViewer.add(btShowHideMarkers);
+		
+		// -- Separator
+		jToolBarMapViewer.add(new javax.swing.JToolBar.Separator());
 
 		// -- Select the type of map
 		btMapSelect = new javax.swing.JButton();
@@ -393,6 +412,7 @@ public class JPanelMaps extends JPanel {
 		btMapMark.setEnabled(true);
 		btMapEat.setEnabled(true);
 		btMapDrink.setEnabled(true);
+		btShowHideMarkers.setEnabled(true);
 
 		// -- Remove the previous track
 		MapViewer.removeAllMapPolygons();
@@ -418,9 +438,9 @@ public class JPanelMaps extends JPanel {
 				routeNight.add(new Coordinate(r.getLatitude(), r.getLongitude()));
 
 				polyLineNight = new MapPolyLine(routeNight);
-				polyLineNight.setColor(cl_Transp); // CgConst.CL_MAP_NIGHT_HIGHLIGHT);
+				polyLineNight.setColor(cl_Transp); 
 
-				polyLineNight.setStroke(new BasicStroke(Settings.NightTrackWidth)); // CgConst.TRACK_NIGHT_TICKNESS));
+				polyLineNight.setStroke(new BasicStroke(Settings.NightTrackWidth)); 
 				found = true;
 			} else if (r.getNight() && found) {
 				routeNight.add(new Coordinate(r.getLatitude(), r.getLongitude()));
@@ -494,20 +514,22 @@ public class JPanelMaps extends JPanel {
 			MapViewer.setDisplayToFitMapPolygons();
 
 		// -- Add marks
-		for (CgData r : tdata.data) {
-			int t = r.getTag();
-			int v = 0;
-			if ((t & CgConst.TAG_MARK) != 0)
-				v = v + 1;
-			if ((t & CgConst.TAG_EAT_PT) != 0)
-				v = v + 2;
-			if ((t & CgConst.TAG_WATER_PT) != 0)
-				v = v + 4;
-
-			if (v != 0)
-				MapViewer.addMapMarker(new MapMarkerImg(new Coordinate(r.getLatitude(), r.getLongitude()),
-						getImage("markers_" + v + ".png", Settings.MapIconSize)));
-		}
+		if (ShowMarkers) {
+			for (CgData r : tdata.data) {
+				int t = r.getTag();
+				int v = 0;
+				if ((t & CgConst.TAG_MARK) != 0)
+					v = v + 1;
+				if ((t & CgConst.TAG_EAT_PT) != 0)
+					v = v + 2;
+				if ((t & CgConst.TAG_WATER_PT) != 0)
+					v = v + 4;
+	
+				if (v != 0)
+					MapViewer.addMapMarker(new MapMarkerImg(new Coordinate(r.getLatitude(), r.getLongitude()),
+							getImage("markers_" + v + ".png", Settings.MapIconSize)));
+			}
+		}		
 	}
 
 
@@ -869,7 +891,17 @@ public class JPanelMaps extends JPanel {
 		}
 	}
 
-
+	
+	/**
+	 * Show/Hide markers on the maps
+	 */
+	private void ShowHideMarkers() {
+		ShowMarkers=!ShowMarkers;
+		btShowHideMarkers.setSelected(ShowMarkers);
+		RefreshTrack(Track, false);
+	}
+	
+	
 	private Image getImage(String name, int size) {
 		return createImageIcon("/course_generator/images/" + size + "/" + name, "").getImage();
 	}
