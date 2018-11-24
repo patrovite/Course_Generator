@@ -357,8 +357,8 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.CurveButtonsIconSize = ManageInt(32, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("THUNDERFORESTAPIKEY")) {
 				Settings.setThunderForestApiKey(ManageString().trim());
-			} else if (qName.equalsIgnoreCase("DARKSKYAPIKEY")) {
-				Settings.setDarkSkyApiKey(ManageString().trim());
+				// } else if (qName.equalsIgnoreCase("DARKSKYAPIKEY")) {
+				// Settings.setDarkSkyApiKey(ManageString().trim());
 			} else if (qName.equalsIgnoreCase("COLORDIFFVERYEASY")) {
 				Settings.Color_Diff_VeryEasy = ManageColor(CgConst.CL_DIFF_VERYEASY, ERR_READ_COLOR);
 			} else if (qName.equalsIgnoreCase("COLORDIFFEASY")) {
