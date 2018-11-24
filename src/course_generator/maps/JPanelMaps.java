@@ -422,6 +422,7 @@ public class JPanelMaps extends JPanel {
 		CurrentPosMarker = null;
 
 		// -- Create the night tracks
+		int cmpt=0;
 		boolean found = false;
 		List<Coordinate> routeNight = null;
 		MapPolyLine polyLineNight = null;
@@ -451,6 +452,7 @@ public class JPanelMaps extends JPanel {
 		}
 
 		// -- Create the tracks (over the night tracks if necessary)
+		cmpt=0;
 		List<Coordinate> routeNormal = new ArrayList<Coordinate>();
 		double last_diff = tdata.data.get(0).getDiff();
 		Color cl = getDiffColor(last_diff);
@@ -459,10 +461,13 @@ public class JPanelMaps extends JPanel {
 			if (r.getDiff() == last_diff) {
 				// -- Add the point to the list
 				routeNormal.add(new Coordinate(r.getLatitude(), r.getLongitude()));
+				cmpt++;
 			} else {
 				// -- Add the point to the list
 				routeNormal.add(new Coordinate(r.getLatitude(), r.getLongitude()));
-
+				if (cmpt<=1)
+					routeNormal.add(new Coordinate(r.getLatitude(), r.getLongitude()));
+				
 				// -- Polyline creation
 				MapPolyLine polyLineNormal = new MapPolyLine(routeNormal);
 				// -- Set the line color
@@ -479,6 +484,7 @@ public class JPanelMaps extends JPanel {
 				// -- Start a new list of points
 				routeNormal = new ArrayList<Coordinate>();
 				routeNormal.add(new Coordinate(r.getLatitude(), r.getLongitude()));
+				cmpt=0;
 			}
 			last_diff = r.getDiff();
 		}
