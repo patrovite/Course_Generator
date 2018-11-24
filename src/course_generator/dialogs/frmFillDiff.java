@@ -310,7 +310,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 
 		rbVeryEasy = new JRadioButton(bundle.getString("frmFillDiff.rbVeryEasy.Text")); // Very easy
 		rbVeryEasy.setOpaque(true);
-		rbVeryEasy.setBackground(CgConst.CL_DIFF_VERYEASY);
+		rbVeryEasy.setBackground(settings.Color_Diff_VeryEasy);
 		rbVeryEasy.setSelected(true);
 		rbVeryEasy.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -322,7 +322,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 
 		rbEasy = new JRadioButton(bundle.getString("frmFillDiff.rbEasy.Text")); // Easy
 		rbEasy.setOpaque(true);
-		rbEasy.setBackground(CgConst.CL_DIFF_EASY);
+		rbEasy.setBackground(settings.Color_Diff_Easy);
 		rbEasy.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				Refresh();
@@ -333,7 +333,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 
 		rbAverage = new JRadioButton(bundle.getString("frmFillDiff.rbAverage.Text"));// Average
 		rbAverage.setOpaque(true);
-		rbAverage.setBackground(CgConst.CL_DIFF_AVERAGE);
+		rbAverage.setBackground(settings.Color_Diff_Average);
 		rbAverage.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				Refresh();
@@ -344,7 +344,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 
 		rbHard = new JRadioButton(bundle.getString("frmFillDiff.rbHard.Text")); // Hard
 		rbHard.setOpaque(true);
-		rbHard.setBackground(CgConst.CL_DIFF_HARD);
+		rbHard.setBackground(settings.Color_Diff_Hard);
 		rbHard.setForeground(Color.WHITE);
 		rbHard.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -356,7 +356,7 @@ public class frmFillDiff extends javax.swing.JDialog {
 
 		rbVeryHard = new JRadioButton(bundle.getString("frmFillDiff.rbVeryHard.Text")); // Very hard
 		rbVeryHard.setOpaque(true);
-		rbVeryHard.setBackground(CgConst.CL_DIFF_VERYHARD);
+		rbVeryHard.setBackground(settings.Color_Diff_VeryHard);
 		rbVeryHard.setForeground(Color.WHITE);
 		rbVeryHard.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
