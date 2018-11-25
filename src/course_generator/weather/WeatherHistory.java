@@ -1,6 +1,5 @@
 package course_generator.weather;
 
-import java.time.Instant;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
@@ -19,17 +18,15 @@ public class WeatherHistory {
 	private WeatherData MonthlyNormals;
 	private CgSettings Settings;
 	private TrackData Track;
-	private int PreviousYearNumber;
 
-
-	public WeatherHistory(CgSettings settings, TrackData track, Double latitude, Double longitude,
-			int previousYearNumber) {
+	public WeatherHistory(CgSettings settings, TrackData track) {
 		Settings = settings;
 		Track = track;
-
-		PreviousYearNumber = previousYearNumber;
 	}
 
+	public WeatherHistory() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public void RetrieveWeatherData() {
 		// TODO
@@ -42,11 +39,12 @@ public class WeatherHistory {
 		CgData firstTrackPoint = Track.data.get(0);
 
 		DateTime startTime = new DateTime(Utils.DateTimetoSpinnerDate(firstTrackPoint.getHour()));
-		Instant time = Instant.ofEpochMilli(startTime.minusDays(PreviousYearNumber * 364).getMillis());
+		// Instant time = Instant.ofEpochMilli(startTime.minusDays(PreviousYearNumber *
+		// 364).getMillis());
 
 		try {
 			String weatherHistoryContent = NoaaWeatherHistoryRetriever.where(45, 115).when(firstTrackPoint.getHour())
-					.retrieve();
+					.forUser(Settings.getNoaaToken()).retrieve();
 
 			PopulateFields(weatherHistoryContent);
 
@@ -57,7 +55,6 @@ public class WeatherHistory {
 					+ "'");
 		}
 	}
-
 
 	private void PopulateFields(String forecastData) {
 
@@ -106,11 +103,9 @@ public class WeatherHistory {
 		 */
 	}
 
-
 	private void UpdateTrackWeatherData() {
-		Track.setDailyWeatherData(this, PreviousYearNumber - 1);
+		// Track.setDailyWeatherData(this, PreviousYearNumber - 1);
 	}
-
 
 	private String retrieveStringElement(JSONObject forecastData, String element) {
 		String result;
@@ -123,7 +118,6 @@ public class WeatherHistory {
 		return result;
 	}
 
-
 	private double retrieveDoubleElement(JSONObject forecastData, String element) {
 		double result;
 		try {
@@ -134,7 +128,6 @@ public class WeatherHistory {
 		}
 		return result;
 	}
-
 
 	private long retrieveLongElement(JSONObject forecastData, String element) {
 		long result;

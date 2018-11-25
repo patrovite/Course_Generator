@@ -70,14 +70,12 @@ public class JPanelWeather extends JPanel {
 	private Double Latitude;
 	private Double Longitude;
 
-
 	public JPanelWeather(CgSettings settings) {
 		super();
 		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
-
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -93,7 +91,6 @@ public class JPanelWeather extends JPanel {
 		scrollPaneStat = new JScrollPane(editorStat);
 		add(scrollPaneStat, java.awt.BorderLayout.CENTER);
 	}
-
 
 	/**
 	 * Create the weather toolbar
@@ -174,12 +171,10 @@ public class JPanelWeather extends JPanel {
 		refresh(null, false);
 	}
 
-
 	private void EnableButtons() {
 		btWeatherRefresh.setEnabled(true);
 		btWeatherDataSave.setEnabled(true);
 	}
-
 
 	/**
 	 * Refresh the statistic tab
@@ -215,16 +210,21 @@ public class JPanelWeather extends JPanel {
 				return;
 			}
 
-			for (int forecastIndex = 0; forecastIndex < 3; ++forecastIndex) {
-				WeatherHistory previousWeatherData = new WeatherHistory(settings, track, Latitude, Longitude,
-						forecastIndex + 1);
+			WeatherHistory previousWeatherData = new WeatherHistory(settings, track);
 
-				previousWeatherData.RetrieveWeatherData();
-				previousWeatherHistory.add(previousWeatherData);
+			previousWeatherData.RetrieveWeatherData();
+			for (int forecastIndex = 0; forecastIndex < 3; ++forecastIndex) {
+				/*
+				 * WeatherHistory previousWeatherData = new WeatherHistory(settings, track,
+				 * Latitude, Longitude, forecastIndex + 1);
+				 * 
+				 * previousWeatherData.RetrieveWeatherData();
+				 * previousWeatherHistory.add(previousWeatherData);
+				 */
 			}
 		} else {
 			// If exists, get the historical weather from the CGX course
-			previousWeatherHistory = track.getHistoricalWeather();
+			// previousWeatherHistory = track.getHistoricalWeather();
 		}
 
 		if (previousWeatherHistory.isEmpty()) {
@@ -242,7 +242,6 @@ public class JPanelWeather extends JPanel {
 			editorStat.setCaretPosition(0);
 		}
 	}
-
 
 	private String PopulateWeatherDataSheet() {
 
@@ -393,12 +392,10 @@ public class JPanelWeather extends JPanel {
 		return sheetSkeleton.toString();
 	}
 
-
 	public void SetParameters(Double latitude, Double longitude, DateTime startTime) {
 		Latitude = latitude;
 		Longitude = longitude;
 	}
-
 
 	/**
 	 * Save the statistics in TXT format
@@ -425,24 +422,20 @@ public class JPanelWeather extends JPanel {
 		}
 	}
 
-
 	/**
 	 * Creates a String containing a temperature value.
 	 * 
-	 * @param temperatureValue
-	 *            The temperature value
+	 * @param temperatureValue The temperature value
 	 * @return A String containing a temperature information
 	 */
 	private String displayTemperature(double temperatureValue) {
 		return Utils.FormatTemperature(temperatureValue, settings.Unit) + Utils.uTemperatureToString(settings.Unit);
 	}
 
-
 	/**
 	 * Creates a String containing a measured time.
 	 * 
-	 * @param time
-	 *            A Unix time.
+	 * @param time A Unix time.
 	 * @return A String containing a time information.
 	 */
 	private String displayTime(long time, String timeZone) {
@@ -453,13 +446,11 @@ public class JPanelWeather extends JPanel {
 		return dtfOut.print(dateTime);
 	}
 
-
 	private String addImage(String iconFilePath) {
 		if (iconFilePath == "")
 			return "";
 		return "<img src=\"file:/" + iconFilePath + "\" width=\"50%\" height=\"50%\"/>";
 	}
-
 
 	/**
 	 * Because the image paths in the original HTML reference images in the Course
@@ -468,8 +459,7 @@ public class JPanelWeather extends JPanel {
 	 * representation in Course Generator : Because Swing's (default) HTML support
 	 * does not extend to Base 64 encoded images.
 	 * 
-	 * @param originalText
-	 *            The original HTML page
+	 * @param originalText The original HTML page
 	 * @return The HTML page containing base64 representations of each image.
 	 */
 	private String ReplaceImages(String originalText) {

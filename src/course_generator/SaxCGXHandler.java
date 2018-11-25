@@ -38,8 +38,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
-import course_generator.weather.WeatherData;
-import course_generator.weather.WeatherHistory;
 
 public class SaxCGXHandler extends DefaultHandler {
 	private java.util.ResourceBundle bundle = null;
@@ -214,7 +212,7 @@ public class SaxCGXHandler extends DefaultHandler {
 		if (f.isFile() && f.canRead()) {
 			if (mode == 0) {
 				trkdata.data.clear();
-				trkdata.historicWeatherData.clear();
+				trkdata.historicWeatherData = null;
 			}
 			parser.parse(f, this);
 		} else
@@ -643,12 +641,17 @@ public class SaxCGXHandler extends DefaultHandler {
 
 			} else if (qName.equalsIgnoreCase("HISTORICAL_WEATHER_DATA_POINT")) {
 				level--;
-				WeatherData dailyWeatherData = new WeatherData(weather_time, weather_summary, weather_icon,
-						weather_moonPhase, weather_precipType, weather_temperatureHigh, weather_temperatureHighTime,
-						weather_temperatureLow, weather_temperatureLowTime, weather_apparentTemperatureHigh,
-						weather_apparentTemperatureHighTime, weather_apparentTemperatureLow,
-						weather_apparentTemperatureLowTime, weather_windSpeed);
-				trkdata.historicWeatherData.add(new WeatherHistory(weather_timezone, dailyWeatherData));
+				// TODO
+				/*
+				 * WeatherData dailyWeatherData = new WeatherData(weather_time, weather_summary,
+				 * weather_icon, weather_moonPhase, weather_precipType, weather_temperatureHigh,
+				 * weather_temperatureHighTime, weather_temperatureLow,
+				 * weather_temperatureLowTime, weather_apparentTemperatureHigh,
+				 * weather_apparentTemperatureHighTime, weather_apparentTemperatureLow,
+				 * weather_apparentTemperatureLowTime, weather_windSpeed);
+				 * trkdata.historicWeatherData.add(new WeatherHistory(weather_timezone,
+				 * dailyWeatherData));
+				 */
 			}
 		}
 	}
