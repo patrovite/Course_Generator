@@ -158,7 +158,6 @@ import course_generator.utils.FileTypeFilter;
 import course_generator.utils.OsCheck;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
-import course_generator.weather.JPanelWeather;
 
 /**
  * This is the main class of the project.
@@ -274,7 +273,7 @@ public class frmMain extends javax.swing.JFrame {
 
 	private JPanelStatistics panelStatistics;
 
-	private JPanelWeather panelWeather;
+	// private JPanelWeather panelWeather;
 
 	private JPanelProfil panelProfil;
 
@@ -333,14 +332,19 @@ public class frmMain extends javax.swing.JFrame {
 			ProgDir = ProgDir.substring(0, ProgDir.length() - 2);
 
 		// -- Create the tiles cache folders if necessary
-		File cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
-		cacheDir.mkdirs();
-		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENTOPOMAP_CACHE_DIR);
-		cacheDir.mkdirs();
-		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OUTDOORS_CACHE_DIR);
-		cacheDir.mkdirs();
-		cacheDir = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.BING_CACHE_DIR);
-		cacheDir.mkdirs();
+		File dirs = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
+		dirs.mkdirs();
+		dirs = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENTOPOMAP_CACHE_DIR);
+		dirs.mkdirs();
+		dirs = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OUTDOORS_CACHE_DIR);
+		dirs.mkdirs();
+		dirs = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.BING_CACHE_DIR);
+		dirs.mkdirs();
+		
+		// -- Create the theme folders if necessary	
+		dirs = new File(DataDir + "/" + CgConst.CG_DIR, "themes/");
+		dirs.mkdirs();
+		
 
 		// -- Initialize data
 		Resume = new ResumeData();
@@ -1652,7 +1656,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
-					panelWeather.refresh(Track, false);
+					// panelWeather.refresh(Track, false);
 
 					Settings.previousCGXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
@@ -2688,9 +2692,10 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Tab - Weather
 		// ---------------------------------------------------
-		panelWeather = new JPanelWeather(Settings);
-		addTab(TabbedPaneMain, panelWeather, bundle.getString("frmMain.TabWeather.tabTitle"),
-				Utils.getIcon(this, "stat.png", Settings.TabIconSize));
+		// panelWeather = new JPanelWeather(Settings);
+		// addTab(TabbedPaneMain, panelWeather,
+		// bundle.getString("frmMain.TabWeather.tabTitle"),
+		// Utils.getIcon(this, "stat.png", Settings.TabIconSize));
 
 		// -- Tab - Analysis
 		// ----------------------------------------------------
@@ -2980,7 +2985,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
-					panelWeather.refresh(Track, false);
+					// panelWeather.refresh(Track, false);
 					Settings.previousGPXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
 				} catch (Exception e) {
@@ -3078,8 +3083,9 @@ public class frmMain extends javax.swing.JFrame {
 		// Refresh weather
 		CgData firstTrackPoint = Track.data.get(0);
 		DateTime startTime = firstTrackPoint.getHour();
-		panelWeather.SetParameters(firstTrackPoint.getLatitude(), firstTrackPoint.getLongitude(), startTime);
-		panelWeather.refresh(Track, false);
+		// panelWeather.SetParameters(firstTrackPoint.getLatitude(),
+		// firstTrackPoint.getLongitude(), startTime);
+		// panelWeather.refresh(Track, false);
 
 		bNoBackup = true;
 
@@ -3199,8 +3205,9 @@ public class frmMain extends javax.swing.JFrame {
 		// Refresh weather
 		CgData firstTrackPoint = Track.data.get(0);
 		DateTime startTime = firstTrackPoint.getHour();
-		panelWeather.SetParameters(firstTrackPoint.getLatitude(), firstTrackPoint.getLongitude(), startTime);
-		panelWeather.refresh(Track, false);
+		// panelWeather.SetParameters(firstTrackPoint.getLatitude(),
+		// firstTrackPoint.getLongitude(), startTime);
+		// panelWeather.refresh(Track, false);
 
 		RefreshMruCGX();
 		bNoBackup = true;

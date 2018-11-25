@@ -28,6 +28,10 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -38,6 +42,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -45,11 +50,23 @@ import javax.swing.JRootPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileFilter;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 
+import org.xml.sax.SAXException;
+
+import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
+
+import course_generator.SaxGPXHandler;
 import course_generator.dialogs.FontChooser;
 import course_generator.dialogs.FrmColorChooser;
 import course_generator.utils.CgConst;
+import course_generator.utils.CgLog;
 import course_generator.utils.CgSpinner;
+import course_generator.utils.FileTypeFilter;
 import course_generator.utils.Utils;
 
 /**
@@ -81,7 +98,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private JPanel panelGeneral;
 	private JPanel panelDisplay;
 	private JPanel panelMaps;
-	private JPanel panelWeather;
+	// private JPanel panelWeather;
 	private JLabel lbStatusBarIconSize;
 	private JComboBox<Object> cbStatusBarIconSize;
 	private JLabel lbTabIconSize;
@@ -101,7 +118,7 @@ public class frmSettings extends javax.swing.JDialog {
 	private JLabel lbCurveButtonsIconSize;
 	private JComboBox<Object> cbCurveButtonsIconSize;
 	private JTextField edThunderForestApiKey;
-	private JTextField DarkSkyApiKey;
+	// private JTextField DarkSkyApiKey;
 
 	private int fontSize[] = { 16, 20, 22, 24, 32, 64, 96, 128 };
 	private JLabel lbThunderForestApiKey;
@@ -138,15 +155,21 @@ public class frmSettings extends javax.swing.JDialog {
 	private JLabel lbNightColorView;
 	private JLabel lbDisplayEmpty;
 
-	/**
+	private JButton btLoadColorTheme;
+	private JButton btSaveColorTheme;
+	private String DataDir; 
+
+  /**
 	 * Creates new form frmSettings
 	 */
 	public frmSettings(CgSettings settings) {
 		this.settings = settings;
+		DataDir = Utils.GetHomeDir();
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
 	}
+
 
 	public boolean showDialog() {
 		// Set field
@@ -197,7 +220,7 @@ public class frmSettings extends javax.swing.JDialog {
 
 		// Maps & Weather tab
 		edThunderForestApiKey.setText(settings.getThunderForestApiKey());
-		DarkSkyApiKey.setText(settings.getDarkSkyApiKey());
+		// DarkSkyApiKey.setText(settings.getDarkSkyApiKey());
 
 		// -- Colors
 		ColorVeryEasy = settings.Color_Diff_VeryEasy;
@@ -334,12 +357,14 @@ public class frmSettings extends javax.swing.JDialog {
 				settings.setThunderForestApiKey(edThunderForestApiKey.getText());
 			}
 
-			if (DarkSkyApiKey.getText() != "" && DarkSkyApiKey.getText() != settings.getDarkSkyApiKey()) {
-				settings.setDarkSkyApiKey(DarkSkyApiKey.getText());
-			}
+			// if (DarkSkyApiKey.getText() != "" && DarkSkyApiKey.getText() !=
+			// settings.getDarkSkyApiKey()) {
+			// settings.setDarkSkyApiKey(DarkSkyApiKey.getText());
+			// }
 		}
 		return ok;
 	}
+
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -375,6 +400,7 @@ public class frmSettings extends javax.swing.JDialog {
 		return rootPane;
 	}
 
+
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -385,6 +411,7 @@ public class frmSettings extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
+
 
 	/**
 	 * This method is called to initialize the form.
@@ -752,9 +779,39 @@ public class frmSettings extends javax.swing.JDialog {
 				Refresh();
 			}
 		});
-		Utils.addComponent(panelColors, btDefaultColor, 0, line++, GridBagConstraints.REMAINDER, 1, 0, 0, 10, 10, 0, 10,
-				GridBagConstraints.EAST, GridBagConstraints.VERTICAL);
+		Utils.addComponent(panelColors, btDefaultColor, 2, line++, 
+				1, 1, 
+				0, 0, 
+				10, 10, 0, 10,
+				GridBagConstraints.EAST, GridBagConstraints.BOTH);
 
+		// -- Load color theme
+		btLoadColorTheme = new JButton(bundle.getString("frmSettings.btLoadColorTheme.text"));
+		btLoadColorTheme.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				LoadTheme();
+				Refresh();
+			}
+		});
+		Utils.addComponent(panelColors, btLoadColorTheme, 
+				2, line++, 
+				1, 1, 
+				0, 0,
+				10, 10, 0, 10,
+				GridBagConstraints.EAST, GridBagConstraints.BOTH);
+		
+		// -- Save color theme
+		btSaveColorTheme = new JButton(bundle.getString("frmSettings.btSaveColorTheme.text"));
+		btSaveColorTheme.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				SaveTheme();
+				Refresh();
+			}
+		});
+		Utils.addComponent(panelColors, btSaveColorTheme, 2, line++, 1, 1, 0, 0, 10, 10, 0, 10,
+				GridBagConstraints.EAST, GridBagConstraints.BOTH);
+		
+		
 		// -- Width of track
 		lbNormalTrackWidth = new javax.swing.JLabel();
 		lbNormalTrackWidth.setText(bundle.getString("frmSettings.lbNormalTrackWidth.Text"));
@@ -803,22 +860,25 @@ public class frmSettings extends javax.swing.JDialog {
 		addTab(TabbedPaneGlobal, panelColors, bundle.getString("frmSettings.TabColors.tabTitle"), null);
 
 		// ## Tab "Weather" ##
-		panelWeather = new JPanel();
-		panelWeather.setLayout(new GridBagLayout());
+		// panelWeather = new JPanel();
+		// panelWeather.setLayout(new GridBagLayout());
 
-		line = 0;
+		// line = 0;
 
 		// Dark Sky API Key
-		JLabel lbDarkSkyApiKey = new javax.swing.JLabel();
-		lbDarkSkyApiKey.setText(bundle.getString("frmSettings.lbDarkSkyApiKey.text"));
-		Utils.addComponent(panelWeather, lbDarkSkyApiKey, 0, line, 1, 1, 1, 1, 10, 10, 0, 0, GridBagConstraints.NORTH,
-				GridBagConstraints.HORIZONTAL);
+		// JLabel lbDarkSkyApiKey = new javax.swing.JLabel();
+		// lbDarkSkyApiKey.setText(bundle.getString("frmSettings.lbDarkSkyApiKey.text"));
+		// Utils.addComponent(panelWeather, lbDarkSkyApiKey, 0, line, 1, 1, 1, 1, 10,
+		// 10, 0, 0, GridBagConstraints.NORTH,
+		// GridBagConstraints.HORIZONTAL);
 
-		DarkSkyApiKey = new javax.swing.JTextField();
-		Utils.addComponent(panelWeather, DarkSkyApiKey, 1, line++, 1, 1, 2, 1, 10, 5, 0, 10, GridBagConstraints.NORTH,
-				GridBagConstraints.HORIZONTAL);
+		// DarkSkyApiKey = new javax.swing.JTextField();
+		// Utils.addComponent(panelWeather, DarkSkyApiKey, 1, line++, 1, 1, 2, 1, 10, 5,
+		// 0, 10, GridBagConstraints.NORTH,
+		// GridBagConstraints.HORIZONTAL);
 
-		addTab(TabbedPaneGlobal, panelWeather, bundle.getString("frmSettings.TabWeather.tabTitle"), null);
+		// addTab(TabbedPaneGlobal, panelWeather,
+		// bundle.getString("frmSettings.TabWeather.tabTitle"), null);
 
 		// -- Separator
 		// -- NOCONNECTIONONSTARTUP - Boolean -bNoConnectOnStartup
@@ -861,6 +921,7 @@ public class frmSettings extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
+
 	/**
 	 * Display the font chooser dialog
 	 */
@@ -870,14 +931,19 @@ public class frmSettings extends javax.swing.JDialog {
 			DefaultFont = res;
 	}
 
+
 	/**
 	 * Add a tab to JTabbedPane. The icon is at the left of the text and there some
 	 * space between the icon and the label
 	 * 
-	 * @param tabbedPane JTabbedPane where we want to add the tab
-	 * @param tab        Tab to add
-	 * @param title      Title of the tab
-	 * @param icon       Icon of the tab
+	 * @param tabbedPane
+	 *            JTabbedPane where we want to add the tab
+	 * @param tab
+	 *            Tab to add
+	 * @param title
+	 *            Title of the tab
+	 * @param icon
+	 *            Icon of the tab
 	 */
 	private void addTab(JTabbedPane tabbedPane, Component tab, String title, Icon icon) {
 		tabbedPane.add(tab);
@@ -894,11 +960,13 @@ public class frmSettings extends javax.swing.JDialog {
 		tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 	}
 
+
 	/**
 	 * Return the index in the "fontSize" array of the value containing the font
 	 * size
 	 * 
-	 * @param value Font size
+	 * @param value
+	 *            Font size
 	 * @return Index in the "fontSize" array
 	 */
 	private int FontSize2Index(int value) {
@@ -909,10 +977,12 @@ public class frmSettings extends javax.swing.JDialog {
 		return 0; // Default value if not found
 	}
 
+
 	/**
 	 * Return the font size corresponding at an index
 	 * 
-	 * @param value index
+	 * @param value
+	 *            index
 	 * @return Font size
 	 */
 	private int Index2FontSize(int value) {
@@ -922,10 +992,92 @@ public class frmSettings extends javax.swing.JDialog {
 		return fontSize[value];
 	}
 
+
 	private Color ChooseColor(Color cl) {
 		return FrmColorChooser.showDialog(this, "", cl, settings);
 	}
 
+	
+	private void LoadTheme() {
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(new File(DataDir + "/" + CgConst.CG_DIR, "themes/"));
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+		FileFilter themeFilter = new FileTypeFilter(".theme", bundle.getString("frmMain.themeFile"));
+		fileChooser.addChoosableFileFilter(themeFilter);
+		fileChooser.setFileFilter(themeFilter);
+
+		int result = fileChooser.showOpenDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File selectedFile = fileChooser.getSelectedFile();
+			
+			SaxThemeHandler ThemeHandler = new SaxThemeHandler();
+			ColorTheme colors = new ColorTheme();
+			
+			int ret=0;
+			try {
+				ret = ThemeHandler.readDataFromTheme(selectedFile.getAbsolutePath(), colors);
+			} catch (SAXException | IOException | ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (ret != 0)
+				CgLog.error("frmSettings.LoadTheme : Error while reading '" + selectedFile + "'. Line =" + ThemeHandler.getErrLine());
+			else {
+				ColorVeryEasy=colors.ColorVeryEasy;
+				ColorEasy=colors.ColorEasy;
+				ColorAverage=colors.ColorAverage;
+				ColorHard=colors.ColorHard;
+				ColorVeryHard=colors.ColorVeryHard;
+				ColorNight=colors.ColorNight;
+				Refresh();
+				
+				spinNormalTrackWidth.setValue((int) colors.NormalTrackWidth);
+				spinNightTrackWidth.setValue((int) colors.NightTrackWidth);
+				spinNormalTrackTransparency.setValue((int) (colors.NormalTrackTransparency));
+				spinNightTrackTransparency.setValue((int) (colors.NightTrackTransparency));
+			}
+				
+		}		
+	}
+	
+	private void SaveTheme() {
+		String s = Utils.SaveDialog(this, DataDir + "/" + CgConst.CG_DIR + "/themes/", "", ".theme", bundle.getString("frmMain.themeFile"), true,
+				bundle.getString("frmMain.FileExist"));
+
+		if (!s.isEmpty()) {
+			// -- Save the data in the home directory
+			XMLOutputFactory factory = XMLOutputFactory.newInstance();
+			try {
+				BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(s));
+				XMLStreamWriter writer = new IndentingXMLStreamWriter(factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8"));
+	
+				writer.writeStartDocument("UTF-8", "1.0");
+					writer.writeComment("Course Generator (C) Pierre DELORE");
+					writer.writeStartElement("THEME");
+						Utils.WriteIntToXML(writer, "COLORDIFFVERYEASY", ColorVeryEasy.getRGB());
+						Utils.WriteIntToXML(writer, "COLORDIFFEASY", ColorEasy.getRGB());
+						Utils.WriteIntToXML(writer, "COLORDIFFAVERAGE", ColorAverage.getRGB());
+						Utils.WriteIntToXML(writer, "COLORDIFFHARD", ColorHard.getRGB());
+						Utils.WriteIntToXML(writer, "COLORDIFFVERYHARD", ColorVeryHard.getRGB());
+						Utils.WriteIntToXML(writer, "COLORNIGHT", ColorNight.getRGB());	
+						Utils.WriteIntToXML(writer, "NORMALTRACKWIDTH",spinNormalTrackWidth.getValueAsInt());
+						Utils.WriteIntToXML(writer, "NIGHTTRACKWIDTH",spinNightTrackWidth.getValueAsInt());
+						Utils.WriteIntToXML(writer, "NORMALTRACKTRANSPARENCY",spinNormalTrackTransparency.getValueAsInt());
+						Utils.WriteIntToXML(writer, "NIGHTTRACKTRANSPARENCY",spinNightTrackTransparency.getValueAsInt());
+						
+					writer.writeEndElement();
+				writer.writeEndDocument();
+	
+				writer.flush();
+				writer.close();
+			} catch (XMLStreamException | IOException e) {
+				e.printStackTrace();
+			}			
+		}
+	}
+	
+	
 	/**
 	 * Refresh some dialog contents
 	 */
@@ -936,6 +1088,8 @@ public class frmSettings extends javax.swing.JDialog {
 		lbHardColorView.setBackground(ColorHard);
 		lbVeryHardColorView.setBackground(ColorVeryHard);
 		lbNightColorView.setBackground(ColorNight);
+		
 	}
+	
 
 }
