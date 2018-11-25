@@ -86,6 +86,7 @@ public class JPanelMaps extends JPanel {
 	private JButton btMapUndo;
 	private JButton btShowHideMarkers;
 	private boolean ShowMarkers;
+	private JButton btSaveMap;
 
 
 	public JPanelMaps(CgSettings settings) {
@@ -335,7 +336,7 @@ public class JPanelMaps extends JPanel {
 		// -- Separator
 		jToolBarMapViewer.add(new javax.swing.JToolBar.Separator());
 				
-		// -- Center map on screen
+		// -- Show/Hide markers
 		btShowHideMarkers = new javax.swing.JButton();
 		btShowHideMarkers.setIcon(Utils.getIcon(this, "show_hide_markers.png", Settings.MapToolbarIconSize));
 		btShowHideMarkers.setToolTipText(bundle.getString("frmMain.btShowHideMarkers.toolTipText"));
@@ -348,6 +349,22 @@ public class JPanelMaps extends JPanel {
 		});
 		jToolBarMapViewer.add(btShowHideMarkers);
 		
+		// -- Separator
+		jToolBarMapViewer.add(new javax.swing.JToolBar.Separator());
+				
+		// -- Save map on disk
+		btSaveMap = new javax.swing.JButton();
+		btSaveMap.setIcon(Utils.getIcon(this, "save_png.png", Settings.MapToolbarIconSize));
+		btSaveMap.setToolTipText(bundle.getString("frmMain.btSaveMap.toolTipText"));
+		btSaveMap.setFocusable(false);
+		btSaveMap.setEnabled(false);
+		btSaveMap.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				SaveMap();
+			}
+		});
+		jToolBarMapViewer.add(btSaveMap);
+
 		// -- Separator
 		jToolBarMapViewer.add(new javax.swing.JToolBar.Separator());
 
@@ -365,7 +382,18 @@ public class JPanelMaps extends JPanel {
 
 	}
 
+	
+	private void SaveMap() {
+		String s = Utils.SaveDialog(this, Settings.previousPNGDirectory, "", ".png", bundle.getString("FrmMiniroadbook.PNGFile"), true,
+				bundle.getString("frmMain.FileExist"));
 
+		if (!s.isEmpty()) {
+			MapViewer.saveToFile(s);
+			Settings.previousPNGDirectory = Utils.GetDirFromFilename(s);
+		}
+	}
+
+	
 	private void MapViewerMouseClicked(java.awt.event.MouseEvent evt) {
 		if (Track == null)
 			return;
@@ -413,6 +441,7 @@ public class JPanelMaps extends JPanel {
 		btMapEat.setEnabled(true);
 		btMapDrink.setEnabled(true);
 		btShowHideMarkers.setEnabled(true);
+		btSaveMap.setEnabled(true);
 
 		// -- Remove the previous track
 		MapViewer.removeAllMapPolygons();

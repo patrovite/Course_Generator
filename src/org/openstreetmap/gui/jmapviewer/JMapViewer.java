@@ -9,9 +9,13 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -32,6 +36,8 @@ import org.openstreetmap.gui.jmapviewer.interfaces.TileLoader;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileLoaderListener;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 import org.openstreetmap.gui.jmapviewer.tilesources.OsmTileSource;
+
+import course_generator.utils.CgLog;
 
 /**
  * Provides a simple panel that displays pre-rendered map tiles loaded from the
@@ -1094,4 +1100,21 @@ public class JMapViewer extends JPanel implements TileLoaderListener {
             }
         }
     }
+    
+    /**
+     * Save the map on the disk
+     * @param filename file name with path
+     */
+    public void saveToFile(String filename) {
+    	BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+    	Graphics g = image.getGraphics();
+    	paint(g);
+    	try {
+    		ImageIO.write(image, "png", new File(filename));
+    		CgLog.info("Save map to disk : " + filename);
+    	} catch (IOException ex) {
+    		CgLog.info(ex.toString());
+    	}
+    }
+    
 }
