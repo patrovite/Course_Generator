@@ -181,14 +181,14 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 
 	private void UpdatePanel() {
 
-		boolean isNoaaTokenvalid = settings.isNoaaTokenValid();
+		boolean isNoaaTokenValid = settings.isNoaaTokenValid();
 
-		InformationWarning.setVisible(!isNoaaTokenvalid);
-		lbInformation.setVisible(!isNoaaTokenvalid);
-		getNoaaTokenLink.setVisible(isNoaaTokenvalid);
+		InformationWarning.setVisible(!isNoaaTokenValid);
+		lbInformation.setVisible(!isNoaaTokenValid);
+		getNoaaTokenLink.setVisible(!isNoaaTokenValid);
 
-		btWeatherRefresh.setEnabled(!isNoaaTokenvalid && track != null);
-		btWeatherDataSave.setEnabled(!isNoaaTokenvalid && track != null);
+		btWeatherRefresh.setEnabled(isNoaaTokenValid && track != null);
+		btWeatherDataSave.setEnabled(isNoaaTokenValid && track != null);
 	}
 
 
