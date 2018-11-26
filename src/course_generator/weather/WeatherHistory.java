@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import org.joda.time.DateTime;
 import org.json.JSONObject;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
@@ -15,7 +13,7 @@ import course_generator.utils.Utils;
 
 public class WeatherHistory {
 
-	private NoaaDailyNormals dailyNormals;
+	public NoaaDailyNormals dailyNormals;
 	private ArrayList<NoaaDailySummary> previousDailySummaries;
 	private WeatherData MonthlyNormals;
 	private CgSettings Settings;
@@ -48,11 +46,13 @@ public class WeatherHistory {
 		// 364).getMillis());
 
 		try {
-			String weatherHistoryContent = NoaaWeatherHistoryRetriever
+			WeatherHistory weatherHistoryContent = NoaaWeatherHistoryRetriever
 					.where(firstTrackPoint.getLatitude(), firstTrackPoint.getLongitude())
 					.when(firstTrackPoint.getHour()).forUser(Settings.getNoaaToken()).retrieve();
 
-			PopulateFields(weatherHistoryContent);
+			this.dailyNormals = weatherHistoryContent.dailyNormals;
+
+			PopulateFields();
 
 			UpdateTrackWeatherData();
 
@@ -63,11 +63,10 @@ public class WeatherHistory {
 	}
 
 
-	private void PopulateFields(String forecastData) {
+	private void PopulateFields() {
 
 		// TODO Deserialize each single element Dailynormals....
 
-		ObjectMapper mapper = new ObjectMapper();
 		// try {
 		// NoaaDailyNormals userFromJSON = mapper.readValue(forecastData,
 		// NoaaDailyNormals.class);

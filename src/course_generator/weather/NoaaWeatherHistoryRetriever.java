@@ -1,7 +1,9 @@
 package course_generator.weather;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -10,7 +12,10 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.json.JSONObject;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javadocmd.simplelatlng.LatLng;
 import com.javadocmd.simplelatlng.LatLngTool;
 import com.javadocmd.simplelatlng.util.LengthUnit;
@@ -22,6 +27,10 @@ final public class NoaaWeatherHistoryRetriever {
 	private LatLng stationSearchStartingPoint;
 	private DateTime startDate;
 	private String noaaToken;
+
+	private NoaaDailyNormals dailyNormalsData;
+
+	private final String NoaaApiUrl = "https://www.ncdc.noaa.gov/cdo-web/api/v2/";
 
 
 	private NoaaWeatherHistoryRetriever(double stationSearchStartingPointlat, double stationSearchStartingPointLon,
@@ -82,37 +91,86 @@ final public class NoaaWeatherHistoryRetriever {
 	 *
 	 * @return the collected weather data.
 	 */
-	public String retrieve() {
-		StringBuffer weatherHistory = new StringBuffer();
-		String datePattern = "yyyy-MM-dd";
+	public WeatherHistory retrieve() {
 
-		DateTimeFormatter fmt = DateTimeFormat.forPattern(datePattern);
-		// TODO
+		// Get the closest one.
 
-		// Search for a weather station
+		WeatherHistory historicalWeather = new WeatherHistory();
+		// NORMAL_DLY
+		// Retrieve daily normals
+		String stationId = findClosestStation("NORMAL_DLY");
+		dailyNormalsData = retrieveDailyNormals(stationId);// "GHCND:USC00421259");
+
+		// GHCND
+		// Retrieve daily summary for the year before the event
+		// Retrieve daily summary 2 years before the event
+		// Retrieve daily summary 3 years before the event
+
+		// NORMAL_MLY
+		// Retrieve the monthly normals
+
+		// Loop and enlarge box if needed
+		// Update southWest and northEast?
+
+		WeatherHistory wh = new WeatherHistory();
+		wh.dailyNormals = dailyNormalsData;
+
+		return wh;
+	}
+
+
+	private String getExtent(LatLng swPoint, LatLng nePoint) {
+
+		return String.format("%.3f", swPoint.getLatitude()) + "," + String.format("%.3f", swPoint.getLongitude()) + ","
+				+ String.format("%.3f", nePoint.getLatitude()) + "," + String.format("%.3f", nePoint.getLongitude());
+
+	}
+
+
+	private String findClosestStation(String dataSetId) {
+		String findWeatherStation = "stations?extent=";
 		LatLng m = LatLngTool.travel(stationSearchStartingPoint, 45, 100, LengthUnit.KILOMETER);
 
-		// TODO static string???
-		String findWeatherStation = "https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?extent=";
+		findWeatherStation = findWeatherStation + getExtent(stationSearchStartingPoint, m) + "&datasetid=" + dataSetId;
 
-		findWeatherStation = findWeatherStation + String.format("%.3f", stationSearchStartingPoint.getLatitude()) + ","
-				+ String.format("%.3f", stationSearchStartingPoint.getLongitude()) + ","
-				+ String.format("%.3f", m.getLatitude()) + "," + String.format("%.3f", m.getLongitude());
+		String weatherHistory = processNoaaRequest(findWeatherStation);
 
-		findWeatherStation = findWeatherStation + "&datasetid=GHCND";
-		findWeatherStation = findWeatherStation + "&startdate=" + fmt.print(startDate);
-		findWeatherStation = findWeatherStation + "&enddate=" + fmt.print(startDate);
+		JSONObject jsonContent = new JSONObject(weatherHistory.toString());
+		String attributesContent = jsonContent.get("results").toString();
 
-		// Retrieve daily normals
-		// Retrieve daily normals for the year before the event
-		// Retrieve daily normals 2 years before the event
-		// Retrieve daily normals 3 years before the event
-		// Retrieve the monthly average
+		ObjectMapper mapper = new ObjectMapper();
+		NoaaWeatherStation closestStation = null;
 		try {
-			// String url =
-			// "https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&locationid=ZIP:28801&startdate=2010-05-01&enddate=2010-05-01";
+			List<NoaaWeatherStation> car = mapper.readValue(attributesContent,
+					new TypeReference<List<NoaaWeatherStation>>() {
+					});
+
+			double minDistance = Integer.MAX_VALUE;
+
+			for (NoaaWeatherStation current : car) {
+				LatLng station = new LatLng(Double.valueOf(current.getLatitude()),
+						Double.valueOf(current.getLongitude()));
+
+				double distance = LatLngTool.distance(station, stationSearchStartingPoint, LengthUnit.KILOMETER);
+				if (distance < minDistance) {
+					minDistance = distance;
+					closestStation = current;
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return closestStation.getId();
+	}
+
+
+	private String processNoaaRequest(String parameters) {
+		StringBuffer weatherHistory = new StringBuffer();
+		try {
 			HttpClient client = HttpClientBuilder.create().build();
-			HttpGet request = new HttpGet(findWeatherStation);
+			HttpGet request = new HttpGet(NoaaApiUrl + parameters);
 
 			// add request header
 			request.addHeader("token", noaaToken);
@@ -129,10 +187,61 @@ final public class NoaaWeatherHistoryRetriever {
 		} catch (Exception ex) {
 			// TODO log error in the CG log
 		}
-
-		// Loop and enlarge box if needed
-		// Update southWest and northEast?
-
 		return weatherHistory.toString();
+	}
+
+
+	private NoaaDailyNormals retrieveDailyNormals(String stationId) {
+		String datePattern = "MM-dd";
+		// Search for a weather station
+		LatLng m = LatLngTool.travel(stationSearchStartingPoint, 45, 100, LengthUnit.KILOMETER);
+
+		//
+		DateTimeFormatter fmt = DateTimeFormat.forPattern(datePattern);
+
+		String findWeatherStation = "data?datasetid=GHCND&stationid=" + stationId + "&startdate=2010-"
+				+ fmt.print(startDate) + "&enddate=2010-" + fmt.print(startDate);
+
+		String dailyNormalsData = processNoaaRequest(findWeatherStation);
+
+		NoaaDailyNormals dailyNormals = processDailyNormals(dailyNormalsData);
+
+		return dailyNormals;
+	}
+
+
+	private NoaaDailyNormals processDailyNormals(String dailyNormalsData) {
+		JSONObject jsonContent = new JSONObject(dailyNormalsData.toString());
+		String attributesContent = jsonContent.get("results").toString();
+
+		NoaaDailyNormals noaaDailyNormals = new NoaaDailyNormals();
+
+		ObjectMapper mapper = new ObjectMapper();
+		NoaaWeatherStation closestStation = null;
+		try {
+			List<NoaaData> car = mapper.readValue(attributesContent, new TypeReference<List<NoaaData>>() {
+			});
+
+			double minDistance = Integer.MAX_VALUE;
+
+			for (NoaaData current : car) {
+				switch (current.getDatatype()) {
+				case "TMIN":
+					noaaDailyNormals.setTemperatureMin(current.getValue());
+					break;
+				case "TMAX":
+					noaaDailyNormals.setTemperatureMax(current.getValue());
+					break;
+				}
+			}
+
+		} catch (
+
+		IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return noaaDailyNormals;
 	}
 }

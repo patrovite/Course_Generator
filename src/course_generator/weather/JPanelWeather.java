@@ -206,6 +206,7 @@ public class JPanelWeather extends JPanel {
 		InformationWarning.setVisible(false);
 
 		ArrayList<WeatherHistory> previousWeatherHistory = new ArrayList<WeatherHistory>();
+		WeatherHistory previousWeatherData = null;
 		if (retrieveOnlineData) {
 
 			if (!Utils.isInternetReachable()) {
@@ -215,7 +216,7 @@ public class JPanelWeather extends JPanel {
 				return;
 			}
 
-			WeatherHistory previousWeatherData = new WeatherHistory(settings, track);
+			previousWeatherData = new WeatherHistory(settings, track);
 
 			previousWeatherData.RetrieveWeatherData();
 			for (int forecastIndex = 0; forecastIndex < 3; ++forecastIndex) {
@@ -239,7 +240,7 @@ public class JPanelWeather extends JPanel {
 		// return;
 		// }
 
-		String dataSheetInfo = PopulateWeatherDataSheet();
+		String dataSheetInfo = PopulateWeatherDataSheet(previousWeatherData);
 
 		// -- Refresh the view and set the cursor position
 		if (editorStat != null) {
@@ -249,7 +250,7 @@ public class JPanelWeather extends JPanel {
 	}
 
 
-	private String PopulateWeatherDataSheet() {
+	private String PopulateWeatherDataSheet(WeatherHistory previousWeatherData) {
 
 		StringBuilder sheetSkeleton = new StringBuilder();
 		InputStream is = getClass().getResourceAsStream("weatherdatasheet.html");
@@ -304,9 +305,9 @@ public class JPanelWeather extends JPanel {
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@114", "78%");
 
 		// Daily normals
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@220", "78");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@220", previousWeatherData.dailyNormals.getTemperatureMax());
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@225", "30");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@230", "20");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@230", previousWeatherData.dailyNormals.getTemperatureMin());
 
 		// Year -1
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@221", "71");
