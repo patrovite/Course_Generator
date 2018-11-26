@@ -185,7 +185,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	 */
 	private void create_Toolbar() {
 		jToolBarMapViewer = new javax.swing.JToolBar();
-		jToolBarMapViewer.setFloatable(false);
+		jToolBarMapViewer.setFloatable(true);
 		jToolBarMapViewer.setOrientation(javax.swing.SwingConstants.VERTICAL);
 		jToolBarMapViewer.setRollover(true);
 
