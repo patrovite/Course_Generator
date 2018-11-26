@@ -178,6 +178,7 @@ public class FrmSelectMap extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		rbOutdoors = new JRadioButton(bundle.getString("FrmSelectMap.rbOutdoors.Text"));
+		rbOutdoors.setEnabled(settings.isThunderForestApiKeyValid());
 		Utils.addComponent(panelMain, rbOutdoors, 0, 2, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
