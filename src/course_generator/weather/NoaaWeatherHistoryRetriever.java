@@ -8,8 +8,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import com.javadocmd.simplelatlng.LatLng;
+import com.javadocmd.simplelatlng.LatLngTool;
+import com.javadocmd.simplelatlng.util.LengthUnit;
 
 final public class NoaaWeatherHistoryRetriever {
 
@@ -19,19 +23,18 @@ final public class NoaaWeatherHistoryRetriever {
 	private DateTime startDate;
 	private String noaaToken;
 
-	private NoaaWeatherHistoryRetriever(long stationSearchStartingPointlat, long stationSearchStartingPointLon,
+
+	private NoaaWeatherHistoryRetriever(double stationSearchStartingPointlat, double stationSearchStartingPointLon,
 			double initialSearchDistance) {
 		stationSearchStartingPoint = new LatLng(stationSearchStartingPointlat, stationSearchStartingPointLon);
 		// TODO pass the distance to search a station from ?
 	}
 
-	private NoaaWeatherHistoryRetriever(DateTime startTime) {
-		this.startDate = startTime;
-	}
 
 	private NoaaWeatherHistoryRetriever(String noaaToken) {
 		this.noaaToken = noaaToken;
 	}
+
 
 	/**
 	 *
@@ -40,23 +43,13 @@ final public class NoaaWeatherHistoryRetriever {
 	 * 
 	 * @return
 	 */
-	public static NoaaWeatherHistoryRetriever where(long southWestPointLat, long southWestPointLon) {
+	public static NoaaWeatherHistoryRetriever where(double southWestPointLat, double southWestPointLon) {
 		// TODO Pass only the start and furthest point ?
 		// If not, the where() is useless as we can get the first point time from the
 		// track
 		return new NoaaWeatherHistoryRetriever(southWestPointLat, southWestPointLon, 1.0);
 	}
 
-	/**
-	 *
-	 *
-	 * @param track
-	 * 
-	 * @return
-	 */
-	public static NoaaWeatherHistoryRetriever when(DateTime dateTime) {
-		return new NoaaWeatherHistoryRetriever(dateTime);
-	}
 
 	/**
 	 *
@@ -65,9 +58,24 @@ final public class NoaaWeatherHistoryRetriever {
 	 * 
 	 * @return
 	 */
-	public static NoaaWeatherHistoryRetriever forUser(String noaaToken) {
-		return new NoaaWeatherHistoryRetriever(noaaToken);
+	public NoaaWeatherHistoryRetriever when(DateTime dateTime) {
+		this.startDate = dateTime;
+		return this;
 	}
+
+
+	/**
+	 *
+	 *
+	 * @param track
+	 * 
+	 * @return
+	 */
+	public NoaaWeatherHistoryRetriever forUser(String noaaToken) {
+		this.noaaToken = noaaToken;
+		return this;
+	}
+
 
 	/**
 	 * This method actually builds the WeatherData object
@@ -76,8 +84,24 @@ final public class NoaaWeatherHistoryRetriever {
 	 */
 	public String retrieve() {
 		StringBuffer weatherHistory = new StringBuffer();
+		String datePattern = "yyyy-MM-dd";
 
+		DateTimeFormatter fmt = DateTimeFormat.forPattern(datePattern);
 		// TODO
+
+		// Search for a weather station
+		LatLng m = LatLngTool.travel(stationSearchStartingPoint, 45, 100, LengthUnit.KILOMETER);
+
+		// TODO static string???
+		String findWeatherStation = "https://www.ncdc.noaa.gov/cdo-web/api/v2/stations?extent=";
+
+		findWeatherStation = findWeatherStation + String.format("%.3f", stationSearchStartingPoint.getLatitude()) + ","
+				+ String.format("%.3f", stationSearchStartingPoint.getLongitude()) + ","
+				+ String.format("%.3f", m.getLatitude()) + "," + String.format("%.3f", m.getLongitude());
+
+		findWeatherStation = findWeatherStation + "&datasetid=GHCND";
+		findWeatherStation = findWeatherStation + "&startdate=" + fmt.print(startDate);
+		findWeatherStation = findWeatherStation + "&enddate=" + fmt.print(startDate);
 
 		// Retrieve daily normals
 		// Retrieve daily normals for the year before the event
@@ -85,9 +109,10 @@ final public class NoaaWeatherHistoryRetriever {
 		// Retrieve daily normals 3 years before the event
 		// Retrieve the monthly average
 		try {
-			String url = "https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&locationid=ZIP:28801&startdate=2010-05-01&enddate=2010-05-01";
+			// String url =
+			// "https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&locationid=ZIP:28801&startdate=2010-05-01&enddate=2010-05-01";
 			HttpClient client = HttpClientBuilder.create().build();
-			HttpGet request = new HttpGet(url);
+			HttpGet request = new HttpGet(findWeatherStation);
 
 			// add request header
 			request.addHeader("token", noaaToken);
@@ -102,10 +127,8 @@ final public class NoaaWeatherHistoryRetriever {
 				weatherHistory.append(line);
 			}
 		} catch (Exception ex) {
-//TODO log error in the CG log
+			// TODO log error in the CG log
 		}
-
-		// LatLng m = LatLngTool.travel(l, 45, 1, LengthUnit.KILOMETER);
 
 		// Loop and enlarge box if needed
 		// Update southWest and northEast?

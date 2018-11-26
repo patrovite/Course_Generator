@@ -48,8 +48,9 @@ public class WeatherHistory {
 		// 364).getMillis());
 
 		try {
-			String weatherHistoryContent = NoaaWeatherHistoryRetriever.where(45, 115).when(firstTrackPoint.getHour())
-					.forUser(Settings.getNoaaToken()).retrieve();
+			String weatherHistoryContent = NoaaWeatherHistoryRetriever
+					.where(firstTrackPoint.getLatitude(), firstTrackPoint.getLongitude())
+					.when(firstTrackPoint.getHour()).forUser(Settings.getNoaaToken()).retrieve();
 
 			PopulateFields(weatherHistoryContent);
 
