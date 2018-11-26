@@ -70,12 +70,14 @@ public class JPanelWeather extends JPanel {
 	private Double Latitude;
 	private Double Longitude;
 
+
 	public JPanelWeather(CgSettings settings) {
 		super();
 		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
+
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -91,6 +93,7 @@ public class JPanelWeather extends JPanel {
 		scrollPaneStat = new JScrollPane(editorStat);
 		add(scrollPaneStat, java.awt.BorderLayout.CENTER);
 	}
+
 
 	/**
 	 * Create the weather toolbar
@@ -171,10 +174,12 @@ public class JPanelWeather extends JPanel {
 		refresh(null, false);
 	}
 
+
 	private void EnableButtons() {
 		btWeatherRefresh.setEnabled(true);
 		btWeatherDataSave.setEnabled(true);
 	}
+
 
 	/**
 	 * Refresh the statistic tab
@@ -227,12 +232,12 @@ public class JPanelWeather extends JPanel {
 			// previousWeatherHistory = track.getHistoricalWeather();
 		}
 
-		if (previousWeatherHistory.isEmpty()) {
-			// -- Refresh the view and set the cursor position
-			editorStat.setText("");
-			editorStat.setCaretPosition(0);
-			return;
-		}
+		// if (previousWeatherHistory.isEmpty()) {
+		// -- Refresh the view and set the cursor position
+		// editorStat.setText("");
+		// editorStat.setCaretPosition(0);
+		// return;
+		// }
 
 		String dataSheetInfo = PopulateWeatherDataSheet();
 
@@ -242,6 +247,7 @@ public class JPanelWeather extends JPanel {
 			editorStat.setCaretPosition(0);
 		}
 	}
+
 
 	private String PopulateWeatherDataSheet() {
 
@@ -288,6 +294,8 @@ public class JPanelWeather extends JPanel {
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@209", "Precip");
 		// TODO OTHER DATA ?????
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@210", "Severe weather US ONLY");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@211", "Weather station name");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@212", "Distance from start");
 
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@110", "2018");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@111", "07:00");
@@ -319,6 +327,9 @@ public class JPanelWeather extends JPanel {
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@224", "68");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@229", "26");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@234", "16");
+
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@244", "TOTO");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@245", "16");
 
 		/*
 		 * sb = Utils.sbReplace(sb, "@0", Utils.uTemperatureToString(settings.Unit)); sb
@@ -392,10 +403,12 @@ public class JPanelWeather extends JPanel {
 		return sheetSkeleton.toString();
 	}
 
+
 	public void SetParameters(Double latitude, Double longitude, DateTime startTime) {
 		Latitude = latitude;
 		Longitude = longitude;
 	}
+
 
 	/**
 	 * Save the statistics in TXT format
@@ -422,20 +435,24 @@ public class JPanelWeather extends JPanel {
 		}
 	}
 
+
 	/**
 	 * Creates a String containing a temperature value.
 	 * 
-	 * @param temperatureValue The temperature value
+	 * @param temperatureValue
+	 *            The temperature value
 	 * @return A String containing a temperature information
 	 */
 	private String displayTemperature(double temperatureValue) {
 		return Utils.FormatTemperature(temperatureValue, settings.Unit) + Utils.uTemperatureToString(settings.Unit);
 	}
 
+
 	/**
 	 * Creates a String containing a measured time.
 	 * 
-	 * @param time A Unix time.
+	 * @param time
+	 *            A Unix time.
 	 * @return A String containing a time information.
 	 */
 	private String displayTime(long time, String timeZone) {
@@ -446,11 +463,13 @@ public class JPanelWeather extends JPanel {
 		return dtfOut.print(dateTime);
 	}
 
+
 	private String addImage(String iconFilePath) {
 		if (iconFilePath == "")
 			return "";
 		return "<img src=\"file:/" + iconFilePath + "\" width=\"50%\" height=\"50%\"/>";
 	}
+
 
 	/**
 	 * Because the image paths in the original HTML reference images in the Course
@@ -459,7 +478,8 @@ public class JPanelWeather extends JPanel {
 	 * representation in Course Generator : Because Swing's (default) HTML support
 	 * does not extend to Base 64 encoded images.
 	 * 
-	 * @param originalText The original HTML page
+	 * @param originalText
+	 *            The original HTML page
 	 * @return The HTML page containing base64 representations of each image.
 	 */
 	private String ReplaceImages(String originalText) {

@@ -1,159 +1,177 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE html>
 <html>
-	<head>
-	      <STYLE TYPE="text/css">
-		H1
-		{
-			FONT-WEIGHT: bold;
-			FONT-SIZE: 24pt;
-			COLOR: black;
-			FONT-FAMILY: Arial;
-			TEXT-ALIGN: center;
-		}
-		H2
-		{
-			FONT-WEIGHT: bold;
-			FONT-SIZE: 16pt;
-			COLOR: black;
-			FONT-FAMILY: Arial;
-			TEXT-ALIGN: left;
-                        PADDING-LEFT: 10px;
-		}
-		H3
-		{
-			FONT-WEIGHT: bold;
-			FONT-SIZE: 14pt;
-			COLOR: black;
-			FONT-FAMILY: Arial;
-			TEXT-ALIGN: left;
-                        PADDING: 0px 0px 0px 0px;
-		}
-		table {
-			PADDING-LEFT: 10px;
-		}
-		span.header
-		{
-			FONT-WEIGHT: bold;
-			FONT-SIZE: 15pt;
-			FONT-FAMILY: Arial;
-			BACKGROUND-COLOR: #ffffff;
-			text-align: left;
-		}
-		span.item
-		{
-			FONT-WEIGHT: bold;
-			FONT-SIZE: 14pt;
-			FONT-FAMILY: Arial;
-			BACKGROUND-COLOR: #ffffff;
-			text-align: right;
-		}
-		span.value
-		{
-			FONT-WEIGHT: normal;
-			FONT-SIZE: 14pt;
-			FONT-FAMILY: Arial;
-			BACKGROUND-COLOR: #ffffff;
-			TEXT-ALIGN: left;
-		}
-		span.separator
-		{
-			FONT-WEIGHT: normal;
-			FONT-SIZE: 14pt;
-			FONT-FAMILY: Arial;
-			BACKGROUND-COLOR: #ffffff;
-			TEXT-ALIGN: left;
-		}
-		P
-		{
-			FONT-SIZE: 14pt;
-			COLOR: black;
-			FONT-FAMILY: Arial;
-			TEXT-DECORATION: none
-                        PADDING-LEFT: 30px;
-		}
-		#cssTable td 
-		{
-		    text-align: center; 
-		    vertical-align: top;
-		}
-		
+<head>
 
-              </STYLE>
-   	      <title>Historical Weather Data</title>
-	</head>
+	<style type="text/css">
+	       H1
+	       {
+	           FONT-WEIGHT: bold;
+	           FONT-SIZE: 24pt;
+	           COLOR: black;
+	           FONT-FAMILY: Arial;
+	           TEXT-ALIGN: center;
+	       }
+	       H2
+	       {
+	           FONT-WEIGHT: bold;
+	           FONT-SIZE: 16pt;
+	           COLOR: black;
+	           FONT-FAMILY: Arial;
+	           TEXT-ALIGN: left;
+	                       PADDING-LEFT: 10px;
+	       }
+	       H3
+	       {
+	           FONT-WEIGHT: bold;
+	           FONT-SIZE: 14pt;
+	           COLOR: black;
+	           FONT-FAMILY: Arial;
+	           TEXT-ALIGN: left;
+	                       PADDING: 0px 0px 0px 0px;
+	       }
+	       table {
+	           PADDING-LEFT: 10px;
+	       }
+	       span.header
+	       {
+	           FONT-WEIGHT: bold;
+	           FONT-SIZE: 15pt;
+	           FONT-FAMILY: Arial;
+	           BACKGROUND-COLOR: #ffffff;
+	           text-align: left;
+	       }
+	       span.item
+	       {
+	           FONT-WEIGHT: bold;
+	           FONT-SIZE: 14pt;
+	           FONT-FAMILY: Arial;
+	           BACKGROUND-COLOR: #ffffff;
+	           text-align: right;
+	       }
+	       span.value
+	       {
+	           FONT-WEIGHT: normal;
+	           FONT-SIZE: 14pt;
+	           FONT-FAMILY: Arial;
+	           BACKGROUND-COLOR: #ffffff;
+	           TEXT-ALIGN: left;
+	       }
+	       span.separator
+	       {
+	           FONT-WEIGHT: normal;
+	           FONT-SIZE: 14pt;
+	           FONT-FAMILY: Arial;
+	           BACKGROUND-COLOR: #ffffff;
+	           TEXT-ALIGN: left;
+	       }
+	       P
+	       {
+	           FONT-SIZE: 14pt;
+	           COLOR: black;
+	           FONT-FAMILY: Arial;
+	           TEXT-DECORATION: none
+	                       PADDING-LEFT: 30px;
+	       }
+	       #cssTable td 
+	       {
+	           text-align: center; 
+	           vertical-align: top;
+	       }
+	       
 
-	<body>
-		<table cellSpacing="5" cellPadding="0" border="1" id="cssTable">
-			<tbody>
-				<TR>
-					<TD COLSPAN=3><H1>@100</H1></TD> <!-- EVENT SUMMARY -->
-					<TD COLSPAN=6><H1>@200</H1></TD> <!-- HISTORICAL WEATHER DATA -->
-				</TR>
-				<TR>
-					<TD><SPAN class="item">@101</SPAN></TD> <!-- Date -->
-					<TD COLSPAN=2>@110</TD>
-					<TD><SPAN class="item">@201</SPAN></TD> <!-- Daily Normals -->
-					<TD><SPAN class="item">@202</SPAN></TD> <!-- Year -1 -->
-					<TD><SPAN class="item">@203</SPAN></TD> <!-- Year -2 -->
-					<TD><SPAN class="item">@204</SPAN></TD> <!-- Year -3 -->
-					<TD><SPAN class="item">@205</SPAN></TD> <!-- Monthly normals -->
-				</TR>
-				<TR>
-					<TD><SPAN class="item">@102</SPAN></TD> <!-- Sunrise/Sunset -->
-					<TD>@111</TD>
-					<TD>@112</TD>
-					<TD><SPAN class="item">@206</SPAN></TD> <!-- Temperature Max -->
-					<TD><SPAN class="value">@220</SPAN></TD>
-					<TD><SPAN class="value">@221</SPAN></TD>
-					<TD><SPAN class="value">@222</SPAN></TD>
-					<TD><SPAN class="value">@223</SPAN></TD>
-					<TD><SPAN class="value">@224</SPAN></TD>
-				</TR>
-				<TR>
-					<TD><SPAN class="item">@103</SPAN></TD> <!-- Daylight hours -->
-					<TD>@113</TD>
-					<TD></TD>
-					<TD><SPAN class="item">@207</SPAN></TD> <!-- Temperature Min -->
-					<TD><SPAN class="value">@225</SPAN></TD>
-					<TD><SPAN class="value">@226</SPAN></TD>
-					<TD><SPAN class="value">@227</SPAN></TD>
-					<TD><SPAN class="value">@228</SPAN></TD>
-					<TD><SPAN class="value">@229</SPAN></TD>
-				</TR>
-				<TR>
-					<TD><SPAN class="item">@104</SPAN></TD> <!-- Moon phase -->
-					<TD>@114</TD>
-					<TD></TD>
-					<TD><SPAN class="item">@208</SPAN></TD> <!-- Temperature Avg -->
-					<TD><SPAN class="value">@230</SPAN></TD>
-					<TD><SPAN class="value">@231</SPAN></TD>
-					<TD><SPAN class="value">@232</SPAN></TD>
-					<TD><SPAN class="value">@233</SPAN></TD>
-					<TD><SPAN class="value">@234</SPAN></TD>
-				</TR>
-				<TR>
-					<TD></TD>
-					<TD></TD>
-					<TD></TD>
-					<TD><SPAN class="item">@209</SPAN></TD> <!-- Precip -->
-					<TD><SPAN class="value">@235</SPAN></TD>
-					<TD><SPAN class="value">@236</SPAN></TD>
-					<TD><SPAN class="value">@237</SPAN></TD>
-					<TD><SPAN class="value">@238</SPAN></TD>
-					<TD><SPAN class="value">@239</SPAN></TD>
-				</TR>
-				<TR>
-					<TD></TD>
-					<TD></TD>
-					<TD></TD>
-						<TD><SPAN class="item">@210</SPAN></TD> <!-- Severe weather (US Only) -->
-					<TD><SPAN class="value">@240</SPAN></TD>
-					<TD><SPAN class="value">@241</SPAN></TD>
-					<TD><SPAN class="value">@241</SPAN></TD>
-					<TD><SPAN class="value">@242</SPAN></TD>
-					<TD><SPAN class="value">@243</SPAN></TD>
-				</TR>
-			</tbody>
-                </table>
-	</body>
+	</style>
+	<title>Historical Weather Data</title>
+</head>
+<body>
+	<table border="1" cellpadding="0" cellspacing="5" id="cssTable">
+		<tbody>
+			<tr>
+				<td colspan="3">
+					<h1>@100</h1>
+				</td><!-- EVENT SUMMARY -->
+				<td colspan="6">
+					<h1>@200</h1>
+				</td><!-- HISTORICAL WEATHER DATA -->
+			</tr>
+			<tr>
+				<td><span class="item">@101</span></td><!-- Date -->
+				<td colspan="2">@110</td>
+				<td><span class="item">@201</span></td><!-- Daily Normals -->
+				<td><span class="item">@202</span></td><!-- Year -1 -->
+				<td><span class="item">@203</span></td><!-- Year -2 -->
+				<td><span class="item">@204</span></td><!-- Year -3 -->
+				<td><span class="item">@205</span></td><!-- Monthly normals -->
+			</tr>
+			<tr>
+				<td><span class="item">@102</span></td><!-- Sunrise/Sunset -->
+				<td>@111</td>
+				<td>@112</td>
+				<td><span class="item">@206</span></td><!-- Temperature Max -->
+				<td><span class="value">@220</span></td>
+				<td><span class="value">@221</span></td>
+				<td><span class="value">@222</span></td>
+				<td><span class="value">@223</span></td>
+				<td><span class="value">@224</span></td>
+			</tr>
+			<tr>
+				<td><span class="item">@103</span></td><!-- Daylight hours -->
+				<td>@113</td>
+				<td></td>
+				<td><span class="item">@207</span></td><!-- Temperature Min -->
+				<td><span class="value">@225</span></td>
+				<td><span class="value">@226</span></td>
+				<td><span class="value">@227</span></td>
+				<td><span class="value">@228</span></td>
+				<td><span class="value">@229</span></td>
+			</tr>
+			<tr>
+				<td><span class="item">@104</span></td><!-- Moon phase -->
+				<td>@114</td>
+				<td></td>
+				<td><span class="item">@208</span></td><!-- Temperature Avg -->
+				<td><span class="value">@230</span></td>
+				<td><span class="value">@231</span></td>
+				<td><span class="value">@232</span></td>
+				<td><span class="value">@233</span></td>
+				<td><span class="value">@234</span></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><span class="item">@209</span></td><!-- Precip -->
+				<td><span class="value">@235</span></td>
+				<td><span class="value">@236</span></td>
+				<td><span class="value">@237</span></td>
+				<td><span class="value">@238</span></td>
+				<td><span class="value">@239</span></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><span class="item">@210</span></td><!-- Severe weather (US Only) -->
+				<td><span class="value">@240</span></td>
+				<td><span class="value">@241</span></td>
+				<td><span class="value">@241</span></td>
+				<td><span class="value">@242</span></td>
+				<td><span class="value">@243</span></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><span class="item">@211</span></td><!-- Weather station name -->
+				<td colspan="5"><span class="value">@244</span></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><span class="item">@212</span></td><!-- Distance from start -->
+				<td colspan="5"><span class="value">@245</span></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
 </html>

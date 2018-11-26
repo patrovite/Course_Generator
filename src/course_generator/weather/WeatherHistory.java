@@ -1,6 +1,5 @@
 package course_generator.weather;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
@@ -22,14 +21,17 @@ public class WeatherHistory {
 	private CgSettings Settings;
 	private TrackData Track;
 
+
 	public WeatherHistory(CgSettings settings, TrackData track) {
 		Settings = settings;
 		Track = track;
 	}
 
+
 	public WeatherHistory() {
 		// TODO Auto-generated constructor stub
 	}
+
 
 	public void RetrieveWeatherData() {
 		// TODO
@@ -59,18 +61,21 @@ public class WeatherHistory {
 		}
 	}
 
+
 	private void PopulateFields(String forecastData) {
 
 		// TODO Deserialize each single element Dailynormals....
 
 		ObjectMapper mapper = new ObjectMapper();
-		try {
-			NoaaDailyNormals userFromJSON = mapper.readValue(forecastData, NoaaDailyNormals.class);
-			String toto = userFromJSON.toString();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// try {
+		// NoaaDailyNormals userFromJSON = mapper.readValue(forecastData,
+		// NoaaDailyNormals.class);
+		// String toto = userFromJSON.toString();
+		// System.out.println(toto);
+		// } catch (IOException e) {
+		// TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 
 		/*
 		 * try { JSONObject root = new JSONObject(forecastData); JSONArray hourlyData =
@@ -115,9 +120,11 @@ public class WeatherHistory {
 		 */
 	}
 
+
 	private void UpdateTrackWeatherData() {
 		// Track.setDailyWeatherData(this, PreviousYearNumber - 1);
 	}
+
 
 	private String retrieveStringElement(JSONObject forecastData, String element) {
 		String result;
@@ -130,6 +137,7 @@ public class WeatherHistory {
 		return result;
 	}
 
+
 	private double retrieveDoubleElement(JSONObject forecastData, String element) {
 		double result;
 		try {
@@ -140,6 +148,7 @@ public class WeatherHistory {
 		}
 		return result;
 	}
+
 
 	private long retrieveLongElement(JSONObject forecastData, String element) {
 		long result;
