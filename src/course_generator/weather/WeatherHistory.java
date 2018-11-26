@@ -1,9 +1,12 @@
 package course_generator.weather;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
 import org.json.JSONObject;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import course_generator.CgData;
 import course_generator.TrackData;
@@ -59,6 +62,15 @@ public class WeatherHistory {
 	private void PopulateFields(String forecastData) {
 
 		// TODO Deserialize each single element Dailynormals....
+
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			NoaaDailyNormals userFromJSON = mapper.readValue(forecastData, NoaaDailyNormals.class);
+			String toto = userFromJSON.toString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		/*
 		 * try { JSONObject root = new JSONObject(forecastData); JSONArray hourlyData =
