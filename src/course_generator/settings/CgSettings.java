@@ -19,6 +19,8 @@
 package course_generator.settings;
 
 import java.awt.Color;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -102,6 +104,7 @@ public class CgSettings {
 
 	private String ThunderForestApiKey;
 	private String NoaaToken;
+	private PropertyChangeSupport NoaaTokenChanged = new PropertyChangeSupport(this);
 
 	public Color Color_Diff_VeryEasy;
 	public Color Color_Diff_Easy;
@@ -453,7 +456,14 @@ public class CgSettings {
 	 *            The entered token
 	 */
 	public void setNoaaToken(String token) {
+		String oldToken = NoaaToken;
 		NoaaToken = token;
+		NoaaTokenChanged.firePropertyChange("NoaaTokenChanged", oldToken, token);
+	}
+
+
+	public void addNoaaTokenChangeListener(PropertyChangeListener listener) {
+		NoaaTokenChanged.addPropertyChangeListener(listener);
 	}
 
 

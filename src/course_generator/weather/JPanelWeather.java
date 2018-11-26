@@ -25,6 +25,8 @@ import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -53,7 +55,7 @@ import course_generator.settings.CgSettings;
 import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
-public class JPanelWeather extends JPanel {
+public class JPanelWeather extends JPanel implements PropertyChangeListener {
 	private static final long serialVersionUID = -7168142806619093218L;
 	private ResourceBundle bundle;
 	private CgSettings settings = null;
@@ -74,6 +76,7 @@ public class JPanelWeather extends JPanel {
 	public JPanelWeather(CgSettings settings) {
 		super();
 		this.settings = settings;
+		this.settings.addNoaaTokenChangeListener(this);
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
@@ -85,6 +88,7 @@ public class JPanelWeather extends JPanel {
 		// -- Statistic tool bar
 		// ---------------------------------------------------
 		createWeatherToolbar();
+		UpdatePanel();
 		add(toolBar, java.awt.BorderLayout.NORTH);
 
 		editorStat = new JEditorPane();
@@ -175,9 +179,16 @@ public class JPanelWeather extends JPanel {
 	}
 
 
-	private void EnableButtons() {
-		btWeatherRefresh.setEnabled(true);
-		btWeatherDataSave.setEnabled(true);
+	private void UpdatePanel() {
+
+		boolean isNoaaTokenvalid = settings.isNoaaTokenValid();
+
+		InformationWarning.setVisible(!isNoaaTokenvalid);
+		lbInformation.setVisible(!isNoaaTokenvalid);
+		getNoaaTokenLink.setVisible(isNoaaTokenvalid);
+
+		btWeatherRefresh.setEnabled(!isNoaaTokenvalid && track != null);
+		btWeatherDataSave.setEnabled(!isNoaaTokenvalid && track != null);
 	}
 
 
@@ -185,25 +196,14 @@ public class JPanelWeather extends JPanel {
 	 * Refresh the statistic tab
 	 */
 	public void refresh(TrackData track, boolean retrieveOnlineData) {
-		if (track == null || track.data.isEmpty())
-			return;
-		boolean isNoaaTokenInvalid = !settings.isNoaaTokenValid();
-
-		InformationWarning.setVisible(isNoaaTokenInvalid);
-		lbInformation.setVisible(isNoaaTokenInvalid);
-		getNoaaTokenLink.setVisible(isNoaaTokenInvalid);
-
-		if (isNoaaTokenInvalid) {
+		if (track == null || track.data.isEmpty()) {
+			UpdatePanel();
 			return;
 		}
 
-		EnableButtons();
-
 		this.track = track;
 
-		lbInformation.setText("");
-		lbInformation.setVisible(false);
-		InformationWarning.setVisible(false);
+		UpdatePanel();
 
 		ArrayList<WeatherHistory> previousWeatherHistory = new ArrayList<WeatherHistory>();
 		WeatherHistory previousWeatherData = null;
@@ -239,6 +239,8 @@ public class JPanelWeather extends JPanel {
 		// editorStat.setCaretPosition(0);
 		// return;
 		// }
+		if (previousWeatherData == null)
+			return;
 
 		String dataSheetInfo = PopulateWeatherDataSheet(previousWeatherData);
 
@@ -247,6 +249,13 @@ public class JPanelWeather extends JPanel {
 			editorStat.setText(dataSheetInfo);
 			editorStat.setCaretPosition(0);
 		}
+	}
+
+
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (!evt.getPropertyName().equals("NoaaTokenChanged"))
+			return;
+		UpdatePanel();
 	}
 
 
