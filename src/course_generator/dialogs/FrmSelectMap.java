@@ -49,12 +49,11 @@ public class FrmSelectMap extends javax.swing.JDialog {
 	private JButton btCancel;
 	private JButton btOk;
 	private JPanel panelMain;
-	private JRadioButton rbOpenStreetMap;
+	public JRadioButton rbOpenStreetMap;
 	private JRadioButton rbOpenTopoMap;
-	private JRadioButton rbOutdoors;
+	public JRadioButton rbOutdoors;
 	private ButtonGroup groupMap;
 	private JRadioButton rbBingAerialMap;
-
 
 	/**
 	 * Creates new form frmSettings
@@ -66,12 +65,10 @@ public class FrmSelectMap extends javax.swing.JDialog {
 		setModal(true);
 	}
 
-
 	/**
-	 * Show the dialog to selct the map
+	 * Show the dialog to select the map
 	 * 
-	 * @param map
-	 *            map code : 0 : OpenStreetMap 1 : OpenTopoMap 2 : BingAerial
+	 * @param map map code : 0 : OpenStreetMap 1 : OpenTopoMap 2 : BingAerial
 	 * @return Return the select map code. -1 if the selection has been cancelled
 	 */
 	public int showDialog(int map) {
@@ -109,7 +106,6 @@ public class FrmSelectMap extends javax.swing.JDialog {
 		return -1;
 	}
 
-
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -144,7 +140,6 @@ public class FrmSelectMap extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -155,7 +150,6 @@ public class FrmSelectMap extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);

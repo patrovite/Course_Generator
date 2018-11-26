@@ -21,6 +21,8 @@ package course_generator.maps;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Image;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,7 +53,7 @@ import course_generator.utils.CgConst;
 import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
-public class JPanelMaps extends JPanel {
+public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	private static final long serialVersionUID = 8019423088047841193L;
 	private TrackData Track = null;
 	private String DataDir;
@@ -87,41 +89,52 @@ public class JPanelMaps extends JPanel {
 	private JButton btShowHideMarkers;
 	private boolean ShowMarkers;
 	private JButton btSaveMap;
-
+	private FrmSelectMap selectMap;
 
 	public JPanelMaps(CgSettings settings) {
 		super();
 		Settings = settings;
-		ShowMarkers=true;
+		Settings.addPropertyChangeListener(this);
+		ShowMarkers = true;
 		DataDir = Utils.GetHomeDir();
 		UndoDiff = new ArrayList<Double>();
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
 
-
 	public void addListener(JPanelMapsListener toAdd) {
 		listeners.add(toAdd);
 	}
-
 
 	public void notifyRequestPosition() {
 		for (JPanelMapsListener hl : listeners)
 			hl.requestPositionIndexEvent();
 	}
 
-
 	public void notifyChange() {
 		for (JPanelMapsListener hl : listeners)
 			hl.changeEvent();
 	}
-
 
 	public void notifyMouseClicked(java.awt.event.MouseEvent evt) {
 		for (JPanelMapsListener hl : listeners)
 			hl.mouseClicked(evt);
 	}
 
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (!evt.getPropertyName().equals("ThunderForestApiKeyChanged"))
+			return;
+
+		if (!Settings.isThunderForestApiKeyValid()) {
+			if (Settings.map == 2) {
+				Settings.map = 0;
+				selectMap.rbOutdoors.setEnabled(false);
+				RefreshMapType();
+			}
+		} else {
+			selectMap.rbOutdoors.setEnabled(true);
+		}
+	}
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -162,9 +175,10 @@ public class JPanelMaps extends JPanel {
 		jScrollPanelMap = new javax.swing.JScrollPane();
 		jScrollPanelMap.setViewportView(panelMain);
 
+		selectMap = new FrmSelectMap(Settings);
+
 		add(panelMain, java.awt.BorderLayout.CENTER);
 	}
-
 
 	/**
 	 * Create the map toolbar
@@ -335,7 +349,7 @@ public class JPanelMaps extends JPanel {
 
 		// -- Separator
 		jToolBarMapViewer.add(new javax.swing.JToolBar.Separator());
-				
+
 		// -- Show/Hide markers
 		btShowHideMarkers = new javax.swing.JButton();
 		btShowHideMarkers.setIcon(Utils.getIcon(this, "show_hide_markers.png", Settings.MapToolbarIconSize));
@@ -348,10 +362,10 @@ public class JPanelMaps extends JPanel {
 			}
 		});
 		jToolBarMapViewer.add(btShowHideMarkers);
-		
+
 		// -- Separator
 		jToolBarMapViewer.add(new javax.swing.JToolBar.Separator());
-				
+
 		// -- Save map on disk
 		btSaveMap = new javax.swing.JButton();
 		btSaveMap.setIcon(Utils.getIcon(this, "save_png.png", Settings.MapToolbarIconSize));
@@ -382,10 +396,9 @@ public class JPanelMaps extends JPanel {
 
 	}
 
-	
 	private void SaveMap() {
-		String s = Utils.SaveDialog(this, Settings.previousPNGDirectory, "", ".png", bundle.getString("FrmMiniroadbook.PNGFile"), true,
-				bundle.getString("frmMain.FileExist"));
+		String s = Utils.SaveDialog(this, Settings.previousPNGDirectory, "", ".png",
+				bundle.getString("FrmMiniroadbook.PNGFile"), true, bundle.getString("frmMain.FileExist"));
 
 		if (!s.isEmpty()) {
 			MapViewer.saveToFile(s);
@@ -393,7 +406,6 @@ public class JPanelMaps extends JPanel {
 		}
 	}
 
-	
 	private void MapViewerMouseClicked(java.awt.event.MouseEvent evt) {
 		if (Track == null)
 			return;
@@ -413,19 +425,16 @@ public class JPanelMaps extends JPanel {
 		RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
 	}
 
-
 	public Coordinate getSelectedPosition() {
 		return selectedPosition;
 	}
 
-
 	/**
 	 * Display track stored in a TrackData class
 	 * 
-	 * @param tdata
-	 *            TrackData object to display
-	 * @param zoom2fit
-	 *            If true the zoom is set have the complete display of the track
+	 * @param tdata    TrackData object to display
+	 * @param zoom2fit If true the zoom is set have the complete display of the
+	 *                 track
 	 * 
 	 */
 	public void RefreshTrack(TrackData tdata, boolean zoom2fit) {
@@ -451,7 +460,7 @@ public class JPanelMaps extends JPanel {
 		CurrentPosMarker = null;
 
 		// -- Create the night tracks
-		int cmpt=0;
+		int cmpt = 0;
 		boolean found = false;
 		List<Coordinate> routeNight = null;
 		MapPolyLine polyLineNight = null;
@@ -468,9 +477,9 @@ public class JPanelMaps extends JPanel {
 				routeNight.add(new Coordinate(r.getLatitude(), r.getLongitude()));
 
 				polyLineNight = new MapPolyLine(routeNight);
-				polyLineNight.setColor(cl_Transp); 
+				polyLineNight.setColor(cl_Transp);
 
-				polyLineNight.setStroke(new BasicStroke(Settings.NightTrackWidth)); 
+				polyLineNight.setStroke(new BasicStroke(Settings.NightTrackWidth));
 				found = true;
 			} else if (r.getNight() && found) {
 				routeNight.add(new Coordinate(r.getLatitude(), r.getLongitude()));
@@ -481,7 +490,7 @@ public class JPanelMaps extends JPanel {
 		}
 
 		// -- Create the tracks (over the night tracks if necessary)
-		cmpt=0;
+		cmpt = 0;
 		List<Coordinate> routeNormal = new ArrayList<Coordinate>();
 		double last_diff = tdata.data.get(0).getDiff();
 		Color cl = getDiffColor(last_diff);
@@ -494,9 +503,9 @@ public class JPanelMaps extends JPanel {
 			} else {
 				// -- Add the point to the list
 				routeNormal.add(new Coordinate(r.getLatitude(), r.getLongitude()));
-				if (cmpt<=1)
+				if (cmpt <= 1)
 					routeNormal.add(new Coordinate(r.getLatitude(), r.getLongitude()));
-				
+
 				// -- Polyline creation
 				MapPolyLine polyLineNormal = new MapPolyLine(routeNormal);
 				// -- Set the line color
@@ -513,7 +522,7 @@ public class JPanelMaps extends JPanel {
 				// -- Start a new list of points
 				routeNormal = new ArrayList<Coordinate>();
 				routeNormal.add(new Coordinate(r.getLatitude(), r.getLongitude()));
-				cmpt=0;
+				cmpt = 0;
 			}
 			last_diff = r.getDiff();
 		}
@@ -559,20 +568,18 @@ public class JPanelMaps extends JPanel {
 					v = v + 2;
 				if ((t & CgConst.TAG_WATER_PT) != 0)
 					v = v + 4;
-	
+
 				if (v != 0)
 					MapViewer.addMapMarker(new MapMarkerImg(new Coordinate(r.getLatitude(), r.getLongitude()),
 							getImage("markers_" + v + ".png", Settings.MapIconSize)));
 			}
-		}		
+		}
 	}
-
 
 	/***
 	 * Return the color corresponding of the difficulty
 	 * 
-	 * @param diff
-	 *            difficulty between 0..100
+	 * @param diff difficulty between 0..100
 	 * @return color corresponding to the difficulty
 	 */
 	private Color getDiffColor(double diff) {
@@ -587,7 +594,6 @@ public class JPanelMaps extends JPanel {
 		else
 			return Settings.Color_Diff_VeryHard; // CgConst.CL_MAP_DIFF_VERYHARD);
 	}
-
 
 	/**
 	 * Set the track difficulty
@@ -636,7 +642,6 @@ public class JPanelMaps extends JPanel {
 		}
 	}
 
-
 	private void SetMarkMapMarker() {
 		if (Track.data.size() > 0) {
 			// int row = panelTrackData.getSelectedRow();
@@ -666,7 +671,6 @@ public class JPanelMaps extends JPanel {
 		}
 	}
 
-
 	private void HideMapMarker() {
 		if (Track.data.size() > 0) {
 			IndexMarker = -1;
@@ -677,7 +681,6 @@ public class JPanelMaps extends JPanel {
 			RefreshMapButtons();
 		}
 	}
-
 
 	private void ShowMapMarker() {
 		if (Track.data.size() > 0) {
@@ -697,7 +700,6 @@ public class JPanelMaps extends JPanel {
 			RefreshMapButtons();
 		}
 	}
-
 
 	private void SetEatMapMarker() {
 		if (Track.data.size() > 0) {
@@ -729,7 +731,6 @@ public class JPanelMaps extends JPanel {
 		}
 	}
 
-
 	private void SetDrinkMapMarker() {
 		if (Track.data.size() > 0) {
 			// int row = panelTrackData.getSelectedRow();
@@ -760,7 +761,6 @@ public class JPanelMaps extends JPanel {
 		}
 	}
 
-
 	public void RefreshMapType() {
 		switch (Settings.map) {
 		case 0:
@@ -789,7 +789,6 @@ public class JPanelMaps extends JPanel {
 		}
 	}
 
-
 	public File getTileCacheDir() {
 		switch (Settings.map) {
 		case 0:
@@ -805,14 +804,11 @@ public class JPanelMaps extends JPanel {
 		}
 	}
 
-
 	/**
 	 * Refresh the marker on the map
 	 * 
-	 * @param lat
-	 *            latitude of the position of the marker
-	 * @param lon
-	 *            longitude of the position of the marker
+	 * @param lat latitude of the position of the marker
+	 * @param lon longitude of the position of the marker
 	 */
 	public void RefreshMapMarker(double lat, double lon) {
 		if (MapMarker == null) {
@@ -825,7 +821,6 @@ public class JPanelMaps extends JPanel {
 			MapViewer.setDisplayPosition(new Coordinate(lat, lon), MapViewer.getZoom());
 		}
 	}
-
 
 	private void UndoMapFillDiff() {
 		if ((Old_MarkerStart >= 0) && (Old_MarkerEnd >= 0) && (UndoDiff.size() > 0)) {
@@ -859,13 +854,11 @@ public class JPanelMaps extends JPanel {
 		}
 	}
 
-
 	public void setTrack(TrackData track) {
 		Track = track;
 		MapViewer.removeAllMapMarkers();
 		RefreshTrack(Track, true);
 	}
-
 
 	/** Returns an ImageIcon, or null if the path was invalid. */
 	protected ImageIcon createImageIcon(String path, String description) {
@@ -878,14 +871,11 @@ public class JPanelMaps extends JPanel {
 		}
 	}
 
-
 	/**
 	 * Refresh the position of the marker on the map
 	 * 
-	 * @param lat
-	 *            latitude of the position of the marker
-	 * @param lon
-	 *            longitude of the position of the marker
+	 * @param lat latitude of the position of the marker
+	 * @param lon longitude of the position of the marker
 	 */
 	public void RefreshCurrentPosMarker(double lat, double lon) {
 		if (CurrentPosMarker == null) {
@@ -900,7 +890,6 @@ public class JPanelMaps extends JPanel {
 		}
 	}
 
-
 	public void RefreshMapButtons() {
 		btMapTrackVeryHard.setEnabled(IndexMarker != -1);
 		btMapTrackHard.setEnabled(IndexMarker != -1);
@@ -911,32 +900,27 @@ public class JPanelMaps extends JPanel {
 		btMapUndo.setEnabled(Old_MarkerStart != -1);
 	}
 
-
 	public void setRow(int row) {
 		this.row = row;
 	}
 
-
 	private void SelectMap() {
-		FrmSelectMap dlg = new FrmSelectMap(Settings);
-		int ret = dlg.showDialog(Settings.map);
+		int ret = selectMap.showDialog(Settings.map);
 		if (ret >= 0) {
 			Settings.map = ret;
 			RefreshMapType();
 		}
 	}
 
-	
 	/**
 	 * Show/Hide markers on the maps
 	 */
 	private void ShowHideMarkers() {
-		ShowMarkers=!ShowMarkers;
+		ShowMarkers = !ShowMarkers;
 		btShowHideMarkers.setSelected(ShowMarkers);
 		RefreshTrack(Track, false);
 	}
-	
-	
+
 	private Image getImage(String name, int size) {
 		return createImageIcon("/course_generator/images/" + size + "/" + name, "").getImage();
 	}
