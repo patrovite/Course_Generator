@@ -19,6 +19,8 @@
 package course_generator.settings;
 
 import java.awt.Color;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,9 +50,11 @@ public class CgSettings {
 	public boolean bNoConnectOnStartup = true;
 	public int ConnectionTimeout = 10; // Time in second between internet test
 	/**
-	 * Map selected 0 : OpenStreetMap 1 : OpenTopoMap 2 : BingAreal
+	 * Map selected : 0 => OpenStreetMap. 1 => OpenTopoMap. 2 => Outdoors. 3=>
+	 * BingAerial
 	 **/
 	public int map = 0;
+
 	public boolean offlineMap = true;
 
 	public String MemoFormat[] = new String[5];
@@ -101,6 +105,8 @@ public class CgSettings {
 	public int CurveButtonsIconSize;
 
 	private String ThunderForestApiKey;
+	private PropertyChangeSupport ThunderForestApiKeyChanged = new PropertyChangeSupport(this);
+
 	private String DarkSkyApiKey;
 
 	public Color Color_Diff_VeryEasy;
@@ -113,7 +119,6 @@ public class CgSettings {
 	public int NightTrackWidth;
 	public int NormalTrackTransparency;
 	public int NightTrackTransparency;
-
 
 	public CgSettings() {
 		int i = 0;
@@ -191,12 +196,10 @@ public class CgSettings {
 		NightTrackTransparency = CgConst.NIGHT_TRACK_TRANSPARENCY;
 	}
 
-
 	/**
 	 * Save the settings to the disk
 	 * 
-	 * @param path
-	 *            Path where the setting file is stored
+	 * @param path Path where the setting file is stored
 	 */
 	public void Save(String path) {
 		// -- Check if the data directory exist. If not! creation
@@ -321,12 +324,10 @@ public class CgSettings {
 		}
 	}
 
-
 	/**
 	 * Load the settings from disk
 	 * 
-	 * @param _Path
-	 *            Path where the setting file is stored
+	 * @param _Path Path where the setting file is stored
 	 */
 	public void Load(String _Path) {
 		// -- Test if the config file exist
@@ -346,7 +347,6 @@ public class CgSettings {
 					+ Confighandler.getErrLine());
 	}
 
-
 	/**
 	 * Return the distance unit as string
 	 * 
@@ -362,7 +362,6 @@ public class CgSettings {
 			return "Km";
 		}
 	}
-
 
 	/**
 	 * Return the distance unit as string (abbreviation)
@@ -380,7 +379,6 @@ public class CgSettings {
 		}
 	}
 
-
 	/**
 	 * Return the elevation unit as string
 	 * 
@@ -396,7 +394,6 @@ public class CgSettings {
 			return "m";
 		}
 	}
-
 
 	/**
 	 * Return the elevation unit as string (abbreviation)
@@ -414,7 +411,6 @@ public class CgSettings {
 		}
 	}
 
-
 	/**
 	 * Returns the user's thunderforest's API Key
 	 * 
@@ -424,17 +420,33 @@ public class CgSettings {
 		return ThunderForestApiKey == null ? "" : ThunderForestApiKey;
 	}
 
-
 	/**
 	 * Sets the user's thunderforest's API Key
 	 * 
-	 * @param key
-	 *            The entered key
+	 * @param key The entered key
 	 */
-	public void setThunderForestApiKey(String key) {
-		ThunderForestApiKey = key;
+	public void setThunderForestApiKey(String newKey) {
+		String oldKey = ThunderForestApiKey;
+		ThunderForestApiKey = newKey;
+		ThunderForestApiKeyChanged.firePropertyChange("ThunderForestApiKeyChanged", oldKey, newKey);
 	}
 
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		ThunderForestApiKeyChanged.addPropertyChangeListener(listener);
+	}
+
+	/**
+	 * Verifies that the thunderforest's API Key is a valid one
+	 * 
+	 */
+	public boolean isThunderForestApiKeyValid() {
+		boolean isKeyValid = false;
+
+		if (ThunderForestApiKey != null && ThunderForestApiKey.length() == 32)
+			isKeyValid = true;
+
+		return isKeyValid;
+	}
 
 	/**
 	 * Returns the user's Dark Sky API Key
@@ -445,17 +457,14 @@ public class CgSettings {
 		return DarkSkyApiKey == null ? "" : DarkSkyApiKey;
 	}
 
-
 	/**
 	 * Sets the user's Dark Sky API Key
 	 * 
-	 * @param key
-	 *            The entered key
+	 * @param key The entered key
 	 */
 	public void setDarkSkyApiKey(String key) {
 		DarkSkyApiKey = key;
 	}
-
 
 	/**
 	 * Verifies that the Dark Sky API Key is a valid one
