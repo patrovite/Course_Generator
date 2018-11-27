@@ -82,8 +82,8 @@ public class TrackData {
 	/** Arraylist containing the main data **/
 	public ArrayList<CgData> data;
 
-	/** Arraylist containing the historical weather data **/
-	public WeatherHistory historicWeatherData;
+	/** Historical weather data **/
+	public WeatherHistory historicalWeatherData;
 
 	/** Statistics data for 'in night' **/
 	public StatData tInNight;
@@ -213,7 +213,7 @@ public class TrackData {
 		param = new ParamData();
 		Paramfile = "Default";
 		data = new ArrayList<CgData>();
-		historicWeatherData = new WeatherHistory(settings);
+		historicalWeatherData = new WeatherHistory(settings);
 		tInNight = new StatData();
 		tInDay = new StatData();
 		StatSlope = new StatData[13]; // : Array [0..12] of TStat;
@@ -1864,7 +1864,7 @@ public class TrackData {
 
 			// HISTORICAL WEATHER DATA
 
-			if (historicWeatherData != null) {
+			if (historicalWeatherData != null) {
 				writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINTS");
 				for (int i = 0; i < 3; i++) {
 					// Daily normals
@@ -2593,12 +2593,12 @@ public class TrackData {
 
 
 	public WeatherHistory getHistoricalWeather() {
-		return historicWeatherData;
+		return historicalWeatherData;
 	}
 
 
-	public void setDailyWeatherData(WeatherHistory weatherHistory) {
-		historicWeatherData = weatherHistory;
+	public void setHistoricalWeather(WeatherHistory weatherHistory) {
+		historicalWeatherData = weatherHistory;
 	}
 
 } // TrackData

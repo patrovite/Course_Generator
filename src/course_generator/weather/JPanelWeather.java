@@ -186,7 +186,6 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		getNoaaTokenLink.setVisible(!isNoaaTokenValid);
 
 		btWeatherRefresh.setEnabled(isNoaaTokenValid && track != null);
-		btWeatherDataSave.setEnabled(isNoaaTokenValid && track != null);
 	}
 
 
@@ -239,13 +238,16 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		// editorStat.setCaretPosition(0);
 		// return;
 		// }
-		if (previousWeatherData == null)
+		if (previousWeatherData == null) {
 			return;
+		}
+
+		btWeatherDataSave.setEnabled(true);
 
 		String dataSheetInfo = PopulateWeatherDataSheet(previousWeatherData);
 
 		// -- Refresh the view and set the cursor position
-		if (editorStat != null) {
+		if (dataSheetInfo != "") {
 			editorStat.setText(dataSheetInfo);
 			editorStat.setCaretPosition(0);
 		}
@@ -304,7 +306,6 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@208", "TMin");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@209", "Precip");
 		// TODO OTHER DATA ?????
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@210", "Severe weather US ONLY");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@211", "Weather station name");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@212", "Distance from start");
 

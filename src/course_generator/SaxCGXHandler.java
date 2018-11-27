@@ -149,10 +149,12 @@ public class SaxCGXHandler extends DefaultHandler {
 	private Locator locator;
 	DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
 
+
 	/**
 	 * Read the CGX file from disc
 	 * 
-	 * @param filename Name of the cgx file to read
+	 * @param filename
+	 *            Name of the cgx file to read
 	 * @return The error code Error explanation: ERR_READ_NO = No problem during the
 	 *         reading of the file ERR_READ_DOUBLE = Parsing error during the read
 	 *         of a double element ERR_READ_INT = Parsing error during the read of a
@@ -212,7 +214,7 @@ public class SaxCGXHandler extends DefaultHandler {
 		if (f.isFile() && f.canRead()) {
 			if (mode == 0) {
 				trkdata.data.clear();
-				trkdata.historicWeatherData = null;
+				trkdata.historicalWeatherData = null;
 			}
 			parser.parse(f, this);
 		} else
@@ -220,6 +222,7 @@ public class SaxCGXHandler extends DefaultHandler {
 
 		return trkdata.ReadError;
 	}
+
 
 	/*
 	 * @Override public void startDocument() throws SAXException {
@@ -233,11 +236,13 @@ public class SaxCGXHandler extends DefaultHandler {
 		return errline;
 	}
 
+
 	@Override
 	public void setDocumentLocator(final Locator locator) {
 		this.locator = locator; // Save the locator, so that it can be used later for line tracking when
 		// traversing nodes.
 	}
+
 
 	@Override
 	public void startElement(String uri, String localname, String qName, Attributes attributs) throws SAXException {
@@ -251,6 +256,7 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
+
 	/**
 	 * Parse a string element
 	 * 
@@ -262,11 +268,14 @@ public class SaxCGXHandler extends DefaultHandler {
 		return S;
 	}
 
+
 	/**
 	 * Parse a double element
 	 * 
-	 * @param _default Default value
-	 * @param _errcode Error code if a parse error occur
+	 * @param _default
+	 *            Default value
+	 * @param _errcode
+	 *            Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private double ManageDouble(double _default, int _errcode) {
@@ -282,11 +291,14 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
+
 	/**
 	 * Parse a long element
 	 * 
-	 * @param _default Default value
-	 * @param _errcode Error code if a parse error occur
+	 * @param _default
+	 *            Default value
+	 * @param _errcode
+	 *            Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private long ManageLong(long _default, int _errcode) {
@@ -302,11 +314,14 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
+
 	/**
 	 * Parse a integer element
 	 * 
-	 * @param _default Default value
-	 * @param _errcode Error code if a parse error occur
+	 * @param _default
+	 *            Default value
+	 * @param _errcode
+	 *            Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private int ManageInt(int _default, int _errcode) {
@@ -322,11 +337,14 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
+
 	/**
 	 * Parse a boolean element
 	 * 
-	 * @param _default Default value
-	 * @param _errcode Error code if a parse error occur
+	 * @param _default
+	 *            Default value
+	 * @param _errcode
+	 *            Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private boolean ManageBoolean(boolean _default, int _errcode) {
@@ -342,11 +360,14 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
+
 	/**
 	 * Parse a color element
 	 * 
-	 * @param _default Default value
-	 * @param _errcode Error code if a parse error occur
+	 * @param _default
+	 *            Default value
+	 * @param _errcode
+	 *            Error code if a parse error occur
 	 * @return Return the parsed color
 	 */
 	private Color ManageColor(Color _default, int _errcode) {
@@ -361,6 +382,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			return _default;
 		}
 	}
+
 
 	@Override
 	public void endElement(String uri, String localname, String qName) throws SAXException {
@@ -641,7 +663,6 @@ public class SaxCGXHandler extends DefaultHandler {
 
 			} else if (qName.equalsIgnoreCase("HISTORICAL_WEATHER_DATA_POINT")) {
 				level--;
-				// TODO
 				/*
 				 * WeatherData dailyWeatherData = new WeatherData(weather_time, weather_summary,
 				 * weather_icon, weather_moonPhase, weather_precipType, weather_temperatureHigh,
@@ -652,9 +673,11 @@ public class SaxCGXHandler extends DefaultHandler {
 				 * trkdata.historicWeatherData.add(new WeatherHistory(weather_timezone,
 				 * dailyWeatherData));
 				 */
+
 			}
 		}
 	}
+
 
 	@Override
 	public void characters(char[] chars, int start, int end) throws SAXException {

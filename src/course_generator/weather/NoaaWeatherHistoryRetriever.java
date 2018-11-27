@@ -280,8 +280,8 @@ final public class NoaaWeatherHistoryRetriever {
 			String dailyNormalsData = processNoaaRequest(findWeatherStation);
 			if (!dailyNormalsData.contains("results"))
 				pastDailySummaries.add(new NoaaDailyNormals());
-
-			pastDailySummaries.add(processDailyNormals(dailyNormalsData));
+			else
+				pastDailySummaries.add(processDailyNormals(dailyNormalsData));
 		}
 
 		return pastDailySummaries;
