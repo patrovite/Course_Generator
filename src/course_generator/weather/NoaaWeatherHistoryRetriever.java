@@ -128,8 +128,10 @@ final public class NoaaWeatherHistoryRetriever {
 		while (!weatherHistory.contains("results")) {
 			String findWeatherStation = "stations?extent=";
 
-			findWeatherStation = findWeatherStation + getExtent(searchAreaSouthWestCorner, searchAreaNorthEastCorner)
-					+ "&datasetid=" + dataSetId;
+			findWeatherStation = findWeatherStation + getExtent(searchAreaSouthWestCorner, searchAreaNorthEastCorner);// +
+																														// "&datasetid="
+																														// +
+																														// dataSetId;
 
 			weatherHistory = processNoaaRequest(findWeatherStation);
 
@@ -255,6 +257,8 @@ final public class NoaaWeatherHistoryRetriever {
 				+ "&enddate=2010-" + fmt.print(startDate);
 
 		String dailyNormalsData = processNoaaRequest(findWeatherStation);
+		if (!dailyNormalsData.contains("results"))
+			return new NoaaDailyNormals();
 
 		return processDailyNormals(dailyNormalsData);
 	}
@@ -274,6 +278,9 @@ final public class NoaaWeatherHistoryRetriever {
 					+ pastDate + "&enddate=" + pastDate;
 
 			String dailyNormalsData = processNoaaRequest(findWeatherStation);
+			if (!dailyNormalsData.contains("results"))
+				pastDailySummaries.add(new NoaaDailyNormals());
+
 			pastDailySummaries.add(processDailyNormals(dailyNormalsData));
 		}
 
@@ -291,6 +298,8 @@ final public class NoaaWeatherHistoryRetriever {
 				+ fmt.print(startDate);
 
 		String dailyNormalsData = processNoaaRequest(findWeatherStation);
+		if (!dailyNormalsData.contains("results"))
+			return new NoaaDailyNormals();
 
 		return processDailyNormals(dailyNormalsData);
 	}
