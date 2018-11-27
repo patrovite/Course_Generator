@@ -52,6 +52,7 @@ import org.jsoup.nodes.Document;
 
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
+import course_generator.utils.CgConst;
 import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
@@ -68,9 +69,6 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 	private JLabel InformationWarning;
 	private JLabel getNoaaTokenLink;
 	private TrackData track = null;
-
-	private Double Latitude;
-	private Double Longitude;
 
 
 	public JPanelWeather(CgSettings settings) {
@@ -307,116 +305,62 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@211", "Weather station name");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@212", "Distance from start");
 
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@110", "2018");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@111", "07:00");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@112", "19:00");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@110", track.data.get(0).getHourString());
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@111", track.EndNightTime.toString());
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@112", track.StartNightTime.toString());
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@113", "12h");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@114", "78%");
 
 		// Daily normals
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@220", previousWeatherData.dailyNormals.getTemperatureMax());
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@225", "30");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@230", previousWeatherData.dailyNormals.getTemperatureMin());
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@220",
+				displayTemperature(previousWeatherData.dailyNormals.getTemperatureMax()));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@225",
+				displayTemperature(previousWeatherData.dailyNormals.getTemperatureAverage()));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@230",
+				displayTemperature(previousWeatherData.dailyNormals.getTemperatureMin()));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@235",
+				displayDouble(previousWeatherData.dailyNormals.getPrecipitation()));
 
 		// Year -1
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@221", "71");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@226", "29");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@231", "19");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@221",
+				displayTemperature(previousWeatherData.previousDailySummaries.get(0).getTemperatureMax()));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@226",
+				displayTemperature(previousWeatherData.previousDailySummaries.get(0).getTemperatureAverage()));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@231",
+				displayTemperature(previousWeatherData.previousDailySummaries.get(0).getTemperatureMin()));
 
 		// Year -2
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@222", "70");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@227", "28");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@232", "18");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@222",
+				displayTemperature(previousWeatherData.previousDailySummaries.get(1).getTemperatureMax()));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@227",
+				displayTemperature(previousWeatherData.previousDailySummaries.get(1).getTemperatureAverage()));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@232",
+				displayTemperature(previousWeatherData.previousDailySummaries.get(1).getTemperatureMin()));
 
 		// Year -3
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@223", "69");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@228", "27");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@233", "17");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@223",
+				displayTemperature(previousWeatherData.previousDailySummaries.get(2).getTemperatureMax()));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@228",
+				displayTemperature(previousWeatherData.previousDailySummaries.get(2).getTemperatureAverage()));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@233",
+				displayTemperature(previousWeatherData.previousDailySummaries.get(2).getTemperatureMin()));
 
 		// Monthly normals
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@224", "68");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@229", "26");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@234", "16");
 
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@244", "TOTO");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@245", "16");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@244", previousWeatherData.weatherStation.getName());
 
-		/*
-		 * sb = Utils.sbReplace(sb, "@0", Utils.uTemperatureToString(settings.Unit)); sb
-		 * = Utils.sbReplace(sb, "@1", Utils.uSpeed2String(settings.Unit, false));
-		 * 
-		 * for (int totalForecasts = 0; totalForecasts < previousWeatherHistory.size();
-		 * ++totalForecasts) { WeatherHistory currentPreviousWeatherHistory =
-		 * previousWeatherHistory.get(totalForecasts); WeatherData previousDailyWeather
-		 * = currentPreviousWeatherHistory.getDailyWeatherData();
-		 * 
-		 * // TODO add a row "Daylight hours??????
-		 * 
-		 * int index = 600 + totalForecasts * 100;
-		 * 
-		 * sb = Utils.sbReplace(sb, "@" + index++,
-		 * fmt.print(Utils.unixTimeToDateTime(previousDailyWeather.getTime()))); sb =
-		 * Utils.sbReplace(sb, "@" + index++,
-		 * addImage(previousDailyWeather.getSummaryIconFilePath())); sb =
-		 * Utils.sbReplace(sb, "@" + index++, previousDailyWeather.getSummary());
-		 * 
-		 * sb = Utils .sbReplace(sb, "@" + index++,
-		 * addImage(previousDailyWeather.getThermometerIconFilePath(
-		 * Utils.FormatTemperature(Double.valueOf(previousDailyWeather.
-		 * getTemperatureHigh()), CgConst.UNIT_MILES_FEET)))); sb = Utils.sbReplace(sb,
-		 * "@" + index++,
-		 * displayTemperature(previousDailyWeather.getTemperatureHigh())); sb =
-		 * Utils.sbReplace(sb, "@" + index++,
-		 * displayTime(previousDailyWeather.getTemperatureHighTime(),
-		 * currentPreviousWeatherHistory.getTimeZone()));
-		 * 
-		 * sb = Utils .sbReplace(sb, "@" + index++,
-		 * addImage(previousDailyWeather.getThermometerIconFilePath(
-		 * Utils.FormatTemperature(Double.valueOf(previousDailyWeather.getTemperatureLow
-		 * ()), CgConst.UNIT_MILES_FEET)))); sb = Utils.sbReplace(sb, "@" + index++,
-		 * displayTemperature(previousDailyWeather.getTemperatureLow())); sb =
-		 * Utils.sbReplace(sb, "@" + index++,
-		 * displayTime(previousDailyWeather.getTemperatureLowTime(),
-		 * currentPreviousWeatherHistory.getTimeZone()));
-		 * 
-		 * // The wind speed is in meter/second. We convert it first in km/h (1 m/s = //
-		 * 3.6km/h) sb = Utils.sbReplace(sb, "@" + index++, Utils.FormatSpeed( 3.6 *
-		 * Double.valueOf(previousDailyWeather.getWindSpeed()), settings.Unit, false,
-		 * false));
-		 * 
-		 * sb = Utils .sbReplace(sb, "@" + index++,
-		 * addImage(previousDailyWeather.getThermometerIconFilePath(Utils.
-		 * FormatTemperature(
-		 * Double.valueOf(previousDailyWeather.getApparentTemperatureHigh()),
-		 * CgConst.UNIT_MILES_FEET)))); sb = Utils.sbReplace(sb, "@" + index++,
-		 * displayTemperature(previousDailyWeather.getApparentTemperatureHigh())); sb =
-		 * Utils.sbReplace(sb, "@" + index++,
-		 * displayTime(previousDailyWeather.getApparentTemperatureHighTime(),
-		 * currentPreviousWeatherHistory.getTimeZone()));
-		 * 
-		 * sb = Utils .sbReplace(sb, "@" + index++,
-		 * addImage(previousDailyWeather.getThermometerIconFilePath(Utils.
-		 * FormatTemperature(
-		 * Double.valueOf(previousDailyWeather.getApparentTemperatureLow()),
-		 * CgConst.UNIT_MILES_FEET)))); sb = Utils.sbReplace(sb, "@" + index++,
-		 * displayTemperature(previousDailyWeather.getApparentTemperatureLow())); sb =
-		 * Utils.sbReplace(sb, "@" + index++,
-		 * displayTime(previousDailyWeather.getApparentTemperatureLowTime(),
-		 * currentPreviousWeatherHistory.getTimeZone()));
-		 * 
-		 * sb = Utils.sbReplace(sb, "@" + index++,
-		 * addImage(previousDailyWeather.getPrecipitationTypeIconFilePath()));
-		 * 
-		 * sb = Utils.sbReplace(sb, "@" + index++,
-		 * String.valueOf(previousDailyWeather.getMoonPhase())); }
-		 */
+		double distanceFromStart = previousWeatherData.weatherStation.getDistanceFromStart();
+		String distance = "";
+		if (settings.Unit == CgConst.UNIT_MILES_FEET)
+			distanceFromStart = Utils.Meter2uMiles(distanceFromStart);
+
+		distance = String.valueOf(distanceFromStart);
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@245", distance);
+
 		return sheetSkeleton.toString();
-	}
-
-
-	public void SetParameters(Double latitude, Double longitude, DateTime startTime) {
-		Latitude = latitude;
-		Longitude = longitude;
 	}
 
 
@@ -453,8 +397,27 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 	 *            The temperature value
 	 * @return A String containing a temperature information
 	 */
-	private String displayTemperature(double temperatureValue) {
-		return Utils.FormatTemperature(temperatureValue, settings.Unit) + Utils.uTemperatureToString(settings.Unit);
+	private String displayDouble(String value) {
+		if (value == null || value == "")
+			return "";
+
+		return String.valueOf(value);
+	}
+
+
+	/**
+	 * Creates a String containing a temperature value.
+	 * 
+	 * @param temperatureValue
+	 *            The temperature value
+	 * @return A String containing a temperature information
+	 */
+	private String displayTemperature(String temperatureValue) {
+		if (temperatureValue == null || temperatureValue == "")
+			return "";
+
+		return Utils.FormatTemperature(Double.valueOf(temperatureValue), settings.Unit)
+				+ Utils.uTemperatureToString(settings.Unit);
 	}
 
 

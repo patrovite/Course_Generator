@@ -19,6 +19,8 @@ public class NoaaWeatherStation {
 
 	private String maxdate;
 
+	private double distanceFromStart;
+
 
 	public String getId() {
 		return id;
@@ -107,6 +109,16 @@ public class NoaaWeatherStation {
 
 	public void setMaxdate(String maxdate) {
 		this.maxdate = maxdate;
+	}
+
+
+	public double getDistanceFromStart() {
+		return distanceFromStart;
+	}
+
+
+	public void setDistanceFromStart(double distanceFromStart) {
+		this.distanceFromStart = distanceFromStart;
 	}
 
 

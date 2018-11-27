@@ -3078,7 +3078,6 @@ public class frmMain extends javax.swing.JFrame {
 		// Refresh weather
 		CgData firstTrackPoint = Track.data.get(0);
 		DateTime startTime = firstTrackPoint.getHour();
-		panelWeather.SetParameters(firstTrackPoint.getLatitude(), firstTrackPoint.getLongitude(), startTime);
 		panelWeather.refresh(Track, false);
 
 		bNoBackup = true;
@@ -3200,7 +3199,6 @@ public class frmMain extends javax.swing.JFrame {
 		CgData firstTrackPoint = Track.data.get(0);
 		DateTime startTime = firstTrackPoint.getHour();
 		// TODO duplicated code line 3081
-		panelWeather.SetParameters(firstTrackPoint.getLatitude(), firstTrackPoint.getLongitude(), startTime);
 		panelWeather.refresh(Track, false);
 
 		RefreshMruCGX();

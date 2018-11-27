@@ -2,6 +2,7 @@ package course_generator.weather;
 
 import java.util.ArrayList;
 
+import org.joda.time.DateTime;
 import org.json.JSONObject;
 
 import com.javadocmd.simplelatlng.LatLng;
@@ -11,12 +12,12 @@ import com.javadocmd.simplelatlng.util.LengthUnit;
 import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
-import course_generator.utils.CgLog;
 
 public class WeatherHistory {
 
 	public NoaaDailyNormals dailyNormals;
-	private ArrayList<NoaaDailySummary> previousDailySummaries;
+	public ArrayList<NoaaDailyNormals> previousDailySummaries;
+	public NoaaWeatherStation weatherStation;
 	private WeatherData MonthlyNormals;
 	private CgSettings Settings;
 	private TrackData Track;
@@ -34,28 +35,24 @@ public class WeatherHistory {
 			return;
 
 		Track = track;
+		DateTime startTime = Track.data.get(0).getHour();
 
 		determineWeatherSearchArea();
 
-		// Get the start point and furthest point
-		// Create a box that includes both of the points
-		// Find the center and the distance between the center and the end of the box
+		NoaaWeatherHistoryRetriever weatherHistoryRetriever = NoaaWeatherHistoryRetriever
+				.where(searchAreaCenter, searchAreaRadius).when(startTime).forUser(Settings.getNoaaToken()).build();
 
-		// Instant time = Instant.ofEpochMilli(startTime.minusDays(PreviousYearNumber *
-		// 364).getMillis());
+		weatherStation = weatherHistoryRetriever.getWeatherStation();
+		dailyNormals = weatherHistoryRetriever.retrieveDailyNormals();
+		previousDailySummaries = weatherHistoryRetriever.retrieveDailySummaries();
+		// PopulateFields(weatherHistoryContent);
 
-		try {
-			String weatherHistoryContent = NoaaWeatherHistoryRetriever.where(searchAreaCenter, searchAreaRadius)
-					.when(Track.data.get(0).getHour()).forUser(Settings.getNoaaToken()).retrieve();
+		// MoonIllumination dd =
+		// MoonIllumination.compute().on(startTime.toDate()).execute();
+		// dd.getPhase();
 
-			PopulateFields();
+		UpdateTrackWeatherData();
 
-			UpdateTrackWeatherData();
-
-		} catch (Exception e) {
-			CgLog.error("WeatherData.RetrieveWeatherData : Error while retrieving the weather data '" + e.getMessage()
-					+ "'");
-		}
 	}
 
 
@@ -91,7 +88,7 @@ public class WeatherHistory {
 	}
 
 
-	private void PopulateFields() {
+	private void PopulateFields(String weatherHistoryContent) {
 
 		// TODO Deserialize each single element Dailynormals....
 
