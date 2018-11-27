@@ -216,9 +216,9 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 				return;
 			}
 
-			previousWeatherData = new WeatherHistory(settings, track);
+			previousWeatherData = new WeatherHistory(settings);
 
-			previousWeatherData.RetrieveWeatherData();
+			previousWeatherData.RetrieveWeatherData(track);
 			for (int forecastIndex = 0; forecastIndex < 3; ++forecastIndex) {
 				/*
 				 * WeatherHistory previousWeatherData = new WeatherHistory(settings, track,

@@ -22,21 +22,25 @@ import com.javadocmd.simplelatlng.util.LengthUnit;
 
 final public class NoaaWeatherHistoryRetriever {
 
-	private LatLng southWest;// The south west location of the desired geographical extent for search
-	private LatLng northEast;// The north east location of the desired geographical extent for search
-	private LatLng stationSearchStartingPoint;
 	private DateTime startDate;
 	private String noaaToken;
+
+	private LatLng searchAreaSouthWestCorner;// The south west location of the desired geographical extent for search
+	private LatLng searchAreaNorthEastCorner;// The north east location of the desired geographical extent for search
+
+	private LatLng searchAreaCenter;
+	private double searchAreaRadius;
 
 	private NoaaDailyNormals dailyNormalsData;
 
 	private final String NoaaApiUrl = "https://www.ncdc.noaa.gov/cdo-web/api/v2/";
 
 
-	private NoaaWeatherHistoryRetriever(double stationSearchStartingPointlat, double stationSearchStartingPointLon,
-			double initialSearchDistance) {
-		stationSearchStartingPoint = new LatLng(stationSearchStartingPointlat, stationSearchStartingPointLon);
-		// TODO pass the distance to search a station from ?
+	private NoaaWeatherHistoryRetriever(LatLng searchAreaCenter, double searchAreaRadius) {
+		this.searchAreaCenter = searchAreaCenter;
+		this.searchAreaRadius = searchAreaRadius;
+
+		computeSearchArea(1);
 	}
 
 
@@ -52,11 +56,8 @@ final public class NoaaWeatherHistoryRetriever {
 	 * 
 	 * @return
 	 */
-	public static NoaaWeatherHistoryRetriever where(double southWestPointLat, double southWestPointLon) {
-		// TODO Pass only the start and furthest point ?
-		// If not, the where() is useless as we can get the first point time from the
-		// track
-		return new NoaaWeatherHistoryRetriever(southWestPointLat, southWestPointLon, 1.0);
+	public static NoaaWeatherHistoryRetriever where(LatLng searchAreaCenter, double searchAreaRadius) {
+		return new NoaaWeatherHistoryRetriever(searchAreaCenter, searchAreaRadius);
 	}
 
 
@@ -91,11 +92,10 @@ final public class NoaaWeatherHistoryRetriever {
 	 *
 	 * @return the collected weather data.
 	 */
-	public WeatherHistory retrieve() {
+	public String retrieve() {
 
 		// Get the closest one.
 
-		WeatherHistory historicalWeather = new WeatherHistory();
 		// NORMAL_DLY
 		// Retrieve daily normals
 		String stationId = findClosestStation("NORMAL_DLY");
@@ -112,10 +112,7 @@ final public class NoaaWeatherHistoryRetriever {
 		// Loop and enlarge box if needed
 		// Update southWest and northEast?
 
-		WeatherHistory wh = new WeatherHistory();
-		wh.dailyNormals = dailyNormalsData;
-
-		return wh;
+		return dailyNormalsData.toString();
 	}
 
 
@@ -128,14 +125,23 @@ final public class NoaaWeatherHistoryRetriever {
 
 
 	private String findClosestStation(String dataSetId) {
-		String findWeatherStation = "stations?extent=";
-		LatLng m = LatLngTool.travel(stationSearchStartingPoint, 45, 100, LengthUnit.KILOMETER);
 
-		findWeatherStation = findWeatherStation + getExtent(stationSearchStartingPoint, m) + "&datasetid=" + dataSetId;
+		String weatherHistory = "";
+		int enlargingFactor = 1;
+		while (!weatherHistory.contains("results")) {
+			String findWeatherStation = "stations?extent=";
 
-		String weatherHistory = processNoaaRequest(findWeatherStation);
+			findWeatherStation = findWeatherStation + getExtent(searchAreaSouthWestCorner, searchAreaNorthEastCorner)
+					+ "&datasetid=" + dataSetId;
+
+			weatherHistory = processNoaaRequest(findWeatherStation);
+
+			enlargingFactor *= 2;
+			computeSearchArea(enlargingFactor);
+		}
 
 		JSONObject jsonContent = new JSONObject(weatherHistory.toString());
+
 		String attributesContent = jsonContent.get("results").toString();
 
 		ObjectMapper mapper = new ObjectMapper();
@@ -151,7 +157,7 @@ final public class NoaaWeatherHistoryRetriever {
 				LatLng station = new LatLng(Double.valueOf(current.getLatitude()),
 						Double.valueOf(current.getLongitude()));
 
-				double distance = LatLngTool.distance(station, stationSearchStartingPoint, LengthUnit.KILOMETER);
+				double distance = LatLngTool.distance(station, searchAreaCenter, LengthUnit.METER);
 				if (distance < minDistance) {
 					minDistance = distance;
 					closestStation = current;
@@ -166,11 +172,20 @@ final public class NoaaWeatherHistoryRetriever {
 	}
 
 
+	private void computeSearchArea(int enlargingFactor) {
+		// We find the south west corner of the box
+		searchAreaSouthWestCorner = LatLngTool.travel(searchAreaCenter, 225, searchAreaRadius * enlargingFactor,
+				LengthUnit.METER);
+		searchAreaNorthEastCorner = LatLngTool.travel(searchAreaCenter, 45, searchAreaRadius * enlargingFactor,
+				LengthUnit.METER);
+	}
+
+
 	private String processNoaaRequest(String parameters) {
 		StringBuffer weatherHistory = new StringBuffer();
 		try {
 			HttpClient client = HttpClientBuilder.create().build();
-			HttpGet request = new HttpGet(NoaaApiUrl + parameters);
+			HttpGet request = new HttpGet(NoaaApiUrl + parameters + "&units=metric");
 
 			// add request header
 			request.addHeader("token", noaaToken);
@@ -193,10 +208,7 @@ final public class NoaaWeatherHistoryRetriever {
 
 	private NoaaDailyNormals retrieveDailyNormals(String stationId) {
 		String datePattern = "MM-dd";
-		// Search for a weather station
-		LatLng m = LatLngTool.travel(stationSearchStartingPoint, 45, 100, LengthUnit.KILOMETER);
 
-		//
 		DateTimeFormatter fmt = DateTimeFormat.forPattern(datePattern);
 
 		String findWeatherStation = "data?datasetid=GHCND&stationid=" + stationId + "&startdate=2010-"

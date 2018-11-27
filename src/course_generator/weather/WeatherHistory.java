@@ -2,14 +2,16 @@ package course_generator.weather;
 
 import java.util.ArrayList;
 
-import org.joda.time.DateTime;
 import org.json.JSONObject;
+
+import com.javadocmd.simplelatlng.LatLng;
+import com.javadocmd.simplelatlng.LatLngTool;
+import com.javadocmd.simplelatlng.util.LengthUnit;
 
 import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgLog;
-import course_generator.utils.Utils;
 
 public class WeatherHistory {
 
@@ -18,39 +20,33 @@ public class WeatherHistory {
 	private WeatherData MonthlyNormals;
 	private CgSettings Settings;
 	private TrackData Track;
+	private LatLng searchAreaCenter;
+	private double searchAreaRadius;
 
 
-	public WeatherHistory(CgSettings settings, TrackData track) {
+	public WeatherHistory(CgSettings settings) {
 		Settings = settings;
+	}
+
+
+	public void RetrieveWeatherData(TrackData track) {
+		if (track == null)
+			return;
+
 		Track = track;
-	}
 
-
-	public WeatherHistory() {
-		// TODO Auto-generated constructor stub
-	}
-
-
-	public void RetrieveWeatherData() {
-		// TODO
-		// searchArea = CreateBox()
+		determineWeatherSearchArea();
 
 		// Get the start point and furthest point
 		// Create a box that includes both of the points
 		// Find the center and the distance between the center and the end of the box
 
-		CgData firstTrackPoint = Track.data.get(0);
-
-		DateTime startTime = new DateTime(Utils.DateTimetoSpinnerDate(firstTrackPoint.getHour()));
 		// Instant time = Instant.ofEpochMilli(startTime.minusDays(PreviousYearNumber *
 		// 364).getMillis());
 
 		try {
-			WeatherHistory weatherHistoryContent = NoaaWeatherHistoryRetriever
-					.where(firstTrackPoint.getLatitude(), firstTrackPoint.getLongitude())
-					.when(firstTrackPoint.getHour()).forUser(Settings.getNoaaToken()).retrieve();
-
-			this.dailyNormals = weatherHistoryContent.dailyNormals;
+			String weatherHistoryContent = NoaaWeatherHistoryRetriever.where(searchAreaCenter, searchAreaRadius)
+					.when(Track.data.get(0).getHour()).forUser(Settings.getNoaaToken()).retrieve();
 
 			PopulateFields();
 
@@ -60,6 +56,38 @@ public class WeatherHistory {
 			CgLog.error("WeatherData.RetrieveWeatherData : Error while retrieving the weather data '" + e.getMessage()
 					+ "'");
 		}
+	}
+
+
+	/**
+	 * is to encompass most of the track to search a weather station as close as
+	 * possible to the course
+	 */
+	private void determineWeatherSearchArea() {
+		// Looking for the furthest point of the track
+		double maxDistance = Double.MIN_VALUE;
+		LatLng furthestPoint = null;
+		LatLng startPoint = new LatLng(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
+		for (CgData dataPoint : Track.data) {
+			LatLng currentPoint = new LatLng(dataPoint.getLatitude(), dataPoint.getLongitude());
+
+			double distanceFromStart = LatLngTool.distance(startPoint, currentPoint, LengthUnit.METER);
+
+			if (distanceFromStart > maxDistance) {
+				maxDistance = distanceFromStart;
+				furthestPoint = currentPoint;
+			}
+		}
+
+		// We find the center of the box formed by the starting point and
+		// the furthest point
+
+		double distanceFromStart = LatLngTool.distance(startPoint, furthestPoint, LengthUnit.METER);
+		double bearingBetweenPoint = LatLngTool.initialBearing(startPoint, furthestPoint);
+
+		searchAreaCenter = LatLngTool.travel(startPoint, bearingBetweenPoint, distanceFromStart / 2, LengthUnit.METER);
+		searchAreaRadius = distanceFromStart / 2;
+
 	}
 
 
