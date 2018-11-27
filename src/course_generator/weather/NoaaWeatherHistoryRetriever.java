@@ -215,57 +215,28 @@ final public class NoaaWeatherHistoryRetriever {
 
 			for (NoaaData current : car) {
 				switch (current.getDatatype()) {
-				case "DLY-TMIN-NORMAL":
-					noaaDailyNormals.setTemperatureMin(current.getValue());
-					break;
-				case "DLY-TMAX-NORMAL":
-					noaaDailyNormals.setTemperatureMax(current.getValue());
-					break;
-				case "DLY-TAVG-NORMAL":
-					noaaDailyNormals.setTemperatureAverage(current.getValue());
-					break;
-				}
-			}
-
-		} catch (
-
-		IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return noaaDailyNormals;
-	}
-
-
-	private NoaaDailyNormals processDailySummaries(String dailySummariesData) {
-		JSONObject jsonContent = new JSONObject(dailySummariesData.toString());
-		String attributesContent = jsonContent.get("results").toString();
-
-		NoaaDailyNormals noaaDailyNormals = new NoaaDailyNormals();
-
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			List<NoaaData> car = mapper.readValue(attributesContent, new TypeReference<List<NoaaData>>() {
-			});
-
-			for (NoaaData current : car) {
-				switch (current.getDatatype()) {
 				case "TMIN":
+				case "DLY-TMIN-NORMAL":
+				case "MLY-TMIN-NORMAL":
 					noaaDailyNormals.setTemperatureMin(current.getValue());
 					break;
 				case "TMAX":
+				case "DLY-TMAX-NORMAL":
+				case "MLY-TMAX-NORMAL":
 					noaaDailyNormals.setTemperatureMax(current.getValue());
+					break;
+				case "DLY-TAVG-NORMAL":
+				case "MLY-TAVG-NORMAL":
+					noaaDailyNormals.setTemperatureAverage(current.getValue());
 					break;
 				case "PRCP":
 					noaaDailyNormals.setPrecipitation(current.getValue());
 					break;
 				}
+				noaaDailyNormals.setDate(DateTime.parse(current.getDate()));
 			}
 
-		} catch (
-
-		IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -303,10 +274,25 @@ final public class NoaaWeatherHistoryRetriever {
 					+ pastDate + "&enddate=" + pastDate;
 
 			String dailyNormalsData = processNoaaRequest(findWeatherStation);
-			pastDailySummaries.add(processDailySummaries(dailyNormalsData));
+			pastDailySummaries.add(processDailyNormals(dailyNormalsData));
 		}
 
 		return pastDailySummaries;
+	}
+
+
+	public NoaaDailyNormals retrieveMonthlyNormals() {
+		String datePattern = "2010-MM-01";
+
+		DateTimeFormatter fmt = DateTimeFormat.forPattern(datePattern);
+
+		String findWeatherStation = "data?datasetid=NORMAL_MLY&datatypeid=MLY-TMIN-NORMAL&datatypeid=MLY-TMAX-NORMAL&datatypeid=MLY-TAVG-NORMAL&"
+				+ "" + "stationid=" + noaaWeatherStation.getId() + "&startdate=" + fmt.print(startDate) + "&enddate="
+				+ fmt.print(startDate);
+
+		String dailyNormalsData = processNoaaRequest(findWeatherStation);
+
+		return processDailyNormals(dailyNormalsData);
 	}
 
 

@@ -17,8 +17,8 @@ public class WeatherHistory {
 
 	public NoaaDailyNormals dailyNormals;
 	public ArrayList<NoaaDailyNormals> previousDailySummaries;
+	public NoaaDailyNormals monthlyNormals;
 	public NoaaWeatherStation weatherStation;
-	private WeatherData MonthlyNormals;
 	private CgSettings Settings;
 	private TrackData Track;
 	private LatLng searchAreaCenter;
@@ -45,6 +45,7 @@ public class WeatherHistory {
 		weatherStation = weatherHistoryRetriever.getWeatherStation();
 		dailyNormals = weatherHistoryRetriever.retrieveDailyNormals();
 		previousDailySummaries = weatherHistoryRetriever.retrieveDailySummaries();
+		monthlyNormals = weatherHistoryRetriever.retrieveMonthlyNormals();
 		// PopulateFields(weatherHistoryContent);
 
 		// MoonIllumination dd =
