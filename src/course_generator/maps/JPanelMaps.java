@@ -64,6 +64,7 @@ public class JPanelMaps extends JPanel {
 	private CgSettings Settings;
 	private MapMarker CurrentPosMarker = null;
 	private MapMarker MapMarker = null;
+	private MapMarker WeatherStationMarker = null;
 	private ArrayList<Double> UndoDiff;
 	private List<JPanelMapsListener> listeners = new ArrayList<JPanelMapsListener>();
 	private JToolBar jToolBarMapViewer;
@@ -79,11 +80,13 @@ public class JPanelMaps extends JPanel {
 	private JButton btMapEat;
 	private JButton btMapDrink;
 	private JButton btMapSelect;
+	private JButton btShowWeatherStation;
 	private JPanel panelMain;
 	private JMapViewer MapViewer;
 	private OsmFileCacheTileLoader offlineTileCache;
 	private JScrollPane jScrollPanelMap;
 	private JButton btMapUndo;
+	private boolean showWeatherStation;
 
 
 	public JPanelMaps(CgSettings settings) {
@@ -343,6 +346,21 @@ public class JPanelMaps extends JPanel {
 			}
 		});
 		jToolBarMapViewer.add(btMapSelect);
+
+		// -- Show the weather station
+		btShowWeatherStation = new javax.swing.JButton();
+		btShowWeatherStation.setIcon(Utils.getIcon(this, "weather.png", Settings.MapToolbarIconSize));
+		btShowWeatherStation.setToolTipText(bundle.getString("frmMain.btMapCenterOnTrack.toolTipText"));
+		btShowWeatherStation.setFocusable(false);
+		btShowWeatherStation.setEnabled(true);
+		btShowWeatherStation.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ShowHideWeatherStation();
+			}
+		});
+		jToolBarMapViewer.add(btShowWeatherStation);
+
+		showWeatherStation = false;
 
 	}
 
@@ -638,6 +656,24 @@ public class JPanelMaps extends JPanel {
 			// -- Display the marker at "lat,lon" position
 			RefreshMapMarker(lat, lon);
 			RefreshMapButtons();
+		}
+	}
+
+
+	private void ShowHideWeatherStation() {
+		showWeatherStation = !showWeatherStation;
+		if (showWeatherStation) {
+			if (Track.historicalWeatherData != null) {
+				if (WeatherStationMarker == null) {
+					double lat = Double.parseDouble(Track.historicalWeatherData.weatherStation.getLatitude());
+					double lon = Double.parseDouble(Track.historicalWeatherData.weatherStation.getLongitude());
+					WeatherStationMarker = new MapMarkerImg(new Coordinate(lat, lon),
+							getImage("weather.png", Settings.MapIconSize));
+				}
+				MapViewer.addMapMarker(WeatherStationMarker);
+			}
+		} else if (WeatherStationMarker != null) {
+			MapViewer.removeMapMarker(WeatherStationMarker);
 		}
 	}
 
