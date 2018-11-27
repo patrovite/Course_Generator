@@ -115,7 +115,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 
-import org.joda.time.DateTime;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.OsmFileCacheTileLoader;
 
@@ -2690,7 +2689,7 @@ public class frmMain extends javax.swing.JFrame {
 		// ---------------------------------------------------
 		panelWeather = new JPanelWeather(Settings);
 		addTab(TabbedPaneMain, panelWeather, bundle.getString("frmMain.TabWeather.tabTitle"),
-				Utils.getIcon(this, "stat.png", Settings.TabIconSize));
+				Utils.getIcon(this, "weather.png", Settings.TabIconSize));
 
 		// -- Tab - Analysis
 		// ----------------------------------------------------
@@ -3076,8 +3075,6 @@ public class frmMain extends javax.swing.JFrame {
 		panelMap.RefreshTrack(Track, true);
 
 		// Refresh weather
-		CgData firstTrackPoint = Track.data.get(0);
-		DateTime startTime = firstTrackPoint.getHour();
 		panelWeather.refresh(Track, false);
 
 		bNoBackup = true;
@@ -3196,9 +3193,6 @@ public class frmMain extends javax.swing.JFrame {
 		panelMap.RefreshTrack(Track, true);
 
 		// Refresh weather
-		CgData firstTrackPoint = Track.data.get(0);
-		DateTime startTime = firstTrackPoint.getHour();
-		// TODO duplicated code line 3081
 		panelWeather.refresh(Track, false);
 
 		RefreshMruCGX();
