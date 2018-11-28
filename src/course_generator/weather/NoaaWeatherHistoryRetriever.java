@@ -135,7 +135,13 @@ final public class NoaaWeatherHistoryRetriever {
 	private NoaaWeatherStation findClosestStation(String dataSetId) {
 
 		String findWeatherStation = "stations?extent=" + getExtent(searchAreaSouthWestCorner, searchAreaNorthEastCorner)
-				+ "&datasetid=" + dataSetId;
+				+ "&datasetid=" + dataSetId + "&limit=1000";
+
+		int startDate2 = Integer.valueOf(startDate.getYear()) - 3;
+		String startDate3 = String.valueOf(startDate2);
+		if (dataSetId == "GHCND")
+			findWeatherStation = findWeatherStation + "&startdate=" + startDate3 + "-01-01" + "&enddate="
+					+ startDate.getYear() + "-12-31";
 
 		String weatherHistory = processNoaaRequest(findWeatherStation);
 
@@ -170,7 +176,8 @@ final public class NoaaWeatherHistoryRetriever {
 							+ dataSetId + "\n" + e.getMessage());
 
 		}
-
+		// TODO DOUBLE CHECK THAT A REQUEST WILL ACTUALLY GIVE DATA< OTHERWISE< WE NEED
+		// ANOTHER ONE
 		closestStation.setDistanceFromStart(minDistance);
 
 		return closestStation;
@@ -267,10 +274,14 @@ final public class NoaaWeatherHistoryRetriever {
 					+ "&startdate=" + pastDate + "&enddate=" + pastDate;
 
 			String dailyNormalsData = processNoaaRequest(findWeatherStation);
+			NoaaDailyNormals toto = new NoaaDailyNormals();
 			if (!dailyNormalsData.contains("results"))
-				pastDailySummaries.add(new NoaaDailyNormals());
-			else
-				pastDailySummaries.add(processDailyNormals(dailyNormalsData));
+				pastDailySummaries.add(toto);
+			else {
+				toto = processDailyNormals(dailyNormalsData);
+				toto.setDate(time.toDateTime());
+				pastDailySummaries.add(toto);
+			}
 		}
 
 		return pastDailySummaries;

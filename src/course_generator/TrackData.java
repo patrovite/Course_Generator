@@ -43,6 +43,8 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
 
@@ -1886,7 +1888,12 @@ public class TrackData {
 				for (int i = 0; i < 3; i++) {
 					NoaaDailyNormals currentDailySummary = historicalWeatherData.previousDailySummaries.get(i);
 					writer.writeStartElement("DAILY_SUMMARY");
-					// TODO DATE
+
+					String datePattern = "yyyy-MM-dd";
+					DateTimeFormatter fmt = DateTimeFormat.forPattern(datePattern);
+
+					Utils.WriteStringToXML(writer, "DATE", fmt.print(currentDailySummary.getDate()));
+
 					Utils.WriteStringToXML(writer, "TEMPERATUREMAX", currentDailySummary.getTemperatureMax());
 					Utils.WriteStringToXML(writer, "TEMPERATUREMIN", currentDailySummary.getTemperatureMin());
 					Utils.WriteStringToXML(writer, "TEMPERATUREAVG", currentDailySummary.getTemperatureAverage());
@@ -1910,7 +1917,6 @@ public class TrackData {
 						historicalWeatherData.dailyNormals.getTemperatureMin());
 				Utils.WriteStringToXML(writer, "TEMPERATUREAVG",
 						historicalWeatherData.dailyNormals.getTemperatureAverage());
-				Utils.WriteStringToXML(writer, "PRECIPITATION", historicalWeatherData.dailyNormals.getPrecipitation());
 				writer.writeEndElement();// "NORMALS_DAILY"
 				writer.writeStartElement("NORMALS_MONTHLY");
 				Utils.WriteStringToXML(writer, "TEMPERATUREMAX",
