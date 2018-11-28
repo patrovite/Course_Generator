@@ -21,6 +21,8 @@ public class NoaaWeatherStation {
 
 	private double distanceFromStart;
 
+	public final static String STATIONID = "STATIONID";
+
 
 	public String getId() {
 		return id;

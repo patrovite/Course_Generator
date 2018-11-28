@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
@@ -36,8 +37,13 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.javadocmd.simplelatlng.LatLng;
+
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
+import course_generator.weather.NoaaDailyNormals;
+import course_generator.weather.NoaaWeatherStation;
+import course_generator.weather.WeatherHistory;
 
 public class SaxCGXHandler extends DefaultHandler {
 	private java.util.ResourceBundle bundle = null;
@@ -96,21 +102,11 @@ public class SaxCGXHandler extends DefaultHandler {
 	private int trkpt_FontSizemrb = 0;
 
 	// Historical weather data
-	private long weather_time;
-	private String weather_timezone;
-	private String weather_summary;
-	private String weather_icon;
-	private double weather_moonPhase;
-	private String weather_precipType;
-	private double weather_temperatureHigh;
-	private long weather_temperatureHighTime;
-	private double weather_temperatureLow;
-	private long weather_temperatureLowTime;
-	private double weather_apparentTemperatureHigh;
-	private long weather_apparentTemperatureHighTime;
-	private double weather_apparentTemperatureLow;
-	private long weather_apparentTemperatureLowTime;
-	private double weather_windSpeed;
+	private NoaaWeatherStation noaaNormalsWeatherStation;
+	private NoaaWeatherStation noaaSummariesWeatherStation;
+	private NoaaDailyNormals dailyNormals;
+	private ArrayList<NoaaDailyNormals> previousDailySummaries;
+	private NoaaDailyNormals monthlyNormals;
 
 	// private int trk_nb=0;
 	// private int trkseg_nb=0;
@@ -121,7 +117,8 @@ public class SaxCGXHandler extends DefaultHandler {
 	private String levelName;
 	private final String LEVEL_COURSEGENERATOR = "COURSEGENERATOR";
 	private final String LEVEL_TRACKPOINT = "TRACKPOINT";
-	private final String LEVEL_WEATHER = "HISTORICAL_WEATHER_DATA_POINT";
+	private final String LEVEL_WEATHER_DAILY_SUMMARIES = "DAILY_SUMMARIES";
+	private final String LEVEL_WEATHER_NORMALS = "NORMALS";
 
 	private TrackData trkdata;
 	private int mode = 0;
@@ -206,6 +203,8 @@ public class SaxCGXHandler extends DefaultHandler {
 		// errcode=ERR_READ_NO;
 		Cmpt = 0;
 		old_time = 0;
+		noaaNormalsWeatherStation = new NoaaWeatherStation();
+		noaaSummariesWeatherStation = new NoaaWeatherStation();
 
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser = factory.newSAXParser();
@@ -249,7 +248,8 @@ public class SaxCGXHandler extends DefaultHandler {
 		if (qName.equalsIgnoreCase("COURSEGENERATOR")) {
 			level++;
 			levelName = qName;
-		} else if (qName.equalsIgnoreCase("TRACKPOINT") || qName.equalsIgnoreCase("HISTORICAL_WEATHER_DATA_POINT")) {
+		} else if (qName.equalsIgnoreCase("TRACKPOINT") || qName.equalsIgnoreCase("DAILY_SUMMARIES")
+				|| qName.equalsIgnoreCase("NORMALS")) {
 			// trk_nb++;
 			level++;
 			levelName = qName;
@@ -628,53 +628,52 @@ public class SaxCGXHandler extends DefaultHandler {
 				old_time = trkpt_timesecond;
 			}
 		} // End LEVEL_TRACKPOINT
-		else if (level == 2 && levelName.equals(LEVEL_WEATHER)) {
-			if (qName.equalsIgnoreCase("TIME")) {
-				weather_time = ManageLong(0, ERR_READ_LONG);
+		else if (level == 2 && levelName.equals(LEVEL_WEATHER_DAILY_SUMMARIES)) {
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.STATIONID)) {
+				noaaSummariesWeatherStation.setId(ManageString());
 			}
-			if (qName.equalsIgnoreCase("TIMEZONE")) {
-				weather_timezone = ManageString();
-			} else if (qName.equalsIgnoreCase("SUMMARY")) {
-				weather_summary = ManageString();
-			} else if (qName.equalsIgnoreCase("ICON")) {
-				weather_icon = ManageString();
-			} else if (qName.equalsIgnoreCase("MOON_PHASE")) {
-				weather_moonPhase = ManageDouble(0.0, ERR_READ_DOUBLE);
-			} else if (qName.equalsIgnoreCase("PRECIPITATION_TYPE")) {
-				weather_precipType = ManageString();
-			} else if (qName.equalsIgnoreCase("HIGH_TEMPERATURE")) {
-				weather_temperatureHigh = ManageDouble(0.0, ERR_READ_DOUBLE);
-			} else if (qName.equalsIgnoreCase("HIGH_TEMPERATURE_TIME")) {
-				weather_temperatureHighTime = ManageLong(0, ERR_READ_LONG);
-			} else if (qName.equalsIgnoreCase("LOW_TEMPERATURE")) {
-				weather_temperatureLow = ManageDouble(0.0, ERR_READ_DOUBLE);
-			} else if (qName.equalsIgnoreCase("LOW_TEMPERATURE_TIME")) {
-				weather_temperatureLowTime = ManageLong(0, ERR_READ_LONG);
-			} else if (qName.equalsIgnoreCase("APPARENT_HIGH_TEMPERATURE")) {
-				weather_apparentTemperatureHigh = ManageDouble(0.0, ERR_READ_DOUBLE);
-			} else if (qName.equalsIgnoreCase("APPARENT_HIGH_TEMPERATURE_TIME")) {
-				weather_apparentTemperatureHighTime = ManageLong(0, ERR_READ_LONG);
-			} else if (qName.equalsIgnoreCase("APARENT_LOW_TEMPERATURE")) {
-				weather_apparentTemperatureLow = ManageDouble(0.0, ERR_READ_DOUBLE);
-			} else if (qName.equalsIgnoreCase("APARENT_LOW_TEMPERATURE_TIME")) {
-				weather_apparentTemperatureLowTime = ManageLong(0, ERR_READ_LONG);
-			} else if (qName.equalsIgnoreCase("WIND_SPEED")) {
-				weather_windSpeed = ManageDouble(0.0, ERR_READ_DOUBLE);
-
-			} else if (qName.equalsIgnoreCase("HISTORICAL_WEATHER_DATA_POINT")) {
+			if (qName.equalsIgnoreCase("NAME")) {
+				noaaSummariesWeatherStation.setName(ManageString());
+			}
+			if (qName.equalsIgnoreCase("DISTANCEFROMSTART")) {
+				noaaSummariesWeatherStation.setDistanceFromStart(ManageDouble(0.0, ERR_READ_DOUBLE));
+			}
+			if (qName.equalsIgnoreCase("LATITUDE")) {
+				noaaSummariesWeatherStation.setLatitude(ManageString());
+			}
+			if (qName.equalsIgnoreCase("LONGITUDE")) {
+				noaaSummariesWeatherStation.setLongitude(ManageString());
+			} else if (qName.equalsIgnoreCase("DAILY_SUMMARIES"))
 				level--;
-				/*
-				 * WeatherData dailyWeatherData = new WeatherData(weather_time, weather_summary,
-				 * weather_icon, weather_moonPhase, weather_precipType, weather_temperatureHigh,
-				 * weather_temperatureHighTime, weather_temperatureLow,
-				 * weather_temperatureLowTime, weather_apparentTemperatureHigh,
-				 * weather_apparentTemperatureHighTime, weather_apparentTemperatureLow,
-				 * weather_apparentTemperatureLowTime, weather_windSpeed);
-				 * trkdata.historicWeatherData.add(new WeatherHistory(weather_timezone,
-				 * dailyWeatherData));
-				 */
+
+		} else if (level == 2 && levelName.equals(LEVEL_WEATHER_NORMALS)) {
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.STATIONID)) {
+				noaaNormalsWeatherStation.setId(ManageString());
+			}
+			if (qName.equalsIgnoreCase("NAME")) {
+				noaaNormalsWeatherStation.setName(ManageString());
+			}
+			if (qName.equalsIgnoreCase("DISTANCEFROMSTART")) {
+				noaaNormalsWeatherStation.setDistanceFromStart(ManageDouble(0.0, ERR_READ_DOUBLE));
+			}
+			if (qName.equalsIgnoreCase("LATITUDE")) {
+				noaaNormalsWeatherStation.setLatitude(ManageString());
+			}
+			if (qName.equalsIgnoreCase("LONGITUDE")) {
+				noaaNormalsWeatherStation.setLongitude(ManageString());
+			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
+				level--;
+
+				WeatherHistory dailyWeatherData = new WeatherHistory(dailyNormals, previousDailySummaries,
+						monthlyNormals, noaaNormalsWeatherStation, noaaSummariesWeatherStation, new LatLng(0.0, 0.0),
+						0.0);
+				trkdata.setHistoricalWeather(dailyWeatherData);
 
 			}
+		}
+		if (level == 2 && levelName != "TRACKPOINT") {
+			int toto = 2;
+			int tata = toto;
 		}
 	}
 

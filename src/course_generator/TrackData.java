@@ -70,6 +70,7 @@ import course_generator.utils.StatData;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
 import course_generator.weather.NoaaDailyNormals;
+import course_generator.weather.NoaaWeatherStation;
 import course_generator.weather.WeatherHistory;
 
 /**
@@ -1749,8 +1750,6 @@ public class TrackData {
 		CheckTimeLimit();
 		isCalculated = true;
 
-		setHistoricalWeather(new WeatherHistory(Settings));
-
 		if (!backup) {
 			Name = new File(name).getName();
 			switch (mode) {
@@ -1879,8 +1878,13 @@ public class TrackData {
 				writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINTS");
 				writer.writeStartElement("DAILY_SUMMARIES");
 				writer.writeStartElement("WEATHER_STATION");
-				Utils.WriteStringToXML(writer, "STATIONID", historicalWeatherData.noaaSummariesWeatherStation.getId());
+				Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID,
+						historicalWeatherData.noaaSummariesWeatherStation.getId());
 				Utils.WriteStringToXML(writer, "NAME", historicalWeatherData.noaaSummariesWeatherStation.getName());
+				Utils.WriteStringToXML(writer, "LATITUDE",
+						historicalWeatherData.noaaSummariesWeatherStation.getLatitude());
+				Utils.WriteStringToXML(writer, "LONGITUDE",
+						historicalWeatherData.noaaSummariesWeatherStation.getLongitude());
 				Utils.WriteDoubleToXML(writer, "DISTANCEFROMSTART",
 						historicalWeatherData.noaaSummariesWeatherStation.getDistanceFromStart());
 				writer.writeEndElement();// "WEATHER_STATION"
@@ -1906,6 +1910,10 @@ public class TrackData {
 				writer.writeStartElement("WEATHER_STATION");
 				Utils.WriteStringToXML(writer, "STATIONID", historicalWeatherData.noaaNormalsWeatherStation.getId());
 				Utils.WriteStringToXML(writer, "NAME", historicalWeatherData.noaaNormalsWeatherStation.getName());
+				Utils.WriteStringToXML(writer, "LATITUDE",
+						historicalWeatherData.noaaNormalsWeatherStation.getLatitude());
+				Utils.WriteStringToXML(writer, "LONGITUDE",
+						historicalWeatherData.noaaNormalsWeatherStation.getLongitude());
 				Utils.WriteDoubleToXML(writer, "DISTANCEFROMSTART",
 						historicalWeatherData.noaaNormalsWeatherStation.getDistanceFromStart());
 				writer.writeEndElement();// "WEATHER_STATION"

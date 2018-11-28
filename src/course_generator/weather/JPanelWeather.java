@@ -34,7 +34,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
@@ -202,7 +201,6 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 
 		UpdatePanel();
 
-		ArrayList<WeatherHistory> previousWeatherHistory = new ArrayList<WeatherHistory>();
 		WeatherHistory previousWeatherData = null;
 		if (retrieveOnlineData) {
 
@@ -229,7 +227,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 			}
 		} else {
 			// If exists, get the historical weather from the CGX course
-			// previousWeatherHistory = track.getHistoricalWeather();
+			previousWeatherData = track.getHistoricalWeather();
 		}
 
 		// if (previousWeatherHistory.isEmpty()) {
@@ -292,12 +290,15 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 
 		// HISTORICAL WEATHER DATA titles
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@200", "HISTORICAL WEATHER DATA");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@201",
-				displayDateTime(previousWeatherData.previousDailySummaries.get(0).getDate(), "EE yyyy-MM-dd"));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@202",
-				displayDateTime(previousWeatherData.previousDailySummaries.get(1).getDate(), "EE yyyy-MM-dd"));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@203",
-				displayDateTime(previousWeatherData.previousDailySummaries.get(2).getDate(), "EE yyyy-MM-dd"));
+		if (previousWeatherData.previousDailySummaries != null
+				&& !previousWeatherData.previousDailySummaries.isEmpty()) {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@201",
+					displayDateTime(previousWeatherData.previousDailySummaries.get(0).getDate(), "EE yyyy-MM-dd"));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@202",
+					displayDateTime(previousWeatherData.previousDailySummaries.get(1).getDate(), "EE yyyy-MM-dd"));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@203",
+					displayDateTime(previousWeatherData.previousDailySummaries.get(2).getDate(), "EE yyyy-MM-dd"));
+		}
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@204", "Daily normals");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@205", "Monthly average");
 
@@ -317,7 +318,8 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@113", "12h");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@114", "78%");
 
-		if (!previousWeatherData.previousDailySummaries.isEmpty()) {
+		if (previousWeatherData.previousDailySummaries != null
+				&& !previousWeatherData.previousDailySummaries.isEmpty()) {
 			// Year -1
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@220",
 					displayTemperature(previousWeatherData.previousDailySummaries.get(0).getTemperatureMax()));

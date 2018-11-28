@@ -30,6 +30,19 @@ public class WeatherHistory {
 	}
 
 
+	public WeatherHistory(NoaaDailyNormals dailyNormals, ArrayList<NoaaDailyNormals> previousDailySummaries,
+			NoaaDailyNormals monthlyNormals, NoaaWeatherStation noaaNormalsWeatherStation,
+			NoaaWeatherStation noaaSummariesWeatherStation, LatLng searchAreaCenter, double searchAreaRadius) {
+		this.dailyNormals = dailyNormals;
+		this.previousDailySummaries = previousDailySummaries;
+		this.monthlyNormals = monthlyNormals;
+		this.noaaNormalsWeatherStation = noaaNormalsWeatherStation;
+		this.noaaSummariesWeatherStation = noaaSummariesWeatherStation;
+		this.searchAreaCenter = searchAreaCenter;
+		this.searchAreaRadius = searchAreaRadius;
+	}
+
+
 	public void RetrieveWeatherData(TrackData track) {
 		if (track == null)
 			return;
