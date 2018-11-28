@@ -17,7 +17,8 @@ public class WeatherHistory {
 	public NoaaDailyNormals dailyNormals;
 	public ArrayList<NoaaDailyNormals> previousDailySummaries;
 	public NoaaDailyNormals monthlyNormals;
-	public NoaaWeatherStation weatherStation;
+	public NoaaWeatherStation noaaNormalsWeatherStation;
+	public NoaaWeatherStation noaaSummariesWeatherStation;
 	private CgSettings Settings;
 	private TrackData Track;
 	private LatLng searchAreaCenter;
@@ -41,7 +42,8 @@ public class WeatherHistory {
 		NoaaWeatherHistoryRetriever weatherHistoryRetriever = NoaaWeatherHistoryRetriever
 				.where(searchAreaCenter, searchAreaRadius).when(startTime).forUser(Settings.getNoaaToken()).build();
 
-		weatherStation = weatherHistoryRetriever.getWeatherStation();
+		noaaNormalsWeatherStation = weatherHistoryRetriever.getNoaaNormalsWeatherStation();
+		noaaSummariesWeatherStation = weatherHistoryRetriever.getNoaaSummariesWeatherStation();
 		dailyNormals = weatherHistoryRetriever.retrieveDailyNormals();
 		previousDailySummaries = weatherHistoryRetriever.retrieveDailySummaries();
 		monthlyNormals = weatherHistoryRetriever.retrieveMonthlyNormals();

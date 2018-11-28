@@ -143,7 +143,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			}
 		}
 		if (evt.getPropertyName().equals("HistoricalWeatherDataChanged")) {
-			if (Track.historicalWeatherData.weatherStation == null) {
+			if (Track.historicalWeatherData.noaaSummariesWeatherStation == null) {
 				btShowWeatherStation.setEnabled(false);
 
 			} else {
@@ -753,10 +753,12 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	private void ShowHideWeatherStation() {
 		showWeatherStation = !showWeatherStation;
 		if (showWeatherStation) {
-			if (Track.historicalWeatherData.weatherStation != null) {
+			if (Track.historicalWeatherData.noaaSummariesWeatherStation != null) {
 				if (WeatherStationMarker == null) {
-					double lat = Double.parseDouble(Track.historicalWeatherData.weatherStation.getLatitude());
-					double lon = Double.parseDouble(Track.historicalWeatherData.weatherStation.getLongitude());
+					double lat = Double
+							.parseDouble(Track.historicalWeatherData.noaaSummariesWeatherStation.getLatitude());
+					double lon = Double
+							.parseDouble(Track.historicalWeatherData.noaaSummariesWeatherStation.getLongitude());
 					WeatherStationMarker = new MapMarkerImg(new Coordinate(lat, lon),
 							getImage("weather.png", Settings.MapIconSize));
 				}

@@ -64,6 +64,11 @@
 	           BACKGROUND-COLOR: #ffffff;
 	           TEXT-ALIGN: left;
 	       }
+	       span.grayout 
+	       {
+   				 opacity: 0.6; /* Real browsers */
+    			filter: alpha(opacity = 60); /* MSIE */
+			}
 	       P
 	       {
 	           FONT-SIZE: 14pt;
@@ -94,12 +99,13 @@
 				</td><!-- HISTORICAL WEATHER DATA -->
 			</tr>
 			<tr>
-				<td><span class="item">@101</span></td><!-- Date -->
+				<td><span class="item">@101</span></td>
 				<td colspan="2">@110</td>
-				<td><span class="item">@201</span></td><!-- Daily Normals -->
-				<td><span class="item">@202</span></td><!-- Year -1 -->
-				<td><span class="item">@203</span></td><!-- Year -2 -->
-				<td><span class="item">@204</span></td><!-- Year -3 -->
+				<td></td>
+				<td><span class="item">@201</span></td><!-- Year - 1 -->
+				<td><span class="item">@202</span></td><!-- Year - 2 -->
+				<td><span class="item">@203</span></td><!-- Year - 3 -->
+				<td><span class="item">@204</span></td><!-- Daily Normals -->
 				<td><span class="item">@205</span></td><!-- Monthly normals -->
 			</tr>
 			<tr>
@@ -114,9 +120,8 @@
 				<td><span class="value">@224</span></td>
 			</tr>
 			<tr>
-				<td><span class="item">@103</span></td><!-- Daylight hours -->
-				<td>@113</td>
-				<td></td>
+				<td><span class="item">@103</span></td>
+				<td colspan="2">@113</td>
 				<td><span class="item">@207</span></td><!-- Temperature Min -->
 				<td><span class="value">@225</span></td>
 				<td><span class="value">@226</span></td>
@@ -125,7 +130,7 @@
 				<td><span class="value">@229</span></td>
 			</tr>
 			<tr>
-				<td><span class="item">@104</span></td><!-- Moon phase -->
+				<td><span class="item">@104</span></td>
 				<td>@114</td>
 				<td></td>
 				<td><span class="item">@208</span></td><!-- Temperature Avg -->
@@ -136,29 +141,25 @@
 				<td><span class="value">@234</span></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><span class="item">@209</span></td><!-- Precip -->
+				<td colspan="3"></td>
+				<td><span class="item">@209</span></td>
 				<td><span class="value">@235</span></td>
 				<td><span class="value">@236</span></td>
 				<td><span class="value">@237</span></td>
-				<td><span class="value">@238</span></td>
-				<td><span class="value">@239</span></td>
+				<td bgcolor="gray"><span class="value">@238</span></td>
+				<td bgcolor="#ff0000"><span class="value">@239</span></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><span class="item">@211</span></td><!-- Weather station name -->
-				<td colspan="5"><span class="value">@244</span></td>
+				<td colspan="3"></td>
+				<td><span class="item">@211</span></td>
+				<td colspan="3"><span class="value">@244</span></td>
+				<td colspan="2"><span class="value">@245</span></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><span class="item">@212</span></td><!-- Distance from start -->
-				<td colspan="5"><span class="value">@245</span></td>
+				<td colspan="3"></td>
+				<td><span class="item">@212</span></td>
+				<td colspan="3"><span class="value">@246</span></td>
+				<td colspan="2"><span class="value">@247</span></td>
 			</tr>
 		</tbody>
 	</table>

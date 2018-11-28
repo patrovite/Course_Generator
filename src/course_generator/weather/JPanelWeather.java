@@ -292,14 +292,15 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 
 		// HISTORICAL WEATHER DATA titles
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@200", "HISTORICAL WEATHER DATA");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@201", "Daily normals");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@202",
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@201",
 				displayDateTime(previousWeatherData.previousDailySummaries.get(0).getDate(), "EE yyyy-MM-dd"));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@203",
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@202",
 				displayDateTime(previousWeatherData.previousDailySummaries.get(1).getDate(), "EE yyyy-MM-dd"));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@204",
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@203",
 				displayDateTime(previousWeatherData.previousDailySummaries.get(2).getDate(), "EE yyyy-MM-dd"));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@204", "Daily normals");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@205", "Monthly average");
+
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@206", "TMax");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@207", "TAvg");
 		// TODO SWAP ????
@@ -316,65 +317,93 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@113", "12h");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@114", "78%");
 
+		if (!previousWeatherData.previousDailySummaries.isEmpty()) {
+			// Year -1
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@220",
+					displayTemperature(previousWeatherData.previousDailySummaries.get(0).getTemperatureMax()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@225",
+					displayTemperature(previousWeatherData.previousDailySummaries.get(0).getTemperatureAverage()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@230",
+					displayTemperature(previousWeatherData.previousDailySummaries.get(0).getTemperatureMin()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@235",
+					displayDouble(previousWeatherData.previousDailySummaries.get(0).getPrecipitation()));
+
+			// Year -2
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@221",
+					displayTemperature(previousWeatherData.previousDailySummaries.get(1).getTemperatureMax()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@226",
+					displayTemperature(previousWeatherData.previousDailySummaries.get(1).getTemperatureAverage()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@231",
+					displayTemperature(previousWeatherData.previousDailySummaries.get(1).getTemperatureMin()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@236",
+					displayDouble(previousWeatherData.previousDailySummaries.get(1).getPrecipitation()));
+
+			// Year -3
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@222",
+					displayTemperature(previousWeatherData.previousDailySummaries.get(2).getTemperatureMax()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@227",
+					displayTemperature(previousWeatherData.previousDailySummaries.get(2).getTemperatureAverage()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@232",
+					displayTemperature(previousWeatherData.previousDailySummaries.get(2).getTemperatureMin()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@237",
+					displayDouble(previousWeatherData.previousDailySummaries.get(2).getPrecipitation()));
+		}
+
 		// Daily normals
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@220",
-				displayTemperature(previousWeatherData.dailyNormals.getTemperatureMax()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@225",
-				displayTemperature(previousWeatherData.dailyNormals.getTemperatureAverage()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@230",
-				displayTemperature(previousWeatherData.dailyNormals.getTemperatureMin()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@235",
-				displayDouble(previousWeatherData.dailyNormals.getPrecipitation()));
-
-		// Year -1
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@221",
-				displayTemperature(previousWeatherData.previousDailySummaries.get(0).getTemperatureMax()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@226",
-				displayTemperature(previousWeatherData.previousDailySummaries.get(0).getTemperatureAverage()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@231",
-				displayTemperature(previousWeatherData.previousDailySummaries.get(0).getTemperatureMin()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@236",
-				displayDouble(previousWeatherData.previousDailySummaries.get(0).getPrecipitation()));
-
-		// Year -2
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@222",
-				displayTemperature(previousWeatherData.previousDailySummaries.get(1).getTemperatureMax()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@227",
-				displayTemperature(previousWeatherData.previousDailySummaries.get(1).getTemperatureAverage()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@232",
-				displayTemperature(previousWeatherData.previousDailySummaries.get(1).getTemperatureMin()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@237",
-				displayDouble(previousWeatherData.previousDailySummaries.get(1).getPrecipitation()));
-
-		// Year -3
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@223",
-				displayTemperature(previousWeatherData.previousDailySummaries.get(2).getTemperatureMax()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@228",
-				displayTemperature(previousWeatherData.previousDailySummaries.get(2).getTemperatureAverage()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@233",
-				displayTemperature(previousWeatherData.previousDailySummaries.get(2).getTemperatureMin()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@238",
-				displayDouble(previousWeatherData.previousDailySummaries.get(2).getPrecipitation()));
+		if (previousWeatherData.dailyNormals != null) {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@223",
+					displayTemperature(previousWeatherData.dailyNormals.getTemperatureMax()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@228",
+					displayTemperature(previousWeatherData.dailyNormals.getTemperatureAverage()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@233",
+					displayTemperature(previousWeatherData.dailyNormals.getTemperatureMin()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@238",
+					displayDouble(previousWeatherData.dailyNormals.getPrecipitation()));
+		}
 
 		// Monthly normals
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@224",
-				displayTemperature(previousWeatherData.monthlyNormals.getTemperatureMax()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@229",
-				displayTemperature(previousWeatherData.monthlyNormals.getTemperatureAverage()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@234",
-				displayTemperature(previousWeatherData.monthlyNormals.getTemperatureMin()));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@239",
-				displayTemperature(previousWeatherData.monthlyNormals.getPrecipitation()));
+		if (previousWeatherData.monthlyNormals != null) {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@224",
+					displayTemperature(previousWeatherData.monthlyNormals.getTemperatureMax()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@229",
+					displayTemperature(previousWeatherData.monthlyNormals.getTemperatureAverage()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@234",
+					displayTemperature(previousWeatherData.monthlyNormals.getTemperatureMin()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@239",
+					displayTemperature(previousWeatherData.monthlyNormals.getPrecipitation()));
+		}
 
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@244", previousWeatherData.weatherStation.getName());
+		if (previousWeatherData.noaaSummariesWeatherStation != null) {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@244",
+					previousWeatherData.noaaSummariesWeatherStation.getName());
 
-		double distanceFromStart = previousWeatherData.weatherStation.getDistanceFromStart();
-		String distance = "";
-		if (settings.Unit == CgConst.UNIT_MILES_FEET)
-			distanceFromStart = Utils.Meter2uMiles(distanceFromStart) / 1000.0;
+			double distanceFromStart = previousWeatherData.noaaSummariesWeatherStation.getDistanceFromStart();
+			String distance = "";
+			if (settings.Unit == CgConst.UNIT_MILES_FEET)
+				distanceFromStart = Utils.Meter2uMiles(distanceFromStart) / 1000.0;
 
-		distance = String.format("%.0f", distanceFromStart);
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@245", distance + " " + Utils.uLDist2String(settings.Unit));
+			distance = String.format("%.0f", distanceFromStart);
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@246", distance + " " + Utils.uLDist2String(settings.Unit));
+		} else {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@244", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@246", "");
+		}
+
+		if (previousWeatherData.noaaNormalsWeatherStation != null) {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@245",
+					previousWeatherData.noaaNormalsWeatherStation.getName());
+
+			double distanceFromStart = previousWeatherData.noaaNormalsWeatherStation.getDistanceFromStart();
+			String distance = "";
+			if (settings.Unit == CgConst.UNIT_MILES_FEET)
+				distanceFromStart = Utils.Meter2uMiles(distanceFromStart) / 1000.0;
+
+			distance = String.format("%.0f", distanceFromStart);
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@247", distance + " " + Utils.uLDist2String(settings.Unit));
+		} else {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@245", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@247", "");
+		}
 
 		return sheetSkeleton.toString();
 	}
