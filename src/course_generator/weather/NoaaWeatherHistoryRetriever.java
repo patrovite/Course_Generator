@@ -214,18 +214,18 @@ final public class NoaaWeatherHistoryRetriever {
 	}
 
 
-	private NoaaDailyNormals processDailyNormals(String dailyNormalsData) {
+	private NoaaWeatherData processDailyNormals(String dailyNormalsData) {
 		JSONObject jsonContent = new JSONObject(dailyNormalsData.toString());
 		String attributesContent = jsonContent.get("results").toString();
 
-		NoaaDailyNormals noaaDailyNormals = new NoaaDailyNormals();
+		NoaaWeatherData noaaDailyNormals = new NoaaWeatherData();
 		// Function to set the date ?
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			List<NoaaData> car = mapper.readValue(attributesContent, new TypeReference<List<NoaaData>>() {
+			List<NoaaResults> car = mapper.readValue(attributesContent, new TypeReference<List<NoaaResults>>() {
 			});
 
-			for (NoaaData current : car) {
+			for (NoaaResults current : car) {
 				switch (current.getDatatype()) {
 				case "TMIN":
 				case "DLY-TMIN-NORMAL":
@@ -257,11 +257,11 @@ final public class NoaaWeatherHistoryRetriever {
 	}
 
 
-	public ArrayList<NoaaDailyNormals> retrieveDailySummaries() {
+	public ArrayList<NoaaWeatherData> retrieveDailySummaries() {
 		if (noaaSummariesWeatherStation == null)
 			return null;
 
-		ArrayList<NoaaDailyNormals> pastDailySummaries = new ArrayList<NoaaDailyNormals>();
+		ArrayList<NoaaWeatherData> pastDailySummaries = new ArrayList<NoaaWeatherData>();
 
 		for (int pastYearNumber = 1; pastYearNumber < 4; ++pastYearNumber) {
 			Instant time = Instant.ofEpochMilli(startDate.minusDays(pastYearNumber * 364).getMillis());
@@ -274,7 +274,7 @@ final public class NoaaWeatherHistoryRetriever {
 					+ "&startdate=" + pastDate + "&enddate=" + pastDate;
 
 			String dailyNormalsData = processNoaaRequest(findWeatherStation);
-			NoaaDailyNormals toto = new NoaaDailyNormals();
+			NoaaWeatherData toto = new NoaaWeatherData();
 			if (!dailyNormalsData.contains("results"))
 				pastDailySummaries.add(toto);
 			else {
@@ -288,7 +288,7 @@ final public class NoaaWeatherHistoryRetriever {
 	}
 
 
-	public NoaaDailyNormals retrieveDailyNormals() {
+	public NoaaWeatherData retrieveDailyNormals() {
 		if (noaaNormalsWeatherStation == null)
 			return null;
 
@@ -302,13 +302,13 @@ final public class NoaaWeatherHistoryRetriever {
 
 		String dailyNormalsData = processNoaaRequest(findWeatherStation);
 		if (!dailyNormalsData.contains("results"))
-			return new NoaaDailyNormals();
+			return new NoaaWeatherData();
 
 		return processDailyNormals(dailyNormalsData);
 	}
 
 
-	public NoaaDailyNormals retrieveMonthlyNormals() {
+	public NoaaWeatherData retrieveMonthlyNormals() {
 		if (noaaNormalsWeatherStation == null)
 			return null;
 
@@ -322,7 +322,7 @@ final public class NoaaWeatherHistoryRetriever {
 
 		String dailyNormalsData = processNoaaRequest(findWeatherStation);
 		if (!dailyNormalsData.contains("results"))
-			return new NoaaDailyNormals();
+			return new NoaaWeatherData();
 
 		return processDailyNormals(dailyNormalsData);
 	}

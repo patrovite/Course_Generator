@@ -69,7 +69,7 @@ import course_generator.utils.CgLog;
 import course_generator.utils.StatData;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
-import course_generator.weather.NoaaDailyNormals;
+import course_generator.weather.NoaaWeatherData;
 import course_generator.weather.NoaaWeatherStation;
 import course_generator.weather.WeatherHistory;
 
@@ -1890,7 +1890,7 @@ public class TrackData {
 				writer.writeEndElement();// "WEATHER_STATION"
 
 				for (int i = 0; i < 3; i++) {
-					NoaaDailyNormals currentDailySummary = historicalWeatherData.previousDailySummaries.get(i);
+					NoaaWeatherData currentDailySummary = historicalWeatherData.previousDailySummaries.get(i);
 					writer.writeStartElement("DAILY_SUMMARY");
 
 					String datePattern = "yyyy-MM-dd";

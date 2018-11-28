@@ -3,11 +3,17 @@ package course_generator.weather;
 import org.joda.time.DateTime;
 
 /**
- * A representation of the NOAA NORMAL_DLY dataset
+ * Class to store data from the NOAA GHCND, NORMAL_DLY and NORMAL_MLY datasets.
  * 
- * https://www.ncdc.noaa.gov/cdo-web/datasets
+ * Documentation : https://www.ncdc.noaa.gov/cdo-web/datasets
+ * https://www1.ncdc.noaa.gov/pub/data/cdo/documentation/GHCND_documentation.pdf
+ * https://www1.ncdc.noaa.gov/pub/data/cdo/documentation/NORMAL_DLY_documentation.pdf
+ * https://www1.ncdc.noaa.gov/pub/data/cdo/documentation/NORMAL_MLY_documentation.pdf
+ * 
+ * @author Frederic Bard
+ * 
  */
-public class NoaaDailyNormals {
+public class NoaaWeatherData {
 
 	private String TemperatureMin;
 	private String TemperatureMax;

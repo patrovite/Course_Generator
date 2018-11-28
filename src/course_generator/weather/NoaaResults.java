@@ -1,6 +1,6 @@
 package course_generator.weather;
 
-public class NoaaData {
+public class NoaaResults {
 	private String station;
 
 	private String value;

@@ -14,9 +14,9 @@ import course_generator.settings.CgSettings;
 
 public class WeatherHistory {
 
-	public NoaaDailyNormals dailyNormals;
-	public ArrayList<NoaaDailyNormals> previousDailySummaries;
-	public NoaaDailyNormals monthlyNormals;
+	public NoaaWeatherData dailyNormals;
+	public ArrayList<NoaaWeatherData> previousDailySummaries;
+	public NoaaWeatherData monthlyNormals;
 	public NoaaWeatherStation noaaNormalsWeatherStation;
 	public NoaaWeatherStation noaaSummariesWeatherStation;
 	private CgSettings Settings;
@@ -30,8 +30,8 @@ public class WeatherHistory {
 	}
 
 
-	public WeatherHistory(NoaaDailyNormals dailyNormals, ArrayList<NoaaDailyNormals> previousDailySummaries,
-			NoaaDailyNormals monthlyNormals, NoaaWeatherStation noaaNormalsWeatherStation,
+	public WeatherHistory(NoaaWeatherData dailyNormals, ArrayList<NoaaWeatherData> previousDailySummaries,
+			NoaaWeatherData monthlyNormals, NoaaWeatherStation noaaNormalsWeatherStation,
 			NoaaWeatherStation noaaSummariesWeatherStation, LatLng searchAreaCenter, double searchAreaRadius) {
 		this.dailyNormals = dailyNormals;
 		this.previousDailySummaries = previousDailySummaries;

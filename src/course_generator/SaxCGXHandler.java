@@ -41,7 +41,7 @@ import com.javadocmd.simplelatlng.LatLng;
 
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
-import course_generator.weather.NoaaDailyNormals;
+import course_generator.weather.NoaaWeatherData;
 import course_generator.weather.NoaaWeatherStation;
 import course_generator.weather.WeatherHistory;
 
@@ -104,9 +104,9 @@ public class SaxCGXHandler extends DefaultHandler {
 	// Historical weather data
 	private NoaaWeatherStation noaaNormalsWeatherStation;
 	private NoaaWeatherStation noaaSummariesWeatherStation;
-	private NoaaDailyNormals dailyNormals;
-	private ArrayList<NoaaDailyNormals> previousDailySummaries;
-	private NoaaDailyNormals monthlyNormals;
+	private NoaaWeatherData dailyNormals;
+	private ArrayList<NoaaWeatherData> previousDailySummaries;
+	private NoaaWeatherData monthlyNormals;
 
 	// private int trk_nb=0;
 	// private int trkseg_nb=0;
@@ -204,9 +204,9 @@ public class SaxCGXHandler extends DefaultHandler {
 		old_time = 0;
 		noaaNormalsWeatherStation = new NoaaWeatherStation();
 		noaaSummariesWeatherStation = new NoaaWeatherStation();
-		dailyNormals = new NoaaDailyNormals();
-		previousDailySummaries = new ArrayList<NoaaDailyNormals>();
-		monthlyNormals = new NoaaDailyNormals();
+		dailyNormals = new NoaaWeatherData();
+		previousDailySummaries = new ArrayList<NoaaWeatherData>();
+		monthlyNormals = new NoaaWeatherData();
 
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser = factory.newSAXParser();
@@ -628,7 +628,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			// }
 			else if (qName.equalsIgnoreCase("DAILY_SUMMARY")) {
 				// TODO create the dailysummary
-				NoaaDailyNormals noaaDailyNormals = new NoaaDailyNormals();
+				// NoaaDailyNormals noaaDailyNormals = new NoaaDailyNormals();
 
 				// previousDailySummaries.add(new NoaaDailyNormals())
 			} else if (qName.equalsIgnoreCase("DAILY_SUMMARIES"))
