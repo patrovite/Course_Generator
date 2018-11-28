@@ -1,7 +1,10 @@
 package course_generator.weather;
 
 /**
- *
+ * Class to store data from the NOAA stations element.
+ * 
+ * Documentation : https://www.ncdc.noaa.gov/cdo-web/webservices/v2#stations
+ * 
  * @author Frederic Bard
  */
 public class NoaaWeatherStation {
