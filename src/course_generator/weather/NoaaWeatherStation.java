@@ -1,5 +1,9 @@
 package course_generator.weather;
 
+/**
+ *
+ * @author Frederic Bard
+ */
 public class NoaaWeatherStation {
 	private String id;
 
@@ -22,6 +26,10 @@ public class NoaaWeatherStation {
 	private double distanceFromStart;
 
 	public final static String STATIONID = "STATIONID";
+	public final static String NAME = "NAME";
+	public final static String DISTANCEFROMSTART = "DISTANCEFROMSTART";
+	public final static String LATITUDE = "LATITUDE";
+	public final static String LONGITUDE = "LONGITUDE";
 
 
 	public String getId() {
@@ -123,11 +131,4 @@ public class NoaaWeatherStation {
 		this.distanceFromStart = distanceFromStart;
 	}
 
-
-	@Override
-	public String toString() {
-		return "ClassPojo [id = " + id + ", name = " + name + ", elevation = " + elevation + ", elevationUnit = "
-				+ elevationUnit + ", longitude = " + longitude + ", datacoverage = " + datacoverage + ", latitude = "
-				+ latitude + ", mindate = " + mindate + ", maxdate = " + maxdate + "]";
-	}
 }

@@ -475,22 +475,6 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 	 *            A Unix time.
 	 * @return A String containing a time information.
 	 */
-	private String displayTime(long time, String timeZone) {
-		DateTime dateTime = Utils.unixTimeToDateTime(time, timeZone);
-
-		DateTimeFormatter dtfOut = DateTimeFormat.forPattern("HH:mm");
-
-		return dtfOut.print(dateTime);
-	}
-
-
-	/**
-	 * Creates a String containing a measured time.
-	 * 
-	 * @param time
-	 *            A Unix time.
-	 * @return A String containing a time information.
-	 */
 	private String displayDateTime(DateTime date, String pattern) {
 		DateTimeFormatter dtfOut = DateTimeFormat.forPattern(pattern);
 

@@ -126,7 +126,6 @@ public class SaxCGXHandler extends DefaultHandler {
 	private int errline = 0;
 	// private final int ERR_READ_NO = 0;
 	private final int ERR_READ_DOUBLE = -1;
-	private final int ERR_READ_LONG = -1;
 	private final int ERR_READ_INT = -2;
 	private final int ERR_READ_BOOL = -3;
 	private final int ERR_READ_VERSION = -5;
@@ -205,6 +204,9 @@ public class SaxCGXHandler extends DefaultHandler {
 		old_time = 0;
 		noaaNormalsWeatherStation = new NoaaWeatherStation();
 		noaaSummariesWeatherStation = new NoaaWeatherStation();
+		dailyNormals = new NoaaDailyNormals();
+		previousDailySummaries = new ArrayList<NoaaDailyNormals>();
+		monthlyNormals = new NoaaDailyNormals();
 
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser = factory.newSAXParser();
@@ -281,29 +283,6 @@ public class SaxCGXHandler extends DefaultHandler {
 	private double ManageDouble(double _default, int _errcode) {
 		try {
 			Double d = Double.parseDouble(characters);
-			characters = "";
-			return d;
-		} catch (NumberFormatException e) {
-			// errcode = _errcode;
-			errline = locator.getLineNumber();
-			characters = "";
-			return _default;
-		}
-	}
-
-
-	/**
-	 * Parse a long element
-	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
-	 * @return Return the parsed value
-	 */
-	private long ManageLong(long _default, int _errcode) {
-		try {
-			long d = Long.parseLong(characters);
 			characters = "";
 			return d;
 		} catch (NumberFormatException e) {
@@ -632,17 +611,26 @@ public class SaxCGXHandler extends DefaultHandler {
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.STATIONID)) {
 				noaaSummariesWeatherStation.setId(ManageString());
 			}
-			if (qName.equalsIgnoreCase("NAME")) {
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.NAME)) {
 				noaaSummariesWeatherStation.setName(ManageString());
 			}
-			if (qName.equalsIgnoreCase("DISTANCEFROMSTART")) {
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.DISTANCEFROMSTART)) {
 				noaaSummariesWeatherStation.setDistanceFromStart(ManageDouble(0.0, ERR_READ_DOUBLE));
 			}
-			if (qName.equalsIgnoreCase("LATITUDE")) {
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.LATITUDE)) {
 				noaaSummariesWeatherStation.setLatitude(ManageString());
 			}
-			if (qName.equalsIgnoreCase("LONGITUDE")) {
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.LONGITUDE)) {
 				noaaSummariesWeatherStation.setLongitude(ManageString());
+			}
+			// if (qName.equalsIgnoreCase(NoaaWeatherStation.TEMPERATUREMAX)) {
+			//
+			// }
+			else if (qName.equalsIgnoreCase("DAILY_SUMMARY")) {
+				// TODO create the dailysummary
+				NoaaDailyNormals noaaDailyNormals = new NoaaDailyNormals();
+
+				// previousDailySummaries.add(new NoaaDailyNormals())
 			} else if (qName.equalsIgnoreCase("DAILY_SUMMARIES"))
 				level--;
 
@@ -650,16 +638,16 @@ public class SaxCGXHandler extends DefaultHandler {
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.STATIONID)) {
 				noaaNormalsWeatherStation.setId(ManageString());
 			}
-			if (qName.equalsIgnoreCase("NAME")) {
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.NAME)) {
 				noaaNormalsWeatherStation.setName(ManageString());
 			}
-			if (qName.equalsIgnoreCase("DISTANCEFROMSTART")) {
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.DISTANCEFROMSTART)) {
 				noaaNormalsWeatherStation.setDistanceFromStart(ManageDouble(0.0, ERR_READ_DOUBLE));
 			}
-			if (qName.equalsIgnoreCase("LATITUDE")) {
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.LATITUDE)) {
 				noaaNormalsWeatherStation.setLatitude(ManageString());
 			}
-			if (qName.equalsIgnoreCase("LONGITUDE")) {
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.LONGITUDE)) {
 				noaaNormalsWeatherStation.setLongitude(ManageString());
 			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
 				level--;
@@ -671,10 +659,7 @@ public class SaxCGXHandler extends DefaultHandler {
 
 			}
 		}
-		if (level == 2 && levelName != "TRACKPOINT") {
-			int toto = 2;
-			int tata = toto;
-		}
+
 	}
 
 
