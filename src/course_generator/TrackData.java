@@ -67,6 +67,7 @@ import course_generator.utils.CgLog;
 import course_generator.utils.StatData;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
+import course_generator.weather.NoaaDailyNormals;
 import course_generator.weather.WeatherHistory;
 
 /**
@@ -1874,40 +1875,56 @@ public class TrackData {
 
 			if (historicalWeatherData != null) {
 				writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINTS");
+				writer.writeStartElement("DAILY_SUMMARIES");
+				writer.writeStartElement("WEATHER_STATION");
+				Utils.WriteStringToXML(writer, "STATIONID", historicalWeatherData.noaaSummariesWeatherStation.getId());
+				Utils.WriteStringToXML(writer, "NAME", historicalWeatherData.noaaSummariesWeatherStation.getName());
+				Utils.WriteDoubleToXML(writer, "DISTANCEFROMSTART",
+						historicalWeatherData.noaaSummariesWeatherStation.getDistanceFromStart());
+				writer.writeEndElement();// "WEATHER_STATION"
+
 				for (int i = 0; i < 3; i++) {
-					// Daily normals
-					/*
-					 * WeatherData currentWeatherData =
-					 * historicWeatherData.get(i).getDailyWeatherData();
-					 * writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINT");
-					 * Utils.WriteLongToXML(writer, "TIME", currentWeatherData.getTime());
-					 * Utils.WriteStringToXML(writer, "TIMEZONE",
-					 * historicWeatherData.get(i).getTimeZone()); Utils.WriteStringToXML(writer,
-					 * "SUMMARY", currentWeatherData.getSummary()); Utils.WriteStringToXML(writer,
-					 * "ICON", currentWeatherData.getIcon()); Utils.WriteDoubleToXML(writer,
-					 * "HIGH_TEMPERATURE", currentWeatherData.getTemperatureHigh());
-					 * Utils.WriteLongToXML(writer, "HIGH_TEMPERATURE_TIME",
-					 * currentWeatherData.getTemperatureHighTime()); Utils.WriteDoubleToXML(writer,
-					 * "LOW_TEMPERATURE", currentWeatherData.getTemperatureLow());
-					 * Utils.WriteLongToXML(writer, "LOW_TEMPERATURE_TIME",
-					 * currentWeatherData.getTemperatureLowTime()); Utils.WriteDoubleToXML(writer,
-					 * "WIND_SPEED", currentWeatherData.getWindSpeed());
-					 * Utils.WriteDoubleToXML(writer, "APPARENT_HIGH_TEMPERATURE",
-					 * currentWeatherData.getApparentTemperatureHigh());
-					 * Utils.WriteLongToXML(writer, "APPARENT_HIGH_TEMPERATURE_TIME",
-					 * currentWeatherData.getApparentTemperatureHighTime());
-					 * Utils.WriteDoubleToXML(writer, "APARENT_LOW_TEMPERATURE",
-					 * currentWeatherData.getApparentTemperatureLow()); Utils.WriteLongToXML(writer,
-					 * "APARENT_LOW_TEMPERATURE_TIME",
-					 * currentWeatherData.getApparentTemperatureLowTime());
-					 * Utils.WriteStringToXML(writer, "PRECIPITATION_TYPE",
-					 * currentWeatherData.getPrecipType()); Utils.WriteDoubleToXML(writer,
-					 * "MOON_PHASE", currentWeatherData.getMoonPhase());
-					 * 
-					 * writer.writeEndElement();
-					 */
+					NoaaDailyNormals currentDailySummary = historicalWeatherData.previousDailySummaries.get(i);
+					writer.writeStartElement("DAILY_SUMMARY");
+					// TODO DATE
+					Utils.WriteStringToXML(writer, "TEMPERATUREMAX", currentDailySummary.getTemperatureMax());
+					Utils.WriteStringToXML(writer, "TEMPERATUREMIN", currentDailySummary.getTemperatureMin());
+					Utils.WriteStringToXML(writer, "TEMPERATUREAVG", currentDailySummary.getTemperatureAverage());
+					Utils.WriteStringToXML(writer, "PRECIPITATION", currentDailySummary.getPrecipitation());
+					writer.writeEndElement();// "DAILY_SUMMARY"
 				}
-				writer.writeEndElement();
+				writer.writeEndElement();// "DAILY_SUMMARIES"
+
+				writer.writeStartElement("NORMALS");
+				writer.writeStartElement("WEATHER_STATION");
+				Utils.WriteStringToXML(writer, "STATIONID", historicalWeatherData.noaaNormalsWeatherStation.getId());
+				Utils.WriteStringToXML(writer, "NAME", historicalWeatherData.noaaNormalsWeatherStation.getName());
+				Utils.WriteDoubleToXML(writer, "DISTANCEFROMSTART",
+						historicalWeatherData.noaaNormalsWeatherStation.getDistanceFromStart());
+				writer.writeEndElement();// "WEATHER_STATION"
+
+				writer.writeStartElement("NORMALS_DAILY");
+				Utils.WriteStringToXML(writer, "TEMPERATUREMAX",
+						historicalWeatherData.dailyNormals.getTemperatureMax());
+				Utils.WriteStringToXML(writer, "TEMPERATUREMIN",
+						historicalWeatherData.dailyNormals.getTemperatureMin());
+				Utils.WriteStringToXML(writer, "TEMPERATUREAVG",
+						historicalWeatherData.dailyNormals.getTemperatureAverage());
+				Utils.WriteStringToXML(writer, "PRECIPITATION", historicalWeatherData.dailyNormals.getPrecipitation());
+				writer.writeEndElement();// "NORMALS_DAILY"
+				writer.writeStartElement("NORMALS_MONTHLY");
+				Utils.WriteStringToXML(writer, "TEMPERATUREMAX",
+						historicalWeatherData.monthlyNormals.getTemperatureMax());
+				Utils.WriteStringToXML(writer, "TEMPERATUREMIN",
+						historicalWeatherData.monthlyNormals.getTemperatureMin());
+				Utils.WriteStringToXML(writer, "TEMPERATUREAVG",
+						historicalWeatherData.monthlyNormals.getTemperatureAverage());
+				Utils.WriteStringToXML(writer, "PRECIPITATION", historicalWeatherData.dailyNormals.getPrecipitation());
+				writer.writeEndElement();// "NORMALS_MONTHLY"
+
+				writer.writeEndElement();// "NORMALS"
+
+				writer.writeEndElement();// "HISTORICAL_WEATHER_DATA_POINTS"
 			}
 
 			writer.writeEndElement();

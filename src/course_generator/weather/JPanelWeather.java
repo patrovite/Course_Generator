@@ -377,10 +377,10 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@244",
 					previousWeatherData.noaaSummariesWeatherStation.getName());
 
-			double distanceFromStart = previousWeatherData.noaaSummariesWeatherStation.getDistanceFromStart();
+			double distanceFromStart = previousWeatherData.noaaSummariesWeatherStation.getDistanceFromStart() / 1000.0;
 			String distance = "";
 			if (settings.Unit == CgConst.UNIT_MILES_FEET)
-				distanceFromStart = Utils.Meter2uMiles(distanceFromStart) / 1000.0;
+				distanceFromStart = Utils.Km2Miles(distanceFromStart);
 
 			distance = String.format("%.0f", distanceFromStart);
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@246", distance + " " + Utils.uLDist2String(settings.Unit));
