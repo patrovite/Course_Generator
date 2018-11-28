@@ -25,6 +25,8 @@ import static course_generator.utils.Utils.CalcDistance;
 //import static course_generator.utils.Utils.ReadXMLString;
 import java.awt.Color;
 import java.awt.Component;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -84,6 +86,8 @@ public class TrackData {
 
 	/** Historical weather data **/
 	public WeatherHistory historicalWeatherData;
+
+	private PropertyChangeSupport HistoricalWeatherDataChanged = new PropertyChangeSupport(this);
 
 	/** Statistics data for 'in night' **/
 	public StatData tInNight;
@@ -422,6 +426,8 @@ public class TrackData {
 
 		isCalculated = true;
 		Name = new File(name).getName();
+
+		setHistoricalWeather(new WeatherHistory(Settings));
 
 		switch (mode) {
 		case 1:
@@ -1740,6 +1746,8 @@ public class TrackData {
 		CheckTimeLimit();
 		isCalculated = true;
 
+		setHistoricalWeather(new WeatherHistory(Settings));
+
 		if (!backup) {
 			Name = new File(name).getName();
 			switch (mode) {
@@ -2598,7 +2606,15 @@ public class TrackData {
 
 
 	public void setHistoricalWeather(WeatherHistory weatherHistory) {
+		WeatherHistory previousWeatherHistory = historicalWeatherData;
 		historicalWeatherData = weatherHistory;
+		HistoricalWeatherDataChanged.firePropertyChange("HistoricalWeatherDataChanged", previousWeatherHistory,
+				weatherHistory);
+	}
+
+
+	public void addHistoricalWeatherListener(PropertyChangeListener listener) {
+		HistoricalWeatherDataChanged.addPropertyChangeListener(listener);
 	}
 
 } // TrackData

@@ -94,6 +94,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	private JButton btSaveMap;
 	private FrmSelectMap selectMap;
 
+
 	public JPanelMaps(CgSettings settings) {
 		super();
 		Settings = settings;
@@ -105,39 +106,52 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		initComponents();
 	}
 
+
 	public void addListener(JPanelMapsListener toAdd) {
 		listeners.add(toAdd);
 	}
+
 
 	public void notifyRequestPosition() {
 		for (JPanelMapsListener hl : listeners)
 			hl.requestPositionIndexEvent();
 	}
 
+
 	public void notifyChange() {
 		for (JPanelMapsListener hl : listeners)
 			hl.changeEvent();
 	}
+
 
 	public void notifyMouseClicked(java.awt.event.MouseEvent evt) {
 		for (JPanelMapsListener hl : listeners)
 			hl.mouseClicked(evt);
 	}
 
-	public void propertyChange(PropertyChangeEvent evt) {
-		if (!evt.getPropertyName().equals("ThunderForestApiKeyChanged"))
-			return;
 
-		if (!Settings.isThunderForestApiKeyValid()) {
-			if (Settings.map == 2) {
-				Settings.map = 0;
-				selectMap.rbOutdoors.setEnabled(false);
-				RefreshMapType();
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName().equals("ThunderForestApiKeyChanged")) {
+			if (!Settings.isThunderForestApiKeyValid()) {
+				if (Settings.map == 2) {
+					Settings.map = 0;
+					selectMap.rbOutdoors.setEnabled(false);
+					RefreshMapType();
+				}
+			} else {
+				selectMap.rbOutdoors.setEnabled(true);
 			}
-		} else {
-			selectMap.rbOutdoors.setEnabled(true);
+		}
+		if (evt.getPropertyName().equals("HistoricalWeatherDataChanged")) {
+			if (Track.historicalWeatherData.weatherStation == null) {
+				btShowWeatherStation.setEnabled(false);
+
+			} else {
+				btShowWeatherStation.setEnabled(true);
+			}
 		}
 	}
+
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -182,6 +196,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 		add(panelMain, java.awt.BorderLayout.CENTER);
 	}
+
 
 	/**
 	 * Create the map toolbar
@@ -400,9 +415,9 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		// -- Show the weather station
 		btShowWeatherStation = new javax.swing.JButton();
 		btShowWeatherStation.setIcon(Utils.getIcon(this, "weather.png", Settings.MapToolbarIconSize));
-		btShowWeatherStation.setToolTipText(bundle.getString("frmMain.btMapCenterOnTrack.toolTipText"));
+		btShowWeatherStation.setToolTipText(bundle.getString("frmMain.btMapShowWeatherStations.toolTipText"));
 		btShowWeatherStation.setFocusable(false);
-		btShowWeatherStation.setEnabled(true);
+		btShowWeatherStation.setEnabled(false);
 		btShowWeatherStation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ShowHideWeatherStation();
@@ -414,6 +429,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 	}
 
+
 	private void SaveMap() {
 		String s = Utils.SaveDialog(this, Settings.previousPNGDirectory, "", ".png",
 				bundle.getString("FrmMiniroadbook.PNGFile"), true, bundle.getString("frmMain.FileExist"));
@@ -423,6 +439,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			Settings.previousPNGDirectory = Utils.GetDirFromFilename(s);
 		}
 	}
+
 
 	private void MapViewerMouseClicked(java.awt.event.MouseEvent evt) {
 		if (Track == null)
@@ -443,16 +460,19 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
 	}
 
+
 	public Coordinate getSelectedPosition() {
 		return selectedPosition;
 	}
 
+
 	/**
 	 * Display track stored in a TrackData class
 	 * 
-	 * @param tdata    TrackData object to display
-	 * @param zoom2fit If true the zoom is set have the complete display of the
-	 *                 track
+	 * @param tdata
+	 *            TrackData object to display
+	 * @param zoom2fit
+	 *            If true the zoom is set have the complete display of the track
 	 * 
 	 */
 	public void RefreshTrack(TrackData tdata, boolean zoom2fit) {
@@ -476,6 +496,9 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 		MapMarker = null;
 		CurrentPosMarker = null;
+		WeatherStationMarker = null;
+
+		tdata.addHistoricalWeatherListener(this);
 
 		// -- Create the night tracks
 		int cmpt = 0;
@@ -591,13 +614,16 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 					MapViewer.addMapMarker(new MapMarkerImg(new Coordinate(r.getLatitude(), r.getLongitude()),
 							getImage("markers_" + v + ".png", Settings.MapIconSize)));
 			}
+			ShowHideWeatherStation();
 		}
 	}
+
 
 	/***
 	 * Return the color corresponding of the difficulty
 	 * 
-	 * @param diff difficulty between 0..100
+	 * @param diff
+	 *            difficulty between 0..100
 	 * @return color corresponding to the difficulty
 	 */
 	private Color getDiffColor(double diff) {
@@ -612,6 +638,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		else
 			return Settings.Color_Diff_VeryHard; // CgConst.CL_MAP_DIFF_VERYHARD);
 	}
+
 
 	/**
 	 * Set the track difficulty
@@ -660,6 +687,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	private void SetMarkMapMarker() {
 		if (Track.data.size() > 0) {
 			// int row = panelTrackData.getSelectedRow();
@@ -689,6 +717,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	private void HideMapMarker() {
 		if (Track.data.size() > 0) {
 			IndexMarker = -1;
@@ -699,6 +728,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			RefreshMapButtons();
 		}
 	}
+
 
 	private void ShowMapMarker() {
 		if (Track.data.size() > 0) {
@@ -719,10 +749,11 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	private void ShowHideWeatherStation() {
 		showWeatherStation = !showWeatherStation;
 		if (showWeatherStation) {
-			if (Track.historicalWeatherData != null) {
+			if (Track.historicalWeatherData.weatherStation != null) {
 				if (WeatherStationMarker == null) {
 					double lat = Double.parseDouble(Track.historicalWeatherData.weatherStation.getLatitude());
 					double lon = Double.parseDouble(Track.historicalWeatherData.weatherStation.getLongitude());
@@ -730,10 +761,17 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 							getImage("weather.png", Settings.MapIconSize));
 				}
 				MapViewer.addMapMarker(WeatherStationMarker);
+
+				// In case the station is out of the screen, it will not be seen
+				// by the user. Hence, we center the map on the track and the markers.
+				MapViewer.setDisplayToFitMapMarkersAndPolygons();
+
 			}
 		} else if (WeatherStationMarker != null) {
 			MapViewer.removeMapMarker(WeatherStationMarker);
 		}
+
+		btShowWeatherStation.setSelected(showWeatherStation);
 	}
 
 
@@ -767,6 +805,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	private void SetDrinkMapMarker() {
 		if (Track.data.size() > 0) {
 			// int row = panelTrackData.getSelectedRow();
@@ -797,6 +836,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	public void RefreshMapType() {
 		switch (Settings.map) {
 		case 0:
@@ -825,6 +865,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	public File getTileCacheDir() {
 		switch (Settings.map) {
 		case 0:
@@ -840,11 +881,14 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	/**
 	 * Refresh the marker on the map
 	 * 
-	 * @param lat latitude of the position of the marker
-	 * @param lon longitude of the position of the marker
+	 * @param lat
+	 *            latitude of the position of the marker
+	 * @param lon
+	 *            longitude of the position of the marker
 	 */
 	public void RefreshMapMarker(double lat, double lon) {
 		if (MapMarker == null) {
@@ -857,6 +901,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			MapViewer.setDisplayPosition(new Coordinate(lat, lon), MapViewer.getZoom());
 		}
 	}
+
 
 	private void UndoMapFillDiff() {
 		if ((Old_MarkerStart >= 0) && (Old_MarkerEnd >= 0) && (UndoDiff.size() > 0)) {
@@ -890,11 +935,13 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	public void setTrack(TrackData track) {
 		Track = track;
 		MapViewer.removeAllMapMarkers();
 		RefreshTrack(Track, true);
 	}
+
 
 	/** Returns an ImageIcon, or null if the path was invalid. */
 	protected ImageIcon createImageIcon(String path, String description) {
@@ -907,11 +954,14 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	/**
 	 * Refresh the position of the marker on the map
 	 * 
-	 * @param lat latitude of the position of the marker
-	 * @param lon longitude of the position of the marker
+	 * @param lat
+	 *            latitude of the position of the marker
+	 * @param lon
+	 *            longitude of the position of the marker
 	 */
 	public void RefreshCurrentPosMarker(double lat, double lon) {
 		if (CurrentPosMarker == null) {
@@ -926,6 +976,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	public void RefreshMapButtons() {
 		btMapTrackVeryHard.setEnabled(IndexMarker != -1);
 		btMapTrackHard.setEnabled(IndexMarker != -1);
@@ -936,9 +987,11 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapUndo.setEnabled(Old_MarkerStart != -1);
 	}
 
+
 	public void setRow(int row) {
 		this.row = row;
 	}
+
 
 	private void SelectMap() {
 		int ret = selectMap.showDialog(Settings.map);
@@ -948,6 +1001,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	/**
 	 * Show/Hide markers on the maps
 	 */
@@ -955,7 +1009,13 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		ShowMarkers = !ShowMarkers;
 		btShowHideMarkers.setSelected(ShowMarkers);
 		RefreshTrack(Track, false);
+
+		if (!ShowMarkers) {
+			showWeatherStation = false;
+			btShowWeatherStation.setSelected(false);
+		}
 	}
+
 
 	private Image getImage(String name, int size) {
 		return createImageIcon("/course_generator/images/" + size + "/" + name, "").getImage();
