@@ -1888,7 +1888,7 @@ public class TrackData {
 				writer.writeEndElement();// "WEATHER_STATION"
 
 				for (int i = 0; i < 3; i++) {
-					NoaaWeatherData currentDailySummary = historicalWeatherData.previousDailySummaries.get(i);
+					NoaaWeatherData currentDailySummary = historicalWeatherData.pastDailySummaries.get(i);
 					writer.writeStartElement("DAILY_SUMMARY");
 
 					String datePattern = "yyyy-MM-dd";
@@ -1918,20 +1918,20 @@ public class TrackData {
 
 				writer.writeStartElement("NORMALS_DAILY");
 				Utils.WriteStringToXML(writer, "TEMPERATUREMAX",
-						historicalWeatherData.dailyNormals.getTemperatureMax());
+						historicalWeatherData.normalsDaily.getTemperatureMax());
 				Utils.WriteStringToXML(writer, "TEMPERATUREMIN",
-						historicalWeatherData.dailyNormals.getTemperatureMin());
+						historicalWeatherData.normalsDaily.getTemperatureMin());
 				Utils.WriteStringToXML(writer, "TEMPERATUREAVG",
-						historicalWeatherData.dailyNormals.getTemperatureAverage());
+						historicalWeatherData.normalsDaily.getTemperatureAverage());
 				writer.writeEndElement();// "NORMALS_DAILY"
 				writer.writeStartElement("NORMALS_MONTHLY");
 				Utils.WriteStringToXML(writer, "TEMPERATUREMAX",
-						historicalWeatherData.monthlyNormals.getTemperatureMax());
+						historicalWeatherData.normalsMonthly.getTemperatureMax());
 				Utils.WriteStringToXML(writer, "TEMPERATUREMIN",
-						historicalWeatherData.monthlyNormals.getTemperatureMin());
+						historicalWeatherData.normalsMonthly.getTemperatureMin());
 				Utils.WriteStringToXML(writer, "TEMPERATUREAVG",
-						historicalWeatherData.monthlyNormals.getTemperatureAverage());
-				Utils.WriteStringToXML(writer, "PRECIPITATION", historicalWeatherData.dailyNormals.getPrecipitation());
+						historicalWeatherData.normalsMonthly.getTemperatureAverage());
+				Utils.WriteStringToXML(writer, "PRECIPITATION", historicalWeatherData.normalsDaily.getPrecipitation());
 				writer.writeEndElement();// "NORMALS_MONTHLY"
 
 				writer.writeEndElement();// "NORMALS"

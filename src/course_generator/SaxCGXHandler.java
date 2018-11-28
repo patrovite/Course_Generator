@@ -41,9 +41,9 @@ import com.javadocmd.simplelatlng.LatLng;
 
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
+import course_generator.weather.HistoricalWeather;
 import course_generator.weather.NoaaWeatherData;
 import course_generator.weather.NoaaWeatherStation;
-import course_generator.weather.HistoricalWeather;
 
 public class SaxCGXHandler extends DefaultHandler {
 	private java.util.ResourceBundle bundle = null;
@@ -102,11 +102,11 @@ public class SaxCGXHandler extends DefaultHandler {
 	private int trkpt_FontSizemrb = 0;
 
 	// Historical weather data
-	private NoaaWeatherStation noaaNormalsWeatherStation;
+	private ArrayList<NoaaWeatherData> pastDailySummaries;
+	private NoaaWeatherData normalsDaily;
+	private NoaaWeatherData normalsMonthly;
 	private NoaaWeatherStation noaaSummariesWeatherStation;
-	private NoaaWeatherData dailyNormals;
-	private ArrayList<NoaaWeatherData> previousDailySummaries;
-	private NoaaWeatherData monthlyNormals;
+	private NoaaWeatherStation noaaNormalsWeatherStation;
 
 	// private int trk_nb=0;
 	// private int trkseg_nb=0;
@@ -202,11 +202,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		// errcode=ERR_READ_NO;
 		Cmpt = 0;
 		old_time = 0;
-		noaaNormalsWeatherStation = new NoaaWeatherStation();
+		pastDailySummaries = new ArrayList<NoaaWeatherData>();
+		normalsDaily = new NoaaWeatherData();
+		normalsMonthly = new NoaaWeatherData();
 		noaaSummariesWeatherStation = new NoaaWeatherStation();
-		dailyNormals = new NoaaWeatherData();
-		previousDailySummaries = new ArrayList<NoaaWeatherData>();
-		monthlyNormals = new NoaaWeatherData();
+		noaaNormalsWeatherStation = new NoaaWeatherStation();
 
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser = factory.newSAXParser();
@@ -652,8 +652,8 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
 				level--;
 
-				HistoricalWeather dailyWeatherData = new HistoricalWeather(dailyNormals, previousDailySummaries,
-						monthlyNormals, noaaNormalsWeatherStation, noaaSummariesWeatherStation, new LatLng(0.0, 0.0),
+				HistoricalWeather dailyWeatherData = new HistoricalWeather(pastDailySummaries, normalsDaily,
+						normalsMonthly, noaaNormalsWeatherStation, noaaSummariesWeatherStation, new LatLng(0.0, 0.0),
 						0.0);
 				trkdata.setHistoricalWeather(dailyWeatherData);
 

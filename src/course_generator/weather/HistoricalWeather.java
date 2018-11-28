@@ -14,11 +14,11 @@ import course_generator.settings.CgSettings;
 
 public class HistoricalWeather {
 
-	public NoaaWeatherData dailyNormals;
-	public ArrayList<NoaaWeatherData> previousDailySummaries;
-	public NoaaWeatherData monthlyNormals;
-	public NoaaWeatherStation noaaNormalsWeatherStation;
+	public ArrayList<NoaaWeatherData> pastDailySummaries;
+	public NoaaWeatherData normalsDaily;
+	public NoaaWeatherData normalsMonthly;
 	public NoaaWeatherStation noaaSummariesWeatherStation;
+	public NoaaWeatherStation noaaNormalsWeatherStation;
 	private CgSettings Settings;
 	private TrackData Track;
 	private LatLng searchAreaCenter;
@@ -30,12 +30,12 @@ public class HistoricalWeather {
 	}
 
 
-	public HistoricalWeather(NoaaWeatherData dailyNormals, ArrayList<NoaaWeatherData> previousDailySummaries,
-			NoaaWeatherData monthlyNormals, NoaaWeatherStation noaaNormalsWeatherStation,
+	public HistoricalWeather(ArrayList<NoaaWeatherData> pastDailySummaries, NoaaWeatherData normalsDaily,
+			NoaaWeatherData normalsMonthly, NoaaWeatherStation noaaNormalsWeatherStation,
 			NoaaWeatherStation noaaSummariesWeatherStation, LatLng searchAreaCenter, double searchAreaRadius) {
-		this.dailyNormals = dailyNormals;
-		this.previousDailySummaries = previousDailySummaries;
-		this.monthlyNormals = monthlyNormals;
+		this.normalsDaily = normalsDaily;
+		this.pastDailySummaries = pastDailySummaries;
+		this.normalsMonthly = normalsMonthly;
 		this.noaaNormalsWeatherStation = noaaNormalsWeatherStation;
 		this.noaaSummariesWeatherStation = noaaSummariesWeatherStation;
 		this.searchAreaCenter = searchAreaCenter;
@@ -57,9 +57,9 @@ public class HistoricalWeather {
 
 		noaaNormalsWeatherStation = weatherHistoryRetriever.getNoaaNormalsWeatherStation();
 		noaaSummariesWeatherStation = weatherHistoryRetriever.getNoaaSummariesWeatherStation();
-		dailyNormals = weatherHistoryRetriever.retrieveDailyNormals();
-		previousDailySummaries = weatherHistoryRetriever.retrieveDailySummaries();
-		monthlyNormals = weatherHistoryRetriever.retrieveMonthlyNormals();
+		normalsDaily = weatherHistoryRetriever.retrieveDailyNormals();
+		pastDailySummaries = weatherHistoryRetriever.retrieveDailySummaries();
+		normalsMonthly = weatherHistoryRetriever.retrieveMonthlyNormals();
 		// PopulateFields(weatherHistoryContent);
 
 		// MoonIllumination dd =
