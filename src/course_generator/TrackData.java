@@ -1878,12 +1878,13 @@ public class TrackData {
 				writer.writeStartElement("WEATHER_STATION");
 				Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID,
 						historicalWeatherData.noaaSummariesWeatherStation.getId());
-				Utils.WriteStringToXML(writer, "NAME", historicalWeatherData.noaaSummariesWeatherStation.getName());
-				Utils.WriteStringToXML(writer, "LATITUDE",
+				Utils.WriteStringToXML(writer, NoaaWeatherStation.NAME,
+						historicalWeatherData.noaaSummariesWeatherStation.getName());
+				Utils.WriteStringToXML(writer, NoaaWeatherStation.LATITUDE,
 						historicalWeatherData.noaaSummariesWeatherStation.getLatitude());
-				Utils.WriteStringToXML(writer, "LONGITUDE",
+				Utils.WriteStringToXML(writer, NoaaWeatherStation.LONGITUDE,
 						historicalWeatherData.noaaSummariesWeatherStation.getLongitude());
-				Utils.WriteDoubleToXML(writer, "DISTANCEFROMSTART",
+				Utils.WriteDoubleToXML(writer, NoaaWeatherStation.DISTANCEFROMSTART,
 						historicalWeatherData.noaaSummariesWeatherStation.getDistanceFromStart());
 				writer.writeEndElement();// "WEATHER_STATION"
 
@@ -1896,42 +1897,45 @@ public class TrackData {
 
 					Utils.WriteStringToXML(writer, "DATE", fmt.print(currentDailySummary.getDate()));
 
-					Utils.WriteStringToXML(writer, "TEMPERATUREMAX", currentDailySummary.getTemperatureMax());
-					Utils.WriteStringToXML(writer, "TEMPERATUREMIN", currentDailySummary.getTemperatureMin());
-					Utils.WriteStringToXML(writer, "TEMPERATUREAVG", currentDailySummary.getTemperatureAverage());
-					Utils.WriteStringToXML(writer, "PRECIPITATION", currentDailySummary.getPrecipitation());
+					Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE,
+							currentDailySummary.getTemperatureMax());
+					Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE,
+							currentDailySummary.getTemperatureMin());
+					Utils.WriteStringToXML(writer, NoaaWeatherData.PRECIPITATION,
+							currentDailySummary.getPrecipitation());
 					writer.writeEndElement();// "DAILY_SUMMARY"
 				}
 				writer.writeEndElement();// "DAILY_SUMMARIES"
 
 				writer.writeStartElement("NORMALS");
 				writer.writeStartElement("WEATHER_STATION");
-				Utils.WriteStringToXML(writer, "STATIONID", historicalWeatherData.noaaNormalsWeatherStation.getId());
-				Utils.WriteStringToXML(writer, "NAME", historicalWeatherData.noaaNormalsWeatherStation.getName());
-				Utils.WriteStringToXML(writer, "LATITUDE",
+				Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID,
+						historicalWeatherData.noaaNormalsWeatherStation.getId());
+				Utils.WriteStringToXML(writer, NoaaWeatherStation.NAME,
+						historicalWeatherData.noaaNormalsWeatherStation.getName());
+				Utils.WriteStringToXML(writer, NoaaWeatherStation.LATITUDE,
 						historicalWeatherData.noaaNormalsWeatherStation.getLatitude());
-				Utils.WriteStringToXML(writer, "LONGITUDE",
+				Utils.WriteStringToXML(writer, NoaaWeatherStation.LONGITUDE,
 						historicalWeatherData.noaaNormalsWeatherStation.getLongitude());
-				Utils.WriteDoubleToXML(writer, "DISTANCEFROMSTART",
+				Utils.WriteDoubleToXML(writer, NoaaWeatherStation.DISTANCEFROMSTART,
 						historicalWeatherData.noaaNormalsWeatherStation.getDistanceFromStart());
 				writer.writeEndElement();// "WEATHER_STATION"
 
 				writer.writeStartElement("NORMALS_DAILY");
-				Utils.WriteStringToXML(writer, "TEMPERATUREMAX",
+				Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE,
 						historicalWeatherData.normalsDaily.getTemperatureMax());
-				Utils.WriteStringToXML(writer, "TEMPERATUREMIN",
+				Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE,
 						historicalWeatherData.normalsDaily.getTemperatureMin());
-				Utils.WriteStringToXML(writer, "TEMPERATUREAVG",
+				Utils.WriteStringToXML(writer, NoaaWeatherData.AVERAGETEMPERATURE,
 						historicalWeatherData.normalsDaily.getTemperatureAverage());
 				writer.writeEndElement();// "NORMALS_DAILY"
 				writer.writeStartElement("NORMALS_MONTHLY");
-				Utils.WriteStringToXML(writer, "TEMPERATUREMAX",
+				Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE,
 						historicalWeatherData.normalsMonthly.getTemperatureMax());
-				Utils.WriteStringToXML(writer, "TEMPERATUREMIN",
+				Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE,
 						historicalWeatherData.normalsMonthly.getTemperatureMin());
-				Utils.WriteStringToXML(writer, "TEMPERATUREAVG",
+				Utils.WriteStringToXML(writer, NoaaWeatherData.AVERAGETEMPERATURE,
 						historicalWeatherData.normalsMonthly.getTemperatureAverage());
-				Utils.WriteStringToXML(writer, "PRECIPITATION", historicalWeatherData.normalsDaily.getPrecipitation());
 				writer.writeEndElement();// "NORMALS_MONTHLY"
 
 				writer.writeEndElement();// "NORMALS"

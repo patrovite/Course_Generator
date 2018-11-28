@@ -15,30 +15,50 @@ import org.joda.time.DateTime;
  */
 public class NoaaWeatherData {
 
-	private String TemperatureMin;
-	private String TemperatureMax;
-	private String TemperatureAverage;
+	private String maxTemperature;
+	private String minTemperature;
+	private String AverageTemperature;
 	private String Precipitation;
 	private DateTime Date;
 
+	public static final String MAXIMUMTEMPERATURE = "MAXIMUMTEMPERATURE";
+	public static final String MINIMUMTEMPERATURE = "MINIMUMTEMPERATURE";
+	public static final String AVERAGETEMPERATURE = "AVERAGETEMPERATURE";
+	public static final String PRECIPITATION = "PRECIPITATION";
+	public static final String DATE = "DATE";
+
+
+	public NoaaWeatherData() {
+	}
+
+
+	public NoaaWeatherData(String maximumTemperature, String minimumTemperature, String averageTemperature,
+			String precipitation, DateTime date) {
+		this.maxTemperature = maximumTemperature;
+		this.minTemperature = minimumTemperature;
+		this.AverageTemperature = averageTemperature;
+		this.Precipitation = precipitation;
+		this.Date = date;
+	}
+
 
 	public String getTemperatureMin() {
-		return TemperatureMin;
+		return minTemperature;
 	}
 
 
 	public void setTemperatureMin(String temperatureMin) {
-		this.TemperatureMin = temperatureMin;
+		this.minTemperature = temperatureMin;
 	}
 
 
 	public String getTemperatureMax() {
-		return TemperatureMax;
+		return maxTemperature;
 	}
 
 
 	public void setTemperatureMax(String temperatureMax) {
-		this.TemperatureMax = temperatureMax;
+		this.maxTemperature = temperatureMax;
 	}
 
 
@@ -53,12 +73,12 @@ public class NoaaWeatherData {
 
 
 	public String getTemperatureAverage() {
-		return TemperatureAverage;
+		return AverageTemperature;
 	}
 
 
 	public void setTemperatureAverage(String temperatureAverage) {
-		TemperatureAverage = temperatureAverage;
+		AverageTemperature = temperatureAverage;
 	}
 
 

@@ -107,6 +107,11 @@ public class SaxCGXHandler extends DefaultHandler {
 	private NoaaWeatherData normalsMonthly;
 	private NoaaWeatherStation noaaSummariesWeatherStation;
 	private NoaaWeatherStation noaaNormalsWeatherStation;
+	private String maximumTemperature;
+	private String minimumTemperature;
+	private String averageTemperature;
+	private String precipitation;
+	private DateTime date;
 
 	// private int trk_nb=0;
 	// private int trkseg_nb=0;
@@ -623,14 +628,20 @@ public class SaxCGXHandler extends DefaultHandler {
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.LONGITUDE)) {
 				noaaSummariesWeatherStation.setLongitude(ManageString());
 			}
-			// if (qName.equalsIgnoreCase(NoaaWeatherStation.TEMPERATUREMAX)) {
-			//
-			// }
-			else if (qName.equalsIgnoreCase("DAILY_SUMMARY")) {
-				// TODO create the dailysummary
-				// NoaaDailyNormals noaaDailyNormals = new NoaaDailyNormals();
-
-				// previousDailySummaries.add(new NoaaDailyNormals())
+			if (qName.equalsIgnoreCase(NoaaWeatherData.MAXIMUMTEMPERATURE)) {
+				maximumTemperature = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.MINIMUMTEMPERATURE)) {
+				minimumTemperature = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.PRECIPITATION)) {
+				precipitation = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.DATE)) {
+				date = DateTime.parse(characters);
+			} else if (qName.equalsIgnoreCase("DAILY_SUMMARY")) {
+				pastDailySummaries
+						.add(new NoaaWeatherData(maximumTemperature, minimumTemperature, "", precipitation, date));
 			} else if (qName.equalsIgnoreCase("DAILY_SUMMARIES"))
 				level--;
 
@@ -649,7 +660,25 @@ public class SaxCGXHandler extends DefaultHandler {
 			}
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.LONGITUDE)) {
 				noaaNormalsWeatherStation.setLongitude(ManageString());
-			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.MAXIMUMTEMPERATURE)) {
+				maximumTemperature = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.MINIMUMTEMPERATURE)) {
+				minimumTemperature = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.AVERAGETEMPERATURE)) {
+				averageTemperature = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.DATE)) {
+				date = DateTime.parse(characters);
+			} else if (qName.equalsIgnoreCase("NORMALS_DAILY")) {
+				normalsDaily = new NoaaWeatherData(maximumTemperature, minimumTemperature, averageTemperature, "",
+						date);
+			} else if (qName.equalsIgnoreCase("NORMALS_MONTHLY"))
+				normalsMonthly = new NoaaWeatherData(maximumTemperature, minimumTemperature, averageTemperature, "",
+						date);
+			else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
 				level--;
 
 				HistoricalWeather dailyWeatherData = new HistoricalWeather(pastDailySummaries, normalsDaily,
