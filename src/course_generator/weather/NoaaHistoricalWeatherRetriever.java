@@ -25,10 +25,11 @@ import com.javadocmd.simplelatlng.util.LengthUnit;
 import course_generator.utils.CgLog;
 
 /**
- *
+ * A class that retrieves, for a given track, the historical weather data.
+ * 
  * @author Frederic Bard
  */
-final public class NoaaWeatherHistoryRetriever {
+final public class NoaaHistoricalWeatherRetriever {
 
 	private DateTime startDate;
 	private String noaaToken;
@@ -45,7 +46,7 @@ final public class NoaaWeatherHistoryRetriever {
 	private final String NoaaApiUrl = "https://www.ncdc.noaa.gov/cdo-web/api/v2/";
 
 
-	private NoaaWeatherHistoryRetriever(LatLng searchAreaCenter, double searchAreaRadius) {
+	private NoaaHistoricalWeatherRetriever(LatLng searchAreaCenter, double searchAreaRadius) {
 		this.searchAreaCenter = searchAreaCenter;
 
 		// We want a search area of minimum 50km
@@ -54,7 +55,7 @@ final public class NoaaWeatherHistoryRetriever {
 	}
 
 
-	private NoaaWeatherHistoryRetriever(String noaaToken) {
+	private NoaaHistoricalWeatherRetriever(String noaaToken) {
 		this.noaaToken = noaaToken;
 	}
 
@@ -66,8 +67,8 @@ final public class NoaaWeatherHistoryRetriever {
 	 * 
 	 * @return
 	 */
-	public static NoaaWeatherHistoryRetriever where(LatLng searchAreaCenter, double searchAreaRadius) {
-		return new NoaaWeatherHistoryRetriever(searchAreaCenter, searchAreaRadius);
+	public static NoaaHistoricalWeatherRetriever where(LatLng searchAreaCenter, double searchAreaRadius) {
+		return new NoaaHistoricalWeatherRetriever(searchAreaCenter, searchAreaRadius);
 	}
 
 
@@ -78,7 +79,7 @@ final public class NoaaWeatherHistoryRetriever {
 	 * 
 	 * @return
 	 */
-	public NoaaWeatherHistoryRetriever when(DateTime dateTime) {
+	public NoaaHistoricalWeatherRetriever when(DateTime dateTime) {
 		this.startDate = dateTime;
 		return this;
 	}
@@ -91,7 +92,7 @@ final public class NoaaWeatherHistoryRetriever {
 	 * 
 	 * @return
 	 */
-	public NoaaWeatherHistoryRetriever forUser(String noaaToken) {
+	public NoaaHistoricalWeatherRetriever forUser(String noaaToken) {
 		this.noaaToken = noaaToken;
 		return this;
 	}
@@ -102,7 +103,7 @@ final public class NoaaWeatherHistoryRetriever {
 	 *
 	 * @return the collected weather data.
 	 */
-	public NoaaWeatherHistoryRetriever build() {
+	public NoaaHistoricalWeatherRetriever build() {
 
 		computeSearchArea();
 

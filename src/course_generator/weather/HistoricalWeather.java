@@ -12,7 +12,7 @@ import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 
-public class WeatherHistory {
+public class HistoricalWeather {
 
 	public NoaaWeatherData dailyNormals;
 	public ArrayList<NoaaWeatherData> previousDailySummaries;
@@ -25,12 +25,12 @@ public class WeatherHistory {
 	private double searchAreaRadius;
 
 
-	public WeatherHistory(CgSettings settings) {
+	public HistoricalWeather(CgSettings settings) {
 		Settings = settings;
 	}
 
 
-	public WeatherHistory(NoaaWeatherData dailyNormals, ArrayList<NoaaWeatherData> previousDailySummaries,
+	public HistoricalWeather(NoaaWeatherData dailyNormals, ArrayList<NoaaWeatherData> previousDailySummaries,
 			NoaaWeatherData monthlyNormals, NoaaWeatherStation noaaNormalsWeatherStation,
 			NoaaWeatherStation noaaSummariesWeatherStation, LatLng searchAreaCenter, double searchAreaRadius) {
 		this.dailyNormals = dailyNormals;
@@ -52,7 +52,7 @@ public class WeatherHistory {
 
 		determineWeatherSearchArea();
 
-		NoaaWeatherHistoryRetriever weatherHistoryRetriever = NoaaWeatherHistoryRetriever
+		NoaaHistoricalWeatherRetriever weatherHistoryRetriever = NoaaHistoricalWeatherRetriever
 				.where(searchAreaCenter, searchAreaRadius).when(startTime).forUser(Settings.getNoaaToken()).build();
 
 		noaaNormalsWeatherStation = weatherHistoryRetriever.getNoaaNormalsWeatherStation();

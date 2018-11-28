@@ -201,7 +201,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 
 		UpdatePanel();
 
-		WeatherHistory previousWeatherData = null;
+		HistoricalWeather previousWeatherData = null;
 		if (retrieveOnlineData) {
 
 			if (!Utils.isInternetReachable()) {
@@ -211,7 +211,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 				return;
 			}
 
-			previousWeatherData = new WeatherHistory(settings);
+			previousWeatherData = new HistoricalWeather(settings);
 			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 			previousWeatherData.RetrieveWeatherData(track);
@@ -259,7 +259,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 	}
 
 
-	private String PopulateWeatherDataSheet(WeatherHistory previousWeatherData) {
+	private String PopulateWeatherDataSheet(HistoricalWeather previousWeatherData) {
 
 		StringBuilder sheetSkeleton = new StringBuilder();
 		InputStream is = getClass().getResourceAsStream("weatherdatasheet.html");

@@ -71,7 +71,7 @@ import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
 import course_generator.weather.NoaaWeatherData;
 import course_generator.weather.NoaaWeatherStation;
-import course_generator.weather.WeatherHistory;
+import course_generator.weather.HistoricalWeather;
 
 /**
  * @author pierre.delore
@@ -89,7 +89,7 @@ public class TrackData {
 	public ArrayList<CgData> data;
 
 	/** Historical weather data **/
-	public WeatherHistory historicalWeatherData;
+	public HistoricalWeather historicalWeatherData;
 
 	private PropertyChangeSupport HistoricalWeatherDataChanged = new PropertyChangeSupport(this);
 
@@ -221,7 +221,7 @@ public class TrackData {
 		param = new ParamData();
 		Paramfile = "Default";
 		data = new ArrayList<CgData>();
-		historicalWeatherData = new WeatherHistory(settings);
+		historicalWeatherData = new HistoricalWeather(settings);
 		tInNight = new StatData();
 		tInDay = new StatData();
 		StatSlope = new StatData[13]; // : Array [0..12] of TStat;
@@ -431,7 +431,7 @@ public class TrackData {
 		isCalculated = true;
 		Name = new File(name).getName();
 
-		setHistoricalWeather(new WeatherHistory(Settings));
+		setHistoricalWeather(new HistoricalWeather(Settings));
 
 		switch (mode) {
 		case 1:
@@ -2631,13 +2631,13 @@ public class TrackData {
 	}
 
 
-	public WeatherHistory getHistoricalWeather() {
+	public HistoricalWeather getHistoricalWeather() {
 		return historicalWeatherData;
 	}
 
 
-	public void setHistoricalWeather(WeatherHistory weatherHistory) {
-		WeatherHistory previousWeatherHistory = historicalWeatherData;
+	public void setHistoricalWeather(HistoricalWeather weatherHistory) {
+		HistoricalWeather previousWeatherHistory = historicalWeatherData;
 		historicalWeatherData = weatherHistory;
 		HistoricalWeatherDataChanged.firePropertyChange("HistoricalWeatherDataChanged", previousWeatherHistory,
 				weatherHistory);

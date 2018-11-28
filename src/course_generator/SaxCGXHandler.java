@@ -43,7 +43,7 @@ import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 import course_generator.weather.NoaaWeatherData;
 import course_generator.weather.NoaaWeatherStation;
-import course_generator.weather.WeatherHistory;
+import course_generator.weather.HistoricalWeather;
 
 public class SaxCGXHandler extends DefaultHandler {
 	private java.util.ResourceBundle bundle = null;
@@ -652,7 +652,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
 				level--;
 
-				WeatherHistory dailyWeatherData = new WeatherHistory(dailyNormals, previousDailySummaries,
+				HistoricalWeather dailyWeatherData = new HistoricalWeather(dailyNormals, previousDailySummaries,
 						monthlyNormals, noaaNormalsWeatherStation, noaaSummariesWeatherStation, new LatLng(0.0, 0.0),
 						0.0);
 				trkdata.setHistoricalWeather(dailyWeatherData);
