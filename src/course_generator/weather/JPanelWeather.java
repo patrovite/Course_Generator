@@ -295,8 +295,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 
 		// HISTORICAL WEATHER DATA titles
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@200", "HISTORICAL WEATHER DATA");
-		if (previousWeatherData.pastDailySummaries != null
-				&& !previousWeatherData.pastDailySummaries.isEmpty()) {
+		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()) {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@201",
 					displayDateTime(previousWeatherData.pastDailySummaries.get(0).getDate(), "EE yyyy-MM-dd"));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@202",
@@ -332,10 +331,9 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@113",
 				Utils.computeDaylightHours(track.StartNightTime, track.EndNightTime));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@114", "78%");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@114", previousWeatherData.getMoonPhaseDescription());
 
-		if (previousWeatherData.pastDailySummaries != null
-				&& !previousWeatherData.pastDailySummaries.isEmpty()) {
+		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()) {
 			// Year -1
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@220",
 					displayTemperature(previousWeatherData.pastDailySummaries.get(0).getTemperatureMax()));
@@ -344,7 +342,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@230",
 					displayTemperature(previousWeatherData.pastDailySummaries.get(0).getTemperatureMin()));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@235",
-					displayDouble(previousWeatherData.pastDailySummaries.get(0).getPrecipitation()));
+					previousWeatherData.pastDailySummaries.get(0).getPrecipitation());
 
 			// Year -2
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@221",
@@ -354,7 +352,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@231",
 					displayTemperature(previousWeatherData.pastDailySummaries.get(1).getTemperatureMin()));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@236",
-					displayDouble(previousWeatherData.pastDailySummaries.get(1).getPrecipitation()));
+					previousWeatherData.pastDailySummaries.get(1).getPrecipitation());
 
 			// Year -3
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@222",
@@ -364,7 +362,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@232",
 					displayTemperature(previousWeatherData.pastDailySummaries.get(2).getTemperatureMin()));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@237",
-					displayDouble(previousWeatherData.pastDailySummaries.get(2).getPrecipitation()));
+					previousWeatherData.pastDailySummaries.get(2).getPrecipitation());
 		}
 
 		// Daily normals
@@ -375,8 +373,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 					displayTemperature(previousWeatherData.normalsDaily.getTemperatureAverage()));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@233",
 					displayTemperature(previousWeatherData.normalsDaily.getTemperatureMin()));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@238",
-					displayDouble(previousWeatherData.normalsDaily.getPrecipitation()));
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@238", previousWeatherData.normalsDaily.getPrecipitation());
 		} else {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@223", "");
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@228", "");
@@ -405,7 +402,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@244",
 					previousWeatherData.noaaSummariesWeatherStation.getName());
 
-			double distanceFromStart = previousWeatherData.noaaSummariesWeatherStation.getDistanceFromStart() / 1000.0;
+			double distanceFromStart = previousWeatherData.noaaSummariesWeatherStation.getDistanceFromStart();
 			String distance = "";
 			if (settings.Unit == CgConst.UNIT_MILES_FEET)
 				distanceFromStart = Utils.Km2Miles(distanceFromStart);
@@ -460,21 +457,6 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 			// -- Store the directory
 			settings.LastDir = Utils.GetDirFromFilename(s);
 		}
-	}
-
-
-	/**
-	 * Creates a String containing a temperature value.
-	 * 
-	 * @param temperatureValue
-	 *            The temperature value
-	 * @return A String containing a temperature information
-	 */
-	private String displayDouble(String value) {
-		if (value == null || value == "")
-			return "";
-
-		return String.valueOf(value);
 	}
 
 

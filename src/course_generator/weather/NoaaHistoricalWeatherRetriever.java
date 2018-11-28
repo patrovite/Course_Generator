@@ -179,6 +179,7 @@ final public class NoaaHistoricalWeatherRetriever {
 		}
 		// TODO DOUBLE CHECK THAT A REQUEST WILL ACTUALLY GIVE DATA< OTHERWISE< WE NEED
 		// ANOTHER ONE
+		minDistance = (int) minDistance / 1000;
 		closestStation.setDistanceFromStart(minDistance);
 
 		return closestStation;

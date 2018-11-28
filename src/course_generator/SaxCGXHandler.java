@@ -102,6 +102,7 @@ public class SaxCGXHandler extends DefaultHandler {
 	private int trkpt_FontSizemrb = 0;
 
 	// Historical weather data
+	public double moonFraction;
 	private ArrayList<NoaaWeatherData> pastDailySummaries;
 	private NoaaWeatherData normalsDaily;
 	private NoaaWeatherData normalsMonthly;
@@ -613,6 +614,9 @@ public class SaxCGXHandler extends DefaultHandler {
 			}
 		} // End LEVEL_TRACKPOINT
 		else if (level == 2 && levelName.equals(LEVEL_WEATHER_DAILY_SUMMARIES)) {
+			if (qName.equalsIgnoreCase(HistoricalWeather.MOONFRACTION)) {
+				moonFraction = ManageDouble(0.0, ERR_READ_DOUBLE);
+			}
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.STATIONID)) {
 				noaaSummariesWeatherStation.setId(ManageString());
 			}

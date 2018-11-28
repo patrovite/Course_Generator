@@ -1874,6 +1874,8 @@ public class TrackData {
 
 			if (historicalWeatherData != null) {
 				writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINTS");
+				Utils.WriteStringToXML(writer, HistoricalWeather.MOONFRACTION,
+						String.format("%.3f", historicalWeatherData.moonFraction));
 				writer.writeStartElement("DAILY_SUMMARIES");
 				writer.writeStartElement("WEATHER_STATION");
 				Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID,

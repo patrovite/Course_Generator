@@ -29,6 +29,10 @@ public class NoaaWeatherData {
 
 
 	public NoaaWeatherData() {
+		maxTemperature = "";
+		minTemperature = "";
+		AverageTemperature = "";
+		Precipitation = "";
 	}
 
 

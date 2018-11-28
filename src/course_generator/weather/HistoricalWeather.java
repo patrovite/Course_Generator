@@ -3,6 +3,7 @@ package course_generator.weather;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
+import org.shredzone.commons.suncalc.MoonIllumination;
 
 import com.javadocmd.simplelatlng.LatLng;
 import com.javadocmd.simplelatlng.LatLngTool;
@@ -19,10 +20,13 @@ public class HistoricalWeather {
 	public NoaaWeatherData normalsMonthly;
 	public NoaaWeatherStation noaaSummariesWeatherStation;
 	public NoaaWeatherStation noaaNormalsWeatherStation;
+	public double moonFraction;
 	private CgSettings Settings;
 	private TrackData Track;
 	private LatLng searchAreaCenter;
 	private double searchAreaRadius;
+
+	public static final String MOONFRACTION = "MOONFRACTION";
 
 
 	public HistoricalWeather(CgSettings settings) {
@@ -60,11 +64,12 @@ public class HistoricalWeather {
 		normalsDaily = weatherHistoryRetriever.retrieveDailyNormals();
 		pastDailySummaries = weatherHistoryRetriever.retrieveDailySummaries();
 		normalsMonthly = weatherHistoryRetriever.retrieveMonthlyNormals();
-		// PopulateFields(weatherHistoryContent);
 
-		// MoonIllumination dd =
-		// MoonIllumination.compute().on(startTime.toDate()).execute();
-		// dd.getPhase();
+		// TODO set the timezone.
+		MoonIllumination moonIllumination = MoonIllumination.compute().on(startTime.toDate()).execute();
+		moonFraction = moonIllumination.getFraction() * 100;
+		moonFraction = (double) ((int) moonFraction);
+		moonFraction = moonFraction / 100;
 
 		UpdateTrackWeatherData();
 
@@ -105,6 +110,31 @@ public class HistoricalWeather {
 
 	private void UpdateTrackWeatherData() {
 		Track.setHistoricalWeather(this);
+	}
+
+
+	public String getMoonPhaseDescription() {
+		String moonPhaseDescription;
+
+		// Moon phase interpretation
+		if (moonFraction > Double.MIN_VALUE && moonFraction < 0.1) {
+			moonPhaseDescription = "New Moon";
+		} else if (moonFraction >= 0.1 && moonFraction < 0.25) {
+			moonPhaseDescription = "Waxing Crescent";
+		} else if (moonFraction == 0.25) {
+			moonPhaseDescription = "First Quarter";
+		} else if (moonFraction > 0.25 && moonFraction < 0.5) {
+			moonPhaseDescription = "Waxing Gibbous";
+		} else if (moonFraction == 0.5) {
+			moonPhaseDescription = "Full Moon";
+		} else if (moonFraction > 0.5 && moonFraction < 0.75) {
+			moonPhaseDescription = "Waning Gibbous";
+		} else if (moonFraction == 0.75) {
+			moonPhaseDescription = "Last Quarter";
+		} else {
+			moonPhaseDescription = "Waning Crescent";
+		}
+		return moonPhaseDescription;
 	}
 
 }
