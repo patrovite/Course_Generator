@@ -69,9 +69,9 @@ import course_generator.utils.CgLog;
 import course_generator.utils.StatData;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
+import course_generator.weather.HistoricalWeather;
 import course_generator.weather.NoaaWeatherData;
 import course_generator.weather.NoaaWeatherStation;
-import course_generator.weather.HistoricalWeather;
 
 /**
  * @author pierre.delore
@@ -430,8 +430,6 @@ public class TrackData {
 
 		isCalculated = true;
 		Name = new File(name).getName();
-
-		setHistoricalWeather(new HistoricalWeather(Settings));
 
 		switch (mode) {
 		case 1:

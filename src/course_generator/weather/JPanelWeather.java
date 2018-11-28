@@ -189,7 +189,13 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 
 
 	/**
-	 * Refresh the statistic tab
+	 * Refreshes the weather tab
+	 * 
+	 * @param track
+	 *            The current track
+	 * @param retrieveOnlineData
+	 *            True if we need to retrieve data from the weather provider,
+	 *            otherwise, we retrieve it from the track.
 	 */
 	public void refresh(TrackData track, boolean retrieveOnlineData) {
 		if (track == null || track.data.isEmpty()) {
@@ -203,7 +209,6 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 
 		HistoricalWeather previousWeatherData = null;
 		if (retrieveOnlineData) {
-
 			if (!Utils.isInternetReachable()) {
 				lbInformation.setText(bundle.getString("JPanelWeather.lbInformationMissingInternetConnection.Text"));
 				lbInformation.setVisible(true);
@@ -212,19 +217,11 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 			}
 
 			previousWeatherData = new HistoricalWeather(settings);
-			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
+			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 			previousWeatherData.RetrieveWeatherData(track);
 			setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-			for (int forecastIndex = 0; forecastIndex < 3; ++forecastIndex) {
-				/*
-				 * WeatherHistory previousWeatherData = new WeatherHistory(settings, track,
-				 * Latitude, Longitude, forecastIndex + 1);
-				 * 
-				 * previousWeatherData.RetrieveWeatherData();
-				 * previousWeatherHistory.add(previousWeatherData);
-				 */
-			}
+
 		} else {
 			// If exists, get the historical weather from the CGX course
 			previousWeatherData = track.getHistoricalWeather();
@@ -237,6 +234,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		// return;
 		// }
 		if (previousWeatherData == null) {
+			updateDataSheet("");
 			return;
 		}
 
@@ -244,11 +242,18 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 
 		String dataSheetInfo = PopulateWeatherDataSheet(previousWeatherData);
 
-		// -- Refresh the view and set the cursor position
-		if (dataSheetInfo != "") {
-			editorStat.setText(dataSheetInfo);
-			editorStat.setCaretPosition(0);
-		}
+		updateDataSheet(dataSheetInfo);
+	}
+
+
+	/**
+	 * Refresh the view and set the cursor position
+	 * 
+	 * @param dataSheetInfo
+	 */
+	private void updateDataSheet(String dataSheetInfo) {
+		editorStat.setText(dataSheetInfo);
+		editorStat.setCaretPosition(0);
 	}
 
 
@@ -299,8 +304,17 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@203",
 					displayDateTime(previousWeatherData.previousDailySummaries.get(2).getDate(), "EE yyyy-MM-dd"));
 		}
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@204", "Daily normals");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@205", "Monthly average");
+		if (previousWeatherData.dailyNormals != null) {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@204", "Daily normals");
+		} else {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@204", "");
+
+		}
+		if (previousWeatherData.monthlyNormals != null) {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@205", "Monthly average");
+		} else {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@205", "");
+		}
 
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@206", "TMax");
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@207", "TAvg");
@@ -315,7 +329,9 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 				displayDateTime(track.data.get(0).getHour(), "yyyy-MM-dd HH:mm"));
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@111", displayDateTime(track.EndNightTime, "HH:mm"));
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@112", displayDateTime(track.StartNightTime, "HH:mm"));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@113", "12h");
+
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@113",
+				Utils.computeDaylightHours(track.StartNightTime, track.EndNightTime));
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@114", "78%");
 
 		if (previousWeatherData.previousDailySummaries != null
@@ -361,6 +377,11 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 					displayTemperature(previousWeatherData.dailyNormals.getTemperatureMin()));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@238",
 					displayDouble(previousWeatherData.dailyNormals.getPrecipitation()));
+		} else {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@223", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@228", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@233", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@238", "");
 		}
 
 		// Monthly normals
@@ -373,6 +394,11 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 					displayTemperature(previousWeatherData.monthlyNormals.getTemperatureMin()));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@239",
 					displayTemperature(previousWeatherData.monthlyNormals.getPrecipitation()));
+		} else {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@224", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@229", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@234", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@239", "");
 		}
 
 		if (previousWeatherData.noaaSummariesWeatherStation != null) {

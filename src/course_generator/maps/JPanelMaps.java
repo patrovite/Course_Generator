@@ -753,7 +753,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	private void ShowHideWeatherStation() {
 		showWeatherStation = !showWeatherStation;
 		if (showWeatherStation) {
-			if (Track.historicalWeatherData.noaaSummariesWeatherStation != null) {
+			if (Track.historicalWeatherData != null) {
 				if (WeatherStationMarker == null) {
 					double lat = Double
 							.parseDouble(Track.historicalWeatherData.noaaSummariesWeatherStation.getLatitude());

@@ -59,6 +59,7 @@ import javax.xml.stream.XMLStreamWriter;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Instant;
+import org.joda.time.Minutes;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -1741,6 +1742,28 @@ public class Utils {
 		long hoursOffsetFromUTC = TimeUnit.MILLISECONDS.toHours(gpsPointTimeZone.getRawOffset());
 
 		return (int) hoursOffsetFromUTC;
+	}
+
+
+	/**
+	 * Computes the total number of hours and minutes of daylight between two times.
+	 * We assume the given dates are of the same day.
+	 * 
+	 * @param startNightTime
+	 *            The sunset time.
+	 * @param endNightTime
+	 *            The sunrise time.
+	 * @return A string containing the total hours and minutes of daylight.
+	 */
+	public static String computeDaylightHours(DateTime startNightTime, DateTime endNightTime) {
+		Minutes totalMinutes = Minutes.minutesBetween(startNightTime, endNightTime);
+		if (totalMinutes.getMinutes() == 0)
+			return "";
+
+		int hours = totalMinutes.toStandardHours().getHours();
+		int minutes = totalMinutes.toStandardSeconds().getSeconds() - hours * 3600;
+
+		return hours + ":" + minutes / 60;
 	}
 
 } // Class
