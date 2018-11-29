@@ -492,7 +492,17 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		CurrentPosMarker = null;
 		SummariesWeatherStationMarker = null;
 		NormalsWeatherStationMarker = null;
-		showWeatherStations = false;
+
+		if (tdata.historicalWeatherData == null) {
+			showWeatherStations = false;
+			btShowWeatherStation.setSelected(false);
+		} else if (showWeatherStations == true) {
+			// If the new track or the recalculated track contains historical weather
+			// we keep the current button state
+			// otherwise, we hide the stations.
+			showWeatherStations = false;
+			ShowHideWeatherStations();
+		}
 		UpdateShowWeatherStationsButton();
 
 		// -- Create the night tracks
