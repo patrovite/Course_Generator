@@ -13,6 +13,12 @@ import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 
+/**
+ * A class that generates and contains, for a given track, the historical
+ * weather data.
+ * 
+ * @author Frederic Bard
+ */
 public class HistoricalWeather {
 
 	public ArrayList<NoaaWeatherData> pastDailySummaries;

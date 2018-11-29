@@ -281,15 +281,15 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		}
 
 		// EVENT SUMMARY titles
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@100", "EVENT SUMMARY");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@101", "Date");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@102", "");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@103", "Daylight hours");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@104", "moonphase");
-		// TODO Store that i the CGX as well ?
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@100", bundle.getString("JPanelWeather.EventSummary.Text"));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@101", bundle.getString("JPanelWeather.Date.Text"));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@102", bundle.getString("JPanelWeather.SunriseSunset.Text"));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@103", bundle.getString("JPanelWeather.DaylightHours.Text"));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@104", bundle.getString("JPanelWeather.MoonPhase.Text"));
 
 		// HISTORICAL WEATHER DATA titles
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@200", "HISTORICAL WEATHER DATA");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@200",
+				bundle.getString("JPanelWeather.HistoricalWeatherData.Text"));
 		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()) {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@201",
 					displayDateTime(previousWeatherData.pastDailySummaries.get(0).getDate(), "EE yyyy-MM-dd"));
@@ -299,25 +299,27 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 					displayDateTime(previousWeatherData.pastDailySummaries.get(2).getDate(), "EE yyyy-MM-dd"));
 		}
 		if (previousWeatherData.normalsDaily != null) {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@204", "Daily normals");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@204", bundle.getString("JPanelWeather.NormalsDaily.Text"));
 		} else {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@204", "");
 
 		}
 		if (previousWeatherData.normalsMonthly != null) {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@205", "Monthly average");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@205",
+					bundle.getString("JPanelWeather.NormalsMonthly.Text"));
 		} else {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@205", "");
 		}
 
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@206", "TMax");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@207", "TAvg");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@206", bundle.getString("JPanelWeather.MaxTemperature.Text"));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@207", bundle.getString("JPanelWeather.AvgTemperature.Text"));
 		// TODO SWAP ????
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@208", "TMin");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@209", "Precip");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@208", bundle.getString("JPanelWeather.MinTemperature.Text"));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@209", bundle.getString("JPanelWeather.Precipitation.Text"));
 		// TODO OTHER DATA ?????
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@211", "Weather station name");
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@212", "Distance from start");
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@211", bundle.getString("JPanelWeather.StationName.Text"));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@212",
+				bundle.getString("JPanelWeather.DistanceFromStart.Text"));
 
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@110",
 				displayDateTime(track.data.get(0).getHour(), "yyyy-MM-dd HH:mm"));
