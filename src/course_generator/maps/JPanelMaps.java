@@ -66,7 +66,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	private CgSettings Settings;
 	private MapMarker CurrentPosMarker = null;
 	private MapMarker MapMarker = null;
-	private MapMarker WeatherStationMarker = null;
+	private MapMarker SummariesWeatherStationMarker = null;
+	private MapMarker NormalsWeatherStationMarker = null;
 	private ArrayList<Double> UndoDiff;
 	private List<JPanelMapsListener> listeners = new ArrayList<JPanelMapsListener>();
 	private JToolBar jToolBarMapViewer;
@@ -88,7 +89,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	private OsmFileCacheTileLoader offlineTileCache;
 	private JScrollPane jScrollPanelMap;
 	private JButton btMapUndo;
-	private boolean showWeatherStation;
+	private boolean showWeatherStations;
 	private JButton btShowHideMarkers;
 	private boolean ShowMarkers;
 	private JButton btSaveMap;
@@ -143,12 +144,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			}
 		}
 		if (evt.getPropertyName().equals("HistoricalWeatherDataChanged")) {
-			if (Track.historicalWeatherData.noaaSummariesWeatherStation == null) {
-				btShowWeatherStation.setEnabled(false);
-
-			} else {
-				btShowWeatherStation.setEnabled(true);
-			}
+			UpdateShowWeatherStationsButton();
 		}
 	}
 
@@ -420,12 +416,10 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btShowWeatherStation.setEnabled(false);
 		btShowWeatherStation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ShowHideWeatherStation();
+				ShowHideWeatherStations();
 			}
 		});
 		jToolBarMapViewer.add(btShowWeatherStation);
-
-		showWeatherStation = false;
 
 	}
 
@@ -496,9 +490,10 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 		MapMarker = null;
 		CurrentPosMarker = null;
-		WeatherStationMarker = null;
-
-		tdata.addHistoricalWeatherListener(this);
+		SummariesWeatherStationMarker = null;
+		NormalsWeatherStationMarker = null;
+		showWeatherStations = false;
+		UpdateShowWeatherStationsButton();
 
 		// -- Create the night tracks
 		int cmpt = 0;
@@ -614,7 +609,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 					MapViewer.addMapMarker(new MapMarkerImg(new Coordinate(r.getLatitude(), r.getLongitude()),
 							getImage("markers_" + v + ".png", Settings.MapIconSize)));
 			}
-			ShowHideWeatherStation();
 		}
 	}
 
@@ -750,30 +744,59 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	}
 
 
-	private void ShowHideWeatherStation() {
-		showWeatherStation = !showWeatherStation;
-		if (showWeatherStation) {
+	private void ShowHideWeatherStations() {
+		showWeatherStations = !showWeatherStations;
+
+		btShowWeatherStation.setSelected(showWeatherStations);
+
+		if (!ShowMarkers)
+			return;
+
+		if (showWeatherStations) {
 			if (Track.historicalWeatherData != null) {
-				if (WeatherStationMarker == null) {
+				if (SummariesWeatherStationMarker == null
+						&& Track.historicalWeatherData.noaaSummariesWeatherStation != null) {
 					double lat = Double
 							.parseDouble(Track.historicalWeatherData.noaaSummariesWeatherStation.getLatitude());
 					double lon = Double
 							.parseDouble(Track.historicalWeatherData.noaaSummariesWeatherStation.getLongitude());
-					WeatherStationMarker = new MapMarkerImg(new Coordinate(lat, lon),
+					SummariesWeatherStationMarker = new MapMarkerImg(new Coordinate(lat, lon),
 							getImage("weather.png", Settings.MapIconSize));
 				}
-				MapViewer.addMapMarker(WeatherStationMarker);
+				if (NormalsWeatherStationMarker == null
+						&& Track.historicalWeatherData.noaaNormalsWeatherStation != null) {
+
+					double lat = Double
+							.parseDouble(Track.historicalWeatherData.noaaNormalsWeatherStation.getLatitude());
+					double lon = Double
+							.parseDouble(Track.historicalWeatherData.noaaNormalsWeatherStation.getLongitude());
+					NormalsWeatherStationMarker = new MapMarkerImg(new Coordinate(lat, lon),
+							getImage("weather.png", Settings.MapIconSize));
+				}
+
+				if (SummariesWeatherStationMarker != null) {
+					MapViewer.addMapMarker(SummariesWeatherStationMarker);
+				}
+				if (NormalsWeatherStationMarker != null) {
+					MapViewer.addMapMarker(NormalsWeatherStationMarker);
+				}
 
 				// In case the station is out of the screen, it will not be seen
 				// by the user. Hence, we center the map on the track and the markers.
-				MapViewer.setDisplayToFitMapMarkersAndPolygons();
+				if (SummariesWeatherStationMarker != null || NormalsWeatherStationMarker != null) {
+					MapViewer.setDisplayToFitMapMarkersAndPolygons();
+				}
 
 			}
-		} else if (WeatherStationMarker != null) {
-			MapViewer.removeMapMarker(WeatherStationMarker);
+		} else {
+			if (SummariesWeatherStationMarker != null) {
+				MapViewer.removeMapMarker(SummariesWeatherStationMarker);
+			}
+			if (NormalsWeatherStationMarker != null) {
+				MapViewer.removeMapMarker(NormalsWeatherStationMarker);
+			}
 		}
 
-		btShowWeatherStation.setSelected(showWeatherStation);
 	}
 
 
@@ -940,6 +963,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 	public void setTrack(TrackData track) {
 		Track = track;
+		Track.addHistoricalWeatherListener(this);
 		MapViewer.removeAllMapMarkers();
 		RefreshTrack(Track, true);
 	}
@@ -1013,7 +1037,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		RefreshTrack(Track, false);
 
 		if (!ShowMarkers) {
-			showWeatherStation = false;
+			showWeatherStations = false;
 			btShowWeatherStation.setSelected(false);
 		}
 	}
@@ -1021,6 +1045,16 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 	private Image getImage(String name, int size) {
 		return createImageIcon("/course_generator/images/" + size + "/" + name, "").getImage();
+	}
+
+
+	private void UpdateShowWeatherStationsButton() {
+		if (Track.historicalWeatherData != null && (Track.historicalWeatherData.noaaNormalsWeatherStation != null
+				|| Track.historicalWeatherData.noaaSummariesWeatherStation != null)) {
+			btShowWeatherStation.setEnabled(true);
+		} else {
+			btShowWeatherStation.setEnabled(false);
+		}
 	}
 
 }

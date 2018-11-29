@@ -20,9 +20,6 @@ package course_generator;
 
 import static course_generator.utils.Utils.CalcDistance;
 
-//import static course_generator.utils.Utils.ReadXMLDouble;
-//import static course_generator.utils.Utils.ReadXMLInt;
-//import static course_generator.utils.Utils.ReadXMLString;
 import java.awt.Color;
 import java.awt.Component;
 import java.beans.PropertyChangeListener;
@@ -50,20 +47,6 @@ import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
 
 import course_generator.param.ParamData;
 import course_generator.settings.CgSettings;
-/*
-import course_generator.table.CoeffClass;
-import course_generator.table.DiffClass;
-import course_generator.table.DistClass;
-import course_generator.table.ElevationClass;
-import course_generator.table.HourClass;
-import course_generator.table.LatClass;
-import course_generator.table.LonClass;
-import course_generator.table.RecupClass;
-import course_generator.table.StationClass;
-import course_generator.table.TimeClass;
-import course_generator.table.TimelimitClass;
-import course_generator.table.TotalClass;
-*/
 import course_generator.utils.CgConst;
 import course_generator.utils.CgLog;
 import course_generator.utils.StatData;
