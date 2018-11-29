@@ -227,14 +227,9 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 			previousWeatherData = track.getHistoricalWeather();
 		}
 
-		// if (previousWeatherHistory.isEmpty()) {
-		// -- Refresh the view and set the cursor position
-		// editorStat.setText("");
-		// editorStat.setCaretPosition(0);
-		// return;
-		// }
 		if (previousWeatherData == null) {
 			updateDataSheet("");
+			btWeatherDataSave.setEnabled(false);
 			return;
 		}
 
