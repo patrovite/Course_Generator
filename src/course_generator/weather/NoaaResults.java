@@ -67,10 +67,4 @@ public class NoaaResults {
 		this.date = date;
 	}
 
-
-	@Override
-	public String toString() {
-		return "ClassPojo [station = " + station + ", value = " + value + ", attributes = " + attributes
-				+ ", datatype = " + datatype + ", date = " + date + "]";
-	}
 }

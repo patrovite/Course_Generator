@@ -44,21 +44,24 @@ public class HistoricalWeather {
 
 
 	public HistoricalWeather(ArrayList<NoaaWeatherData> pastDailySummaries, NoaaWeatherData normalsDaily,
-			NoaaWeatherData normalsMonthly, NoaaWeatherStation noaaNormalsWeatherStation,
-			NoaaWeatherStation noaaSummariesWeatherStation, LatLng searchAreaCenter, double searchAreaRadius,
-			String daylightHours, double moonFraction) {
-		this.normalsDaily = normalsDaily;
+			NoaaWeatherData normalsMonthly, NoaaWeatherStation noaaSummariesWeatherStation,
+			NoaaWeatherStation noaaNormalsWeatherStation, String daylightHours, double moonFraction) {
 		this.pastDailySummaries = pastDailySummaries;
+		this.normalsDaily = normalsDaily;
 		this.normalsMonthly = normalsMonthly;
-		this.noaaNormalsWeatherStation = noaaNormalsWeatherStation;
 		this.noaaSummariesWeatherStation = noaaSummariesWeatherStation;
-		this.searchAreaCenter = searchAreaCenter;
-		this.searchAreaRadius = searchAreaRadius;
+		this.noaaNormalsWeatherStation = noaaNormalsWeatherStation;
 		this.daylightHours = daylightHours;
 		this.moonFraction = moonFraction;
 	}
 
 
+	/**
+	 * Retrieves the ephemeris and the historical weather data for a given track.
+	 * 
+	 * @param track
+	 *            A track
+	 */
 	public void RetrieveWeatherData(TrackData track) {
 		if (track == null)
 			return;
@@ -97,8 +100,7 @@ public class HistoricalWeather {
 		moonFraction = (double) ((int) moonFraction);
 		moonFraction = moonFraction / 100;
 
-		UpdateTrackWeatherData();
-
+		Track.setHistoricalWeather(this);
 	}
 
 
@@ -134,15 +136,16 @@ public class HistoricalWeather {
 	}
 
 
-	private void UpdateTrackWeatherData() {
-		Track.setHistoricalWeather(this);
-	}
-
-
+	/**
+	 * Gives the moon phase description for a given moon fraction value.
+	 * Interpretation table :
+	 * https://github.com/mourner/suncalc/blob/master/README.md
+	 * 
+	 * @return A String containing the moon phase description
+	 */
 	public String getMoonPhaseDescription() {
 		String moonPhaseDescription;
 
-		// Moon phase interpretation
 		if (moonFraction > Double.MIN_VALUE && moonFraction < 0.1) {
 			moonPhaseDescription = "New Moon";
 		} else if (moonFraction >= 0.1 && moonFraction < 0.25) {

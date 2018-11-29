@@ -37,8 +37,6 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.javadocmd.simplelatlng.LatLng;
-
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 import course_generator.weather.HistoricalWeather;
@@ -698,8 +696,8 @@ public class SaxCGXHandler extends DefaultHandler {
 				level--;
 
 				HistoricalWeather historicalWeather = new HistoricalWeather(pastDailySummaries, normalsDaily,
-						normalsMonthly, noaaNormalsWeatherStation, noaaSummariesWeatherStation, new LatLng(0.0, 0.0),
-						0.0, daylightHours, moonFraction);
+						normalsMonthly, noaaSummariesWeatherStation, noaaNormalsWeatherStation, daylightHours,
+						moonFraction);
 				trkdata.setHistoricalWeather(historicalWeather);
 
 			}
