@@ -439,7 +439,9 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("ENDGLOBALCOEFF")) {
 				trkdata.EndGlobalCoeff = ManageDouble(100.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("TIMEZONE")) {
-				trkdata.TrackTimeZone = ManageInt(0, ERR_READ_INT);
+				trkdata.timeZoneOffsetHours = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("TIMEZONEID")) {
+				trkdata.timeZoneId = ManageString();
 			} else if (qName.equalsIgnoreCase("USESUMMERTIME")) {
 				trkdata.TrackUseDaylightSaving = ManageBoolean(false, ERR_READ_BOOL);
 			} else if (qName.equalsIgnoreCase("CURVE")) {

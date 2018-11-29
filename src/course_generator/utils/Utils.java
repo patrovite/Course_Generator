@@ -1755,8 +1755,8 @@ public class Utils {
 	 *            The sunrise time.
 	 * @return A string containing the total hours and minutes of daylight.
 	 */
-	public static String computeDaylightHours(DateTime startNightTime, DateTime endNightTime) {
-		Minutes totalMinutes = Minutes.minutesBetween(startNightTime, endNightTime);
+	public static String computeDaylightHours(DateTime startDayTime, DateTime endDayTime) {
+		Minutes totalMinutes = Minutes.minutesBetween(startDayTime, endDayTime);
 		if (totalMinutes.getMinutes() == 0)
 			return "";
 

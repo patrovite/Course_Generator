@@ -326,8 +326,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@111", displayDateTime(track.EndNightTime, "HH:mm"));
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@112", displayDateTime(track.StartNightTime, "HH:mm"));
 
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@113",
-				Utils.computeDaylightHours(track.StartNightTime, track.EndNightTime));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@113", previousWeatherData.daylightHours);
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@114", previousWeatherData.getMoonPhaseDescription());
 
 		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()) {

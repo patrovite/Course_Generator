@@ -12,6 +12,7 @@ import com.javadocmd.simplelatlng.util.LengthUnit;
 import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
+import course_generator.utils.Utils;
 
 /**
  * A class that generates and contains, for a given track, the historical
@@ -26,6 +27,7 @@ public class HistoricalWeather {
 	public NoaaWeatherData normalsMonthly;
 	public NoaaWeatherStation noaaSummariesWeatherStation;
 	public NoaaWeatherStation noaaNormalsWeatherStation;
+	public String daylightHours;
 	public double moonFraction;
 	private CgSettings Settings;
 	private TrackData Track;
@@ -71,8 +73,22 @@ public class HistoricalWeather {
 		pastDailySummaries = weatherHistoryRetriever.retrieveDailySummaries();
 		normalsMonthly = weatherHistoryRetriever.retrieveMonthlyNormals();
 
-		// TODO set the timezone.
-		MoonIllumination moonIllumination = MoonIllumination.compute().on(startTime.toDate()).execute();
+		if (track.StartNightTime == TrackData.defaultSunriseSunsetTime) {
+			// The sunrise and sunset values haven't been computed yet.
+			// Let's do it.
+			Track.determineSunriseSunsetTimes();
+		}
+
+		daylightHours = Utils.computeDaylightHours(Track.EndNightTime, Track.StartNightTime);
+
+		if (Track.timeZoneId == "") {
+			// The time zone id, sunrise and sunset hours haven't been computed yet.
+			// Let's do it.
+			Track.determineTrackTimeZone();
+		}
+
+		MoonIllumination moonIllumination = MoonIllumination.compute().on(startTime.toDate()).timezone(Track.timeZoneId)
+				.execute();
 		moonFraction = moonIllumination.getFraction() * 100;
 		moonFraction = (double) ((int) moonFraction);
 		moonFraction = moonFraction / 100;

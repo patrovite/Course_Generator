@@ -33,6 +33,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.swing.JOptionPane;
 import javax.xml.stream.XMLOutputFactory;
@@ -40,8 +41,10 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.shredzone.commons.suncalc.SunTimes;
 
 import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
 
@@ -133,8 +136,10 @@ public class TrackData {
 	public boolean isTimeLimit = false;
 	/** Indicate where the timelimit has been reached (-1 if none) **/
 	public int TimeLimit_Line = -1;
-	/** Timezone for the sunrise/sunset calculation **/
-	public int TrackTimeZone = 0;
+	/** Timezone offset for the sunrise/sunset calculation **/
+	public int timeZoneOffsetHours = 0;
+	/** Time Zone Id **/
+	public String timeZoneId = "";
 	/** Are we using the daylight saving time for the sunrise/sunset calculation **/
 	public boolean TrackUseDaylightSaving = false;
 	public double StartSpeed = 0.0;
@@ -151,6 +156,7 @@ public class TrackData {
 	public DateTime StartNightTime;
 	/** End night time **/
 	public DateTime EndNightTime;
+	public final static DateTime defaultSunriseSunsetTime = new DateTime(2010, 1, 1, 0, 0, 0);
 	/** If 'true' this indicate that the night coefficients are used ***/
 	public boolean bNightCoeff = false;
 	/** Ascent nigth coefficient (100%=normal) **/
@@ -222,8 +228,10 @@ public class TrackData {
 			StatElevDay[i] = new StatData();
 		}
 
-		StartNightTime = new DateTime(2010, 1, 1, 0, 0, 0);
-		EndNightTime = new DateTime(2010, 1, 1, 0, 0, 0);
+		timeZoneOffsetHours = 0;
+		timeZoneId = "";
+		StartNightTime = defaultSunriseSunsetTime;
+		EndNightTime = defaultSunriseSunsetTime;
 
 		MrbSizeW = 640;
 		MrbSizeH = 480;
@@ -400,6 +408,11 @@ public class TrackData {
 		DescTime = resClimb.tm;
 
 		TotalTime = CalcHour();
+
+		timeZoneOffsetHours = 0;
+		timeZoneId = "";
+		StartNightTime = defaultSunriseSunsetTime;
+		EndNightTime = defaultSunriseSunsetTime;
 
 		SearchMinMaxElevationResult resMinMaxElev = new SearchMinMaxElevationResult();
 		resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev); // ref
@@ -1792,7 +1805,8 @@ public class TrackData {
 			Utils.WriteStringToXML(writer, "NIGHTCOEFFDESC", String.format(Locale.ROOT, "%f", NightCoeffDesc));
 			Utils.WriteStringToXML(writer, "STARTGLOBALCOEFF", String.format(Locale.ROOT, "%f", StartGlobalCoeff));
 			Utils.WriteStringToXML(writer, "ENDGLOBALCOEFF", String.format(Locale.ROOT, "%f", EndGlobalCoeff));
-			Utils.WriteIntToXML(writer, "TIMEZONE", TrackTimeZone);
+			Utils.WriteIntToXML(writer, "TIMEZONE", timeZoneOffsetHours);
+			Utils.WriteStringToXML(writer, "TIMEZONEID", timeZoneId);
 			Utils.WriteStringToXML(writer, "USESUMMERTIME", (TrackUseDaylightSaving ? "1" : "0"));
 			Utils.WriteStringToXML(writer, "CURVE", Paramfile);
 			Utils.WriteIntToXML(writer, "MRBSIZEW", MrbSizeW);
@@ -2592,7 +2606,8 @@ public class TrackData {
 		d.EndGlobalCoeff = EndGlobalCoeff;
 		d.isTimeLimit = isTimeLimit;
 		d.TimeLimit_Line = TimeLimit_Line;
-		d.TrackTimeZone = TrackTimeZone;
+		d.timeZoneOffsetHours = timeZoneOffsetHours;
+		d.timeZoneId = timeZoneId;
 		d.TrackUseDaylightSaving = TrackUseDaylightSaving;
 		d.StartSpeed = StartSpeed;
 		d.EndSpeed = EndSpeed;
@@ -2633,6 +2648,40 @@ public class TrackData {
 
 	public void addHistoricalWeatherListener(PropertyChangeListener listener) {
 		HistoricalWeatherDataChanged.addPropertyChangeListener(listener);
+	}
+
+
+	public void determineTrackTimeZone() {
+		if (this.data == null || this.data.isEmpty())
+			return;
+
+		timeZoneId = Utils.getTimeZoneFromLatLon(this.data.get(0).getLatitude(), this.data.get(0).getLongitude())
+				.getID();
+		timeZoneOffsetHours = Utils.hoursUTCOffsetFromLatLon(this.data.get(0).getLatitude(),
+				this.data.get(0).getLongitude());
+	}
+
+
+	public void determineSunriseSunsetTimes() {
+		if (this.data == null || this.data.isEmpty())
+			return;
+
+		if (timeZoneId == "")
+			determineTrackTimeZone();
+
+		DateTime toto = new DateTime(StartTime.getYear(), StartTime.getMonthOfYear(), StartTime.getDayOfMonth(), 0, 0,
+				DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId)));
+
+		SunTimes times = SunTimes.compute().on(toto.toDate())
+				.at(this.data.get(0).getLatitude(), this.data.get(0).getLongitude()).execute();
+
+		DateTime sunriseTime = new DateTime(times.getRise())
+				.withZone(DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId)));
+		DateTime sunsetTime = new DateTime(times.getSet())
+				.withZone(DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId)));
+		EndNightTime = sunriseTime;
+		StartNightTime = sunsetTime;
+
 	}
 
 } // TrackData

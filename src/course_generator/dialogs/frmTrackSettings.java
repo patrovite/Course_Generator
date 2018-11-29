@@ -60,7 +60,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	private static final long serialVersionUID = 4203790672206475952L;
 	private ResourceBundle bundle;
 	private boolean ok;
-	private int timezone;
+	private int timeZone;
+	private String timeZoneId;
 	private boolean summertime;
 	private CgSettings settings;
 	private JPanel jPanelButtons;
@@ -93,6 +94,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	private JPanel panelCoeff;
 	private static FrmCalcSunriseSunset calcSunriseSunset;
 
+
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -103,9 +105,12 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		setModal(true);
 	}
 
+
 	public boolean showDialog(TrackData track) {
 		this.track = track;
-		this.timezone = track.TrackTimeZone;
+		this.timeZone = track.timeZoneOffsetHours;
+		this.timeZoneId = track.timeZoneId;
+
 		this.summertime = track.TrackUseDaylightSaving;
 
 		// Set field
@@ -119,8 +124,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		spinStartTimeModel.setValue(date);
 		chkElevationEffect.setSelected(this.track.bElevEffect);
 		chkNightEffect.setSelected(this.track.bNightCoeff);
-		spinStartNightModel.setValue(this.track.StartNightTime.toDate());
-		spinEndNightModel.setValue(this.track.EndNightTime.toDate());
+		spinStartNightModel.setValue(Utils.DateTimetoSpinnerDate(this.track.StartNightTime));
+		spinEndNightModel.setValue(Utils.DateTimetoSpinnerDate(this.track.EndNightTime));
 		spinAscCoeff.setValue(this.track.NightCoeffAsc);
 		spinDescCoeff.setValue(this.track.NightCoeffDesc);
 
@@ -152,13 +157,15 @@ public class frmTrackSettings extends javax.swing.JDialog {
 			track.NightCoeffAsc = spinAscCoeff.getValueAsDouble();
 			track.NightCoeffDesc = spinDescCoeff.getValueAsDouble();
 
-			track.TrackTimeZone = this.timezone;
+			track.timeZoneOffsetHours = this.timeZone;
+			track.timeZoneId = this.timeZoneId;
 			track.TrackUseDaylightSaving = this.summertime;
 
 			JOptionPane.showMessageDialog(this, bundle.getString("frmTrackSettings.ModificationMsg"));
 		}
 		return ok;
 	}
+
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -194,6 +201,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		return rootPane;
 	}
 
+
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -204,6 +212,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
+
 
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -340,7 +349,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 				setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 
 				if (res.valid) {
-					timezone = res.TimeZone;
+					timeZone = res.TimeZone;
+					timeZoneId = res.TimeZoneId;
 					summertime = res.SummerTime;
 
 					Date date = Utils.DateTimetoSpinnerDate(res.Sunrise);
@@ -409,13 +419,15 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
+
 	private ResCalcSunriseSunset ShowCalcSunriseSunset() {
 		if (calcSunriseSunset == null)
 			calcSunriseSunset = new FrmCalcSunriseSunset(this, settings);
 
 		return calcSunriseSunset.showDialog(track.data.get(0).getLongitude(), track.data.get(0).getLatitude(),
-				track.StartTime, track.TrackTimeZone, track.TrackUseDaylightSaving);
+				track.StartTime);
 	}
+
 
 	protected void Refresh() {
 		spinStartNight.setEnabled(chkNightEffect.isSelected());
