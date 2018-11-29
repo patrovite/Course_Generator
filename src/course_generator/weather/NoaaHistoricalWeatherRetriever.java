@@ -12,8 +12,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.Instant;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.json.JSONObject;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -269,8 +267,7 @@ final public class NoaaHistoricalWeatherRetriever {
 			Instant time = Instant.ofEpochMilli(startDate.minusDays(pastYearNumber * 364).getMillis());
 
 			String datePattern = "yyyy-MM-dd";
-			DateTimeFormatter fmt = DateTimeFormat.forPattern(datePattern);
-			String pastDate = fmt.print(time.toDateTime());
+			String pastDate = time.toDateTime().toString(datePattern);
 
 			String findWeatherStation = "data?datasetid=GHCND&stationid=" + noaaSummariesWeatherStation.getId()
 					+ "&startdate=" + pastDate + "&enddate=" + pastDate;
@@ -294,13 +291,9 @@ final public class NoaaHistoricalWeatherRetriever {
 		if (noaaNormalsWeatherStation == null)
 			return null;
 
-		String datePattern = "MM-dd";
-
-		DateTimeFormatter fmt = DateTimeFormat.forPattern(datePattern);
-
 		String findWeatherStation = "data?datasetid=NORMAL_DLY&datatypeid=DLY-TMIN-NORMAL&datatypeid=DLY-TMAX-NORMAL&datatypeid=DLY-TAVG-NORMAL&"
-				+ "" + "stationid=" + noaaNormalsWeatherStation.getId() + "&startdate=2010-" + fmt.print(startDate)
-				+ "&enddate=2010-" + fmt.print(startDate);
+				+ "" + "stationid=" + noaaNormalsWeatherStation.getId() + "&startdate=2010-"
+				+ startDate.toString("MM-dd") + "&enddate=2010-" + startDate.toString("MM-dd");
 
 		String dailyNormalsData = processNoaaRequest(findWeatherStation);
 		if (!dailyNormalsData.contains("results"))
@@ -314,13 +307,9 @@ final public class NoaaHistoricalWeatherRetriever {
 		if (noaaNormalsWeatherStation == null)
 			return null;
 
-		String datePattern = "2010-MM-01";
-
-		DateTimeFormatter fmt = DateTimeFormat.forPattern(datePattern);
-
 		String findWeatherStation = "data?datasetid=NORMAL_MLY&datatypeid=MLY-TMIN-NORMAL&datatypeid=MLY-TMAX-NORMAL&datatypeid=MLY-TAVG-NORMAL&"
-				+ "" + "stationid=" + noaaNormalsWeatherStation.getId() + "&startdate=" + fmt.print(startDate)
-				+ "&enddate=" + fmt.print(startDate);
+				+ "" + "stationid=" + noaaNormalsWeatherStation.getId() + "&startdate="
+				+ startDate.toString("2010-MM-01") + "&enddate=" + startDate.toString("2010-MM-01");
 
 		String dailyNormalsData = processNoaaRequest(findWeatherStation);
 		if (!dailyNormalsData.contains("results"))

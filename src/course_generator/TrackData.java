@@ -42,8 +42,6 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.shredzone.commons.suncalc.SunTimes;
 
 import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
@@ -1871,9 +1869,12 @@ public class TrackData {
 
 			if (historicalWeatherData != null) {
 				writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINTS");
+				writer.writeStartElement(SaxCGXHandler.LEVEL_WEATHER_NORMALS_EPHEMERIS);
+				Utils.WriteStringToXML(writer, HistoricalWeather.DAYLIGHTHOURS, historicalWeatherData.daylightHours);
 				Utils.WriteStringToXML(writer, HistoricalWeather.MOONFRACTION,
 						String.format("%.3f", historicalWeatherData.moonFraction));
-				writer.writeStartElement("DAILY_SUMMARIES");
+				writer.writeEndElement();// "EPHEMERIS"
+				writer.writeStartElement(SaxCGXHandler.LEVEL_WEATHER_DAILY_SUMMARIES);
 				writer.writeStartElement("WEATHER_STATION");
 				Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID,
 						historicalWeatherData.noaaSummariesWeatherStation.getId());
@@ -1891,10 +1892,8 @@ public class TrackData {
 					NoaaWeatherData currentDailySummary = historicalWeatherData.pastDailySummaries.get(i);
 					writer.writeStartElement("DAILY_SUMMARY");
 
-					String datePattern = "yyyy-MM-dd";
-					DateTimeFormatter fmt = DateTimeFormat.forPattern(datePattern);
-
-					Utils.WriteStringToXML(writer, "DATE", fmt.print(currentDailySummary.getDate()));
+					Utils.WriteStringToXML(writer, NoaaWeatherData.DATE,
+							currentDailySummary.getDate().toString("yyyy-MM-dd"));
 
 					Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE,
 							currentDailySummary.getTemperatureMax());
@@ -1906,7 +1905,7 @@ public class TrackData {
 				}
 				writer.writeEndElement();// "DAILY_SUMMARIES"
 
-				writer.writeStartElement("NORMALS");
+				writer.writeStartElement(SaxCGXHandler.LEVEL_WEATHER_NORMALS);
 				writer.writeStartElement("WEATHER_STATION");
 				Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID,
 						historicalWeatherData.noaaNormalsWeatherStation.getId());

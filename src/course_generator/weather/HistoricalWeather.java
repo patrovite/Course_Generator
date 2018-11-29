@@ -35,6 +35,7 @@ public class HistoricalWeather {
 	private double searchAreaRadius;
 
 	public static final String MOONFRACTION = "MOONFRACTION";
+	public static final String DAYLIGHTHOURS = "DAYLIGHTHOURS";
 
 
 	public HistoricalWeather(CgSettings settings) {
@@ -44,7 +45,8 @@ public class HistoricalWeather {
 
 	public HistoricalWeather(ArrayList<NoaaWeatherData> pastDailySummaries, NoaaWeatherData normalsDaily,
 			NoaaWeatherData normalsMonthly, NoaaWeatherStation noaaNormalsWeatherStation,
-			NoaaWeatherStation noaaSummariesWeatherStation, LatLng searchAreaCenter, double searchAreaRadius) {
+			NoaaWeatherStation noaaSummariesWeatherStation, LatLng searchAreaCenter, double searchAreaRadius,
+			String daylightHours, double moonFraction) {
 		this.normalsDaily = normalsDaily;
 		this.pastDailySummaries = pastDailySummaries;
 		this.normalsMonthly = normalsMonthly;
@@ -52,6 +54,8 @@ public class HistoricalWeather {
 		this.noaaSummariesWeatherStation = noaaSummariesWeatherStation;
 		this.searchAreaCenter = searchAreaCenter;
 		this.searchAreaRadius = searchAreaRadius;
+		this.daylightHours = daylightHours;
+		this.moonFraction = moonFraction;
 	}
 
 

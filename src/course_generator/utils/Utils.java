@@ -60,8 +60,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Instant;
 import org.joda.time.Minutes;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import course_generator.CgData;
 import course_generator.TrackData;
@@ -1709,12 +1707,9 @@ public class Utils {
 		Date spinnerDate = null;
 		String datePattern = "yyyy-MM-dd HH:mm:ss";
 
-		DateTimeFormatter fmt = DateTimeFormat.forPattern(datePattern);
-		String date = fmt.print(dateTime);
-
 		SimpleDateFormat parser = new SimpleDateFormat(datePattern);
 		try {
-			spinnerDate = parser.parse(date);
+			spinnerDate = parser.parse(dateTime.toString(datePattern));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -43,9 +43,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -292,11 +289,11 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 				bundle.getString("JPanelWeather.HistoricalWeatherData.Text"));
 		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()) {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@201",
-					displayDateTime(previousWeatherData.pastDailySummaries.get(0).getDate(), "EE yyyy-MM-dd"));
+					previousWeatherData.pastDailySummaries.get(0).getDate().toString("EE yyyy-MM-dd"));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@202",
-					displayDateTime(previousWeatherData.pastDailySummaries.get(1).getDate(), "EE yyyy-MM-dd"));
+					previousWeatherData.pastDailySummaries.get(1).getDate().toString("EE yyyy-MM-dd"));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@203",
-					displayDateTime(previousWeatherData.pastDailySummaries.get(2).getDate(), "EE yyyy-MM-dd"));
+					previousWeatherData.pastDailySummaries.get(2).getDate().toString("EE yyyy-MM-dd"));
 		}
 		if (previousWeatherData.normalsDaily != null) {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@204", bundle.getString("JPanelWeather.NormalsDaily.Text"));
@@ -322,9 +319,9 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 				bundle.getString("JPanelWeather.DistanceFromStart.Text"));
 
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@110",
-				displayDateTime(track.data.get(0).getHour(), "yyyy-MM-dd HH:mm"));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@111", displayDateTime(track.EndNightTime, "HH:mm"));
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@112", displayDateTime(track.StartNightTime, "HH:mm"));
+				track.data.get(0).getHour().toString("yyyy-MM-dd HH:mm"));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@111", track.EndNightTime.toString("HH:mm"));
+		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@112", track.StartNightTime.toString("HH:mm"));
 
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@113", previousWeatherData.daylightHours);
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@114", previousWeatherData.getMoonPhaseDescription());
@@ -469,20 +466,6 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 
 		return Utils.FormatTemperature(Double.valueOf(temperatureValue), settings.Unit)
 				+ Utils.uTemperatureToString(settings.Unit);
-	}
-
-
-	/**
-	 * Creates a String containing a measured time.
-	 * 
-	 * @param time
-	 *            A Unix time.
-	 * @return A String containing a time information.
-	 */
-	private String displayDateTime(DateTime date, String pattern) {
-		DateTimeFormatter dtfOut = DateTimeFormat.forPattern(pattern);
-
-		return dtfOut.print(date);
 	}
 
 

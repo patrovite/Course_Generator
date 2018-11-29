@@ -103,6 +103,7 @@ public class SaxCGXHandler extends DefaultHandler {
 
 	// Historical weather data
 	public double moonFraction;
+	public String daylightHours;
 	private ArrayList<NoaaWeatherData> pastDailySummaries;
 	private NoaaWeatherData normalsDaily;
 	private NoaaWeatherData normalsMonthly;
@@ -123,8 +124,9 @@ public class SaxCGXHandler extends DefaultHandler {
 	private String levelName;
 	private final String LEVEL_COURSEGENERATOR = "COURSEGENERATOR";
 	private final String LEVEL_TRACKPOINT = "TRACKPOINT";
-	private final String LEVEL_WEATHER_DAILY_SUMMARIES = "DAILY_SUMMARIES";
-	private final String LEVEL_WEATHER_NORMALS = "NORMALS";
+	public static final String LEVEL_WEATHER_NORMALS_EPHEMERIS = "EPHEMERIS";
+	public static final String LEVEL_WEATHER_DAILY_SUMMARIES = "DAILY_SUMMARIES";
+	public static final String LEVEL_WEATHER_NORMALS = "NORMALS";
 
 	private TrackData trkdata;
 	private int mode = 0;
@@ -256,8 +258,9 @@ public class SaxCGXHandler extends DefaultHandler {
 		if (qName.equalsIgnoreCase("COURSEGENERATOR")) {
 			level++;
 			levelName = qName;
-		} else if (qName.equalsIgnoreCase("TRACKPOINT") || qName.equalsIgnoreCase("DAILY_SUMMARIES")
-				|| qName.equalsIgnoreCase("NORMALS")) {
+		} else if (qName.equalsIgnoreCase("TRACKPOINT") || qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS_EPHEMERIS)
+				|| qName.equalsIgnoreCase(LEVEL_WEATHER_DAILY_SUMMARIES)
+				|| qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
 			// trk_nb++;
 			level++;
 			levelName = qName;
@@ -615,10 +618,16 @@ public class SaxCGXHandler extends DefaultHandler {
 				old_time = trkpt_timesecond;
 			}
 		} // End LEVEL_TRACKPOINT
-		else if (level == 2 && levelName.equals(LEVEL_WEATHER_DAILY_SUMMARIES)) {
+
+		else if (level == 2 && levelName.equals(LEVEL_WEATHER_NORMALS_EPHEMERIS)) {
 			if (qName.equalsIgnoreCase(HistoricalWeather.MOONFRACTION)) {
 				moonFraction = ManageDouble(0.0, ERR_READ_DOUBLE);
-			}
+			} else if (qName.equalsIgnoreCase(HistoricalWeather.DAYLIGHTHOURS)) {
+				daylightHours = ManageString();
+			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS_EPHEMERIS))
+				// End element
+				level--;
+		} else if (level == 2 && levelName.equals(LEVEL_WEATHER_DAILY_SUMMARIES)) {
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.STATIONID)) {
 				noaaSummariesWeatherStation.setId(ManageString());
 			}
@@ -648,7 +657,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("DAILY_SUMMARY")) {
 				pastDailySummaries
 						.add(new NoaaWeatherData(maximumTemperature, minimumTemperature, "", precipitation, date));
-			} else if (qName.equalsIgnoreCase("DAILY_SUMMARIES"))
+			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_DAILY_SUMMARIES))
 				level--;
 
 		} else if (level == 2 && levelName.equals(LEVEL_WEATHER_NORMALS)) {
@@ -685,12 +694,13 @@ public class SaxCGXHandler extends DefaultHandler {
 				normalsMonthly = new NoaaWeatherData(maximumTemperature, minimumTemperature, averageTemperature, "",
 						date);
 			else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
+				// End element
 				level--;
 
-				HistoricalWeather dailyWeatherData = new HistoricalWeather(pastDailySummaries, normalsDaily,
+				HistoricalWeather historicalWeather = new HistoricalWeather(pastDailySummaries, normalsDaily,
 						normalsMonthly, noaaNormalsWeatherStation, noaaSummariesWeatherStation, new LatLng(0.0, 0.0),
-						0.0);
-				trkdata.setHistoricalWeather(dailyWeatherData);
+						0.0, daylightHours, moonFraction);
+				trkdata.setHistoricalWeather(historicalWeather);
 
 			}
 		}
