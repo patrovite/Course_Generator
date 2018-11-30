@@ -152,6 +152,13 @@ final public class NoaaHistoricalWeatherRetriever {
 
 		String attributesContent = jsonContent.get("results").toString();
 
+		// We store the stations order from closest to the start to farthest to the
+		// start.
+		// We loop thru each station and we look at the results.
+		// If the 1st has few data but the 2nd one has more, we take the 2nd one.
+		// If only 1 and no data, we don't take anything.
+		//
+
 		ObjectMapper mapper = new ObjectMapper();
 		NoaaWeatherStation closestStation = null;
 		double minDistance = Integer.MAX_VALUE;
