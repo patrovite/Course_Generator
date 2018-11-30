@@ -101,16 +101,16 @@ public class SaxCGXHandler extends DefaultHandler {
 
 	// Historical weather data
 	public double moonFraction;
-	public String daylightHours;
+	public String daylightHours = "";
 	private ArrayList<NoaaWeatherData> pastDailySummaries;
 	private NoaaWeatherData normalsDaily;
 	private NoaaWeatherData normalsMonthly;
 	private NoaaWeatherStation noaaSummariesWeatherStation;
 	private NoaaWeatherStation noaaNormalsWeatherStation;
-	private String maximumTemperature;
-	private String minimumTemperature;
-	private String averageTemperature;
-	private String precipitation;
+	private String maximumTemperature = "";
+	private String minimumTemperature = "";
+	private String averageTemperature = "";
+	private String precipitation = "";
 	private DateTime date;
 
 	// private int trk_nb=0;

@@ -485,7 +485,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	 * @return A String containing a temperature information
 	 */
 	private String displayTemperature(String temperatureValue) {
-		if (temperatureValue == null || temperatureValue == "")
+		if (temperatureValue == null || temperatureValue.equals(""))
 			return "";
 
 		return Utils.FormatTemperature(Double.valueOf(temperatureValue), settings.Unit)
