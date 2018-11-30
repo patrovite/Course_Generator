@@ -17,6 +17,7 @@ public class CustomToolKit extends HTMLEditorKit {
 	private static final long serialVersionUID = 1L;
 	private static HTMLFactory factory = null;
 
+
 	@Override
 	public ViewFactory getViewFactory() {
 		if (factory == null) {
@@ -30,6 +31,7 @@ public class CustomToolKit extends HTMLEditorKit {
 					if (o instanceof HTML.Tag) {
 						HTML.Tag kind = (HTML.Tag) o;
 						if (kind == HTML.Tag.IMG) {
+							BASE64ImageView ff = new BASE64ImageView(elem);
 							return new BASE64ImageView(elem);
 						}
 					}

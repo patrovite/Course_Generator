@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.net.URL;
+import java.util.Base64;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -32,21 +33,24 @@ public class BASE64ImageView extends ImageView {
 		}
 
 		URL src = getImageURL();
-		cache.put(src, loadImage());
+		Image image = loadImage();
+		if (image != null)
+			cache.put(src, image);
 
 	}
 
 
 	private Image loadImage() {
 		String b64 = getBASE64Image();
+		CgLog.info("TOTO:" + b64);
 		BufferedImage newImage = null;
 		ByteArrayInputStream bais = null;
 		try {
-			bais = new ByteArrayInputStream(org.apache.commons.codec.binary.Base64.decodeBase64(b64.getBytes()));
+			bais = new ByteArrayInputStream(Base64.getDecoder().decode(b64.getBytes()));
 			newImage = ImageIO.read(bais);
-			bais.close();
+
 		} catch (Throwable ex) {
-			ex.printStackTrace();
+			CgLog.info("TOTO:");
 		}
 		return newImage;
 	}
