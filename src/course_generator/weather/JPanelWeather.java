@@ -301,7 +301,12 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 					previousWeatherData.pastDailySummaries.get(1).getDate().toString("EE yyyy-MM-dd"));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@203",
 					previousWeatherData.pastDailySummaries.get(2).getDate().toString("EE yyyy-MM-dd"));
+		} else {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@201", "No weather station found");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@202", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@203", "");
 		}
+
 		if (previousWeatherData.normalsDaily != null) {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@204", bundle.getString("JPanelWeather.NormalsDaily.Text"));
 		} else {
@@ -317,10 +322,8 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@206", bundle.getString("JPanelWeather.MaxTemperature.Text"));
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@207", bundle.getString("JPanelWeather.AvgTemperature.Text"));
-		// TODO SWAP ????
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@208", bundle.getString("JPanelWeather.MinTemperature.Text"));
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@209", bundle.getString("JPanelWeather.Precipitation.Text"));
-		// TODO OTHER DATA ?????
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@211", bundle.getString("JPanelWeather.StationName.Text"));
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@212",
 				bundle.getString("JPanelWeather.DistanceFromStart.Text"));
@@ -333,7 +336,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@113", previousWeatherData.daylightHours);
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@114", previousWeatherData.getMoonPhaseDescription());
 
-		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()) {
+		if (previousWeatherData.pastDailySummaries != null && previousWeatherData.pastDailySummaries.get(0) != null) {
 			// Year -1
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@220",
 					displayTemperature(previousWeatherData.pastDailySummaries.get(0).getTemperatureMax()));
@@ -343,6 +346,13 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 					displayTemperature(previousWeatherData.pastDailySummaries.get(0).getTemperatureMin()));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@235",
 					previousWeatherData.pastDailySummaries.get(0).getPrecipitation());
+		} else {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@220", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@225", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@230", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@235", "");
+		}
+		if (previousWeatherData.pastDailySummaries != null && previousWeatherData.pastDailySummaries.get(1) != null) {
 			// Year -2
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@221",
 					displayTemperature(previousWeatherData.pastDailySummaries.get(1).getTemperatureMax()));
@@ -352,7 +362,13 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 					displayTemperature(previousWeatherData.pastDailySummaries.get(1).getTemperatureMin()));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@236",
 					previousWeatherData.pastDailySummaries.get(1).getPrecipitation());
-
+		} else {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@221", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@226", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@231", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@236", "");
+		}
+		if (previousWeatherData.pastDailySummaries != null && previousWeatherData.pastDailySummaries.get(2) != null) {
 			// Year -3
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@222",
 					displayTemperature(previousWeatherData.pastDailySummaries.get(2).getTemperatureMax()));
@@ -362,6 +378,11 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 					displayTemperature(previousWeatherData.pastDailySummaries.get(2).getTemperatureMin()));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@237",
 					previousWeatherData.pastDailySummaries.get(2).getPrecipitation());
+		} else {
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@222", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@227", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@232", "");
+			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@237", "");
 		}
 
 		// Daily normals
