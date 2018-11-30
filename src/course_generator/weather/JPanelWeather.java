@@ -490,16 +490,16 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 			String base64 = "";
 			switch (image) {
 			case "sunrise":
-				base64 = Utils.imageToBase64(this, "thermometer.png", 22);
+				base64 = Utils.imageToBase64(this, "thermometer.png", 96);
 				break;
 			case "sunset":
-				base64 = Utils.imageToBase64(this, "thermometer.png", 22);
+				base64 = Utils.imageToBase64(this, "thermometer.png", 96);
 				break;
 			case "thermometer":
-				base64 = Utils.imageToBase64(this, "thermometer.png", 22);
+				base64 = Utils.imageToBase64(this, "thermometer.png", 96);
 				break;
 			case "moonphase":
-				base64 = Utils.imageToBase64(this, "sunrise.png", 22);
+				base64 = Utils.imageToBase64(this, "sunrise.png", 96);
 				break;
 			}
 
