@@ -27,7 +27,6 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -54,6 +53,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import org.apache.commons.compress.utils.IOUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Instant;
@@ -180,20 +180,16 @@ public class Utils {
 
 
 	public static String imageToBase64(Component Parent, String image, int size) {
-		// InputStream imageStream = Parent.getClass()
-		// .getResourceAsStream("/course_generator/images/" + size + "/" + image);
+		CgLog.info(Parent.getClass().getResource("/course_generator/images/" + size + "/" + image).toString());
 
 		byte[] imageBytes = null;
 		try {
-			File file = new File(
-					Parent.getClass().getResource("/course_generator/images/" + size + "/" + image).toURI());
-			InputStream finput = new FileInputStream(file);
+			InputStream is = Parent.getClass().getResourceAsStream("/course_generator/images/" + size + "/" + image);
+			imageBytes = IOUtils.toByteArray(is);
 
-			imageBytes = new byte[(int) file.length()];
-			finput.read(imageBytes, 0, imageBytes.length);
-			finput.close();
+			is.close();
 		} catch (Exception e) {
-
+			CgLog.info("Error when retrieving the image" + image + " : " + e.getMessage());
 		}
 		String imageStr = org.apache.commons.codec.binary.Base64.encodeBase64String(imageBytes);
 		return imageStr;
