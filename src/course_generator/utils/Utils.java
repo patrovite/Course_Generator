@@ -53,6 +53,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.compress.utils.IOUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -180,7 +181,6 @@ public class Utils {
 
 
 	public static String imageToBase64(Component Parent, String image, int size) {
-		CgLog.info(Parent.getClass().getResource("/course_generator/images/" + size + "/" + image).toString());
 
 		byte[] imageBytes = null;
 		try {
@@ -191,8 +191,7 @@ public class Utils {
 		} catch (Exception e) {
 			CgLog.info("Error when retrieving the image" + image + " : " + e.getMessage());
 		}
-		String imageStr = org.apache.commons.codec.binary.Base64.encodeBase64String(imageBytes);
-		return imageStr;
+		return Base64.encodeBase64String(imageBytes);
 	}
 
 

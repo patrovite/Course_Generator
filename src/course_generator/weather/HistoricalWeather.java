@@ -166,4 +166,34 @@ public class HistoricalWeather {
 		return moonPhaseDescription;
 	}
 
+
+	/**
+	 * Gives the moon phase icon for a given moon fraction value. Interpretation
+	 * table : https://github.com/mourner/suncalc/blob/master/README.md
+	 * 
+	 * @return A String containing the name of the appropriate moon phase icon
+	 */
+	public static String getMoonPhaseIcon(double moonFraction) {
+		String moonPhaseIcon;
+
+		if (moonFraction > Double.MIN_VALUE && moonFraction < 0.1) {
+			moonPhaseIcon = "moon-new";
+		} else if (moonFraction >= 0.1 && moonFraction < 0.25) {
+			moonPhaseIcon = "moon-waxing-crescent";
+		} else if (moonFraction == 0.25) {
+			moonPhaseIcon = "moon-first-quarter";
+		} else if (moonFraction > 0.25 && moonFraction < 0.5) {
+			moonPhaseIcon = "moon-waxing-gibbous";
+		} else if (moonFraction == 0.5) {
+			moonPhaseIcon = "moon-full";
+		} else if (moonFraction > 0.5 && moonFraction < 0.75) {
+			moonPhaseIcon = "moon-waning-gibbous";
+		} else if (moonFraction == 0.75) {
+			moonPhaseIcon = "moon-last-quarter";
+		} else {
+			moonPhaseIcon = "moon-waning-crescent";
+		}
+		return moonPhaseIcon + ".png";
+	}
+
 }
