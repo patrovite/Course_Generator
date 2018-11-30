@@ -60,6 +60,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Instant;
 import org.joda.time.Minutes;
+import org.shredzone.commons.suncalc.SunTimes;
 
 import course_generator.CgData;
 import course_generator.TrackData;
@@ -1759,6 +1760,40 @@ public class Utils {
 		int minutes = totalMinutes.toStandardSeconds().getSeconds() - hours * 3600;
 
 		return hours + ":" + minutes / 60;
+	}
+
+
+	public static DateTime determineSunRiseTimes(DateTime StartTime, double latitude, double longitude,
+			String timeZoneId) {
+		// Because giving a date with a specific hour could result into getting the
+		// sunrise of the previous day,
+		// we adjust the date to the beginning of the day
+		DateTime beginningOfDay = new DateTime(StartTime.getYear(), StartTime.getMonthOfYear(),
+				StartTime.getDayOfMonth(), 0, 0, DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId)));
+
+		SunTimes times = SunTimes.compute().on(beginningOfDay.toDate()).at(latitude, longitude).execute();
+
+		DateTime sunriseTime = new DateTime(times.getRise())
+				.withZone(DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId)));
+
+		return sunriseTime;
+	}
+
+
+	public static DateTime determineSunsetTimes(DateTime StartTime, double latitude, double longitude,
+			String timeZoneId) {
+		// Because giving a date with a specific hour could result into getting the
+		// sunrise of the previous day,
+		// we adjust the date to the beginning of the day
+		DateTime beginningOfDay = new DateTime(StartTime.getYear(), StartTime.getMonthOfYear(),
+				StartTime.getDayOfMonth(), 0, 0, DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId)));
+
+		SunTimes times = SunTimes.compute().on(beginningOfDay.toDate()).at(latitude, longitude).execute();
+
+		DateTime sunsetTime = new DateTime(times.getSet())
+				.withZone(DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId)));
+		return sunsetTime;
+
 	}
 
 } // Class

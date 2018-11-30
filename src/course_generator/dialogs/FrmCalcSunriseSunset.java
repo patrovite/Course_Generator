@@ -43,8 +43,6 @@ import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.shredzone.commons.suncalc.SunTimes;
 
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgSpinner;
@@ -336,10 +334,9 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 
 	protected void Calc() {
 
-		SunTimes times = SunTimes.compute().on(date.toDate()).at(latitude, longitude).execute();
+		sunrise = Utils.determineSunRiseTimes(date, latitude, longitude, courseStartZone.getID());
+		sunset = Utils.determineSunsetTimes(date, latitude, longitude, courseStartZone.getID());
 
-		sunrise = new DateTime(times.getRise()).withZone(DateTimeZone.forTimeZone(courseStartZone));
-		sunset = new DateTime(times.getSet()).withZone(DateTimeZone.forTimeZone(courseStartZone));
 	}
 
 

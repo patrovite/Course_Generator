@@ -33,7 +33,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import javax.swing.JOptionPane;
 import javax.xml.stream.XMLOutputFactory;
@@ -41,8 +40,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.shredzone.commons.suncalc.SunTimes;
 
 import com.sun.xml.txw2.output.IndentingXMLStreamWriter;
 
@@ -2668,18 +2665,10 @@ public class TrackData {
 		if (timeZoneId == "")
 			determineTrackTimeZone();
 
-		DateTime toto = new DateTime(StartTime.getYear(), StartTime.getMonthOfYear(), StartTime.getDayOfMonth(), 0, 0,
-				DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId)));
-
-		SunTimes times = SunTimes.compute().on(toto.toDate())
-				.at(this.data.get(0).getLatitude(), this.data.get(0).getLongitude()).execute();
-
-		DateTime sunriseTime = new DateTime(times.getRise())
-				.withZone(DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId)));
-		DateTime sunsetTime = new DateTime(times.getSet())
-				.withZone(DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId)));
-		EndNightTime = sunriseTime;
-		StartNightTime = sunsetTime;
+		EndNightTime = Utils.determineSunRiseTimes(StartTime, this.data.get(0).getLatitude(),
+				this.data.get(0).getLongitude(), timeZoneId);
+		StartNightTime = Utils.determineSunsetTimes(StartTime, this.data.get(0).getLatitude(),
+				this.data.get(0).getLongitude(), timeZoneId);
 
 	}
 
