@@ -416,7 +416,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@247", "");
 		}
 
-		return sheetSkeleton.toString();
+		return ReplaceImages(sheetSkeleton.toString());
 	}
 
 	/**
@@ -456,12 +456,6 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 				+ Utils.uTemperatureToString(settings.Unit);
 	}
 
-	private String addImage(String iconFilePath) {
-		if (iconFilePath == "")
-			return "";
-		return "<img src=\"file:/" + iconFilePath + "\" width=\"50%\" height=\"50%\"/>";
-	}
-
 	/**
 	 * Because the image paths in the original HTML reference images in the Course
 	 * Generator jar (i.e: not accessible by any browser), we convert all the images
@@ -476,15 +470,25 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		Document document = Jsoup.parse(originalText);
 
 		document.select("img[src]").forEach(e -> {
-			System.out.println(e.text());
 
-			String absoluteFilePath = e.attr("src");
+			String image = e.attr("src");
+			String base64 = "";
+			switch (image) {
+			case "sunrise":
+				base64 = Utils.imageToBase64(Utils.getIcon(this, "sunrise.png", settings.ToolbarIconSize));
+				break;
+			case "sunset":
+				base64 = Utils.imageToBase64(Utils.getIcon(this, "sunset.png", settings.ToolbarIconSize));
+				break;
+			case "thermometer":
+				base64 = Utils.imageToBase64(Utils.getIcon(this, "thermometer.png", settings.ToolbarIconSize));
+				break;
+			case "moonphase":
+				base64 = Utils.imageToBase64(Utils.getIcon(this, "thermometer.png", settings.ToolbarIconSize));
+				break;
+			}
 
-			// We remove the string "file:/"
-			absoluteFilePath = absoluteFilePath.substring(6);
-			String base64 = Utils.getFileBase64(absoluteFilePath);
-
-			e.attr("src", "data:image/png;base64," + base64);
+			e.attr("src", "data:image/png;base64," + base64 + "\" width=\"50%\" height=\"50%\"/>");
 		});
 
 		return document.toString();
