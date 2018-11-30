@@ -37,6 +37,7 @@ final public class NoaaHistoricalWeatherRetriever {
 
 	private LatLng searchAreaCenter;
 	private double searchAreaRadius;
+	private final double maxSearchAreaRadius = 100000.0; // 100km
 
 	private NoaaWeatherStation noaaNormalsWeatherStation;
 	private NoaaWeatherStation noaaSummariesWeatherStation;
@@ -48,7 +49,7 @@ final public class NoaaHistoricalWeatherRetriever {
 		this.searchAreaCenter = searchAreaCenter;
 
 		// We want a search area of minimum 50km
-		this.searchAreaRadius = searchAreaRadius > 50000.0 ? searchAreaRadius : 50000.0;
+		this.searchAreaRadius = searchAreaRadius > maxSearchAreaRadius ? searchAreaRadius : maxSearchAreaRadius;
 
 	}
 
