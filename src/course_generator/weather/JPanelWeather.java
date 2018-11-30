@@ -50,6 +50,7 @@ import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.CgLog;
+import course_generator.utils.CustomToolKit;
 import course_generator.utils.Utils;
 
 public class JPanelWeather extends JPanel implements PropertyChangeListener {
@@ -66,7 +67,6 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 	private JLabel getNoaaTokenLink;
 	private TrackData track = null;
 
-
 	public JPanelWeather(CgSettings settings) {
 		super();
 		this.settings = settings;
@@ -74,7 +74,6 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
-
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -88,10 +87,11 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		editorStat = new JEditorPane();
 		editorStat.setContentType("text/html");
 		editorStat.setEditable(false);
+		CustomToolKit toolKit = new CustomToolKit();
+		editorStat.setEditorKit(toolKit);
 		scrollPaneStat = new JScrollPane(editorStat);
 		add(scrollPaneStat, java.awt.BorderLayout.CENTER);
 	}
-
 
 	/**
 	 * Create the weather toolbar
@@ -172,7 +172,6 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		refresh(null, false);
 	}
 
-
 	private void UpdatePanel() {
 
 		boolean isNoaaTokenValid = settings.isNoaaTokenValid();
@@ -184,15 +183,12 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		btWeatherRefresh.setEnabled(isNoaaTokenValid && track != null);
 	}
 
-
 	/**
 	 * Refreshes the weather tab
 	 * 
-	 * @param track
-	 *            The current track
-	 * @param retrieveOnlineData
-	 *            True if we need to retrieve data from the weather provider,
-	 *            otherwise, we retrieve it from the track.
+	 * @param track              The current track
+	 * @param retrieveOnlineData True if we need to retrieve data from the weather
+	 *                           provider, otherwise, we retrieve it from the track.
 	 */
 	public void refresh(TrackData track, boolean retrieveOnlineData) {
 		if (track == null || track.data.isEmpty()) {
@@ -237,7 +233,6 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		updateDataSheet(dataSheetInfo);
 	}
 
-
 	/**
 	 * Refresh the view and set the cursor position
 	 * 
@@ -248,13 +243,11 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		editorStat.setCaretPosition(0);
 	}
 
-
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (!evt.getPropertyName().equals("NoaaTokenChanged"))
 			return;
 		UpdatePanel();
 	}
-
 
 	private String PopulateWeatherDataSheet(HistoricalWeather previousWeatherData) {
 
@@ -426,7 +419,6 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		return sheetSkeleton.toString();
 	}
 
-
 	/**
 	 * Save the statistics in TXT format
 	 */
@@ -439,9 +431,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 			try {
 				FileWriter out = new FileWriter(s);
 
-				String text = ReplaceImages(editorStat.getText());
-
-				out.write(text);
+				out.write(editorStat.getText());
 				out.close();
 			} catch (Exception f) {
 				CgLog.error("SaveStat : impossible to save the statistic file");
@@ -452,12 +442,10 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	/**
 	 * Creates a String containing a temperature value.
 	 * 
-	 * @param temperatureValue
-	 *            The temperature value
+	 * @param temperatureValue The temperature value
 	 * @return A String containing a temperature information
 	 */
 	private String displayTemperature(String temperatureValue) {
@@ -468,13 +456,11 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 				+ Utils.uTemperatureToString(settings.Unit);
 	}
 
-
 	private String addImage(String iconFilePath) {
 		if (iconFilePath == "")
 			return "";
 		return "<img src=\"file:/" + iconFilePath + "\" width=\"50%\" height=\"50%\"/>";
 	}
-
 
 	/**
 	 * Because the image paths in the original HTML reference images in the Course
@@ -483,8 +469,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 	 * representation in Course Generator : Because Swing's (default) HTML support
 	 * does not extend to Base 64 encoded images.
 	 * 
-	 * @param originalText
-	 *            The original HTML page
+	 * @param originalText The original HTML page
 	 * @return The HTML page containing base64 representations of each image.
 	 */
 	private String ReplaceImages(String originalText) {
