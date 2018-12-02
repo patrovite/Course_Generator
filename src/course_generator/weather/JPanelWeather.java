@@ -67,7 +67,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	private WebView titi;
 	private String weatherDataSheetContent;
 
-
 	public JPanelWeather(CgSettings settings) {
 		super();
 		this.settings = settings;
@@ -75,7 +74,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
-
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -96,7 +94,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		});
 		add(fxPanel, java.awt.BorderLayout.CENTER);
 	}
-
 
 	/**
 	 * Create the weather toolbar
@@ -177,7 +174,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		refresh(null, false);
 	}
 
-
 	private void UpdatePanel() {
 
 		boolean isNoaaTokenValid = settings.isNoaaTokenValid();
@@ -189,15 +185,12 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		btWeatherRefresh.setEnabled(isNoaaTokenValid && track != null);
 	}
 
-
 	/**
 	 * Refreshes the weather tab
 	 * 
-	 * @param track
-	 *            The current track
-	 * @param retrieveOnlineData
-	 *            True if we need to retrieve data from the weather provider,
-	 *            otherwise, we retrieve it from the track.
+	 * @param track              The current track
+	 * @param retrieveOnlineData True if we need to retrieve data from the weather
+	 *                           provider, otherwise, we retrieve it from the track.
 	 */
 	public void refresh(TrackData track, boolean retrieveOnlineData) {
 		if (track == null || track.data.isEmpty()) {
@@ -243,7 +236,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 
 	}
 
-
 	/**
 	 * Refresh the view and set the cursor position
 	 * 
@@ -255,13 +247,11 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		});
 	}
 
-
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (!evt.getPropertyName().equals("NoaaTokenChanged"))
 			return;
 		UpdatePanel();
 	}
-
 
 	private String PopulateWeatherDataSheet(HistoricalWeather previousWeatherData) {
 
@@ -452,7 +442,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		return ReplaceImages(sheetSkeleton.toString(), previousWeatherData.moonFraction);
 	}
 
-
 	/**
 	 * Save the statistics in TXT format
 	 */
@@ -476,12 +465,10 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	/**
 	 * Creates a String containing a temperature value.
 	 * 
-	 * @param temperatureValue
-	 *            The temperature value
+	 * @param temperatureValue The temperature value
 	 * @return A String containing a temperature information
 	 */
 	private String displayTemperature(String temperatureValue) {
@@ -492,7 +479,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				+ Utils.uTemperatureToString(settings.Unit);
 	}
 
-
 	/**
 	 * Because the image paths in the original HTML reference images in the Course
 	 * Generator jar (i.e: not accessible by any browser), we convert all the images
@@ -500,8 +486,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	 * representation in Course Generator : Because Swing's (default) HTML support
 	 * does not extend to Base 64 encoded images.
 	 * 
-	 * @param originalText
-	 *            The original HTML page
+	 * @param originalText The original HTML page
 	 * @return The HTML page containing base64 representations of each image.
 	 */
 	private String ReplaceImages(String originalText, double moonFraction) {

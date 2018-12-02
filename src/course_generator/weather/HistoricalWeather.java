@@ -1,6 +1,7 @@
 package course_generator.weather;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.shredzone.commons.suncalc.MoonIllumination;
@@ -22,7 +23,7 @@ import course_generator.utils.Utils;
  */
 public class HistoricalWeather {
 
-	public ArrayList<NoaaWeatherData> pastDailySummaries;
+	public List<NoaaWeatherData> pastDailySummaries;
 	public NoaaWeatherData normalsDaily;
 	public NoaaWeatherData normalsMonthly;
 	public NoaaWeatherStation noaaSummariesWeatherStation;
@@ -68,13 +69,13 @@ public class HistoricalWeather {
 		determineWeatherSearchArea();
 
 		NoaaHistoricalWeatherRetriever weatherHistoryRetriever = NoaaHistoricalWeatherRetriever
-				.where(searchAreaCenter, searchAreaRadius).when(startTime).forUser(Settings.getNoaaToken()).build();
+				.where(searchAreaCenter, searchAreaRadius).when(startTime).forUser(Settings.getNoaaToken()).retrieve();
 
 		noaaNormalsWeatherStation = weatherHistoryRetriever.getNoaaNormalsWeatherStation();
 		noaaSummariesWeatherStation = weatherHistoryRetriever.getNoaaSummariesWeatherStation();
-		normalsDaily = weatherHistoryRetriever.retrieveDailyNormals();
-		pastDailySummaries = weatherHistoryRetriever.retrieveDailySummaries();
-		normalsMonthly = weatherHistoryRetriever.retrieveMonthlyNormals();
+		normalsDaily = weatherHistoryRetriever.getNormalsDaily();
+		pastDailySummaries = weatherHistoryRetriever.getPastDailySummaries();
+		// normalsMonthly = weatherHistoryRetriever.retrieveMonthlyNormals();
 
 		if (track.StartNightTime == TrackData.defaultSunriseSunsetTime) {
 			// The sunrise and sunset values haven't been computed yet.
