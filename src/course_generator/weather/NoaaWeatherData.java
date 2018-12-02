@@ -27,14 +27,12 @@ public class NoaaWeatherData {
 	public static final String PRECIPITATION = "PRECIPITATION";
 	public static final String DATE = "DATE";
 
-
 	public NoaaWeatherData() {
 		maxTemperature = "";
 		minTemperature = "";
 		AverageTemperature = "";
 		Precipitation = "";
 	}
-
 
 	public NoaaWeatherData(String maximumTemperature, String minimumTemperature, String averageTemperature,
 			String precipitation, DateTime date) {
@@ -45,54 +43,60 @@ public class NoaaWeatherData {
 		this.Date = date;
 	}
 
-
 	public String getTemperatureMin() {
 		return minTemperature;
 	}
-
 
 	public void setTemperatureMin(String temperatureMin) {
 		this.minTemperature = temperatureMin;
 	}
 
-
 	public String getTemperatureMax() {
 		return maxTemperature;
 	}
-
 
 	public void setTemperatureMax(String temperatureMax) {
 		this.maxTemperature = temperatureMax;
 	}
 
-
 	public String getPrecipitation() {
 		return Precipitation;
 	}
-
 
 	public void setPrecipitation(String precipitation) {
 		this.Precipitation = precipitation;
 	}
 
-
 	public String getTemperatureAverage() {
 		return AverageTemperature;
 	}
-
 
 	public void setTemperatureAverage(String temperatureAverage) {
 		AverageTemperature = temperatureAverage;
 	}
 
-
 	public DateTime getDate() {
 		return Date;
 	}
 
-
 	public void setDate(DateTime date) {
 		Date = date;
+	}
+
+	public boolean isDailySummaryValid() {
+		if (maxTemperature != null && !maxTemperature.equals("") && minTemperature != null
+				&& !minTemperature.equals(""))
+			return true;
+
+		return false;
+	}
+
+	public boolean isNormalsDataValid() {
+		if (maxTemperature != null && !maxTemperature.equals("") && minTemperature != null && !minTemperature.equals("")
+				&& AverageTemperature != null && !AverageTemperature.equals(""))
+			return true;
+
+		return false;
 	}
 
 }

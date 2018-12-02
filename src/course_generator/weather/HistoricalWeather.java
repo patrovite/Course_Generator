@@ -75,7 +75,7 @@ public class HistoricalWeather {
 		noaaSummariesWeatherStation = weatherHistoryRetriever.getNoaaSummariesWeatherStation();
 		normalsDaily = weatherHistoryRetriever.getNormalsDaily();
 		pastDailySummaries = weatherHistoryRetriever.getPastDailySummaries();
-		// normalsMonthly = weatherHistoryRetriever.retrieveMonthlyNormals();
+		normalsMonthly = weatherHistoryRetriever.getNormalsMonthly();
 
 		if (track.StartNightTime == TrackData.defaultSunriseSunsetTime) {
 			// The sunrise and sunset values haven't been computed yet.
