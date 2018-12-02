@@ -37,11 +37,9 @@ public class HistoricalWeather {
 	public static final String MOONFRACTION = "MOONFRACTION";
 	public static final String DAYLIGHTHOURS = "DAYLIGHTHOURS";
 
-
 	public HistoricalWeather(CgSettings settings) {
 		Settings = settings;
 	}
-
 
 	public HistoricalWeather(ArrayList<NoaaWeatherData> pastDailySummaries, NoaaWeatherData normalsDaily,
 			NoaaWeatherData normalsMonthly, NoaaWeatherStation noaaSummariesWeatherStation,
@@ -55,12 +53,10 @@ public class HistoricalWeather {
 		this.moonFraction = moonFraction;
 	}
 
-
 	/**
 	 * Retrieves the ephemeris and the historical weather data for a given track.
 	 * 
-	 * @param track
-	 *            A track
+	 * @param track A track
 	 */
 	public void RetrieveWeatherData(TrackData track) {
 		if (track == null)
@@ -88,7 +84,7 @@ public class HistoricalWeather {
 
 		daylightHours = Utils.computeDaylightHours(Track.EndNightTime, Track.StartNightTime);
 
-		if (Track.timeZoneId == "") {
+		if (Track.timeZoneId.equals("")) {
 			// The time zone id, sunrise and sunset hours haven't been computed yet.
 			// Let's do it.
 			Track.determineTrackTimeZone();
@@ -102,7 +98,6 @@ public class HistoricalWeather {
 
 		Track.setHistoricalWeather(this);
 	}
-
 
 	/**
 	 * is to encompass most of the track to search a weather station as close as
@@ -135,7 +130,6 @@ public class HistoricalWeather {
 
 	}
 
-
 	/**
 	 * Gives the moon phase description for a given moon fraction value.
 	 * Interpretation table :
@@ -165,7 +159,6 @@ public class HistoricalWeather {
 		}
 		return moonPhaseDescription;
 	}
-
 
 	/**
 	 * Gives the moon phase icon for a given moon fraction value. Interpretation
