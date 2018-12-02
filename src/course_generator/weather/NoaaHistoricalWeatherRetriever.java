@@ -44,7 +44,6 @@ final public class NoaaHistoricalWeatherRetriever {
 
 	private final String NoaaApiUrl = "https://www.ncdc.noaa.gov/cdo-web/api/v2/";
 
-
 	private NoaaHistoricalWeatherRetriever(LatLng searchAreaCenter, double searchAreaRadius) {
 		this.searchAreaCenter = searchAreaCenter;
 
@@ -53,11 +52,9 @@ final public class NoaaHistoricalWeatherRetriever {
 
 	}
 
-
 	private NoaaHistoricalWeatherRetriever(String noaaToken) {
 		this.noaaToken = noaaToken;
 	}
-
 
 	/**
 	 *
@@ -69,7 +66,6 @@ final public class NoaaHistoricalWeatherRetriever {
 	public static NoaaHistoricalWeatherRetriever where(LatLng searchAreaCenter, double searchAreaRadius) {
 		return new NoaaHistoricalWeatherRetriever(searchAreaCenter, searchAreaRadius);
 	}
-
 
 	/**
 	 *
@@ -83,7 +79,6 @@ final public class NoaaHistoricalWeatherRetriever {
 		return this;
 	}
 
-
 	/**
 	 * 
 	 *
@@ -95,7 +90,6 @@ final public class NoaaHistoricalWeatherRetriever {
 		this.noaaToken = noaaToken;
 		return this;
 	}
-
 
 	/**
 	 * This method actually builds the WeatherData object
@@ -125,12 +119,10 @@ final public class NoaaHistoricalWeatherRetriever {
 		return this;
 	}
 
-
 	private String getExtent(LatLng swPoint, LatLng nePoint) {
 		return String.format("%.3f", swPoint.getLatitude()) + "," + String.format("%.3f", swPoint.getLongitude()) + ","
 				+ String.format("%.3f", nePoint.getLatitude()) + "," + String.format("%.3f", nePoint.getLongitude());
 	}
-
 
 	private NoaaWeatherStation findClosestStation(String dataSetId) {
 
@@ -145,7 +137,7 @@ final public class NoaaHistoricalWeatherRetriever {
 
 		String weatherHistory = processNoaaRequest(findWeatherStation);
 
-		if (weatherHistory == "" || !weatherHistory.contains("results"))
+		if (weatherHistory.equals("") || !weatherHistory.contains("results"))
 			return null;
 
 		JSONObject jsonContent = new JSONObject(weatherHistory.toString());
@@ -191,13 +183,11 @@ final public class NoaaHistoricalWeatherRetriever {
 		return closestStation;
 	}
 
-
 	private void computeSearchArea() {
 		// We find the south west corner of the box
 		searchAreaSouthWestCorner = LatLngTool.travel(searchAreaCenter, 225, searchAreaRadius, LengthUnit.METER);
 		searchAreaNorthEastCorner = LatLngTool.travel(searchAreaCenter, 45, searchAreaRadius, LengthUnit.METER);
 	}
-
 
 	private String processNoaaRequest(String parameters) {
 		StringBuffer weatherHistory = new StringBuffer();
@@ -220,7 +210,6 @@ final public class NoaaHistoricalWeatherRetriever {
 		}
 		return weatherHistory.toString();
 	}
-
 
 	private NoaaWeatherData processDailyNormals(String dailyNormalsData) {
 		JSONObject jsonContent = new JSONObject(dailyNormalsData.toString());
@@ -264,7 +253,6 @@ final public class NoaaHistoricalWeatherRetriever {
 		return noaaDailyNormals;
 	}
 
-
 	public ArrayList<NoaaWeatherData> retrieveDailySummaries() {
 		if (noaaSummariesWeatherStation == null)
 			return null;
@@ -294,7 +282,6 @@ final public class NoaaHistoricalWeatherRetriever {
 		return pastDailySummaries;
 	}
 
-
 	public NoaaWeatherData retrieveDailyNormals() {
 		if (noaaNormalsWeatherStation == null)
 			return null;
@@ -309,7 +296,6 @@ final public class NoaaHistoricalWeatherRetriever {
 
 		return processDailyNormals(dailyNormalsData);
 	}
-
 
 	public NoaaWeatherData retrieveMonthlyNormals() {
 		if (noaaNormalsWeatherStation == null)
@@ -326,11 +312,9 @@ final public class NoaaHistoricalWeatherRetriever {
 		return processDailyNormals(dailyNormalsData);
 	}
 
-
 	public NoaaWeatherStation getNoaaNormalsWeatherStation() {
 		return noaaNormalsWeatherStation;
 	}
-
 
 	public NoaaWeatherStation getNoaaSummariesWeatherStation() {
 		return noaaSummariesWeatherStation;
