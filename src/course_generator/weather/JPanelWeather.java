@@ -291,16 +291,18 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@103", bundle.getString("JPanelWeather.DaylightHours.Text"));
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@104", bundle.getString("JPanelWeather.MoonPhase.Text"));
 
+		String datePattern = settings.Unit == CgConst.UNIT_MILES_FEET ? "EE MM/dd/yyyy" : "EE dd/MM/yyyy";
+
 		// HISTORICAL WEATHER DATA titles
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@200",
 				bundle.getString("JPanelWeather.HistoricalWeatherData.Text"));
 		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()) {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@201",
-					previousWeatherData.pastDailySummaries.get(0).getDate().toString("EE yyyy-MM-dd"));
+					previousWeatherData.pastDailySummaries.get(0).getDate().toString(datePattern));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@202",
-					previousWeatherData.pastDailySummaries.get(1).getDate().toString("EE yyyy-MM-dd"));
+					previousWeatherData.pastDailySummaries.get(1).getDate().toString(datePattern));
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@203",
-					previousWeatherData.pastDailySummaries.get(2).getDate().toString("EE yyyy-MM-dd"));
+					previousWeatherData.pastDailySummaries.get(2).getDate().toString(datePattern));
 		} else {
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@201", "No weather station found");
 			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@202", "");
@@ -329,7 +331,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				bundle.getString("JPanelWeather.DistanceFromStart.Text"));
 
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@110",
-				track.data.get(0).getHour().toString("yyyy-MM-dd HH:mm"));
+				track.data.get(0).getHour().toString(datePattern + " HH:mm"));
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@111", track.EndNightTime.toString("HH:mm"));
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@112", track.StartNightTime.toString("HH:mm"));
 
