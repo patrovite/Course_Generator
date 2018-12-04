@@ -2,6 +2,7 @@ package course_generator.weather;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.shredzone.commons.suncalc.MoonIllumination;
 
@@ -22,14 +23,20 @@ import course_generator.utils.Utils;
  */
 public class HistoricalWeather {
 
+	// Daily summaries
+	public NoaaWeatherStation noaaSummariesWeatherStation;
 	public List<NoaaWeatherData> pastDailySummaries;
+
+	// Normals
+	public NoaaWeatherStation noaaNormalsWeatherStation;
 	public NoaaWeatherData normalsDaily;
 	public NoaaWeatherData normalsMonthly;
-	public NoaaWeatherStation noaaSummariesWeatherStation;
-	public NoaaWeatherStation noaaNormalsWeatherStation;
+
+	// Event data
 	public String daylightHours;
 	public double moonFraction;
 	private CgSettings Settings;
+
 	private TrackData Track;
 	private LatLng searchAreaCenter;
 	private double searchAreaRadius;
@@ -40,6 +47,7 @@ public class HistoricalWeather {
 
 	public HistoricalWeather(CgSettings settings) {
 		Settings = settings;
+
 	}
 
 
@@ -60,7 +68,7 @@ public class HistoricalWeather {
 	 * Retrieves the ephemeris and the historical weather data for a given track.
 	 * 
 	 * @param track
-	 *            A track
+	 *            The current track
 	 */
 	public void RetrieveWeatherData(TrackData track) {
 		if (track == null)
@@ -105,8 +113,9 @@ public class HistoricalWeather {
 
 
 	/**
-	 * is to encompass most of the track to search a weather station as close as
-	 * possible to the course
+	 * Determines the geographic area covered by a GPS track. The goal is to
+	 * encompass most of the track to search a weather station as close as possible
+	 * to the overall course and not just to a specific point.
 	 */
 	private void determineWeatherSearchArea() {
 		// Looking for the farthest point of the track
@@ -124,12 +133,12 @@ public class HistoricalWeather {
 			}
 		}
 
-		// We find the center of the box formed by the starting point and
-		// the farthest point
-
 		double distanceFromStart = LatLngTool.distance(startPoint, furthestPoint, LengthUnit.METER);
 		double bearingBetweenPoint = LatLngTool.initialBearing(startPoint, furthestPoint);
 
+		// We find the center and the radius of the circle formed by the starting point
+		// and
+		// the farthest point
 		searchAreaCenter = LatLngTool.travel(startPoint, bearingBetweenPoint, distanceFromStart / 2, LengthUnit.METER);
 		searchAreaRadius = distanceFromStart / 2;
 
@@ -146,22 +155,24 @@ public class HistoricalWeather {
 	public String getMoonPhaseDescription() {
 		String moonPhaseDescription;
 
+		ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+
 		if (moonFraction > Double.MIN_VALUE && moonFraction < 0.1) {
-			moonPhaseDescription = "New Moon";
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseNewMoon.Text");
 		} else if (moonFraction >= 0.1 && moonFraction < 0.25) {
-			moonPhaseDescription = "Waxing Crescent";
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaxingCrescent.Text");
 		} else if (moonFraction == 0.25) {
-			moonPhaseDescription = "First Quarter";
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseFirstQuarter.Text");
 		} else if (moonFraction > 0.25 && moonFraction < 0.5) {
-			moonPhaseDescription = "Waxing Gibbous";
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaxingGibbous.Text");
 		} else if (moonFraction == 0.5) {
-			moonPhaseDescription = "Full Moon";
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseFullMoon.Text");
 		} else if (moonFraction > 0.5 && moonFraction < 0.75) {
-			moonPhaseDescription = "Waning Gibbous";
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaningGibbous.Text");
 		} else if (moonFraction == 0.75) {
-			moonPhaseDescription = "Last Quarter";
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseLastQuarter.Text");
 		} else {
-			moonPhaseDescription = "Waning Crescent";
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaningCrescent.Text");
 		}
 		return moonPhaseDescription;
 	}
