@@ -217,8 +217,8 @@ public class SaxCGXHandler extends DefaultHandler {
 		Cmpt = 0;
 		old_time = 0;
 		pastDailySummaries = new ArrayList<NoaaWeatherData>();
-		normalsDaily = new NoaaWeatherData();
-		normalsMonthly = new NoaaWeatherData();
+		normalsDaily = null;
+		normalsMonthly = null;
 
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser = factory.newSAXParser();
@@ -692,12 +692,16 @@ public class SaxCGXHandler extends DefaultHandler {
 			if (qName.equalsIgnoreCase(NoaaWeatherData.DATE)) {
 				date = DateTime.parse(characters);
 			} else if (qName.equalsIgnoreCase("NORMALS_DAILY")) {
-				normalsDaily = new NoaaWeatherData(maximumTemperature, minimumTemperature, averageTemperature, "",
-						date);
-			} else if (qName.equalsIgnoreCase("NORMALS_MONTHLY"))
-				normalsMonthly = new NoaaWeatherData(maximumTemperature, minimumTemperature, averageTemperature, "",
-						date);
-			else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
+				if (!normalsStationId.equals("")) {
+					normalsDaily = new NoaaWeatherData(maximumTemperature, minimumTemperature, averageTemperature, "",
+							date);
+				}
+			} else if (qName.equalsIgnoreCase("NORMALS_MONTHLY")) {
+				if (!normalsStationId.equals("")) {
+					normalsMonthly = new NoaaWeatherData(maximumTemperature, minimumTemperature, averageTemperature, "",
+							date);
+				}
+			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
 				// End element
 				level--;
 
