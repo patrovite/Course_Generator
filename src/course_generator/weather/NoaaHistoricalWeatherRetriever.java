@@ -52,7 +52,7 @@ final public class NoaaHistoricalWeatherRetriever {
 	private NoaaHistoricalWeatherRetriever(LatLng searchAreaCenter, double searchAreaRadius) {
 		this.searchAreaCenter = searchAreaCenter;
 
-		// We want a search area of minimum 50km
+		// We want a search area of minimum 100km
 		this.searchAreaRadius = searchAreaRadius > maxSearchAreaRadius ? searchAreaRadius : maxSearchAreaRadius;
 
 	}

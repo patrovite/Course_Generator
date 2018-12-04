@@ -41,8 +41,8 @@ public class HistoricalWeather {
 	private LatLng searchAreaCenter;
 	private double searchAreaRadius;
 
-	public static final String MOONFRACTION = "MOONFRACTION";
-	public static final String DAYLIGHTHOURS = "DAYLIGHTHOURS";
+	public static final String MOONFRACTION = "MOONFRACTION"; //$NON-NLS-1$
+	public static final String DAYLIGHTHOURS = "DAYLIGHTHOURS"; //$NON-NLS-1$
 
 
 	public HistoricalWeather(CgSettings settings) {
@@ -96,7 +96,7 @@ public class HistoricalWeather {
 
 		daylightHours = Utils.computeDaylightHours(Track.EndNightTime, Track.StartNightTime);
 
-		if (Track.timeZoneId.equals("")) {
+		if (Track.timeZoneId.equals("")) { //$NON-NLS-1$
 			// The time zone id, sunrise and sunset hours haven't been computed yet.
 			// Let's do it.
 			Track.determineTrackTimeZone();
@@ -155,24 +155,24 @@ public class HistoricalWeather {
 	public String getMoonPhaseDescription() {
 		String moonPhaseDescription;
 
-		ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle"); //$NON-NLS-1$
 
 		if (moonFraction > Double.MIN_VALUE && moonFraction < 0.1) {
-			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseNewMoon.Text");
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseNewMoon.Text"); //$NON-NLS-1$
 		} else if (moonFraction >= 0.1 && moonFraction < 0.25) {
-			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaxingCrescent.Text");
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaxingCrescent.Text"); //$NON-NLS-1$
 		} else if (moonFraction == 0.25) {
-			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseFirstQuarter.Text");
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseFirstQuarter.Text"); //$NON-NLS-1$
 		} else if (moonFraction > 0.25 && moonFraction < 0.5) {
-			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaxingGibbous.Text");
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaxingGibbous.Text"); //$NON-NLS-1$
 		} else if (moonFraction == 0.5) {
-			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseFullMoon.Text");
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseFullMoon.Text"); //$NON-NLS-1$
 		} else if (moonFraction > 0.5 && moonFraction < 0.75) {
-			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaningGibbous.Text");
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaningGibbous.Text"); //$NON-NLS-1$
 		} else if (moonFraction == 0.75) {
-			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseLastQuarter.Text");
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseLastQuarter.Text"); //$NON-NLS-1$
 		} else {
-			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaningCrescent.Text");
+			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaningCrescent.Text"); //$NON-NLS-1$
 		}
 		return moonPhaseDescription;
 	}
@@ -188,23 +188,23 @@ public class HistoricalWeather {
 		String moonPhaseIcon;
 
 		if (moonFraction > Double.MIN_VALUE && moonFraction < 0.1) {
-			moonPhaseIcon = "moon-new";
+			moonPhaseIcon = "moon-new"; //$NON-NLS-1$
 		} else if (moonFraction >= 0.1 && moonFraction < 0.25) {
-			moonPhaseIcon = "moon-waxing-crescent";
+			moonPhaseIcon = "moon-waxing-crescent"; //$NON-NLS-1$
 		} else if (moonFraction == 0.25) {
-			moonPhaseIcon = "moon-first-quarter";
+			moonPhaseIcon = "moon-first-quarter"; //$NON-NLS-1$
 		} else if (moonFraction > 0.25 && moonFraction < 0.5) {
-			moonPhaseIcon = "moon-waxing-gibbous";
+			moonPhaseIcon = "moon-waxing-gibbous"; //$NON-NLS-1$
 		} else if (moonFraction == 0.5) {
-			moonPhaseIcon = "moon-full";
+			moonPhaseIcon = "moon-full"; //$NON-NLS-1$
 		} else if (moonFraction > 0.5 && moonFraction < 0.75) {
-			moonPhaseIcon = "moon-waning-gibbous";
+			moonPhaseIcon = "moon-waning-gibbous"; //$NON-NLS-1$
 		} else if (moonFraction == 0.75) {
-			moonPhaseIcon = "moon-last-quarter";
+			moonPhaseIcon = "moon-last-quarter"; //$NON-NLS-1$
 		} else {
-			moonPhaseIcon = "moon-waning-crescent";
+			moonPhaseIcon = "moon-waning-crescent"; //$NON-NLS-1$
 		}
-		return moonPhaseIcon + ".png";
+		return moonPhaseIcon + ".png"; //$NON-NLS-1$
 	}
 
 }

@@ -28,15 +28,14 @@ public class NoaaWeatherStation implements Comparable<NoaaWeatherStation> {
 
 	private double distanceFromStart;
 
-	public final static String STATIONID = "STATIONID";
-	public final static String NAME = "NAME";
-	public final static String DISTANCEFROMSTART = "DISTANCEFROMSTART";
-	public final static String LATITUDE = "LATITUDE";
-	public final static String LONGITUDE = "LONGITUDE";
+	public final static String STATIONID = "STATIONID"; //$NON-NLS-1$
+	public final static String NAME = "NAME"; //$NON-NLS-1$
+	public final static String DISTANCEFROMSTART = "DISTANCEFROMSTART"; //$NON-NLS-1$
+	public final static String LATITUDE = "LATITUDE"; //$NON-NLS-1$
+	public final static String LONGITUDE = "LONGITUDE"; //$NON-NLS-1$
 
 
 	public NoaaWeatherStation() {
-
 	}
 
 

@@ -21,17 +21,17 @@ public class NoaaWeatherData {
 	private String Precipitation;
 	private DateTime Date;
 
-	public static final String MAXIMUMTEMPERATURE = "MAXIMUMTEMPERATURE";
-	public static final String MINIMUMTEMPERATURE = "MINIMUMTEMPERATURE";
-	public static final String AVERAGETEMPERATURE = "AVERAGETEMPERATURE";
-	public static final String PRECIPITATION = "PRECIPITATION";
-	public static final String DATE = "DATE";
+	public static final String MAXIMUMTEMPERATURE = "MAXIMUMTEMPERATURE"; //$NON-NLS-1$
+	public static final String MINIMUMTEMPERATURE = "MINIMUMTEMPERATURE"; //$NON-NLS-1$
+	public static final String AVERAGETEMPERATURE = "AVERAGETEMPERATURE"; //$NON-NLS-1$
+	public static final String PRECIPITATION = "PRECIPITATION"; //$NON-NLS-1$
+	public static final String DATE = "DATE"; //$NON-NLS-1$
 
 	public NoaaWeatherData() {
-		maxTemperature = "";
-		minTemperature = "";
-		AverageTemperature = "";
-		Precipitation = "";
+		maxTemperature = ""; //$NON-NLS-1$
+		minTemperature = ""; //$NON-NLS-1$
+		AverageTemperature = ""; //$NON-NLS-1$
+		Precipitation = ""; //$NON-NLS-1$
 	}
 
 	public NoaaWeatherData(String maximumTemperature, String minimumTemperature, String averageTemperature,
@@ -84,16 +84,16 @@ public class NoaaWeatherData {
 	}
 
 	public boolean isDailySummaryValid() {
-		if (maxTemperature != null && !maxTemperature.equals("") && minTemperature != null
-				&& !minTemperature.equals(""))
+		if (maxTemperature != null && !maxTemperature.equals("") && minTemperature != null //$NON-NLS-1$
+				&& !minTemperature.equals("")) //$NON-NLS-1$
 			return true;
 
 		return false;
 	}
 
 	public boolean isNormalsDataValid() {
-		if (maxTemperature != null && !maxTemperature.equals("") && minTemperature != null && !minTemperature.equals("")
-				&& AverageTemperature != null && !AverageTemperature.equals(""))
+		if (maxTemperature != null && !maxTemperature.equals("") && minTemperature != null && !minTemperature.equals("") //$NON-NLS-1$ //$NON-NLS-2$
+				&& AverageTemperature != null && !AverageTemperature.equals("")) //$NON-NLS-1$
 			return true;
 
 		return false;
