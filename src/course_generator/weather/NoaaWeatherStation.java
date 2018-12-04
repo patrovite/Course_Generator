@@ -35,6 +35,15 @@ public class NoaaWeatherStation implements Comparable<NoaaWeatherStation> {
 	public final static String LONGITUDE = "LONGITUDE";
 
 
+	public NoaaWeatherStation(String id, String name, String latitude, String longitude, double distanceFromStart) {
+		this.id = id;
+		this.name = name;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.distanceFromStart = distanceFromStart;
+	}
+
+
 	public String getId() {
 		return id;
 	}

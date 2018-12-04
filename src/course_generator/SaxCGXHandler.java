@@ -105,13 +105,21 @@ public class SaxCGXHandler extends DefaultHandler {
 	private ArrayList<NoaaWeatherData> pastDailySummaries;
 	private NoaaWeatherData normalsDaily;
 	private NoaaWeatherData normalsMonthly;
-	private NoaaWeatherStation noaaSummariesWeatherStation;
-	private NoaaWeatherStation noaaNormalsWeatherStation;
 	private String maximumTemperature = "";
 	private String minimumTemperature = "";
 	private String averageTemperature = "";
 	private String precipitation = "";
 	private DateTime date;
+	private String summariesStationId;
+	private String summariesStationName;
+	private String summariesStationLatitude;
+	private String summariesStationLongitude;
+	private double summariesStationDistanceFromStart;
+	private String normalsStationId;
+	private String normalsStationName;
+	private String normalsStationLatitude;
+	private String normalsStationLongitude;
+	private double normalsStationDistanceFromStart;
 
 	// private int trk_nb=0;
 	// private int trkseg_nb=0;
@@ -211,8 +219,6 @@ public class SaxCGXHandler extends DefaultHandler {
 		pastDailySummaries = new ArrayList<NoaaWeatherData>();
 		normalsDaily = new NoaaWeatherData();
 		normalsMonthly = new NoaaWeatherData();
-		noaaSummariesWeatherStation = new NoaaWeatherStation();
-		noaaNormalsWeatherStation = new NoaaWeatherStation();
 
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser = factory.newSAXParser();
@@ -627,19 +633,19 @@ public class SaxCGXHandler extends DefaultHandler {
 				level--;
 		} else if (level == 2 && levelName.equals(LEVEL_WEATHER_DAILY_SUMMARIES)) {
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.STATIONID)) {
-				noaaSummariesWeatherStation.setId(ManageString());
+				summariesStationId = ManageString();
 			}
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.NAME)) {
-				noaaSummariesWeatherStation.setName(ManageString());
+				summariesStationName = ManageString();
 			}
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.DISTANCEFROMSTART)) {
-				noaaSummariesWeatherStation.setDistanceFromStart(ManageDouble(0.0, ERR_READ_DOUBLE));
+				summariesStationDistanceFromStart = ManageDouble(0.0, ERR_READ_DOUBLE);
 			}
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.LATITUDE)) {
-				noaaSummariesWeatherStation.setLatitude(ManageString());
+				summariesStationLatitude = ManageString();
 			}
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.LONGITUDE)) {
-				noaaSummariesWeatherStation.setLongitude(ManageString());
+				summariesStationLongitude = ManageString();
 			}
 			if (qName.equalsIgnoreCase(NoaaWeatherData.MAXIMUMTEMPERATURE)) {
 				maximumTemperature = ManageString();
@@ -660,19 +666,19 @@ public class SaxCGXHandler extends DefaultHandler {
 
 		} else if (level == 2 && levelName.equals(LEVEL_WEATHER_NORMALS)) {
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.STATIONID)) {
-				noaaNormalsWeatherStation.setId(ManageString());
+				normalsStationId = ManageString();
 			}
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.NAME)) {
-				noaaNormalsWeatherStation.setName(ManageString());
+				normalsStationName = ManageString();
 			}
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.DISTANCEFROMSTART)) {
-				noaaNormalsWeatherStation.setDistanceFromStart(ManageDouble(0.0, ERR_READ_DOUBLE));
+				normalsStationDistanceFromStart = ManageDouble(0.0, ERR_READ_DOUBLE);
 			}
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.LATITUDE)) {
-				noaaNormalsWeatherStation.setLatitude(ManageString());
+				normalsStationLatitude = ManageString();
 			}
 			if (qName.equalsIgnoreCase(NoaaWeatherStation.LONGITUDE)) {
-				noaaNormalsWeatherStation.setLongitude(ManageString());
+				normalsStationLongitude = ManageString();
 			}
 			if (qName.equalsIgnoreCase(NoaaWeatherData.MAXIMUMTEMPERATURE)) {
 				maximumTemperature = ManageString();
@@ -694,6 +700,16 @@ public class SaxCGXHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
 				// End element
 				level--;
+
+				NoaaWeatherStation noaaSummariesWeatherStation = null;
+				if (!summariesStationId.equals(""))
+					noaaSummariesWeatherStation = new NoaaWeatherStation(summariesStationId, summariesStationName,
+							summariesStationLatitude, summariesStationLongitude, summariesStationDistanceFromStart);
+
+				NoaaWeatherStation noaaNormalsWeatherStation = null;
+				if (!normalsStationId.equals(""))
+					noaaNormalsWeatherStation = new NoaaWeatherStation(normalsStationId, normalsStationName,
+							normalsStationLatitude, normalsStationLongitude, normalsStationDistanceFromStart);
 
 				HistoricalWeather historicalWeather = new HistoricalWeather(pastDailySummaries, normalsDaily,
 						normalsMonthly, noaaSummariesWeatherStation, noaaNormalsWeatherStation, daylightHours,
