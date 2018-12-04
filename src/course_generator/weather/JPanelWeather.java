@@ -129,7 +129,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		// -- Refresh
 		// --------------------------------------------------------------
 		btWeatherRefresh = new javax.swing.JButton();
-		btWeatherRefresh.setIcon(Utils.getIcon(this, "refresh.png", settings.ToolbarIconSize));
+		btWeatherRefresh.setIcon(Utils.getIcon(this, "download_weather.png", settings.ToolbarIconSize));
 		btWeatherRefresh.setToolTipText(bundle.getString("JPanelWeather.btWeatherRefresh.toolTipText"));
 		btWeatherRefresh.setEnabled(false);
 		btWeatherRefresh.setFocusable(false);
