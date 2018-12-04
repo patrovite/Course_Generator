@@ -160,7 +160,10 @@ final public class NoaaHistoricalWeatherRetriever {
 						Double.valueOf(current.getLongitude()));
 
 				double distance = LatLngTool.distance(station, searchAreaCenter, LengthUnit.METER);
-				current.setDistanceFromStart(distance / 1000.0);
+				distance = distance / 100;
+				distance = (double) ((int) distance);
+				distance = distance / 10;
+				current.setDistanceFromStart(distance);
 
 			}
 
