@@ -3,7 +3,6 @@ package course_generator.weather;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.shredzone.commons.suncalc.MoonIllumination;
 
 import com.javadocmd.simplelatlng.LatLng;
@@ -38,9 +37,11 @@ public class HistoricalWeather {
 	public static final String MOONFRACTION = "MOONFRACTION";
 	public static final String DAYLIGHTHOURS = "DAYLIGHTHOURS";
 
+
 	public HistoricalWeather(CgSettings settings) {
 		Settings = settings;
 	}
+
 
 	public HistoricalWeather(ArrayList<NoaaWeatherData> pastDailySummaries, NoaaWeatherData normalsDaily,
 			NoaaWeatherData normalsMonthly, NoaaWeatherStation noaaSummariesWeatherStation,
@@ -54,22 +55,24 @@ public class HistoricalWeather {
 		this.moonFraction = moonFraction;
 	}
 
+
 	/**
 	 * Retrieves the ephemeris and the historical weather data for a given track.
 	 * 
-	 * @param track A track
+	 * @param track
+	 *            A track
 	 */
 	public void RetrieveWeatherData(TrackData track) {
 		if (track == null)
 			return;
 
 		Track = track;
-		DateTime startTime = Track.data.get(0).getHour();
 
 		determineWeatherSearchArea();
 
 		NoaaHistoricalWeatherRetriever weatherHistoryRetriever = NoaaHistoricalWeatherRetriever
-				.where(searchAreaCenter, searchAreaRadius).when(startTime).forUser(Settings.getNoaaToken()).retrieve();
+				.where(searchAreaCenter, searchAreaRadius).when(Track.StartTime).forUser(Settings.getNoaaToken())
+				.retrieve();
 
 		noaaNormalsWeatherStation = weatherHistoryRetriever.getNoaaNormalsWeatherStation();
 		noaaSummariesWeatherStation = weatherHistoryRetriever.getNoaaSummariesWeatherStation();
@@ -91,14 +94,15 @@ public class HistoricalWeather {
 			Track.determineTrackTimeZone();
 		}
 
-		MoonIllumination moonIllumination = MoonIllumination.compute().on(startTime.toDate()).timezone(Track.timeZoneId)
-				.execute();
+		MoonIllumination moonIllumination = MoonIllumination.compute().on(Track.StartTime.toDate())
+				.timezone(Track.timeZoneId).execute();
 		moonFraction = moonIllumination.getFraction() * 100;
 		moonFraction = (double) ((int) moonFraction);
 		moonFraction = moonFraction / 100;
 
 		Track.setHistoricalWeather(this);
 	}
+
 
 	/**
 	 * is to encompass most of the track to search a weather station as close as
@@ -131,6 +135,7 @@ public class HistoricalWeather {
 
 	}
 
+
 	/**
 	 * Gives the moon phase description for a given moon fraction value.
 	 * Interpretation table :
@@ -160,6 +165,7 @@ public class HistoricalWeather {
 		}
 		return moonPhaseDescription;
 	}
+
 
 	/**
 	 * Gives the moon phase icon for a given moon fraction value. Interpretation
