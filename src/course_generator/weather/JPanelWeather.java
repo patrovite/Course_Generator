@@ -472,7 +472,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				out.write(weatherDataSheetContent);
 				out.close();
 			} catch (Exception f) {
-				CgLog.error("SaveStat : impossible to save the statistic file"); //$NON-NLS-1$
+				CgLog.error("SaveStat : impossible to save the weather data file"); //$NON-NLS-1$
 				f.printStackTrace();
 			}
 			// -- Store the directory
