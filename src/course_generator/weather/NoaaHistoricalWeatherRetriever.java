@@ -47,9 +47,9 @@ final public class NoaaHistoricalWeatherRetriever {
 	private NoaaWeatherData noaaNormalsMonthly;
 
 	private final String NoaaApiUrl = "https://www.ncdc.noaa.gov/cdo-web/api/v2/"; //$NON-NLS-1$
-	private final String ghcndParameters = "&datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&datatypeid=PRCP&limit=1000"; //$NON-NLS-1$
-	private final String normalDlyDataTypeIds = "&datasetid=NORMAL_DLY&datatypeid=DLY-TMIN-NORMAL&datatypeid=DLY-TMAX-NORMAL&datatypeid=DLY-TAVG-NORMAL&limit=1000"; //$NON-NLS-1$
-	private final String normalMlyDataTypeIds = "&datasetid=NORMAL_MLY&datatypeid=MLY-TMIN-NORMAL&datatypeid=MLY-TMAX-NORMAL&datatypeid=MLY-TAVG-NORMAL&limit=1000"; //$NON-NLS-1$
+	private final String ghcndParameters = "&datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&datatypeid=PRCP"; //$NON-NLS-1$
+	private final String normalDlyDataTypeIds = "&datasetid=NORMAL_DLY&datatypeid=DLY-TMIN-NORMAL&datatypeid=DLY-TMAX-NORMAL&datatypeid=DLY-TAVG-NORMAL"; //$NON-NLS-1$
+	private final String normalMlyDataTypeIds = "&datasetid=NORMAL_MLY&datatypeid=MLY-TMIN-NORMAL&datatypeid=MLY-TMAX-NORMAL&datatypeid=MLY-TAVG-NORMAL"; //$NON-NLS-1$
 
 
 	private NoaaHistoricalWeatherRetriever(LatLng searchAreaCenter, double searchAreaRadius) {
@@ -159,7 +159,7 @@ final public class NoaaHistoricalWeatherRetriever {
 		StringBuffer weatherHistory = new StringBuffer();
 		try {
 			HttpClient client = HttpClientBuilder.create().build();
-			HttpGet request = new HttpGet(NoaaApiUrl + parameters + "&units=metric"); //$NON-NLS-1$
+			HttpGet request = new HttpGet(NoaaApiUrl + parameters + "&units=metric&limit=1000"); //$NON-NLS-1$
 
 			// add request header
 			request.addHeader("token", noaaToken); //$NON-NLS-1$

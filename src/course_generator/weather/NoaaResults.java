@@ -1,7 +1,7 @@
 package course_generator.weather;
 
 /**
- * Java representation of a NOAA query "results" element.
+ * A Java representation of a NOAA query "results" element.
  * 
  * @author Frederic Bard
  * 
