@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="236.59617"
-     inkscape:cy="116.44907"
+     inkscape:cx="245.5886"
+     inkscape:cy="176.39171"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -55,13 +55,13 @@
      id="layer1"
      transform="translate(0,-161.53332)">
     <rect
-       style="fill:#0075ff;fill-opacity:1;stroke:#0075ff;stroke-width:11.00415421;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       style="fill:#0075ff;fill-opacity:1;stroke:#0075ff;stroke-width:12.9558382;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
        id="rect2009"
-       width="6.6367292"
-       height="103.09428"
-       x="64.300819"
-       y="169.57877"
-       ry="7.9829636" />
+       width="10.293595"
+       height="92.138084"
+       x="62.517113"
+       y="178.85515"
+       ry="7.1345859" />
     <rect
        style="fill:#0075ff;fill-opacity:1;stroke:#0075ff;stroke-width:10;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
        id="rect2011"
@@ -81,7 +81,7 @@
        ry="1.3363476"
        transform="rotate(-135)" />
     <rect
-       style="fill:#0075ff;fill-opacity:1;stroke:#0075ff;stroke-width:10.32361221;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       style="fill:#0075ff;fill-opacity:1;stroke:#0075ff;stroke-width:10.324;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
        id="rect2009-3"
        width="6.6367297"
        height="90.737038"
@@ -89,5 +89,21 @@
        y="-113.40424"
        ry="7.0260978"
        transform="rotate(90)" />
+    <rect
+       style="fill:#0075ff;fill-opacity:1;stroke:#0075ff;stroke-width:7.07522964;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       id="rect2009-4"
+       width="11.837554"
+       height="23.894306"
+       x="15.788033"
+       y="269.31808"
+       ry="1.8502227" />
+    <rect
+       style="fill:#0075ff;fill-opacity:1;stroke:#0075ff;stroke-width:7.07522964;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       id="rect2009-4-3"
+       width="11.837554"
+       height="23.894306"
+       x="108.64175"
+       y="269.31808"
+       ry="1.8502227" />
   </g>
 </svg>
