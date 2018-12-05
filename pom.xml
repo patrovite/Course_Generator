@@ -1,4 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!--  Here is the command to automatically check for newer versions:
+mvn versions:display-dependency-updates -->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>Course_Generator</groupId>
 	<artifactId>Course_Generator</artifactId>
@@ -69,11 +71,6 @@
 			<groupId>com.sun.xml.txw2</groupId>
 			<artifactId>txwc2</artifactId>
 			<version>20110809</version>
-		</dependency>
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20180813</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jsoup</groupId>

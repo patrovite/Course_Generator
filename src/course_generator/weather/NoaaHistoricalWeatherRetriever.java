@@ -13,9 +13,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.Instant;
-import org.json.JSONObject;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javadocmd.simplelatlng.LatLng;
 import com.javadocmd.simplelatlng.LatLngTool;
@@ -194,14 +194,12 @@ final public class NoaaHistoricalWeatherRetriever {
 		if (weatherStationsQueryResults.equals("") || !weatherStationsQueryResults.contains("results")) //$NON-NLS-1$ //$NON-NLS-2$
 			return null;
 
-		JSONObject weatherStationsJson = new JSONObject(weatherStationsQueryResults.toString());
-
-		String weatherStationsResults = weatherStationsJson.get("results").toString(); //$NON-NLS-1$
-
-		ObjectMapper mapper = new ObjectMapper();
-
 		List<NoaaWeatherStation> stations = null;
 		try {
+			ObjectMapper mapper = new ObjectMapper();
+			String weatherStationsResults = mapper.readValue(weatherStationsQueryResults, JsonNode.class).get("results")
+					.toString();
+
 			stations = mapper.readValue(weatherStationsResults, new TypeReference<List<NoaaWeatherStation>>() {
 			});
 
@@ -380,13 +378,11 @@ final public class NoaaHistoricalWeatherRetriever {
 	 */
 	private NoaaWeatherData parseWeatherData(String weatherData) {
 
-		JSONObject jsonContent = new JSONObject(weatherData.toString());
-		String weatherResults = jsonContent.get("results").toString(); //$NON-NLS-1$
-
-		NoaaWeatherData noaaDailyNormals = new NoaaWeatherData();
-
-		ObjectMapper mapper = new ObjectMapper();
+		NoaaWeatherData noaaWeatherData = new NoaaWeatherData();
 		try {
+			ObjectMapper mapper = new ObjectMapper();
+			String weatherResults = mapper.readValue(weatherData, JsonNode.class).get("results").toString();
+
 			List<NoaaResults> noaaObjects = mapper.readValue(weatherResults, new TypeReference<List<NoaaResults>>() {
 			});
 
@@ -395,22 +391,22 @@ final public class NoaaHistoricalWeatherRetriever {
 				case "TMIN": //$NON-NLS-1$
 				case "DLY-TMIN-NORMAL": //$NON-NLS-1$
 				case "MLY-TMIN-NORMAL": //$NON-NLS-1$
-					noaaDailyNormals.setTemperatureMin(currentObject.getValue());
+					noaaWeatherData.setTemperatureMin(currentObject.getValue());
 					break;
 				case "TMAX": //$NON-NLS-1$
 				case "DLY-TMAX-NORMAL": //$NON-NLS-1$
 				case "MLY-TMAX-NORMAL": //$NON-NLS-1$
-					noaaDailyNormals.setTemperatureMax(currentObject.getValue());
+					noaaWeatherData.setTemperatureMax(currentObject.getValue());
 					break;
 				case "DLY-TAVG-NORMAL": //$NON-NLS-1$
 				case "MLY-TAVG-NORMAL": //$NON-NLS-1$
-					noaaDailyNormals.setTemperatureAverage(currentObject.getValue());
+					noaaWeatherData.setTemperatureAverage(currentObject.getValue());
 					break;
 				case "PRCP": //$NON-NLS-1$
-					noaaDailyNormals.setPrecipitation(currentObject.getValue());
+					noaaWeatherData.setPrecipitation(currentObject.getValue());
 					break;
 				}
-				noaaDailyNormals.setDate(DateTime.parse(currentObject.getDate()));
+				noaaWeatherData.setDate(DateTime.parse(currentObject.getDate()));
 			}
 
 		} catch (IOException e) {
@@ -419,7 +415,7 @@ final public class NoaaHistoricalWeatherRetriever {
 							+ weatherData + "\n" + e.getMessage()); //$NON-NLS-1$
 		}
 
-		return noaaDailyNormals;
+		return noaaWeatherData;
 	}
 
 
