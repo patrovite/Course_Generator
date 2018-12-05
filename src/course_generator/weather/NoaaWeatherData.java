@@ -27,12 +27,14 @@ public class NoaaWeatherData {
 	public static final String PRECIPITATION = "PRECIPITATION"; //$NON-NLS-1$
 	public static final String DATE = "DATE"; //$NON-NLS-1$
 
+
 	public NoaaWeatherData() {
 		maxTemperature = ""; //$NON-NLS-1$
 		minTemperature = ""; //$NON-NLS-1$
 		AverageTemperature = ""; //$NON-NLS-1$
 		Precipitation = ""; //$NON-NLS-1$
 	}
+
 
 	public NoaaWeatherData(String maximumTemperature, String minimumTemperature, String averageTemperature,
 			String precipitation, DateTime date) {
@@ -43,45 +45,56 @@ public class NoaaWeatherData {
 		this.Date = date;
 	}
 
+
 	public String getTemperatureMin() {
 		return minTemperature;
 	}
+
 
 	public void setTemperatureMin(String temperatureMin) {
 		this.minTemperature = temperatureMin;
 	}
 
+
 	public String getTemperatureMax() {
 		return maxTemperature;
 	}
+
 
 	public void setTemperatureMax(String temperatureMax) {
 		this.maxTemperature = temperatureMax;
 	}
 
+
 	public String getPrecipitation() {
 		return Precipitation;
 	}
+
 
 	public void setPrecipitation(String precipitation) {
 		this.Precipitation = precipitation;
 	}
 
+
 	public String getTemperatureAverage() {
 		return AverageTemperature;
 	}
+
 
 	public void setTemperatureAverage(String temperatureAverage) {
 		AverageTemperature = temperatureAverage;
 	}
 
+
 	public DateTime getDate() {
 		return Date;
 	}
 
+
 	public void setDate(DateTime date) {
 		Date = date;
 	}
+
 
 	public boolean isDailySummaryValid() {
 		if (maxTemperature != null && !maxTemperature.equals("") && minTemperature != null //$NON-NLS-1$
@@ -91,9 +104,9 @@ public class NoaaWeatherData {
 		return false;
 	}
 
+
 	public boolean isNormalsDataValid() {
-		if (maxTemperature != null && !maxTemperature.equals("") && minTemperature != null && !minTemperature.equals("") //$NON-NLS-1$ //$NON-NLS-2$
-				&& AverageTemperature != null && !AverageTemperature.equals("")) //$NON-NLS-1$
+		if (isDailySummaryValid() && AverageTemperature != null && !AverageTemperature.equals("")) //$NON-NLS-1$
 			return true;
 
 		return false;

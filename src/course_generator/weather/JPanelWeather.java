@@ -347,7 +347,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				bundle.getString("JPanelWeather.DistanceFromStart.Text")); //$NON-NLS-1$
 
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@110", //$NON-NLS-1$
-				track.data.get(0).getHour().toString(datePattern + " HH:mm")); //$NON-NLS-1$
+				track.StartTime.toString(datePattern + " HH:mm")); //$NON-NLS-1$
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@111", track.EndNightTime.toString("HH:mm")); //$NON-NLS-1$ //$NON-NLS-2$
 		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@112", track.StartNightTime.toString("HH:mm")); //$NON-NLS-1$ //$NON-NLS-2$
 
