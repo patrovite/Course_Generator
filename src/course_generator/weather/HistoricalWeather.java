@@ -13,6 +13,7 @@ import com.javadocmd.simplelatlng.util.LengthUnit;
 import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
+import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
 /**
@@ -78,9 +79,11 @@ public class HistoricalWeather {
 
 		determineWeatherSearchArea();
 
+		long retrievalstartTime = System.currentTimeMillis();
 		NoaaHistoricalWeatherRetriever weatherHistoryRetriever = NoaaHistoricalWeatherRetriever
 				.where(searchAreaCenter, searchAreaRadius).when(Track.StartTime).forUser(Settings.getNoaaToken())
 				.retrieve();
+		CgLog.info("Weather retrieval time : " + (System.currentTimeMillis() - retrievalstartTime) + "ms");
 
 		noaaNormalsWeatherStation = weatherHistoryRetriever.getNoaaNormalsWeatherStation();
 		noaaSummariesWeatherStation = weatherHistoryRetriever.getNoaaSummariesWeatherStation();

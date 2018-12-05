@@ -1750,7 +1750,7 @@ public class Utils {
 		int hours = totalMinutes.toStandardHours().getHours();
 		int minutes = totalMinutes.toStandardSeconds().getSeconds() - hours * 3600;
 
-		return hours + ":" + minutes / 60;
+		return String.format("%02d", hours) + ":" + String.format("%02d", minutes / 60);
 	}
 
 
