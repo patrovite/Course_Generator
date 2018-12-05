@@ -410,7 +410,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 		// -- Show the weather station
 		btShowWeatherStation = new javax.swing.JButton();
-		btShowWeatherStation.setIcon(Utils.getIcon(this, "weather.png", Settings.MapToolbarIconSize));
+		btShowWeatherStation.setIcon(Utils.getIcon(this, "weather_station.png", Settings.MapToolbarIconSize));
 		btShowWeatherStation.setToolTipText(bundle.getString("frmMain.btMapShowWeatherStations.toolTipText"));
 		btShowWeatherStation.setFocusable(false);
 		btShowWeatherStation.setEnabled(false);
@@ -771,7 +771,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 					double lon = Double
 							.parseDouble(Track.historicalWeatherData.noaaSummariesWeatherStation.getLongitude());
 					SummariesWeatherStationMarker = new MapMarkerImg(new Coordinate(lat, lon),
-							getImage("weather.png", Settings.MapIconSize));
+							getImage("weather_station.png", Settings.MapIconSize));
 				}
 				if (NormalsWeatherStationMarker == null
 						&& Track.historicalWeatherData.noaaNormalsWeatherStation != null) {
@@ -781,7 +781,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 					double lon = Double
 							.parseDouble(Track.historicalWeatherData.noaaNormalsWeatherStation.getLongitude());
 					NormalsWeatherStationMarker = new MapMarkerImg(new Coordinate(lat, lon),
-							getImage("weather.png", Settings.MapIconSize));
+							getImage("weather_station.png", Settings.MapIconSize));
+
 				}
 
 				if (SummariesWeatherStationMarker != null) {
