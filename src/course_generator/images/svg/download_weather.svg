@@ -26,7 +26,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="468.73903"
+     inkscape:cx="236.59617"
      inkscape:cy="116.44907"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
@@ -45,7 +45,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -54,19 +54,14 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-161.53332)">
-    <path
-       style="fill:#ffe000;fill-opacity:1;stroke:#ffe000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 61.926758,295.653 c -0.43059,-0.0661 -1.878843,-0.27353 -3.218353,-0.46039 C 49.732734,293.9405 40.145569,290.28455 32.215017,285.08973 20.545984,277.446 11.288823,265.90297 6.3284832,252.8111 3.0905895,244.26525 1.7624554,236.34999 2.0196326,227.13159 2.1536862,222.32652 2.4564721,219.46083 3.2418307,215.56425 7.8914505,192.495 24.520713,173.48698 46.619164,165.98198 c 8.428529,-2.86245 16.311178,-3.87717 25.503328,-3.28297 6.616491,0.42769 10.550341,1.19196 16.646099,3.23394 18.445269,6.17884 33.365319,20.30658 40.721559,38.55898 2.88896,7.16813 4.63424,15.72033 4.7567,23.3087 l 0.0512,3.17233 -0.59289,0.0948 c -0.32606,0.0522 -0.81495,0.12875 -1.08636,0.17015 -0.27143,0.0414 -0.0299,0.10547 0.53655,0.14231 l 1.03009,0.0669 -0.066,2.33069 c -0.12616,4.45424 -1.52985,11.84513 -3.21775,16.94071 -0.91681,2.76777 -3.27314,8.16044 -4.74013,10.84825 -4.02791,7.37992 -10.07129,14.59925 -16.63035,19.86639 C 99.485753,289.5 87.776751,294.2822 74.798164,295.6189 c -2.547119,0.26231 -11.240829,0.28529 -12.871498,0.034 z"
-       id="path844"
-       inkscape:connector-curvature="0" />
     <rect
-       style="fill:#0075ff;fill-opacity:1;stroke:#0075ff;stroke-width:10.32361221;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       style="fill:#0075ff;fill-opacity:1;stroke:#0075ff;stroke-width:11.00415421;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
        id="rect2009"
        width="6.6367292"
-       height="90.737038"
+       height="103.09428"
        x="64.300819"
-       y="181.936"
-       ry="7.0260978" />
+       y="169.57877"
+       ry="7.9829636" />
     <rect
        style="fill:#0075ff;fill-opacity:1;stroke:#0075ff;stroke-width:10;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
        id="rect2011"
