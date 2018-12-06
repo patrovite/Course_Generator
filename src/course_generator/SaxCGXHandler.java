@@ -659,8 +659,10 @@ public class SaxCGXHandler extends DefaultHandler {
 			if (qName.equalsIgnoreCase(NoaaWeatherData.DATE)) {
 				date = DateTime.parse(characters);
 			} else if (qName.equalsIgnoreCase("DAILY_SUMMARY")) {
-				pastDailySummaries
-						.add(new NoaaWeatherData(maximumTemperature, minimumTemperature, "", precipitation, date));
+				if (!summariesStationId.equals("")) {
+					pastDailySummaries
+							.add(new NoaaWeatherData(maximumTemperature, minimumTemperature, "", precipitation, date));
+				}
 			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_DAILY_SUMMARIES))
 				level--;
 
@@ -715,10 +717,14 @@ public class SaxCGXHandler extends DefaultHandler {
 					noaaNormalsWeatherStation = new NoaaWeatherStation(normalsStationId, normalsStationName,
 							normalsStationLatitude, normalsStationLongitude, normalsStationDistanceFromStart);
 
-				HistoricalWeather historicalWeather = new HistoricalWeather(pastDailySummaries, normalsDaily,
-						normalsMonthly, noaaSummariesWeatherStation, noaaNormalsWeatherStation, daylightHours,
-						moonFraction);
-				trkdata.setHistoricalWeather(historicalWeather);
+				// The daylight hours data is the minimum data to have in order
+				// to justify the creation of the the HistoricalWeather object
+				if (!daylightHours.equals("")) {
+					HistoricalWeather historicalWeather = new HistoricalWeather(pastDailySummaries, normalsDaily,
+							normalsMonthly, noaaSummariesWeatherStation, noaaNormalsWeatherStation, daylightHours,
+							moonFraction);
+					trkdata.setHistoricalWeather(historicalWeather);
+				}
 
 			}
 		}

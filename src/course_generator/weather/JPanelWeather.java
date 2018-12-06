@@ -404,7 +404,8 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@114", //$NON-NLS-1$
 				previousWeatherData.getMoonPhaseDescription());
 
-		if (previousWeatherData.pastDailySummaries != null && previousWeatherData.pastDailySummaries.get(0) != null) {
+		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()
+				&& previousWeatherData.pastDailySummaries.get(0) != null) {
 			// Year -1
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@220", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.pastDailySummaries.get(0).getTemperatureMax()));
@@ -420,7 +421,8 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@230", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@235", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		if (previousWeatherData.pastDailySummaries != null && previousWeatherData.pastDailySummaries.get(1) != null) {
+		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()
+				&& previousWeatherData.pastDailySummaries.get(1) != null) {
 			// Year -2
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@221", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.pastDailySummaries.get(1).getTemperatureMax()));
@@ -436,7 +438,8 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@231", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@236", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		if (previousWeatherData.pastDailySummaries != null && previousWeatherData.pastDailySummaries.get(2) != null) {
+		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()
+				&& previousWeatherData.pastDailySummaries.get(2) != null) {
 			// Year -3
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@222", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.pastDailySummaries.get(2).getTemperatureMax()));
