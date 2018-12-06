@@ -25,6 +25,11 @@ import javax.swing.JToolBar;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
 
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
@@ -32,6 +37,10 @@ import course_generator.utils.CgConst;
 import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
+import javafx.concurrent.Worker.State;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.web.WebView;
@@ -56,6 +65,9 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	private WebView webView;
 	private String weatherDataSheetContent;
 
+	public static final String EVENT_TYPE_CLICK = "click";
+	public static final String EVENT_TYPE_MOUSEOVER = "mouseover";
+	public static final String EVENT_TYPE_MOUSEOUT = "mouseclick";
 
 	public JPanelWeather(CgSettings settings) {
 		super();
@@ -64,7 +76,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle"); //$NON-NLS-1$
 		initComponents();
 	}
-
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -82,10 +93,42 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		Platform.runLater(() -> {
 			webView = new WebView();
 			fxPanel.setScene(new Scene(webView));
+
+			webView.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
+				public void changed(@SuppressWarnings("rawtypes") ObservableValue ov, State oldState, State newState) {
+					if (newState == Worker.State.SUCCEEDED) {
+						EventListener listener = new EventListener() {
+							@Override
+							public void handleEvent(Event ev) {
+								String domEventType = ev.getType();
+								if (domEventType.equals(EVENT_TYPE_CLICK)) {
+									String href = ((Element) ev.getTarget()).getAttribute("href");
+
+									try {
+
+										Desktop.getDesktop().browse(new URI(href)); // $NON-NLS-1$
+										ev.preventDefault();
+
+									} catch (IOException | URISyntaxException e1) {
+										e1.printStackTrace();
+									}
+								}
+							}
+						};
+
+						org.w3c.dom.Document doc = webView.getEngine().getDocument();
+						NodeList nodeList = doc.getElementsByTagName("a");
+						for (int i = 0; i < nodeList.getLength(); i++) {
+							((EventTarget) nodeList.item(i)).addEventListener(EVENT_TYPE_CLICK, listener, false);
+
+						}
+					}
+				}
+			});
+
 		});
 		add(fxPanel, java.awt.BorderLayout.CENTER);
 	}
-
 
 	/**
 	 * Create the weather toolbar
@@ -166,7 +209,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		refresh(null, false);
 	}
 
-
 	/**
 	 * Updates the panel buttons states depending on the NOAA token validity
 	 */
@@ -181,15 +223,12 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		btWeatherRefresh.setEnabled(isNoaaTokenValid && track != null);
 	}
 
-
 	/**
 	 * Refreshes the weather data sheet.
 	 * 
-	 * @param track
-	 *            The current track.
-	 * @param retrieveOnlineData
-	 *            True if we need to retrieve data from the weather provider,
-	 *            otherwise, we retrieve it from the track.
+	 * @param track              The current track.
+	 * @param retrieveOnlineData True if we need to retrieve data from the weather
+	 *                           provider, otherwise, we retrieve it from the track.
 	 */
 	public void refresh(TrackData track, boolean retrieveOnlineData) {
 		if (track == null || track.data.isEmpty()) {
@@ -235,12 +274,10 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 
 	}
 
-
 	/**
 	 * Refreshes the weather data sheet with the new content.
 	 * 
-	 * @param dataSheetContent
-	 *            The new weather data content.
+	 * @param dataSheetContent The new weather data content.
 	 * 
 	 */
 	private void updateDataSheet(String dataSheetContent) {
@@ -249,7 +286,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			webView.getEngine().loadContent(weatherDataSheetContent);
 		});
 	}
-
 
 	/**
 	 * Performs the necessary operations whenever the NOAA token value has changed.
@@ -260,17 +296,15 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		UpdatePanel();
 	}
 
-
 	/**
 	 * Parses weather data and populates the weather data sheet.
 	 * 
-	 * @param previousWeatherData
-	 *            The retrieved NOAA weather data.
+	 * @param previousWeatherData The retrieved NOAA weather data.
 	 * @return The filled HTML content of the weather data sheet.
 	 */
 	private String PopulateWeatherDataSheet(HistoricalWeather previousWeatherData) {
 
-		StringBuilder sheetSkeleton = new StringBuilder();
+		StringBuilder weatherDataSheetBuilder = new StringBuilder();
 		InputStream is = getClass().getResourceAsStream("weatherdatasheet.html"); //$NON-NLS-1$
 
 		try {
@@ -279,7 +313,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 
 			String line;
 			while ((line = br.readLine()) != null) {
-				sheetSkeleton.append(line);
+				weatherDataSheetBuilder.append(line);
 			}
 			br.close();
 			isr.close();
@@ -290,140 +324,154 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		}
 
 		// EVENT SUMMARY titles
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@100", bundle.getString("JPanelWeather.EventSummary.Text")); //$NON-NLS-1$ //$NON-NLS-2$
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@101", bundle.getString("JPanelWeather.Date.Text")); //$NON-NLS-1$ //$NON-NLS-2$
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@102", bundle.getString("JPanelWeather.SunriseSunset.Text")); //$NON-NLS-1$ //$NON-NLS-2$
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@103", bundle.getString("JPanelWeather.DaylightHours.Text")); //$NON-NLS-1$ //$NON-NLS-2$
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@104", bundle.getString("JPanelWeather.MoonPhase.Text")); //$NON-NLS-1$ //$NON-NLS-2$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@100", //$NON-NLS-1$
+				bundle.getString("JPanelWeather.EventSummary.Text")); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@101", //$NON-NLS-1$
+				bundle.getString("JPanelWeather.Date.Text")); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@102", //$NON-NLS-1$
+				bundle.getString("JPanelWeather.SunriseSunset.Text")); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@103", //$NON-NLS-1$
+				bundle.getString("JPanelWeather.DaylightHours.Text")); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@104", //$NON-NLS-1$
+				bundle.getString("JPanelWeather.MoonPhase.Text")); //$NON-NLS-1$
 
 		String datePattern = settings.Unit == CgConst.UNIT_MILES_FEET ? "EE MM/dd/yyyy" : "EE dd/MM/yyyy"; //$NON-NLS-1$ //$NON-NLS-2$
 
 		// HISTORICAL WEATHER DATA titles
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@200", //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@200", //$NON-NLS-1$
 				bundle.getString("JPanelWeather.HistoricalWeatherData.Text")); //$NON-NLS-1$
 		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()) {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@201", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@201", //$NON-NLS-1$
 					previousWeatherData.pastDailySummaries.get(0).getDate().toString(datePattern));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@202", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@202", //$NON-NLS-1$
 					previousWeatherData.pastDailySummaries.get(1).getDate().toString(datePattern));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@203", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@203", //$NON-NLS-1$
 					previousWeatherData.pastDailySummaries.get(2).getDate().toString(datePattern));
 		} else {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@201", "No weather station found"); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@202", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@203", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@201", "No weather station found"); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@202", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@203", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 		if (previousWeatherData.normalsDaily != null) {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@204", bundle.getString("JPanelWeather.NormalsDaily.Text")); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@204", //$NON-NLS-1$
+					bundle.getString("JPanelWeather.NormalsDaily.Text")); //$NON-NLS-1$
 		} else {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@204", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@204", ""); //$NON-NLS-1$ //$NON-NLS-2$
 
 		}
 		if (previousWeatherData.normalsMonthly != null) {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@205", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@205", //$NON-NLS-1$
 					bundle.getString("JPanelWeather.NormalsMonthly.Text")); //$NON-NLS-1$
 		} else {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@205", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@205", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@206", bundle.getString("JPanelWeather.MaxTemperature.Text")); //$NON-NLS-1$ //$NON-NLS-2$
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@207", bundle.getString("JPanelWeather.AvgTemperature.Text")); //$NON-NLS-1$ //$NON-NLS-2$
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@208", bundle.getString("JPanelWeather.MinTemperature.Text")); //$NON-NLS-1$ //$NON-NLS-2$
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@209", bundle.getString("JPanelWeather.Precipitation.Text")); //$NON-NLS-1$ //$NON-NLS-2$
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@211", bundle.getString("JPanelWeather.StationName.Text")); //$NON-NLS-1$ //$NON-NLS-2$
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@212", //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@206", //$NON-NLS-1$
+				bundle.getString("JPanelWeather.MaxTemperature.Text")); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@207", //$NON-NLS-1$
+				bundle.getString("JPanelWeather.AvgTemperature.Text")); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@208", //$NON-NLS-1$
+				bundle.getString("JPanelWeather.MinTemperature.Text")); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@209", //$NON-NLS-1$
+				bundle.getString("JPanelWeather.Precipitation.Text")); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@211", //$NON-NLS-1$
+				bundle.getString("JPanelWeather.StationName.Text")); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@212", //$NON-NLS-1$
 				bundle.getString("JPanelWeather.DistanceFromStart.Text")); //$NON-NLS-1$
 
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@110", //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@110", //$NON-NLS-1$
 				track.StartTime.toString(datePattern + " HH:mm")); //$NON-NLS-1$
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@111", track.EndNightTime.toString("HH:mm")); //$NON-NLS-1$ //$NON-NLS-2$
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@112", track.StartNightTime.toString("HH:mm")); //$NON-NLS-1$ //$NON-NLS-2$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@111", //$NON-NLS-1$
+				track.EndNightTime.toString("HH:mm")); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@112", //$NON-NLS-1$
+				track.StartNightTime.toString("HH:mm")); //$NON-NLS-1$
 
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@113", previousWeatherData.daylightHours); //$NON-NLS-1$
-		sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@114", previousWeatherData.getMoonPhaseDescription()); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@113", previousWeatherData.daylightHours); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@114", //$NON-NLS-1$
+				previousWeatherData.getMoonPhaseDescription());
 
 		if (previousWeatherData.pastDailySummaries != null && previousWeatherData.pastDailySummaries.get(0) != null) {
 			// Year -1
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@220", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@220", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.pastDailySummaries.get(0).getTemperatureMax()));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@225", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@225", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.pastDailySummaries.get(0).getTemperatureAverage()));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@230", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@230", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.pastDailySummaries.get(0).getTemperatureMin()));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@235", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@235", //$NON-NLS-1$
 					previousWeatherData.pastDailySummaries.get(0).getPrecipitation());
 		} else {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@220", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@225", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@230", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@235", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@220", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@225", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@230", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@235", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		if (previousWeatherData.pastDailySummaries != null && previousWeatherData.pastDailySummaries.get(1) != null) {
 			// Year -2
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@221", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@221", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.pastDailySummaries.get(1).getTemperatureMax()));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@226", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@226", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.pastDailySummaries.get(1).getTemperatureAverage()));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@231", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@231", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.pastDailySummaries.get(1).getTemperatureMin()));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@236", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@236", //$NON-NLS-1$
 					previousWeatherData.pastDailySummaries.get(1).getPrecipitation());
 		} else {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@221", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@226", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@231", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@236", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@221", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@226", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@231", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@236", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		if (previousWeatherData.pastDailySummaries != null && previousWeatherData.pastDailySummaries.get(2) != null) {
 			// Year -3
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@222", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@222", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.pastDailySummaries.get(2).getTemperatureMax()));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@227", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@227", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.pastDailySummaries.get(2).getTemperatureAverage()));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@232", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@232", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.pastDailySummaries.get(2).getTemperatureMin()));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@237", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@237", //$NON-NLS-1$
 					previousWeatherData.pastDailySummaries.get(2).getPrecipitation());
 		} else {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@222", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@227", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@232", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@237", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@222", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@227", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@232", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@237", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 		// Daily normals
 		if (previousWeatherData.normalsDaily != null) {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@223", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@223", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.normalsDaily.getTemperatureMax()));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@228", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@228", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.normalsDaily.getTemperatureAverage()));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@233", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@233", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.normalsDaily.getTemperatureMin()));
 		} else {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@223", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@228", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@233", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@238", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@223", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@228", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@233", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@238", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 		// Monthly normals
 		if (previousWeatherData.normalsMonthly != null) {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@224", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@224", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.normalsMonthly.getTemperatureMax()));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@229", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@229", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.normalsMonthly.getTemperatureAverage()));
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@234", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@234", //$NON-NLS-1$
 					displayTemperature(previousWeatherData.normalsMonthly.getTemperatureMin()));
 		} else {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@224", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@229", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@234", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@239", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@224", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@229", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@234", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@239", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 		if (previousWeatherData.noaaSummariesWeatherStation != null) {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@244", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@244", //$NON-NLS-1$
 					previousWeatherData.noaaSummariesWeatherStation.getName());
 
 			double distanceFromStart = previousWeatherData.noaaSummariesWeatherStation.getDistanceFromStart();
@@ -432,13 +480,14 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				distanceFromStart = Utils.Km2Miles(distanceFromStart);
 
 			distance = String.format("%.0f", distanceFromStart); //$NON-NLS-1$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@246", distance + " " + Utils.uLDist2String(settings.Unit)); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@246", //$NON-NLS-1$
+					distance + " " + Utils.uLDist2String(settings.Unit)); //$NON-NLS-1$
 		} else {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@244", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@246", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@244", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@246", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		if (previousWeatherData.noaaNormalsWeatherStation != null) {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@245", //$NON-NLS-1$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@245", //$NON-NLS-1$
 					previousWeatherData.noaaNormalsWeatherStation.getName());
 
 			double distanceFromStart = previousWeatherData.noaaNormalsWeatherStation.getDistanceFromStart();
@@ -447,15 +496,19 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				distanceFromStart = Utils.Meter2uMiles(distanceFromStart);
 
 			distance = String.format("%.0f", distanceFromStart); //$NON-NLS-1$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@247", distance + " " + Utils.uLDist2String(settings.Unit)); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@247", //$NON-NLS-1$
+					distance + " " + Utils.uLDist2String(settings.Unit)); //$NON-NLS-1$
 		} else {
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@247", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			sheetSkeleton = Utils.sbReplace(sheetSkeleton, "@245", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@247", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@245", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
-		return ReplaceImages(sheetSkeleton.toString(), previousWeatherData.moonFraction);
-	}
+		String weatherDataSheet = ReplaceImages(weatherDataSheetBuilder.toString(), previousWeatherData.moonFraction);
+		weatherDataSheet = AddWeatherStationsHyperLinks(weatherDataSheet,
+				previousWeatherData.noaaSummariesWeatherStation, previousWeatherData.noaaNormalsWeatherStation);
 
+		return weatherDataSheet;
+	}
 
 	/**
 	 * Save the statistics in HTML format
@@ -480,12 +533,10 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	/**
 	 * Creates a String containing a temperature value.
 	 * 
-	 * @param temperatureValue
-	 *            The temperature value.
+	 * @param temperatureValue The temperature value.
 	 * @return A String containing a temperature information.
 	 */
 	private String displayTemperature(String temperatureValue) {
@@ -496,14 +547,12 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				+ Utils.uTemperatureToString(settings.Unit);
 	}
 
-
 	/**
 	 * Because the image paths in the original HTML reference images in the Course
 	 * Generator jar (i.e: not accessible by any browser), we convert all the images
 	 * references to their actual Base64 value.
 	 * 
-	 * @param originalText
-	 *            The original HTML page
+	 * @param originalText The original HTML page
 	 * @return The HTML page containing base64 representations of each image.
 	 */
 	private String ReplaceImages(String originalText, double moonFraction) {
@@ -530,6 +579,41 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			}
 
 			e.attr("src", "data:image/png;base64," + base64); //$NON-NLS-1$ //$NON-NLS-2$
+
+		});
+
+		return document.toString();
+	}
+
+	/**
+	 * Adds the HTTP link to each weather station.
+	 * 
+	 * @param originalSheet The original HTML page
+	 * @return The HTML page containing the HTTP link for each weather station.
+	 */
+	private String AddWeatherStationsHyperLinks(String originalSheet, NoaaWeatherStation noaaSummariesWeatherStation,
+			NoaaWeatherStation noaaNormalsWeatherStation) {
+		Document document = Jsoup.parse(originalSheet);
+
+		document.select("a[href]").forEach(e -> { //$NON-NLS-1$
+
+			String href = e.attr("href"); //$NON-NLS-1$
+			switch (href) {
+			case "dailySummariesWeatherStation": //$NON-NLS-1$
+				if (noaaSummariesWeatherStation != null) {
+					e.attr("href", //$NON-NLS-1$
+							"https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/"
+									+ noaaSummariesWeatherStation.getId() + "/detail;");
+				}
+				break;
+			case "normalsWeatherStation": //$NON-NLS-1$
+				if (noaaNormalsWeatherStation != null) {
+					e.attr("href", //$NON-NLS-1$
+							"https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/"
+									+ noaaNormalsWeatherStation.getId() + "/detail;");
+				}
+				break;
+			}
 
 		});
 
