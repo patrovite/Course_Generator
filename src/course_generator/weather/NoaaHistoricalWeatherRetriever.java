@@ -194,13 +194,17 @@ final public class NoaaHistoricalWeatherRetriever {
 				LatLng station = new LatLng(Double.valueOf(current.getLatitude()),
 						Double.valueOf(current.getLongitude()));
 
-				double distance = LatLngTool.distance(station, startPoint, LengthUnit.KILOMETER);
+				double distanceFromStart = LatLngTool.distance(station, startPoint, LengthUnit.KILOMETER);
+				double distanceFromSearchAreaCenter = LatLngTool.distance(station, searchAreaCenter,
+						LengthUnit.KILOMETER);
+
+				current.setDistanceFromStart(distanceFromStart);
 
 				// Converting the distance and only keeping 1 decimal.
-				distance = distance * 10;
-				distance = (double) ((int) distance);
-				distance = distance / 10;
-				current.setDistanceFromStart(distance);
+				distanceFromSearchAreaCenter = distanceFromSearchAreaCenter * 10;
+				distanceFromSearchAreaCenter = (double) ((int) distanceFromSearchAreaCenter);
+				distanceFromSearchAreaCenter = distanceFromSearchAreaCenter / 10;
+				current.setDistanceFromSearchAreaCenter(distanceFromSearchAreaCenter);
 
 			}
 
