@@ -88,11 +88,9 @@ public class HistoricalWeather {
 		pastDailySummaries = weatherHistoryRetriever.getPastDailySummaries();
 		normalsMonthly = weatherHistoryRetriever.getNormalsMonthly();
 
-		if (track.StartNightTime == TrackData.defaultSunriseSunsetTime) {
-			// The sunrise and sunset values haven't been computed yet.
-			// Let's do it.
-			Track.determineSunriseSunsetTimes();
-		}
+		// The start time might have been changed, we recompute the sunrise and sunset
+		// times.
+		Track.determineSunriseSunsetTimes();
 
 		daylightHours = Utils.computeDaylightHours(Track.EndNightTime, Track.StartNightTime);
 
