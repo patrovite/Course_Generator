@@ -45,12 +45,10 @@ public class HistoricalWeather {
 	public static final String MOONFRACTION = "MOONFRACTION"; //$NON-NLS-1$
 	public static final String DAYLIGHTHOURS = "DAYLIGHTHOURS"; //$NON-NLS-1$
 
-
 	public HistoricalWeather(CgSettings settings) {
 		Settings = settings;
 
 	}
-
 
 	public HistoricalWeather(ArrayList<NoaaWeatherData> pastDailySummaries, NoaaWeatherData normalsDaily,
 			NoaaWeatherData normalsMonthly, NoaaWeatherStation noaaSummariesWeatherStation,
@@ -64,26 +62,25 @@ public class HistoricalWeather {
 		this.moonFraction = moonFraction;
 	}
 
-
 	/**
 	 * Retrieves the ephemeris and the historical weather data for a given track.
 	 * 
-	 * @param track
-	 *            The current track
+	 * @param track The current track
 	 */
 	public void RetrieveWeatherData(TrackData track) {
-		if (track == null)
+		if (track == null || track.data == null || track.data.isEmpty())
 			return;
 
 		Track = track;
+		LatLng startPoint = new LatLng(track.data.get(0).getLatitude(), track.data.get(0).getLongitude());
 
 		determineWeatherSearchArea();
 
 		long retrievalstartTime = System.currentTimeMillis();
 		NoaaHistoricalWeatherRetriever weatherHistoryRetriever = NoaaHistoricalWeatherRetriever
-				.where(searchAreaCenter, searchAreaRadius).when(Track.StartTime).forUser(Settings.getNoaaToken())
-				.retrieve();
-		CgLog.info("Weather retrieval time : " + (System.currentTimeMillis() - retrievalstartTime) + "ms");
+				.where(startPoint, searchAreaCenter, searchAreaRadius).when(Track.StartTime)
+				.forUser(Settings.getNoaaToken()).retrieve();
+		CgLog.info("Weather retrieval time : " + (System.currentTimeMillis() - retrievalstartTime) + "ms"); //$NON-NLS-1$ //$NON-NLS-2$
 
 		noaaNormalsWeatherStation = weatherHistoryRetriever.getNoaaNormalsWeatherStation();
 		noaaSummariesWeatherStation = weatherHistoryRetriever.getNoaaSummariesWeatherStation();
@@ -113,7 +110,6 @@ public class HistoricalWeather {
 
 		Track.setHistoricalWeather(this);
 	}
-
 
 	/**
 	 * Determines the geographic area covered by a GPS track. The goal is to
@@ -147,7 +143,6 @@ public class HistoricalWeather {
 
 	}
 
-
 	/**
 	 * Gives the moon phase description for a given moon fraction value.
 	 * Interpretation table :
@@ -179,7 +174,6 @@ public class HistoricalWeather {
 		}
 		return moonPhaseDescription;
 	}
-
 
 	/**
 	 * Gives the moon phase icon for a given moon fraction value. Interpretation
