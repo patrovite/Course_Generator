@@ -65,10 +65,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	private WebView webView;
 	private String weatherDataSheetContent;
 
-	public static final String EVENT_TYPE_CLICK = "click";
-	public static final String EVENT_TYPE_MOUSEOVER = "mouseover";
-	public static final String EVENT_TYPE_MOUSEOUT = "mouseclick";
-
+	public static final String EVENT_TYPE_CLICK = "click"; //$NON-NLS-1$
 
 	public JPanelWeather(CgSettings settings) {
 		super();
@@ -77,7 +74,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle"); //$NON-NLS-1$
 		initComponents();
 	}
-
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -104,7 +100,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 							public void handleEvent(Event ev) {
 								String domEventType = ev.getType();
 								if (domEventType.equals(EVENT_TYPE_CLICK)) {
-									String href = ((Element) ev.getTarget()).getAttribute("href");
+									String href = ((Element) ev.getTarget()).getAttribute("href"); //$NON-NLS-1$
 									if (Desktop.isDesktopSupported()) {
 										new Thread(() -> {
 											try {
@@ -120,7 +116,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 						};
 
 						org.w3c.dom.Document doc = webView.getEngine().getDocument();
-						NodeList nodeList = doc.getElementsByTagName("a");
+						NodeList nodeList = doc.getElementsByTagName("a"); //$NON-NLS-1$
 						for (int i = 0; i < nodeList.getLength(); i++) {
 							((EventTarget) nodeList.item(i)).addEventListener(EVENT_TYPE_CLICK, listener, false);
 
@@ -132,7 +128,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		});
 		add(fxPanel, java.awt.BorderLayout.CENTER);
 	}
-
 
 	/**
 	 * Create the weather toolbar
@@ -213,7 +208,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		refresh(null, false);
 	}
 
-
 	/**
 	 * Updates the panel buttons states depending on the NOAA token validity
 	 */
@@ -228,15 +222,12 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		btWeatherRefresh.setEnabled(isNoaaTokenValid && track != null);
 	}
 
-
 	/**
 	 * Refreshes the weather data sheet.
 	 * 
-	 * @param track
-	 *            The current track.
-	 * @param retrieveOnlineData
-	 *            True if we need to retrieve data from the weather provider,
-	 *            otherwise, we retrieve it from the track.
+	 * @param track              The current track.
+	 * @param retrieveOnlineData True if we need to retrieve data from the weather
+	 *                           provider, otherwise, we retrieve it from the track.
 	 */
 	public void refresh(TrackData track, boolean retrieveOnlineData) {
 		if (track == null || track.data.isEmpty()) {
@@ -282,12 +273,10 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 
 	}
 
-
 	/**
 	 * Refreshes the weather data sheet with the new content.
 	 * 
-	 * @param dataSheetContent
-	 *            The new weather data content.
+	 * @param dataSheetContent The new weather data content.
 	 * 
 	 */
 	private void updateDataSheet(String dataSheetContent) {
@@ -296,7 +285,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			webView.getEngine().loadContent(weatherDataSheetContent);
 		});
 	}
-
 
 	/**
 	 * Performs the necessary operations whenever the NOAA token value has changed.
@@ -307,12 +295,10 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		UpdatePanel();
 	}
 
-
 	/**
 	 * Parses weather data and populates the weather data sheet.
 	 * 
-	 * @param previousWeatherData
-	 *            The retrieved NOAA weather data.
+	 * @param previousWeatherData The retrieved NOAA weather data.
 	 * @return The filled HTML content of the weather data sheet.
 	 */
 	private String PopulateWeatherDataSheet(HistoricalWeather previousWeatherData) {
@@ -394,7 +380,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				bundle.getString("JPanelWeather.DistanceFromStart.Text")); //$NON-NLS-1$
 
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@110", //$NON-NLS-1$
-				track.StartTime.toString(datePattern + " HH:mm")); //$NON-NLS-1$
+				track.StartTime.toString(datePattern));
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@111", //$NON-NLS-1$
 				track.EndNightTime.toString("HH:mm")); //$NON-NLS-1$
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@112", //$NON-NLS-1$
@@ -526,7 +512,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		return weatherDataSheet;
 	}
 
-
 	/**
 	 * Save the statistics in HTML format
 	 */
@@ -550,12 +535,10 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	/**
 	 * Creates a String containing a temperature value.
 	 * 
-	 * @param temperatureValue
-	 *            The temperature value.
+	 * @param temperatureValue The temperature value.
 	 * @return A String containing a temperature information.
 	 */
 	private String displayTemperature(String temperatureValue) {
@@ -566,14 +549,12 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				+ Utils.uTemperatureToString(settings.Unit);
 	}
 
-
 	/**
 	 * Because the image paths in the original HTML reference images in the Course
 	 * Generator jar (i.e: not accessible by any browser), we convert all the images
 	 * references to their actual Base64 value.
 	 * 
-	 * @param originalText
-	 *            The original HTML page
+	 * @param originalText The original HTML page
 	 * @return The HTML page containing base64 representations of each image.
 	 */
 	private String ReplaceImages(String originalText, double moonFraction) {
@@ -606,12 +587,10 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		return document.toString();
 	}
 
-
 	/**
 	 * Adds the HTTP link to each weather station.
 	 * 
-	 * @param originalSheet
-	 *            The original HTML page
+	 * @param originalSheet The original HTML page
 	 * @return The HTML page containing the HTTP link for each weather station.
 	 */
 	private String AddWeatherStationsHyperLinks(String originalSheet, NoaaWeatherStation noaaSummariesWeatherStation,
@@ -625,15 +604,15 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			case "dailySummariesWeatherStation": //$NON-NLS-1$
 				if (noaaSummariesWeatherStation != null) {
 					e.attr("href", //$NON-NLS-1$
-							"https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/"
-									+ noaaSummariesWeatherStation.getId() + "/detail;");
+							"https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/" //$NON-NLS-1$
+									+ noaaSummariesWeatherStation.getId() + "/detail"); //$NON-NLS-1$
 				}
 				break;
 			case "normalsWeatherStation": //$NON-NLS-1$
 				if (noaaNormalsWeatherStation != null) {
 					e.attr("href", //$NON-NLS-1$
-							"https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/"
-									+ noaaNormalsWeatherStation.getId() + "/detail;");
+							"https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/" //$NON-NLS-1$
+									+ noaaNormalsWeatherStation.getId() + "/detail"); //$NON-NLS-1$
 				}
 				break;
 			}
