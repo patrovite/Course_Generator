@@ -52,6 +52,7 @@ final public class NoaaHistoricalWeatherRetriever {
 	private final String normalDlyDataTypeIds = "&datasetid=NORMAL_DLY&datatypeid=DLY-TMIN-NORMAL&datatypeid=DLY-TMAX-NORMAL&datatypeid=DLY-TAVG-NORMAL"; //$NON-NLS-1$
 	private final String normalMlyDataTypeIds = "&datasetid=NORMAL_MLY&datatypeid=MLY-TMIN-NORMAL&datatypeid=MLY-TMAX-NORMAL&datatypeid=MLY-TAVG-NORMAL"; //$NON-NLS-1$
 
+
 	private NoaaHistoricalWeatherRetriever(LatLng startPoint, LatLng searchAreaCenter, double searchAreaRadius) {
 		this.searchAreaCenter = searchAreaCenter;
 		this.startPoint = startPoint;
@@ -61,17 +62,21 @@ final public class NoaaHistoricalWeatherRetriever {
 
 	}
 
+
 	/**
 	 * Assigns the weather search area center and radius to a new object.
 	 * 
-	 * @param searchAreaCenter The weather search circle center.
-	 * @param searchAreaRadius The weather search circle radius.
+	 * @param searchAreaCenter
+	 *            The weather search circle center.
+	 * @param searchAreaRadius
+	 *            The weather search circle radius.
 	 * @return A new object.
 	 */
 	public static NoaaHistoricalWeatherRetriever where(LatLng startPoint, LatLng searchAreaCenter,
 			double searchAreaRadius) {
 		return new NoaaHistoricalWeatherRetriever(startPoint, searchAreaCenter, searchAreaRadius);
 	}
+
 
 	/**
 	 * 
@@ -83,16 +88,19 @@ final public class NoaaHistoricalWeatherRetriever {
 		return this;
 	}
 
+
 	/**
 	 * Assigns a NOAA token to the current object.
 	 * 
-	 * @param noaaToken The NOAA token to be used for the queries.
+	 * @param noaaToken
+	 *            The NOAA token to be used for the queries.
 	 * @return The current object.
 	 */
 	public NoaaHistoricalWeatherRetriever forUser(String noaaToken) {
 		this.noaaToken = noaaToken;
 		return this;
 	}
+
 
 	/**
 	 * This method builds a NoaaHistoricalWeatherRetriever object and retrieves, if
@@ -112,6 +120,7 @@ final public class NoaaHistoricalWeatherRetriever {
 		return this;
 	}
 
+
 	/**
 	 * Creates an extent compliant to the NOAA extent definition bases on the south
 	 * west and north east corners.
@@ -121,14 +130,17 @@ final public class NoaaHistoricalWeatherRetriever {
 	 * LatLngBounds.toUrlValue. Stations returned must be located within the extent
 	 * specified.
 	 * 
-	 * @param swPoint The GPS coordinates of the south west corner.
-	 * @param nePoint The GPS coordinates of the north east corner.
+	 * @param swPoint
+	 *            The GPS coordinates of the south west corner.
+	 * @param nePoint
+	 *            The GPS coordinates of the north east corner.
 	 * @return The NOAA compliant extent as a string.
 	 */
 	private String getExtent(LatLng swPoint, LatLng nePoint) {
 		return String.format("%.3f", swPoint.getLatitude()) + "," + String.format("%.3f", swPoint.getLongitude()) + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				+ String.format("%.3f", nePoint.getLatitude()) + "," + String.format("%.3f", nePoint.getLongitude()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
+
 
 	/**
 	 * Computes the south west and north east corners of the box
@@ -138,10 +150,12 @@ final public class NoaaHistoricalWeatherRetriever {
 		searchAreaNorthEastCorner = LatLngTool.travel(searchAreaCenter, 45, searchAreaRadius, LengthUnit.METER);
 	}
 
+
 	/**
 	 * Processes a query against the NOAA API.
 	 * 
-	 * @param parameters The parameters to specify within the query.
+	 * @param parameters
+	 *            The parameters to specify within the query.
 	 * @return The result of the NOAA query.
 	 */
 	private String processNoaaRequest(String parameters) {
@@ -168,10 +182,12 @@ final public class NoaaHistoricalWeatherRetriever {
 		return weatherHistory.toString();
 	}
 
+
 	/**
 	 * Retrieves all the available weather stations that meet certain criteria.
 	 * 
-	 * @param queryParameters The parameters for the weather station search.
+	 * @param queryParameters
+	 *            The parameters for the weather station search.
 	 * 
 	 * @return If any were found, a list containing all the weather stations sorted
 	 *         ascending order by the distance from the start.
@@ -198,6 +214,10 @@ final public class NoaaHistoricalWeatherRetriever {
 				double distanceFromSearchAreaCenter = LatLngTool.distance(station, searchAreaCenter,
 						LengthUnit.KILOMETER);
 
+				// Converting the distance and only keeping 1 decimal.
+				distanceFromStart = distanceFromStart * 10;
+				distanceFromStart = (double) ((int) distanceFromStart);
+				distanceFromStart = distanceFromStart / 10;
 				current.setDistanceFromStart(distanceFromStart);
 
 				// Converting the distance and only keeping 1 decimal.
@@ -221,6 +241,7 @@ final public class NoaaHistoricalWeatherRetriever {
 
 		return stations;
 	}
+
 
 	/**
 	 * Attempts to retrieve the most complete and closest daily summaries weather
@@ -257,10 +278,12 @@ final public class NoaaHistoricalWeatherRetriever {
 		return null;
 	}
 
+
 	/**
 	 * Retrieves the daily summaries for a given weather station.
 	 * 
-	 * @param stationId The Id of a given weather station.
+	 * @param stationId
+	 *            The Id of a given weather station.
 	 * @return The weather data, if found.
 	 */
 	private ArrayList<NoaaWeatherData> retrieveDailySummaries(String stationId) {
@@ -275,7 +298,7 @@ final public class NoaaHistoricalWeatherRetriever {
 					+ "&enddate=" + pastDate; //$NON-NLS-1$
 
 			String dailyNormalsData = processNoaaRequest(findWeatherStation);
-			if (pastYearNumber == 1 && !dailyNormalsData.contains("results")) //$NON-NLS-1$
+			if (!dailyNormalsData.contains("results")) //$NON-NLS-1$
 				return null;
 			else {
 				NoaaWeatherData dailyNormals = parseWeatherData(dailyNormalsData);
@@ -285,6 +308,7 @@ final public class NoaaHistoricalWeatherRetriever {
 
 		return pastDailySummaries;
 	}
+
 
 	/**
 	 * Attempts to retrieve the most complete and closest normals daily weather
@@ -316,10 +340,12 @@ final public class NoaaHistoricalWeatherRetriever {
 		return null;
 	}
 
+
 	/**
 	 * Retrieves the normals daily for a given weather station.
 	 * 
-	 * @param stationId The Id of a given weather station.
+	 * @param stationId
+	 *            The Id of a given weather station.
 	 * @return The weather data, if found.
 	 */
 	private NoaaWeatherData retrieveNormalsDaily(String stationId) {
@@ -332,6 +358,7 @@ final public class NoaaHistoricalWeatherRetriever {
 
 		return parseWeatherData(normalsDailyData);
 	}
+
 
 	/**
 	 * Retrieve the normals monthly for a given weather station.
@@ -352,10 +379,12 @@ final public class NoaaHistoricalWeatherRetriever {
 		return parseWeatherData(normalsMonthlyData);
 	}
 
+
 	/**
 	 * Parses a JSON weather data object into a NoaaWeatherData object.
 	 * 
-	 * @param dailyNormalsData A string containing a NOAA weather data JSON object.
+	 * @param dailyNormalsData
+	 *            A string containing a NOAA weather data JSON object.
 	 * @return The parsed weather data.
 	 */
 	private NoaaWeatherData parseWeatherData(String weatherData) {
@@ -400,21 +429,26 @@ final public class NoaaHistoricalWeatherRetriever {
 		return noaaWeatherData;
 	}
 
+
 	public NoaaWeatherStation getNoaaNormalsWeatherStation() {
 		return noaaNormalsWeatherStation;
 	}
+
 
 	public NoaaWeatherStation getNoaaSummariesWeatherStation() {
 		return noaaSummariesWeatherStation;
 	}
 
+
 	public NoaaWeatherData getNormalsDaily() {
 		return noaaNormalsDaily;
 	}
 
+
 	public NoaaWeatherData getNormalsMonthly() {
 		return noaaNormalsMonthly;
 	}
+
 
 	public List<NoaaWeatherData> getPastDailySummaries() {
 		return pastDailySummaries;

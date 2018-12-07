@@ -498,6 +498,62 @@ public class Utils {
 
 
 	/**
+	 * Returns a given precipitation in the correct unit (mm or inches)
+	 * 
+	 * @param value
+	 *            The precipitation value to be formatted.
+	 * @param unit
+	 *            The unit to use.
+	 * @param withUnit
+	 *            Whether the unit string needs to be concatenated to the returned
+	 *            string.
+	 * @return The given precipitation in the correct unit and format.
+	 */
+	public static String FormatPrecipitation(String value, int unit, boolean withUnit) {
+		if (value.equals(""))
+			return "";
+
+		double precipitationValue = Double.valueOf(value);
+		if (unit == CgConst.UNIT_MILES_FEET)
+			precipitationValue = precipitationValue * 0.0393700787;
+
+		String precipitationString = String.format("%.1f", precipitationValue);
+
+		if (withUnit) {
+			precipitationString += " " + uPrecipitationString(unit);
+		}
+
+		return precipitationString;
+	}
+
+
+	/**
+	 * Returns the precipitation unit as string (mm or inches)
+	 * 
+	 * @param unit
+	 *            Unit
+	 * @return String with the unit
+	 */
+
+	public static String uPrecipitationString(int unit) {
+		String unitString;
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			unitString = "mm";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			unitString = "in";
+			break;
+		default:
+			unitString = "mm";
+			break;
+		}
+
+		return unitString;
+	}
+
+
+	/**
 	 * Returns a given speed in the correct unit and format (km/h, miles/h, min/km
 	 * or min/mile)
 	 * 
