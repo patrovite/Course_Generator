@@ -25,6 +25,9 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.YearMonth;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -45,8 +48,16 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SpinnerDateModel;
 
-import org.jdesktop.swingx.JXMonthView;
 import org.joda.time.DateTime;
+
+import com.github.lgooddatepicker.components.CalendarPanel;
+import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.github.lgooddatepicker.components.TimePicker;
+import com.github.lgooddatepicker.components.TimePickerSettings;
+import com.github.lgooddatepicker.components.TimePickerSettings.TimeIncrement;
+import com.github.lgooddatepicker.optionalusertools.CalendarListener;
+import com.github.lgooddatepicker.zinternaltools.CalendarSelectionEvent;
+import com.github.lgooddatepicker.zinternaltools.YearMonthChangeEvent;
 
 import course_generator.TrackData;
 import course_generator.dialogs.FrmCalcSunriseSunset.ResCalcSunriseSunset;
@@ -76,15 +87,16 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	private JPanel panelElevationEffect;
 	private JCheckBox chkNightEffect;
 	private JCheckBox chkElevationEffect;
-	private JXMonthView jMonthView;
-	private SpinnerDateModel spinStartTimeModel;
-	private JSpinner spinStartTime;
+	private CalendarPanel calendar;
+	private LocalDate newSelectedDate;
 	private SpinnerDateModel spinStartNightModel;
 	private JSpinner spinStartNight;
 	private JLabel lbStartNight;
 	private JLabel lbEndNight;
 	private SpinnerDateModel spinEndNightModel;
 	private JSpinner spinEndNight;
+	private TimePickerSettings timePickerSettings;
+	private TimePicker timePicker;
 	private JButton btCalc;
 	private JLabel lbAscCoeff;
 	private CgSpinnerDouble spinAscCoeff;
@@ -112,11 +124,14 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		tfTrackName.setText(this.track.CourseName);
 		tfDescription.setText(this.track.Description);
 
-		jMonthView.setSelectionDate(this.track.StartTime.toDate());
-		jMonthView.ensureDateVisible(this.track.StartTime.toDate());
+		calendar.setSelectedDate(LocalDate.of(this.track.StartTime.getYear(), this.track.StartTime.getMonthOfYear(),
+				this.track.StartTime.getDayOfMonth()));
+		newSelectedDate = LocalDate.of(this.track.StartTime.getYear(), this.track.StartTime.getMonthOfYear(),
+				this.track.StartTime.getHourOfDay());
 
-		Date date = Utils.DateTimetoSpinnerDate(this.track.StartTime);
-		spinStartTimeModel.setValue(date);
+		timePickerSettings.initialTime = LocalTime.of(this.track.StartTime.getHourOfDay(),
+				this.track.StartTime.getMinuteOfHour());
+		timePicker.setTime(LocalTime.of(this.track.StartTime.getHourOfDay(), this.track.StartTime.getMinuteOfHour()));
 		chkElevationEffect.setSelected(this.track.bElevEffect);
 		chkNightEffect.setSelected(this.track.bNightCoeff);
 		spinStartNightModel.setValue(this.track.StartNightTime.toDate());
@@ -137,12 +152,11 @@ public class frmTrackSettings extends javax.swing.JDialog {
 			// Copy fields
 			track.CourseName = tfTrackName.getText();
 			track.Description = tfDescription.getText();
-			DateTime std = new DateTime(jMonthView.getSelectionDate());
-			DateTime stt = new DateTime(spinStartTimeModel.getValue());
-			std = std.withTime(stt.getHourOfDay(), stt.getMinuteOfHour(), 0, 0);
-			// track.StartTime=std;
-			track.StartTime = new DateTime(std.getYear(), std.getMonthOfYear(), std.getDayOfMonth(), stt.getHourOfDay(),
-					stt.getMinuteOfHour());
+			DateTime std = new DateTime(newSelectedDate.getYear(), newSelectedDate.getMonthValue(),
+					newSelectedDate.getDayOfMonth(), 0, 0, 0);
+			std = std.withTime(timePicker.getTime().getHour(), timePicker.getTime().getMinute(), 0, 0);
+			track.StartTime = new DateTime(std.getYear(), std.getMonthOfYear(), std.getDayOfMonth(),
+					timePicker.getTime().getHour(), timePicker.getTime().getMinute());
 
 			track.bElevEffect = chkElevationEffect.isSelected();
 			track.bNightCoeff = chkNightEffect.isSelected();
@@ -252,21 +266,33 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		Utils.addComponent(paneGlobal, panelDateTime, 0, 2, 1, 1, 1, 1, 10, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		jMonthView = new org.jdesktop.swingx.JXMonthView();
-		jMonthView.setBackground(new java.awt.Color(255, 255, 255));
-		jMonthView.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
-		jMonthView.setBoxPaddingX(1);
-		jMonthView.setBoxPaddingY(1);
-		jMonthView.setShowingWeekNumber(true);
-		jMonthView.setTraversable(true);
-		Utils.addComponent(panelDateTime, jMonthView, 0, 0, 1, 1, 0, 0, 5, 5, 5, 0, GridBagConstraints.BASELINE_LEADING,
+		DatePickerSettings datePickerSettings = new DatePickerSettings();
+		calendar = new CalendarPanel(datePickerSettings);
+		calendar.addCalendarListener(new CalendarListener() {
+
+			@Override
+			public void selectedDateChanged(CalendarSelectionEvent event) {
+				newSelectedDate = event.getNewDate();
+			}
+
+			@Override
+			public void yearMonthChanged(YearMonthChangeEvent event) {
+				YearMonth newYearMonth = event.getNewYearMonth();
+				newSelectedDate = LocalDate.of(newYearMonth.getYear(), newYearMonth.getMonth(),
+						newSelectedDate.getDayOfMonth());
+			}
+
+		});
+
+		Utils.addComponent(panelDateTime, calendar, 0, 0, 1, 1, 0, 0, 5, 5, 5, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.NONE);
 
-		spinStartTimeModel = new SpinnerDateModel(new Date(), null, null, Calendar.HOUR_OF_DAY);
-		spinStartTime = new javax.swing.JSpinner(spinStartTimeModel);
-		JSpinner.DateEditor deStartTime = new JSpinner.DateEditor(spinStartTime, "HH:mm");
-		spinStartTime.setEditor(deStartTime);
-		Utils.addComponent(panelDateTime, spinStartTime, 1, 0, 1, 1, 1, 0, 5, 10, 5, 5,
+		timePickerSettings = new TimePickerSettings();
+		timePickerSettings.use24HourClockFormat();
+		timePickerSettings.generatePotentialMenuTimes(TimeIncrement.ThirtyMinutes, null, null);
+		timePicker = new TimePicker(timePickerSettings);
+
+		Utils.addComponent(panelDateTime, timePicker, 1, 0, 1, 1, 1, 0, 5, 10, 5, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.NONE);
 
 		// -- Panel elevation effect
