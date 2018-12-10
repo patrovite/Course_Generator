@@ -504,8 +504,10 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@244", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@246", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		if (previousWeatherData.noaaNormalsWeatherStation != null && !previousWeatherData.noaaNormalsWeatherStation
-				.getId().equals(previousWeatherData.noaaSummariesWeatherStation.getId())) {
+		if (previousWeatherData.noaaNormalsWeatherStation != null
+				&& previousWeatherData.noaaSummariesWeatherStation != null
+				&& !previousWeatherData.noaaNormalsWeatherStation.getId()
+						.equals(previousWeatherData.noaaSummariesWeatherStation.getId())) {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@245", //$NON-NLS-1$
 					previousWeatherData.noaaNormalsWeatherStation.getName());
 

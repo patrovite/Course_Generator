@@ -3,9 +3,11 @@ package course_generator.weather;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -48,9 +50,12 @@ final public class NoaaHistoricalWeatherRetriever {
 	private NoaaWeatherData noaaNormalsMonthly;
 
 	private final String NoaaApiUrl = "https://www.ncdc.noaa.gov/cdo-web/api/v2/"; //$NON-NLS-1$
-	private final String ghcndParameters = "&datasetid=GHCND&datatypeid=TMAX&datatypeid=TMIN&datatypeid=PRCP"; //$NON-NLS-1$
-	private final String normalDlyDataTypeIds = "&datasetid=NORMAL_DLY&datatypeid=DLY-TMIN-NORMAL&datatypeid=DLY-TMAX-NORMAL&datatypeid=DLY-TAVG-NORMAL"; //$NON-NLS-1$
-	private final String normalMlyDataTypeIds = "&datasetid=NORMAL_MLY&datatypeid=MLY-TMIN-NORMAL&datatypeid=MLY-TMAX-NORMAL&datatypeid=MLY-TAVG-NORMAL"; //$NON-NLS-1$
+	private final String ghcndDatSetId = "&datasetid=GHCND"; //$NON-NLS-1$
+	private final String ghcndDataTypeIds = "&datatypeid=TMAX&datatypeid=TMIN&datatypeid=PRCP"; //$NON-NLS-1$
+	private final String normalDlyDataSetId = "&datasetid=NORMAL_DLY"; //$NON-NLS-1$
+	private final String normalMlyDataSetId = "&datasetid=NORMAL_MLY"; //$NON-NLS-1$
+	private final String normalDlyDataTypeIds = "&datatypeid=DLY-TMIN-NORMAL&datatypeid=DLY-TMAX-NORMAL&datatypeid=DLY-TAVG-NORMAL"; //$NON-NLS-1$
+	private final String normalMlyDataTypeIds = "&datatypeid=MLY-TMIN-NORMAL&datatypeid=MLY-TMAX-NORMAL&datatypeid=MLY-TAVG-NORMAL"; //$NON-NLS-1$
 
 
 	private NoaaHistoricalWeatherRetriever(LatLng startPoint, LatLng searchAreaCenter, double searchAreaRadius) {
@@ -137,8 +142,12 @@ final public class NoaaHistoricalWeatherRetriever {
 	 * @return The NOAA compliant extent as a string.
 	 */
 	private String getExtent(LatLng swPoint, LatLng nePoint) {
-		return String.format("%.3f", swPoint.getLatitude()) + "," + String.format("%.3f", swPoint.getLongitude()) + "," //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ String.format("%.3f", nePoint.getLatitude()) + "," + String.format("%.3f", nePoint.getLongitude()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		NumberFormat nf = NumberFormat.getNumberInstance(Locale.ROOT);
+		nf.setGroupingUsed(false);
+		nf.setMaximumFractionDigits(4);
+		return nf.format(swPoint.getLatitude()) + "," + nf.format(swPoint.getLongitude()) + "," //$NON-NLS-1$ //$NON-NLS-2$
+				+ nf.format(nePoint.getLatitude()) + "," + nf.format(nePoint.getLongitude()); //$NON-NLS-1$ //$NON-NLS-2$
+																								// //$NON-NLS-3$
 	}
 
 
@@ -255,7 +264,7 @@ final public class NoaaHistoricalWeatherRetriever {
 		// Looking for the 3 previous years of weather data
 		String threeYearsAgo = String.valueOf(Integer.valueOf(startDate.getYear()) - 3);
 		String queryParameters = "stations?extent=" + getExtent(searchAreaSouthWestCorner, searchAreaNorthEastCorner) //$NON-NLS-1$
-				+ ghcndParameters + "&startdate=" + threeYearsAgo + "-01-01" + "&enddate=" + startDate.getYear() //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ ghcndDatSetId + "&startdate=" + threeYearsAgo + "-01-01" + "&enddate=" + startDate.getYear() //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ "-12-31"; //$NON-NLS-1$
 
 		List<NoaaWeatherStation> stations = findClosestWeatherStations(queryParameters);
@@ -294,8 +303,8 @@ final public class NoaaHistoricalWeatherRetriever {
 			Instant time = Instant.ofEpochMilli(startDate.minusDays(pastYearNumber * 364).getMillis());
 			String pastDate = time.toDateTime().toString("yyyy-MM-dd"); //$NON-NLS-1$
 
-			String findWeatherStation = "data?stationid=" + stationId + ghcndParameters + "&startdate=" + pastDate //$NON-NLS-1$ //$NON-NLS-2$
-					+ "&enddate=" + pastDate; //$NON-NLS-1$
+			String findWeatherStation = "data?stationid=" + stationId + ghcndDatSetId + ghcndDataTypeIds + "&startdate=" //$NON-NLS-1$ //$NON-NLS-2$
+					+ pastDate + "&enddate=" + pastDate; //$NON-NLS-1$
 
 			String dailyNormalsData = processNoaaRequest(findWeatherStation);
 			if (!dailyNormalsData.contains("results")) //$NON-NLS-1$
@@ -320,7 +329,7 @@ final public class NoaaHistoricalWeatherRetriever {
 	private NoaaWeatherData findMostRelevantNormalsDaily() {
 
 		String queryParameters = "stations?extent=" + getExtent(searchAreaSouthWestCorner, searchAreaNorthEastCorner) //$NON-NLS-1$
-				+ normalDlyDataTypeIds;
+				+ normalDlyDataSetId;
 
 		List<NoaaWeatherStation> stations = findClosestWeatherStations(queryParameters);
 		if (stations == null)
@@ -350,7 +359,7 @@ final public class NoaaHistoricalWeatherRetriever {
 	 */
 	private NoaaWeatherData retrieveNormalsDaily(String stationId) {
 		String queryParameters = "data?stationid=" + stationId + "&startdate=2010-" + startDate.toString("MM-dd") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ "&enddate=2010-" + startDate.toString("MM-dd") + normalDlyDataTypeIds; //$NON-NLS-1$ //$NON-NLS-2$
+				+ "&enddate=2010-" + startDate.toString("MM-dd") + normalDlyDataSetId + normalDlyDataTypeIds; //$NON-NLS-1$ //$NON-NLS-2$
 
 		String normalsDailyData = processNoaaRequest(queryParameters);
 		if (!normalsDailyData.contains("results")) //$NON-NLS-1$
@@ -369,8 +378,9 @@ final public class NoaaHistoricalWeatherRetriever {
 		if (noaaNormalsWeatherStation == null)
 			return null;
 
-		String findWeatherStation = "data?stationid=" + noaaNormalsWeatherStation.getId() + normalMlyDataTypeIds //$NON-NLS-1$
-				+ "&startdate=" + startDate.toString("2010-MM-01") + "&enddate=" + startDate.toString("2010-MM-01"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+		String findWeatherStation = "data?stationid=" + noaaNormalsWeatherStation.getId() + normalMlyDataSetId //$NON-NLS-1$
+				+ normalMlyDataTypeIds + "&startdate=" + startDate.toString("2010-MM-01") + "&enddate=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ startDate.toString("2010-MM-01"); //$NON-NLS-1$
 
 		String normalsMonthlyData = processNoaaRequest(findWeatherStation);
 		if (!normalsMonthlyData.contains("results")) //$NON-NLS-1$
