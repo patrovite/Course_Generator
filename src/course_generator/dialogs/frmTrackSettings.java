@@ -124,10 +124,10 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		tfTrackName.setText(this.track.CourseName);
 		tfDescription.setText(this.track.Description);
 
+		newSelectedDate = LocalDate.of(this.track.StartTime.getYear(), this.track.StartTime.getMonthOfYear(),
+				this.track.StartTime.getDayOfMonth());
 		calendar.setSelectedDate(LocalDate.of(this.track.StartTime.getYear(), this.track.StartTime.getMonthOfYear(),
 				this.track.StartTime.getDayOfMonth()));
-		newSelectedDate = LocalDate.of(this.track.StartTime.getYear(), this.track.StartTime.getMonthOfYear(),
-				this.track.StartTime.getHourOfDay());
 
 		timePickerSettings.initialTime = LocalTime.of(this.track.StartTime.getHourOfDay(),
 				this.track.StartTime.getMinuteOfHour());
@@ -272,7 +272,14 @@ public class frmTrackSettings extends javax.swing.JDialog {
 
 			@Override
 			public void selectedDateChanged(CalendarSelectionEvent event) {
-				newSelectedDate = event.getNewDate();
+				if (event.getNewDate() == null) {
+					// If the user has clicked the "Clear" button
+					// we go back to the original date.
+					calendar.setSelectedDate(LocalDate.of(track.StartTime.getYear(), track.StartTime.getMonthOfYear(),
+							track.StartTime.getDayOfMonth()));
+				} else if (!newSelectedDate.equals(event.getNewDate())) {
+					newSelectedDate = event.getNewDate();
+				}
 			}
 
 			@Override
