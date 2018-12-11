@@ -25,6 +25,9 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.YearMonth;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -45,8 +48,16 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SpinnerDateModel;
 
-import org.jdesktop.swingx.JXMonthView;
 import org.joda.time.DateTime;
+
+import com.github.lgooddatepicker.components.CalendarPanel;
+import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.github.lgooddatepicker.components.TimePicker;
+import com.github.lgooddatepicker.components.TimePickerSettings;
+import com.github.lgooddatepicker.components.TimePickerSettings.TimeIncrement;
+import com.github.lgooddatepicker.optionalusertools.CalendarListener;
+import com.github.lgooddatepicker.zinternaltools.CalendarSelectionEvent;
+import com.github.lgooddatepicker.zinternaltools.YearMonthChangeEvent;
 
 import course_generator.TrackData;
 import course_generator.dialogs.FrmCalcSunriseSunset.ResCalcSunriseSunset;
@@ -77,15 +88,16 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	private JPanel panelElevationEffect;
 	private JCheckBox chkNightEffect;
 	private JCheckBox chkElevationEffect;
-	private JXMonthView jMonthView;
-	private SpinnerDateModel spinStartTimeModel;
-	private JSpinner spinStartTime;
+	private CalendarPanel calendar;
+	private LocalDate newSelectedDate;
 	private SpinnerDateModel spinStartNightModel;
 	private JSpinner spinStartNight;
 	private JLabel lbStartNight;
 	private JLabel lbEndNight;
 	private SpinnerDateModel spinEndNightModel;
 	private JSpinner spinEndNight;
+	private TimePickerSettings timePickerSettings;
+	private TimePicker timePicker;
 	private JButton btCalc;
 	private JLabel lbAscCoeff;
 	private CgSpinnerDouble spinAscCoeff;
@@ -100,7 +112,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	 */
 	public frmTrackSettings(CgSettings settings) {
 		this.settings = settings;
-		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle"); //$NON-NLS-1$
 		initComponents();
 		setModal(true);
 	}
@@ -117,11 +129,14 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		tfTrackName.setText(this.track.CourseName);
 		tfDescription.setText(this.track.Description);
 
-		jMonthView.setSelectionDate(this.track.StartTime.toDate());
-		jMonthView.ensureDateVisible(this.track.StartTime.toDate());
+		newSelectedDate = LocalDate.of(this.track.StartTime.getYear(), this.track.StartTime.getMonthOfYear(),
+				this.track.StartTime.getDayOfMonth());
+		calendar.setSelectedDate(LocalDate.of(this.track.StartTime.getYear(), this.track.StartTime.getMonthOfYear(),
+				this.track.StartTime.getDayOfMonth()));
 
-		Date date = Utils.DateTimetoSpinnerDate(this.track.StartTime);
-		spinStartTimeModel.setValue(date);
+		timePickerSettings.initialTime = LocalTime.of(this.track.StartTime.getHourOfDay(),
+				this.track.StartTime.getMinuteOfHour());
+		timePicker.setTime(LocalTime.of(this.track.StartTime.getHourOfDay(), this.track.StartTime.getMinuteOfHour()));
 		chkElevationEffect.setSelected(this.track.bElevEffect);
 		chkNightEffect.setSelected(this.track.bNightCoeff);
 		spinStartNightModel.setValue(Utils.DateTimetoSpinnerDate(this.track.StartNightTime));
@@ -142,12 +157,11 @@ public class frmTrackSettings extends javax.swing.JDialog {
 			// Copy fields
 			track.CourseName = tfTrackName.getText();
 			track.Description = tfDescription.getText();
-			DateTime std = new DateTime(jMonthView.getSelectionDate());
-			DateTime stt = new DateTime(spinStartTimeModel.getValue());
-			std = std.withTime(stt.getHourOfDay(), stt.getMinuteOfHour(), 0, 0);
-			// track.StartTime=std;
-			track.StartTime = new DateTime(std.getYear(), std.getMonthOfYear(), std.getDayOfMonth(), stt.getHourOfDay(),
-					stt.getMinuteOfHour());
+			DateTime std = new DateTime(newSelectedDate.getYear(), newSelectedDate.getMonthValue(),
+					newSelectedDate.getDayOfMonth(), 0, 0, 0);
+			std = std.withTime(timePicker.getTime().getHour(), timePicker.getTime().getMinute(), 0, 0);
+			track.StartTime = new DateTime(std.getYear(), std.getMonthOfYear(), std.getDayOfMonth(),
+					timePicker.getTime().getHour(), timePicker.getTime().getMinute());
 
 			track.bElevEffect = chkElevationEffect.isSelected();
 			track.bNightCoeff = chkNightEffect.isSelected();
@@ -161,7 +175,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 			track.timeZoneId = this.timeZoneId;
 			track.TrackUseDaylightSaving = this.summertime;
 
-			JOptionPane.showMessageDialog(this, bundle.getString("frmTrackSettings.ModificationMsg"));
+			JOptionPane.showMessageDialog(this, bundle.getString("frmTrackSettings.ModificationMsg")); //$NON-NLS-1$
 		}
 		return ok;
 	}
@@ -174,8 +188,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	 */
 	protected JRootPane createRootPane() {
 		JRootPane rootPane = new JRootPane();
-		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE");
-		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER");
+		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE"); //$NON-NLS-1$
+		KeyStroke strokeEnter = KeyStroke.getKeyStroke("ENTER"); //$NON-NLS-1$
 
 		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
@@ -192,11 +206,11 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		};
 
 		InputMap inputMap = rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-		inputMap.put(strokeEscape, "ESCAPE");
-		rootPane.getActionMap().put("ESCAPE", actionListener);
+		inputMap.put(strokeEscape, "ESCAPE"); //$NON-NLS-1$
+		rootPane.getActionMap().put("ESCAPE", actionListener); //$NON-NLS-1$
 
-		inputMap.put(strokeEnter, "ENTER");
-		rootPane.getActionMap().put("ENTER", actionListenerEnter);
+		inputMap.put(strokeEnter, "ENTER"); //$NON-NLS-1$
+		rootPane.getActionMap().put("ENTER", actionListenerEnter); //$NON-NLS-1$
 
 		return rootPane;
 	}
@@ -216,7 +230,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle(bundle.getString("frmTrackSettings.title"));
+		setTitle(bundle.getString("frmTrackSettings.title")); //$NON-NLS-1$
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setMinimumSize(new Dimension(300, 400));
@@ -231,7 +245,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		panelTrackName = new JPanel();
 		panelTrackName.setLayout(new GridBagLayout());
 		panelTrackName
-				.setBorder(BorderFactory.createTitledBorder(bundle.getString("frmTrackSettings.panelTrackName.Title"))); // Start
+				.setBorder(BorderFactory.createTitledBorder(bundle.getString("frmTrackSettings.panelTrackName.Title"))); // Start //$NON-NLS-1$
 		panelTrackName.setLayout(new GridBagLayout());
 		Utils.addComponent(paneGlobal, panelTrackName, 0, 0, 1, 1, 0, 0, 10, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
@@ -244,7 +258,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		panelDescription = new JPanel();
 		panelDescription.setLayout(new GridBagLayout());
 		panelDescription.setBorder(
-				BorderFactory.createTitledBorder(bundle.getString("frmTrackSettings.panelDescription.Title")));// End
+				BorderFactory.createTitledBorder(bundle.getString("frmTrackSettings.panelDescription.Title")));// End //$NON-NLS-1$
 		panelDescription.setLayout(new GridBagLayout());
 		Utils.addComponent(paneGlobal, panelDescription, 0, 1, 1, 1, 0, 0, 10, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
@@ -257,37 +271,56 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		panelDateTime = new JPanel();
 		panelDateTime.setLayout(new GridBagLayout());
 		panelDateTime
-				.setBorder(BorderFactory.createTitledBorder(bundle.getString("frmTrackSettings.panelDateTime.Title")));// Difficulty
+				.setBorder(BorderFactory.createTitledBorder(bundle.getString("frmTrackSettings.panelDateTime.Title")));// Difficulty //$NON-NLS-1$
 		Utils.addComponent(paneGlobal, panelDateTime, 0, 2, 1, 1, 1, 1, 10, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		jMonthView = new org.jdesktop.swingx.JXMonthView();
-		jMonthView.setBackground(new java.awt.Color(255, 255, 255));
-		jMonthView.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
-		jMonthView.setBoxPaddingX(1);
-		jMonthView.setBoxPaddingY(1);
-		jMonthView.setShowingWeekNumber(true);
-		jMonthView.setTraversable(true);
-		Utils.addComponent(panelDateTime, jMonthView, 0, 0, 1, 1, 0, 0, 5, 5, 5, 0, GridBagConstraints.BASELINE_LEADING,
+		DatePickerSettings datePickerSettings = new DatePickerSettings();
+		calendar = new CalendarPanel(datePickerSettings);
+		calendar.addCalendarListener(new CalendarListener() {
+
+			@Override
+			public void selectedDateChanged(CalendarSelectionEvent event) {
+				if (event.getNewDate() == null) {
+					// If the user has clicked the "Clear" button
+					// we go back to the original date.
+					calendar.setSelectedDate(LocalDate.of(track.StartTime.getYear(), track.StartTime.getMonthOfYear(),
+							track.StartTime.getDayOfMonth()));
+				} else if (!newSelectedDate.equals(event.getNewDate())) {
+					newSelectedDate = event.getNewDate();
+				}
+			}
+
+			@Override
+			public void yearMonthChanged(YearMonthChangeEvent event) {
+				YearMonth newYearMonth = event.getNewYearMonth();
+				newSelectedDate = LocalDate.of(newYearMonth.getYear(), newYearMonth.getMonth(),
+						newSelectedDate.getDayOfMonth());
+			}
+
+		});
+
+		Utils.addComponent(panelDateTime, calendar, 0, 0, 1, 1, 0, 0, 5, 5, 5, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.NONE);
 
-		spinStartTimeModel = new SpinnerDateModel(new Date(), null, null, Calendar.HOUR_OF_DAY);
-		spinStartTime = new javax.swing.JSpinner(spinStartTimeModel);
-		JSpinner.DateEditor deStartTime = new JSpinner.DateEditor(spinStartTime, "HH:mm");
-		spinStartTime.setEditor(deStartTime);
-		Utils.addComponent(panelDateTime, spinStartTime, 1, 0, 1, 1, 1, 0, 5, 10, 5, 5,
+		timePickerSettings = new TimePickerSettings();
+		timePickerSettings.use24HourClockFormat();
+		timePickerSettings.generatePotentialMenuTimes(TimeIncrement.ThirtyMinutes, null, null);
+		timePicker = new TimePicker(timePickerSettings);
+
+		Utils.addComponent(panelDateTime, timePicker, 1, 0, 1, 1, 1, 0, 5, 10, 5, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.NONE);
 
 		// -- Panel elevation effect
 		panelElevationEffect = new JPanel();
 		panelElevationEffect.setLayout(new GridBagLayout());
 		panelElevationEffect.setBorder(
-				BorderFactory.createTitledBorder(bundle.getString("frmTrackSettings.panelElevationEffect.Title")));
+				BorderFactory.createTitledBorder(bundle.getString("frmTrackSettings.panelElevationEffect.Title"))); //$NON-NLS-1$
 		panelElevationEffect.setLayout(new GridBagLayout());
 		Utils.addComponent(paneGlobal, panelElevationEffect, 0, 3, 1, 1, 1, 1, 10, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		chkElevationEffect = new JCheckBox(bundle.getString("frmTrackSettings.rbElevationEffect.Text"));
+		chkElevationEffect = new JCheckBox(bundle.getString("frmTrackSettings.rbElevationEffect.Text")); //$NON-NLS-1$
 		Utils.addComponent(panelElevationEffect, chkElevationEffect, 0, 1, 1, 1, 1, 0, 5, 5, 5, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.NONE);
 
@@ -295,11 +328,11 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		panelNightEffect = new JPanel();
 		panelNightEffect.setLayout(new GridBagLayout());
 		panelNightEffect.setBorder(
-				BorderFactory.createTitledBorder(bundle.getString("frmTrackSettings.panelNightEffect.Title")));
+				BorderFactory.createTitledBorder(bundle.getString("frmTrackSettings.panelNightEffect.Title"))); //$NON-NLS-1$
 		Utils.addComponent(paneGlobal, panelNightEffect, 0, 4, 1, 1, 1, 1, 10, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		chkNightEffect = new JCheckBox(bundle.getString("frmTrackSettings.rbNightEffect.Text"));
+		chkNightEffect = new JCheckBox(bundle.getString("frmTrackSettings.rbNightEffect.Text")); //$NON-NLS-1$
 		chkNightEffect.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				Refresh();
@@ -308,29 +341,29 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		Utils.addComponent(panelNightEffect, chkNightEffect, 0, 0, GridBagConstraints.REMAINDER, 1, 1, 0, 5, 5, 5, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.NONE);
 
-		lbStartNight = new JLabel(bundle.getString("frmTrackSettings.lbStartNight.Text"));
+		lbStartNight = new JLabel(bundle.getString("frmTrackSettings.lbStartNight.Text")); //$NON-NLS-1$
 		Utils.addComponent(panelNightEffect, lbStartNight, 0, 1, 1, 1, 0, 0, 5, 5, 5, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.NONE);
 
 		spinStartNightModel = new SpinnerDateModel(new Date(), null, null, Calendar.HOUR_OF_DAY);
 		spinStartNight = new javax.swing.JSpinner(spinStartNightModel);
-		JSpinner.DateEditor deStartNight = new JSpinner.DateEditor(spinStartNight, "HH:mm");
+		JSpinner.DateEditor deStartNight = new JSpinner.DateEditor(spinStartNight, "HH:mm"); //$NON-NLS-1$
 		spinStartNight.setEditor(deStartNight);
 		Utils.addComponent(panelNightEffect, spinStartNight, 1, 1, 1, 1, 0, 0, 5, 5, 5, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.NONE);
 
-		lbEndNight = new JLabel(bundle.getString("frmTrackSettings.lbEndNight.Text"));
+		lbEndNight = new JLabel(bundle.getString("frmTrackSettings.lbEndNight.Text")); //$NON-NLS-1$
 		Utils.addComponent(panelNightEffect, lbEndNight, 2, 1, 1, 1, 0, 0, 5, 10, 5, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.NONE);
 
 		spinEndNightModel = new SpinnerDateModel(new Date(), null, null, Calendar.HOUR_OF_DAY);
 		spinEndNight = new javax.swing.JSpinner(spinEndNightModel);
-		JSpinner.DateEditor deEndNight = new JSpinner.DateEditor(spinEndNight, "HH:mm");
+		JSpinner.DateEditor deEndNight = new JSpinner.DateEditor(spinEndNight, "HH:mm"); //$NON-NLS-1$
 		spinEndNight.setEditor(deEndNight);
 		Utils.addComponent(panelNightEffect, spinEndNight, 3, 1, 1, 1, 0, 0, 5, 5, 5, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.NONE);
 
-		btCalc = new JButton(bundle.getString("frmTrackSettings.btCalc.text"));
+		btCalc = new JButton(bundle.getString("frmTrackSettings.btCalc.text")); //$NON-NLS-1$
 		btCalc.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -370,13 +403,13 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		Utils.addComponent(panelNightEffect, panelCoeff, 0, 2, GridBagConstraints.REMAINDER, 1, 1, 0, 5, 5, 5, 1,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.NONE);
 
-		lbAscCoeff = new JLabel(bundle.getString("frmTrackSettings.lbAscCoeff.Text"));
+		lbAscCoeff = new JLabel(bundle.getString("frmTrackSettings.lbAscCoeff.Text")); //$NON-NLS-1$
 		panelCoeff.add(lbAscCoeff);
 
 		spinAscCoeff = new CgSpinnerDouble(100, 0, 100, 1);
 		panelCoeff.add(spinAscCoeff);
 
-		lbDescCoeff = new JLabel(bundle.getString("frmTrackSettings.lbDescCoeff.Text"));
+		lbDescCoeff = new JLabel(bundle.getString("frmTrackSettings.lbDescCoeff.Text")); //$NON-NLS-1$
 		panelCoeff.add(lbDescCoeff);
 
 		spinDescCoeff = new CgSpinnerDouble(100, 0, 100, 1);
@@ -390,8 +423,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 		btCancel = new javax.swing.JButton();
-		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize));
-		btCancel.setText(bundle.getString("Global.btCancel.text"));
+		btCancel.setIcon(Utils.getIcon(this, "cancel.png", settings.DialogIconSize)); //$NON-NLS-1$
+		btCancel.setText(bundle.getString("Global.btCancel.text")); //$NON-NLS-1$
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				setVisible(false);
@@ -399,8 +432,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		});
 
 		btOk = new javax.swing.JButton();
-		btOk.setIcon(Utils.getIcon(this, "valid.png", settings.DialogIconSize));
-		btOk.setText(bundle.getString("Global.btOk.text"));
+		btOk.setIcon(Utils.getIcon(this, "valid.png", settings.DialogIconSize)); //$NON-NLS-1$
+		btOk.setText(bundle.getString("Global.btOk.text")); //$NON-NLS-1$
 		btOk.setMinimumSize(btCancel.getMinimumSize());
 		btOk.setPreferredSize(btCancel.getPreferredSize());
 		btOk.addActionListener(new java.awt.event.ActionListener() {

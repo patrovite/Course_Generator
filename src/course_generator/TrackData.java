@@ -385,6 +385,10 @@ public class TrackData {
 		CalcClimb(0, data.size() - 1, resClimb);
 		StartTime = data.get(0).getHour().equals(new DateTime(1970, 1, 1, 0, 0, 0)) ? new DateTime(2010, 1, 1, 0, 0)
 				: data.get(0).getHour();
+		StartTime = data.get(0).getHour().equals(new DateTime(1970, 1, 1, 0, 0, 0)) ? DateTime.now()
+				: data.get(0).getHour();
+		StartTime = data.get(0).getHour().equals(new DateTime(1970, 1, 1, 0, 0, 0)) ? DateTime.now()
+				: data.get(0).getHour();
 		ClimbP = resClimb.cp;
 		ClimbM = resClimb.cm;
 		AscTime = resClimb.tp;
