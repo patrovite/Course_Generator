@@ -119,6 +119,9 @@ public class CgSettings {
 	public int NightTrackWidth;
 	public int NormalTrackTransparency;
 	public int NightTrackTransparency;
+	public String MapToolBarLayout;
+	public int MapToolBarOrientation;
+
 
 	public CgSettings() {
 		int i = 0;
@@ -194,12 +197,17 @@ public class CgSettings {
 		NightTrackWidth = CgConst.TRACK_NIGHT_TICKNESS;
 		NormalTrackTransparency = CgConst.NORMAL_TRACK_TRANSPARENCY;
 		NightTrackTransparency = CgConst.NIGHT_TRACK_TRANSPARENCY;
+
+		MapToolBarLayout = "WEST";
+		MapToolBarOrientation = javax.swing.SwingConstants.VERTICAL;
 	}
+
 
 	/**
 	 * Save the settings to the disk
 	 * 
-	 * @param path Path where the setting file is stored
+	 * @param path
+	 *            Path where the setting file is stored
 	 */
 	public void Save(String path) {
 		// -- Check if the data directory exist. If not! creation
@@ -314,6 +322,9 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "NORMALTRACKTRANSPARENCY", NormalTrackTransparency);
 			Utils.WriteIntToXML(writer, "NIGHTTRACKTRANSPARENCY", NightTrackTransparency);
 
+			Utils.WriteStringToXML(writer, "MAPTOOLBARLAYOUT", MapToolBarLayout);
+			Utils.WriteIntToXML(writer, "MAPTOOLBARORIENTATION", MapToolBarOrientation);
+
 			writer.writeEndElement();
 			writer.writeEndDocument();
 
@@ -324,10 +335,12 @@ public class CgSettings {
 		}
 	}
 
+
 	/**
 	 * Load the settings from disk
 	 * 
-	 * @param _Path Path where the setting file is stored
+	 * @param _Path
+	 *            Path where the setting file is stored
 	 */
 	public void Load(String _Path) {
 		// -- Test if the config file exist
@@ -347,6 +360,7 @@ public class CgSettings {
 					+ Confighandler.getErrLine());
 	}
 
+
 	/**
 	 * Return the distance unit as string
 	 * 
@@ -362,6 +376,7 @@ public class CgSettings {
 			return "Km";
 		}
 	}
+
 
 	/**
 	 * Return the distance unit as string (abbreviation)
@@ -379,6 +394,7 @@ public class CgSettings {
 		}
 	}
 
+
 	/**
 	 * Return the elevation unit as string
 	 * 
@@ -394,6 +410,7 @@ public class CgSettings {
 			return "m";
 		}
 	}
+
 
 	/**
 	 * Return the elevation unit as string (abbreviation)
@@ -411,6 +428,7 @@ public class CgSettings {
 		}
 	}
 
+
 	/**
 	 * Returns the user's thunderforest's API Key
 	 * 
@@ -420,10 +438,12 @@ public class CgSettings {
 		return ThunderForestApiKey == null ? "" : ThunderForestApiKey;
 	}
 
+
 	/**
 	 * Sets the user's thunderforest's API Key
 	 * 
-	 * @param key The entered key
+	 * @param key
+	 *            The entered key
 	 */
 	public void setThunderForestApiKey(String newKey) {
 		String oldKey = ThunderForestApiKey;
@@ -431,9 +451,11 @@ public class CgSettings {
 		ThunderForestApiKeyChanged.firePropertyChange("ThunderForestApiKeyChanged", oldKey, newKey);
 	}
 
+
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		ThunderForestApiKeyChanged.addPropertyChangeListener(listener);
 	}
+
 
 	/**
 	 * Verifies that the thunderforest's API Key is a valid one
@@ -448,6 +470,7 @@ public class CgSettings {
 		return isKeyValid;
 	}
 
+
 	/**
 	 * Returns the user's Dark Sky API Key
 	 * 
@@ -457,14 +480,17 @@ public class CgSettings {
 		return DarkSkyApiKey == null ? "" : DarkSkyApiKey;
 	}
 
+
 	/**
 	 * Sets the user's Dark Sky API Key
 	 * 
-	 * @param key The entered key
+	 * @param key
+	 *            The entered key
 	 */
 	public void setDarkSkyApiKey(String key) {
 		DarkSkyApiKey = key;
 	}
+
 
 	/**
 	 * Verifies that the Dark Sky API Key is a valid one

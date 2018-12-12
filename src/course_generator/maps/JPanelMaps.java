@@ -19,8 +19,16 @@
 package course_generator.maps;
 
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -91,6 +99,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	private JButton btSaveMap;
 	private FrmSelectMap selectMap;
 
+
 	public JPanelMaps(CgSettings settings) {
 		super();
 		Settings = settings;
@@ -102,24 +111,29 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		initComponents();
 	}
 
+
 	public void addListener(JPanelMapsListener toAdd) {
 		listeners.add(toAdd);
 	}
+
 
 	public void notifyRequestPosition() {
 		for (JPanelMapsListener hl : listeners)
 			hl.requestPositionIndexEvent();
 	}
 
+
 	public void notifyChange() {
 		for (JPanelMapsListener hl : listeners)
 			hl.changeEvent();
 	}
 
-	public void notifyMouseClicked(java.awt.event.MouseEvent evt) {
+
+	public void notifyMouseClicked(MouseEvent evt) {
 		for (JPanelMapsListener hl : listeners)
 			hl.mouseClicked(evt);
 	}
+
 
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (!evt.getPropertyName().equals("ThunderForestApiKeyChanged"))
@@ -136,14 +150,32 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	private void initComponents() {
-		setLayout(new java.awt.BorderLayout());
+		setLayout(new BorderLayout());
 
 		panelMain = new JPanel();
-		panelMain.setLayout(new java.awt.BorderLayout());
+		panelMain.setLayout(new BorderLayout());
 
 		create_Toolbar();
-		panelMain.add(jToolBarMapViewer, java.awt.BorderLayout.WEST);
+		if (Settings.MapToolBarLayout == null || Settings.MapToolBarLayout.equals(""))
+			panelMain.add(jToolBarMapViewer, BorderLayout.WEST);
+		else {
+			switch (Settings.MapToolBarLayout) {
+			case "NORTH":
+				panelMain.add(jToolBarMapViewer, BorderLayout.NORTH);
+				break;
+			case "EAST":
+				panelMain.add(jToolBarMapViewer, BorderLayout.EAST);
+				break;
+			case "WEST":
+				panelMain.add(jToolBarMapViewer, BorderLayout.WEST);
+				break;
+			case "SOUTH":
+				panelMain.add(jToolBarMapViewer, BorderLayout.SOUTH);
+				break;
+			}
+		}
 
 		// MapViewer = new org.openstreetmap.gui.jmapviewer.JMapViewer();
 		MapViewer = new JMapViewerCG();
@@ -165,29 +197,73 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		MapViewer.setMapMarkerVisible(true);
 		MapViewer.setScrollWrapEnabled(true);
 		MapViewer.setZoomButtonStyle(org.openstreetmap.gui.jmapviewer.JMapViewer.ZOOM_BUTTON_STYLE.VERTICAL);
-		MapViewer.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
+		MapViewer.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
 				MapViewerMouseClicked(evt);
 			}
 		});
-		panelMain.add(MapViewer, java.awt.BorderLayout.CENTER);
+		panelMain.add(MapViewer, BorderLayout.CENTER);
 
 		jScrollPanelMap = new javax.swing.JScrollPane();
 		jScrollPanelMap.setViewportView(panelMain);
 
 		selectMap = new FrmSelectMap(Settings);
 
-		add(panelMain, java.awt.BorderLayout.CENTER);
+		add(panelMain, BorderLayout.CENTER);
 	}
+
 
 	/**
 	 * Create the map toolbar
 	 */
 	private void create_Toolbar() {
 		jToolBarMapViewer = new javax.swing.JToolBar();
+		jToolBarMapViewer.setOrientation(Settings.MapToolBarOrientation);
 		jToolBarMapViewer.setFloatable(true);
-		jToolBarMapViewer.setOrientation(javax.swing.SwingConstants.VERTICAL);
 		jToolBarMapViewer.setRollover(true);
+		jToolBarMapViewer.addComponentListener(new ComponentListener() {
+
+			@Override
+			public void componentShown(ComponentEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+
+
+			@Override
+			public void componentResized(ComponentEvent arg0) {
+				LayoutManager layout = arg0.getComponent().getParent().getLayout();
+
+				if (layout instanceof BorderLayout) {
+					BorderLayout b = (BorderLayout) layout;
+					Object con = b.getConstraints(arg0.getComponent());
+					if (con == BorderLayout.SOUTH) {
+						Settings.MapToolBarLayout = "SOUTH";
+					} else if (con == BorderLayout.WEST) {
+						Settings.MapToolBarLayout = "WEST";
+					} else if (con == BorderLayout.EAST) {
+						Settings.MapToolBarLayout = "EAST";
+					} else if (con == BorderLayout.NORTH) {
+						Settings.MapToolBarLayout = "NORTH";
+					} else
+						Settings.MapToolBarLayout = "WEST";
+				}
+
+				Settings.MapToolBarOrientation = jToolBarMapViewer.getOrientation();
+
+			}
+
+
+			@Override
+			public void componentMoved(ComponentEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+
+
+			@Override
+			public void componentHidden(ComponentEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+		});
 
 		// -- Center map on screen
 		btMapCenterOnTrack = new javax.swing.JButton();
@@ -195,8 +271,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapCenterOnTrack.setToolTipText(bundle.getString("frmMain.btMapCenterOnTrack.toolTipText"));
 		btMapCenterOnTrack.setFocusable(false);
 		btMapCenterOnTrack.setEnabled(false);
-		btMapCenterOnTrack.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btMapCenterOnTrack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				MapViewer.setDisplayToFitMapPolygons();
 			}
 		});
@@ -208,8 +284,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapAddMarker.setToolTipText(bundle.getString("frmMain.btMapAddMarker.toolTipText"));
 		btMapAddMarker.setFocusable(false);
 		btMapAddMarker.setEnabled(false);
-		btMapAddMarker.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btMapAddMarker.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				ShowMapMarker();
 			}
 		});
@@ -220,8 +296,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapHideMarker.setIcon(Utils.getIcon(this, "hide_marker.png", Settings.MapToolbarIconSize));
 		btMapHideMarker.setToolTipText(bundle.getString("frmMain.btMapHideMarker.toolTipText"));
 		btMapHideMarker.setFocusable(false);
-		btMapHideMarker.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btMapHideMarker.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				HideMapMarker();
 			}
 		});
@@ -235,8 +311,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapUndo.setIcon(Utils.getIcon(this, "undo.png", Settings.MapToolbarIconSize));
 		btMapUndo.setToolTipText(bundle.getString("frmMain.btMapUndo.toolTipText"));
 		btMapUndo.setFocusable(false);
-		btMapUndo.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btMapUndo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				UndoMapFillDiff();
 			}
 		});
@@ -250,8 +326,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapTrackVeryEasy.setIcon(Utils.getIcon(this, "track_very_easy.png", Settings.MapToolbarIconSize));
 		btMapTrackVeryEasy.setToolTipText(bundle.getString("frmMain.btMapTrackVeryEasy.toolTipText"));
 		btMapTrackVeryEasy.setFocusable(false);
-		btMapTrackVeryEasy.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btMapTrackVeryEasy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				MapTrackDifficulty(CgConst.DIFF_VERYEASY);
 			}
 		});
@@ -262,8 +338,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapTrackEasy.setIcon(Utils.getIcon(this, "track_easy.png", Settings.MapToolbarIconSize));
 		btMapTrackEasy.setToolTipText(bundle.getString("frmMain.btMapTrackEasy.toolTipText"));
 		btMapTrackEasy.setFocusable(false);
-		btMapTrackEasy.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btMapTrackEasy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				MapTrackDifficulty(CgConst.DIFF_EASY);
 			}
 		});
@@ -274,8 +350,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapTrackAverage.setIcon(Utils.getIcon(this, "track_average.png", Settings.MapToolbarIconSize));
 		btMapTrackAverage.setToolTipText(bundle.getString("frmMain.btMapTrackAverage.toolTipText"));
 		btMapTrackAverage.setFocusable(false);
-		btMapTrackAverage.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btMapTrackAverage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				MapTrackDifficulty(CgConst.DIFF_AVERAGE);
 			}
 		});
@@ -286,8 +362,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapTrackHard.setIcon(Utils.getIcon(this, "track_hard.png", Settings.MapToolbarIconSize));
 		btMapTrackHard.setToolTipText(bundle.getString("frmMain.btMapTrackHard.toolTipText"));
 		btMapTrackHard.setFocusable(false);
-		btMapTrackHard.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btMapTrackHard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				MapTrackDifficulty(CgConst.DIFF_HARD);
 			}
 		});
@@ -298,8 +374,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapTrackVeryHard.setIcon(Utils.getIcon(this, "track_very_hard.png", Settings.MapToolbarIconSize));
 		btMapTrackVeryHard.setToolTipText(bundle.getString("frmMain.btMapTrackVeryHard.toolTipText"));
 		btMapTrackVeryHard.setFocusable(false);
-		btMapTrackVeryHard.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btMapTrackVeryHard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				MapTrackDifficulty(CgConst.DIFF_VERYHARD);
 			}
 		});
@@ -314,8 +390,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapMark.setToolTipText(bundle.getString("frmMain.btMapMark.toolTipText"));
 		btMapMark.setFocusable(false);
 		btMapMark.setEnabled(false);
-		btMapMark.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btMapMark.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				SetMarkMapMarker();
 			}
 		});
@@ -327,8 +403,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapEat.setToolTipText(bundle.getString("frmMain.btMapEat.toolTipText"));
 		btMapEat.setFocusable(false);
 		btMapEat.setEnabled(false);
-		btMapEat.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btMapEat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				SetEatMapMarker();
 			}
 		});
@@ -340,8 +416,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapDrink.setToolTipText(bundle.getString("frmMain.btMapDrink.toolTipText"));
 		btMapDrink.setFocusable(false);
 		btMapDrink.setEnabled(false);
-		btMapDrink.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btMapDrink.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				SetDrinkMapMarker();
 			}
 		});
@@ -356,8 +432,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btShowHideMarkers.setToolTipText(bundle.getString("frmMain.btShowHideMarkers.toolTipText"));
 		btShowHideMarkers.setFocusable(false);
 		btShowHideMarkers.setEnabled(false);
-		btShowHideMarkers.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btShowHideMarkers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				ShowHideMarkers();
 			}
 		});
@@ -372,8 +448,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btSaveMap.setToolTipText(bundle.getString("frmMain.btSaveMap.toolTipText"));
 		btSaveMap.setFocusable(false);
 		btSaveMap.setEnabled(false);
-		btSaveMap.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btSaveMap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				SaveMap();
 			}
 		});
@@ -387,14 +463,15 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapSelect.setIcon(Utils.getIcon(this, "select_map.png", Settings.MapToolbarIconSize));
 		btMapSelect.setToolTipText(bundle.getString("frmMain.btMapSelect.toolTipText"));
 		btMapSelect.setFocusable(false);
-		btMapSelect.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		btMapSelect.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
 				SelectMap();
 			}
 		});
 		jToolBarMapViewer.add(btMapSelect);
 
 	}
+
 
 	private void SaveMap() {
 		String s = Utils.SaveDialog(this, Settings.previousPNGDirectory, "", ".png",
@@ -406,7 +483,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
-	private void MapViewerMouseClicked(java.awt.event.MouseEvent evt) {
+
+	private void MapViewerMouseClicked(MouseEvent evt) {
 		if (Track == null)
 			return;
 		if (Track.data == null)
@@ -425,16 +503,19 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
 	}
 
+
 	public Coordinate getSelectedPosition() {
 		return selectedPosition;
 	}
 
+
 	/**
 	 * Display track stored in a TrackData class
 	 * 
-	 * @param tdata    TrackData object to display
-	 * @param zoom2fit If true the zoom is set have the complete display of the
-	 *                 track
+	 * @param tdata
+	 *            TrackData object to display
+	 * @param zoom2fit
+	 *            If true the zoom is set have the complete display of the track
 	 * 
 	 */
 	public void RefreshTrack(TrackData tdata, boolean zoom2fit) {
@@ -576,10 +657,12 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	/***
 	 * Return the color corresponding of the difficulty
 	 * 
-	 * @param diff difficulty between 0..100
+	 * @param diff
+	 *            difficulty between 0..100
 	 * @return color corresponding to the difficulty
 	 */
 	private Color getDiffColor(double diff) {
@@ -594,6 +677,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		else
 			return Settings.Color_Diff_VeryHard; // CgConst.CL_MAP_DIFF_VERYHARD);
 	}
+
 
 	/**
 	 * Set the track difficulty
@@ -642,6 +726,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	private void SetMarkMapMarker() {
 		if (Track.data.size() > 0) {
 			// int row = panelTrackData.getSelectedRow();
@@ -671,6 +756,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	private void HideMapMarker() {
 		if (Track.data.size() > 0) {
 			IndexMarker = -1;
@@ -681,6 +767,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			RefreshMapButtons();
 		}
 	}
+
 
 	private void ShowMapMarker() {
 		if (Track.data.size() > 0) {
@@ -700,6 +787,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			RefreshMapButtons();
 		}
 	}
+
 
 	private void SetEatMapMarker() {
 		if (Track.data.size() > 0) {
@@ -731,6 +819,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	private void SetDrinkMapMarker() {
 		if (Track.data.size() > 0) {
 			// int row = panelTrackData.getSelectedRow();
@@ -761,6 +850,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	public void RefreshMapType() {
 		switch (Settings.map) {
 		case 0:
@@ -789,6 +879,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	public File getTileCacheDir() {
 		switch (Settings.map) {
 		case 0:
@@ -804,11 +895,14 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	/**
 	 * Refresh the marker on the map
 	 * 
-	 * @param lat latitude of the position of the marker
-	 * @param lon longitude of the position of the marker
+	 * @param lat
+	 *            latitude of the position of the marker
+	 * @param lon
+	 *            longitude of the position of the marker
 	 */
 	public void RefreshMapMarker(double lat, double lon) {
 		if (MapMarker == null) {
@@ -821,6 +915,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			MapViewer.setDisplayPosition(new Coordinate(lat, lon), MapViewer.getZoom());
 		}
 	}
+
 
 	private void UndoMapFillDiff() {
 		if ((Old_MarkerStart >= 0) && (Old_MarkerEnd >= 0) && (UndoDiff.size() > 0)) {
@@ -854,11 +949,13 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	public void setTrack(TrackData track) {
 		Track = track;
 		MapViewer.removeAllMapMarkers();
 		RefreshTrack(Track, true);
 	}
+
 
 	/** Returns an ImageIcon, or null if the path was invalid. */
 	protected ImageIcon createImageIcon(String path, String description) {
@@ -871,11 +968,14 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	/**
 	 * Refresh the position of the marker on the map
 	 * 
-	 * @param lat latitude of the position of the marker
-	 * @param lon longitude of the position of the marker
+	 * @param lat
+	 *            latitude of the position of the marker
+	 * @param lon
+	 *            longitude of the position of the marker
 	 */
 	public void RefreshCurrentPosMarker(double lat, double lon) {
 		if (CurrentPosMarker == null) {
@@ -890,6 +990,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	public void RefreshMapButtons() {
 		btMapTrackVeryHard.setEnabled(IndexMarker != -1);
 		btMapTrackHard.setEnabled(IndexMarker != -1);
@@ -900,9 +1001,11 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapUndo.setEnabled(Old_MarkerStart != -1);
 	}
 
+
 	public void setRow(int row) {
 		this.row = row;
 	}
+
 
 	private void SelectMap() {
 		int ret = selectMap.showDialog(Settings.map);
@@ -912,6 +1015,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+
 	/**
 	 * Show/Hide markers on the maps
 	 */
@@ -920,6 +1024,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btShowHideMarkers.setSelected(ShowMarkers);
 		RefreshTrack(Track, false);
 	}
+
 
 	private Image getImage(String name, int size) {
 		return createImageIcon("/course_generator/images/" + size + "/" + name, "").getImage();
