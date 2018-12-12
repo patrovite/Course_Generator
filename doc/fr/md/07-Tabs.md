@@ -86,6 +86,22 @@ Les statistiques concernent entre autre:
 Le bouton ![](./images/Tabs/save_html.png) permet de sauver ces données au format HTML.  
 Le bouton ![](./images/Tabs/refresh.png) permet de rafraîchir les données.
 
+## L'onglet "Météo"
+ Cet onglet permet d'obtenir les données historiques météorologiques du parcours.
+![Statistics tab](./images/Tabs/CG40_Tab_Weather.png)
+ Les données historiques contiennent les informations suivantes:
+ * Températures mamimales, températures minimales et précipitations pour les 3 dernières années (si une station météorologique a été trouvée).
+* Les normales journalières et mensuelles (Températures mamimales, moyennes et minimales) pour la même période (si une station météorologique a été trouvée).
+* La station météorologique, son URL et la distance entre la station et le point de départ.
+ Le résumé du parcours contient les données suivantes:
+* La date du parcours.
+* Les heures de lever et coucher du soleil.
+* Les heures de jour.
+* La phase lunaire.
+
+Le bouton ![](./images/Tabs/refresh.png) permet de rafraîchir les données. 
+Le bouton ![](./images/Tabs/retrieve_weather.png) permet de récuperer les données météorologiques des serveurs NOAA.
+
 ## L'onglet "Analyse"
 Cet onglet permet d'obtenir une analyse de votre parcours. Il contient 3 sous-onglets qui sont détaillés ci-dessous.
 
