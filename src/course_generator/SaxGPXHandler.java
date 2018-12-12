@@ -142,7 +142,7 @@ public class SaxGPXHandler extends DefaultHandler {
 			// -- Clear the DataList? --
 			if (mode == 0) {
 				trkdata.data.clear();
-				trkdata.historicWeatherData.clear();
+				trkdata.historicalWeatherData = null;
 			}
 			// -- Parse the file
 			parser.parse(f, this);

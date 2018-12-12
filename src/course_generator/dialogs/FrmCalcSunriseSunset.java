@@ -43,8 +43,6 @@ import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.shredzone.commons.suncalc.SunTimes;
 
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgSpinner;
@@ -89,10 +87,12 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		boolean valid;
 	}
 
+
 	/**
 	 * Creates new form frmSettings
 	 * 
-	 * @param settings Object containing the settings
+	 * @param settings
+	 *            Object containing the settings
 	 */
 	public FrmCalcSunriseSunset(JDialog parent, CgSettings settings) {
 		super(parent);
@@ -102,15 +102,15 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		setModal(true);
 	}
 
-	public ResCalcSunriseSunset showDialog(double longitude, double latitude, DateTime starttime, int timezone,
-			boolean useDayLightSaving) {
+
+	public ResCalcSunriseSunset showDialog(double longitude, double latitude, DateTime starttime) {
 
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.date = starttime;
 
 		// Determine the course time zone
-		long hoursOffsetFromUTC = Utils.hoursUTCOffsetFromLatLon(latitude, longitude);
+		int hoursOffsetFromUTC = Utils.hoursUTCOffsetFromLatLon(latitude, longitude);
 		courseStartZone = Utils.getTimeZoneFromLatLon(latitude, longitude);
 		String timeZoneId = courseStartZone.getID();
 
@@ -151,6 +151,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		return res;
 	}
 
+
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -185,6 +186,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		return rootPane;
 	}
 
+
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -195,6 +197,7 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
+
 
 	private void initComponents() {
 		int line = 0;
@@ -328,17 +331,19 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
+
 	protected void Calc() {
 
-		SunTimes times = SunTimes.compute().on(date.toDate()).at(latitude, longitude).execute();
+		sunrise = Utils.determineSunRiseTimes(date, latitude, longitude, courseStartZone.getID());
+		sunset = Utils.determineSunsetTimes(date, latitude, longitude, courseStartZone.getID());
 
-		sunrise = new DateTime(times.getRise()).withZone(DateTimeZone.forTimeZone(courseStartZone));
-		sunset = new DateTime(times.getSet()).withZone(DateTimeZone.forTimeZone(courseStartZone));
 	}
+
 
 	protected void formComponentShown(ComponentEvent evt) {
 		repaint();
 	}
+
 
 	protected void Refresh() {
 		lbSunriseVal.setText(sunrise.toString("HH:mm"));
