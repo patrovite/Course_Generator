@@ -74,6 +74,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	private CgSettings Settings;
 	private MapMarker CurrentPosMarker = null;
 	private MapMarker MapMarker = null;
+	private MapMarker SummariesWeatherStationMarker = null;
+	private MapMarker NormalsWeatherStationMarker = null;
 	private ArrayList<Double> UndoDiff;
 	private List<JPanelMapsListener> listeners = new ArrayList<JPanelMapsListener>();
 	private JToolBar jToolBarMapViewer;
@@ -89,11 +91,13 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	private JButton btMapEat;
 	private JButton btMapDrink;
 	private JButton btMapSelect;
+	private JButton btShowWeatherStation;
 	private JPanel panelMain;
 	private JMapViewer MapViewer;
 	private OsmFileCacheTileLoader offlineTileCache;
 	private JScrollPane jScrollPanelMap;
 	private JButton btMapUndo;
+	private boolean showWeatherStations;
 	private JButton btShowHideMarkers;
 	private boolean ShowMarkers;
 	private JButton btSaveMap;
@@ -129,24 +133,32 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	}
 
 
-	public void notifyMouseClicked(MouseEvent evt) {
+
+//	public void notifyMouseClicked(MouseEvent evt) {
+	public void notifyMouseClicked(java.awt.event.MouseEvent evt) {
 		for (JPanelMapsListener hl : listeners)
 			hl.mouseClicked(evt);
 	}
 
 
-	public void propertyChange(PropertyChangeEvent evt) {
-		if (!evt.getPropertyName().equals("ThunderForestApiKeyChanged"))
-			return;
+//	public void propertyChange(PropertyChangeEvent evt) {
+//		if (!evt.getPropertyName().equals("ThunderForestApiKeyChanged"))
+//			return;
 
-		if (!Settings.isThunderForestApiKeyValid()) {
-			if (Settings.map == 2) {
-				Settings.map = 0;
-				selectMap.rbOutdoors.setEnabled(false);
-				RefreshMapType();
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName().equals("ThunderForestApiKeyChanged")) {
+			if (!Settings.isThunderForestApiKeyValid()) {
+				if (Settings.map == 2) {
+					Settings.map = 0;
+					selectMap.rbOutdoors.setEnabled(false);
+					RefreshMapType();
+				}
+			} else {
+				selectMap.rbOutdoors.setEnabled(true);
 			}
-		} else {
-			selectMap.rbOutdoors.setEnabled(true);
+		}
+		if (evt.getPropertyName().equals("HistoricalWeatherDataChanged")) {
+			UpdateShowWeatherStationsButton();
 		}
 	}
 
@@ -470,6 +482,19 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		});
 		jToolBarMapViewer.add(btMapSelect);
 
+		// -- Show the weather station
+		btShowWeatherStation = new javax.swing.JButton();
+		btShowWeatherStation.setIcon(Utils.getIcon(this, "weather_station.png", Settings.MapToolbarIconSize));
+		btShowWeatherStation.setToolTipText(bundle.getString("frmMain.btMapShowWeatherStations.toolTipText"));
+		btShowWeatherStation.setFocusable(false);
+		btShowWeatherStation.setEnabled(false);
+		btShowWeatherStation.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ShowHideWeatherStations();
+			}
+		});
+		jToolBarMapViewer.add(btShowWeatherStation);
+
 	}
 
 
@@ -484,7 +509,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	}
 
 
-	private void MapViewerMouseClicked(MouseEvent evt) {
+//	private void MapViewerMouseClicked(MouseEvent evt) {
+	private void MapViewerMouseClicked(java.awt.event.MouseEvent evt) {
 		if (Track == null)
 			return;
 		if (Track.data == null)
@@ -539,6 +565,20 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 		MapMarker = null;
 		CurrentPosMarker = null;
+		SummariesWeatherStationMarker = null;
+		NormalsWeatherStationMarker = null;
+
+		if (tdata.historicalWeatherData == null) {
+			showWeatherStations = false;
+			btShowWeatherStation.setSelected(false);
+		} else if (showWeatherStations == true) {
+			// If the new track or the recalculated track contains historical weather
+			// we keep the current button state
+			// otherwise, we hide the stations.
+			showWeatherStations = false;
+			ShowHideWeatherStations();
+		}
+		UpdateShowWeatherStationsButton();
 
 		// -- Create the night tracks
 		int cmpt = 0;
@@ -789,6 +829,66 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	}
 
 
+//<<<<<<< floatabletoolbar
+//=======
+	private void ShowHideWeatherStations() {
+		showWeatherStations = !showWeatherStations;
+
+		btShowWeatherStation.setSelected(showWeatherStations);
+
+		if (!ShowMarkers)
+			return;
+
+		if (showWeatherStations) {
+			if (Track.historicalWeatherData != null) {
+				if (SummariesWeatherStationMarker == null
+						&& Track.historicalWeatherData.noaaSummariesWeatherStation != null) {
+					double lat = Double
+							.parseDouble(Track.historicalWeatherData.noaaSummariesWeatherStation.getLatitude());
+					double lon = Double
+							.parseDouble(Track.historicalWeatherData.noaaSummariesWeatherStation.getLongitude());
+					SummariesWeatherStationMarker = new MapMarkerImg(new Coordinate(lat, lon),
+							getImage("weather_station.png", Settings.MapIconSize));
+				}
+				if (NormalsWeatherStationMarker == null
+						&& Track.historicalWeatherData.noaaNormalsWeatherStation != null) {
+
+					double lat = Double
+							.parseDouble(Track.historicalWeatherData.noaaNormalsWeatherStation.getLatitude());
+					double lon = Double
+							.parseDouble(Track.historicalWeatherData.noaaNormalsWeatherStation.getLongitude());
+					NormalsWeatherStationMarker = new MapMarkerImg(new Coordinate(lat, lon),
+							getImage("weather_station.png", Settings.MapIconSize));
+
+				}
+
+				if (SummariesWeatherStationMarker != null) {
+					MapViewer.addMapMarker(SummariesWeatherStationMarker);
+				}
+				if (NormalsWeatherStationMarker != null) {
+					MapViewer.addMapMarker(NormalsWeatherStationMarker);
+				}
+
+				// In case the station is out of the screen, it will not be seen
+				// by the user. Hence, we center the map on the track and the markers.
+				if (SummariesWeatherStationMarker != null || NormalsWeatherStationMarker != null) {
+					MapViewer.setDisplayToFitMapMarkersAndPolygons();
+				}
+
+			}
+		} else {
+			if (SummariesWeatherStationMarker != null) {
+				MapViewer.removeMapMarker(SummariesWeatherStationMarker);
+			}
+			if (NormalsWeatherStationMarker != null) {
+				MapViewer.removeMapMarker(NormalsWeatherStationMarker);
+			}
+		}
+
+	}
+
+
+//>>>>>>> master
 	private void SetEatMapMarker() {
 		if (Track.data.size() > 0) {
 			// int row = panelTrackData.getSelectedRow();
@@ -952,6 +1052,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 	public void setTrack(TrackData track) {
 		Track = track;
+		Track.addHistoricalWeatherListener(this);
 		MapViewer.removeAllMapMarkers();
 		RefreshTrack(Track, true);
 	}
@@ -1023,11 +1124,26 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		ShowMarkers = !ShowMarkers;
 		btShowHideMarkers.setSelected(ShowMarkers);
 		RefreshTrack(Track, false);
+
+		if (!ShowMarkers) {
+			showWeatherStations = false;
+			btShowWeatherStation.setSelected(false);
+		}
 	}
 
 
 	private Image getImage(String name, int size) {
 		return createImageIcon("/course_generator/images/" + size + "/" + name, "").getImage();
+	}
+
+
+	private void UpdateShowWeatherStationsButton() {
+		if (Track.historicalWeatherData != null && (Track.historicalWeatherData.noaaNormalsWeatherStation != null
+				|| Track.historicalWeatherData.noaaSummariesWeatherStation != null)) {
+			btShowWeatherStation.setEnabled(true);
+		} else {
+			btShowWeatherStation.setEnabled(false);
+		}
 	}
 
 }
