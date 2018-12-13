@@ -54,6 +54,7 @@ public class frmAbout extends javax.swing.JDialog {
 		}
 	}
 
+
 	/**
 	 * Creates new form DialogAbout
 	 */
@@ -71,11 +72,14 @@ public class frmAbout extends javax.swing.JDialog {
 		}
 	}
 
+
 	/**
 	 * Show the dialog
 	 * 
-	 * @param parent  Parent
-	 * @param version String containing the version of the software l
+	 * @param parent
+	 *            Parent
+	 * @param version
+	 *            String containing the version of the software l
 	 */
 	public static void showDialogAbout(java.awt.Frame parent, boolean autoclose, boolean withcopyrights,
 			String version) {
@@ -84,15 +88,16 @@ public class frmAbout extends javax.swing.JDialog {
 		dlg.setVisible(true);
 	}
 
+
 	private void Refresh(boolean withcopyrights) {
 		if (withcopyrights) {
 			StringBuilder sb = new StringBuilder();
 			sb.append(" Thanks to the contributors :\n");
-			sb.append(" - Frédéric Bard (frederic@freemovin.com)\n\n");
+			sb.append(" - Frederic Bard\n\n");
 
 			sb.append(" Translators\n");
 			sb.append(" - Spanish: victorhck@opensuse.org\n");
-			sb.append(" - English: Frédéric Bard (frederic@freemovin.com)\n\n");
+			sb.append(" - English: Frederic Bard\n\n");
 
 			sb.append(" .oO Copyrights Oo.\n");
 			sb.append(" Used libraries:\n");
@@ -127,6 +132,7 @@ public class frmAbout extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 
 	}
+
 
 	/**
 	 * This method initialize the form.

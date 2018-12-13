@@ -3,7 +3,7 @@
  * Copyright (C) 2008-2018 Pierre Delore
  *
  * Contributor(s) :
- * Frédéric (frederic@freemovin.com)
+ * Frederic
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -340,11 +340,10 @@ public class frmMain extends javax.swing.JFrame {
 		dirs.mkdirs();
 		dirs = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.BING_CACHE_DIR);
 		dirs.mkdirs();
-		
-		// -- Create the theme folders if necessary	
+
+		// -- Create the theme folders if necessary
 		dirs = new File(DataDir + "/" + CgConst.CG_DIR, "themes/");
 		dirs.mkdirs();
-		
 
 		// -- Initialize data
 		Resume = new ResumeData();
