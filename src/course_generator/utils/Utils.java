@@ -419,11 +419,11 @@ public class Utils {
 
 
 	/**
-	 * Convert °C to °F
+	 * Convert ï¿½C to ï¿½F
 	 * 
 	 * @param c
-	 *            Temperature in °C
-	 * @return Temperature in °F
+	 *            Temperature in ï¿½C
+	 * @return Temperature in ï¿½F
 	 */
 	public static double C2F(double c) {
 		return c * 9 / 5 + 32;
@@ -431,11 +431,11 @@ public class Utils {
 
 
 	/**
-	 * Convert °F to °C
+	 * Convert ï¿½F to ï¿½C
 	 * 
 	 * @param f
-	 *            Temperature in °F
-	 * @return Temperature in °C
+	 *            Temperature in ï¿½F
+	 * @return Temperature in ï¿½C
 	 */
 	public static double F2C(double f) {
 		return (f - 32) * 5 / 9;
@@ -472,7 +472,7 @@ public class Utils {
 
 
 	/**
-	 * Return the temperature unit as string (°C or °F)
+	 * Return the temperature unit as string (ï¿½C or ï¿½F)
 	 * 
 	 * @param unit
 	 *            Unit
@@ -483,13 +483,13 @@ public class Utils {
 		String unitString;
 		switch (unit) {
 		case CgConst.UNIT_METER:
-			unitString = "°C";
+			unitString = "&deg;C";
 			break;
 		case CgConst.UNIT_MILES_FEET:
-			unitString = "°F";
+			unitString = "&deg;F";
 			break;
 		default:
-			unitString = "°C";
+			unitString = "&deg;C";
 			break;
 		}
 

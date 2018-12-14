@@ -1063,6 +1063,7 @@ public class frmSettings extends javax.swing.JDialog {
 
 				writer.flush();
 				writer.close();
+				bufferedOutputStream.close();
 			} catch (XMLStreamException | IOException e) {
 				e.printStackTrace();
 			}

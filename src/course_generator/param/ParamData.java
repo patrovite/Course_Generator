@@ -99,6 +99,8 @@ public class ParamData {
 			writer.writeEndDocument();
 			writer.flush();
 			writer.close();
+			bufferedOutputStream.close();
+
 		} catch (XMLStreamException | IOException e) {
 			e.printStackTrace();
 		}
