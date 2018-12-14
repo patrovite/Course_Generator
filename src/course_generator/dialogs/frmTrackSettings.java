@@ -106,7 +106,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	private JPanel panelCoeff;
 	private static FrmCalcSunriseSunset calcSunriseSunset;
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -116,7 +115,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
-
 
 	public boolean showDialog(TrackData track) {
 		this.track = track;
@@ -131,12 +129,11 @@ public class frmTrackSettings extends javax.swing.JDialog {
 
 		newSelectedDate = LocalDate.of(this.track.StartTime.getYear(), this.track.StartTime.getMonthOfYear(),
 				this.track.StartTime.getDayOfMonth());
-		calendar.setSelectedDate(LocalDate.of(this.track.StartTime.getYear(), this.track.StartTime.getMonthOfYear(),
-				this.track.StartTime.getDayOfMonth()));
+		calendar.setSelectedDate(newSelectedDate);
 
 		timePickerSettings.initialTime = LocalTime.of(this.track.StartTime.getHourOfDay(),
 				this.track.StartTime.getMinuteOfHour());
-		timePicker.setTime(LocalTime.of(this.track.StartTime.getHourOfDay(), this.track.StartTime.getMinuteOfHour()));
+		timePicker.setTime(timePickerSettings.initialTime);
 		chkElevationEffect.setSelected(this.track.bElevEffect);
 		chkNightEffect.setSelected(this.track.bNightCoeff);
 		spinStartNightModel.setValue(Utils.DateTimetoSpinnerDate(this.track.StartNightTime));
@@ -180,7 +177,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		return ok;
 	}
 
-
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -215,7 +211,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -226,7 +221,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -369,15 +363,6 @@ public class frmTrackSettings extends javax.swing.JDialog {
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 				ResCalcSunriseSunset res = ShowCalcSunriseSunset();
-				/*
-				 * if (calcSunriseSunset == null) calcSunriseSunset = new
-				 * FrmCalcSunriseSunset(settings);
-				 * 
-				 * ResCalcSunriseSunset res =
-				 * calcSunriseSunset.showDialog(track.data.get(0).getLongitude(),
-				 * track.data.get(0).getLatitude(), track.StartTime,
-				 * track.TrackTimeZone.intValue(), track.TrackUseDaylightSaving);
-				 */
 
 				setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 
@@ -452,15 +437,14 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-
 	private ResCalcSunriseSunset ShowCalcSunriseSunset() {
 		if (calcSunriseSunset == null)
 			calcSunriseSunset = new FrmCalcSunriseSunset(this, settings);
 
 		return calcSunriseSunset.showDialog(track.data.get(0).getLongitude(), track.data.get(0).getLatitude(),
-				track.StartTime);
+				new DateTime(newSelectedDate.getYear(), newSelectedDate.getMonthValue(),
+						newSelectedDate.getDayOfMonth(), 0, 0, 0));
 	}
-
 
 	protected void Refresh() {
 		spinStartNight.setEnabled(chkNightEffect.isSelected());
