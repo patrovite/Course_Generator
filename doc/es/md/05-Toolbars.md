@@ -2,16 +2,16 @@
 
 ![Main Toolbar](./images/Toolbar/CG40_Main_Toolbar.png)
 
-* ![](./images/Toolbar/open_gpx.png) : Loads a GPX file format course
-* ![](./images/Toolbar/open_cgx.png) : Loads a CGX file format course
-* ![](./images/Toolbar/save_cgx.png) : Saves a CGX file format course
-* ![](./images/Toolbar/undo.png) : Undo the last command
-* ![](./images/Toolbar/search.png) : Searches for a specific GPS location
-* ![](./images/Toolbar/prev.png) : Searches the previous mark
-* ![](./images/Toolbar/next.png) : Searches the next mark
-* ![](./images/Toolbar/roadbook.png) : Displays the mini road-book
-* ![](./images/Toolbar/chart_curve.png) : Displays the speed/slope curve
-* ![](./images/Toolbar/setting.png) : Displays the course settings window
-* ![](./images/Toolbar/fill_diff.png) : Displays the global terrain difficulty settings window
-* ![](./images/Toolbar/fill_coeff.png) : Displays the global fatigue coefficient settings window
-* ![](./images/Toolbar/refresh.png) : Computes the course estimated time
+* ![](./images/Toolbar/open_gpx.png) : Cargar un archivo en formato GPX
+* ![](./images/Toolbar/open_cgx.png) : Cargar un archivo en formato CGX
+* ![](./images/Toolbar/save_cgx.png) : Guardar un archivo en formato CGX
+* ![](./images/Toolbar/undo.png) : Deshacer el último comando
+* ![](./images/Toolbar/search.png) : Búsqueda para una ubicación GPS específica
+* ![](./images/Toolbar/prev.png) : Búsqueda la marca previa
+* ![](./images/Toolbar/next.png) : Búsqueda de la marca siguiente
+* ![](./images/Toolbar/roadbook.png) : Muestra el mini libro de ruta
+* ![](./images/Toolbar/chart_curve.png) : Muestra la curva de velocidad/desnivel
+* ![](./images/Toolbar/setting.png) : Muestra la ventana de ajustes de la carrera
+* ![](./images/Toolbar/fill_diff.png) : Muestra la ventana de ajustes globales de la dificultad del terreno
+* ![](./images/Toolbar/fill_coeff.png) : Muestra la ventana global de ajustes del coeficiente de fatiga
+* ![](./images/Toolbar/refresh.png) : Calcula el tiempo estimado de la carrera
