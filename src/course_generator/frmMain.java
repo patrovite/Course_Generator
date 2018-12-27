@@ -3424,30 +3424,74 @@ public class frmMain extends javax.swing.JFrame {
 	private void mnuMruGPXActionPerformed(java.awt.event.ActionEvent evt) {
 		JMenuItem m = (JMenuItem) evt.getSource();
 		if (m == mnuMruGPX1)
-			LoadGPX(Settings.mruGPX[0]);
+			tryOpenRecentFile(Settings.mruGPX[0]);
 		else if (m == mnuMruGPX2)
-			LoadGPX(Settings.mruGPX[1]);
+			tryOpenRecentFile(Settings.mruGPX[1]);
 		else if (m == mnuMruGPX3)
-			LoadGPX(Settings.mruGPX[2]);
+			tryOpenRecentFile(Settings.mruGPX[2]);
 		else if (m == mnuMruGPX4)
-			LoadGPX(Settings.mruGPX[3]);
+			tryOpenRecentFile(Settings.mruGPX[3]);
 		else if (m == mnuMruGPX5)
-			LoadGPX(Settings.mruGPX[4]);
+			tryOpenRecentFile(Settings.mruGPX[4]);
 	}
 
 
 	private void mnuMruCGXActionPerformed(java.awt.event.ActionEvent evt) {
 		JMenuItem m = (JMenuItem) evt.getSource();
 		if (m == mnuMruCGX1)
-			LoadCGX(Settings.mruCGX[0]);
+			tryOpenRecentFile(Settings.mruCGX[0]);
 		else if (m == mnuMruCGX2)
-			LoadCGX(Settings.mruCGX[1]);
+			tryOpenRecentFile(Settings.mruCGX[1]);
 		else if (m == mnuMruCGX3)
-			LoadCGX(Settings.mruCGX[2]);
+			tryOpenRecentFile(Settings.mruCGX[2]);
 		else if (m == mnuMruCGX4)
-			LoadCGX(Settings.mruCGX[3]);
+			tryOpenRecentFile(Settings.mruCGX[3]);
 		else if (m == mnuMruCGX5)
-			LoadCGX(Settings.mruCGX[4]);
+			tryOpenRecentFile(Settings.mruCGX[4]);
+	}
+
+
+	/**
+	 * Attempts to open a file (GPX or CGX).
+	 * 
+	 * @param filePath
+	 *            The absolute file path.
+	 */
+	private void tryOpenRecentFile(String filePath) {
+		File file = new File(filePath);
+		String fileExtension = filePath.substring(filePath.length() - 3).toLowerCase();
+		if (!file.exists()) {
+			int dialogResult = JOptionPane.showConfirmDialog(this,
+					filePath + " :\n" + bundle.getString("frmMain.QuestionRemoveRecentFile"),
+					bundle.getString("frmMain.FileNotFound"), JOptionPane.YES_NO_OPTION);
+			if (dialogResult == JOptionPane.YES_OPTION) {
+				if (fileExtension.equals("cgx")) {
+					for (int i = 0; i < Settings.mruCGX.length; ++i) {
+						if (Settings.mruCGX[i].equals(filePath)) {
+							Settings.mruCGX[i] = "";
+							RefreshMruCGX();
+							break;
+						}
+					}
+				}
+				if (fileExtension.equals("gpx")) {
+					for (int i = 0; i < Settings.mruCGX.length; ++i) {
+						if (Settings.mruGPX[i].equals(filePath)) {
+							Settings.mruGPX[i] = "";
+							RefreshMruGPX();
+							break;
+						}
+					}
+				}
+			}
+		} else {
+			if (fileExtension.equals("cgx")) {
+				LoadCGX(filePath);
+			}
+			if (fileExtension.equals("gpx")) {
+				LoadGPX(filePath);
+			}
+		}
 	}
 
 
