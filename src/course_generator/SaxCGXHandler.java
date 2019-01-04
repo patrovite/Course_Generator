@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
@@ -38,6 +39,9 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
+import course_generator.weather.HistoricalWeather;
+import course_generator.weather.NoaaWeatherData;
+import course_generator.weather.NoaaWeatherStation;
 
 public class SaxCGXHandler extends DefaultHandler {
 	private java.util.ResourceBundle bundle = null;
@@ -95,14 +99,40 @@ public class SaxCGXHandler extends DefaultHandler {
 	private String trkpt_fmtmrb = "";
 	private int trkpt_FontSizemrb = 0;
 
+	// Historical weather data
+	public double moonFraction;
+	public String daylightHours = "";
+	private ArrayList<NoaaWeatherData> pastDailySummaries;
+	private NoaaWeatherData normalsDaily;
+	private NoaaWeatherData normalsMonthly;
+	private String maximumTemperature = "";
+	private String minimumTemperature = "";
+	private String averageTemperature = "";
+	private String precipitation = "";
+	private DateTime date;
+	private String summariesStationId;
+	private String summariesStationName;
+	private String summariesStationLatitude;
+	private String summariesStationLongitude;
+	private double summariesStationDistanceFromStart;
+	private String normalsStationId;
+	private String normalsStationName;
+	private String normalsStationLatitude;
+	private String normalsStationLongitude;
+	private double normalsStationDistanceFromStart;
+
 	// private int trk_nb=0;
 	// private int trkseg_nb=0;
 	private String characters = "";
 	private int old_time = 0;
 
 	private int level = 0;
-	private final int LEVEL_COURSEGENERATOR = 1;
-	private final int LEVEL_TRACKPOINT = 2;
+	private String levelName;
+	private final String LEVEL_COURSEGENERATOR = "COURSEGENERATOR";
+	private final String LEVEL_TRACKPOINT = "TRACKPOINT";
+	public static final String LEVEL_WEATHER_NORMALS_EPHEMERIS = "EPHEMERIS";
+	public static final String LEVEL_WEATHER_DAILY_SUMMARIES = "DAILY_SUMMARIES";
+	public static final String LEVEL_WEATHER_NORMALS = "NORMALS";
 
 	private TrackData trkdata;
 	private int mode = 0;
@@ -186,14 +216,19 @@ public class SaxCGXHandler extends DefaultHandler {
 		// errcode=ERR_READ_NO;
 		Cmpt = 0;
 		old_time = 0;
+		pastDailySummaries = new ArrayList<NoaaWeatherData>();
+		normalsDaily = null;
+		normalsMonthly = null;
 
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser = factory.newSAXParser();
 
 		File f = new File(filename);
 		if (f.isFile() && f.canRead()) {
-			if (mode == 0)
+			if (mode == 0) {
 				trkdata.data.clear();
+				trkdata.historicalWeatherData = null;
+			}
 			parser.parse(f, this);
 		} else
 			trkdata.ReadError = ERR_READ_NOTEXIST;
@@ -218,7 +253,7 @@ public class SaxCGXHandler extends DefaultHandler {
 	@Override
 	public void setDocumentLocator(final Locator locator) {
 		this.locator = locator; // Save the locator, so that it can be used later for line tracking when
-								// traversing nodes.
+		// traversing nodes.
 	}
 
 
@@ -226,9 +261,13 @@ public class SaxCGXHandler extends DefaultHandler {
 	public void startElement(String uri, String localname, String qName, Attributes attributs) throws SAXException {
 		if (qName.equalsIgnoreCase("COURSEGENERATOR")) {
 			level++;
-		} else if (qName.equalsIgnoreCase("TRACKPOINT")) {
+			levelName = qName;
+		} else if (qName.equalsIgnoreCase("TRACKPOINT") || qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS_EPHEMERIS)
+				|| qName.equalsIgnoreCase(LEVEL_WEATHER_DAILY_SUMMARIES)
+				|| qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
 			// trk_nb++;
 			level++;
+			levelName = qName;
 		}
 	}
 
@@ -343,7 +382,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			level--;
 		}
 
-		if (level == LEVEL_COURSEGENERATOR) {
+		if (level == 1 && levelName.equals(LEVEL_COURSEGENERATOR)) {
 			if (qName.equalsIgnoreCase("VERSION")) {
 				cgx_version = ManageDouble(0.0, ERR_READ_VERSION);
 
@@ -407,7 +446,9 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("ENDGLOBALCOEFF")) {
 				trkdata.EndGlobalCoeff = ManageDouble(100.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("TIMEZONE")) {
-				trkdata.TrackTimeZone = ManageDouble(0.0, ERR_READ_DOUBLE);
+				trkdata.timeZoneOffsetHours = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("TIMEZONEID")) {
+				trkdata.timeZoneId = ManageString();
 			} else if (qName.equalsIgnoreCase("USESUMMERTIME")) {
 				trkdata.TrackUseDaylightSaving = ManageBoolean(false, ERR_READ_BOOL);
 			} else if (qName.equalsIgnoreCase("CURVE")) {
@@ -455,7 +496,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			}
 		} // End LEVEL_COURSEGENERATOR
 
-		if (level == LEVEL_TRACKPOINT) {
+		if (level == 2 && levelName.equals(LEVEL_TRACKPOINT)) {
 			if (qName.equalsIgnoreCase("LATITUDEDEGREES")) {
 				trkpt_lat = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("LONGITUDEDEGREES")) {
@@ -532,7 +573,7 @@ public class SaxCGXHandler extends DefaultHandler {
 							trkpt_timesecond, // int Time
 							trkpt_timesecond - old_time, // double dTime_f
 							trkpt_timelimit, // int TimeLimit
-							new DateTime(), // DateTime Hour
+							new DateTime(), // DateTime Hour,
 							trkpt_eattime, // int Station
 							trkpt_name, // String Name
 							trkpt_comment, // String Comment
@@ -577,9 +618,116 @@ public class SaxCGXHandler extends DefaultHandler {
 					));
 					Cmpt++;
 				} // else
+
 				old_time = trkpt_timesecond;
 			}
 		} // End LEVEL_TRACKPOINT
+
+		else if (level == 2 && levelName.equals(LEVEL_WEATHER_NORMALS_EPHEMERIS)) {
+			if (qName.equalsIgnoreCase(HistoricalWeather.MOONFRACTION)) {
+				moonFraction = ManageDouble(0.0, ERR_READ_DOUBLE);
+			} else if (qName.equalsIgnoreCase(HistoricalWeather.DAYLIGHTHOURS)) {
+				daylightHours = ManageString();
+			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS_EPHEMERIS))
+				// End element
+				level--;
+		} else if (level == 2 && levelName.equals(LEVEL_WEATHER_DAILY_SUMMARIES)) {
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.STATIONID)) {
+				summariesStationId = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.NAME)) {
+				summariesStationName = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.DISTANCEFROMSTART)) {
+				summariesStationDistanceFromStart = ManageDouble(0.0, ERR_READ_DOUBLE);
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.LATITUDE)) {
+				summariesStationLatitude = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.LONGITUDE)) {
+				summariesStationLongitude = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.MAXIMUMTEMPERATURE)) {
+				maximumTemperature = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.MINIMUMTEMPERATURE)) {
+				minimumTemperature = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.PRECIPITATION)) {
+				precipitation = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.DATE)) {
+				date = DateTime.parse(characters);
+			} else if (qName.equalsIgnoreCase("DAILY_SUMMARY")) {
+				if (!summariesStationId.equals("")) {
+					pastDailySummaries
+							.add(new NoaaWeatherData(maximumTemperature, minimumTemperature, "", precipitation, date));
+				}
+			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_DAILY_SUMMARIES))
+				level--;
+
+		} else if (level == 2 && levelName.equals(LEVEL_WEATHER_NORMALS)) {
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.STATIONID)) {
+				normalsStationId = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.NAME)) {
+				normalsStationName = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.DISTANCEFROMSTART)) {
+				normalsStationDistanceFromStart = ManageDouble(0.0, ERR_READ_DOUBLE);
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.LATITUDE)) {
+				normalsStationLatitude = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherStation.LONGITUDE)) {
+				normalsStationLongitude = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.MAXIMUMTEMPERATURE)) {
+				maximumTemperature = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.MINIMUMTEMPERATURE)) {
+				minimumTemperature = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.AVERAGETEMPERATURE)) {
+				averageTemperature = ManageString();
+			}
+			if (qName.equalsIgnoreCase(NoaaWeatherData.DATE)) {
+				date = DateTime.parse(characters);
+			} else if (qName.equalsIgnoreCase("NORMALS_DAILY")) {
+				if (!normalsStationId.equals("")) {
+					normalsDaily = new NoaaWeatherData(maximumTemperature, minimumTemperature, averageTemperature, "",
+							date);
+				}
+			} else if (qName.equalsIgnoreCase("NORMALS_MONTHLY")) {
+				if (!normalsStationId.equals("")) {
+					normalsMonthly = new NoaaWeatherData(maximumTemperature, minimumTemperature, averageTemperature, "",
+							date);
+				}
+			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
+				// End element
+				level--;
+
+				NoaaWeatherStation noaaSummariesWeatherStation = null;
+				if (!summariesStationId.equals(""))
+					noaaSummariesWeatherStation = new NoaaWeatherStation(summariesStationId, summariesStationName,
+							summariesStationLatitude, summariesStationLongitude, summariesStationDistanceFromStart);
+
+				NoaaWeatherStation noaaNormalsWeatherStation = null;
+				if (!normalsStationId.equals(""))
+					noaaNormalsWeatherStation = new NoaaWeatherStation(normalsStationId, normalsStationName,
+							normalsStationLatitude, normalsStationLongitude, normalsStationDistanceFromStart);
+
+				// The daylight hours data is the minimum data to have in order
+				// to justify the creation of the the HistoricalWeather object
+				if (!daylightHours.equals("")) {
+					HistoricalWeather historicalWeather = new HistoricalWeather(pastDailySummaries, normalsDaily,
+							normalsMonthly, noaaSummariesWeatherStation, noaaNormalsWeatherStation, daylightHours,
+							moonFraction);
+					trkdata.setHistoricalWeather(historicalWeather);
+				}
+
+			}
+		}
 
 	}
 

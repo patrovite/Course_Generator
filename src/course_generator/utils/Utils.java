@@ -35,9 +35,15 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -47,21 +53,27 @@ import javax.swing.filechooser.FileFilter;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-//import org.jdom2.Element;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.compress.utils.IOUtils;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.Instant;
+import org.joda.time.Minutes;
+import org.shredzone.commons.suncalc.SunTimes;
 
 import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.TrackData.CalcClimbResult;
 import course_generator.settings.CgSettings;
+import net.iakovlev.timeshape.TimeZoneEngine;
 
 /**
- *
  * @author pierre.delore
  */
 public class Utils {
 
 	public static final String htmlDocFile = "cg_doc_4.00.html";
+	private static TimeZoneEngine timeZoneEngine;
 
 
 	/**
@@ -168,6 +180,21 @@ public class Utils {
 	}
 
 
+	public static String imageToBase64(Component Parent, String image, int size) {
+
+		byte[] imageBytes = null;
+		try {
+			InputStream is = Parent.getClass().getResourceAsStream("/course_generator/images/" + size + "/" + image);
+			imageBytes = IOUtils.toByteArray(is);
+
+			is.close();
+		} catch (Exception e) {
+			CgLog.info("Error when retrieving the image" + image + " : " + e.getMessage());
+		}
+		return Base64.encodeBase64String(imageBytes);
+	}
+
+
 	/**
 	 * Parse a string containing a double. The separator can be "." or ","
 	 * 
@@ -177,7 +204,7 @@ public class Utils {
 	 * @throws ParseException
 	 */
 	public static double ParseDoubleEx(String s, double value_if_fault) { // throws
-																			// ParseException{
+		// ParseException{
 		int pos, step;
 		double v;
 		String str, s1;
@@ -392,11 +419,11 @@ public class Utils {
 
 
 	/**
-	 * Convert °C to °F
+	 * Convert �C to �F
 	 * 
 	 * @param c
-	 *            Temperature in °C
-	 * @return Temperature in °F
+	 *            Temperature in �C
+	 * @return Temperature in �F
 	 */
 	public static double C2F(double c) {
 		return c * 9 / 5 + 32;
@@ -404,11 +431,11 @@ public class Utils {
 
 
 	/**
-	 * Convert °F to °C
+	 * Convert �F to �C
 	 * 
 	 * @param f
-	 *            Temperature in °F
-	 * @return Temperature in °C
+	 *            Temperature in �F
+	 * @return Temperature in �C
 	 */
 	public static double F2C(double f) {
 		return (f - 32) * 5 / 9;
@@ -437,6 +464,88 @@ public class Utils {
 			break;
 		default:
 			unitString = "km/h";
+			break;
+		}
+
+		return unitString;
+	}
+
+
+	/**
+	 * Return the temperature unit as string (�C or �F)
+	 * 
+	 * @param unit
+	 *            Unit
+	 * @return String with the unit
+	 */
+
+	public static String uTemperatureToString(int unit) {
+		String unitString;
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			unitString = "&deg;C";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			unitString = "&deg;F";
+			break;
+		default:
+			unitString = "&deg;C";
+			break;
+		}
+
+		return unitString;
+	}
+
+
+	/**
+	 * Returns a given precipitation in the correct unit (mm or inches)
+	 * 
+	 * @param value
+	 *            The precipitation value to be formatted.
+	 * @param unit
+	 *            The unit to use.
+	 * @param withUnit
+	 *            Whether the unit string needs to be concatenated to the returned
+	 *            string.
+	 * @return The given precipitation in the correct unit and format.
+	 */
+	public static String FormatPrecipitation(String value, int unit, boolean withUnit) {
+		if (value.equals(""))
+			return "";
+
+		double precipitationValue = Double.valueOf(value);
+		if (unit == CgConst.UNIT_MILES_FEET)
+			precipitationValue = precipitationValue * 0.0393700787;
+
+		String precipitationString = String.format("%.1f", precipitationValue);
+
+		if (withUnit) {
+			precipitationString += " " + uPrecipitationString(unit);
+		}
+
+		return precipitationString;
+	}
+
+
+	/**
+	 * Returns the precipitation unit as string (mm or inches)
+	 * 
+	 * @param unit
+	 *            Unit
+	 * @return String with the unit
+	 */
+
+	public static String uPrecipitationString(int unit) {
+		String unitString;
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			unitString = "mm";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			unitString = "in";
+			break;
+		default:
+			unitString = "mm";
 			break;
 		}
 
@@ -593,6 +702,54 @@ public class Utils {
 		double sec100 = sec60 / 0.6;
 
 		return 60 / (min + sec100);
+	}
+
+
+	/**
+	 * Converts a speed from the current chosen units to km/h.
+	 * 
+	 * @param speedValue
+	 *            A given speed in any units (min/km, km/h, min/mile, mph).
+	 * @param settings
+	 *            Object containing the current user settings.
+	 * @return The converted speed in km/h.
+	 */
+	public static double SpeedCurrentUnitsToMeters(double speedValue, CgSettings settings) {
+		double convertedSpeed = speedValue;
+
+		if (settings.isPace) {
+			convertedSpeed = Utils.Pace2Speed(convertedSpeed);
+		}
+
+		if (settings.Unit == CgConst.UNIT_MILES_FEET) {
+			convertedSpeed = Utils.Miles2Km(convertedSpeed);
+		}
+
+		return convertedSpeed;
+	}
+
+
+	/**
+	 * Converts a speed from km/h to the current chosen units.
+	 * 
+	 * @param speedValue
+	 *            A given speed in km/h.
+	 * @param settings
+	 *            Object containing the current user settings.
+	 * @return The converted speed in the current chosen units.
+	 */
+	public static double SpeedMeterToCurrentUnits(double speedValue, CgSettings settings) {
+		double convertedSpeed = speedValue;
+
+		if (settings.Unit == CgConst.UNIT_MILES_FEET) {
+			convertedSpeed = Utils.Km2Miles(convertedSpeed);
+		}
+
+		if (settings.isPace) {
+			return Utils.SpeedToPaceNumber(convertedSpeed);
+		}
+
+		return convertedSpeed;
 	}
 
 
@@ -769,6 +926,17 @@ public class Utils {
 		try {
 			writer.writeStartElement(Element);
 			writer.writeCharacters(String.format(Locale.ROOT, "%f", Data));
+			writer.writeEndElement();
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public static void WriteLongToXML(XMLStreamWriter writer, String Element, long Data) {
+		try {
+			writer.writeStartElement(Element);
+			writer.writeCharacters(String.valueOf(Data));
 			writer.writeEndElement();
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
@@ -1495,6 +1663,184 @@ public class Utils {
 			CgLog.info("The help file '" + helpFilePath + "' was not found.");
 		}
 		return success;
+	}
+
+
+	/**
+	 * Returns a given temperature in the correct unit (Celsius or Fahrenheit)
+	 * 
+	 * @param temperature
+	 *            temperature in Celsius
+	 * @return Converted value
+	 */
+	public static String FormatTemperature(double temperature, int unit) {
+		temperature = unit == CgConst.UNIT_MILES_FEET ? temperature * 9 / 5 + 32 : temperature;
+
+		return String.format("%3.0f", temperature).trim();
+	}
+
+
+	/**
+	 * Converts a given temperature to the correct unit (Celsius or Fahrenheit)
+	 * 
+	 * @param temperature
+	 *            temperature in Celsius
+	 * @return Converted value
+	 */
+	public static double CelsiusToFahrenheit(double temperature) {
+		return ((temperature - 32) * 5) / 9;
+	}
+
+
+	/**
+	 * Compares two DateTime objects, using their time portion only, completely
+	 * ignoring Year, Month and Day.
+	 * 
+	 * @param d1
+	 *            a DateTimeobject
+	 * @param d2
+	 *            a DateTimeobject
+	 * @return the difference, in seconds, between the DateTimes
+	 * @see https://stackoverflow.com/questions/7676149/compare-only-the-time-portion-of-two-dates-ignoring-the-date-part#7676307
+	 */
+	public static int compareTimes(DateTime d1, DateTime d2) {
+		int t1;
+		int t2;
+
+		t1 = (int) (d1.toDate().getTime() % (24 * 60 * 60 * 1000L));
+		t2 = (int) (d2.toDate().getTime() % (24 * 60 * 60 * 1000L));
+		return (t1 - t2);
+	}
+
+
+	/**
+	 * Converts a Unix time to a Joda-Time.
+	 * 
+	 * @param unixTime
+	 *            A Unix time as a long.
+	 * @return A DateTime.
+	 */
+	public static DateTime unixTimeToDateTime(long unixTime) {
+		return new DateTime(Instant.ofEpochMilli(unixTime * 1000));
+	}
+
+
+	/**
+	 * Converts a Unix time to a Joda-Time
+	 * 
+	 * @param unixTime
+	 *            A Unix time as a long.
+	 * @param timeZoneId
+	 *            A time zone.
+	 * @return A Joda-Time.
+	 */
+	public static DateTime unixTimeToDateTime(long unixTime, String timeZoneId) {
+		DateTime dateTime = new DateTime(unixTimeToDateTime(unixTime)).withZone(DateTimeZone.forID(timeZoneId));
+
+		return dateTime;
+	}
+
+
+	/**
+	 * Converts a Joda-Time to a date for a SpinnerDateModel. The particularity of
+	 * the SpinnerDateModel is that it is time zone agnostic. Hence we need to keep
+	 * the time at the given time zone but pretend that its time zone is UTC.
+	 * Example : Input : 07:50:00 UTC-7 ==> Output : 07:50:00 UTC
+	 * 
+	 * @param dateTime
+	 *            A Joda-Time.
+	 * @return A Date.
+	 */
+	public static Date DateTimetoSpinnerDate(DateTime dateTime) {
+		Date spinnerDate = null;
+		String datePattern = "yyyy-MM-dd HH:mm:ss";
+
+		SimpleDateFormat parser = new SimpleDateFormat(datePattern);
+		try {
+			spinnerDate = parser.parse(dateTime.toString(datePattern));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return spinnerDate;
+	}
+
+
+	public static TimeZone getTimeZoneFromLatLon(double latitude, double longitude) {
+		if (timeZoneEngine == null) {
+			// Initialize the time zone engine
+			timeZoneEngine = TimeZoneEngine.initialize();
+		}
+
+		Optional<ZoneId> courseStartZoneId = timeZoneEngine.query(latitude, longitude);
+		String timeZoneId = courseStartZoneId.get().getId();
+
+		return TimeZone.getTimeZone(timeZoneId);
+	}
+
+
+	public static int hoursUTCOffsetFromLatLon(double latitude, double longitude) {
+		TimeZone gpsPointTimeZone = getTimeZoneFromLatLon(latitude, longitude);
+		long hoursOffsetFromUTC = TimeUnit.MILLISECONDS.toHours(gpsPointTimeZone.getRawOffset());
+
+		return (int) hoursOffsetFromUTC;
+	}
+
+
+	/**
+	 * Computes the total number of hours and minutes of daylight between two times.
+	 * We assume the given dates are of the same day.
+	 * 
+	 * @param startNightTime
+	 *            The sunset time.
+	 * @param endNightTime
+	 *            The sunrise time.
+	 * @return A string containing the total hours and minutes of daylight.
+	 */
+	public static String computeDaylightHours(DateTime startDayTime, DateTime endDayTime) {
+		Minutes totalMinutes = Minutes.minutesBetween(startDayTime, endDayTime);
+		if (totalMinutes.getMinutes() == 0)
+			return "";
+
+		int hours = totalMinutes.toStandardHours().getHours();
+		int minutes = totalMinutes.toStandardSeconds().getSeconds() - hours * 3600;
+
+		return String.format("%02d", hours) + ":" + String.format("%02d", minutes / 60);
+	}
+
+
+	public static DateTime determineSunRiseTimes(DateTime StartTime, double latitude, double longitude,
+			String timeZoneId) {
+		// Because giving a date with a specific hour could result into getting the
+		// sunrise of the previous day,
+		// we adjust the date to the beginning of the day
+		DateTime beginningOfDay = new DateTime(StartTime.getYear(), StartTime.getMonthOfYear(),
+				StartTime.getDayOfMonth(), 0, 0, DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId)));
+
+		SunTimes times = SunTimes.compute().on(beginningOfDay.toDate()).at(latitude, longitude).execute();
+
+		DateTime sunriseTime = new DateTime(times.getRise())
+				.withZone(DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId)));
+
+		return sunriseTime;
+	}
+
+
+	public static DateTime determineSunsetTimes(DateTime StartTime, double latitude, double longitude,
+			String timeZoneId) {
+		// Because giving a date with a specific hour could result into getting the
+		// sunrise of the previous day,
+		// we adjust the date to the beginning of the day
+		DateTime beginningOfDay = new DateTime(StartTime.getYear(), StartTime.getMonthOfYear(),
+				StartTime.getDayOfMonth(), 0, 0, DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId)));
+
+		SunTimes times = SunTimes.compute().on(beginningOfDay.toDate()).at(latitude, longitude).execute();
+
+		DateTime sunsetTime = new DateTime(times.getSet())
+				.withZone(DateTimeZone.forTimeZone(TimeZone.getTimeZone(timeZoneId)));
+		return sunsetTime;
+
 	}
 
 } // Class

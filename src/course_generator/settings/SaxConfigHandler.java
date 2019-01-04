@@ -32,7 +32,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import course_generator.utils.CgConst;
-import course_generator.utils.Utils;
 
 /**
  *
@@ -184,6 +183,7 @@ public class SaxConfigHandler extends DefaultHandler {
 			return _default;
 		}
 	}
+
 
 	/**
 	 * Parse a color element
@@ -357,6 +357,8 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.CurveButtonsIconSize = ManageInt(32, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("THUNDERFORESTAPIKEY")) {
 				Settings.setThunderForestApiKey(ManageString().trim());
+			} else if (qName.equalsIgnoreCase("NOAATOKEN")) {
+				Settings.setNoaaToken(ManageString().trim());
 			} else if (qName.equalsIgnoreCase("COLORDIFFVERYEASY")) {
 				Settings.Color_Diff_VeryEasy = ManageColor(CgConst.CL_DIFF_VERYEASY, ERR_READ_COLOR);
 			} else if (qName.equalsIgnoreCase("COLORDIFFEASY")) {
@@ -375,10 +377,12 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.NightTrackWidth = ManageInt(CgConst.TRACK_NIGHT_TICKNESS, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("NORMALTRACKTRANSPARENCY")) {
 				Settings.NormalTrackTransparency = ManageInt(CgConst.NORMAL_TRACK_TRANSPARENCY, ERR_READ_INT);
-			} else if (qName.equalsIgnoreCase("NIGHTTRACKTRANSPARENCY")) {
-				Settings.NightTrackTransparency = ManageInt(CgConst.NIGHT_TRACK_TRANSPARENCY, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("MAPTOOLBARLAYOUT")) {
+				Settings.MapToolBarLayout = ManageString();
+			} else if (qName.equalsIgnoreCase("MAPTOOLBARORIENTATION")) {
+				Settings.MapToolBarOrientation = ManageInt(javax.swing.SwingConstants.VERTICAL, ERR_READ_INT);
 			}
-			
+
 			else if (qName.equalsIgnoreCase("CONFIG")) {
 				level--;
 			}

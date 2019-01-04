@@ -30,7 +30,6 @@ public class MrbData extends CgData {
 	/** Time from previous point **/
 	private int deltatime;
 
-
 	public MrbData(double Num, double Latitude, double Longitude, double Elevation, double ElevationMemo, int Tag,
 			double Dist, double Total, double Diff, double Coeff, double Recup, double Slope, double Speed,
 			double dElevation, int Time, // Time in second
@@ -53,11 +52,9 @@ public class MrbData extends CgData {
 		this.deltatime = deltatime;
 	}
 
-
 	public double getDeltaDist() {
 		return deltadistance;
 	}
-
 
 	public double getDeltaDist(int unit) {
 		switch (unit) {
@@ -70,7 +67,6 @@ public class MrbData extends CgData {
 			return deltadistance;
 		}
 	}
-
 
 	public String getDeltaDistString(int unit, boolean withunit) {
 
@@ -99,16 +95,13 @@ public class MrbData extends CgData {
 		return s;
 	}
 
-
 	public void setDeltaDist(double dist) {
 		deltadistance = dist;
 	}
 
-
 	public int getDeltaTime() {
 		return deltatime;
 	}
-
 
 	public String getDeltaTimeString() {
 		int time = getDeltaTime();
@@ -119,7 +112,6 @@ public class MrbData extends CgData {
 		int nbs = (time % 3600) % 60;
 		return String.format("%02d:%02d:%02d ", nbh, nbm, nbs);
 	}
-
 
 	public void setDeltaTime(int deltatime) {
 		this.deltatime = deltatime;

@@ -89,11 +89,10 @@ public class CgData {
 	public String CommentMiniRoadbook;
 	/** Font size of this position in the mini roadbook **/
 	public int FontSizeMiniRoadbook;
-	//** Indicate that this position is in the night period **/
+	// ** Indicate that this position is in the night period **/
 	private boolean isNight;
 
 	public boolean ToDelete;
-
 
 	public CgData(double Num, double Latitude, double Longitude, double Elevation, double ElevationMemo, int Tag,
 			double Dist, double Total, double Diff, double Coeff, double Recup, double Slope, double Speed,
@@ -132,9 +131,8 @@ public class CgData {
 		else
 			this.FontSizeMiniRoadbook = FontSizeMiniRoadbook;
 		this.ToDelete = false;
-		this.isNight=false;
+		this.isNight = false;
 	}
-
 
 	public CgData() {
 		this.Num = 0;
@@ -166,57 +164,47 @@ public class CgData {
 		this.CommentMiniRoadbook = "";
 		this.FontSizeMiniRoadbook = 10;
 		this.ToDelete = false;
-		this.isNight=false;
+		this.isNight = false;
 	}
-
 
 	// -------------------------------
 	public double getNum() {
 		return Num;
 	}
 
-
 	public String getNumString() {
 		return String.format("%1.0f ", Num);
 	}
 
-
 	public void setNum(double num) {
 		Num = num;
 	}
-
 
 	// -------------------------------
 	public double getLatitude() {
 		return Latitude;
 	}
 
-
 	public String getLatitudeString() {
 		return String.format("%1.7f", Latitude);
 	}
 
-
 	public void setLatitude(double latitude) {
 		Latitude = latitude;
 	}
-
 
 	// -------------------------------
 	public double getLongitude() {
 		return Longitude;
 	}
 
-
 	public String getLongitudeString() {
 		return String.format("%1.7f", Longitude);
 	}
 
-
 	public void setLongitude(double longitude) {
 		Longitude = longitude;
 	}
-
 
 	public double getElevation(int unit) {
 		switch (unit) {
@@ -229,7 +217,6 @@ public class CgData {
 			return Elevation;
 		}
 	}
-
 
 	public String getElevationString(int unit, boolean withunit) {
 
@@ -256,22 +243,18 @@ public class CgData {
 		return s;
 	}
 
-
 	public void setElevation(double elevation) {
 		Elevation = elevation;
 	}
-
 
 	// -------------------------------
 	public int getTag() {
 		return Tag;
 	}
 
-
 	public void setTag(int tag) {
 		Tag = tag;
 	}
-
 
 	public double getDist(int unit) {
 		switch (unit) {
@@ -284,7 +267,6 @@ public class CgData {
 			return Dist;
 		}
 	}
-
 
 	public String getDistString(int unit, boolean withunit) {
 
@@ -313,11 +295,9 @@ public class CgData {
 		return s;
 	}
 
-
 	public void setDist(double dist) {
 		Dist = dist;
 	}
-
 
 	public double getTotal(int unit) {
 		switch (unit) {
@@ -330,7 +310,6 @@ public class CgData {
 			return Total;
 		}
 	}
-
 
 	public String getTotalString(int unit, boolean withunit) {
 
@@ -359,50 +338,41 @@ public class CgData {
 		return s;
 	}
 
-
 	public void setTotal(double total) {
 		Total = total;
 	}
-
 
 	// -------------------------------
 	public double getDiff() {
 		return Diff;
 	}
 
-
 	public void setDiff(double diff) {
 		Diff = diff;
 	}
-
 
 	// -------------------------------
 	public double getCoeff() {
 		return Coeff;
 	}
 
-
 	public void setCoeff(double coeff) {
 		Coeff = coeff;
 	}
-
 
 	// -------------------------------
 	public double getRecovery() {
 		return Recovery;
 	}
 
-
 	public void setRecovery(double recup) {
 		Recovery = recup;
 	}
-
 
 	// -------------------------------
 	public double getSlope() {
 		return Slope;
 	}
-
 
 	public String getSlopeString(boolean withunit) {
 		if (withunit)
@@ -411,33 +381,27 @@ public class CgData {
 			return String.format("%1.1f ", getSlope());
 	}
 
-
 	public void setSlope(double slope) {
 		Slope = slope;
 	}
-
 
 	/**
 	 * Returns the speed as a string in the correct format (metric vs imperial, per
 	 * hour vs per mile).
 	 * 
-	 * @param unit
-	 *            The unit to use (metric vs imperial).
-	 * @param pace
-	 *            A boolean indicating whether to convert the speed into pace
-	 *            (min/mile).
+	 * @param unit The unit to use (metric vs imperial).
+	 * @param pace A boolean indicating whether to convert the speed into pace
+	 *             (min/mile).
 	 * @return A string containing the speed in the correct format.
 	 */
 	public String getSpeedString(int unit, boolean pace) {
 		return getSpeedString(unit, pace, false);
 	}
 
-
 	/**
 	 * Returns the speed in the correct format (metric vs imperial)
 	 * 
-	 * @param unit
-	 *            The unit to use (metric vs imperial).
+	 * @param unit The unit to use (metric vs imperial).
 	 * @return A double containing the speed in the correct format.
 	 */
 	public double getSpeed(int unit) {
@@ -451,30 +415,24 @@ public class CgData {
 		}
 	}
 
-
 	/**
 	 * Returns the speed as a string in the correct format (metric vs imperial, per
 	 * hour vs per mile) with or without the string unit.
 	 * 
-	 * @param unit
-	 *            The unit to use (metric vs imperial).
-	 * @param withUnit
-	 *            A boolean indicating if the speed unit needs to be appended to the
-	 *            returned string.
-	 * @param pace
-	 *            A boolean indicating whether to convert the speed into pace
-	 *            (min/mile).
+	 * @param unit     The unit to use (metric vs imperial).
+	 * @param withUnit A boolean indicating if the speed unit needs to be appended
+	 *                 to the returned string.
+	 * @param pace     A boolean indicating whether to convert the speed into pace
+	 *                 (min/mile).
 	 * @return A string containing the speed in the correct format.
 	 */
 	public String getSpeedString(int unit, boolean withUnit, boolean pace) {
 		return Utils.FormatSpeed(Speed, unit, pace, withUnit);
 	}
 
-
 	public void setSpeed(double speed) {
 		Speed = speed;
 	}
-
 
 	/**
 	 * Returns the speed as a double
@@ -484,7 +442,6 @@ public class CgData {
 	public double getSpeed() {
 		return Speed;
 	}
-
 
 	public double getdElevation(int unit) {
 		switch (unit) {
@@ -498,17 +455,14 @@ public class CgData {
 		}
 	}
 
-
 	public void setdElevation(double dElevation) {
 		this.dElevation = dElevation;
 	}
-
 
 	// -------------------------------
 	public int getTime() {
 		return Time;
 	}
-
 
 	public String getTimeString() {
 		int time = getTime();
@@ -520,28 +474,23 @@ public class CgData {
 		return String.format("%02d:%02d:%02d ", nbh, nbm, nbs);
 	}
 
-
 	public void setTime(int time) {
 		Time = time;
 	}
-
 
 	// -------------------------------
 	public double getdTime_f() {
 		return dTime_f;
 	}
 
-
 	public void setdTime_f(double dTime_f) {
 		this.dTime_f = dTime_f;
 	}
-
 
 	// -------------------------------
 	public int getTimeLimit() {
 		return TimeLimit;
 	}
-
 
 	public String getTimeLimitString(boolean empty_if_0) {
 		int time = getTimeLimit();
@@ -557,33 +506,27 @@ public class CgData {
 		}
 	}
 
-
 	public void setTimeLimit(int timeLimit) {
 		TimeLimit = timeLimit;
 	}
-
 
 	// -------------------------------
 	public DateTime getHour() {
 		return Hour;
 	}
 
-
 	public String getHourString() {
 		return getHour().toString("E HH:mm:ss");
 	}
-
 
 	public void setHour(DateTime hour) {
 		Hour = hour;
 	}
 
-
 	// -------------------------------
 	public int getStation() {
 		return Station;
 	}
-
 
 	public String getStationString(boolean empty_if_0) {
 		int time = getStation();
@@ -599,39 +542,32 @@ public class CgData {
 		}
 	}
 
-
 	public void setStation(int station) {
 		Station = station;
 	}
-
 
 	// -------------------------------
 	public String getName() {
 		return Name;
 	}
 
-
 	public void setName(String name) {
 		Name = name;
 	}
-
 
 	// -------------------------------
 	public String getComment() {
 		return Comment;
 	}
 
-
 	public void setComment(String comment) {
 		Comment = comment;
 	}
-
 
 	// -------------------------------
 	public double getElevationMemo() {
 		return ElevationMemo;
 	}
-
 
 	public void setElevationMemo(double elevationMemo) {
 		ElevationMemo = elevationMemo;
@@ -641,13 +577,11 @@ public class CgData {
 	public boolean getNight() {
 		return isNight;
 	}
-	
-	
-	public void setNight(boolean night)	{
+
+	public void setNight(boolean night) {
 		isNight = night;
 	}
 
-	
 	// -------------------------------
 	public CgData CopyTo(CgData d) {
 		d.Num = Num;

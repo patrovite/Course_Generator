@@ -20,12 +20,14 @@ package course_generator;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.TimeZone;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.Interval;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
@@ -33,6 +35,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import course_generator.utils.CgConst;
+import course_generator.utils.Utils;
 
 /**
  *
@@ -80,18 +83,14 @@ public class SaxGPXHandler extends DefaultHandler {
 	private double dTime_f;
 	private int Cmpt = 0;
 
-
 	/**
 	 * Read the GPX file from disc
 	 * 
-	 * @param filename
-	 *            Name of the gpx file to read
-	 * @param TData
-	 *            TrackData object where to store the read data
-	 * @param readmode
-	 *            Reading mode 0=Load the complete file 1=Insert the read data at
-	 *            the beginning of the current track 2=Insert the read data at the
-	 *            end of the current track
+	 * @param filename Name of the gpx file to read
+	 * @param TData    TrackData object where to store the read data
+	 * @param readmode Reading mode 0=Load the complete file 1=Insert the read data
+	 *                 at the beginning of the current track 2=Insert the read data
+	 *                 at the end of the current track
 	 * @return The error code Erroce explanation: ERR_READ_NO = No problem during
 	 *         the reading of the file ERR_READ_LAT = Parsing error during the read
 	 *         of a latitude (lat) element ERR_READ_LON = Parsing error during the
@@ -141,9 +140,10 @@ public class SaxGPXHandler extends DefaultHandler {
 			// -- ok let's go
 
 			// -- Clear the DataList? --
-			if (mode == 0)
+			if (mode == 0) {
 				trkdata.data.clear();
-
+				trkdata.historicalWeatherData = null;
+			}
 			// -- Parse the file
 			parser.parse(f, this);
 		} else
@@ -152,18 +152,15 @@ public class SaxGPXHandler extends DefaultHandler {
 		return trkdata.ReadError;
 	}
 
-
 	public int getErrLine() {
 		return errline;
 	}
-
 
 	@Override
 	public void setDocumentLocator(final Locator locator) {
 		this.locator = locator; // Save the locator, so that it can be used later for line tracking when
 								// traversing nodes.
 	}
-
 
 	@Override
 	public void startElement(String uri, String localname, String qName, Attributes attributs) throws SAXException {
@@ -217,7 +214,6 @@ public class SaxGPXHandler extends DefaultHandler {
 		}
 	}
 
-
 	@Override
 	public void endElement(String uri, String localname, String qName) throws SAXException {
 		if (qName.equalsIgnoreCase("GPX")) {
@@ -246,7 +242,10 @@ public class SaxGPXHandler extends DefaultHandler {
 			try {
 				if (first) {
 					first = false;
-					trkpt_time = DateTime.parse(characters);
+					// Fetch the timezone to populate for each track point time.
+					// Determine the course time zone
+					TimeZone timeZoneId = Utils.getTimeZoneFromLatLon(trkpt_lat, trkpt_lon);
+					trkpt_time = DateTime.parse(characters).withZone(DateTimeZone.forTimeZone(timeZoneId));
 					StartTime = trkpt_time;
 					old_time = StartTime;
 					Time_s = 0;
@@ -286,7 +285,7 @@ public class SaxGPXHandler extends DefaultHandler {
 							0.0, // double Slope
 							0.0, // double Speed
 							0.0, // double dElevation
-							Time_s, // int Time //Temps total en seconde
+							Time_s, // int Time //Temps total en seconde,
 							dTime_f, // double dTime_f //temps de parcours du tronçon en seconde (avec virgule)
 							0, // int TimeLimit //Barrière horaire
 							trkpt_time, // DateTime Hour //Contient la date et l'heure de passage
@@ -342,7 +341,6 @@ public class SaxGPXHandler extends DefaultHandler {
 			old_time = trkpt_time;
 		}
 	}
-
 
 	@Override
 	public void characters(char[] chars, int start, int end) throws SAXException {

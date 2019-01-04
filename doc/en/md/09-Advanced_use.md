@@ -281,6 +281,18 @@ The possible settings are:
 * "Default font" : Allows you to choose the font that will be used for the display.
 * Icons size : Specify the size of the interface icons.
 
+### "Maps" tab  
+![](./images/CG40_Settings_Maps.png)
+
+Provides a field to enter a Thunderforest API key in order to show the Outdoors map layer. A free API key can be requested [here](https://thunderforest.com/docs/apikeys/).
+
+### "Weather" tab  
+![](./images/CG40_Settings_Weather.png)
+
+Provides a field to enter a NOAA API token in order to retrieve historical weather data. A free token can be requested [here](https://www.ncdc.noaa.gov/cdo-web/token).
+
+
+
 ## Import and export marked points
 
 In some cases it is necessary to save only the marked points of the current track in a file. This allows, if you have a new version of the course, to import these points on the new track.
@@ -318,7 +330,8 @@ The data will remain unchanged until you ask for a calculation of the travel tim
 
 On the left, a vertical bar of buttons allows actions on this map.
 
-* ![](./images/Map/marker.png) : Adds an start mark to the selected location
+* ![](./images/Map/center.png) : Centers the track on the map
+* ![](./images/Map/marker.png) : Adds a start mark to the selected location
 * ![](./images/Map/hide_marker.png) : Deletes the mark
 * ![](./images/Map/undo.png) : Cancels the last operation
 * ![](./images/Map/track_very_easy.png) : Indicates that the field between ![](./images/Map/marker.png) and the current point is "Very easy"
@@ -330,6 +343,7 @@ On the left, a vertical bar of buttons allows actions on this map.
 * ![](./images/Map/eat.png) : Adds an aid station to the current point.
 * ![](./images/Map/drink.png) : Adds a water point to the current point.
 * ![](./images/Map/select_map.png) : Allows you to select the map layer to be displayed.
+* ![](./images/Map/show_weather_stations.png) : Displays the closest weather station(s) on the map.
 
 The mouse commands are as follows:
 

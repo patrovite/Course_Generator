@@ -23,7 +23,6 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 
@@ -35,7 +34,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 
 import course_generator.settings.CgSettings;
 import course_generator.utils.Utils;
@@ -51,7 +49,6 @@ public class FrmColorChooser extends javax.swing.JDialog {
 	private JPanel panelButtons;
 	private ResourceBundle bundle;
 
-
 	/**
 	 * Creates new form DialogColorChooser
 	 */
@@ -63,15 +60,14 @@ public class FrmColorChooser extends javax.swing.JDialog {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
-		
+
 		setAlwaysOnTop(true);
 	}
 
-
 	public static Color showDialog(JDialog parent, String title, Color c, CgSettings settings) {
 		FrmColorChooser dlg = new FrmColorChooser(parent, title, settings);
-		//if (title != null)
-		//	dlg.setTitle(title);
+		// if (title != null)
+		// dlg.setTitle(title);
 		dlg.jColorChooser1.setColor(c);
 		dlg.ok = false;
 
@@ -81,7 +77,6 @@ public class FrmColorChooser extends javax.swing.JDialog {
 		} else
 			return c;
 	}
-
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -117,7 +112,6 @@ public class FrmColorChooser extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -128,7 +122,6 @@ public class FrmColorChooser extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 

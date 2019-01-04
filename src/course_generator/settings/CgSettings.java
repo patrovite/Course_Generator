@@ -19,6 +19,8 @@
 package course_generator.settings;
 
 import java.awt.Color;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,9 +50,11 @@ public class CgSettings {
 	public boolean bNoConnectOnStartup = true;
 	public int ConnectionTimeout = 10; // Time in second between internet test
 	/**
-	 * Map selected 0 : OpenStreetMap 1 : OpenTopoMap 2 : BingAreal
+	 * Map selected : 0 => OpenStreetMap. 1 => OpenTopoMap. 2 => Outdoors. 3=>
+	 * BingAerial
 	 **/
 	public int map = 0;
+
 	public boolean offlineMap = true;
 
 	public String MemoFormat[] = new String[5];
@@ -101,6 +105,10 @@ public class CgSettings {
 	public int CurveButtonsIconSize;
 
 	private String ThunderForestApiKey;
+	private PropertyChangeSupport ThunderForestApiKeyChanged = new PropertyChangeSupport(this);
+
+	private String NoaaToken;
+	private PropertyChangeSupport NoaaTokenChanged = new PropertyChangeSupport(this);
 
 	public Color Color_Diff_VeryEasy;
 	public Color Color_Diff_Easy;
@@ -112,8 +120,10 @@ public class CgSettings {
 	public int NightTrackWidth;
 	public int NormalTrackTransparency;
 	public int NightTrackTransparency;
-	
-	
+	public String MapToolBarLayout;
+	public int MapToolBarOrientation;
+
+
 	public CgSettings() {
 		int i = 0;
 
@@ -178,16 +188,19 @@ public class CgSettings {
 
 		ThunderForestApiKey = "";
 
-		Color_Diff_VeryEasy=CgConst.CL_DIFF_VERYEASY;
-		Color_Diff_Easy=CgConst.CL_DIFF_EASY;
-		Color_Diff_Average=CgConst.CL_DIFF_AVERAGE;
-		Color_Diff_Hard=CgConst.CL_DIFF_HARD;
-		Color_Diff_VeryHard=CgConst.CL_DIFF_VERYHARD;
-		Color_Map_NightHighlight=CgConst.CL_MAP_NIGHT_HIGHLIGHT;
-		NormalTrackWidth=CgConst.TRACK_NORMAL_TICKNESS;
-		NightTrackWidth=CgConst.TRACK_NIGHT_TICKNESS;
-		NormalTrackTransparency=CgConst.NORMAL_TRACK_TRANSPARENCY;
-		NightTrackTransparency=CgConst.NIGHT_TRACK_TRANSPARENCY;		
+		Color_Diff_VeryEasy = CgConst.CL_DIFF_VERYEASY;
+		Color_Diff_Easy = CgConst.CL_DIFF_EASY;
+		Color_Diff_Average = CgConst.CL_DIFF_AVERAGE;
+		Color_Diff_Hard = CgConst.CL_DIFF_HARD;
+		Color_Diff_VeryHard = CgConst.CL_DIFF_VERYHARD;
+		Color_Map_NightHighlight = CgConst.CL_MAP_NIGHT_HIGHLIGHT;
+		NormalTrackWidth = CgConst.TRACK_NORMAL_TICKNESS;
+		NightTrackWidth = CgConst.TRACK_NIGHT_TICKNESS;
+		NormalTrackTransparency = CgConst.NORMAL_TRACK_TRANSPARENCY;
+		NightTrackTransparency = CgConst.NIGHT_TRACK_TRANSPARENCY;
+
+		MapToolBarLayout = "WEST";
+		MapToolBarOrientation = javax.swing.SwingConstants.VERTICAL;
 	}
 
 
@@ -293,26 +306,33 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "DIALOGICONSIZE", DialogIconSize);
 			Utils.WriteIntToXML(writer, "MAPICONSIZE", MapIconSize);
 			Utils.WriteIntToXML(writer, "CURVEBUTTONSICONSIZE", CurveButtonsIconSize);
-			Utils.WriteStringToXML(writer, "THUNDERFORESTAPIKEY", ThunderForestApiKey);
 
-			Utils.WriteIntToXML(writer, "COLORDIFFVERYEASY",Color_Diff_VeryEasy.getRGB());
-			Utils.WriteIntToXML(writer, "COLORDIFFEASY",Color_Diff_Easy.getRGB());
-			Utils.WriteIntToXML(writer, "COLORDIFFAVERAGE",Color_Diff_Average.getRGB());
-			Utils.WriteIntToXML(writer, "COLORDIFFHARD",Color_Diff_Hard.getRGB());
-			Utils.WriteIntToXML(writer, "COLORDIFFVERYHARD",Color_Diff_VeryHard.getRGB());
-			Utils.WriteIntToXML(writer, "COLORMAPNIGHTHIGHLIGHT",Color_Map_NightHighlight.getRGB());
-			
-			Utils.WriteIntToXML(writer, "NORMALTRACKWIDTH",NormalTrackWidth);
-			Utils.WriteIntToXML(writer, "NIGHTTRACKWIDTH",NightTrackWidth);
-			
-			Utils.WriteIntToXML(writer, "NORMALTRACKTRANSPARENCY",NormalTrackTransparency);
-			Utils.WriteIntToXML(writer, "NIGHTTRACKTRANSPARENCY",NightTrackTransparency);
-			
+			Utils.WriteStringToXML(writer, "THUNDERFORESTAPIKEY", ThunderForestApiKey);
+			Utils.WriteStringToXML(writer, "NOAATOKEN", NoaaToken);
+
+			Utils.WriteIntToXML(writer, "COLORDIFFVERYEASY", Color_Diff_VeryEasy.getRGB());
+			Utils.WriteIntToXML(writer, "COLORDIFFEASY", Color_Diff_Easy.getRGB());
+			Utils.WriteIntToXML(writer, "COLORDIFFAVERAGE", Color_Diff_Average.getRGB());
+			Utils.WriteIntToXML(writer, "COLORDIFFHARD", Color_Diff_Hard.getRGB());
+			Utils.WriteIntToXML(writer, "COLORDIFFVERYHARD", Color_Diff_VeryHard.getRGB());
+			Utils.WriteIntToXML(writer, "COLORMAPNIGHTHIGHLIGHT", Color_Map_NightHighlight.getRGB());
+
+			Utils.WriteIntToXML(writer, "NORMALTRACKWIDTH", NormalTrackWidth);
+			Utils.WriteIntToXML(writer, "NIGHTTRACKWIDTH", NightTrackWidth);
+
+			Utils.WriteIntToXML(writer, "NORMALTRACKTRANSPARENCY", NormalTrackTransparency);
+			Utils.WriteIntToXML(writer, "NIGHTTRACKTRANSPARENCY", NightTrackTransparency);
+
+			Utils.WriteStringToXML(writer, "MAPTOOLBARLAYOUT", MapToolBarLayout);
+			Utils.WriteIntToXML(writer, "MAPTOOLBARORIENTATION", MapToolBarOrientation);
+
 			writer.writeEndElement();
 			writer.writeEndDocument();
 
 			writer.flush();
 			writer.close();
+			bufferedOutputStream.close();
+
 		} catch (XMLStreamException | IOException e) {
 			e.printStackTrace();
 		}
@@ -428,8 +448,71 @@ public class CgSettings {
 	 * @param key
 	 *            The entered key
 	 */
-	public void setThunderForestApiKey(String key) {
-		ThunderForestApiKey = key;
+	public void setThunderForestApiKey(String newKey) {
+		String oldKey = ThunderForestApiKey;
+		ThunderForestApiKey = newKey;
+		ThunderForestApiKeyChanged.firePropertyChange("ThunderForestApiKeyChanged", oldKey, newKey);
+	}
+
+
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		ThunderForestApiKeyChanged.addPropertyChangeListener(listener);
+	}
+
+
+	/**
+	 * Verifies that the thunderforest's API Key is a valid one
+	 * 
+	 */
+	public boolean isThunderForestApiKeyValid() {
+		boolean isKeyValid = false;
+
+		if (ThunderForestApiKey != null && ThunderForestApiKey.length() == 32)
+			isKeyValid = true;
+
+		return isKeyValid;
+	}
+
+
+	/**
+	 * Returns the user's NOAA token.
+	 * 
+	 * @return string with the key
+	 */
+	public String getNoaaToken() {
+		return NoaaToken == null ? "" : NoaaToken;
+	}
+
+
+	/**
+	 * Sets the user's NOAA token.
+	 * 
+	 * @param token
+	 *            The entered token
+	 */
+	public void setNoaaToken(String token) {
+		String oldToken = NoaaToken;
+		NoaaToken = token;
+		NoaaTokenChanged.firePropertyChange("NoaaTokenChanged", oldToken, token);
+	}
+
+
+	public void addNoaaTokenChangeListener(PropertyChangeListener listener) {
+		NoaaTokenChanged.addPropertyChangeListener(listener);
+	}
+
+
+	/**
+	 * Verifies that the NOAA token is a valid one
+	 * 
+	 */
+	public boolean isNoaaTokenValid() {
+		boolean isTokenValid = false;
+
+		if (NoaaToken != null && NoaaToken.length() == 32)
+			isTokenValid = true;
+
+		return isTokenValid;
 	}
 
 }
