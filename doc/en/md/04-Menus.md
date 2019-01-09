@@ -10,7 +10,7 @@
 * **Recent CGX files** : Displays a list of the last 5 CGX files that have been loaded. Clicking on one of those files will load them again.
 
 * **Save as CGX** : Saves the course data in CGX format.
-All the course data (difficulty, fatigue coefficient, aid station time...) will be asved. Keyboard shortcut: [CTRL+S].
+All the course data (difficulty, fatigue coefficient, aid station time...) will be saved. Keyboard shortcut: [CTRL+S].
 
 * **Save as GPX** : Saves the course data in GPX format.
 Warning! Only latitude, longitude and altitude data will be saved.
@@ -18,7 +18,7 @@ Warning! Only latitude, longitude and altitude data will be saved.
 * **Save as CSV** : Saves the course data in CSV format.
 The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
-* **Import a GPX file** : Imports a GPX file at the beginning or end of the current course
+* **Import a GPX file** : Imports a GPX file at the beginning or end of the current course.
 
 * **Import a CGX file** : Imports a CGX file at the beginning or end of the current course.
 
@@ -67,7 +67,7 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 * **Estimate track time** : Compute the estimated time for each of the course's points. Keyboard shortcut: [F5].
 
-* **Update standard curves** : The standard "Speed/slope" will be updated with standard settings. It's necessary to use this menu if you modified a standard curve and you want to retrieve the standard settings. It's also necessary after a software update that introduce new standard curves. It doesn't affect the custom curves.  
+* **Update standard curves** : The standard "Speed/Slope" will be updated with standard settings. It's necessary to use this menu if you modified a standard curve and you want to retrieve the standard settings. It's also necessary after a software update that introduce new standard curves. It doesn't affect the custom curves.
 
 * **Open the "Speed/Slope" folder** : Opens the folder containing the speed curve files in File Explorer.
 
