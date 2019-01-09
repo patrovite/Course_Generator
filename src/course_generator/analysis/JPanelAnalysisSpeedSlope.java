@@ -163,10 +163,11 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 					int s = e.getSeriesIndex();
 					int i = e.getItem();
 					double x = d.getXValue(s, i);
+					double y = d.getYValue(s, i);
 					// double y = d.getYValue(s, i);
 					xCrosshair.setValue(x);
 					// yCrosshair.setValue(y);
-					RefreshInfo(i);
+					RefreshInfo(x,y);
 					// //Refresh the position on the data grid
 					// TableMain.setRowSelectionInterval(i, i);
 					// Rectangle rect = TableMain.getCellRect(i, 0, true);
@@ -337,18 +338,15 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 	}
 
 
-	private void RefreshInfo(int i) {
+	private void RefreshInfo(double x, double y) {
 		if ((track == null) || (settings == null))
 			return;
 
-		// -- Get the data
-		CgData d = track.data.get(i);
-		// TODO
 		lbSpeedSlopeInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSpeed.text")
-				+ "=" + d.getSpeedString(settings.Unit, true, settings.isPace) + " ");
-
+		+ "=" + Utils.FormatSpeed(y, settings.Unit, settings.isPace, true) + " ");
+		
 		lbSpeedSlopeInfoSlope.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSlope.text")
-				+ "=" + d.getSlopeString(true) + " ");
+		+ "=" + String.format("%1.1f ", x) + "% ");
 	}
 
 
