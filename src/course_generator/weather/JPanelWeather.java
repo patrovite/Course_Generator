@@ -20,8 +20,10 @@ import java.net.URISyntaxException;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -32,6 +34,7 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
 import course_generator.TrackData;
+import course_generator.dialogs.ProgressDialog;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.CgLog;
@@ -63,15 +66,20 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	private JLabel getNoaaTokenLink;
 	private TrackData track = null;
 	private WebView webView;
+	HistoricalWeather previousWeatherData;
 	private String weatherDataSheetContent;
+	private ProgressDialog progressDialog;
+	private JFrame parentFrame;
 
 	public static final String EVENT_TYPE_CLICK = "click"; //$NON-NLS-1$
 
 
-	public JPanelWeather(CgSettings settings) {
+	public JPanelWeather(CgSettings settings, JFrame parentFrame) {
 		super();
 		this.settings = settings;
 		this.settings.addNoaaTokenChangeListener(this);
+		this.parentFrame = parentFrame;
+		this.previousWeatherData = null;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle"); //$NON-NLS-1$
 		initComponents();
 	}
@@ -246,8 +254,16 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 
 		UpdatePanel();
 
-		HistoricalWeather previousWeatherData = null;
+		previousWeatherData = null;
 		if (retrieveOnlineData) {
+			progressDialog = new ProgressDialog(parentFrame, bundle.getString("JPanelWeather.lbProgressBar.Text")); //$NON-NLS-1$
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					progressDialog.setVisible(true);
+				}
+			});
+			progressDialog.setValue(0);
+
 			if (!Utils.isInternetReachable()) {
 				lbInformation.setText(bundle.getString("JPanelWeather.lbInformationMissingInternetConnection.Text")); //$NON-NLS-1$
 				lbInformation.setVisible(true);
@@ -256,27 +272,26 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			}
 
 			previousWeatherData = new HistoricalWeather(settings);
+			previousWeatherData.addWeatherDataRetrievedChangeListener(this);
+			previousWeatherData.RetrieveWeatherData(track, progressDialog);
+		} else
 
-			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-			previousWeatherData.RetrieveWeatherData(track);
-			setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-
-		} else {
+		{
 			// If exists, get the historical weather from the CGX course
 			previousWeatherData = track.getHistoricalWeather();
+
+			if (previousWeatherData == null) {
+				updateDataSheet(""); //$NON-NLS-1$
+				btWeatherDataSave.setEnabled(false);
+				return;
+			}
+
+			btWeatherDataSave.setEnabled(true);
+
+			String newContent = PopulateWeatherDataSheet(previousWeatherData);
+
+			updateDataSheet(newContent);
 		}
-
-		if (previousWeatherData == null) {
-			updateDataSheet(""); //$NON-NLS-1$
-			btWeatherDataSave.setEnabled(false);
-			return;
-		}
-
-		btWeatherDataSave.setEnabled(true);
-
-		String newContent = PopulateWeatherDataSheet(previousWeatherData);
-
-		updateDataSheet(newContent);
 
 	}
 
@@ -300,9 +315,23 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	 * Performs the necessary operations whenever the NOAA token value has changed.
 	 */
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (!evt.getPropertyName().equals("NoaaTokenChanged")) //$NON-NLS-1$
-			return;
-		UpdatePanel();
+		if (evt.getPropertyName().equals("NoaaTokenChanged")) //$NON-NLS-1$
+		{
+			UpdatePanel();
+		} else if (evt.getPropertyName().equals("WeatherDataRetrieved")) //$NON-NLS-1$
+		{
+			if (evt.getNewValue().equals("cancelled")) //$NON-NLS-1$
+				return;
+
+			if (previousWeatherData == null) {
+				updateDataSheet(""); //$NON-NLS-1$
+				btWeatherDataSave.setEnabled(false);
+			}
+			track.setHistoricalWeather(previousWeatherData);
+			String newContent = PopulateWeatherDataSheet(previousWeatherData);
+
+			updateDataSheet(newContent);
+		}
 	}
 
 
