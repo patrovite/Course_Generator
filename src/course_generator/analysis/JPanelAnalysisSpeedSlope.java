@@ -52,6 +52,7 @@ import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
+import org.jfree.chart.renderer.xy.XYAreaRenderer;
 import org.jfree.chart.renderer.xy.XYDotRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
@@ -142,13 +143,8 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 
 		xCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
 		xCrosshair.setLabelBackgroundPaint(Color.WHITE);
-
-		// yCrosshair = new Crosshair(Double.NaN, Color.RED, new
-		// BasicStroke(0f));
-		// yCrosshair.setLabelBackgroundPaint(Color.WHITE);
-
+		
 		crosshairOverlay.addDomainCrosshair(xCrosshair);
-		// crosshairOverlay.addRangeCrosshair(yCrosshair);
 
 		ChartPanelSpeedSlope.addOverlay(crosshairOverlay);
 		ChartPanelSpeedSlope.setBackground(new java.awt.Color(255, 0, 51));
@@ -312,11 +308,13 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		plot.setDomainGridlinePaint(Color.gray);
 		plot.setRangeGridlinePaint(Color.gray);
 		plot.setDomainAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+		plot.setRangeCrosshairLockedOnData(false);
 
 		XYDotRenderer renderer = new XYDotRenderer();
-		renderer.setSeriesPaint(0, new Color(0x99, 0xff, 0x00));
-		renderer.setDotWidth(4);
-		renderer.setDotHeight(4);
+		//renderer.setSeriesPaint(0, new Color(0x99, 0xff, 0x00));
+		renderer.setSeriesPaint(0, new Color(0x6B, 0xB2, 0x00));
+		renderer.setDotWidth(2);
+		renderer.setDotHeight(2);
 		// renderer.setSeriesOutlinePaint(0, Color.DARK_GRAY);
 		// renderer.setSeriesOutlineStroke(0, new BasicStroke(1.0f));
 		plot.setRenderer(renderer);
@@ -327,12 +325,21 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		plot.setRangeAxis(1, rangeAxis2);
 		plot.mapDatasetToRangeAxis(1, 1);
 
-		StandardXYItemRenderer renderer2 = new StandardXYItemRenderer();
+		
+		XYAreaRenderer renderer2 = new XYAreaRenderer();
+		renderer2.setSeriesPaint(0, new Color(0x99, 0xff, 0x00));
+		renderer2.setOutline(true);
+		renderer2.setSeriesOutlineStroke(1, new BasicStroke(2.0f));
+		plot.setRenderer(1, renderer2);
+		
+		/*
+		StandardXYItemRenderer renderer2 = new StandardXYItemRenderer();		
 		renderer2.setSeriesPaint(0, Color.red);
 		plot.setRenderer(1, renderer2);
-
+		*/
+		
 		// -- Select the display order
-		plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
+		plot.setDatasetRenderingOrder(DatasetRenderingOrder.REVERSE);
 
 		return chart;
 	}
