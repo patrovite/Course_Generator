@@ -1,7 +1,10 @@
 package course_generator.dialogs;
 
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +12,10 @@ import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+
+import course_generator.utils.Utils;
 
 public class ProgressDialog extends JDialog {
 
@@ -30,21 +36,29 @@ public class ProgressDialog extends JDialog {
 	public ProgressDialog(Window parent, String dialogTitle) {
 		super(parent, dialogTitle, ModalityType.APPLICATION_MODAL);
 
-		setLayout(new FlowLayout());
-		setSize(450, 150);
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		setResizable(false);
 
+		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		Container paneGlobal = getContentPane();
+		paneGlobal.setLayout(new GridBagLayout());
+
+		//-- Progress bar
 		progressBar = new JProgressBar(0, 100);
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
-		progressBar.setPreferredSize(new Dimension(300, 100));
-		add(progressBar);
+		progressBar.setPreferredSize(new Dimension(500, 30));
+		Utils.addComponent(paneGlobal, progressBar, 
+				0, 0, 
+				1, 1, 
+				0, 0, 
+				10, 10, 10, 10, 
+				GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.BOTH);
 
-		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle"); //$NON-NLS-1$
-
-		buttonCancel = new JButton(bundle.getString("Global.btCancel.text")); //$NON-NLS-1$
-		buttonCancel.setPreferredSize(new Dimension(100, 75));
+		//-- Cancel button
+		buttonCancel = new JButton(bundle.getString("Global.btCancel.text"));
 		buttonCancel.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if (progressDialogListener != null) {
@@ -53,10 +67,17 @@ public class ProgressDialog extends JDialog {
 
 			}
 		});
-		add(buttonCancel);
+		Utils.addComponent(paneGlobal, buttonCancel, 
+				0, 1, 
+				1, 1, 
+				0, 0, 
+				0, 10, 10, 10, 
+				GridBagConstraints.CENTER,
+				GridBagConstraints.NONE);
 
-		setLocationRelativeTo(parent);
-		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		pack();
+		//-- Center the dialog on the parent
+		setLocationRelativeTo(parent);		
 	}
 
 
