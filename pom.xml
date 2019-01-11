@@ -55,7 +55,7 @@ mvn versions:display-dependency-updates -->
 		<dependency>
 			<groupId>net.iakovlev</groupId>
 			<artifactId>timeshape</artifactId>
-			<version>2018d.6</version>
+			<version>2018d.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jxmapviewer</groupId>
