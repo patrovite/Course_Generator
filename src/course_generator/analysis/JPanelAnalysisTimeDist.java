@@ -241,6 +241,7 @@ public class JPanelAnalysisTimeDist extends JPanel {
 		renderer.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
 		plot.setRenderer(0, renderer);
 
+
 		NumberAxis rangeAxis2 = new NumberAxis(bundle.getString("JPanelAnalysisTimeDist.labelY2")); // "Time"
 		plot.setRangeAxis(1, rangeAxis2);
 		plot.setDataset(1, dataset2);

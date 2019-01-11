@@ -311,12 +311,9 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		plot.setRangeCrosshairLockedOnData(false);
 
 		XYDotRenderer renderer = new XYDotRenderer();
-		//renderer.setSeriesPaint(0, new Color(0x99, 0xff, 0x00));
 		renderer.setSeriesPaint(0, new Color(0x6B, 0xB2, 0x00));
 		renderer.setDotWidth(2);
 		renderer.setDotHeight(2);
-		// renderer.setSeriesOutlinePaint(0, Color.DARK_GRAY);
-		// renderer.setSeriesOutlineStroke(0, new BasicStroke(1.0f));
 		plot.setRenderer(renderer);
 
 		NumberAxis rangeAxis2 = new NumberAxis();
@@ -327,9 +324,10 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 
 		
 		XYAreaRenderer renderer2 = new XYAreaRenderer();
-		renderer2.setSeriesPaint(0, new Color(0x99, 0xff, 0x00));
+		renderer2.setSeriesPaint(0, new Color(0x99, 0xff, 0x00, 0x80));
 		renderer2.setOutline(true);
-		renderer2.setSeriesOutlineStroke(1, new BasicStroke(2.0f));
+		renderer2.setSeriesOutlinePaint(0, new Color(0x80, 0x80, 0x80, 0x80));
+		renderer2.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
 		plot.setRenderer(1, renderer2);
 		
 		/*
