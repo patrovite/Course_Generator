@@ -123,7 +123,6 @@ import course_generator.TrackData.SearchPointResult;
 import course_generator.analysis.JPanelAnalysisSpeed;
 import course_generator.analysis.JPanelAnalysisSpeedSlope;
 import course_generator.analysis.JPanelAnalysisTimeDist;
-import course_generator.analysis.JPanelAnalysisTimeTemperature;
 import course_generator.dialogs.FrmExportWaypoints;
 import course_generator.dialogs.FrmImportChoice;
 import course_generator.dialogs.frmEditPosition;
@@ -264,7 +263,6 @@ public class frmMain extends javax.swing.JFrame {
 
 	private JTabbedPane TabbedPaneAnalysis;
 	private JPanelAnalysisTimeDist jPanelTimeDist;
-	private JPanelAnalysisTimeTemperature jPanelTimeTemperature;
 	private JPanelAnalysisSpeed jPanelSpeed;
 	private JPanelAnalysisSpeedSlope jPanelSpeedSlope;
 	// private JButton btMapOfflineSelection;
@@ -1238,7 +1236,6 @@ public class frmMain extends javax.swing.JFrame {
 					Track.Invert();
 					panelProfil.RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
-					jPanelTimeTemperature.Refresh(Track, Settings);
 					jPanelSpeed.Refresh(Track, Settings);
 					jPanelSpeedSlope.Refresh(Track, Settings);
 					RefreshStatusbar(Track);
@@ -1379,7 +1376,6 @@ public class frmMain extends javax.swing.JFrame {
 				PanelResume.refresh();
 				panelProfil.RefreshProfilChart();
 				jPanelTimeDist.Refresh(Track, Settings);
-				jPanelTimeTemperature.Refresh(Track, Settings);
 				jPanelSpeed.Refresh(Track, Settings);
 				jPanelSpeedSlope.Refresh(Track, Settings);
 				panelStatistics.refresh();
@@ -1538,7 +1534,6 @@ public class frmMain extends javax.swing.JFrame {
 			RefreshTitle();
 			panelProfil.RefreshProfilChart();
 			jPanelTimeDist.Refresh(Track, Settings);
-			jPanelTimeTemperature.Refresh(Track, Settings);
 			jPanelSpeed.Refresh(Track, Settings);
 			jPanelSpeedSlope.Refresh(Track, Settings);
 			panelMap.RefreshTrack(Track, true);
@@ -1649,7 +1644,6 @@ public class frmMain extends javax.swing.JFrame {
 					RefreshTitle();
 					panelProfil.RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
-					jPanelTimeTemperature.Refresh(Track, Settings);
 					jPanelSpeed.Refresh(Track, Settings);
 					jPanelSpeedSlope.Refresh(Track, Settings);
 					panelMap.RefreshTrack(Track, true);
@@ -1705,7 +1699,6 @@ public class frmMain extends javax.swing.JFrame {
 		panelProfil.RefreshProfilChart();
 		// -- Refresh analysis tab
 		jPanelTimeDist.Refresh(Track, Settings);
-		jPanelTimeTemperature.Refresh(Track, Settings);
 		jPanelSpeed.Refresh(Track, Settings);
 		jPanelSpeedSlope.Refresh(Track, Settings);
 		// -- Refresh the form title
@@ -2251,7 +2244,6 @@ public class frmMain extends javax.swing.JFrame {
 					panelTrackData.refresh();
 					panelProfil.RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
-					jPanelTimeTemperature.Refresh(Track, Settings);
 					jPanelSpeed.Refresh(Track, Settings);
 					jPanelSpeedSlope.Refresh(Track, Settings);
 					panelMap.RefreshTrack(Track, false);
@@ -2319,7 +2311,6 @@ public class frmMain extends javax.swing.JFrame {
 					panelTrackData.refresh();
 					panelProfil.RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
-					jPanelTimeTemperature.Refresh(Track, Settings);
 					jPanelSpeed.Refresh(Track, Settings);
 					jPanelSpeedSlope.Refresh(Track, Settings);
 					RefreshStatusbar(Track);
@@ -2370,7 +2361,6 @@ public class frmMain extends javax.swing.JFrame {
 			panelTrackData.refresh();
 			panelProfil.RefreshProfilChart();
 			jPanelTimeDist.Refresh(Track, Settings);
-			jPanelTimeTemperature.Refresh(Track, Settings);
 			jPanelSpeed.Refresh(Track, Settings);
 			jPanelSpeedSlope.Refresh(Track, Settings);
 			RefreshTitle();
@@ -2710,11 +2700,6 @@ public class frmMain extends javax.swing.JFrame {
 		jPanelTimeDist = new JPanelAnalysisTimeDist(Settings);
 		addTab(TabbedPaneAnalysis, jPanelTimeDist, bundle.getString("frmMain.TabTimeDist.tabTitle"), null);
 
-		// -- Tab Analysis : Time/Temperature
-		jPanelTimeTemperature = new JPanelAnalysisTimeTemperature(Settings);
-		addTab(TabbedPaneAnalysis, jPanelTimeTemperature, bundle.getString("frmMain.TabTimeTemperature.tabTitle"),
-				null);
-
 		// -- Tab Analysis : Speed
 		jPanelSpeed = new JPanelAnalysisSpeed(Settings);
 		addTab(TabbedPaneAnalysis, jPanelSpeed, bundle.getString("frmMain.TabSpeed.tabTitle"), null);
@@ -2977,7 +2962,6 @@ public class frmMain extends javax.swing.JFrame {
 					RefreshTitle();
 					panelProfil.RefreshProfilChart();
 					jPanelTimeDist.Refresh(Track, Settings);
-					jPanelTimeTemperature.Refresh(Track, Settings);
 					jPanelSpeed.Refresh(Track, Settings);
 					jPanelSpeedSlope.Refresh(Track, Settings);
 					panelMap.RefreshTrack(Track, true);
@@ -3066,7 +3050,6 @@ public class frmMain extends javax.swing.JFrame {
 		panelProfil.RefreshProfilChart();
 		// -- Refresh analysis tab
 		jPanelTimeDist.Refresh(Track, Settings);
-		jPanelTimeTemperature.Refresh(Track, Settings);
 		jPanelSpeed.Refresh(Track, Settings);
 		jPanelSpeedSlope.Refresh(Track, Settings);
 		// -- Refresh the form title
@@ -3175,7 +3158,6 @@ public class frmMain extends javax.swing.JFrame {
 		panelProfil.RefreshProfilChart();
 		// -- Refresh analysis tab
 		jPanelTimeDist.Refresh(Track, Settings);
-		jPanelTimeTemperature.Refresh(Track, Settings);
 		jPanelSpeed.Refresh(Track, Settings);
 		jPanelSpeedSlope.Refresh(Track, Settings);
 		// -- Refresh the form title
