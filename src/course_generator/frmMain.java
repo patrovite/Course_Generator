@@ -862,6 +862,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuImportGPX = new javax.swing.JMenuItem();
 		mnuImportGPX.setIcon(Utils.getIcon(this, "import.png", Settings.MenuIconSize));
 		mnuImportGPX.setText(bundle.getString("frmMain.mnuImportGPX.text"));
+		mnuImportGPX.setEnabled(false);
 		mnuImportGPX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ImportGPX();
@@ -873,6 +874,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuImportCGX = new javax.swing.JMenuItem();
 		mnuImportCGX.setIcon(Utils.getIcon(this, "import.png", Settings.MenuIconSize));
 		mnuImportCGX.setText(bundle.getString("frmMain.mnuImportCGX.text"));
+		mnuImportCGX.setEnabled(false);
 		mnuImportCGX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ImportCGX();
@@ -923,6 +925,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuImportPoints = new javax.swing.JMenuItem();
 		mnuImportPoints.setIcon(Utils.getIcon(this, "import.png", Settings.MenuIconSize));
 		mnuImportPoints.setText(bundle.getString("frmMain.mnuImportPoints.text"));
+		mnuImportPoints.setEnabled(false);
 		mnuImportPoints.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				BackupInCGX();
@@ -1524,7 +1527,7 @@ public class frmMain extends javax.swing.JFrame {
 		if (Track.data.isEmpty())
 			return;
 
-		String s = Utils.LoadDialog(this, Settings.LastDir, ".cgp", bundle.getString("frmMain.CGPFile"));
+		String s = Utils.LoadDialog(this, Settings.getLastDirectory(), ".cgp", bundle.getString("frmMain.CGPFile"));
 		if (!s.isEmpty()) {
 			frmImportPoints frm = new frmImportPoints(Settings);
 			frm.showDialog(s, Track);
@@ -1539,6 +1542,9 @@ public class frmMain extends javax.swing.JFrame {
 			panelMap.RefreshTrack(Track, true);
 			PanelResume.refresh();
 			panelStatistics.refresh();
+			
+		// -- Store the directory
+		Settings.setLastDirectory( Utils.GetDirFromFilename(s));
 		}
 	}
 
@@ -1547,19 +1553,21 @@ public class frmMain extends javax.swing.JFrame {
 	 * Open a dialog to export a selection of points
 	 */
 	private void ExportPoints() {
-		if (Track == null)
-			return;
-		if (Track.data.isEmpty())
+		if (Track == null || Track.data.isEmpty())
 			return;
 
 		frmExportPoints frm = new frmExportPoints(Settings);
 		int mask = frm.showDialog();
 		if (mask != -1) {
-			String s = Utils.SaveDialog(this, Settings.LastDir, "", ".cgp", bundle.getString("frmMain.CGPFile"), true,
+			//if current file is cgx we get the last dir from cgx
+			String s = Utils.SaveDialog(this, Settings.getLastDirectory(), "", ".cgp", bundle.getString("frmMain.CGPFile"), true,
 					bundle.getString("frmMain.FileExist"));
 
 			if (!s.isEmpty()) {
 				Track.ExportCGP(s, mask);
+				
+			// -- Store the directory
+			Settings.setLastDirectory(Utils.GetDirFromFilename(s));
 			}
 		}
 	}
@@ -3232,7 +3240,7 @@ public class frmMain extends javax.swing.JFrame {
 		if (Track.data.isEmpty())
 			return;
 
-		s = Utils.SaveDialog(this, Settings.LastDir, "", ".gpx", bundle.getString("frmMain.GPXFile"), true,
+		s = Utils.SaveDialog(this, Settings.getLastDirectory(), "", ".gpx", bundle.getString("frmMain.GPXFile"), true,
 				bundle.getString("frmMain.FileExist"));
 
 		if (!s.isEmpty()) {
@@ -3240,6 +3248,9 @@ public class frmMain extends javax.swing.JFrame {
 			if (frm.showDialog()) {
 				Track.SaveWaypoint(s, frm.getTag());
 			}
+			
+			// -- Store the directory
+			Settings.setLastDirectory(Utils.GetDirFromFilename(s));
 		}
 	}
 
@@ -3528,6 +3539,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuDefineNewStart.setEnabled(isLoaded);
 		mnuCalculateTrackTime.setEnabled(isLoaded);
 		mnuTrackSettings.setEnabled(isLoaded);
+		mnuImportPoints.setEnabled(isLoaded);
+		mnuImportCGX.setEnabled(isLoaded);
+		mnuImportGPX.setEnabled(isLoaded);
 	}
 
 

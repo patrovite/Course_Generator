@@ -233,7 +233,7 @@ public class SaxConfigHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("CONNECTIONTIMEOUT")) {
 				Settings.ConnectionTimeout = ManageInt(10000, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("LASTDIR")) {
-				Settings.LastDir = ManageString().trim();
+				Settings.setLastDirectory(ManageString().trim());
 			} else if (qName.equalsIgnoreCase("PREVIOUSCGXDIR")) {
 				Settings.previousCGXDirectory = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("PREVIOUSGPXDIR")) {
