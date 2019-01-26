@@ -274,9 +274,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			previousWeatherData = new HistoricalWeather(settings);
 			previousWeatherData.addWeatherDataRetrievedChangeListener(this);
 			previousWeatherData.RetrieveWeatherData(track, progressDialog);
-		} else
-
-		{
+		} else {
 			// If exists, get the historical weather from the CGX course
 			previousWeatherData = track.getHistoricalWeather();
 
@@ -286,13 +284,13 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				return;
 			}
 
-			btWeatherDataSave.setEnabled(true);
 
 			String newContent = PopulateWeatherDataSheet(previousWeatherData);
 
 			updateDataSheet(newContent);
 		}
-
+		
+		btWeatherDataSave.setEnabled(true);
 	}
 
 
@@ -566,7 +564,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	 */
 	private void SaveStat() {
 		String s;
-		s = Utils.SaveDialog(this, settings.LastDir, "", ".html", bundle.getString("frmMain.HTMLFile"), true, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		s = Utils.SaveDialog(this, settings.getLastDirectory(), "", ".html", bundle.getString("frmMain.HTMLFile"), true, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				bundle.getString("frmMain.FileExist")); //$NON-NLS-1$
 
 		if (!s.isEmpty()) {
@@ -580,7 +578,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				f.printStackTrace();
 			}
 			// -- Store the directory
-			settings.LastDir = Utils.GetDirFromFilename(s);
+			settings.setLastDirectory(Utils.GetDirFromFilename(s));
 		}
 	}
 

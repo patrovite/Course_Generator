@@ -239,14 +239,14 @@ public class JPanelResume extends JPanel {
 	private void SaveResumeAsCSV() {
 		if (Resume.data.size() > 0) {
 			String s;
-			s = Utils.SaveDialog(this, Settings.LastDir, "", ".csv", bundle.getString("frmMain.CSVFile"), true,
+			s = Utils.SaveDialog(this, Settings.getLastDirectory(), "", ".csv", bundle.getString("frmMain.CSVFile"), true,
 					bundle.getString("frmMain.FileExist"));
 
 			if (!s.isEmpty()) {
 				Resume.SaveAsCSV(s, Settings.Unit, Settings.isPace);
 
 				// -- Store the directory
-				Settings.LastDir = Utils.GetDirFromFilename(s);
+				Settings.setLastDirectory(Utils.GetDirFromFilename(s));
 			}
 		}
 	}

@@ -84,7 +84,7 @@ public class CgSettings {
 
 	public int ReadError = 0;
 	public int LineError = 0;
-	public String LastDir; // Store the last directory
+	private String LastDir; // Store the last directory
 	public String previousGPXDirectory;
 	public String previousCGXDirectory;
 	public String previousCSVDirectory;
@@ -363,6 +363,37 @@ public class CgSettings {
 					+ Confighandler.getErrLine());
 	}
 
+	
+	/**
+	 * Returns the path of the last directory used to load or 
+	 * save:
+	 * - Points
+	 * - Resume
+	 * - Tags
+	 * - Statistics
+	 * - Weather data
+	 * 
+	 * @return string with the full file path.
+	 */
+	public String getLastDirectory() {
+		return LastDir;
+	}
+	
+	/**
+	 * Saves the path of the last directory used to load or 
+	 * save:
+	 * - Points
+	 * - Resume
+	 * - Tags
+	 * - Statistics
+	 * - Weather data
+	 * 
+	 * @param lastDirectoryFullPath 
+	 * The full path of the last directory
+	 */
+	public void setLastDirectory(String lastDirectoryFullPath) {
+		 LastDir = lastDirectoryFullPath;
+	}
 
 	/**
 	 * Return the distance unit as string

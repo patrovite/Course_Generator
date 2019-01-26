@@ -350,7 +350,7 @@ public class JPanelStatistics extends JPanel {
 		if (track.data.isEmpty())
 			return;
 
-		s = Utils.SaveDialog(this, settings.LastDir, "", ".html", bundle.getString("frmMain.HTMLFile"), true,
+		s = Utils.SaveDialog(this, settings.getLastDirectory(), "", ".html", bundle.getString("frmMain.HTMLFile"), true,
 				bundle.getString("frmMain.FileExist"));
 
 		if (!s.isEmpty()) {
@@ -366,7 +366,7 @@ public class JPanelStatistics extends JPanel {
 			}
 
 			// -- Store the directory
-			settings.LastDir = Utils.GetDirFromFilename(s);
+			settings.setLastDirectory(Utils.GetDirFromFilename(s));
 		}
 	}
 
