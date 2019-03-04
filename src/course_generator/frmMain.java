@@ -1443,6 +1443,7 @@ public class frmMain extends javax.swing.JFrame {
 		menuCGCoursesLibrary = new javax.swing.JMenuItem();
 		menuCGCoursesLibrary.setIcon(Utils.getIcon(this, "help.png", Settings.MenuIconSize));
 		menuCGCoursesLibrary.setText(bundle.getString("frmMain.menuCGCoursesLibrary.text"));
+		menuCGCoursesLibrary.setVisible(false); //Hide the menu. Maybe in the future a new web page will be created 
 		menuCGCoursesLibrary.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
