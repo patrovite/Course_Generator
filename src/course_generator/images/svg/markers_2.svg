@@ -8,9 +8,9 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    height="512"
-   width="512"
+   width="1024"
    version="1.1"
-   viewBox="0 0 384.00326 383.99999"
+   viewBox="0 0 1024 512"
    id="svg3847"
    sodipodi:docname="markers_2.svg"
    inkscape:version="0.92.3 (2405546, 2018-03-11)">
@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -36,15 +36,15 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1027"
+     inkscape:window-height="1025"
      id="namedview3849"
      showgrid="false"
      units="px"
      inkscape:zoom="0.99380962"
-     inkscape:cx="109.63565"
-     inkscape:cy="160.09181"
+     inkscape:cx="251.01082"
+     inkscape:cy="229.92776"
      inkscape:window-x="0"
-     inkscape:window-y="25"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg3847" />
   <defs
@@ -93,7 +93,7 @@
   </defs>
   <g
      id="g1998"
-     transform="translate(2.1037685e-6)">
+     transform="matrix(1.333322,0,0,1.333322,32.30559,16.393835)">
     <g
        style="fill:#f9f9f9;stroke:#f9f9f9;stroke-width:58.33594513;stroke-miterlimit:4;stroke-dasharray:none"
        transform="matrix(0.76943138,0,0,0.77337484,369.1069,101.05092)"
@@ -124,5 +124,21 @@
          d="M -131.98331,-35.221269 V 282.14016 c 0,28.36658 -39.61689,27.94814 -39.61689,0 V 156.22351 h -21.09531 V -35.221269 c 0,-44.55992 60.7122,-44.55992 60.7122,0.0031 z"
          id="path2362-0" />
     </g>
+  </g>
+  <g
+     id="g6156"
+     transform="translate(634.25681,57.440308)">
+    <circle
+       style="fill:#f9f9f9;fill-opacity:1;stroke:#f9f9f9;stroke-width:60;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="circle6152"
+       cx="-122.25681"
+       cy="198.55969"
+       r="54.259502" />
+    <circle
+       r="54.259502"
+       cy="198.55969"
+       cx="-122.25681"
+       id="path6150"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:30;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
 </svg>
