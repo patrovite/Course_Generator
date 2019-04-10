@@ -12,6 +12,7 @@ import java.util.Locale;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.Instant;
@@ -32,9 +33,8 @@ import course_generator.utils.CgLog;
  */
 final public class NoaaHistoricalWeatherRetriever {
 
-	private DateTime startDate;
+	private DateTime requestStartDate;
 	private LatLng startPoint;
-	private String noaaToken;
 
 	private LatLng searchAreaSouthWestCorner;// The south west location of the desired geographical extent for search
 	private LatLng searchAreaNorthEastCorner;// The north east location of the desired geographical extent for search
@@ -49,14 +49,15 @@ final public class NoaaHistoricalWeatherRetriever {
 	private NoaaWeatherData noaaNormalsDaily;
 	private NoaaWeatherData noaaNormalsMonthly;
 
-	private final String NoaaApiUrl = "https://www.ncdc.noaa.gov/cdo-web/api/v2/"; //$NON-NLS-1$
-	private final String ghcndDatSetId = "&datasetid=GHCND"; //$NON-NLS-1$
-	private final String ghcndDataTypeIds = "&datatypeid=TMAX&datatypeid=TMIN&datatypeid=PRCP"; //$NON-NLS-1$
+	public static String NoaaBaseUrl = "https://www.ncei.noaa.gov/access/services/"; //$NON-NLS-1$
+	private final String ghcndDatSetId = "&dataset=daily-summaries"; //$NON-NLS-1$
+	private final String ghcndDataTypeIds = "&dataTypes=TMAX,TMIN,PRCP"; //$NON-NLS-1$
 	private final String normalDlyDataSetId = "&datasetid=NORMAL_DLY"; //$NON-NLS-1$
 	private final String normalMlyDataSetId = "&datasetid=NORMAL_MLY"; //$NON-NLS-1$
 	private final String normalDlyDataTypeIds = "&datatypeid=DLY-TMIN-NORMAL&datatypeid=DLY-TMAX-NORMAL&datatypeid=DLY-TAVG-NORMAL"; //$NON-NLS-1$
 	private final String normalMlyDataTypeIds = "&datatypeid=MLY-TMIN-NORMAL&datatypeid=MLY-TMAX-NORMAL&datatypeid=MLY-TAVG-NORMAL"; //$NON-NLS-1$
-
+	private final String startDate = "&startDate=";
+	private final String endDate = "&endDate=";
 
 	private NoaaHistoricalWeatherRetriever(LatLng startPoint, LatLng searchAreaCenter, double searchAreaRadius) {
 		this.searchAreaCenter = searchAreaCenter;
@@ -89,23 +90,9 @@ final public class NoaaHistoricalWeatherRetriever {
 	 * @return
 	 */
 	public NoaaHistoricalWeatherRetriever when(DateTime dateTime) {
-		this.startDate = dateTime;
+		this.requestStartDate = dateTime;
 		return this;
 	}
-
-
-	/**
-	 * Assigns a NOAA token to the current object.
-	 * 
-	 * @param noaaToken
-	 *            The NOAA token to be used for the queries.
-	 * @return The current object.
-	 */
-	public NoaaHistoricalWeatherRetriever forUser(String noaaToken) {
-		this.noaaToken = noaaToken;
-		return this;
-	}
-
 
 	/**
 	 * This method builds a NoaaHistoricalWeatherRetriever object and retrieves, if
@@ -170,12 +157,18 @@ final public class NoaaHistoricalWeatherRetriever {
 	private String processNoaaRequest(String parameters) {
 		StringBuffer weatherHistory = new StringBuffer();
 		try {
-			HttpClient client = HttpClientBuilder.create().build();
-			HttpGet request = new HttpGet(NoaaApiUrl + parameters + "&units=metric&limit=1000"); //$NON-NLS-1$
+			HttpClientBuilder clientBuilder = HttpClientBuilder.create();
+			clientBuilder.setRetryHandler(new DefaultHttpRequestRetryHandler(3, true));
+			HttpClient client = clientBuilder.build();
+			HttpGet request = new HttpGet(NoaaBaseUrl + parameters + "&units=metric&limit=1000"); //$NON-NLS-1$
 
-			// add request header
-			request.addHeader("token", noaaToken); //$NON-NLS-1$
 			HttpResponse response = client.execute(request);
+			
+			if(response.getStatusLine().getStatusCode() != 200)
+				CgLog.error(
+						"NoaaWeatherHistoryRetriever.processNoaaRequest : Error code '"+response.getStatusLine().getStatusCode() +  //$NON-NLS-1$
+						"' while executing the NOAA request with the parameters " //$NON-NLS-1$
+								+ parameters + ":\n" + response.getStatusLine().getReasonPhrase()); //$NON-NLS-1$
 
 			BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
@@ -262,9 +255,9 @@ final public class NoaaHistoricalWeatherRetriever {
 	private List<NoaaWeatherData> findMostRelevantDailySummaries() {
 
 		// Looking for the 3 previous years of weather data
-		String threeYearsAgo = String.valueOf(Integer.valueOf(startDate.getYear()) - 3);
-		String queryParameters = "stations?extent=" + getExtent(searchAreaSouthWestCorner, searchAreaNorthEastCorner) //$NON-NLS-1$
-				+ ghcndDatSetId + "&startdate=" + threeYearsAgo + "-01-01" + "&enddate=" + startDate.getYear() //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		String threeYearsAgo = String.valueOf(Integer.valueOf(requestStartDate.getYear()) - 3);
+		String queryParameters = "search/v1/data?boundingBox=" + getExtent(searchAreaSouthWestCorner, searchAreaNorthEastCorner) //$NON-NLS-1$
+				+ ghcndDatSetId + startDate + threeYearsAgo + "-01-01" + endDate + requestStartDate.getYear() //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ "-12-31"; //$NON-NLS-1$
 
 		List<NoaaWeatherStation> stations = findClosestWeatherStations(queryParameters);
@@ -300,11 +293,11 @@ final public class NoaaHistoricalWeatherRetriever {
 		ArrayList<NoaaWeatherData> pastDailySummaries = new ArrayList<NoaaWeatherData>();
 
 		for (int pastYearNumber = 1; pastYearNumber < 4; ++pastYearNumber) {
-			Instant time = Instant.ofEpochMilli(startDate.minusDays(pastYearNumber * 364).getMillis());
+			Instant time = Instant.ofEpochMilli(requestStartDate.minusDays(pastYearNumber * 364).getMillis());
 			String pastDate = time.toDateTime().toString("yyyy-MM-dd"); //$NON-NLS-1$
 
-			String findWeatherStation = "data?stationid=" + stationId + ghcndDatSetId + ghcndDataTypeIds + "&startdate=" //$NON-NLS-1$ //$NON-NLS-2$
-					+ pastDate + "&enddate=" + pastDate; //$NON-NLS-1$
+			String findWeatherStation = "data?stationid=" + stationId + ghcndDatSetId + ghcndDataTypeIds + startDate //$NON-NLS-1$ //$NON-NLS-2$
+					+ pastDate + endDate + pastDate;
 
 			String dailyNormalsData = processNoaaRequest(findWeatherStation);
 			if (!dailyNormalsData.contains("results")) //$NON-NLS-1$
@@ -358,8 +351,8 @@ final public class NoaaHistoricalWeatherRetriever {
 	 * @return The weather data, if found.
 	 */
 	private NoaaWeatherData retrieveNormalsDaily(String stationId) {
-		String queryParameters = "data?stationid=" + stationId + "&startdate=2010-" + startDate.toString("MM-dd") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ "&enddate=2010-" + startDate.toString("MM-dd") + normalDlyDataSetId + normalDlyDataTypeIds; //$NON-NLS-1$ //$NON-NLS-2$
+		String queryParameters = "data?stationid=" + stationId + startDate +"2010-" + requestStartDate.toString("MM-dd") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ endDate + "2010-" + requestStartDate.toString("MM-dd") + normalDlyDataSetId + normalDlyDataTypeIds; //$NON-NLS-1$ //$NON-NLS-2$
 
 		String normalsDailyData = processNoaaRequest(queryParameters);
 		if (!normalsDailyData.contains("results")) //$NON-NLS-1$
@@ -379,8 +372,8 @@ final public class NoaaHistoricalWeatherRetriever {
 			return null;
 
 		String findWeatherStation = "data?stationid=" + noaaNormalsWeatherStation.getId() + normalMlyDataSetId //$NON-NLS-1$
-				+ normalMlyDataTypeIds + "&startdate=" + startDate.toString("2010-MM-01") + "&enddate=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ startDate.toString("2010-MM-01"); //$NON-NLS-1$
+				+ normalMlyDataTypeIds + startDate + requestStartDate.toString("2010-MM-01") + endDate //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ requestStartDate.toString("2010-MM-01"); //$NON-NLS-1$
 
 		String normalsMonthlyData = processNoaaRequest(findWeatherStation);
 		if (!normalsMonthlyData.contains("results")) //$NON-NLS-1$

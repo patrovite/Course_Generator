@@ -1,13 +1,8 @@
 
 package course_generator.weather;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Desktop;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
@@ -63,7 +58,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	private JButton btWeatherRefresh;
 	private JLabel lbInformation;
 	private JLabel InformationWarning;
-	private JLabel getNoaaTokenLink;
 	private TrackData track = null;
 	private WebView webView;
 	HistoricalWeather previousWeatherData;
@@ -77,7 +71,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	public JPanelWeather(CgSettings settings, JFrame parentFrame) {
 		super();
 		this.settings = settings;
-		this.settings.addNoaaTokenChangeListener(this);
 		this.parentFrame = parentFrame;
 		this.previousWeatherData = null;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle"); //$NON-NLS-1$
@@ -91,7 +84,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		// -- Statistic tool bar
 		// ---------------------------------------------------
 		createWeatherToolbar();
-		UpdatePanel();
 		add(toolBar, java.awt.BorderLayout.NORTH);
 
 		final JFXPanel fxPanel = new JFXPanel();
@@ -189,49 +181,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		InformationWarning.setFocusable(false);
 		toolBar.add(InformationWarning);
 
-		lbInformation = new JLabel(" " + bundle.getString("JPanelWeather.lbInformationMissingNoaaToken.Text")); //$NON-NLS-1$ //$NON-NLS-2$
-		Font boldFont = new Font(lbInformation.getFont().getName(), Font.BOLD, lbInformation.getFont().getSize());
-		lbInformation.setFont(boldFont);
-		InformationWarning.setFocusable(false);
-		lbInformation.setVisible(false);
-		toolBar.add(lbInformation);
-
-		getNoaaTokenLink = new JLabel(". " + bundle.getString("JPanelWeather.lbNOAARequestTokenLink.Text")); //$NON-NLS-1$ //$NON-NLS-2$
-		getNoaaTokenLink.setForeground(Color.BLUE.darker());
-		boldFont = new Font(getNoaaTokenLink.getFont().getName(), Font.BOLD, getNoaaTokenLink.getFont().getSize());
-		getNoaaTokenLink.setFont(boldFont);
-		getNoaaTokenLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		getNoaaTokenLink.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-
-					Desktop.getDesktop().browse(new URI("https://www.ncdc.noaa.gov/cdo-web/token")); //$NON-NLS-1$
-
-				} catch (IOException | URISyntaxException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		getNoaaTokenLink.setVisible(false);
-		toolBar.add(getNoaaTokenLink);
-
 		refresh(null, false);
-	}
-
-
-	/**
-	 * Updates the panel buttons states depending on the NOAA token validity
-	 */
-	private void UpdatePanel() {
-
-		boolean isNoaaTokenValid = settings.isNoaaTokenValid();
-
-		InformationWarning.setVisible(!isNoaaTokenValid);
-		lbInformation.setVisible(!isNoaaTokenValid);
-		getNoaaTokenLink.setVisible(!isNoaaTokenValid);
-
-		btWeatherRefresh.setEnabled(isNoaaTokenValid && track != null);
 	}
 
 
@@ -246,13 +196,10 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	 */
 	public void refresh(TrackData track, boolean retrieveOnlineData) {
 		if (track == null || track.data.isEmpty()) {
-			UpdatePanel();
 			return;
 		}
 
 		this.track = track;
-
-		UpdatePanel();
 
 		previousWeatherData = null;
 		if (retrieveOnlineData) {
@@ -313,10 +260,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	 * Performs the necessary operations whenever the NOAA token value has changed.
 	 */
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("NoaaTokenChanged")) //$NON-NLS-1$
-		{
-			UpdatePanel();
-		} else if (evt.getPropertyName().equals("WeatherDataRetrieved")) //$NON-NLS-1$
+		if (evt.getPropertyName().equals("WeatherDataRetrieved")) //$NON-NLS-1$
 		{
 			if (evt.getNewValue().equals("cancelled")) //$NON-NLS-1$
 				return;
