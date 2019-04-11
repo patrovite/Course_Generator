@@ -111,8 +111,8 @@ final public class NoaaHistoricalWeatherRetriever {
 
 		pastDailySummaries = findMostRelevantDailySummaries();
 
-		noaaNormalsDaily = findMostRelevantNormalsDaily();
-		noaaNormalsMonthly = retrieveNormalsMonthly();
+		// noaaNormalsDaily = findMostRelevantNormalsDaily();
+		// noaaNormalsMonthly = retrieveNormalsMonthly();
 
 		return this;
 	}

@@ -219,7 +219,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				return;
 			}
 
-			previousWeatherData = new HistoricalWeather(settings);
+			previousWeatherData = new HistoricalWeather();
 			previousWeatherData.addWeatherDataRetrievedChangeListener(this);
 			previousWeatherData.RetrieveWeatherData(track, progressDialog);
 		} else {

@@ -205,7 +205,7 @@ public class TrackData {
 		param = new ParamData();
 		Paramfile = "Default";
 		data = new ArrayList<CgData>();
-		historicalWeatherData = new HistoricalWeather(settings);
+		historicalWeatherData = new HistoricalWeather();
 		tInNight = new StatData();
 		tInDay = new StatData();
 		StatSlope = new StatData[13]; // : Array [0..12] of TStat;

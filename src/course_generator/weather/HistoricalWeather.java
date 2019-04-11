@@ -18,7 +18,6 @@ import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.dialogs.ProgressDialog;
 import course_generator.dialogs.ProgressDialogListener;
-import course_generator.settings.CgSettings;
 import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
@@ -42,7 +41,6 @@ public class HistoricalWeather implements ProgressDialogListener {
 	// Event data
 	public String daylightHours;
 	public double moonFraction;
-	private CgSettings Settings;
 
 	private TrackData Track;
 	private LatLng searchAreaCenter;
@@ -55,8 +53,7 @@ public class HistoricalWeather implements ProgressDialogListener {
 	public static final String DAYLIGHTHOURS = "DAYLIGHTHOURS"; //$NON-NLS-1$
 
 
-	public HistoricalWeather(CgSettings settings) {
-		Settings = settings;
+	public HistoricalWeather() {
 
 	}
 

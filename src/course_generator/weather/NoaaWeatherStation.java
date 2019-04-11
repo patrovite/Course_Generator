@@ -153,7 +153,7 @@ public class NoaaWeatherStation implements Comparable<NoaaWeatherStation> {
 
 
 	public void setName(String name) {
-		// this.name = name;
+		this.name = name;
 	}
 
 
