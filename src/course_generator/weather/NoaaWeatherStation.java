@@ -1,5 +1,9 @@
 package course_generator.weather;
 
+import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * A class to store data from the NOAA stations element.
  * 
@@ -7,7 +11,9 @@ package course_generator.weather;
  * 
  * @author Frederic Bard
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NoaaWeatherStation implements Comparable<NoaaWeatherStation> {
+
 	private String id;
 
 	private String name;
@@ -35,8 +41,10 @@ public class NoaaWeatherStation implements Comparable<NoaaWeatherStation> {
 	public final static String LATITUDE = "LATITUDE"; //$NON-NLS-1$
 	public final static String LONGITUDE = "LONGITUDE"; //$NON-NLS-1$
 
+
 	public NoaaWeatherStation() {
 	}
+
 
 	public NoaaWeatherStation(String id, String name, String latitude, String longitude, double distanceFromStart) {
 		this.id = id;
@@ -46,93 +54,113 @@ public class NoaaWeatherStation implements Comparable<NoaaWeatherStation> {
 		this.distanceFromStart = distanceFromStart;
 	}
 
+	public ArrayList<Object> dataTypes = new ArrayList<Object>();
+	public DateRange DateRangeObject;
+	private float fileSize;
+	public ArrayList<Object> boundingPoints = new ArrayList<Object>();
+	private String filePath;
+	public Location location;
+	public ArrayList<Station> stations = new ArrayList<Station>();
+	private float dataTypesCount;
+
+
+	// Getter Methods
+
 	public String getId() {
-		return id;
+		if (this.stations != null && this.stations.size() > 0)
+			return this.stations.get(0).getId();
+
+		return "";
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getElevation() {
-		return elevation;
-	}
-
-	public void setElevation(String elevation) {
-		this.elevation = elevation;
-	}
-
-	public String getElevationUnit() {
-		return elevationUnit;
-	}
-
-	public void setElevationUnit(String elevationUnit) {
-		this.elevationUnit = elevationUnit;
-	}
 
 	public String getLongitude() {
-		return longitude;
+		if (this.location != null)
+			return this.location.getLongitude();
+
+		return "";
 	}
 
-	public void setLongitude(String longitude) {
-		this.longitude = longitude;
-	}
-
-	public String getDatacoverage() {
-		return datacoverage;
-	}
-
-	public void setDatacoverage(String datacoverage) {
-		this.datacoverage = datacoverage;
-	}
 
 	public String getLatitude() {
-		return latitude;
+		if (this.location != null)
+			return this.location.getLatitude();
+
+		return "";
 	}
 
-	public void setLatitude(String latitude) {
-		this.latitude = latitude;
-	}
-
-	public String getMindate() {
-		return mindate;
-	}
-
-	public void setMindate(String mindate) {
-		this.mindate = mindate;
-	}
-
-	public String getMaxdate() {
-		return maxdate;
-	}
-
-	public void setMaxdate(String maxdate) {
-		this.maxdate = maxdate;
-	}
 
 	public double getDistanceFromStart() {
 		return distanceFromStart;
 	}
 
+
 	public void setDistanceFromStart(double distanceFromStart) {
 		this.distanceFromStart = distanceFromStart;
 	}
+
+
+	public void setDistanceFromSearchAreaCenter(double distanceFromSearchAreaCenter) {
+		this.distanceFromSearchAreaCenter = distanceFromSearchAreaCenter;
+	}
+
 
 	public double getDistanceFromSearchAreaCenter() {
 		return distanceFromSearchAreaCenter;
 	}
 
-	public void setDistanceFromSearchAreaCenter(double distanceFromSearchAreaCenter) {
-		this.distanceFromSearchAreaCenter = distanceFromSearchAreaCenter;
+
+	public DateRange getDateRange() {
+		return DateRangeObject;
 	}
+
+
+	public float getFileSize() {
+		return fileSize;
+	}
+
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public float getDataTypesCount() {
+		return dataTypesCount;
+	}
+
+
+	// Setter Methods
+
+	public void setDateRange(DateRange dateRangeObject) {
+		this.DateRangeObject = dateRangeObject;
+	}
+
+
+	public void setFileSize(float fileSize) {
+		this.fileSize = fileSize;
+	}
+
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+
+	public void setName(String name) {
+		// this.name = name;
+	}
+
+
+	public void setDataTypesCount(float dataTypesCount) {
+		this.dataTypesCount = dataTypesCount;
+	}
+
 
 	@Override
 	public int compareTo(NoaaWeatherStation station2) {
@@ -140,6 +168,82 @@ public class NoaaWeatherStation implements Comparable<NoaaWeatherStation> {
 			return -1;
 		else
 			return 1;
+	}
+}
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+class Location {
+	public ArrayList<String> coordinates = new ArrayList<String>();
+
+	// Getter Methods
+
+
+	public String getLatitude() {
+		if (this.coordinates != null && this.coordinates.size() == 2) {
+			return this.coordinates.get(1);
+		}
+		return "";
+	}
+
+
+	public String getLongitude() {
+		if (this.coordinates != null && this.coordinates.size() == 2) {
+			return this.coordinates.get(0);
+		}
+		return "";
+	}
+
+	// Setter Methods
+
+}
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+class Station {
+	public String name;
+	public String id;
+
+	// Getter Methods
+
+
+	public String getId() {
+		return id;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+	// Setter Methods
+
+}
+
+class DateRange {
+	private String start;
+	private String end;
+
+
+	// Getter Methods
+
+	public String getStart() {
+		return start;
+	}
+
+
+	public String getEnd() {
+		return end;
+	}
+
+
+	// Setter Methods
+
+	public void setStart(String start) {
+		this.start = start;
+	}
+
+
+	public void setEnd(String end) {
+		this.end = end;
 	}
 
 }

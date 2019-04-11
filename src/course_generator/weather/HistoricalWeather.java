@@ -98,7 +98,7 @@ public class HistoricalWeather implements ProgressDialogListener {
 
 				long retrievalstartTime = System.currentTimeMillis();
 				NoaaHistoricalWeatherRetriever weatherHistoryRetriever = NoaaHistoricalWeatherRetriever
-						.where(startPoint, searchAreaCenter, searchAreaRadius).when(Track.StartTime);
+						.where(startPoint, searchAreaCenter, searchAreaRadius).when(Track.StartTime).retrieve();
 				CgLog.info("Weather retrieval time : " + (System.currentTimeMillis() - retrievalstartTime) + "ms"); //$NON-NLS-1$ //$NON-NLS-2$
 
 				publish(75);

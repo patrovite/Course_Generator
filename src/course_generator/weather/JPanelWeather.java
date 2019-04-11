@@ -200,6 +200,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		}
 
 		this.track = track;
+		btWeatherRefresh.setEnabled(true);
 
 		previousWeatherData = null;
 		if (retrieveOnlineData) {
@@ -231,12 +232,11 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				return;
 			}
 
-
 			String newContent = PopulateWeatherDataSheet(previousWeatherData);
 
 			updateDataSheet(newContent);
 		}
-		
+
 		btWeatherDataSave.setEnabled(true);
 	}
 

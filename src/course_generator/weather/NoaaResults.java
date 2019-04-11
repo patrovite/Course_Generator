@@ -7,15 +7,13 @@ package course_generator.weather;
  * 
  */
 public class NoaaResults {
-	private String station;
+	public String station;
 
-	private String value;
+	public String date;
 
-	private String attributes;
+	public String tmax;
 
-	private String datatype;
-
-	private String date;
+	public String tmin;
 
 
 	public String getStation() {
@@ -28,36 +26,6 @@ public class NoaaResults {
 	}
 
 
-	public String getValue() {
-		return value;
-	}
-
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-
-	public String getAttributes() {
-		return attributes;
-	}
-
-
-	public void setAttributes(String attributes) {
-		this.attributes = attributes;
-	}
-
-
-	public String getDatatype() {
-		return datatype;
-	}
-
-
-	public void setDatatype(String datatype) {
-		this.datatype = datatype;
-	}
-
-
 	public String getDate() {
 		return date;
 	}
@@ -65,6 +33,26 @@ public class NoaaResults {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+
+	public String getTmin() {
+		return tmin;
+	}
+
+
+	public void setTmin(String tmin) {
+		this.tmin = tmin;
+	}
+
+
+	public String getTmax() {
+		return tmax;
+	}
+
+
+	public void setTmax(String tmax) {
+		this.tmax = tmax;
 	}
 
 }
