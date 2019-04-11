@@ -35,6 +35,15 @@ public class NoaaWeatherStation implements Comparable<NoaaWeatherStation> {
 	private double distanceFromStart;
 	private double distanceFromSearchAreaCenter;
 
+	public ArrayList<Object> dataTypes = new ArrayList<Object>();
+	public DateRange DateRangeObject;
+	private float fileSize;
+	public ArrayList<Object> boundingPoints = new ArrayList<Object>();
+	private String filePath;
+	public Location location;
+	public ArrayList<Station> stations = new ArrayList<Station>();
+	private float dataTypesCount;
+
 	public final static String STATIONID = "STATIONID"; //$NON-NLS-1$
 	public final static String NAME = "NAME"; //$NON-NLS-1$
 	public final static String DISTANCEFROMSTART = "DISTANCEFROMSTART"; //$NON-NLS-1$
@@ -53,15 +62,6 @@ public class NoaaWeatherStation implements Comparable<NoaaWeatherStation> {
 		this.longitude = longitude;
 		this.distanceFromStart = distanceFromStart;
 	}
-
-	public ArrayList<Object> dataTypes = new ArrayList<Object>();
-	public DateRange DateRangeObject;
-	private float fileSize;
-	public ArrayList<Object> boundingPoints = new ArrayList<Object>();
-	private String filePath;
-	public Location location;
-	public ArrayList<Station> stations = new ArrayList<Station>();
-	private float dataTypesCount;
 
 
 	// Getter Methods
