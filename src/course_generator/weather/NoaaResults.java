@@ -14,11 +14,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NoaaResults {
 
+	// Daily summaries query result properties
+	@JsonProperty
 	private String date;
 
-	private String tmax;
+	@JsonProperty("TMAX")
+	private String MaximumTemperature;
 
-	private String tmin;
+	@JsonProperty("TMIN")
+	private String MinimumTemperature;
+
+	@JsonProperty("TAVG")
+	private String AverageTemperature;
+
+	@JsonProperty("PRCP")
+	private String Precipitation;
+
+	// Daily normals query result properties
 
 	@JsonProperty("DLY-TMIN-NORMAL")
 	private String MinimumTemperatureDailyNormal;
@@ -28,6 +40,8 @@ public class NoaaResults {
 
 	@JsonProperty("DLY-TAVG-NORMAL")
 	private String AverageTemperatureDailyNormal;
+
+	// Monthly normals query result properties
 
 	@JsonProperty("MLY-TMIN-NORMAL")
 	private String MinimumTemperatureMonthlyNormal;
@@ -46,6 +60,52 @@ public class NoaaResults {
 	private Location location;
 
 
+	// Daily summaries methods
+
+	public String getDate() {
+		return date;
+	}
+
+
+	public String getMinimumTemperature() {
+		return MinimumTemperature;
+	}
+
+
+	public String getMaximumTemperature() {
+		return MaximumTemperature;
+	}
+
+
+	public String getAverageTemperature() {
+		return AverageTemperature;
+	}
+
+
+	public String getPrecipitation() {
+		return Precipitation;
+	}
+
+
+	// Daily normals methods
+
+	public String getMinimumTemperatureDailyNormal() {
+		return MinimumTemperatureDailyNormal;
+	}
+
+
+	public String getMaximumTemperatureDailyNormal() {
+		return MaximumTemperatureDailyNormal;
+	}
+
+
+	public String getAverageTemperatureDailyNormal() {
+		return AverageTemperatureDailyNormal;
+	}
+
+
+	// Monthly normals methods
+
 	public String getMinimumTemperatureMonthlyNormal() {
 		return MinimumTemperatureMonthlyNormal;
 	}
@@ -61,13 +121,11 @@ public class NoaaResults {
 	}
 
 
-	public String getMaximumTemperatureDailyNormal() {
-		return MaximumTemperatureDailyNormal;
-	}
+	// Weather station methods
 
-
-	public String getAverageTemperatureDailyNormal() {
-		return AverageTemperatureDailyNormal;
+	public boolean IsStationValid() {
+		return this.getStationId() != null && this.getStationName() != null && this.getStationLatitude() != null
+				&& this.getStationLongitude() != null;
 	}
 
 
@@ -100,26 +158,6 @@ public class NoaaResults {
 			return this.location.getLongitude();
 
 		return null;
-	}
-
-
-	public String getDate() {
-		return date;
-	}
-
-
-	public String getTmin() {
-		return tmin;
-	}
-
-
-	public String getTmax() {
-		return tmax;
-	}
-
-
-	public String getMinimumTemperatureDailyNormal() {
-		return MinimumTemperatureDailyNormal;
 	}
 
 }

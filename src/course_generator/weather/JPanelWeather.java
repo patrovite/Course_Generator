@@ -369,7 +369,8 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@112", //$NON-NLS-1$
 				track.StartNightTime.toString("HH:mm")); //$NON-NLS-1$
 
-		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@113", previousWeatherData.daylightHours); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@113", //$NON-NLS-1$
+				previousWeatherData.getDaylightHours());
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@114", //$NON-NLS-1$
 				previousWeatherData.getMoonPhaseDescription());
 

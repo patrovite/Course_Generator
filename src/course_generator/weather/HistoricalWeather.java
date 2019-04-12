@@ -39,7 +39,7 @@ public class HistoricalWeather implements ProgressDialogListener {
 	public NoaaWeatherData normalsMonthly;
 
 	// Event data
-	public String daylightHours;
+	private String daylightHours;
 	public double moonFraction;
 
 	private TrackData Track;
@@ -186,6 +186,16 @@ public class HistoricalWeather implements ProgressDialogListener {
 		searchAreaCenter = LatLngTool.travel(startPoint, bearingBetweenPoint, distanceFromStart / 2, LengthUnit.METER);
 		searchAreaRadius = distanceFromStart / 2;
 
+	}
+
+
+	public String getDaylightHours() {
+		return daylightHours;
+	}
+
+
+	public void setDaylightHours(String daylightHours) {
+		this.daylightHours = daylightHours;
 	}
 
 

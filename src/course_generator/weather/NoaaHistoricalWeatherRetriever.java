@@ -227,9 +227,7 @@ final public class NoaaHistoricalWeatherRetriever {
 
 			for (NoaaResults currentObject : noaaObjects) {
 
-				// Put this code in a .IsStationValid()?
-				if (StringUtils.isBlank(currentObject.getStationLatitude())
-						|| StringUtils.isBlank(currentObject.getStationLatitude())) {
+				if (!currentObject.IsStationValid()) {
 					continue;
 				}
 
@@ -435,11 +433,17 @@ final public class NoaaHistoricalWeatherRetriever {
 			});
 
 			for (NoaaResults currentObject : noaaObjects) {
+
 				// Daily summary data
-				if (!StringUtils.isBlank(currentObject.getTmax()))
-					noaaWeatherData.setTemperatureMax(currentObject.getTmax());
-				if (!StringUtils.isBlank(currentObject.getTmin()))
-					noaaWeatherData.setTemperatureMin(currentObject.getTmin());
+				if (!StringUtils.isBlank(currentObject.getMaximumTemperature()))
+					noaaWeatherData.setTemperatureMax(currentObject.getMaximumTemperature());
+				if (!StringUtils.isBlank(currentObject.getMinimumTemperature()))
+					noaaWeatherData.setTemperatureMin(currentObject.getMinimumTemperature());
+				if (!StringUtils.isBlank(currentObject.getAverageTemperature()))
+					noaaWeatherData.setTemperatureAverage(currentObject.getAverageTemperature());
+				if (!StringUtils.isBlank(currentObject.getPrecipitation()))
+					noaaWeatherData.setPrecipitation(currentObject.getPrecipitation());
+
 				// Daily normals data
 				if (!StringUtils.isBlank(currentObject.getMaximumTemperatureDailyNormal()))
 					noaaWeatherData.setTemperatureMax(currentObject.getMaximumTemperatureDailyNormal());
@@ -447,6 +451,7 @@ final public class NoaaHistoricalWeatherRetriever {
 					noaaWeatherData.setTemperatureMin(currentObject.getMinimumTemperatureDailyNormal());
 				if (!StringUtils.isBlank(currentObject.getAverageTemperatureDailyNormal()))
 					noaaWeatherData.setTemperatureAverage(currentObject.getAverageTemperatureDailyNormal());
+
 				// Monthly normals data
 				if (!StringUtils.isBlank(currentObject.getMaximumTemperatureMonthlyNormal()))
 					noaaWeatherData.setTemperatureMax(currentObject.getMaximumTemperatureMonthlyNormal());
@@ -455,7 +460,7 @@ final public class NoaaHistoricalWeatherRetriever {
 				if (!StringUtils.isBlank(currentObject.getAverageTemperatureMonthlyNormal()))
 					noaaWeatherData.setTemperatureAverage(currentObject.getAverageTemperatureMonthlyNormal());
 
-				if (!StringUtils.isBlank(currentObject.getDate()))
+				if (!StringUtils.isBlank(currentObject.getDate()) && currentObject.getDate().length() == 10)
 					noaaWeatherData.setDate(DateTime.parse(currentObject.getDate()));
 			}
 
