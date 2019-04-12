@@ -286,12 +286,6 @@ The possible settings are:
 
 Provides a field to enter a Thunderforest API key in order to show the Outdoors map layer. A free API key can be requested [here](https://thunderforest.com/docs/apikeys/).
 
-### "Weather" tab  
-![](./images/CG40_Settings_Weather.png)
-
-Provides a field to enter a NOAA API token in order to retrieve historical weather data. A free token can be requested [here](https://www.ncdc.noaa.gov/cdo-web/token).
-
-
 
 ## Import and export marked points
 

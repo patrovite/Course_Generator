@@ -284,11 +284,6 @@ Les réglages possibles sont les suivants:
 ![](./images/CG40_Settings_Maps.png)
  Permet d'entrer une clef API Thunderforest pour pouvoir utiliser le fond de carte Outdoors. Une clef gratuite peut être obtenue [ici](https://thunderforest.com/docs/apikeys/).
  
- ### Onglet "Météo"  
-![](./images/CG40_Settings_Weather.png)
- Permet d'entrer un token NOAA API pour pouvoir récupérer les données historiques météorologiques du parcours. Une clef gratuite peut être obtenue [ici](https://www.ncdc.noaa.gov/cdo-web/token).
-
-
 
 ## Importer et exporter les points marqués
 
