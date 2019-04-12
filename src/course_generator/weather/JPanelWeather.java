@@ -601,15 +601,13 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			case "dailySummariesWeatherStation": //$NON-NLS-1$
 				if (noaaSummariesWeatherStation != null) {
 					e.attr("href", //$NON-NLS-1$
-							"https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/" //$NON-NLS-1$
-									+ noaaSummariesWeatherStation.getId() + "/detail"); //$NON-NLS-1$
+							NoaaWeatherStation.WebUrlBase + noaaSummariesWeatherStation.getId() + "/detail"); //$NON-NLS-1$
 				}
 				break;
 			case "normalsWeatherStation": //$NON-NLS-1$
 				if (noaaNormalsWeatherStation != null) {
 					e.attr("href", //$NON-NLS-1$
-							"https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/" //$NON-NLS-1$
-									+ noaaNormalsWeatherStation.getId() + "/detail"); //$NON-NLS-1$
+							NoaaWeatherStation.WebUrlBase + noaaNormalsWeatherStation.getId() + "/detail"); //$NON-NLS-1$
 				}
 				break;
 			}

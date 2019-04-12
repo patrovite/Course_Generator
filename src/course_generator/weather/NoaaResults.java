@@ -1,17 +1,18 @@
 package course_generator.weather;
 
+import java.util.ArrayList;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * A Java representation of a NOAA query "results" element.
  * 
- * @author Frederic Bard
+ * @author Frédéric Bard
  * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NoaaResults {
-	private String station;
 
 	private String date;
 
@@ -36,6 +37,13 @@ public class NoaaResults {
 
 	@JsonProperty("MLY-TAVG-NORMAL")
 	private String AverageTemperatureMonthlyNormal;
+
+	// Weather station query result properties
+
+	@JsonProperty
+	private ArrayList<Station> stations = new ArrayList<Station>();
+	@JsonProperty
+	private Location location;
 
 
 	public String getMinimumTemperatureMonthlyNormal() {
@@ -63,13 +71,35 @@ public class NoaaResults {
 	}
 
 
-	public String getStation() {
-		return station;
+	public String getStationId() {
+		if (this.stations != null && this.stations.size() > 0)
+			return stations.get(0).getId();
+
+		return null;
 	}
 
 
-	public void setStation(String station) {
-		this.station = station;
+	public String getStationName() {
+		if (this.stations != null && this.stations.size() > 0)
+			return stations.get(0).getName();
+
+		return null;
+	}
+
+
+	public String getStationLatitude() {
+		if (this.location != null)
+			return this.location.getLatitude();
+
+		return null;
+	}
+
+
+	public String getStationLongitude() {
+		if (this.location != null)
+			return this.location.getLongitude();
+
+		return null;
 	}
 
 
@@ -78,18 +108,8 @@ public class NoaaResults {
 	}
 
 
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-
 	public String getTmin() {
 		return tmin;
-	}
-
-
-	public void setTmin(String tmin) {
-		this.tmin = tmin;
 	}
 
 
@@ -98,17 +118,52 @@ public class NoaaResults {
 	}
 
 
-	public void setTmax(String tmax) {
-		this.tmax = tmax;
-	}
-
-
 	public String getMinimumTemperatureDailyNormal() {
 		return MinimumTemperatureDailyNormal;
 	}
 
+}
 
-	public void setMinimumTemperatureDailyNormal(String minimumTemperatureDailyNormal) {
-		MinimumTemperatureDailyNormal = minimumTemperatureDailyNormal;
+@JsonIgnoreProperties(ignoreUnknown = true)
+class Station {
+	@JsonProperty
+	private String name;
+	@JsonProperty
+	private String id;
+
+
+	// Getter Methods
+	public String getId() {
+		return id;
 	}
+
+
+	public String getName() {
+		return name;
+	}
+}
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+class Location {
+	@JsonProperty
+	private ArrayList<String> coordinates = new ArrayList<String>();
+
+	// Getter Methods
+
+
+	public String getLatitude() {
+		if (this.coordinates != null && this.coordinates.size() == 2) {
+			return this.coordinates.get(1);
+		}
+		return null;
+	}
+
+
+	public String getLongitude() {
+		if (this.coordinates != null && this.coordinates.size() == 2) {
+			return this.coordinates.get(0);
+		}
+		return null;
+	}
+
 }

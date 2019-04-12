@@ -215,35 +215,47 @@ final public class NoaaHistoricalWeatherRetriever {
 		if (weatherStationsQueryResults.equals("") || !weatherStationsQueryResults.contains("results")) //$NON-NLS-1$ //$NON-NLS-2$
 			return null;
 
-		List<NoaaWeatherStation> stations = null;
+		List<NoaaWeatherStation> stations = new ArrayList<NoaaWeatherStation>();
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			String weatherStationsResults = mapper.readValue(weatherStationsQueryResults, JsonNode.class).get("results") //$NON-NLS-1$
 					.toString();
 
-			stations = mapper.readValue(weatherStationsResults, new TypeReference<List<NoaaWeatherStation>>() {
-			});
+			List<NoaaResults> noaaObjects = mapper.readValue(weatherStationsResults,
+					new TypeReference<List<NoaaResults>>() {
+					});
 
-			for (NoaaWeatherStation current : stations) {
-				LatLng station = new LatLng(Double.valueOf(current.getLatitude()),
-						Double.valueOf(current.getLongitude()));
+			for (NoaaResults currentObject : noaaObjects) {
 
-				double distanceFromStart = LatLngTool.distance(station, startPoint, LengthUnit.KILOMETER);
-				double distanceFromSearchAreaCenter = LatLngTool.distance(station, searchAreaCenter,
+				// Put this code in a .IsStationValid()?
+				if (StringUtils.isBlank(currentObject.getStationLatitude())
+						|| StringUtils.isBlank(currentObject.getStationLatitude())) {
+					continue;
+				}
+
+				LatLng stationLocation = new LatLng(Double.valueOf(currentObject.getStationLatitude()),
+						Double.valueOf(currentObject.getStationLongitude()));
+
+				double distanceFromStart = LatLngTool.distance(stationLocation, startPoint, LengthUnit.KILOMETER);
+				double distanceFromSearchAreaCenter = LatLngTool.distance(stationLocation, searchAreaCenter,
 						LengthUnit.KILOMETER);
 
 				// Converting the distance and only keeping 1 decimal.
 				distanceFromStart = distanceFromStart * 10;
 				distanceFromStart = (double) ((int) distanceFromStart);
 				distanceFromStart = distanceFromStart / 10;
-				current.setDistanceFromStart(distanceFromStart);
+
+				NoaaWeatherStation noaaWeatherStation = new NoaaWeatherStation(currentObject.getStationId(),
+						currentObject.getStationName(), currentObject.getStationLatitude(),
+						currentObject.getStationLongitude(), distanceFromStart);
 
 				// Converting the distance and only keeping 1 decimal.
 				distanceFromSearchAreaCenter = distanceFromSearchAreaCenter * 10;
 				distanceFromSearchAreaCenter = (double) ((int) distanceFromSearchAreaCenter);
 				distanceFromSearchAreaCenter = distanceFromSearchAreaCenter / 10;
-				current.setDistanceFromSearchAreaCenter(distanceFromSearchAreaCenter);
+				noaaWeatherStation.setDistanceFromSearchAreaCenter(distanceFromSearchAreaCenter);
 
+				stations.add(noaaWeatherStation);
 			}
 
 			// We sort the stations from closest to the start to farthest to the
