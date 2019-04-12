@@ -30,17 +30,17 @@ import course_generator.utils.Utils;
 public class HistoricalWeather implements ProgressDialogListener {
 
 	// Daily summaries
-	public NoaaWeatherStation noaaSummariesWeatherStation;
-	public List<NoaaWeatherData> pastDailySummaries;
+	private NoaaWeatherStation noaaSummariesWeatherStation;
+	private List<NoaaWeatherData> pastDailySummaries;
 
 	// Normals
-	public NoaaWeatherStation noaaNormalsWeatherStation;
-	public NoaaWeatherData normalsDaily;
-	public NoaaWeatherData normalsMonthly;
+	private NoaaWeatherStation noaaNormalsWeatherStation;
+	private NoaaWeatherData normalsDaily;
+	private NoaaWeatherData normalsMonthly;
 
 	// Event data
 	private String daylightHours;
-	public double moonFraction;
+	private double moonFraction;
 
 	private TrackData Track;
 	private LatLng searchAreaCenter;
@@ -54,7 +54,6 @@ public class HistoricalWeather implements ProgressDialogListener {
 
 
 	public HistoricalWeather() {
-
 	}
 
 
@@ -189,13 +188,38 @@ public class HistoricalWeather implements ProgressDialogListener {
 	}
 
 
+	public NoaaWeatherStation getNoaaSummariesWeatherStation() {
+		return noaaSummariesWeatherStation;
+	}
+
+
+	public List<NoaaWeatherData> getPastDailySummaries() {
+		return pastDailySummaries;
+	}
+
+
+	public NoaaWeatherStation getNoaaNormalsWeatherStation() {
+		return noaaNormalsWeatherStation;
+	}
+
+
+	public NoaaWeatherData getNormalsDaily() {
+		return normalsDaily;
+	}
+
+
+	public NoaaWeatherData getNormalsMonthly() {
+		return normalsMonthly;
+	}
+
+
 	public String getDaylightHours() {
 		return daylightHours;
 	}
 
 
-	public void setDaylightHours(String daylightHours) {
-		this.daylightHours = daylightHours;
+	public double getMoonFraction() {
+		return moonFraction;
 	}
 
 

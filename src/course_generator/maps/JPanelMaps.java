@@ -133,17 +133,16 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	}
 
 
-
-//	public void notifyMouseClicked(MouseEvent evt) {
+	// public void notifyMouseClicked(MouseEvent evt) {
 	public void notifyMouseClicked(java.awt.event.MouseEvent evt) {
 		for (JPanelMapsListener hl : listeners)
 			hl.mouseClicked(evt);
 	}
 
 
-//	public void propertyChange(PropertyChangeEvent evt) {
-//		if (!evt.getPropertyName().equals("ThunderForestApiKeyChanged"))
-//			return;
+	// public void propertyChange(PropertyChangeEvent evt) {
+	// if (!evt.getPropertyName().equals("ThunderForestApiKeyChanged"))
+	// return;
 
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals("ThunderForestApiKeyChanged")) {
@@ -509,7 +508,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	}
 
 
-//	private void MapViewerMouseClicked(MouseEvent evt) {
+	// private void MapViewerMouseClicked(MouseEvent evt) {
 	private void MapViewerMouseClicked(java.awt.event.MouseEvent evt) {
 		if (Track == null)
 			return;
@@ -829,8 +828,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	}
 
 
-//<<<<<<< floatabletoolbar
-//=======
+	// <<<<<<< floatabletoolbar
+	// =======
 	private void ShowHideWeatherStations() {
 		showWeatherStations = !showWeatherStations;
 
@@ -842,21 +841,21 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		if (showWeatherStations) {
 			if (Track.historicalWeatherData != null) {
 				if (SummariesWeatherStationMarker == null
-						&& Track.historicalWeatherData.noaaSummariesWeatherStation != null) {
+						&& Track.historicalWeatherData.getNoaaSummariesWeatherStation() != null) {
 					double lat = Double
-							.parseDouble(Track.historicalWeatherData.noaaSummariesWeatherStation.getLatitude());
+							.parseDouble(Track.historicalWeatherData.getNoaaSummariesWeatherStation().getLatitude());
 					double lon = Double
-							.parseDouble(Track.historicalWeatherData.noaaSummariesWeatherStation.getLongitude());
+							.parseDouble(Track.historicalWeatherData.getNoaaSummariesWeatherStation().getLongitude());
 					SummariesWeatherStationMarker = new MapMarkerImg(new Coordinate(lat, lon),
 							getImage("weather_station.png", Settings.MapIconSize));
 				}
 				if (NormalsWeatherStationMarker == null
-						&& Track.historicalWeatherData.noaaNormalsWeatherStation != null) {
+						&& Track.historicalWeatherData.getNoaaNormalsWeatherStation() != null) {
 
 					double lat = Double
-							.parseDouble(Track.historicalWeatherData.noaaNormalsWeatherStation.getLatitude());
+							.parseDouble(Track.historicalWeatherData.getNoaaNormalsWeatherStation().getLatitude());
 					double lon = Double
-							.parseDouble(Track.historicalWeatherData.noaaNormalsWeatherStation.getLongitude());
+							.parseDouble(Track.historicalWeatherData.getNoaaNormalsWeatherStation().getLongitude());
 					NormalsWeatherStationMarker = new MapMarkerImg(new Coordinate(lat, lon),
 							getImage("weather_station.png", Settings.MapIconSize));
 
@@ -888,7 +887,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	}
 
 
-//>>>>>>> master
+	// >>>>>>> master
 	private void SetEatMapMarker() {
 		if (Track.data.size() > 0) {
 			// int row = panelTrackData.getSelectedRow();
@@ -1138,8 +1137,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 
 	private void UpdateShowWeatherStationsButton() {
-		if (Track.historicalWeatherData != null && (Track.historicalWeatherData.noaaNormalsWeatherStation != null
-				|| Track.historicalWeatherData.noaaSummariesWeatherStation != null)) {
+		if (Track.historicalWeatherData != null && (Track.historicalWeatherData.getNoaaNormalsWeatherStation() != null
+				|| Track.historicalWeatherData.getNoaaSummariesWeatherStation() != null)) {
 			btShowWeatherStation.setEnabled(true);
 		} else {
 			btShowWeatherStation.setEnabled(false);
