@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.Instant;
@@ -174,7 +175,14 @@ final public class NoaaHistoricalWeatherRetriever {
 		StringBuffer weatherHistory = new StringBuffer();
 		try {
 			HttpClientBuilder clientBuilder = HttpClientBuilder.create();
-			// clientBuilder.setRetryHandler(new DefaultHttpRequestRetryHandler(3, true));
+
+			// I don't understand exactly the parameters 'requestSentRetryEnabled' is used.
+			// From the official documentation :
+			// (https://jar-download.com/artifacts/org.apache.httpcomponents/httpclient/4.5.2/source-code/org/apache/http/impl/client/DefaultHttpRequestRetryHandler.java)
+			// @param requestSentRetryEnabled true if it's OK to retry requests that have
+			// been sent
+			clientBuilder.setRetryHandler(new DefaultHttpRequestRetryHandler(3, false));
+
 			HttpClient client = clientBuilder.build();
 			HttpGet request = new HttpGet(NoaaBaseUrl + parameters + "&units=metric&limit=1000"); //$NON-NLS-1$
 
