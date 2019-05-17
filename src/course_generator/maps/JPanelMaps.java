@@ -54,6 +54,7 @@ import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.dialogs.FrmSelectMap;
 import course_generator.settings.CgSettings;
+import course_generator.tiles.geoportail.Ign;
 import course_generator.tiles.openstreetmap.OpenStreetMap;
 import course_generator.tiles.opentopomap.OpenTopoMap;
 import course_generator.tiles.thunderforest.Outdoors;
@@ -969,6 +970,11 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.OUTDOORS_CACHE_DIR);
 			break;
 		case 3:
+			MapViewer.setTileSource(new Ign());
+			offlineTileCache
+					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.IGN_CACHE_DIR);
+			break;
+		case 4:
 			MapViewer.setTileSource(new BingAerialTileSource());
 			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.BING_CACHE_DIR);
 			break;

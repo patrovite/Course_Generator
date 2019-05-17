@@ -32,6 +32,7 @@ public class CgConst {
 	public static final String OPENSTREETMAP_CACHE_DIR = "openstreetmap";
 	public static final String OPENTOPOMAP_CACHE_DIR = "opentopomap";
 	public static final String OUTDOORS_CACHE_DIR = "outdoors";
+	public static final String IGN_CACHE_DIR = "ign";
 	public static final String BING_CACHE_DIR = "bing";
 	
 	/** Maximum version of the CGX file to read **/
