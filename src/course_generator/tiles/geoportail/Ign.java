@@ -19,13 +19,12 @@ public class Ign extends AbstractTMSTileSource {
 
 	@Override
 	public String getTileUrl(int zoom, int tilex, int tiley) throws IOException {
-		return String.format(this.baseUrl, zoom, tilex, tiley);
+		return String.format(this.baseUrl, zoom, tiley, tilex);
 	}
 
 
 	@Override
 	public int getMaxZoom() {
-		// TODO Check
 		return 18;
 	}
 
