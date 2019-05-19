@@ -1,13 +1,8 @@
 
 package course_generator.weather;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Desktop;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
@@ -63,7 +58,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	private JButton btWeatherRefresh;
 	private JLabel lbInformation;
 	private JLabel InformationWarning;
-	private JLabel getNoaaTokenLink;
 	private TrackData track = null;
 	private WebView webView;
 	HistoricalWeather previousWeatherData;
@@ -77,7 +71,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	public JPanelWeather(CgSettings settings, JFrame parentFrame) {
 		super();
 		this.settings = settings;
-		this.settings.addNoaaTokenChangeListener(this);
 		this.parentFrame = parentFrame;
 		this.previousWeatherData = null;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle"); //$NON-NLS-1$
@@ -91,7 +84,6 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		// -- Statistic tool bar
 		// ---------------------------------------------------
 		createWeatherToolbar();
-		UpdatePanel();
 		add(toolBar, java.awt.BorderLayout.NORTH);
 
 		final JFXPanel fxPanel = new JFXPanel();
@@ -189,49 +181,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		InformationWarning.setFocusable(false);
 		toolBar.add(InformationWarning);
 
-		lbInformation = new JLabel(" " + bundle.getString("JPanelWeather.lbInformationMissingNoaaToken.Text")); //$NON-NLS-1$ //$NON-NLS-2$
-		Font boldFont = new Font(lbInformation.getFont().getName(), Font.BOLD, lbInformation.getFont().getSize());
-		lbInformation.setFont(boldFont);
-		InformationWarning.setFocusable(false);
-		lbInformation.setVisible(false);
-		toolBar.add(lbInformation);
-
-		getNoaaTokenLink = new JLabel(". " + bundle.getString("JPanelWeather.lbNOAARequestTokenLink.Text")); //$NON-NLS-1$ //$NON-NLS-2$
-		getNoaaTokenLink.setForeground(Color.BLUE.darker());
-		boldFont = new Font(getNoaaTokenLink.getFont().getName(), Font.BOLD, getNoaaTokenLink.getFont().getSize());
-		getNoaaTokenLink.setFont(boldFont);
-		getNoaaTokenLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		getNoaaTokenLink.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-
-					Desktop.getDesktop().browse(new URI("https://www.ncdc.noaa.gov/cdo-web/token")); //$NON-NLS-1$
-
-				} catch (IOException | URISyntaxException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		getNoaaTokenLink.setVisible(false);
-		toolBar.add(getNoaaTokenLink);
-
 		refresh(null, false);
-	}
-
-
-	/**
-	 * Updates the panel buttons states depending on the NOAA token validity
-	 */
-	private void UpdatePanel() {
-
-		boolean isNoaaTokenValid = settings.isNoaaTokenValid();
-
-		InformationWarning.setVisible(!isNoaaTokenValid);
-		lbInformation.setVisible(!isNoaaTokenValid);
-		getNoaaTokenLink.setVisible(!isNoaaTokenValid);
-
-		btWeatherRefresh.setEnabled(isNoaaTokenValid && track != null);
 	}
 
 
@@ -246,13 +196,11 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	 */
 	public void refresh(TrackData track, boolean retrieveOnlineData) {
 		if (track == null || track.data.isEmpty()) {
-			UpdatePanel();
 			return;
 		}
 
 		this.track = track;
-
-		UpdatePanel();
+		btWeatherRefresh.setEnabled(true);
 
 		previousWeatherData = null;
 		if (retrieveOnlineData) {
@@ -271,7 +219,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				return;
 			}
 
-			previousWeatherData = new HistoricalWeather(settings);
+			previousWeatherData = new HistoricalWeather();
 			previousWeatherData.addWeatherDataRetrievedChangeListener(this);
 			previousWeatherData.RetrieveWeatherData(track, progressDialog);
 		} else {
@@ -284,12 +232,11 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				return;
 			}
 
-
 			String newContent = PopulateWeatherDataSheet(previousWeatherData);
 
 			updateDataSheet(newContent);
 		}
-		
+
 		btWeatherDataSave.setEnabled(true);
 	}
 
@@ -313,10 +260,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	 * Performs the necessary operations whenever the NOAA token value has changed.
 	 */
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("NoaaTokenChanged")) //$NON-NLS-1$
-		{
-			UpdatePanel();
-		} else if (evt.getPropertyName().equals("WeatherDataRetrieved")) //$NON-NLS-1$
+		if (evt.getPropertyName().equals("WeatherDataRetrieved")) //$NON-NLS-1$
 		{
 			if (evt.getNewValue().equals("cancelled")) //$NON-NLS-1$
 				return;
@@ -378,27 +322,28 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		// HISTORICAL WEATHER DATA titles
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@200", //$NON-NLS-1$
 				bundle.getString("JPanelWeather.HistoricalWeatherData.Text")); //$NON-NLS-1$
-		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()) {
+		if (previousWeatherData.getPastDailySummaries() != null
+				&& !previousWeatherData.getPastDailySummaries().isEmpty()) {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@201", //$NON-NLS-1$
-					previousWeatherData.pastDailySummaries.get(0).getDate().toString(datePattern));
+					previousWeatherData.getPastDailySummaries().get(0).getDate().toString(datePattern));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@202", //$NON-NLS-1$
-					previousWeatherData.pastDailySummaries.get(1).getDate().toString(datePattern));
+					previousWeatherData.getPastDailySummaries().get(1).getDate().toString(datePattern));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@203", //$NON-NLS-1$
-					previousWeatherData.pastDailySummaries.get(2).getDate().toString(datePattern));
+					previousWeatherData.getPastDailySummaries().get(2).getDate().toString(datePattern));
 		} else {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@201", "No weather station found"); //$NON-NLS-1$ //$NON-NLS-2$
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@202", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@203", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
-		if (previousWeatherData.normalsDaily != null) {
+		if (previousWeatherData.getNormalsDaily() != null) {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@204", //$NON-NLS-1$
 					bundle.getString("JPanelWeather.NormalsDaily.Text")); //$NON-NLS-1$
 		} else {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@204", ""); //$NON-NLS-1$ //$NON-NLS-2$
 
 		}
-		if (previousWeatherData.normalsMonthly != null) {
+		if (previousWeatherData.getNormalsMonthly() != null) {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@205", //$NON-NLS-1$
 					bundle.getString("JPanelWeather.NormalsMonthly.Text")); //$NON-NLS-1$
 		} else {
@@ -425,21 +370,23 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@112", //$NON-NLS-1$
 				track.StartNightTime.toString("HH:mm")); //$NON-NLS-1$
 
-		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@113", previousWeatherData.daylightHours); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@113", //$NON-NLS-1$
+				previousWeatherData.getDaylightHours());
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@114", //$NON-NLS-1$
 				previousWeatherData.getMoonPhaseDescription());
 
-		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()
-				&& previousWeatherData.pastDailySummaries.get(0) != null) {
+		if (previousWeatherData.getPastDailySummaries() != null
+				&& !previousWeatherData.getPastDailySummaries().isEmpty()
+				&& previousWeatherData.getPastDailySummaries().get(0) != null) {
 			// Year -1
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@220", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.pastDailySummaries.get(0).getTemperatureMax()));
+					displayTemperature(previousWeatherData.getPastDailySummaries().get(0).getTemperatureMax()));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@225", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.pastDailySummaries.get(0).getTemperatureAverage()));
+					displayTemperature(previousWeatherData.getPastDailySummaries().get(0).getTemperatureAverage()));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@230", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.pastDailySummaries.get(0).getTemperatureMin()));
+					displayTemperature(previousWeatherData.getPastDailySummaries().get(0).getTemperatureMin()));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@235", //$NON-NLS-1$
-					Utils.FormatPrecipitation(previousWeatherData.pastDailySummaries.get(0).getPrecipitation(),
+					Utils.FormatPrecipitation(previousWeatherData.getPastDailySummaries().get(0).getPrecipitation(),
 							settings.Unit, true));
 		} else {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@220", ""); //$NON-NLS-1$ //$NON-NLS-2$
@@ -447,17 +394,18 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@230", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@235", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()
-				&& previousWeatherData.pastDailySummaries.get(1) != null) {
+		if (previousWeatherData.getPastDailySummaries() != null
+				&& !previousWeatherData.getPastDailySummaries().isEmpty()
+				&& previousWeatherData.getPastDailySummaries().get(1) != null) {
 			// Year -2
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@221", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.pastDailySummaries.get(1).getTemperatureMax()));
+					displayTemperature(previousWeatherData.getPastDailySummaries().get(1).getTemperatureMax()));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@226", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.pastDailySummaries.get(1).getTemperatureAverage()));
+					displayTemperature(previousWeatherData.getPastDailySummaries().get(1).getTemperatureAverage()));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@231", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.pastDailySummaries.get(1).getTemperatureMin()));
+					displayTemperature(previousWeatherData.getPastDailySummaries().get(1).getTemperatureMin()));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@236", //$NON-NLS-1$
-					Utils.FormatPrecipitation(previousWeatherData.pastDailySummaries.get(1).getPrecipitation(),
+					Utils.FormatPrecipitation(previousWeatherData.getPastDailySummaries().get(1).getPrecipitation(),
 							settings.Unit, true));
 		} else {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@221", ""); //$NON-NLS-1$ //$NON-NLS-2$
@@ -465,17 +413,18 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@231", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@236", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		if (previousWeatherData.pastDailySummaries != null && !previousWeatherData.pastDailySummaries.isEmpty()
-				&& previousWeatherData.pastDailySummaries.get(2) != null) {
+		if (previousWeatherData.getPastDailySummaries() != null
+				&& !previousWeatherData.getPastDailySummaries().isEmpty()
+				&& previousWeatherData.getPastDailySummaries().get(2) != null) {
 			// Year -3
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@222", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.pastDailySummaries.get(2).getTemperatureMax()));
+					displayTemperature(previousWeatherData.getPastDailySummaries().get(2).getTemperatureMax()));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@227", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.pastDailySummaries.get(2).getTemperatureAverage()));
+					displayTemperature(previousWeatherData.getPastDailySummaries().get(2).getTemperatureAverage()));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@232", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.pastDailySummaries.get(2).getTemperatureMin()));
+					displayTemperature(previousWeatherData.getPastDailySummaries().get(2).getTemperatureMin()));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@237", //$NON-NLS-1$
-					Utils.FormatPrecipitation(previousWeatherData.pastDailySummaries.get(2).getPrecipitation(),
+					Utils.FormatPrecipitation(previousWeatherData.getPastDailySummaries().get(2).getPrecipitation(),
 							settings.Unit, true));
 
 		} else {
@@ -486,13 +435,13 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		}
 
 		// Daily normals
-		if (previousWeatherData.normalsDaily != null) {
+		if (previousWeatherData.getNormalsDaily() != null) {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@223", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.normalsDaily.getTemperatureMax()));
+					displayTemperature(previousWeatherData.getNormalsDaily().getTemperatureMax()));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@228", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.normalsDaily.getTemperatureAverage()));
+					displayTemperature(previousWeatherData.getNormalsDaily().getTemperatureAverage()));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@233", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.normalsDaily.getTemperatureMin()));
+					displayTemperature(previousWeatherData.getNormalsDaily().getTemperatureMin()));
 		} else {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@223", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@228", ""); //$NON-NLS-1$ //$NON-NLS-2$
@@ -501,13 +450,13 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		}
 
 		// Monthly normals
-		if (previousWeatherData.normalsMonthly != null) {
+		if (previousWeatherData.getNormalsMonthly() != null) {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@224", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.normalsMonthly.getTemperatureMax()));
+					displayTemperature(previousWeatherData.getNormalsMonthly().getTemperatureMax()));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@229", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.normalsMonthly.getTemperatureAverage()));
+					displayTemperature(previousWeatherData.getNormalsMonthly().getTemperatureAverage()));
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@234", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.normalsMonthly.getTemperatureMin()));
+					displayTemperature(previousWeatherData.getNormalsMonthly().getTemperatureMin()));
 		} else {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@224", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@229", ""); //$NON-NLS-1$ //$NON-NLS-2$
@@ -515,11 +464,11 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@239", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
-		if (previousWeatherData.noaaSummariesWeatherStation != null) {
+		if (previousWeatherData.getNoaaSummariesWeatherStation() != null) {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@244", //$NON-NLS-1$
-					previousWeatherData.noaaSummariesWeatherStation.getName());
+					previousWeatherData.getNoaaSummariesWeatherStation().getName());
 
-			double distanceFromStart = previousWeatherData.noaaSummariesWeatherStation.getDistanceFromStart();
+			double distanceFromStart = previousWeatherData.getNoaaSummariesWeatherStation().getDistanceFromStart();
 			String distance = ""; //$NON-NLS-1$
 			if (settings.Unit == CgConst.UNIT_MILES_FEET)
 				distanceFromStart = Utils.Km2Miles(distanceFromStart);
@@ -531,14 +480,14 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@244", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@246", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		if (previousWeatherData.noaaNormalsWeatherStation != null
-				&& previousWeatherData.noaaSummariesWeatherStation != null
-				&& !previousWeatherData.noaaNormalsWeatherStation.getId()
-						.equals(previousWeatherData.noaaSummariesWeatherStation.getId())) {
+		if (previousWeatherData.getNoaaNormalsWeatherStation() != null
+				&& previousWeatherData.getNoaaSummariesWeatherStation() != null
+				&& !previousWeatherData.getNoaaNormalsWeatherStation().getId()
+						.equals(previousWeatherData.getNoaaSummariesWeatherStation().getId())) {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@245", //$NON-NLS-1$
-					previousWeatherData.noaaNormalsWeatherStation.getName());
+					previousWeatherData.getNoaaNormalsWeatherStation().getName());
 
-			double distanceFromStart = previousWeatherData.noaaNormalsWeatherStation.getDistanceFromStart();
+			double distanceFromStart = previousWeatherData.getNoaaNormalsWeatherStation().getDistanceFromStart();
 			String distance = ""; //$NON-NLS-1$
 			if (settings.Unit == CgConst.UNIT_MILES_FEET)
 				distanceFromStart = Utils.Meter2uMiles(distanceFromStart);
@@ -551,9 +500,11 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@245", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
-		String weatherDataSheet = ReplaceImages(weatherDataSheetBuilder.toString(), previousWeatherData.moonFraction);
+		String weatherDataSheet = ReplaceImages(weatherDataSheetBuilder.toString(),
+				previousWeatherData.getMoonFraction());
 		weatherDataSheet = AddWeatherStationsHyperLinks(weatherDataSheet,
-				previousWeatherData.noaaSummariesWeatherStation, previousWeatherData.noaaNormalsWeatherStation);
+				previousWeatherData.getNoaaSummariesWeatherStation(),
+				previousWeatherData.getNoaaNormalsWeatherStation());
 
 		return weatherDataSheet;
 	}
@@ -657,15 +608,13 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 			case "dailySummariesWeatherStation": //$NON-NLS-1$
 				if (noaaSummariesWeatherStation != null) {
 					e.attr("href", //$NON-NLS-1$
-							"https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/" //$NON-NLS-1$
-									+ noaaSummariesWeatherStation.getId() + "/detail"); //$NON-NLS-1$
+							NoaaWeatherStation.WebUrlBase + noaaSummariesWeatherStation.getId() + "/detail"); //$NON-NLS-1$
 				}
 				break;
 			case "normalsWeatherStation": //$NON-NLS-1$
 				if (noaaNormalsWeatherStation != null) {
 					e.attr("href", //$NON-NLS-1$
-							"https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/" //$NON-NLS-1$
-									+ noaaNormalsWeatherStation.getId() + "/detail"); //$NON-NLS-1$
+							NoaaWeatherStation.WebUrlBase + noaaNormalsWeatherStation.getId() + "/detail"); //$NON-NLS-1$
 				}
 				break;
 			}

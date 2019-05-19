@@ -107,9 +107,6 @@ public class CgSettings {
 	private String ThunderForestApiKey;
 	private PropertyChangeSupport ThunderForestApiKeyChanged = new PropertyChangeSupport(this);
 
-	private String NoaaToken;
-	private PropertyChangeSupport NoaaTokenChanged = new PropertyChangeSupport(this);
-
 	public Color Color_Diff_VeryEasy;
 	public Color Color_Diff_Easy;
 	public Color Color_Diff_Average;
@@ -308,7 +305,6 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "CURVEBUTTONSICONSIZE", CurveButtonsIconSize);
 
 			Utils.WriteStringToXML(writer, "THUNDERFORESTAPIKEY", ThunderForestApiKey);
-			Utils.WriteStringToXML(writer, "NOAATOKEN", NoaaToken);
 
 			Utils.WriteIntToXML(writer, "COLORDIFFVERYEASY", Color_Diff_VeryEasy.getRGB());
 			Utils.WriteIntToXML(writer, "COLORDIFFEASY", Color_Diff_Easy.getRGB());
@@ -503,47 +499,4 @@ public class CgSettings {
 
 		return isKeyValid;
 	}
-
-
-	/**
-	 * Returns the user's NOAA token.
-	 * 
-	 * @return string with the key
-	 */
-	public String getNoaaToken() {
-		return NoaaToken == null ? "" : NoaaToken;
-	}
-
-
-	/**
-	 * Sets the user's NOAA token.
-	 * 
-	 * @param token
-	 *            The entered token
-	 */
-	public void setNoaaToken(String token) {
-		String oldToken = NoaaToken;
-		NoaaToken = token;
-		NoaaTokenChanged.firePropertyChange("NoaaTokenChanged", oldToken, token);
-	}
-
-
-	public void addNoaaTokenChangeListener(PropertyChangeListener listener) {
-		NoaaTokenChanged.addPropertyChangeListener(listener);
-	}
-
-
-	/**
-	 * Verifies that the NOAA token is a valid one
-	 * 
-	 */
-	public boolean isNoaaTokenValid() {
-		boolean isTokenValid = false;
-
-		if (NoaaToken != null && NoaaToken.length() == 32)
-			isTokenValid = true;
-
-		return isTokenValid;
-	}
-
 }

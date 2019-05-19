@@ -9,15 +9,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.Instant;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javadocmd.simplelatlng.LatLng;
 import com.javadocmd.simplelatlng.LatLngTool;
@@ -32,9 +35,8 @@ import course_generator.utils.CgLog;
  */
 final public class NoaaHistoricalWeatherRetriever {
 
-	private DateTime startDate;
+	private DateTime requestStartDate;
 	private LatLng startPoint;
-	private String noaaToken;
 
 	private LatLng searchAreaSouthWestCorner;// The south west location of the desired geographical extent for search
 	private LatLng searchAreaNorthEastCorner;// The north east location of the desired geographical extent for search
@@ -49,13 +51,28 @@ final public class NoaaHistoricalWeatherRetriever {
 	private NoaaWeatherData noaaNormalsDaily;
 	private NoaaWeatherData noaaNormalsMonthly;
 
-	private final String NoaaApiUrl = "https://www.ncdc.noaa.gov/cdo-web/api/v2/"; //$NON-NLS-1$
-	private final String ghcndDatSetId = "&datasetid=GHCND"; //$NON-NLS-1$
-	private final String ghcndDataTypeIds = "&datatypeid=TMAX&datatypeid=TMIN&datatypeid=PRCP"; //$NON-NLS-1$
-	private final String normalDlyDataSetId = "&datasetid=NORMAL_DLY"; //$NON-NLS-1$
-	private final String normalMlyDataSetId = "&datasetid=NORMAL_MLY"; //$NON-NLS-1$
-	private final String normalDlyDataTypeIds = "&datatypeid=DLY-TMIN-NORMAL&datatypeid=DLY-TMAX-NORMAL&datatypeid=DLY-TAVG-NORMAL"; //$NON-NLS-1$
-	private final String normalMlyDataTypeIds = "&datatypeid=MLY-TMIN-NORMAL&datatypeid=MLY-TMAX-NORMAL&datatypeid=MLY-TAVG-NORMAL"; //$NON-NLS-1$
+	public static String NoaaBaseUrl = "https://www.ncei.noaa.gov/access/services/"; //$NON-NLS-1$
+	private final String ghcndDatSetId = "&dataset=daily-summaries"; //$NON-NLS-1$
+	private final String TMax = "TMAX";
+	private final String TMin = "TMIN";
+	private final String Precipitation = "PRCP";
+	private final String ghcndDataTypeIds = "&dataTypes=" + TMax + "," + TMin + "," + Precipitation; //$NON-NLS-1$
+	private final String normalDlyDataSet = "&dataset=normals-daily"; //$NON-NLS-1$
+	private final String TMaxNormalDaily = "DLY-TMAX-NORMAL";
+	private final String TMinNormalDaily = "DLY-TMIN-NORMAL";
+	private final String TAvgNormalDaily = "DLY-TAVG-NORMAL";
+	private final String normalDlyDataTypeIds = "&datatypes=" + TMaxNormalDaily + "," + TMinNormalDaily + "," //$NON-NLS-1$
+			+ TAvgNormalDaily;
+	private final String normalMlyDataSet = "&dataset=normals-monthly"; //$NON-NLS-1$
+	private final String TMaxNormalMonthly = "MLY-TMAX-NORMAL";
+	private final String TMinNormalMonthly = "MLY-TMIN-NORMAL";
+	private final String TAvgNormalMonthly = "MLY-TAVG-NORMAL";
+	private final String normalMlyDataTypeIds = "&datatypes=" + TMaxNormalMonthly + "," + TMinNormalMonthly + "," //$NON-NLS-1$
+			+ TAvgNormalMonthly;
+	private final String startDate = "&startDate=";
+	private final String endDate = "&endDate=";
+	private final String searchWeatherStationQueryBase = "search/v1/data?boundingBox=";
+	private final String dataAccessQueryBase = "data/v1?format=json&stations=";
 
 
 	private NoaaHistoricalWeatherRetriever(LatLng startPoint, LatLng searchAreaCenter, double searchAreaRadius) {
@@ -89,20 +106,7 @@ final public class NoaaHistoricalWeatherRetriever {
 	 * @return
 	 */
 	public NoaaHistoricalWeatherRetriever when(DateTime dateTime) {
-		this.startDate = dateTime;
-		return this;
-	}
-
-
-	/**
-	 * Assigns a NOAA token to the current object.
-	 * 
-	 * @param noaaToken
-	 *            The NOAA token to be used for the queries.
-	 * @return The current object.
-	 */
-	public NoaaHistoricalWeatherRetriever forUser(String noaaToken) {
-		this.noaaToken = noaaToken;
+		this.requestStartDate = dateTime;
 		return this;
 	}
 
@@ -170,12 +174,25 @@ final public class NoaaHistoricalWeatherRetriever {
 	private String processNoaaRequest(String parameters) {
 		StringBuffer weatherHistory = new StringBuffer();
 		try {
-			HttpClient client = HttpClientBuilder.create().build();
-			HttpGet request = new HttpGet(NoaaApiUrl + parameters + "&units=metric&limit=1000"); //$NON-NLS-1$
+			HttpClientBuilder clientBuilder = HttpClientBuilder.create();
 
-			// add request header
-			request.addHeader("token", noaaToken); //$NON-NLS-1$
+			// I don't understand exactly the parameters 'requestSentRetryEnabled' is used.
+			// From the official documentation :
+			// (https://jar-download.com/artifacts/org.apache.httpcomponents/httpclient/4.5.2/source-code/org/apache/http/impl/client/DefaultHttpRequestRetryHandler.java)
+			// @param requestSentRetryEnabled true if it's OK to retry requests that have
+			// been sent
+			clientBuilder.setRetryHandler(new DefaultHttpRequestRetryHandler(3, false));
+
+			HttpClient client = clientBuilder.build();
+			HttpGet request = new HttpGet(NoaaBaseUrl + parameters + "&units=metric&limit=1000"); //$NON-NLS-1$
+
 			HttpResponse response = client.execute(request);
+
+			if (response.getStatusLine().getStatusCode() != 200)
+				CgLog.error("NoaaWeatherHistoryRetriever.processNoaaRequest : Error code '" //$NON-NLS-1$
+						+ response.getStatusLine().getStatusCode()
+						+ "' while executing the NOAA request with the parameters " + parameters + ":\n" //$NON-NLS-2$
+						+ response.getStatusLine().getReasonPhrase());
 
 			BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
@@ -206,35 +223,45 @@ final public class NoaaHistoricalWeatherRetriever {
 		if (weatherStationsQueryResults.equals("") || !weatherStationsQueryResults.contains("results")) //$NON-NLS-1$ //$NON-NLS-2$
 			return null;
 
-		List<NoaaWeatherStation> stations = null;
+		List<NoaaWeatherStation> stations = new ArrayList<NoaaWeatherStation>();
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			String weatherStationsResults = mapper.readValue(weatherStationsQueryResults, JsonNode.class).get("results") //$NON-NLS-1$
 					.toString();
 
-			stations = mapper.readValue(weatherStationsResults, new TypeReference<List<NoaaWeatherStation>>() {
-			});
+			List<NoaaResults> noaaObjects = mapper.readValue(weatherStationsResults,
+					new TypeReference<List<NoaaResults>>() {
+					});
 
-			for (NoaaWeatherStation current : stations) {
-				LatLng station = new LatLng(Double.valueOf(current.getLatitude()),
-						Double.valueOf(current.getLongitude()));
+			for (NoaaResults currentObject : noaaObjects) {
 
-				double distanceFromStart = LatLngTool.distance(station, startPoint, LengthUnit.KILOMETER);
-				double distanceFromSearchAreaCenter = LatLngTool.distance(station, searchAreaCenter,
+				if (!currentObject.IsStationValid()) {
+					continue;
+				}
+
+				LatLng stationLocation = new LatLng(Double.valueOf(currentObject.getStationLatitude()),
+						Double.valueOf(currentObject.getStationLongitude()));
+
+				double distanceFromStart = LatLngTool.distance(stationLocation, startPoint, LengthUnit.KILOMETER);
+				double distanceFromSearchAreaCenter = LatLngTool.distance(stationLocation, searchAreaCenter,
 						LengthUnit.KILOMETER);
 
 				// Converting the distance and only keeping 1 decimal.
 				distanceFromStart = distanceFromStart * 10;
 				distanceFromStart = (double) ((int) distanceFromStart);
 				distanceFromStart = distanceFromStart / 10;
-				current.setDistanceFromStart(distanceFromStart);
+
+				NoaaWeatherStation noaaWeatherStation = new NoaaWeatherStation(currentObject.getStationId(),
+						currentObject.getStationName(), currentObject.getStationLatitude(),
+						currentObject.getStationLongitude(), distanceFromStart);
 
 				// Converting the distance and only keeping 1 decimal.
 				distanceFromSearchAreaCenter = distanceFromSearchAreaCenter * 10;
 				distanceFromSearchAreaCenter = (double) ((int) distanceFromSearchAreaCenter);
 				distanceFromSearchAreaCenter = distanceFromSearchAreaCenter / 10;
-				current.setDistanceFromSearchAreaCenter(distanceFromSearchAreaCenter);
+				noaaWeatherStation.setDistanceFromSearchAreaCenter(distanceFromSearchAreaCenter);
 
+				stations.add(noaaWeatherStation);
 			}
 
 			// We sort the stations from closest to the start to farthest to the
@@ -262,9 +289,10 @@ final public class NoaaHistoricalWeatherRetriever {
 	private List<NoaaWeatherData> findMostRelevantDailySummaries() {
 
 		// Looking for the 3 previous years of weather data
-		String threeYearsAgo = String.valueOf(Integer.valueOf(startDate.getYear()) - 3);
-		String queryParameters = "stations?extent=" + getExtent(searchAreaSouthWestCorner, searchAreaNorthEastCorner) //$NON-NLS-1$
-				+ ghcndDatSetId + "&startdate=" + threeYearsAgo + "-01-01" + "&enddate=" + startDate.getYear() //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		String threeYearsAgo = String.valueOf(Integer.valueOf(requestStartDate.getYear()) - 3);
+		String queryParameters = searchWeatherStationQueryBase
+				+ getExtent(searchAreaSouthWestCorner, searchAreaNorthEastCorner) + ghcndDatSetId + startDate
+				+ threeYearsAgo + "-01-01" + endDate + requestStartDate.getYear() //$NON-NLS-1$ //$NON-NLS-2$
 				+ "-12-31"; //$NON-NLS-1$
 
 		List<NoaaWeatherStation> stations = findClosestWeatherStations(queryParameters);
@@ -300,14 +328,15 @@ final public class NoaaHistoricalWeatherRetriever {
 		ArrayList<NoaaWeatherData> pastDailySummaries = new ArrayList<NoaaWeatherData>();
 
 		for (int pastYearNumber = 1; pastYearNumber < 4; ++pastYearNumber) {
-			Instant time = Instant.ofEpochMilli(startDate.minusDays(pastYearNumber * 364).getMillis());
+			Instant time = Instant.ofEpochMilli(requestStartDate.minusDays(pastYearNumber * 364).getMillis());
 			String pastDate = time.toDateTime().toString("yyyy-MM-dd"); //$NON-NLS-1$
 
-			String findWeatherStation = "data?stationid=" + stationId + ghcndDatSetId + ghcndDataTypeIds + "&startdate=" //$NON-NLS-1$ //$NON-NLS-2$
-					+ pastDate + "&enddate=" + pastDate; //$NON-NLS-1$
+			String queryParameters = dataAccessQueryBase + stationId + ghcndDatSetId + ghcndDataTypeIds + startDate // $NON-NLS-1$
+					+ pastDate + endDate + pastDate;
 
-			String dailyNormalsData = processNoaaRequest(findWeatherStation);
-			if (!dailyNormalsData.contains("results")) //$NON-NLS-1$
+			String dailyNormalsData = processNoaaRequest(queryParameters);
+			if (!dailyNormalsData.contains(TMax) && !dailyNormalsData.contains(TMin)
+					&& !dailyNormalsData.contains(Precipitation))
 				return null;
 			else {
 				NoaaWeatherData dailyNormals = parseWeatherData(dailyNormalsData);
@@ -328,8 +357,9 @@ final public class NoaaHistoricalWeatherRetriever {
 	 */
 	private NoaaWeatherData findMostRelevantNormalsDaily() {
 
-		String queryParameters = "stations?extent=" + getExtent(searchAreaSouthWestCorner, searchAreaNorthEastCorner) //$NON-NLS-1$
-				+ normalDlyDataSetId;
+		String queryParameters = searchWeatherStationQueryBase
+				+ getExtent(searchAreaSouthWestCorner, searchAreaNorthEastCorner) // $NON-NLS-1$
+				+ normalDlyDataSet;
 
 		List<NoaaWeatherStation> stations = findClosestWeatherStations(queryParameters);
 		if (stations == null)
@@ -358,11 +388,13 @@ final public class NoaaHistoricalWeatherRetriever {
 	 * @return The weather data, if found.
 	 */
 	private NoaaWeatherData retrieveNormalsDaily(String stationId) {
-		String queryParameters = "data?stationid=" + stationId + "&startdate=2010-" + startDate.toString("MM-dd") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ "&enddate=2010-" + startDate.toString("MM-dd") + normalDlyDataSetId + normalDlyDataTypeIds; //$NON-NLS-1$ //$NON-NLS-2$
+		String queryParameters = dataAccessQueryBase + stationId + startDate + "2010-" //$NON-NLS-1$ //$NON-NLS-2$
+				+ requestStartDate.toString("MM-dd") //$NON-NLS-1$
+				+ endDate + "2010-" + requestStartDate.toString("MM-dd") + normalDlyDataSet + normalDlyDataTypeIds; //$NON-NLS-1$ //$NON-NLS-2$
 
 		String normalsDailyData = processNoaaRequest(queryParameters);
-		if (!normalsDailyData.contains("results")) //$NON-NLS-1$
+		if (!normalsDailyData.contains(TMinNormalDaily) && !normalsDailyData.contains(TMaxNormalDaily)
+				&& !normalsDailyData.contains(TAvgNormalDaily))
 			return null;
 
 		return parseWeatherData(normalsDailyData);
@@ -378,12 +410,14 @@ final public class NoaaHistoricalWeatherRetriever {
 		if (noaaNormalsWeatherStation == null)
 			return null;
 
-		String findWeatherStation = "data?stationid=" + noaaNormalsWeatherStation.getId() + normalMlyDataSetId //$NON-NLS-1$
-				+ normalMlyDataTypeIds + "&startdate=" + startDate.toString("2010-MM-01") + "&enddate=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ startDate.toString("2010-MM-01"); //$NON-NLS-1$
+		String findWeatherStation = dataAccessQueryBase + noaaNormalsWeatherStation.getId() + normalMlyDataSet // $NON-NLS-1$
+				+ normalMlyDataTypeIds + startDate + requestStartDate.toString("2010-MM-01") + endDate //$NON-NLS-1$ //$NON-NLS-2$
+																										// //$NON-NLS-3$
+				+ requestStartDate.toString("2010-MM-01"); //$NON-NLS-1$
 
 		String normalsMonthlyData = processNoaaRequest(findWeatherStation);
-		if (!normalsMonthlyData.contains("results")) //$NON-NLS-1$
+		if (!normalsMonthlyData.contains(TMinNormalMonthly) && !normalsMonthlyData.contains(TMaxNormalMonthly)
+				&& !normalsMonthlyData.contains(TAvgNormalMonthly))
 			return null;
 
 		return parseWeatherData(normalsMonthlyData);
@@ -402,32 +436,40 @@ final public class NoaaHistoricalWeatherRetriever {
 		NoaaWeatherData noaaWeatherData = new NoaaWeatherData();
 		try {
 			ObjectMapper mapper = new ObjectMapper();
-			String weatherResults = mapper.readValue(weatherData, JsonNode.class).get("results").toString(); //$NON-NLS-1$
-
-			List<NoaaResults> noaaObjects = mapper.readValue(weatherResults, new TypeReference<List<NoaaResults>>() {
+			mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
+			List<NoaaResults> noaaObjects = mapper.readValue(weatherData, new TypeReference<List<NoaaResults>>() {
 			});
 
 			for (NoaaResults currentObject : noaaObjects) {
-				switch (currentObject.getDatatype()) {
-				case "TMIN": //$NON-NLS-1$
-				case "DLY-TMIN-NORMAL": //$NON-NLS-1$
-				case "MLY-TMIN-NORMAL": //$NON-NLS-1$
-					noaaWeatherData.setTemperatureMin(currentObject.getValue());
-					break;
-				case "TMAX": //$NON-NLS-1$
-				case "DLY-TMAX-NORMAL": //$NON-NLS-1$
-				case "MLY-TMAX-NORMAL": //$NON-NLS-1$
-					noaaWeatherData.setTemperatureMax(currentObject.getValue());
-					break;
-				case "DLY-TAVG-NORMAL": //$NON-NLS-1$
-				case "MLY-TAVG-NORMAL": //$NON-NLS-1$
-					noaaWeatherData.setTemperatureAverage(currentObject.getValue());
-					break;
-				case "PRCP": //$NON-NLS-1$
-					noaaWeatherData.setPrecipitation(currentObject.getValue());
-					break;
-				}
-				noaaWeatherData.setDate(DateTime.parse(currentObject.getDate()));
+
+				// Daily summary data
+				if (!StringUtils.isBlank(currentObject.getMaximumTemperature()))
+					noaaWeatherData.setTemperatureMax(currentObject.getMaximumTemperature());
+				if (!StringUtils.isBlank(currentObject.getMinimumTemperature()))
+					noaaWeatherData.setTemperatureMin(currentObject.getMinimumTemperature());
+				if (!StringUtils.isBlank(currentObject.getAverageTemperature()))
+					noaaWeatherData.setTemperatureAverage(currentObject.getAverageTemperature());
+				if (!StringUtils.isBlank(currentObject.getPrecipitation()))
+					noaaWeatherData.setPrecipitation(currentObject.getPrecipitation());
+
+				// Daily normals data
+				if (!StringUtils.isBlank(currentObject.getMaximumTemperatureDailyNormal()))
+					noaaWeatherData.setTemperatureMax(currentObject.getMaximumTemperatureDailyNormal());
+				if (!StringUtils.isBlank(currentObject.getMinimumTemperatureDailyNormal()))
+					noaaWeatherData.setTemperatureMin(currentObject.getMinimumTemperatureDailyNormal());
+				if (!StringUtils.isBlank(currentObject.getAverageTemperatureDailyNormal()))
+					noaaWeatherData.setTemperatureAverage(currentObject.getAverageTemperatureDailyNormal());
+
+				// Monthly normals data
+				if (!StringUtils.isBlank(currentObject.getMaximumTemperatureMonthlyNormal()))
+					noaaWeatherData.setTemperatureMax(currentObject.getMaximumTemperatureMonthlyNormal());
+				if (!StringUtils.isBlank(currentObject.getMinimumTemperatureMonthlyNormal()))
+					noaaWeatherData.setTemperatureMin(currentObject.getMinimumTemperatureMonthlyNormal());
+				if (!StringUtils.isBlank(currentObject.getAverageTemperatureMonthlyNormal()))
+					noaaWeatherData.setTemperatureAverage(currentObject.getAverageTemperatureMonthlyNormal());
+
+				if (!StringUtils.isBlank(currentObject.getDate()) && currentObject.getDate().length() == 10)
+					noaaWeatherData.setDate(DateTime.parse(currentObject.getDate()));
 			}
 
 		} catch (IOException e) {

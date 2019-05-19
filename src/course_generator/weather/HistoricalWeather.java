@@ -18,7 +18,6 @@ import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.dialogs.ProgressDialog;
 import course_generator.dialogs.ProgressDialogListener;
-import course_generator.settings.CgSettings;
 import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
@@ -31,18 +30,17 @@ import course_generator.utils.Utils;
 public class HistoricalWeather implements ProgressDialogListener {
 
 	// Daily summaries
-	public NoaaWeatherStation noaaSummariesWeatherStation;
-	public List<NoaaWeatherData> pastDailySummaries;
+	private NoaaWeatherStation noaaSummariesWeatherStation;
+	private List<NoaaWeatherData> pastDailySummaries;
 
 	// Normals
-	public NoaaWeatherStation noaaNormalsWeatherStation;
-	public NoaaWeatherData normalsDaily;
-	public NoaaWeatherData normalsMonthly;
+	private NoaaWeatherStation noaaNormalsWeatherStation;
+	private NoaaWeatherData normalsDaily;
+	private NoaaWeatherData normalsMonthly;
 
 	// Event data
-	public String daylightHours;
-	public double moonFraction;
-	private CgSettings Settings;
+	private String daylightHours;
+	private double moonFraction;
 
 	private TrackData Track;
 	private LatLng searchAreaCenter;
@@ -55,9 +53,7 @@ public class HistoricalWeather implements ProgressDialogListener {
 	public static final String DAYLIGHTHOURS = "DAYLIGHTHOURS"; //$NON-NLS-1$
 
 
-	public HistoricalWeather(CgSettings settings) {
-		Settings = settings;
-
+	public HistoricalWeather() {
 	}
 
 
@@ -98,8 +94,7 @@ public class HistoricalWeather implements ProgressDialogListener {
 
 				long retrievalstartTime = System.currentTimeMillis();
 				NoaaHistoricalWeatherRetriever weatherHistoryRetriever = NoaaHistoricalWeatherRetriever
-						.where(startPoint, searchAreaCenter, searchAreaRadius).when(Track.StartTime)
-						.forUser(Settings.getNoaaToken()).retrieve();
+						.where(startPoint, searchAreaCenter, searchAreaRadius).when(Track.StartTime).retrieve();
 				CgLog.info("Weather retrieval time : " + (System.currentTimeMillis() - retrievalstartTime) + "ms"); //$NON-NLS-1$ //$NON-NLS-2$
 
 				publish(75);
@@ -190,6 +185,41 @@ public class HistoricalWeather implements ProgressDialogListener {
 		searchAreaCenter = LatLngTool.travel(startPoint, bearingBetweenPoint, distanceFromStart / 2, LengthUnit.METER);
 		searchAreaRadius = distanceFromStart / 2;
 
+	}
+
+
+	public NoaaWeatherStation getNoaaSummariesWeatherStation() {
+		return noaaSummariesWeatherStation;
+	}
+
+
+	public List<NoaaWeatherData> getPastDailySummaries() {
+		return pastDailySummaries;
+	}
+
+
+	public NoaaWeatherStation getNoaaNormalsWeatherStation() {
+		return noaaNormalsWeatherStation;
+	}
+
+
+	public NoaaWeatherData getNormalsDaily() {
+		return normalsDaily;
+	}
+
+
+	public NoaaWeatherData getNormalsMonthly() {
+		return normalsMonthly;
+	}
+
+
+	public String getDaylightHours() {
+		return daylightHours;
+	}
+
+
+	public double getMoonFraction() {
+		return moonFraction;
 	}
 
 
