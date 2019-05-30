@@ -97,7 +97,6 @@ public class frmSettings extends javax.swing.JDialog {
 	private JPanel panelGeneral;
 	private JPanel panelDisplay;
 	private JPanel panelMaps;
-	private JPanel panelWeather;
 	private JLabel lbStatusBarIconSize;
 	private JComboBox<Object> cbStatusBarIconSize;
 	private JLabel lbTabIconSize;
@@ -117,7 +116,6 @@ public class frmSettings extends javax.swing.JDialog {
 	private JLabel lbCurveButtonsIconSize;
 	private JComboBox<Object> cbCurveButtonsIconSize;
 	private JTextField edThunderForestApiKey;
-	private JTextField NoaaToken;
 
 	private int fontSize[] = { 16, 20, 22, 24, 32, 64, 96, 128 };
 	private JLabel lbThunderForestApiKey;
@@ -220,9 +218,6 @@ public class frmSettings extends javax.swing.JDialog {
 
 		// -- Thunderforest API key
 		edThunderForestApiKey.setText(settings.getThunderForestApiKey());
-
-		// -- NOAA token
-		NoaaToken.setText(settings.getNoaaToken());
 
 		// -- Colors
 		ColorVeryEasy = settings.Color_Diff_VeryEasy;
@@ -353,15 +348,12 @@ public class frmSettings extends javax.swing.JDialog {
 					|| (OldCurveButtonsIconSize != settings.CurveButtonsIconSize))
 				JOptionPane.showMessageDialog(this, bundle.getString("frmSettings.MsgRestart"));
 
-			// Maps & Weather
+			// Maps
 			if (edThunderForestApiKey.getText() != ""
 					&& edThunderForestApiKey.getText() != settings.getThunderForestApiKey()) {
 				settings.setThunderForestApiKey(edThunderForestApiKey.getText());
 			}
 
-			if (NoaaToken.getText() != "" && NoaaToken.getText() != settings.getNoaaToken()) {
-				settings.setNoaaToken(NoaaToken.getText());
-			}
 		}
 		return ok;
 	}
@@ -852,22 +844,7 @@ public class frmSettings extends javax.swing.JDialog {
 
 		addTab(TabbedPaneGlobal, panelColors, bundle.getString("frmSettings.TabColors.tabTitle"), null);
 
-		// ## Tab "Weather" ##
-		panelWeather = new JPanel();
-		panelWeather.setLayout(new GridBagLayout());
-
 		// line = 0;
-
-		// NOAA API Token
-		JLabel lbNOAAToken = new javax.swing.JLabel();
-		lbNOAAToken.setText(bundle.getString("frmSettings.lbNOAAToken.text"));
-		Utils.addComponent(panelWeather, lbNOAAToken, 0, line, 1, 1, 1, 1, 10, 10, 0, 0, GridBagConstraints.NORTH,
-				GridBagConstraints.HORIZONTAL);
-		NoaaToken = new javax.swing.JTextField();
-		Utils.addComponent(panelWeather, NoaaToken, 1, line++, 1, 1, 2, 1, 10, 5, 0, 10, GridBagConstraints.NORTH,
-				GridBagConstraints.HORIZONTAL);
-
-		addTab(TabbedPaneGlobal, panelWeather, bundle.getString("frmSettings.TabWeather.tabTitle"), null);
 
 		// -- Separator
 		// -- NOCONNECTIONONSTARTUP - Boolean -bNoConnectOnStartup

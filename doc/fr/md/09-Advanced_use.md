@@ -284,12 +284,6 @@ Les réglages possibles sont les suivants:
 ![](./images/CG40_Settings_Maps.png)
  Permet d'entrer une clef API Thunderforest pour pouvoir utiliser le fond de carte Outdoors. Une clef gratuite peut être obtenue [ici](https://thunderforest.com/docs/apikeys/).
  
- ### Onglet "Météo"  
-![](./images/CG40_Settings_Weather.png)
- Permet d'entrer un token NOAA API pour pouvoir récupérer les données historiques météorologiques du parcours. Une clef gratuite peut être obtenue [ici](https://www.ncdc.noaa.gov/cdo-web/token).
-
-
-
 ## Importer et exporter les points marqués
 
 Il est nécessaire dans certain cas de devoir sauvegarder uniquement les points marqués du parcours actuel dans un fichier. Cela permet si vous avez une nouvelle version du parcours de pouvoir importer ces points sur ce parcours.
@@ -340,7 +334,6 @@ Sur la droite, une barre verticale de boutons permet de réaliser des actions su
 * ![](./images/Map/eat.png) : Permet d'ajouter un ravitaillement au point courant.
 * ![](./images/Map/drink.png) : Permet d'ajouter un point d'eau au point courant.
 * ![](./images/Map/select_map.png) : Permet de sélectionner le type de carte à utiliser.
-* ![](./images/Map/show_weather_stations.png) : Affiche sur la carte les stations météorologiques les plus proches.
 
 Les commandes à la souris sont les suivantes:
 
