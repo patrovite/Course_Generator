@@ -53,12 +53,8 @@ import javax.swing.filechooser.FileFilter;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.compress.utils.IOUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.Instant;
-import org.joda.time.Minutes;
 import org.shredzone.commons.suncalc.SunTimes;
 
 import course_generator.CgData;
@@ -177,21 +173,6 @@ public class Utils {
 	public static ImageIcon getIcon(Component Parent, String name, int size) {
 		return new javax.swing.ImageIcon(
 				Parent.getClass().getResource("/course_generator/images/" + size + "/" + name));
-	}
-
-
-	public static String imageToBase64(Component Parent, String image, int size) {
-
-		byte[] imageBytes = null;
-		try {
-			InputStream is = Parent.getClass().getResourceAsStream("/course_generator/images/" + size + "/" + image);
-			imageBytes = IOUtils.toByteArray(is);
-
-			is.close();
-		} catch (Exception e) {
-			CgLog.info("Error when retrieving the image" + image + " : " + e.getMessage());
-		}
-		return Base64.encodeBase64String(imageBytes);
 	}
 
 
@@ -1623,24 +1604,6 @@ public class Utils {
 			System.out.println(resourceName + " exported to " + dst);
 		}
 		return ok;
-
-		/*
-		 * InputStream stream = null; OutputStream resStreamOut = null; boolean
-		 * ok=false; String jarFolder; try { stream =
-		 * obj.getClass().getResourceAsStream(resourceName); if (stream == null) { throw
-		 * new Exception ("Cannot get resource \"" + resourceName + "\" from jar file");
-		 * } int readBytes; byte[] buffer = new byte[4096]; String
-		 * s=obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().
-		 * getPath(); System.out.println("resourceName="+resourceName);
-		 * System.out.println("s="+s); //jarFolder = new
-		 * File(obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI
-		 * ().getPath()).getParentFile().getPath().replace('\\', '/'); jarFolder = new
-		 * File(s).getParentFile().getPath().replace('\\', '/'); resStreamOut = new
-		 * FileOutputStream(dst); while ((readBytes = stream.read(buffer)) >0 ) {
-		 * resStreamOut.write(buffer, 0, readBytes); } ok=true; } catch (Exception ex) {
-		 * throw ex; } finally { if (stream!=null) stream.close(); if
-		 * (resStreamOut!=null) resStreamOut.close(); } return ok;
-		 */
 	}
 
 
@@ -1665,80 +1628,6 @@ public class Utils {
 		return success;
 	}
 
-
-	/**
-	 * Returns a given temperature in the correct unit (Celsius or Fahrenheit)
-	 * 
-	 * @param temperature
-	 *            temperature in Celsius
-	 * @return Converted value
-	 */
-	public static String FormatTemperature(double temperature, int unit) {
-		temperature = unit == CgConst.UNIT_MILES_FEET ? temperature * 9 / 5 + 32 : temperature;
-
-		return String.format("%3.0f", temperature).trim();
-	}
-
-
-	/**
-	 * Converts a given temperature to the correct unit (Celsius or Fahrenheit)
-	 * 
-	 * @param temperature
-	 *            temperature in Celsius
-	 * @return Converted value
-	 */
-	public static double CelsiusToFahrenheit(double temperature) {
-		return ((temperature - 32) * 5) / 9;
-	}
-
-
-	/**
-	 * Compares two DateTime objects, using their time portion only, completely
-	 * ignoring Year, Month and Day.
-	 * 
-	 * @param d1
-	 *            a DateTimeobject
-	 * @param d2
-	 *            a DateTimeobject
-	 * @return the difference, in seconds, between the DateTimes
-	 * @see https://stackoverflow.com/questions/7676149/compare-only-the-time-portion-of-two-dates-ignoring-the-date-part#7676307
-	 */
-	public static int compareTimes(DateTime d1, DateTime d2) {
-		int t1;
-		int t2;
-
-		t1 = (int) (d1.toDate().getTime() % (24 * 60 * 60 * 1000L));
-		t2 = (int) (d2.toDate().getTime() % (24 * 60 * 60 * 1000L));
-		return (t1 - t2);
-	}
-
-
-	/**
-	 * Converts a Unix time to a Joda-Time.
-	 * 
-	 * @param unixTime
-	 *            A Unix time as a long.
-	 * @return A DateTime.
-	 */
-	public static DateTime unixTimeToDateTime(long unixTime) {
-		return new DateTime(Instant.ofEpochMilli(unixTime * 1000));
-	}
-
-
-	/**
-	 * Converts a Unix time to a Joda-Time
-	 * 
-	 * @param unixTime
-	 *            A Unix time as a long.
-	 * @param timeZoneId
-	 *            A time zone.
-	 * @return A Joda-Time.
-	 */
-	public static DateTime unixTimeToDateTime(long unixTime, String timeZoneId) {
-		DateTime dateTime = new DateTime(unixTimeToDateTime(unixTime)).withZone(DateTimeZone.forID(timeZoneId));
-
-		return dateTime;
-	}
 
 
 	/**
@@ -1785,28 +1674,6 @@ public class Utils {
 		long hoursOffsetFromUTC = TimeUnit.MILLISECONDS.toHours(gpsPointTimeZone.getRawOffset());
 
 		return (int) hoursOffsetFromUTC;
-	}
-
-
-	/**
-	 * Computes the total number of hours and minutes of daylight between two times.
-	 * We assume the given dates are of the same day.
-	 * 
-	 * @param startNightTime
-	 *            The sunset time.
-	 * @param endNightTime
-	 *            The sunrise time.
-	 * @return A string containing the total hours and minutes of daylight.
-	 */
-	public static String computeDaylightHours(DateTime startDayTime, DateTime endDayTime) {
-		Minutes totalMinutes = Minutes.minutesBetween(startDayTime, endDayTime);
-		if (totalMinutes.getMinutes() == 0)
-			return "";
-
-		int hours = totalMinutes.toStandardHours().getHours();
-		int minutes = totalMinutes.toStandardSeconds().getSeconds() - hours * 3600;
-
-		return String.format("%02d", hours) + ":" + String.format("%02d", minutes / 60);
 	}
 
 

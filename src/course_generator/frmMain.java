@@ -33,8 +33,6 @@
  *  - jfreechart - LGPL - http://www.jfree.org/index.html
  *  - Joda-time - http://www.joda.org/joda-time/
  *  - JXMapViewer2 - LGPL - https://wiki.openstreetmap.org/wiki/JXMapViewer2
- *  - SwingX - LGPL 2.1 - https://swingx.java.net/
- *  - Timeshape - MIT - https://github.com/RomanIakovlev/timeshape
  *  - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf/ 
  *  
  * Copyrights:
@@ -156,7 +154,6 @@ import course_generator.utils.FileTypeFilter;
 import course_generator.utils.OsCheck;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
-import course_generator.weather.JPanelWeather;
 
 /**
  * This is the main class of the project.
@@ -270,8 +267,6 @@ public class frmMain extends javax.swing.JFrame {
 	private JPanelResume PanelResume;
 
 	private JPanelStatistics panelStatistics;
-
-	private JPanelWeather panelWeather;
 
 	private JPanelProfil panelProfil;
 
@@ -1658,7 +1653,6 @@ public class frmMain extends javax.swing.JFrame {
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
-					panelWeather.refresh(Track, false);
 
 					Settings.previousCGXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
@@ -2688,12 +2682,6 @@ public class frmMain extends javax.swing.JFrame {
 		addTab(TabbedPaneMain, panelStatistics, bundle.getString("frmMain.TabStatistic.tabTitle"),
 				Utils.getIcon(this, "stat.png", Settings.TabIconSize));
 
-		// -- Tab - Weather
-		// ---------------------------------------------------
-		panelWeather = new JPanelWeather(Settings, this);
-		addTab(TabbedPaneMain, panelWeather, bundle.getString("frmMain.TabWeather.tabTitle"),
-				Utils.getIcon(this, "weather.png", Settings.TabIconSize));
-
 		// -- Tab - Analysis
 		// ----------------------------------------------------
 		jPanelAnalyze = new javax.swing.JPanel();
@@ -2976,7 +2964,6 @@ public class frmMain extends javax.swing.JFrame {
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
-					panelWeather.refresh(Track, false);
 					Settings.previousGPXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
 				} catch (Exception e) {
@@ -3069,9 +3056,6 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshMainMenu();
 		// Refresh map
 		panelMap.RefreshTrack(Track, true);
-
-		// Refresh weather
-		panelWeather.refresh(Track, false);
 
 		bNoBackup = true;
 
@@ -3186,9 +3170,6 @@ public class frmMain extends javax.swing.JFrame {
 
 		// Refresh map
 		panelMap.RefreshTrack(Track, true);
-
-		// Refresh weather
-		panelWeather.refresh(Track, false);
 
 		RefreshMruCGX();
 		bNoBackup = true;

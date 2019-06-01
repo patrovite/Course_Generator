@@ -2,7 +2,6 @@ package course_generator.dialogs;
 
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Window;
@@ -12,7 +11,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 import course_generator.utils.Utils;

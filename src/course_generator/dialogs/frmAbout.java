@@ -101,20 +101,13 @@ public class frmAbout extends javax.swing.JDialog {
 
 			sb.append(" .oO Copyrights Oo.\n");
 			sb.append(" Used libraries:\n");
-			sb.append(" - Apache HttpComponents - Apache License 2.0 - https://hc.apache.org\n");
 			sb.append(
 					" - Commons-Suncalc - Apache License 2.0 - https://shredzone.org/maven/commons-suncalc/index.html\n");
-			sb.append(" - jackson-core - Apache License 2.0 - https://github.com/FasterXML/jackson-core\n");
-			sb.append(" - jackson-databind - Apache License 2.0 - https://github.com/FasterXML/jackson-databind\n");
 			sb.append(" - jcommon - LGPL - http://www.jfree.org/jcommon\n");
 			sb.append(" - jfreechart - LGPL - http://www.jfree.org/index.html\n");
 			sb.append(" - Joda-time - Apache License 2.0 - http://www.joda.org/joda-time\n");
-			sb.append(" - jsoup - MIT - https://jsoup.org\n");
 			sb.append(" - JUnit - Eclipse Public License 1.0 - https://junit.org/junit4\n");
 			sb.append(" - JXMapViewer2 - LGPL - https://wiki.openstreetmap.org/wiki/JXMapViewer2\n");
-			sb.append(" - simplelatlng - Apache License 2.0 - https://github.com/JavadocMD/simplelatlng\n");
-			sb.append(" - SwingX - LGPL 2.1 - https://swingx.java.net\n");
-			sb.append(" - Timeshape - MIT - https://github.com/RomanIakovlev/timeshape\n");
 			sb.append(" - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf\n");
 			sb.append("\n");
 			sb.append(" Maps :\n");
