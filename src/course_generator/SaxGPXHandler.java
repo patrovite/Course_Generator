@@ -246,6 +246,7 @@ public class SaxGPXHandler extends DefaultHandler {
 					TimeZone timeZoneId = Utils.getTimeZoneFromLatLon(trkpt_lat, trkpt_lon);
 					trkpt_time = DateTime.parse(characters).withZone(DateTimeZone.forTimeZone(timeZoneId));
 					StartTime = trkpt_time;
+					//StartTime=new DateTime();
 					old_time = StartTime;
 					Time_s = 0;
 					dTime_f = 0.0;
