@@ -22,14 +22,14 @@
 # This is the size (in kB) of all the files copied into "Program Files"
 # !define INSTALLSIZE 7233
 
-# RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
-RequestExecutionLevel user
-InstallDir "$LOCALAPPDATA\Course_Generator"
+RequestExecutionLevel admin ;Require admin rights on NT6+ (When UAC is turned on)
+#InstallDir "$LOCALAPPDATA\Course_Generator"
+InstallDir "$PROGRAMFILES\Course Generator"
 
 # rtf or txt file - remember if it is txt, it must be in the DOS text format (\r\n)
-LicenseData "..\build\gpl-3.0.txt"
+LicenseData "..\gpl-3.0.txt"
 # This will be in the installer/uninstaller's title bar
-Name "${COMPANYNAME} - ${APPNAME}"
+Name "${APPNAME}"
 Icon "..\build\cg.ico"
 # outFile "Course_Generator_install_4_2_0.exe"
 outFile "..\build\Course_Generator_install_${VERSIONMAJOR}_${VERSIONMINOR}_${VERSIONBUILD}.exe"
@@ -41,6 +41,7 @@ page license
 page directory
 Page instfiles
 
+/*
 !macro VerifyUserIsAdmin
 UserInfo::GetAccountType
 pop $0
@@ -50,6 +51,7 @@ ${If} $0 != "admin" ;Require admin rights on NT4+
         quit
 ${EndIf}
 !macroend
+*/
 
 function .onInit
 	setShellVarContext all
@@ -59,6 +61,7 @@ functionEnd
 section "install"
 	# Files for the install directory - to build the installer, these should be in the same directory as the install script (this file)
 	setOutPath $INSTDIR
+        SetOverwrite ifnewer
 	# Files added here should be removed by the uninstaller (see section "uninstall")
 	file "..\build\Course_Generator.exe"
 	file "..\build\cg.ico"
@@ -69,7 +72,7 @@ section "install"
 	file "..\build\en_cg_doc_4.00.pdf"
 	file "..\build\fr_cg_doc_4.00.epub"
 	file "..\build\fr_cg_doc_4.00.pdf"
-	file "..\build\gpl-3.0.txt"
+	file "..\gpl-3.0.txt"
 	file /r "..\build\help"
 
 	# Uninstaller - See function un.onInit and section "uninstall" for configuration
@@ -80,9 +83,12 @@ section "install"
 	createShortCut "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk" "$INSTDIR\Course_Generator.exe" "" "$INSTDIR\cg.ico"
 	createShortCut "$SMPROGRAMS\${APPNAME}\CG documentation - FR.lnk" "$INSTDIR\fr_cg_doc_4.00.pdf"
 	createShortCut "$SMPROGRAMS\${APPNAME}\CG documentation - EN.lnk" "$INSTDIR\en_cg_doc_4.00.pdf"
+	
+	# Desktop	
+	CreateShortcut "$DESKTOP\Course Generator.lnk" "$INSTDIR\Course_Generator.exe" "" "$INSTDIR\cg.ico"
 
 	# Registry information for add/remove programs
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME} - ${DESCRIPTION}"
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "DisplayName" "${APPNAME}"
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "QuietUninstallString" "$\"$INSTDIR\uninstall.exe$\" /S"
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "InstallLocation" "$\"$INSTDIR$\""
@@ -98,7 +104,7 @@ section "install"
 	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "NoModify" 1
 	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}" "NoRepair" 1
 	# Set the INSTALLSIZE constant (!defined at the top of this script) so Add/Remove Programs can accurately report the size
-	#WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "EstimatedSize" ${INSTALLSIZE}
+	# WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${COMPANYNAME} ${APPNAME}" "EstimatedSize" ${INSTALLSIZE}
 sectionEnd
 
 # Uninstaller
@@ -110,13 +116,19 @@ function un.onInit
 	MessageBox MB_OKCANCEL "Permanantly remove ${APPNAME}?" IDOK next
 		Abort
 	next:
-	!insertmacro VerifyUserIsAdmin
+	#!insertmacro VerifyUserIsAdmin
 functionEnd
 
 section "uninstall"
 
 	# Remove Start Menu launcher
 	delete "$SMPROGRAMS\${APPNAME}\${APPNAME}.lnk"
+	delete "$SMPROGRAMS\${APPNAME}\CG documentation - FR.lnk"
+	delete "$SMPROGRAMS\${APPNAME}\CG documentation - EN.lnk"
+
+	# Remove Desktop link
+	delete "$DESKTOP\Course Generator.lnk"
+
 	# Try to remove the Start Menu folder - this will only happen if it is empty
 	rmDir "$SMPROGRAMS\${APPNAME}"
 

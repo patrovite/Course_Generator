@@ -1,4 +1,4 @@
-# Build informations for WINDOWS
+To build the Windows installer you need NSIS software.
 
-In order to build the executable you need to use "Launch4j".
-"course_generator.xml" is already configured. Check the directories before building the executable.
+* Under windows go to https://nsis.sourceforge.io/
+* Under Linux (Ubuntu/Debian): sudo apt install nsis 
