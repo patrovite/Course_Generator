@@ -32,7 +32,7 @@ LicenseData "..\gpl-3.0.txt"
 Name "${APPNAME}"
 Icon "..\build\cg.ico"
 # outFile "Course_Generator_install_4_2_0.exe"
-outFile "..\build\Course_Generator_install_${VERSIONMAJOR}_${VERSIONMINOR}_${VERSIONBUILD}.exe"
+outFile "..\distrib\Course_Generator_install_${VERSIONMAJOR}_${VERSIONMINOR}_${VERSIONBUILD}.exe"
 
 !include LogicLib.nsh
 
