@@ -1,6 +1,3 @@
-First, in the main Course Generator source folder create a "distrib" folder.
-
-
 build_win_install.sh
 --------------------
 Use "build_win_install.sh" for building the windows installer. The resulting file will stored in the "distrib" folder. 
