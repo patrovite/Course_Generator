@@ -333,6 +333,8 @@ Sur la droite, une barre verticale de boutons permet de réaliser des actions su
 * ![](./images/Map/flag.png) : Permet d'ajouter une marque au point courant.
 * ![](./images/Map/eat.png) : Permet d'ajouter un ravitaillement au point courant.
 * ![](./images/Map/drink.png) : Permet d'ajouter un point d'eau au point courant.
+* ![](./images/Map/show_hide_markers.png) : Permet d'afficher ou de cacher les étiquettes.
+* ![](./images/Map/save_png.png) : Permet de sauver la carte affichée dans une image au format PNG.
 * ![](./images/Map/select_map.png) : Permet de sélectionner le type de carte à utiliser.
 
 Les commandes à la souris sont les suivantes:

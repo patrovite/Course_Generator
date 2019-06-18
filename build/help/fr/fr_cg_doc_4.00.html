@@ -5,8 +5,8 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Pierre Delore" />
-  <title>Course Generator - V4.10</title>
-  <style type="text/css">
+  <title>Course Generator - V4.2</title>
+  <style>
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
       span.underline{text-decoration: underline;}
@@ -18,12 +18,12 @@
   <![endif]-->
 </head>
 <body>
-<header>
-<h1 class="title">Course Generator - V4.10</h1>
+<header id="title-block-header">
+<h1 class="title">Course Generator - V4.2</h1>
 <p class="author">Pierre Delore</p>
-<p class="date">© 2008-2018 Pierre Delore (pierre@TechAndRun.com), CC BY-NC</p>
+<p class="date">© 2008-2019 Pierre Delore (pierre@TechAndRun.com), CC BY-NC</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
 <li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a><ul>
 <li><a href="#mot-de-lauteur"><span class="toc-section-number">1.1</span> Mot de l’auteur</a></li>
@@ -93,6 +93,7 @@
 <li><a href="#les-paramètres-généraux-de-course-generator"><span class="toc-section-number">9.11</span> Les paramètres généraux de Course Generator</a><ul>
 <li><a href="#onglet-général"><span class="toc-section-number">9.11.1</span> Onglet “Général”</a></li>
 <li><a href="#onglet-affichage"><span class="toc-section-number">9.11.2</span> Onglet “Affichage”</a></li>
+<li><a href="#onglet-cartes"><span class="toc-section-number">9.11.3</span> Onglet “Cartes”</a></li>
 </ul></li>
 <li><a href="#importer-et-exporter-les-points-marqués"><span class="toc-section-number">9.12</span> Importer et exporter les points marqués</a></li>
 <li><a href="#analyser-les-données-après-une-course"><span class="toc-section-number">9.13</span> Analyser les données après une course</a></li>
@@ -172,7 +173,7 @@ Source Wikipédia</p>
 <h2 id="le-principe-de-fonctionnement-de-course-generator"><span class="header-section-number">2.3</span> Le principe de fonctionnement de Course Generator</h2>
 <p>Le diagramme ci-dessous montre le principe de fonctionnement de <strong>Course Generator</strong>.</p>
 <figure>
-<img src="./images/CG40_Principe.png" alt="Principe de fonctionnement" /><figcaption>Principe de fonctionnement</figcaption>
+<img src="./images/CG40_Principe.png" alt="" /><figcaption>Principe de fonctionnement</figcaption>
 </figure>
 <h2 id="les-cas-dutilisations"><span class="header-section-number">2.4</span> Les cas d’utilisations</h2>
 <p>Les cas d’utilisation suivant pourraient être envisagés (liste non exhaustive) :</p>
@@ -250,7 +251,6 @@ Source Wikipédia</p>
 <ul>
 <li><p><strong>Aide</strong> : Affiche ce document.</p></li>
 <li><p><strong>F.A.Q.</strong> : Ouvre votre navigateur et affiche la page des questions fréquements posées sur <strong>Course Generator</strong>.</p></li>
-<li><p><strong>Parcours à télécharger</strong> : Ouvre votre navigateur et affiche la page de téléchargement de parcours au format CGX du site Freemovin.</p></li>
 <li><p><strong>Contrôle mise à jour</strong> : Permet de vérifier si une mise à jour de <strong>Course Generator</strong> existe.</p></li>
 <li><p><strong>Encourager l’auteur…</strong> : Ce menu ouvre votre navigateur internet et affiche la page internet permettant de faire un don à l’auteur afin de l’encourager dans le développement de <strong>Course Generator</strong>.</p></li>
 <li><p><strong>Page internet de Course Generator…</strong> : Ce menu ouvre votre navigateur internet et affiche la page internet sur les dernières nouvelles concernant <strong>Course Generator</strong>.</p></li>
@@ -258,7 +258,7 @@ Source Wikipédia</p>
 </ul>
 <h1 id="la-barre-doutils"><span class="header-section-number">5</span> La barre d’outils</h1>
 <figure>
-<img src="./images/Toolbar/CG40_Main_Toolbar.png" alt="La barre d’outils" /><figcaption>La barre d’outils</figcaption>
+<img src="./images/Toolbar/CG40_Main_Toolbar.png" alt="" /><figcaption>La barre d’outils</figcaption>
 </figure>
 <ul>
 <li><img src="./images/Toolbar/open_gpx.png" /> : Permet de charger un parcours au format GPX</li>
@@ -680,28 +680,28 @@ Le profil met en évidence le degré de pente par un code de couleur.</p>
 <h3 id="la-barre-dicônes"><span class="header-section-number">9.8.3</span> La barre d’icônes</h3>
 <p><img src="./images/MRB/CG40_MRB_Toolbar.png" /></p>
 <ul>
-<li><img src="./images/MRB/Toolbar/save.png" /> : Permet de sauver le mini roadbook sous forme d’image. Le format disponible est PNG.</li>
-<li><img src="./images/MRB/Toolbar/setting.png" /> : Permet d’ouvrir la fenêtre de configuration du mini roadbook</li>
-<li><img src="./images/MRB/Toolbar/pipette.png" /> : Permet de copier la mise en forme d’une étiquette afin de la reproduire sur une ou plusieurs autres étiquettes. Cette fonction est aussi accessible avec le raccourci clavier CTRL+C</li>
-<li><img src="./images/MRB/Toolbar/replicate.png" /> : Permet de coller la mise en forme sur l’étiquette sélectionnée. Seules les propriétés sélectionnées dans la fenêtre de configuration de la fonction seront collées. Cette fonction est aussi accessible avec le raccourci clavier CTRL+V</li>
+<li><p><img src="./images/MRB/Toolbar/save.png" /> : Permet de sauver le mini roadbook sous forme d’image. Le format disponible est PNG.</p></li>
+<li><p><img src="./images/MRB/Toolbar/setting.png" /> : Permet d’ouvrir la fenêtre de configuration du mini roadbook</p></li>
+<li><p><img src="./images/MRB/Toolbar/pipette.png" /> : Permet de copier la mise en forme d’une étiquette afin de la reproduire sur une ou plusieurs autres étiquettes. Cette fonction est aussi accessible avec le raccourci clavier CTRL+C</p></li>
+<li><p><img src="./images/MRB/Toolbar/replicate.png" /> : Permet de coller la mise en forme sur l’étiquette sélectionnée. Seules les propriétés sélectionnées dans la fenêtre de configuration de la fonction seront collées. Cette fonction est aussi accessible avec le raccourci clavier CTRL+V</p></li>
 <li><p><img src="./images/MRB/Toolbar/replicate_config.png" /> : Ouvre une fenêtre permettant de configurer la fonction de duplication de la mise en forme. Cela ouvre la fenêtre suivante:<br />
 <img src="./images/MRB/CG40_MRB_Replicate_Dlg.png" /><br />
 Sélectionnez les paramètres que vous voulez utiliser lors de la copie.</p></li>
-<li><img src="./images/MRB/Toolbar/label_to_bottom.png" /> : Permet de spécifier que les étiquettes doivent être connectées au bas du profil.</li>
-<li><img src="./images/MRB/Toolbar/label_to_profil.png" /> : Permet de spécifier que les étiquettes doivent être connectées au profil.</li>
-<li><img src="./images/MRB/Toolbar/night_day.png" /> : Permet de spécifier si on veut faire apparaître les zones de jour et de nuit sur le profil.</li>
-<li>“Type de profil” : Permet de sélectionner le type de mini roadbook.
+<li><p><img src="./images/MRB/Toolbar/label_to_bottom.png" /> : Permet de spécifier que les étiquettes doivent être connectées au bas du profil.</p></li>
+<li><p><img src="./images/MRB/Toolbar/label_to_profil.png" /> : Permet de spécifier que les étiquettes doivent être connectées au profil.</p></li>
+<li><p><img src="./images/MRB/Toolbar/night_day.png" /> : Permet de spécifier si on veut faire apparaître les zones de jour et de nuit sur le profil.</p></li>
+<li><p>“Type de profil” : Permet de sélectionner le type de mini roadbook.</p>
 <ul>
 <li>Simple</li>
 <li>Avec route/sentier</li>
 <li>Avec pente</li>
 </ul></li>
-<li><img src="./images/MRB/Toolbar/favori1.png" /> <img src="./images/MRB/Toolbar/favori2.png" /> <img src="./images/MRB/Toolbar/favori3.png" /> <img src="./images/MRB/Toolbar/favori4.png" /> <img src="./images/MRB/Toolbar/favori5.png" /> : Ces 5 boutons permettent de mémoriser des formats d’affichage.
+<li><p><img src="./images/MRB/Toolbar/favori1.png" /> <img src="./images/MRB/Toolbar/favori2.png" /> <img src="./images/MRB/Toolbar/favori3.png" /> <img src="./images/MRB/Toolbar/favori4.png" /> <img src="./images/MRB/Toolbar/favori5.png" /> : Ces 5 boutons permettent de mémoriser des formats d’affichage.</p>
 <ul>
 <li>Un clique droit sur un bouton mémorise dans le bouton le réglage affiché dans le champ format.</li>
 <li>Un clique gauche sur un bouton restitue dans le champ format, le format mémorisé dans le bouton.</li>
 </ul></li>
-<li>“Largeur” : Permet de sélectionner la largeur du profil (Valeur maximum 4000).</li>
+<li><p>“Largeur” : Permet de sélectionner la largeur du profil (Valeur maximum 4000).</p></li>
 <li><p>“Hauteur” : Permet de sélectionner la hauteur du profil (Valeur maximum 2000).</p></li>
 </ul>
 <h3 id="définir-la-taille-du-mini-roadbook"><span class="header-section-number">9.8.4</span> Définir la taille du mini roadbook</h3>
@@ -788,7 +788,7 @@ Les zones de nuits apparaissent grâce au fond grisé.</p>
 <li>“Langues” : Permet de sélectionner la langue utilisée dans l’interface. “Système” utilise les réglages du système d’exploitation pour déterminer la langue à utiliser. Si la langue système n’est pas géré par <strong>Course Generator</strong> alors l’anglais est sélectionné.</li>
 <li>“Unité” : Permet de choisir entre “km/m” et “Miles/Pieds”.</li>
 <li>“Format vitesse” : Permet de choisir le format de la vitesse (Vitesse ou Allure).</li>
-<li>&quot;Seuil pour filtre position (en %) : Seuil, en %, à partir duquel le logiciel demande si on veut appliquer un filtre sur les points GPS lors du chargement d’un parcours.</li>
+<li>"Seuil pour filtre position (en %) : Seuil, en %, à partir duquel le logiciel demande si on veut appliquer un filtre sur les points GPS lors du chargement d’un parcours.</li>
 <li>“Contrôle mise à jour au démarrage” : Permet de choisir si on veut contrôler la présence d’une mise à jour de l’application au démarrage.</li>
 </ul>
 <h3 id="onglet-affichage"><span class="header-section-number">9.11.2</span> Onglet “Affichage”</h3>
@@ -798,6 +798,8 @@ Les zones de nuits apparaissent grâce au fond grisé.</p>
 <li>“Police de caractère par défaut” : Permet de choisir la police de caractère qui va être utilisée pour l’affichage.</li>
 <li>Taille des icônes : Permet de spécifier la taille des icônes de l’interface.</li>
 </ul>
+<h3 id="onglet-cartes"><span class="header-section-number">9.11.3</span> Onglet “Cartes”</h3>
+<p><img src="./images/CG40_Settings_Maps.png" /> Permet d’entrer une clef API Thunderforest pour pouvoir utiliser le fond de carte Outdoors. Une clef gratuite peut être obtenue <a href="https://thunderforest.com/docs/apikeys/">ici</a>.</p>
 <h2 id="importer-et-exporter-les-points-marqués"><span class="header-section-number">9.12</span> Importer et exporter les points marqués</h2>
 <p>Il est nécessaire dans certain cas de devoir sauvegarder uniquement les points marqués du parcours actuel dans un fichier. Cela permet si vous avez une nouvelle version du parcours de pouvoir importer ces points sur ce parcours.</p>
 <p>Par exemple:<br />
@@ -830,6 +832,7 @@ Vous avez récupéré le parcours de l’UTMB. Vous avez passez du temps à rep�
 <img src="./images/Map/CG40_Map_Area.png" /></p>
 <p>Sur la droite, une barre verticale de boutons permet de réaliser des actions sur cette carte.</p>
 <ul>
+<li><img src="./images/Map/center.png" /> : Centre la carte sur la trace</li>
 <li><img src="./images/Map/marker.png" /> : Permet d’ajouter une marque de début d’action à l’endroit sélectionné</li>
 <li><img src="./images/Map/hide_marker.png" /> : Permet de supprimer la marque</li>
 <li><img src="./images/Map/undo.png" /> : Permet d’annuler la dernière opération</li>
@@ -841,6 +844,8 @@ Vous avez récupéré le parcours de l’UTMB. Vous avez passez du temps à rep�
 <li><img src="./images/Map/flag.png" /> : Permet d’ajouter une marque au point courant.</li>
 <li><img src="./images/Map/eat.png" /> : Permet d’ajouter un ravitaillement au point courant.</li>
 <li><img src="./images/Map/drink.png" /> : Permet d’ajouter un point d’eau au point courant.</li>
+<li><img src="./images/Map/show_hide_markers.png" /> : Permet d’afficher ou de cacher les étiquettes.</li>
+<li><img src="./images/Map/save_png.png" /> : Permet de sauver la carte affichée dans une image au format PNG.</li>
 <li><img src="./images/Map/select_map.png" /> : Permet de sélectionner le type de carte à utiliser.</li>
 </ul>
 <p>Les commandes à la souris sont les suivantes:</p>

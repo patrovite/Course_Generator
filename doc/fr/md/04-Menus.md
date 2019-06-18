@@ -86,8 +86,6 @@ Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
 
 * **F.A.Q.** : Ouvre votre navigateur et affiche la page des questions fréquements posées sur **Course Generator**. 
 
-* **Parcours à télécharger** : Ouvre votre navigateur et affiche la page de téléchargement de parcours au format CGX du site Freemovin.
-
 * **Contrôle mise à jour** : Permet de vérifier si une mise à jour de **Course Generator** existe.
 
 * **Encourager l'auteur...** : Ce menu ouvre votre navigateur internet et affiche la page internet permettant de faire un don à l'auteur afin de l'encourager dans le développement de **Course Generator**.

@@ -335,6 +335,8 @@ On the left, a vertical bar of buttons allows actions on this map.
 * ![](./images/Map/flag.png) : Adds a mark to the current point.
 * ![](./images/Map/eat.png) : Adds an aid station to the current point.
 * ![](./images/Map/drink.png) : Adds a water point to the current point.
+* ![](./images/Map/show_hide_markers.png) : Display or hide the marks.
+* ![](./images/Map/save_png.png) : Save the current map as a PNG image.
 * ![](./images/Map/select_map.png) : Allows you to select the map layer to be displayed.
 
 The mouse commands are as follows:

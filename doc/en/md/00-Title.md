@@ -1,3 +1,3 @@
-% Course Generator - V4.10
+% Course Generator - V4.2
 % Pierre Delore
-% © 2008-2018 Pierre Delore (pierre@TechAndRun.com), CC BY-NC
+% © 2008-2019 Pierre Delore (pierre@TechAndRun.com), CC BY-NC

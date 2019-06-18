@@ -1,4 +1,4 @@
-This documenation is written in Markdown and compiled with Pandoc.
+This documentation is written in Markdown and compiled with Pandoc.
 
 The texts are in the "./md" directory and the images included in the document in the "./images" directory.
 
