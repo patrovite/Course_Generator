@@ -3832,24 +3832,14 @@ public class frmMain extends javax.swing.JFrame {
 			OsCheck.OSType ostype = OsCheck.getOperatingSystemType();
 			switch (ostype) {
 			case Windows:
-				for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-					if ("Windows".equals(info.getName())) {
-						javax.swing.UIManager.setLookAndFeel(info.getClassName());
-						break;
-					} else {
-						javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-					}
-				}
+				//Force L&F and not the system L&F otherwise the the application crash (Java problem)
+				//javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel"); => Metal L&F works but it looks old!
+				javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel"); //Windows look but also a bit old fashion
 				break;
 			case MacOS:
 				javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
 				break;
 			case Linux:
-				// Toolkit.getDefaultToolkit().setDynamicLayout(true);
-				// System.setProperty("sun.awt.noerasebackground", "true");
-				// //JFrame.setDefaultLookAndFeelDecorated(true);
-				// //JDialog.setDefaultLookAndFeelDecorated(true);
-
 				try {
 					javax.swing.UIManager.setLookAndFeel("de.muntjak.tinylookandfeel.TinyLookAndFeel");
 					// continuous layout on frame resize
