@@ -43,7 +43,6 @@ public class Outdoors extends AbstractOsmTileSource {
 
 	@Override
 	public int getMaxZoom() {
-		// TODO Check
 		return 18;
 	}
 

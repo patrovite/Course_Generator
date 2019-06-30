@@ -166,7 +166,7 @@ public class CgSettings {
 		previousPNGDirectory = "";
 
 		offlineMap = true;
-		map = 0;
+		map = 1; //OpenTopomap
 		PosFilterAskThreshold = 5;
 
 		DefaultFontName = "Arial";

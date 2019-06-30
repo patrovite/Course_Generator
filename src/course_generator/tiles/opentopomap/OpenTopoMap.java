@@ -18,6 +18,7 @@
 
 package course_generator.tiles.opentopomap;
 
+import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 import org.openstreetmap.gui.jmapviewer.tilesources.AbstractOsmTileSource;
 
@@ -59,4 +60,10 @@ public class OpenTopoMap extends AbstractOsmTileSource {
 	public TileSource.TileUpdate getTileUpdate() {
 		return TileSource.TileUpdate.IfNoneMatch;
 	}
+	
+	@Override
+    public String getAttributionText(int zoom, Coordinate topLeft, Coordinate botRight) {
+        return "Map data: © OpenStreetMap-contributors, SRTM | Map style : © OpenTopoMap (CC-BY-SA)";
+    }
+
 }

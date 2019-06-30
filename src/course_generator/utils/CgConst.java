@@ -33,6 +33,7 @@ public class CgConst {
 	public static final String OPENTOPOMAP_CACHE_DIR = "opentopomap";
 	public static final String OUTDOORS_CACHE_DIR = "outdoors";
 	public static final String BING_CACHE_DIR = "bing";
+	public static final String STAMEN_TONER_CACHE_DIR = "StamenToner";
 	
 	/** Maximum version of the CGX file to read **/
 	public static final int MAX_CGX_VERSION_TO_READ = 5;
@@ -121,13 +122,13 @@ public class CgConst {
 	public static final Color CL_PROFIL_SLOPE_SUP15 = new Color(0xA6, 0x55, 0x00);
 	public static final Color CL_PROFIL_SLOPE_BORDER = new Color(0xA6, 0x55, 0x00);
 
-	public static final Color CL_DIFF_VERYEASY = new Color(188, 211, 95); // -- Green
+	public static final Color CL_DIFF_VERYEASY = new Color(255, 51, 255); // -- Green 188,211,95
 	public static final Color CL_DIFF_EASY = new Color(137, 160, 44); // -- Dark green
 	public static final Color CL_DIFF_AVERAGE = new Color(42, 127, 255); // -- Blue
 	public static final Color CL_DIFF_HARD = new Color(255, 0, 0); // -- Red
 	public static final Color CL_DIFF_VERYHARD = new Color(77, 77, 77); // -- Black
 
-	public static final Color CL_MAP_DIFF_VERYEASY = new Color(0, 210, 0); // -- Green
+	public static final Color CL_MAP_DIFF_VERYEASY = new Color(255, 51, 255); // -- Green 0,210,0
 	public static final Color CL_MAP_DIFF_EASY = new Color(0, 128, 0); // -- Dark Green
 	public static final Color CL_MAP_DIFF_AVERAGE = new Color(0, 0, 210); // -- Blue
 	public static final Color CL_MAP_DIFF_HARD = new Color(255, 0, 0); // -- Red

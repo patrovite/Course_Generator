@@ -37,9 +37,8 @@ public class JMapViewerCG extends JMapViewer {
 
 
 	public JMapViewerCG() {
-		super(new MemoryTileCache(), 8);
+		super(new MemoryTileCache(), 2); //2 to avoid error 429 on openstreetmap. Before it was set to 8
 		CGMapController = new CGMapController(this);
-		// CGMapController.setMovementMouseButton(MouseEvent.BUTTON1);
 	}
 
 }

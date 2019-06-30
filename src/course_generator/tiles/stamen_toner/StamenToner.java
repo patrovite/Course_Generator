@@ -1,6 +1,6 @@
 /*
  * Course Generator
- * Copyright (C) 2016 Pierre Delore
+ * Copyright (C) 2019 Pierre Delore
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,20 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package course_generator.tiles.openstreetmap;
+package course_generator.tiles.stamen_toner;
 
+import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 import org.openstreetmap.gui.jmapviewer.tilesources.AbstractOsmTileSource;
 
 /**
- *
- * @author pierre.delore
- */
-
-public class OpenStreetMap extends AbstractOsmTileSource {
-	//private static final String PATTERN = "http://%s.tile.openstreetmap.org";
-	private static final String PATTERN = "https://%s.tile.openstreetmap.org";
-
+*
+* @author pierre.delore
+*/
+public class StamenToner extends AbstractOsmTileSource {
+	//http://tile.stamen.com/toner/{z}/{x}/{y}.png
+	private static final String PATTERN = "http://tile.stamen.com/toner";
 	private static final String[] SERVER = { "a", "b", "c" };
 
 	private int SERVER_NUM = 0;
@@ -38,7 +37,7 @@ public class OpenStreetMap extends AbstractOsmTileSource {
 	/**
 	 * Constructs a new {@code "Mapnik"} tile source.
 	 */
-	public OpenStreetMap() {
+	public StamenToner() {
 		super("map", PATTERN);
 	}
 
@@ -60,4 +59,9 @@ public class OpenStreetMap extends AbstractOsmTileSource {
 	public TileSource.TileUpdate getTileUpdate() {
 		return TileSource.TileUpdate.IfNoneMatch;
 	}
+	
+	@Override
+    public String getAttributionText(int zoom, Coordinate topLeft, Coordinate botRight) {
+        return "Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL";
+    }
 }

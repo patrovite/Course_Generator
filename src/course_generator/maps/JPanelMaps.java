@@ -56,6 +56,7 @@ import course_generator.dialogs.FrmSelectMap;
 import course_generator.settings.CgSettings;
 import course_generator.tiles.openstreetmap.OpenStreetMap;
 import course_generator.tiles.opentopomap.OpenTopoMap;
+import course_generator.tiles.stamen_toner.StamenToner;
 import course_generator.tiles.thunderforest.Outdoors;
 import course_generator.utils.CgConst;
 import course_generator.utils.CgLog;
@@ -859,25 +860,31 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 	public void RefreshMapType() {
 		switch (Settings.map) {
-		case 0:
+		case 0: //OpenStreetMap
 			MapViewer.setTileSource(new OpenStreetMap());
 			offlineTileCache
 					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
 			break;
-		case 1:
+		case 1: //OpenTopoMap
 			MapViewer.setTileSource(new OpenTopoMap());
 			offlineTileCache
 					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.OPENTOPOMAP_CACHE_DIR);
 			break;
-		case 2:
+		case 2: //Outdoor
 			MapViewer.setTileSource(new Outdoors(Settings));
 			offlineTileCache
 					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.OUTDOORS_CACHE_DIR);
 			break;
-		case 3:
+		case 3: //Bing aerial
 			MapViewer.setTileSource(new BingAerialTileSource());
 			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.BING_CACHE_DIR);
 			break;
+			
+		case 4: //Stamen toner
+			MapViewer.setTileSource(new StamenToner());
+			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.STAMEN_TONER_CACHE_DIR);
+			break;
+
 		default:
 			MapViewer.setTileSource(new OpenStreetMap());
 			offlineTileCache

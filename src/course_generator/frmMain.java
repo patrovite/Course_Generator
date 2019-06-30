@@ -40,6 +40,7 @@
  * - Openstreetmap : http://www.openstreetmap.org/
  * - OpenTopoMap : https://opentopomap.org/
  * - Bing map : (c) Microsoft
+ * - Stamen toner and terrain : Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL.
  */
 /*
  * IN PROGRESS:
