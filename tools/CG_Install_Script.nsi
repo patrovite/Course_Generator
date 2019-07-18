@@ -13,7 +13,7 @@
 # These three must be integers
 !define VERSIONMAJOR 4
 !define VERSIONMINOR 2
-!define VERSIONBUILD 1
+!define VERSIONBUILD 2
 # These will be displayed by the "Click here for support information" link in "Add/Remove Programs"
 # It is possible to use "mailto:" links in here to open the email client
 !define HELPURL "https://techandrun.com/course-generator/" # "Support Information" link
@@ -31,7 +31,7 @@ LicenseData "..\gpl-3.0.txt"
 # This will be in the installer/uninstaller's title bar
 Name "${APPNAME}"
 Icon "..\build\cg.ico"
-# outFile "Course_Generator_install_4_2_1.exe"
+# outFile "Course_Generator_install_4_2_2.exe"
 outFile "..\distrib\Course_Generator_install_${VERSIONMAJOR}_${VERSIONMINOR}_${VERSIONBUILD}.exe"
 
 !include LogicLib.nsh
@@ -74,6 +74,7 @@ section "install"
 	file "..\build\fr_cg_doc_4.00.pdf"
 	file "..\gpl-3.0.txt"
 	file /r "..\build\help"
+	file /r "..\build\course_generator_lib"
 
 	# Uninstaller - See function un.onInit and section "uninstall" for configuration
 	writeUninstaller "$INSTDIR\uninstall.exe"
@@ -143,6 +144,7 @@ section "uninstall"
 	delete $INSTDIR\fr_cg_doc_4.00.pdf
 	delete $INSTDIR\gpl-3.0.txt
         rmdir /r $INSTDIR\help
+	rmdir /r $INSTDIR\course_generator_lib
 
 	# Always delete uninstaller as the last action
 	delete $INSTDIR\uninstall.exe
