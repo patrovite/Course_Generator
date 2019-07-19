@@ -41,7 +41,7 @@ With Course Generator you can :
 ## How to run Course Generator - WINDOWS (with installer)
 
 * You need a version 7 (minimum) of the java runtime environment (JRE)
-* Download the latest version ('exe' file) from the [TechAndRun website](http://techandrun.com/course-generator/telechargement/)
+* Download the latest version ('exe' file) from the [Release section](https://github.com/patrovite/Course_Generator/releases)
 * Execute the installer
 * Execute "course_generator"
 * The first time you execute the program it will ask you if you want to install the standard curves. Answer "yes"
@@ -50,7 +50,7 @@ With Course Generator you can :
 ## How to run Course Generator - WINDOWS (portable)
 
 * You need a version 7 (minimum) of the java runtime environment (JRE)
-* Download the latest version ('zip' file) from the [TechAndRun website](http://techandrun.com/course-generator/telechargement/)
+* Download the latest version ('zip' file) from the [Release section](https://github.com/patrovite/Course_Generator/releases)
 * Unzip all the files in a folder
 * Execute "course_generator"
 * The first time you execute the program it will ask you if you want to install the standard curves. Answer "yes"
@@ -58,7 +58,7 @@ With Course Generator you can :
 
 ## How to run Course Generator - LINUX
 * You need a version 7 (minimum) of the java runtime environment (JRE)
-* Download the latest version from the [TechAndRun website](http://techandrun.com/course-generator/telechargement/)
+* Download the latest version from the [Release section](https://github.com/patrovite/Course_Generator/releases)
 * Uncompress the archive in a directory (where you want)
 * Give the execution right to "course_generator.sh"
 * Execute "course_generator.sh"
