@@ -34,10 +34,13 @@ import org.openstreetmap.gui.jmapviewer.MemoryTileCache;
 public class JMapViewerCG extends JMapViewer {
 	private static final long serialVersionUID = -8826616041157348692L;
 	public CGMapController CGMapController;
+	public static MemoryTileCache Cache=new MemoryTileCache();
 
 
 	public JMapViewerCG() {
-		super(new MemoryTileCache(), 2); //2 to avoid error 429 on openstreetmap. Before it was set to 8
+		//Cache = new MemoryTileCache();
+		//super(new MemoryTileCache(), 2); //2 to avoid error 429 on openstreetmap. Before it was set to 8
+		super(Cache, 2); //2 to avoid error 429 on openstreetmap. Before it was set to 8
 		CGMapController = new CGMapController(this);
 	}
 

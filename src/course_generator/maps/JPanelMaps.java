@@ -91,7 +91,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	private JButton btMapDrink;
 	private JButton btMapSelect;
 	private JPanel panelMain;
-	private JMapViewer MapViewer;
+	private JMapViewerCG MapViewer;
 	private OsmFileCacheTileLoader offlineTileCache;
 	private JScrollPane jScrollPanelMap;
 	private JButton btMapUndo;
@@ -855,6 +855,8 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 
 	public void RefreshMapType() {
+		MapViewer.Cache.clear();
+		MapViewer.getTileController().cancelOutstandingJobs();
 		switch (Settings.map) {
 		case 0: //OpenStreetMap
 			MapViewer.setTileSource(new OpenStreetMap());
