@@ -69,6 +69,7 @@ public class JPanelAnalysisSpeed extends JPanel {
 	private CgSettings settings = null;
 	private double startSpeed = 0.0;
 	private double endSpeed = 0.0;
+	private int index=0;
 
 
 	public JPanelAnalysisSpeed(CgSettings settings) {
@@ -229,6 +230,8 @@ public class JPanelAnalysisSpeed extends JPanel {
 		if ((track == null) || (settings == null))
 			return;
 
+		index= i;
+		
 		// -- Get the data
 		CgData d = track.data.get(i);
 
@@ -345,45 +348,11 @@ public class JPanelAnalysisSpeed extends JPanel {
 		RefreshInfo(0);
 	}
 
-	// private void RefreshAnalyseSpeed()
-	// {
-	// if (cd.data.Count <= 0) return;
-	//
-	// int i = 0;
-	// double a = 0.0;
-	// double b = 0.0;
-	// double x = 0.0;
-	// double maxspeed = 0.0;
-	// double s = 0.0;
-	// double e = 0.0;
-	//
-	// ChartAnalyseSpeed.Series["Series1"].Points.Clear();
-	// ChartAnalyseSpeed.Series["Series2"].Points.Clear();
-	//
-	// Regression(ref a, ref b);
-	//
-	// foreach (cgData r in cd.data)
-	// {
-	// double v = r.Total / 1000;
-	// if (v < 0.001) v = 0;
-	// if (r.Speed > maxspeed) maxspeed = r.Speed;
-	// if (x == 0) s = a * x + b;
-	// if (x == cd.data.Count-1) e = a * x + b;
-	// ChartAnalyseSpeed.Series["Series1"].Points.AddXY(v, a*x+b);
-	// ChartAnalyseSpeed.Series["Series2"].Points.AddXY(v, (r.Speed / (100 /
-	// r.Diff)) / (100 / r.Coeff));
-	//
-	// i++;
-	// x++;
-	// }
-	//
-	// ChartAnalyseSpeed.ChartAreas["ChartArea1"].Axes[1].Maximum =
-	// Math.Ceiling(maxspeed / 5.0) * 5.0;
-	// ChartAnalyseSpeed.ChartAreas["ChartArea1"].Axes[3].Maximum =
-	// Math.Ceiling(maxspeed / 5.0) * 5.0;
-	//
-	// cd.StartSpeed = b;
-	// cd.EndSpeed = a * x + b;
-	// }
 
+	public void ChangLang() {
+		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		chart.getXYPlot().getDomainAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisSpeed.labelX")); //X
+		chart.getXYPlot().getRangeAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisSpeed.labelY")); //Y
+		RefreshInfo(index);
+	}
 }

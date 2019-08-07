@@ -339,8 +339,7 @@ public class frmSettings extends javax.swing.JDialog {
 			settings.NightTrackTransparency = spinNightTrackTransparency.getValueAsInt() * 255 / 100;
 
 			// -- Restart of the application needed?
-			if ((!old_language.equalsIgnoreCase(settings.Language))
-					|| (OldStatusbarIconSize != settings.StatusbarIconSize) || (OldTabIconSize != settings.TabIconSize)
+			if ( (OldStatusbarIconSize != settings.StatusbarIconSize) || (OldTabIconSize != settings.TabIconSize)
 					|| (OldToolbarIconSize != settings.ToolbarIconSize)
 					|| (OldMapToolbarIconSize != settings.MapToolbarIconSize)
 					|| (OldMenuIconSize != settings.MenuIconSize) || (OldTagIconSize != settings.TagIconSize)

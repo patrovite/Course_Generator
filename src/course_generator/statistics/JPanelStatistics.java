@@ -90,7 +90,6 @@ public class JPanelStatistics extends JPanel {
 		// --------------------------------------------------------------
 		btStatisticSave = new javax.swing.JButton();
 		btStatisticSave.setIcon(Utils.getIcon(this, "save_html.png", settings.ToolbarIconSize));
-		btStatisticSave.setToolTipText(bundle.getString("JPanelStastistics.btStatisticSave.toolTipText"));
 		btStatisticSave.setFocusable(false);
 		btStatisticSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,7 +106,6 @@ public class JPanelStatistics extends JPanel {
 		// --------------------------------------------------------------
 		btStatisticRefresh = new javax.swing.JButton();
 		btStatisticRefresh.setIcon(Utils.getIcon(this, "refresh.png", settings.ToolbarIconSize));
-		btStatisticRefresh.setToolTipText(bundle.getString("JPanelStastistics.btStatisticRefresh.toolTipText"));
 		btStatisticRefresh.setFocusable(false);
 		btStatisticRefresh.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,8 +113,15 @@ public class JPanelStatistics extends JPanel {
 			}
 		});
 		toolBar.add(btStatisticRefresh);
+		
+		//-- Set Texts
+		SetTexts();
 	}
 
+	private void SetTexts() {
+		btStatisticSave.setToolTipText(bundle.getString("JPanelStastistics.btStatisticSave.toolTipText"));
+		btStatisticRefresh.setToolTipText(bundle.getString("JPanelStastistics.btStatisticRefresh.toolTipText"));
+	}
 
 	/**
 	 * Refresh the statistic tab
@@ -128,6 +133,11 @@ public class JPanelStatistics extends JPanel {
 		if (track.data.isEmpty())
 			return;
 
+		//-- Set Texts
+		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		SetTexts();
+		
+		//--
 		StringBuilder sb = new StringBuilder();
 
 		// -- Get current language

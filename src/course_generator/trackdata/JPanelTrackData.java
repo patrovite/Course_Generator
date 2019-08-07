@@ -306,4 +306,9 @@ public class JPanelTrackData extends JPanel {
 		}
 	}
 
+	public void ChangeLang() {
+		ModelTableMain.SetTexts();
+		ModelTableMain.fireTableStructureChanged();
+	}
+	
 }

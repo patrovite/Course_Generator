@@ -170,10 +170,16 @@ public class JPanelResume extends JPanel {
 			}
 		});
 		ToolBarResume.add(btRefreshRefresh);
-
+		
+		SetText_Resume_Toolbar();
 	}
 
+	private void SetText_Resume_Toolbar() {
+		btResumeSave.setToolTipText(bundle.getString("JPanelResume.btResumeSave.toolTipText"));
+		btRefreshRefresh.setToolTipText(bundle.getString("JPanelResume.btRefreshRefresh.toolTipText"));
+	}
 
+	
 	private void TableResumeKeyReleased(KeyEvent evt) {
 		int row = TableResume.getSelectedRow();
 		int col = TableResume.getSelectedColumn();
@@ -345,4 +351,10 @@ public class JPanelResume extends JPanel {
 		refresh();
 	}
 
+	public void ChangLang() {
+		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		SetText_Resume_Toolbar();
+		ModelTableResume.SetTexts();
+		ModelTableResume.fireTableStructureChanged();
+	}
 }

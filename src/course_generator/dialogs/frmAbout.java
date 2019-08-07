@@ -114,6 +114,7 @@ public class frmAbout extends javax.swing.JDialog {
 			sb.append(" - OpenStreetMap : http://www.openstreetmap.org\n");
 			sb.append(" - OpenTopoMap : https://opentopomap.org\n");
 			sb.append(" - Bing map : (C)Microsoft\n");
+			sb.append(" - Stamen toner  : http://maps.stamen.com\n");
 			taCopyright.setText(sb.toString());
 			jScrollPaneCopyright.setPreferredSize(new Dimension(400, 100));
 			jScrollPaneCopyright.setVisible(true);
