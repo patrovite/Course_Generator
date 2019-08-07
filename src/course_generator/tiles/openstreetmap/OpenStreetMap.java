@@ -28,7 +28,8 @@ import org.openstreetmap.gui.jmapviewer.tilesources.AbstractOsmTileSource;
 
 public class OpenStreetMap extends AbstractOsmTileSource {
 	//private static final String PATTERN = "http://%s.tile.openstreetmap.org";
-	private static final String PATTERN = "https://%s.tile.openstreetmap.org";
+	//private static final String PATTERN = "https://%s.tile.openstreetmap.org";
+	private static final String PATTERN = "https://tile.openstreetmap.de"; //Openstreetmap.de because ".org" return error 429
 
 	private static final String[] SERVER = { "a", "b", "c" };
 

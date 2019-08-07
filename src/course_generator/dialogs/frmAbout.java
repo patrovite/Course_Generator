@@ -111,7 +111,8 @@ public class frmAbout extends javax.swing.JDialog {
 			sb.append(" - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf\n");
 			sb.append("\n");
 			sb.append(" Maps :\n");
-			sb.append(" - OpenStreetMap : http://www.openstreetmap.org\n");
+			sb.append(" - OpenStreetMap.org : https://www.openstreetmap.org\n");
+			sb.append(" - OpenStreetMap.de : https://www.openstreetmap.de\n");
 			sb.append(" - OpenTopoMap : https://opentopomap.org\n");
 			sb.append(" - Bing map : (C)Microsoft\n");
 			sb.append(" - Stamen toner  : http://maps.stamen.com\n");

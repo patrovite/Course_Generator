@@ -38,9 +38,8 @@ public class JMapViewerCG extends JMapViewer {
 
 
 	public JMapViewerCG() {
-		//Cache = new MemoryTileCache();
 		//super(new MemoryTileCache(), 2); //2 to avoid error 429 on openstreetmap. Before it was set to 8
-		super(Cache, 2); //2 to avoid error 429 on openstreetmap. Before it was set to 8
+		super(Cache, 8);
 		CGMapController = new CGMapController(this);
 	}
 
