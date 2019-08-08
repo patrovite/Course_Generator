@@ -12,8 +12,8 @@
 !define DESCRIPTION "Calcul de vos temps parcours / Calculate your track time"
 # These three must be integers
 !define VERSIONMAJOR 4
-!define VERSIONMINOR 2
-!define VERSIONBUILD 2
+!define VERSIONMINOR 3
+!define VERSIONBUILD 0
 # These will be displayed by the "Click here for support information" link in "Add/Remove Programs"
 # It is possible to use "mailto:" links in here to open the email client
 !define HELPURL "https://techandrun.com/course-generator/" # "Support Information" link
@@ -31,7 +31,7 @@ LicenseData "..\gpl-3.0.txt"
 # This will be in the installer/uninstaller's title bar
 Name "${APPNAME}"
 Icon "..\build\cg.ico"
-# outFile "Course_Generator_install_4_2_2.exe"
+# outFile "Course_Generator_install_4_3_0.exe"
 outFile "..\distrib\Course_Generator_install_${VERSIONMAJOR}_${VERSIONMINOR}_${VERSIONBUILD}.exe"
 
 !include LogicLib.nsh
