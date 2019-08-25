@@ -164,7 +164,7 @@ import course_generator.utils.Utils.CalcLineResult;
 public class frmMain extends javax.swing.JFrame {
 	private static final long serialVersionUID = 6484405417503538528L;
 
-	private final static String Version = "4.3.0";
+	private final static String Version = "4.3.1";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;

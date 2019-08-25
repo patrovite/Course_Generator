@@ -573,7 +573,15 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 				found = false;
 			}
 		}
+		
+		//-- Finish the night polyline
+		polyLineNight = new MapPolyLine(routeNight);
+		polyLineNight.setColor(cl_Transp);
+		polyLineNight.setStroke(new BasicStroke(Settings.NightTrackWidth));
+		// -- Add the polyline to the viewer
+		MapViewer.addMapPolygon(polyLineNight);
 
+		
 		// -- Create the tracks (over the night tracks if necessary)
 		cmpt = 0;
 		List<Coordinate> routeNormal = new ArrayList<Coordinate>();
@@ -612,7 +620,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			last_diff = r.getDiff();
 		}
 
-		// -- Polyline creation
+		//-- Finish the polyline
 		MapPolyLine polyLineNormal = new MapPolyLine(routeNormal);
 		// -- Set the line color
 		cl = getDiffColor(last_diff);
@@ -625,19 +633,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		// -- Add the polyline to the viewer
 		MapViewer.addMapPolygon(polyLineNormal);
 
-		/*
-		 * 
-		 * // -- Add the last polyline MapPolyLine polyLineEnd = new
-		 * MapPolyLine(routeNormal); // -- Set the line color
-		 * cl=getDiffColor(last_diff); cl= new Color(cl.getRed(), cl.getGreen(),
-		 * cl.getBlue(), Settings.NormalTrackTransparency);
-		 * 
-		 * polyLineEnd.setColor(cl);
-		 * 
-		 * // -- Set the stroke polyLineEnd.setStroke(new
-		 * BasicStroke(Settings.NormalTrackWidth)); //CgConst.TRACK_NORMAL_TICKNESS));
-		 * // -- Upddate the viewer MapViewer.addMapPolygon(polyLineEnd);
-		 */
+		
 		// -- Zoom to display the track
 		if (zoom2fit)
 			MapViewer.setDisplayToFitMapPolygons();
