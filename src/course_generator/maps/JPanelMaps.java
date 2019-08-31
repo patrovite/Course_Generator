@@ -546,6 +546,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 		// -- Create the night tracks
 		int cmpt = 0;
+		int cmptNight = 0;
 		boolean found = false;
 		List<Coordinate> routeNight = null;
 		MapPolyLine polyLineNight = null;
@@ -565,9 +566,11 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 				polyLineNight.setColor(cl_Transp);
 
 				polyLineNight.setStroke(new BasicStroke(Settings.NightTrackWidth));
+				cmptNight++;
 				found = true;
 			} else if (r.getNight() && found) {
 				routeNight.add(new Coordinate(r.getLatitude(), r.getLongitude()));
+				cmptNight++;
 			} else if (!r.getNight() && found) {
 				MapViewer.addMapPolygon(polyLineNight);
 				found = false;
@@ -575,12 +578,13 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 		
 		//-- Finish the night polyline
-		polyLineNight = new MapPolyLine(routeNight);
-		polyLineNight.setColor(cl_Transp);
-		polyLineNight.setStroke(new BasicStroke(Settings.NightTrackWidth));
-		// -- Add the polyline to the viewer
-		MapViewer.addMapPolygon(polyLineNight);
-
+		if (cmptNight>0) {
+			polyLineNight = new MapPolyLine(routeNight);
+			polyLineNight.setColor(cl_Transp);
+			polyLineNight.setStroke(new BasicStroke(Settings.NightTrackWidth));
+			// -- Add the polyline to the viewer
+			MapViewer.addMapPolygon(polyLineNight);
+		}
 		
 		// -- Create the tracks (over the night tracks if necessary)
 		cmpt = 0;
