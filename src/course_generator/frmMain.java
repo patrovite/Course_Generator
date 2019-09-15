@@ -164,7 +164,7 @@ import course_generator.utils.Utils.CalcLineResult;
 public class frmMain extends javax.swing.JFrame {
 	private static final long serialVersionUID = 6484405417503538528L;
 
-	private final static String Version = "4.3.2";
+	private final static String Version = "4.4.0-Alpha1";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -264,47 +264,34 @@ public class frmMain extends javax.swing.JFrame {
 	private JPanelAnalysisSpeed jPanelSpeed;
 	private JPanelAnalysisSpeedSlope jPanelSpeedSlope;
 	// private JButton btMapOfflineSelection;
-
 	private JPanelResume PanelResume;
-
 	private JPanelStatistics panelStatistics;
-
 	private JPanelProfil panelProfil;
-
 	private JPanelTrackData panelTrackData;
-
 	private JPanelMaps panelMap;
-
 	private JLabel LbInfoMapDirSize;
-
 	private JMenuItem mnuCGWebsite;
-
 	private JMenuItem mnuCheckUpdate;
-
 	private JCheckBoxMenuItem mnuReadOnly;
-
 	private JLabel LbReadOnly;
-
 	private JMenuItem mnuDisplayCopyCurves;
-
 	private Component TabMain;
-
 	private JLabel LbTabMain;
-
 	private JLabel LbTabProfil;
-
 	private JLabel LbTabStatistics;
-
 	private JLabel LbTabAnalyze;
-
 	private JLabel LbTabTimeDist;
-
 	private JLabel LbTabSpeed;
-
 	private JLabel LbTabSpeedSlope;
-
 	private JLabel LbTabResume;
+	private JMenu mnuImport;
+	private JMenu mnuExport;
+	private JMenu mnuTags;
+	private JMenuItem mnuSaveAsCGX;
 
+	private JMenuItem mnuDisplayLogDir;
+
+	
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
 
@@ -681,74 +668,6 @@ public class frmMain extends javax.swing.JFrame {
 
 		// == File menu ========================================================
 		mnuFile = new javax.swing.JMenu();
-		//mnuFile.setText(bundle.getString("frmMain.mnuFile.text"));
-
-		// -- Open GPX
-		mnuOpenGPX = new javax.swing.JMenuItem();
-		mnuOpenGPX.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O,
-				java.awt.event.InputEvent.CTRL_MASK | java.awt.event.InputEvent.SHIFT_MASK));
-		mnuOpenGPX.setIcon(Utils.getIcon(this, "open_gpx.png", Settings.MenuIconSize));
-		mnuOpenGPX.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				OpenGPXDialog();
-			}
-		});
-		mnuFile.add(mnuOpenGPX);
-
-		// -- Recent GPX files
-		// --------------------------------------------------
-		mnuLastGPX = new javax.swing.JMenu();
-		mnuLastGPX.setIcon(Utils.getIcon(this, "open_gpx.png", Settings.MenuIconSize));
-
-		// -- Mru GPX n°1
-		mnuMruGPX1 = new javax.swing.JMenuItem();
-		mnuMruGPX1.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				mnuMruGPXActionPerformed(evt);
-			}
-		});
-		mnuLastGPX.add(mnuMruGPX1);
-
-		// -- Mru GPX n°2
-		mnuMruGPX2 = new javax.swing.JMenuItem();
-		mnuMruGPX2.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				mnuMruGPXActionPerformed(evt);
-			}
-		});
-		mnuLastGPX.add(mnuMruGPX2);
-
-		// -- Mru GPX n°3
-		mnuMruGPX3 = new javax.swing.JMenuItem();
-		mnuMruGPX3.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				mnuMruGPXActionPerformed(evt);
-			}
-		});
-		mnuLastGPX.add(mnuMruGPX3);
-
-		// -- Mru GPX n°4
-		mnuMruGPX4 = new javax.swing.JMenuItem();
-		mnuMruGPX4.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				mnuMruGPXActionPerformed(evt);
-			}
-		});
-		mnuLastGPX.add(mnuMruGPX4);
-
-		// -- Mru GPX n°5
-		mnuMruGPX5 = new javax.swing.JMenuItem();
-		mnuMruGPX5.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				mnuMruGPXActionPerformed(evt);
-			}
-		});
-		mnuLastGPX.add(mnuMruGPX5);
-
-		mnuFile.add(mnuLastGPX);
-
-		// -- Separator
-		mnuFile.add(new javax.swing.JPopupMenu.Separator());
 
 		// -- Open CGX
 		mnuOpenCGX = new javax.swing.JMenuItem();
@@ -813,10 +732,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuLastCGX.add(mnuMruCGX5);
 
 		mnuFile.add(mnuLastCGX);
-
-		// -- Separator
-		mnuFile.add(new javax.swing.JPopupMenu.Separator());
-
+		
 		// -- Save CGX
 		mnuSaveCGX = new javax.swing.JMenuItem();
 		mnuSaveCGX.setAccelerator(
@@ -825,36 +741,104 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSaveCGX.setEnabled(false);
 		mnuSaveCGX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SaveCGX();
+				SaveCGX(); 
 			}
 		});
 		mnuFile.add(mnuSaveCGX);
 
-		// -- Save GPX
-		mnuSaveGPX = new javax.swing.JMenuItem();
-		mnuSaveGPX.setIcon(Utils.getIcon(this, "save_gpx.png", Settings.MenuIconSize));
-		mnuSaveGPX.setEnabled(false);
-		mnuSaveGPX.addActionListener(new java.awt.event.ActionListener() {
+		// -- Save as CGX
+		mnuSaveAsCGX = new javax.swing.JMenuItem();
+		mnuSaveAsCGX.setIcon(Utils.getIcon(this, "save_cgx.png", Settings.MenuIconSize));
+		mnuSaveAsCGX.setEnabled(false);
+		mnuSaveAsCGX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SaveGPX();
+				SaveAsCGX();
 			}
 		});
-		mnuFile.add(mnuSaveGPX);
-
-		// -- Save CSV
-		mnuSaveCSV = new javax.swing.JMenuItem();
-		mnuSaveCSV.setIcon(Utils.getIcon(this, "save_csv.png", Settings.MenuIconSize));
-		mnuSaveCSV.setEnabled(false);
-		mnuSaveCSV.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SaveCSV();
-			}
-		});
-		mnuFile.add(mnuSaveCSV);
-
+		mnuFile.add(mnuSaveAsCGX);
+		
+		//##########################
+		
 		// -- Separator
 		mnuFile.add(new javax.swing.JPopupMenu.Separator());
+				
+		//##########################	
+		
+		// -- Open GPX
+		mnuOpenGPX = new javax.swing.JMenuItem();
+		mnuOpenGPX.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O,
+				java.awt.event.InputEvent.CTRL_MASK | java.awt.event.InputEvent.SHIFT_MASK));
+		mnuOpenGPX.setIcon(Utils.getIcon(this, "open_gpx.png", Settings.MenuIconSize));
+		mnuOpenGPX.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				OpenGPXDialog();
+			}
+		});
+		mnuFile.add(mnuOpenGPX);
 
+		// -- Recent GPX files
+		// --------------------------------------------------
+		mnuLastGPX = new javax.swing.JMenu();
+		mnuLastGPX.setIcon(Utils.getIcon(this, "open_gpx.png", Settings.MenuIconSize));
+
+		// -- Mru GPX n°1
+		mnuMruGPX1 = new javax.swing.JMenuItem();
+		mnuMruGPX1.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				mnuMruGPXActionPerformed(evt);
+			}
+		});
+		mnuLastGPX.add(mnuMruGPX1);
+
+		// -- Mru GPX n°2
+		mnuMruGPX2 = new javax.swing.JMenuItem();
+		mnuMruGPX2.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				mnuMruGPXActionPerformed(evt);
+			}
+		});
+		mnuLastGPX.add(mnuMruGPX2);
+
+		// -- Mru GPX n°3
+		mnuMruGPX3 = new javax.swing.JMenuItem();
+		mnuMruGPX3.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				mnuMruGPXActionPerformed(evt);
+			}
+		});
+		mnuLastGPX.add(mnuMruGPX3);
+
+		// -- Mru GPX n°4
+		mnuMruGPX4 = new javax.swing.JMenuItem();
+		mnuMruGPX4.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				mnuMruGPXActionPerformed(evt);
+			}
+		});
+		mnuLastGPX.add(mnuMruGPX4);
+
+		// -- Mru GPX n°5
+		mnuMruGPX5 = new javax.swing.JMenuItem();
+		mnuMruGPX5.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				mnuMruGPXActionPerformed(evt);
+			}
+		});
+		mnuLastGPX.add(mnuMruGPX5);
+
+		mnuFile.add(mnuLastGPX);
+
+		//##########################
+		
+		// -- Separator
+		mnuFile.add(new javax.swing.JPopupMenu.Separator());
+		
+		//##########################
+
+		// -- Sous-menu "Importer"
+		mnuImport = new javax.swing.JMenu();
+		mnuImport.setIcon(Utils.getIcon(this, "import.png", Settings.MenuIconSize));
+		
 		// -- Import GPX
 		mnuImportGPX = new javax.swing.JMenuItem();
 		mnuImportGPX.setIcon(Utils.getIcon(this, "import.png", Settings.MenuIconSize));
@@ -864,7 +848,7 @@ public class frmMain extends javax.swing.JFrame {
 				ImportGPX();
 			}
 		});
-		mnuFile.add(mnuImportGPX);
+		mnuImport.add(mnuImportGPX);
 
 		// -- Import CGX
 		mnuImportCGX = new javax.swing.JMenuItem();
@@ -875,8 +859,43 @@ public class frmMain extends javax.swing.JFrame {
 				ImportCGX();
 			}
 		});
-		mnuFile.add(mnuImportCGX);
+		mnuImport.add(mnuImportCGX);
 
+		mnuFile.add(mnuImport);
+		
+		//##########################
+		
+		// -- Separator
+		mnuFile.add(new javax.swing.JPopupMenu.Separator());
+		
+		//##########################
+
+		// -- Sous-menu "Exporter"
+		mnuExport = new javax.swing.JMenu();	
+		mnuExport.setIcon(Utils.getIcon(this, "export.png", Settings.MenuIconSize));
+		
+		// -- Save CSV
+		mnuSaveCSV = new javax.swing.JMenuItem();
+		mnuSaveCSV.setIcon(Utils.getIcon(this, "save_csv.png", Settings.MenuIconSize));
+		mnuSaveCSV.setEnabled(false);
+		mnuSaveCSV.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				SaveCSV();
+			}
+		});
+		mnuExport.add(mnuSaveCSV);
+
+		// -- Save GPX
+		mnuSaveGPX = new javax.swing.JMenuItem();
+		mnuSaveGPX.setIcon(Utils.getIcon(this, "save_gpx.png", Settings.MenuIconSize));
+		mnuSaveGPX.setEnabled(false);
+		mnuSaveGPX.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				SaveAsGPX();
+			}
+		});
+		mnuExport.add(mnuSaveGPX);
+		
 		// -- Save a part of the track in CGX
 		mnuSavePartCGX = new javax.swing.JMenuItem();
 		mnuSavePartCGX.setIcon(Utils.getIcon(this, "save_cgx.png", Settings.MenuIconSize));
@@ -886,7 +905,7 @@ public class frmMain extends javax.swing.JFrame {
 				SavePartCGX();
 			}
 		});
-		mnuFile.add(mnuSavePartCGX);
+		mnuExport.add(mnuSavePartCGX);
 
 		// -- Save a part of the track in GPX
 		mnuSavePartGPX = new javax.swing.JMenuItem();
@@ -897,7 +916,7 @@ public class frmMain extends javax.swing.JFrame {
 				SavePartGPX();
 			}
 		});
-		mnuFile.add(mnuSavePartGPX);
+		mnuExport.add(mnuSavePartGPX);
 
 		// -- Save a part of the track in CSV
 		mnuSavePartCSV = new javax.swing.JMenuItem();
@@ -908,11 +927,20 @@ public class frmMain extends javax.swing.JFrame {
 				SavePartCSV();
 			}
 		});
-		mnuFile.add(mnuSavePartCSV);
-
+		mnuExport.add(mnuSavePartCSV);
+		
+		mnuFile.add(mnuExport);
+		//##########################
+		
 		// -- Separator
 		mnuFile.add(new javax.swing.JPopupMenu.Separator());
 
+		//##########################
+		
+		// -- Sous-menu "Marques"
+		mnuTags = new javax.swing.JMenu();
+		mnuTags.setIcon(Utils.getIcon(this, "flag.png", Settings.MenuIconSize));
+		
 		// -- Import points
 		mnuImportPoints = new javax.swing.JMenuItem();
 		mnuImportPoints.setIcon(Utils.getIcon(this, "import.png", Settings.MenuIconSize));
@@ -923,7 +951,7 @@ public class frmMain extends javax.swing.JFrame {
 				ImportPoints();
 			}
 		});
-		mnuFile.add(mnuImportPoints);
+		mnuTags.add(mnuImportPoints);
 
 		// -- Export points
 		mnuExportPoints = new javax.swing.JMenuItem();
@@ -934,10 +962,10 @@ public class frmMain extends javax.swing.JFrame {
 				ExportPoints();
 			}
 		});
-		mnuFile.add(mnuExportPoints);
+		mnuTags.add(mnuExportPoints);
 
 		// -- Separator
-		mnuFile.add(new javax.swing.JPopupMenu.Separator());
+		mnuTags.add(new javax.swing.JPopupMenu.Separator());
 
 		// -- Export tags as waypoints
 		mnuExportTagAsWaypoints = new javax.swing.JMenuItem();
@@ -948,8 +976,12 @@ public class frmMain extends javax.swing.JFrame {
 				ExportTagsAsWaypoints();
 			}
 		});
-		mnuFile.add(mnuExportTagAsWaypoints);
+		mnuTags.add(mnuExportTagAsWaypoints);
 
+		mnuFile.add(mnuTags);
+		
+		//##########################
+		
 		// -- Separator
 		mnuFile.add(new javax.swing.JPopupMenu.Separator());
 
@@ -1264,6 +1296,21 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuTools.add(mnuDisplaySSDir);
 
+		// -- Separator
+		// ---------------------------------------------------------
+		mnuTools.add(new javax.swing.JPopupMenu.Separator());
+				
+		// -- Display the directory containing the logs
+		// ------------
+		mnuDisplayLogDir = new javax.swing.JMenuItem();
+		mnuDisplayLogDir.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				DisplayLogDir();
+			}
+		});
+		mnuTools.add(mnuDisplayLogDir);
+		
+		
 		// --
 		mnuMain.add(mnuTools);
 
@@ -1399,7 +1446,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- F.A.Q.
 		// --------------------------------------------------------------
 		menuCGFaq = new javax.swing.JMenuItem();
-		menuCGFaq.setIcon(Utils.getIcon(this, "help.png", Settings.MenuIconSize));
+		menuCGFaq.setIcon(Utils.getIcon(this, "faq.png", Settings.MenuIconSize));
 		menuCGFaq.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
@@ -1411,6 +1458,10 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuHelp.add(menuCGFaq);
 
+		// -- Separator
+		// ---------------------------------------------------------
+		mnuHelp.add(new javax.swing.JPopupMenu.Separator());
+		
 		// -- Courses to download
 		// --------------------------------------------------------------
 		menuCGCoursesLibrary = new javax.swing.JMenuItem();
@@ -1437,6 +1488,10 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuHelp.add(mnuCheckUpdate);
+
+		// -- Separator
+		// ---------------------------------------------------------
+		mnuHelp.add(new javax.swing.JPopupMenu.Separator());
 
 		// -- Reward the author
 		// -------------------------------------------------
@@ -1467,6 +1522,10 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuHelp.add(mnuCGWebsite);
+
+		// -- Separator
+		// ---------------------------------------------------------
+		mnuHelp.add(new javax.swing.JPopupMenu.Separator());
 
 		// -- About
 		// -------------------------------------------------------------
@@ -1501,6 +1560,9 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Menu File --------------------------------------------------------
 		mnuFile.setText(bundle.getString("frmMain.mnuFile.text"));
+		mnuImport.setText(bundle.getString("frmMain.mnuImport.text"));
+		mnuExport.setText(bundle.getString("frmMain.mnuExport.text"));
+		mnuTags.setText(bundle.getString("frmMain.mnuTags.text"));
 		mnuOpenGPX.setText(bundle.getString("frmMain.mnuOpenGPX.text"));
 		mnuLastGPX.setText(bundle.getString("frmMain.mnuLastGPX.text"));
 		mnuMruGPX1.setText(bundle.getString("frmMain.mnuMruGPX1.text"));
@@ -1516,6 +1578,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuMruCGX4.setText(bundle.getString("frmMain.mnuMruCGX4.text"));
 		mnuMruCGX5.setText(bundle.getString("frmMain.mnuMruCGX5.text"));
 		mnuSaveCGX.setText(bundle.getString("frmMain.mnuSaveCGX.text"));
+		mnuSaveAsCGX.setText(bundle.getString("frmMain.mnuSaveAsCGX.text"));
 		mnuSaveGPX.setText(bundle.getString("frmMain.mnuSaveGPX.text"));
 		mnuSaveCSV.setText(bundle.getString("frmMain.mnuSaveCSV.text"));
 		mnuImportGPX.setText(bundle.getString("frmMain.mnuImportGPX.text"));
@@ -1558,7 +1621,8 @@ public class frmMain extends javax.swing.JFrame {
 		mnuInternetTools.setText(bundle.getString("frmMain.mnuInternetTools.text"));
 		mnuDisplayCopyCurves.setText(bundle.getString("frmMain.mnuDisplayCopyCurves.text"));
 		mnuDisplaySSDir.setText(bundle.getString("frmMain.mnuDisplaySSDir.text"));
-
+		mnuDisplayLogDir.setText(bundle.getString("frmMain.mnuDisplayLogDir.text"));
+		
 		// -- Menu Settings ---------------------------------------------------
 		mnuSettings.setText(bundle.getString("frmMain.mnuSettings.text"));
 		mnuTrackSettings.setText(bundle.getString("frmMain.mnuTrackSettings.text"));
@@ -1839,7 +1903,7 @@ public class frmMain extends javax.swing.JFrame {
 			int start = panelTrackData.getSelectedRow();
 			int end = start + panelTrackData.getSelectedRowCount() - 1;
 
-			Track.SaveGPX(s, start, end);
+			Track.ExportGPX(s, start, end);
 			// -- Store the directory
 			Settings.previousGPXDirectory = Utils.GetDirFromFilename(s);
 
@@ -1894,6 +1958,21 @@ public class frmMain extends javax.swing.JFrame {
 			RefreshStatusbar(Track);
 
 			setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		}
+	}
+
+	
+	/**
+	 * Affiche le répertoire des logs
+	 */
+	void DisplayLogDir() {
+		try {
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.LogReadme"),
+					"Course Generator", JOptionPane.INFORMATION_MESSAGE);
+
+			Desktop.getDesktop().open(new File(DataDir + "/" + CgConst.CG_DIR + "/" +CgConst.CG_LOGS));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -2155,7 +2234,7 @@ public class frmMain extends javax.swing.JFrame {
 		btSaveCGX.setEnabled(false);
 		btSaveCGX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SaveCGX();
+				SaveAsCGX();
 			}
 		});
 		ToolBarMain.add(btSaveCGX);
@@ -3154,9 +3233,9 @@ public class frmMain extends javax.swing.JFrame {
 
 
 	/**
-	 * Save the track in GPX format
+	 * Save the track in GPX format with file name input
 	 */
-	private void SaveGPX() {
+	private void SaveAsGPX() {
 		String s;
 
 		if (Track.data.isEmpty())
@@ -3169,7 +3248,7 @@ public class frmMain extends javax.swing.JFrame {
 			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 			// -- Save track
-			Track.SaveGPX(s, 0, Track.data.size() - 1);
+			Track.ExportGPX(s, 0, Track.data.size() - 1);
 			// -- Store the directory
 			Settings.previousGPXDirectory = Utils.GetDirFromFilename(s);
 
@@ -3187,7 +3266,7 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
+	
 	/**
 	 * Display a dialog box to open a CGX file
 	 */
@@ -3266,9 +3345,9 @@ public class frmMain extends javax.swing.JFrame {
 
 
 	/**
-	 * Save the track in CGX format
+	 * Save the track in CGX format with file name input
 	 */
-	private void SaveCGX() {
+	private void SaveAsCGX() {
 		String s;
 
 		if (Track.data.isEmpty())
@@ -3291,6 +3370,8 @@ public class frmMain extends javax.swing.JFrame {
 
 			// -- Reset the track modified flag
 			Track.isModified = false;
+			Track.isNewTrack = false;
+			
 			// -- Refresh info panel
 			RefreshStatusbar(Track);
 			RefreshTitle();
@@ -3300,6 +3381,39 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 
+	/**
+	 * Save the track in CGX format
+	 */
+	private void SaveCGX() {
+		String s;
+
+		//-- New? 
+		if (Track.isNewTrack) 
+			SaveAsCGX();
+		else {		
+			if (Track.data.isEmpty())
+				return;
+	
+			if (!Track.FullName.isEmpty()) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+	
+				// -- Save track
+				Track.SaveCGX(Track.FullName, 0, Track.data.size() - 1, false);
+	
+				// -- Reset the track modified flag
+				Track.isModified = false;
+				Track.isNewTrack = false;
+				
+				// -- Refresh info panel
+				RefreshStatusbar(Track);
+				RefreshTitle();
+	
+				setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			}
+		}
+	}
+
+	
 	/**
 	 * Export tags as waypoints
 	 */
@@ -3589,6 +3703,7 @@ public class frmMain extends javax.swing.JFrame {
 		boolean isLoaded = !Track.Name.isEmpty();
 
 		mnuSaveCGX.setEnabled(isLoaded);
+		mnuSaveAsCGX.setEnabled(isLoaded);
 		mnuSaveGPX.setEnabled(isLoaded);
 		mnuSaveCSV.setEnabled(isLoaded);
 		mnuSavePartCGX.setEnabled(isLoaded);

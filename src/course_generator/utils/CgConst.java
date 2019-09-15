@@ -28,7 +28,8 @@ public class CgConst {
 
 	/** Course Generator config and curve directory **/
 	public static final String CG_DIR = ".course_generator";
-	
+	public static final String CG_LOGS = "logs";
+		
 	public static final String OPENSTREETMAP_CACHE_DIR = "openstreetmap";
 	public static final String OPENTOPOMAP_CACHE_DIR = "opentopomap";
 	public static final String OUTDOORS_CACHE_DIR = "outdoors";

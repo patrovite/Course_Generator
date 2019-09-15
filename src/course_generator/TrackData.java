@@ -79,8 +79,12 @@ public class TrackData {
 	public StatData[] StatElevDay;
 
 	/** Track name **/
-	public String Name; // Track
-	// name
+	public String Name; // Track name
+	/** Full track name with **/
+	public String FullName; // Track name	
+	/** New track **/
+	public boolean isNewTrack; 
+	
 	/** Name of the track that appear in the track setting **/
 	public String CourseName = "";
 	/** Total distance in meters **/
@@ -192,6 +196,8 @@ public class TrackData {
 	// -- Constructor --
 	public TrackData(CgSettings settings) {
 		Name = "";
+		FullName = "";
+		isNewTrack = true;
 		param = new ParamData();
 		Paramfile = "Default";
 		data = new ArrayList<CgData>();
@@ -378,6 +384,8 @@ public class TrackData {
 
 		isCalculated = false;
 		isModified = false;
+		
+		if (mode==0) isNewTrack = true;
 
 		CalcDist();
 		CalcSpeed();
@@ -442,7 +450,7 @@ public class TrackData {
 	 * @param end
 	 *            Index of the last point to save
 	 */
-	public void SaveGPX(String name, int start, int end) {
+	public void ExportGPX(String name, int start, int end) {
 		/*
 		 * <?xml version="1.0"?> <gpx creator=
 		 * "GPS Visualizer http://www.gpsvisualizer.com/" version="1.0"
@@ -586,7 +594,7 @@ public class TrackData {
 			bufferedOutputStream.close();
 
 			isModified = false;
-			Name = new File(name).getName();
+			//Name = new File(name).getName();
 
 			CgLog.info("TrackData.SaveGPX : '" + name + "' saved");
 			CgLog.info(cmpt + " positions saved.");
@@ -1709,6 +1717,7 @@ public class TrackData {
 
 		isCalculated = false;
 		isModified = false;
+		if (mode==0) isNewTrack = true;
 
 		CalcDist();
 		CalcSpeed();
@@ -1735,6 +1744,7 @@ public class TrackData {
 
 		if (!backup) {
 			Name = new File(name).getName();
+			String Dir = new File(name).getAbsolutePath();
 			switch (mode) {
 			case 1:
 				CgLog.info("TrackData.OpenCGX : '" + name + "' imported at the end of the data");
@@ -1746,6 +1756,7 @@ public class TrackData {
 				CgLog.info("TrackData.OpenCGX : '" + name + "' loaded");
 			}
 		}
+		FullName = name;
 
 	}// LoadCGX
 
@@ -1871,6 +1882,7 @@ public class TrackData {
 				CgLog.info("TrackData.SaveCGX : '" + name + "' saved");
 				CgLog.info(cmpt + " positions saved.");
 			}
+			FullName = name;
 		} catch (XMLStreamException |
 
 				IOException e) {
