@@ -505,6 +505,10 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		// Refresh position marker on the map
 		int i = Track.FindNearestPoint(c.getLat(), c.getLon());
 		RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
+		
+		//-- If CTRL key is pressed then set marker at this position
+		if (evt.isControlDown())
+			ShowMapMarker();
 	}
 
 
