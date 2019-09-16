@@ -399,6 +399,8 @@ public class frmMain extends javax.swing.JFrame {
 				Locale.setDefault(Locale.US);
 			} else if (Settings.Language.equalsIgnoreCase("ES")) {
 				Locale.setDefault(new Locale("es", "ES"));
+			} else if (Settings.Language.equalsIgnoreCase("PT")) {
+				Locale.setDefault(new Locale("pt", "PT"));
 			} else {
 				Locale.setDefault(Locale.US);
 			}
@@ -1370,6 +1372,8 @@ public class frmMain extends javax.swing.JFrame {
 						loc = Locale.US;
 					} else if (Settings.Language.equalsIgnoreCase("ES")) {
 						loc = new Locale("es", "ES");
+					} else if (Settings.Language.equalsIgnoreCase("PT")) {
+						loc = new Locale("pt", "PT");
 					}
 					//-- Change the language
 					Locale.setDefault(loc);
