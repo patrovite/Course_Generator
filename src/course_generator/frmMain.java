@@ -164,7 +164,7 @@ import course_generator.utils.Utils.CalcLineResult;
 public class frmMain extends javax.swing.JFrame {
 	private static final long serialVersionUID = 6484405417503538528L;
 
-	private final static String Version = "4.4.0-Alpha1";
+	private final static String Version = "4.4.0-Alpha2";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -320,7 +320,7 @@ public class frmMain extends javax.swing.JFrame {
 	public frmMain(String args[]) {
 		// -- Get the current time to measure the initialization time
 		long ts = System.currentTimeMillis();
-
+		
 		// -- Initialize data dir
 		DataDir = Utils.GetHomeDir();
 
@@ -1435,11 +1435,11 @@ public class frmMain extends javax.swing.JFrame {
 		mnuCGHelp.setIcon(Utils.getIcon(this, "help.png", Settings.MenuIconSize));
 		mnuCGHelp.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (!Utils.OpenHelp(CurrentLanguage)) {
+				if (!Utils.OpenHelp(ProgDir, CurrentLanguage)) {
 					CgLog.info("Failed to open help for the default language '" + CurrentLanguage);
 
 					// By default, we should be able to open the French .
-					if (!Utils.OpenHelp("fr")) {
+					if (!Utils.OpenHelp(ProgDir, "fr")) {
 						CgLog.info("Failed to open help for language 'fr'.");
 					}
 				}

@@ -1607,12 +1607,13 @@ public class Utils {
 	}
 
 
-	public static boolean OpenHelp(String language) {
+	public static boolean OpenHelp(String ProgDir, String language) {
 		boolean success = false;
 		Map<String, String> environmentVariables = System.getenv();
 		String helpFolder = environmentVariables.get("CGInstallFolder");
 
-		String helpFilePath = helpFolder + "/help/" + language + "/" + language + "_" + htmlDocFile;
+		//String helpFilePath = helpFolder + "/help/" + language + "/" + language + "_" + htmlDocFile;
+		String helpFilePath = ProgDir + "/help/" + language + "/" + language + "_" + htmlDocFile;
 		File helpFile = new File(helpFilePath);
 		if (helpFile.exists() && !helpFile.isDirectory()) {
 			try {
