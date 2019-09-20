@@ -415,7 +415,8 @@ public class SaxCGXHandler extends DefaultHandler {
 				trkdata.TrackUseDaylightSaving = ManageBoolean(false, ERR_READ_BOOL);
 			} else if (qName.equalsIgnoreCase("CURVE")) {
 				curve = ManageString();
-				if (!Utils.FileExist(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + curve + ".par")) {
+				int FolderType=Utils.searchCurveFolder(curve);				
+				if (!Utils.FileExist(Utils.getSelectedCurveFolder(FolderType)  + curve + ".par")) {
 					JOptionPane.showMessageDialog(Parent,
 							String.format(bundle.getString("loadCGX.CurveFileError"), curve + ".par"));
 					trkdata.Paramfile = "Default";

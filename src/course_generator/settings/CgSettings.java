@@ -53,6 +53,7 @@ public class CgSettings {
 	 * Map selected : 0 => OpenStreetMap. 1 => OpenTopoMap. 2 => Outdoors. 3=>
 	 * BingAerial
 	 **/
+	public int SelectedCurveFolder = CgConst.CURVE_FOLDER_KM_H; //0:km_h 1:min_miles 2:user
 	public int map = 0;
 
 	public boolean offlineMap = true;
@@ -128,6 +129,7 @@ public class CgSettings {
 		bNoConnectOnStartup = true;
 		ConnectionTimeout = 10;
 		Language = "en";
+		SelectedCurveFolder = CgConst.CURVE_FOLDER_KM_H;
 
 		MainWindowWidth = 800;
 		MainWindowHeight = 600;
@@ -322,6 +324,8 @@ public class CgSettings {
 			Utils.WriteStringToXML(writer, "MAPTOOLBARLAYOUT", MapToolBarLayout);
 			Utils.WriteIntToXML(writer, "MAPTOOLBARORIENTATION", MapToolBarOrientation);
 
+			Utils.WriteIntToXML(writer, "SELECTEDCURVEFOLDER", SelectedCurveFolder);
+			
 			writer.writeEndElement();
 			writer.writeEndDocument();
 

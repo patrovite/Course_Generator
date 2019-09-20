@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Project>
+  <Name>Run_4_5km_h</Name>
+  <Comment>Vitesse de 4.5km/h</Comment>
+  <Param>
+    <Item>
+      <Slope>-50</Slope>
+      <Speed>9.7</Speed>
+    </Item>
+    <Item>
+      <Slope>-40</Slope>
+      <Speed>8.7</Speed>
+    </Item>
+    <Item>
+      <Slope>-30</Slope>
+      <Speed>7.7</Speed>
+    </Item>
+    <Item>
+      <Slope>-20</Slope>
+      <Speed>6.0</Speed>
+    </Item>
+    <Item>
+      <Slope>-15</Slope>
+      <Speed>6.0</Speed>
+    </Item>
+  </Param>
+</Project>

@@ -106,7 +106,12 @@ public class CgConst {
 	public static final int MRB_DUP_NONE = 0;
 	public static final int MRB_DUP_SIMPLE = 1;
 	public static final int MRB_DUP_MULTI = 2;
-
+		
+	public static final int CURVE_NOT_FOUND = -1;
+	public static final int CURVE_FOLDER_KM_H = 0;
+	public static final int CURVE_FOLDER_MIN_MILES = 1;
+	public static final int CURVE_FOLDER_USER = 2;
+	
 	public static final Color CL_LINE_SELECTION = new Color(151, 153, 255);
 	public static final Color CL_RESUME_ALTERNATE_LINE = new Color(220, 220, 220);
 

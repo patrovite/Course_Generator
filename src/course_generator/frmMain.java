@@ -174,7 +174,7 @@ public class frmMain extends javax.swing.JFrame {
 	private final TrackDataModel ModelTableMain;
 	public CgSettings Settings;
 	public String DataDir;
-	public String ProgDir;
+	//public String ProgDir;
 	private java.util.ResourceBundle bundle = null;
 	private int cmptInternetConnexion = 0;
 	private int cmptMinute = 0;
@@ -325,11 +325,18 @@ public class frmMain extends javax.swing.JFrame {
 		DataDir = Utils.GetHomeDir();
 
 		// -- Initialize program dir
+		Utils.SetProgDir(inEclipse);
+		
+		/*
 		ProgDir = new File(".").getAbsolutePath();
 		ProgDir = ProgDir.replaceAll("\\\\", "/");
 		if (ProgDir.endsWith("/."))
 			ProgDir = ProgDir.substring(0, ProgDir.length() - 2);
-
+		
+		if (inEclipse) 
+			ProgDir = ProgDir + "/build";
+		*/
+		
 		// -- Create the tiles cache folders if necessary
 		File dirs = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
 		dirs.mkdirs();
@@ -379,7 +386,7 @@ public class frmMain extends javax.swing.JFrame {
 		CgLog.info("sun.cpu.isalist : " + System.getProperty("sun.cpu.isalist"));
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		CgLog.info("Screen size : " + screen.width + "x" + screen.height);
-		CgLog.info("AppDir = " + ProgDir);
+		CgLog.info("AppDir = " + Utils.ProgDir);
 
 		// -- List the java properties
 		// -- To activate only if necessary. It talks a lot!
@@ -487,23 +494,15 @@ public class frmMain extends javax.swing.JFrame {
 		panelMap.RefreshMapButtons();
 		panelProfil.RefreshProfilButtons();
 
-		//
+		//-- Used map dir. Ask to the user to delete it!
 		String tmpstr = DataDir + "/" + CgConst.CG_DIR + "/OpenStreetMapTileCache";
 		Path DataFolder = Paths.get(tmpstr);
 		if (Files.exists(DataFolder)) {
-			// String s = "Le répertoire %s n'est plus utile.\nVous pouvez le supprimer
-			// afin de gagner de l'espace disque.";
 			JOptionPane.showMessageDialog(this, String.format(bundle.getString("frmMain.UnusedTileCacheDir"), tmpstr),
 					"Course Generator", JOptionPane.INFORMATION_MESSAGE);
-			// JOptionPane.showConfirmDialog(this,
-			// bundle.getString("frmMain.QuestionInstallCurves"), "",
-			// JOptionPane.OK_OPTION);
-			// JOptionPane.showConfirmDialog(this, "Le répertoire "+tmpstr+ " n'est plus
-			// utile. Vous pouvez le supprimer afin de gagner de l'espace disque.", "",
-			// JOptionPane.OK_OPTION);
 		}
 
-		ExportCurvesFromResource(false);
+		//ExportCurvesFromResource(false); //No more used since V4.4. When sure delete this line and the function
 
 		// -- Display the splash screen
 		showDialogAbout(this, true, false, Version);
@@ -1435,11 +1434,11 @@ public class frmMain extends javax.swing.JFrame {
 		mnuCGHelp.setIcon(Utils.getIcon(this, "help.png", Settings.MenuIconSize));
 		mnuCGHelp.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (!Utils.OpenHelp(ProgDir, CurrentLanguage)) {
+				if (!Utils.OpenHelp(Utils.ProgDir, CurrentLanguage)) {
 					CgLog.info("Failed to open help for the default language '" + CurrentLanguage);
 
 					// By default, we should be able to open the French .
-					if (!Utils.OpenHelp(ProgDir, "fr")) {
+					if (!Utils.OpenHelp(Utils.ProgDir, "fr")) {
 						CgLog.info("Failed to open help for language 'fr'.");
 					}
 				}
@@ -2065,11 +2064,21 @@ public class frmMain extends javax.swing.JFrame {
 		// --------------------------------------------------------
 		LbInfoCurve = new javax.swing.JLabel();
 		LbInfoCurve.setIcon(Utils.getIcon(this, "chart_curve.png", Settings.StatusbarIconSize));
+		LbInfoCurve.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				EditSSCurves();
+			}
+		});
 		StatusBar.add(LbInfoCurve);
 
 		// -- Curve value
 		// --------------------------------------------------------
 		LbInfoCurveVal = new javax.swing.JLabel();
+		LbInfoCurveVal.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				EditSSCurves();
+			}
+		});
 		StatusBar.add(LbInfoCurveVal);
 
 		// -- Separator

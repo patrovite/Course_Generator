@@ -1306,7 +1306,11 @@ public class TrackData {
 
 		isTimeLoaded = false;
 
-		String sParamfile = Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + Paramfile + ".par";
+		//String sParamfile = Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + Paramfile + ".par";
+		
+		//-- Search the curve in a special order (user>min_miles>km_h)
+		int FolderType=Utils.searchCurveFolder(Paramfile);
+		String sParamfile = Utils.getSelectedCurveFolder(FolderType) + Paramfile + ".par";
 
 		try {
 			param.Load(sParamfile);

@@ -70,6 +70,7 @@ public class Utils {
 
 	public static final String htmlDocFile = "cg_doc_4.00.html";
 	private static TimeZoneEngine timeZoneEngine;
+	public static String ProgDir = ""; //Contain the folder where is the program
 
 
 	/**
@@ -160,6 +161,45 @@ public class Utils {
 			return "";
 	}
 
+	/**
+	 * Initialize program dir
+	 * @param inEclipse true if we are inside eclipse
+	 */
+	public static void SetProgDir(boolean inEclipse) {
+		ProgDir = new File(".").getAbsolutePath();
+		ProgDir = ProgDir.replaceAll("\\\\", "/");
+		if (ProgDir.endsWith("/."))
+			ProgDir = ProgDir.substring(0, ProgDir.length() - 2);
+		
+		if (inEclipse) 
+			ProgDir = ProgDir + "/build";
+	}
+	
+
+	public static String getSelectedCurveFolder(int sel)
+	{
+		if (sel==0)
+			return Utils.ProgDir + "/curves/km_h/";
+		else if (sel==1)
+			return Utils.ProgDir + "/curves/min_miles/";
+		else
+			return Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/";
+	}
+
+	
+	public static int searchCurveFolder(String paramFileName) {
+		if (FileExist(getSelectedCurveFolder(CgConst.CURVE_FOLDER_USER)+ paramFileName + ".par")) {
+			return CgConst.CURVE_FOLDER_USER;
+		}
+		else if (FileExist(getSelectedCurveFolder(CgConst.CURVE_FOLDER_MIN_MILES)+ paramFileName + ".par")) {
+			return CgConst.CURVE_FOLDER_MIN_MILES;
+		}
+		else if (FileExist(getSelectedCurveFolder(CgConst.CURVE_FOLDER_KM_H)+ paramFileName + ".par")) {
+			return CgConst.CURVE_FOLDER_KM_H;
+		}
+		else return CgConst.CURVE_NOT_FOUND;
+	}
+	
 
 	/**
 	 * Return the icon in the resource library
