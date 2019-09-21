@@ -164,7 +164,7 @@ import course_generator.utils.Utils.CalcLineResult;
 public class frmMain extends javax.swing.JFrame {
 	private static final long serialVersionUID = 6484405417503538528L;
 
-	private final static String Version = "4.4.0-Alpha3";
+	private final static String Version = "4.4.0-Alpha4";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -174,7 +174,6 @@ public class frmMain extends javax.swing.JFrame {
 	private final TrackDataModel ModelTableMain;
 	public CgSettings Settings;
 	public String DataDir;
-	//public String ProgDir;
 	private java.util.ResourceBundle bundle = null;
 	private int cmptInternetConnexion = 0;
 	private int cmptMinute = 0;
@@ -183,7 +182,6 @@ public class frmMain extends javax.swing.JFrame {
 	private boolean bNoBackup = true;
 	private String StrMapsDirSize = "";
 	private String CurrentLanguage = "";
-	// private boolean showProfilMarker = true;
 
 	/**
 	 * Creates new form frmMain
@@ -326,17 +324,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Initialize program dir
 		Utils.SetProgDir(inEclipse);
-		
-		/*
-		ProgDir = new File(".").getAbsolutePath();
-		ProgDir = ProgDir.replaceAll("\\\\", "/");
-		if (ProgDir.endsWith("/."))
-			ProgDir = ProgDir.substring(0, ProgDir.length() - 2);
-		
-		if (inEclipse) 
-			ProgDir = ProgDir + "/build";
-		*/
-		
+	
 		// -- Create the tiles cache folders if necessary
 		File dirs = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
 		dirs.mkdirs();
@@ -523,6 +511,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * @param force
 	 *            "true" force the copy with checking the presence of "default.par"
 	 */
+	//TODO To delete when the new curve system is validated
 	private void ExportCurvesFromResource(boolean force) {
 
 		String dst = DataDir + "/" + CgConst.CG_DIR + "/";

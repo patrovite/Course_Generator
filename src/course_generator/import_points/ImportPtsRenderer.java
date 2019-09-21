@@ -47,7 +47,10 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 		setIcon(null);
 
 		data = (CgImportPts) value;
-
+		
+		if (data ==null)	
+			return this;
+		
 		// Depending of the column number return the rendered label
 		switch (column) {
 		// case 0:

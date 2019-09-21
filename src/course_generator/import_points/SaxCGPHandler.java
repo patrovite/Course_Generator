@@ -30,6 +30,8 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import course_generator.utils.Utils;
+
 public class SaxCGPHandler extends DefaultHandler {
 	private String characters = "";
 	private double tmp_lat = 0.0;
@@ -38,6 +40,16 @@ public class SaxCGPHandler extends DefaultHandler {
 	private int tmp_tag = 0;
 	private String tmp_name = "";
 	private String tmp_comment = "";
+	
+	
+	private int tmp_eattime = 0;
+	private int tmp_timelimit = 0;
+	private String tmp_fmtmrb = "";
+	private int tmp_optmrb = 0;
+	private int tmp_vposmrb = 0;
+	private String tmp_commentmrb = "";
+	private int tmp_FontSizemrb = 0;
+
 
 	private int level = 0;
 	private final int LEVEL_PTS = 2;
@@ -222,7 +234,21 @@ public class SaxCGPHandler extends DefaultHandler {
 		} else if (qName.equalsIgnoreCase("PT") && (level == LEVEL_PT)) {
 			level--;
 			// Add data at the of the array
-			ptsdata.data.add(new CgImportPts(tmp_lat, tmp_lon, tmp_ele, tmp_tag, tmp_name, tmp_comment));
+			ptsdata.data.add(new CgImportPts(
+					tmp_lat, 
+					tmp_lon, 
+					tmp_ele, 
+					tmp_tag, 
+					tmp_name, 
+					tmp_comment,
+					tmp_eattime,
+					tmp_timelimit,
+					tmp_fmtmrb,
+					tmp_optmrb,
+					tmp_vposmrb,
+					tmp_commentmrb,
+					tmp_FontSizemrb
+					));
 		}
 		if (level == LEVEL_PT) {
 			if (qName.equalsIgnoreCase("LATITUDEDEGREES")) {
@@ -237,9 +263,22 @@ public class SaxCGPHandler extends DefaultHandler {
 				tmp_name = ManageString();
 			} else if (qName.equalsIgnoreCase("TAG")) {
 				tmp_tag = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("EATTIME")) {
+				tmp_eattime = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("TIMELIMIT")) {
+				tmp_timelimit = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("FMTLBMINIROADBOOK")) {
+				tmp_fmtmrb = ManageString();
+			} else if (qName.equalsIgnoreCase("OPTMINIROADBOOK")) {
+				tmp_optmrb = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("VPOSMINIROADBOOK")) {
+				tmp_vposmrb = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("COMMENTMINIROADBOOK")) {
+				tmp_commentmrb = ManageString();
+			} else if (qName.equalsIgnoreCase("FONTSIZEMINIROADBOOK")) {
+				tmp_FontSizemrb = ManageInt(0, ERR_READ_INT);
 			}
 		}
-
 	}
 
 

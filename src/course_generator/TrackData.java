@@ -735,21 +735,42 @@ public class TrackData {
 					Utils.WriteStringToXML(writer, "AltitudeMeters",
 							String.format(Locale.ROOT, "%1.1f", r.getElevation(CgConst.UNIT_METER)));
 
-					// <Comment>AAA<Comment>
+					// <Comment>AAA</Comment>
 					String s = r.getComment().trim();
 					if (s.equals(""))
 						s = " ";
 					Utils.WriteStringToXML(writer, "Comment", s);
 
-					// <Name>AAA<Namet>
+					// <Name>AAA</Name>
 					s = r.getName().trim();
 					if (s.equals(""))
 						s = " ";
 					Utils.WriteStringToXML(writer, "Name", s);
 
-					// <Tag>1234<Tag>
+					// <Tag>1234</Tag>
 					Utils.WriteStringToXML(writer, "Tag", String.format("%d", r.getTag()));
 
+					// <EatTime>1234</EatTime>
+					Utils.WriteIntToXML(writer, "EatTime", r.getStation());
+					
+					// <TimeLimit>1234</TimeLimit>
+					Utils.WriteIntToXML(writer, "TimeLimit", r.getTimeLimit());
+					
+					// <FmtLbMiniRoadbook>1234</FmtLbMiniRoadbook>
+					Utils.WriteStringToXML(writer, "FmtLbMiniRoadbook", r.FmtLbMiniRoadbook);
+					
+					// <OptMiniRoadbook>1234</OptMiniRoadbook>
+					Utils.WriteIntToXML(writer, "OptMiniRoadbook", r.OptionMiniRoadbook);
+					
+					// <VPosMiniRoadbook>1234</VPosMiniRoadbook>
+					Utils.WriteIntToXML(writer, "VPosMiniRoadbook", r.VPosMiniRoadbook);
+					
+					// <CommentMiniRoadbook>1234</CommentMiniRoadbook>
+					Utils.WriteStringToXML(writer, "CommentMiniRoadbook", r.CommentMiniRoadbook);
+					
+					// <FontSizeMiniRoadbook>1234</FontSizeMiniRoadbook>
+					Utils.WriteIntToXML(writer, "FontSizeMiniRoadbook", r.FontSizeMiniRoadbook);					
+					
 					writer.writeEndElement(); // Pt
 				} // if
 

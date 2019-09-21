@@ -40,6 +40,20 @@ public class CgImportPts {
 	private String Name;
 	/** Comment **/
 	private String Comment;
+	/** Time at the station **/
+	private int EatTime = 0;
+	/** Cut off time **/
+	private int TimeLimit = 0;
+	/** Format MRB **/
+	private String FmtMRB = "";
+	/** Option of the MRB **/
+	private int OptMRB = 0;
+	/** Position of the label of the MRB **/
+	private int VPosMRB = 0;
+	/** Comment of the MRB **/
+	private String CommentMRB = "";
+	/** Font size of the MRB **/
+	private int FontSizeMRB = 0;
 
 
 	// -- Constructor
@@ -53,10 +67,25 @@ public class CgImportPts {
 		Tag = 0;
 		Name = "";
 		Comment = "";
+		setEatTime(0);
+		setTimeLimit(0);
+		setFmtRB("");
+		setOptMRB(0);
+		setVPosMRB(0);
+		setCommentMRB("");
+		setFontSizeMRB(0);
 	}
 
 
-	public CgImportPts(double lat, double lon, double ele, int tag, String name, String comment) {
+	public CgImportPts(double lat, double lon, double ele, int tag, String name, String comment,
+			int eattime,
+			int timelimit,
+			String fmtmrb,
+			int optmrb,
+			int	vposmrb,
+			String commentmrb,
+			int FontSizemrb			
+			) {
 		Sel = false;
 		Line = 0;
 		Dist = 0.0;
@@ -66,6 +95,13 @@ public class CgImportPts {
 		Tag = tag;
 		Name = name;
 		Comment = comment;
+		setEatTime(eattime);
+		setTimeLimit(timelimit);
+		setFmtRB(fmtmrb);
+		setOptMRB(optmrb);
+		setVPosMRB(vposmrb);
+		setCommentMRB(commentmrb);
+		setFontSizeMRB(FontSizemrb);			
 	}
 
 
@@ -278,6 +314,80 @@ public class CgImportPts {
 
 	public void setComment(String comment) {
 		Comment = comment;
+	}
+
+	//-- EatTime
+
+	public int getEatTime() {
+		return EatTime;
+	}
+
+
+	public void setEatTime(int eatTime) {
+		EatTime = eatTime;
+	}
+
+	//-- Timelimit
+	public int getTimeLimit() {
+		return TimeLimit;
+	}
+
+
+	public void setTimeLimit(int timeLimit) {
+		TimeLimit = timeLimit;
+	}
+
+	
+	//-- FmtMRB
+	public String getFmtRB() {
+		return FmtMRB;
+	}
+
+
+	public void setFmtRB(String fmtRB) {
+		FmtMRB = fmtRB;
+	}
+
+
+	//-- OptMRB
+	public int getOptMRB() {
+		return OptMRB;
+	}
+
+
+	public void setOptMRB(int optMRB) {
+		OptMRB = optMRB;
+	}
+
+
+	//-- VPosMRB
+	public int getVPosMRB() {
+		return VPosMRB;
+	}
+
+
+	public void setVPosMRB(int vPosMRB) {
+		VPosMRB = vPosMRB;
+	}
+
+	//-- Comment MRB
+	public String getCommentMRB() {
+		return CommentMRB;
+	}
+
+
+	public void setCommentMRB(String commentMRB) {
+		CommentMRB = commentMRB;
+	}
+
+	//-- FontSize MRB
+	public int getFontSizeMRB() {
+		return FontSizeMRB;
+	}
+
+
+	public void setFontSizeMRB(int fontSizeMRB) {
+		FontSizeMRB = fontSizeMRB;
 	}
 
 }

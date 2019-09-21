@@ -295,6 +295,14 @@ public class frmImportPoints extends javax.swing.JDialog {
 				track.data.get((int) r.getLine()).setName(r.getName());
 				track.data.get((int) r.getLine()).setComment(r.getComment());
 
+				track.data.get((int) r.getLine()).setStation(r.getEatTime());
+				track.data.get((int) r.getLine()).setTimeLimit(r.getTimeLimit());
+				track.data.get((int) r.getLine()).FmtLbMiniRoadbook = r.getFmtRB();
+				track.data.get((int) r.getLine()).OptionMiniRoadbook=r.getOptMRB();
+				track.data.get((int) r.getLine()).VPosMiniRoadbook = r.getVPosMRB();
+				track.data.get((int) r.getLine()).CommentMiniRoadbook =r.getCommentMRB();
+				track.data.get((int) r.getLine()).FontSizeMiniRoadbook = r.getFontSizeMRB();
+
 				track.isModified = true;
 			}
 		}
