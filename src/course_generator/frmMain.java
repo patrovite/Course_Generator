@@ -165,7 +165,7 @@ import course_generator.utils.Utils.CalcLineResult;
 public class frmMain extends javax.swing.JFrame {
 	private static final long serialVersionUID = 6484405417503538528L;
 
-	private final static String Version = "4.4.0-Alpha4";
+	private final static String Version = "4.4.0-Alpha5";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -342,6 +342,10 @@ public class frmMain extends javax.swing.JFrame {
 		dirs = new File(DataDir + "/" + CgConst.CG_DIR, "themes/");
 		dirs.mkdirs();
 
+		// -- Create the curves folders if necessary
+		dirs = new File(DataDir + "/" + CgConst.CG_DIR, "curves/");
+		dirs.mkdirs();
+		
 		// -- Initialize data
 		Resume = new ResumeData();
 		Settings = new CgSettings();
@@ -1295,7 +1299,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuDisplaySSDir.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
-					Desktop.getDesktop().open(new File(DataDir + "/" + CgConst.CG_DIR));
+					Desktop.getDesktop().open(new File(DataDir + "/" + CgConst.CG_DIR + "/curves"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -1981,7 +1985,9 @@ public class frmMain extends javax.swing.JFrame {
 			return;
 		
 		frmSearchCurve frm = new frmSearchCurve(Settings);
-		frm.showDialog(Settings, Track);
+		if (frm.showDialog(Settings, Track))
+			CalcTrackTime();
+		//RefreshStatusbar(Track);
 	}
 	
 	

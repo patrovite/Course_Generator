@@ -57,6 +57,8 @@ public class frmSearchCurve extends javax.swing.JDialog{
 	private ResourceBundle bundle;
 	private boolean ok;
 	private final int NbCurves = 145;
+	private String strMin = "";
+	private String strMax = "";	
 	private CgSettings settings;
 	private TrackData track;
 	private CgData data;
@@ -92,6 +94,7 @@ public class frmSearchCurve extends javax.swing.JDialog{
 	public boolean showDialog(CgSettings _settings, TrackData _track) {
 		settings = _settings;
 		track = _track;
+		
 		// Set field
 
 
@@ -161,7 +164,7 @@ public class frmSearchCurve extends javax.swing.JDialog{
 		int line = 0;
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle(bundle.getString("frmEditPosition.title"));
+		setTitle(bundle.getString("frmSearchCurve.title"));
 		setAlwaysOnTop(true);
 		setResizable(false);
 		//setMinimumSize(new Dimension(1000, 400));
@@ -174,7 +177,7 @@ public class frmSearchCurve extends javax.swing.JDialog{
 
 		// == Final time panel
 		panelFinalTime = new JPanel();
-		panelFinalTime.setBorder(javax.swing.BorderFactory.createTitledBorder("Final time")); //TODO bundle...
+		panelFinalTime.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("frmSearchCurve.panelFinalTime"))); //TODO bundle...
 		panelFinalTime.setOpaque(true);
 		panelFinalTime.setLayout(new GridBagLayout());
 		Utils.addComponent(paneGlobal, panelFinalTime, 
@@ -196,11 +199,11 @@ public class frmSearchCurve extends javax.swing.JDialog{
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.VERTICAL);
 
 		btSearchCurve = new javax.swing.JButton();
-		btSearchCurve.setToolTipText(bundle.getString("frmSearchPoint.btSearch.tooltips")); //TODO change....
+		btSearchCurve.setToolTipText(bundle.getString("frmSearchCurve.btSearch.tooltips")); //TODO change....
 		btSearchCurve.setIcon(Utils.getIcon(this, "search.png", settings.DialogIconSize));		
 		btSearchCurve.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//spinDiff.setValue(100);
+				Search();
 			}
 		});
 		Utils.addComponent(panelFinalTime, btSearchCurve, 
@@ -212,7 +215,7 @@ public class frmSearchCurve extends javax.swing.JDialog{
 		
 		// == Progress panel
 		panelProgress = new JPanel();
-		panelProgress.setBorder(javax.swing.BorderFactory.createTitledBorder("Progress")); //TODO bundle
+		panelProgress.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("frmSearchCurve.panelProgress"))); //TODO bundle
 		panelProgress.setOpaque(true);
 		panelProgress.setLayout(new GridBagLayout());
 		Utils.addComponent(paneGlobal, panelProgress, 
@@ -226,7 +229,7 @@ public class frmSearchCurve extends javax.swing.JDialog{
 		line = 0;
 
 		progressBar = new JProgressBar(0, NbCurves);
-		progressBar.setValue(5);
+		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
 		Utils.addComponent(panelProgress, progressBar, 
 				0, line, 
@@ -238,7 +241,7 @@ public class frmSearchCurve extends javax.swing.JDialog{
 
 		// == Result panel
 		panelResult = new JPanel();
-		panelResult.setBorder(javax.swing.BorderFactory.createTitledBorder("Results")); //TODO bundle
+		panelResult.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("frmSearchCurve.panelResult"))); //TODO bundle
 		panelResult.setOpaque(true);
 		panelResult.setLayout(new GridBagLayout());
 		Utils.addComponent(paneGlobal, panelResult, 
@@ -267,7 +270,7 @@ public class frmSearchCurve extends javax.swing.JDialog{
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		lbFoundTime1 = new javax.swing.JLabel();
-		lbFoundTime1.setText("Time"); //TODO Bundle
+		lbFoundTime1.setText(bundle.getString("frmSearchCurve.lbFoundTime1.Text")); 
 		Utils.addComponent(panelResult, lbFoundTime1, 
 				1, line, 
 				1, 1, 
@@ -291,10 +294,13 @@ public class frmSearchCurve extends javax.swing.JDialog{
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 		
 		btFoundSelect1 = new javax.swing.JButton();
-		btFoundSelect1.setText("Select"); //TODO change....
+		btFoundSelect1.setText(bundle.getString("frmSearchCurve.btFoundSelect1.Text")); 
 		btFoundSelect1.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//spinDiff.setValue(100);
+				if (!strMin.isEmpty()) {
+					track.Paramfile = strMin;
+					RequestToClose();
+				}				
 			}
 		});
 		Utils.addComponent(panelResult, btFoundSelect1, 
@@ -322,7 +328,7 @@ public class frmSearchCurve extends javax.swing.JDialog{
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		lbFoundTime2 = new javax.swing.JLabel();
-		lbFoundTime2.setText("Time"); //TODO Bundle
+		lbFoundTime2.setText(bundle.getString("frmSearchCurve.lbFoundTime2.Text")); 
 		Utils.addComponent(panelResult, lbFoundTime2, 
 				1, line, 
 				1, 1, 
@@ -346,10 +352,13 @@ public class frmSearchCurve extends javax.swing.JDialog{
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 		
 		btFoundSelect2 = new javax.swing.JButton();
-		btFoundSelect2.setText("Select"); //TODO change....
+		btFoundSelect2.setText(bundle.getString("frmSearchCurve.btFoundSelect2.Text")); //TODO change....
 		btFoundSelect2.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//spinDiff.setValue(100);
+				if (!strMax.isEmpty()) {
+					track.Paramfile = strMax;
+					RequestToClose();
+				}
 			}
 		});
 		Utils.addComponent(panelResult, btFoundSelect2, 
@@ -390,5 +399,67 @@ public class frmSearchCurve extends javax.swing.JDialog{
 		setLocationRelativeTo(null);
 	}
 	
+	private void Search() {
+		int targetTime = hsFinalTime.getHMSinSecond();
+		int timeMin = 0;
+		int timeMax = 0;
+		int cmpt=0;
+		
+		TrackData track_calc = new TrackData(settings);
+		track.CopyTo(track_calc);
+
+		//-- Init display 
+		lbFoundCurve1.setText("");
+		lbFoundTime1Val.setText("");
+		
+		lbFoundCurve2.setText("");
+		lbFoundTime2Val.setText("");
+		progressBar.setValue(0);
+		
+		boolean found=false;
+		
+		//-- Search
+		for (double speed=3.6; speed<=18; speed=speed+0.1) {
+			String name = String.format("Run_%02d_%dkm_h", (int)speed, (int) ((speed-(int)speed)*10) );
+			track_calc.Paramfile=name;
+			track_calc.Calculate();
+
+			//Found exact time		
+			if (track_calc.TotalTime==targetTime) {
+				strMin=track_calc.Paramfile;
+				timeMin=track_calc.TotalTime;
+				found=true;
+				break;
+			}
+			else if (track_calc.TotalTime>targetTime) {
+				strMax=track_calc.Paramfile;
+				timeMax=track_calc.TotalTime;
+			}
+			else {
+				if (!strMax.isEmpty()) {
+					strMin=track_calc.Paramfile;
+					timeMin=track_calc.TotalTime;
+					found=true;
+				}
+				break;				
+			}
+			
+			//Update progressbar
+			cmpt++;
+			progressBar.setValue(cmpt);
+		} //for
+		
+		progressBar.setValue(NbCurves);
+		
+		if (found) {
+			lbFoundCurve1.setText(strMin);
+			lbFoundTime1Val.setText(Utils.Second2DateString(timeMin));
+			
+			lbFoundCurve2.setText(strMax);
+			lbFoundTime2Val.setText(Utils.Second2DateString(timeMax));
+		}
+		else
+			lbFoundCurve1.setText(bundle.getString("frmSearchCurve.StrNotFound"));
+	}
 	
 }

@@ -183,7 +183,7 @@ public class Utils {
 		else if (sel==1)
 			return Utils.ProgDir + "/curves/min_miles/";
 		else
-			return Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/";
+			return Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/curves/";
 	}
 
 	
