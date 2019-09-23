@@ -7,15 +7,28 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   id="svg2"
    viewBox="0 0 512 512"
    version="1.1"
+   id="svg4"
    sodipodi:docname="open_cgx.svg"
-   width="512"
-   height="512"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+   inkscape:export-filename="C:\Users\pierre.delore\Dropbox\Perso\tmp\test-open.png"
+   inkscape:export-xdpi="4.5"
+   inkscape:export-ydpi="4.5"
+   inkscape:version="0.92.4 (f8dce91, 2019-08-02)">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
   <defs
-     id="defs1544" />
+     id="defs8" />
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -26,85 +39,38 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1027"
-     id="namedview1542"
+     inkscape:window-height="1033"
+     id="namedview6"
      showgrid="false"
-     inkscape:zoom="1.5191747"
-     inkscape:cx="-54.621075"
-     inkscape:cy="202.25602"
+     inkscape:zoom="0.92187502"
+     inkscape:cx="339.37497"
+     inkscape:cy="190.05641"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg2" />
-  <path
-     style="fill:#f9f9f9;fill-opacity:1;stroke-width:13.27383804"
-     inkscape:connector-curvature="0"
-     d="m 0.20643914,460.79116 c 0,24.92998 43.65718386,44.99996 97.88606686,44.99996 H 414.38195 c 54.22888,0 97.88606,-20.06998 97.88606,-44.99996 V 259.69535 c 0,-24.92998 -43.65718,-44.99996 -97.88606,-44.99996 h -20.80078 c -60.48739,0.15424 -75.18067,0.2629 -133.35803,-0.002 H 98.10033 c -54.228882,0 -97.88605946,20.06998 -97.88605946,44.99996 v 201.09581 z"
-     id="path816"
-     sodipodi:nodetypes="csssssccsscc" />
-  <path
-     id="path3617"
-     d="m 411.0637,339.80814 c -0.35851,4.25682 -6.64628,12.21378 -19.60642,26.99009 -56.68856,64.63119 -60.70306,63.94758 -65.43784,63.91092 l -2.29201,-0.50925 c -4.32575,-2.42206 -6.01482,-5.25005 -24.9531,-35.13805 -5.28232,-8.33698 -16.40021,-25.5096 -24.69808,-38.19353 -20.62165,-31.52116 -20.41551,-33.10186 3.81895,-31.31909 14.33876,1.05507 15.40288,1.00081 18.33289,-1.52775 2.66357,-2.2987 3.30725,-4.51478 4.83825,-14.76816 4.18479,-28.01592 -0.26888,-58.63674 -12.47696,-85.80609 -5.09491,-11.34195 -6.95916,-14.85209 -15.27741,-26.99009 -3.98598,-5.81764 -4.91403,-7.97824 -4.58322,-12.47615 0.29333,-4.07055 1.1839,-5.53458 3.05548,-6.36559 9.70584,-4.31035 29.8598,9.97147 54.23521,38.44856 24.5506,28.67998 39.79135,61.14142 46.5957,99.81242 2.91127,16.54279 3.00904,16.72612 21.38838,18.07868 11.6532,0.85741 17.41625,1.59952 17.06018,5.85634 z"
-     inkscape:connector-curvature="0"
-     style="fill:#ff6600;fill-opacity:1;stroke-width:8.14795208" />
-  <path
-     id="path2821"
-     d="m 0.52117723,465.77359 c 0,25.49372 43.69416477,46.01753 97.96898177,46.01753 H 415.04753 c 54.27482,0 97.96897,-20.52381 97.96897,-46.01753 V 260.13044 c 0,-25.49371 -43.69415,-46.01753 -97.96897,-46.01753 h -20.81841 c -6.3092,5.70617 -11.40359,11.59642 -16.51758,17.54188 51.3044,1.52134 91.84593,21.23433 91.84593,45.73039 v 155.02386 c 0,25.49371 -43.69417,46.01753 -97.96899,46.01753 h -229.6197 c -54.274811,0 -97.968966,-20.52382 -97.968966,-46.01753 V 277.38518 c 0,-25.49372 43.694155,-46.01754 97.968966,-46.01754 h 90.00999 c 8.85757,-5.9704 18.77124,-11.63783 28.77936,-17.25657 H 98.49799 c -54.274818,0 -97.96897473,20.52382 -97.96897473,46.01753 v 205.64315 z"
-     inkscape:connector-curvature="0"
-     style="fill:#1a1a1a;fill-opacity:1;stroke-width:13.42876053" />
-  <metadata
-     id="metadata1539">
-    <rdf:RDF>
-      <cc:Work>
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <cc:license
-           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
-        <dc:publisher>
-          <cc:Agent
-             rdf:about="http://openclipart.org/">
-            <dc:title>Openclipart</dc:title>
-          </cc:Agent>
-        </dc:publisher>
-        <dc:title />
-        <dc:date>2013-07-15T19:13:16</dc:date>
-        <dc:description>An import icon</dc:description>
-        <dc:source>https://openclipart.org/detail/180895/import-icon-2-by-dibargatin-180895</dc:source>
-        <dc:creator>
-          <cc:Agent>
-            <dc:title>dibargatin</dc:title>
-          </cc:Agent>
-        </dc:creator>
-        <dc:subject>
-          <rdf:Bag>
-            <rdf:li>android</rdf:li>
-            <rdf:li>icon</rdf:li>
-            <rdf:li>import</rdf:li>
-          </rdf:Bag>
-        </dc:subject>
-      </cc:Work>
-      <cc:License
-         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
-        <cc:permits
-           rdf:resource="http://creativecommons.org/ns#Reproduction" />
-        <cc:permits
-           rdf:resource="http://creativecommons.org/ns#Distribution" />
-        <cc:permits
-           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
-      </cc:License>
-    </rdf:RDF>
-  </metadata>
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:80.96235657px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.82985568"
-     x="54.324226"
-     y="147.15971"
-     id="text1042"
-     transform="scale(0.90405255,1.1061304)"><tspan
-       sodipodi:role="line"
-       id="tspan1040"
-       x="54.324226"
-       y="147.15971"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:194.30964661px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';stroke-width:1.82985568">CGX</tspan></text>
+     inkscape:current-layer="layer2" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="copie"
+     style="display:inline;opacity:1">
+    <path
+       style="fill:#eeffaa;stroke:#000000;stroke-width:26.05694389;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 24.785991,53.909016 c 9.82993,-9.925695 31.485721,-8.338222 31.485721,-8.338222 H 202.40798 l 64.24079,76.748096 h 192.1087 c 0,0 18.5071,-0.58349 27.4288,8.33822 9.41387,9.41387 10.42279,33.99981 10.42279,33.99981 v 305.21637 c 0,0 1.54053,14.34522 -4.16912,20.05485 -5.26665,5.26667 -18.17542,4.16912 -18.17542,4.16912 H 43.347112 c 0,0 -15.960246,-1.01944 -21.758959,-8.33823 -7.40603,-9.34744 -6.496485,-22.96078 -6.496485,-22.96078 L 14.84885,95.661468 c 0,0 -1.812528,-29.888317 9.937141,-41.752452 z"
+       id="path849"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sccccsccsccsccs" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:204.7828064px;line-height:1.25;font-family:sans-serif;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;display:inline;opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.13315415"
+       x="300.83191"
+       y="344.67334"
+       id="text7316-8"
+       transform="scale(0.85059965,1.1756412)"><tspan
+         sodipodi:role="line"
+         id="tspan7314-7"
+         x="300.83191"
+         y="344.67334"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';fill:#000000;stroke-width:2.13315415">CGX</tspan></text>
+  </g>
 </svg>

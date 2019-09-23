@@ -130,6 +130,7 @@ import course_generator.dialogs.frmFillCoeff;
 import course_generator.dialogs.frmFillCoeff.EditCoeffResult;
 import course_generator.dialogs.frmFillDiff;
 import course_generator.dialogs.frmFillDiff.EditDiffResult;
+import course_generator.dialogs.frmSearchCurve;
 import course_generator.dialogs.frmSearchPoint;
 import course_generator.dialogs.frmSearchPointListener;
 import course_generator.dialogs.frmTrackSettings;
@@ -288,6 +289,8 @@ public class frmMain extends javax.swing.JFrame {
 	private JMenuItem mnuSaveAsCGX;
 
 	private JMenuItem mnuDisplayLogDir;
+
+	private JMenuItem mnuSearchCurveFromFinalTime;
 
 	
 	// -- Called every second
@@ -1242,6 +1245,18 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuTools.add(mnuCalculateTrackTime);
 
+		// -- Search curve from final time
+		// ------------------------------------------------
+		mnuSearchCurveFromFinalTime = new javax.swing.JMenuItem();
+		mnuSearchCurveFromFinalTime.setEnabled(false);
+		mnuSearchCurveFromFinalTime.setIcon(Utils.getIcon(this, "search.png", Settings.MenuIconSize));
+		mnuSearchCurveFromFinalTime.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				SearchCurveFromFinalTime();
+			}
+		});
+		mnuTools.add(mnuSearchCurveFromFinalTime);
+		
 		// -- Separator
 		// ---------------------------------------------------------
 		mnuTools.add(new javax.swing.JPopupMenu.Separator());
@@ -1260,6 +1275,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Force curves copy from resources
 		// ------------
+		/*
 		mnuDisplayCopyCurves = new javax.swing.JMenuItem();
 		mnuDisplayCopyCurves.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1271,7 +1287,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Separator
 		// ---------------------------------------------------------
 		mnuTools.add(new javax.swing.JPopupMenu.Separator());
-
+		*/
+		
 		// -- Display the directory containing the speed/slope files
 		// ------------
 		mnuDisplaySSDir = new javax.swing.JMenuItem();
@@ -1610,8 +1627,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuInvertTrack.setText(bundle.getString("frmMain.mnuInvertTrack.text"));
 		mnuDefineNewStart.setText(bundle.getString("frmMain.mnuDefineNewStart.text"));
 		mnuCalculateTrackTime.setText(bundle.getString("frmMain.mnuCalculateTackTime.text"));
+		mnuSearchCurveFromFinalTime.setText(bundle.getString("frmMain.mnuSearchCurveFromCurve.text"));
 		mnuInternetTools.setText(bundle.getString("frmMain.mnuInternetTools.text"));
-		mnuDisplayCopyCurves.setText(bundle.getString("frmMain.mnuDisplayCopyCurves.text"));
+		//mnuDisplayCopyCurves.setText(bundle.getString("frmMain.mnuDisplayCopyCurves.text"));
 		mnuDisplaySSDir.setText(bundle.getString("frmMain.mnuDisplaySSDir.text"));
 		mnuDisplayLogDir.setText(bundle.getString("frmMain.mnuDisplayLogDir.text"));
 		
@@ -1953,6 +1971,19 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
+	/**
+	 * Open the dialog to search the curve from an estimated final time
+	 */
+	private void SearchCurveFromFinalTime() {
+		if (Track==null) 
+			return;
+		if (Track.data.isEmpty())
+			return;
+		
+		frmSearchCurve frm = new frmSearchCurve(Settings);
+		frm.showDialog(Settings, Track);
+	}
+	
 	
 	/**
 	 * Affiche le répertoire des logs
@@ -3724,6 +3755,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuInvertTrack.setEnabled(isLoaded);
 		mnuDefineNewStart.setEnabled(isLoaded);
 		mnuCalculateTrackTime.setEnabled(isLoaded);
+		mnuSearchCurveFromFinalTime.setEnabled(isLoaded);
 		mnuTrackSettings.setEnabled(isLoaded);
 		mnuImportPoints.setEnabled(isLoaded);
 		mnuImportCGX.setEnabled(isLoaded);
