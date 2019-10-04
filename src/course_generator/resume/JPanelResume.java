@@ -302,7 +302,7 @@ public class JPanelResume extends JPanel {
 				dst.setLine(src.getNum());
 				dst.setElevation(src.getElevation(CgConst.UNIT_METER));
 
-				ccr = Track.CalcClimb(0, i, ccr);
+				ccr = Track.CalcClimb(CgConst.ELEV_NORM, 0, i, ccr);
 				dst.setClimbP(ccr.cp);
 				dst.setClimbM(ccr.cm);
 
@@ -316,7 +316,7 @@ public class JPanelResume extends JPanel {
 				dst.setdTime_f(src.getTime() - OldData.getTime());
 				dst.setdDist((src.getTotal(CgConst.UNIT_METER) - OldData.getTotal(CgConst.UNIT_METER)) / 1000.0);
 
-				ccr = Track.CalcClimb(old, i, ccr);
+				ccr = Track.CalcClimb(CgConst.ELEV_NORM, old, i, ccr);
 				casr = Track.CalcAvrSlope(old, i, casr);
 				speedResult = Track.CalcAvrSpeed(old, i, speedResult);
 

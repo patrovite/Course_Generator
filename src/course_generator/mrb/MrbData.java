@@ -30,7 +30,8 @@ public class MrbData extends CgData {
 	/** Time from previous point **/
 	private int deltatime;
 
-	public MrbData(double Num, double Latitude, double Longitude, double Elevation, double ElevationMemo, int Tag,
+	public MrbData(double Num, double Latitude, double Longitude, double Elevation, double ElevationNotSmoothed, 
+			double ElevationSmoothed, double ElevationMemo, int Tag,
 			double Dist, double Total, double Diff, double Coeff, double Recup, double Slope, double Speed,
 			double dElevation, int Time, // Time in second
 			double dTime_f, // Time this part of the track in second (with decimal)
@@ -40,7 +41,7 @@ public class MrbData extends CgData {
 			int OptionMiniRoadbook, int VPosMiniRoadbook, String CommentMiniRoadbook, int FontSizeMiniRoadbook,
 			double deltadistance, int deltatime) {
 
-		super(Num, Latitude, Longitude, Elevation, ElevationMemo, Tag, Dist, Total, Diff, Coeff, Recup, Slope, Speed,
+		super(Num, Latitude, Longitude, Elevation, ElevationNotSmoothed, ElevationSmoothed, ElevationMemo, Tag, Dist, Total, Diff, Coeff, Recup, Slope, Speed,
 				dElevation, Time, // Time in second
 				dTime_f, // Time this part of the track in second (with decimal)
 				TimeLimit, // Time limit

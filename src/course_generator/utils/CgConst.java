@@ -146,6 +146,8 @@ public class CgConst {
 	public static final Color CL_TRACK_TABLE_TOTAL = new Color(221, 233, 175);
 	public static final Color CL_TRACK_TABLE_LAT = new Color(244, 238, 215);
 	public static final Color CL_TRACK_TABLE_LON = new Color(255, 242, 193);
-	
 
+	public static final int ELEV_NORM = 0;
+	public static final int ELEV_NOTSMOOTHED = 1;
+	public static final int ELEV_SMOOTHED = 2;
 }

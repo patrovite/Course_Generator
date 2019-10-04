@@ -1236,7 +1236,7 @@ public class Utils {
 
 		if (cd != null) {
 			CalcClimbResult res = new CalcClimbResult();
-			res = cd.CalcClimb(0, (int) (r.getNum() - 1), res);
+			res = cd.CalcClimb(CgConst.ELEV_NORM, 0, (int) (r.getNum() - 1), res);
 
 			for (i = 0; i < s.length(); i++) {
 				switch (step) {

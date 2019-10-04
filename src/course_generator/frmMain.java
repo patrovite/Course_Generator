@@ -122,6 +122,7 @@ import course_generator.TrackData.SearchPointResult;
 import course_generator.analysis.JPanelAnalysisSpeed;
 import course_generator.analysis.JPanelAnalysisSpeedSlope;
 import course_generator.analysis.JPanelAnalysisTimeDist;
+import course_generator.dialogs.FrmElevationFilter;
 import course_generator.dialogs.FrmExportWaypoints;
 import course_generator.dialogs.FrmImportChoice;
 import course_generator.dialogs.frmEditPosition;
@@ -291,6 +292,8 @@ public class frmMain extends javax.swing.JFrame {
 	private JMenuItem mnuDisplayLogDir;
 
 	private JMenuItem mnuSearchCurveFromFinalTime;
+
+	private JMenuItem mnuSmoothElevation;
 
 	
 	// -- Called every second
@@ -627,7 +630,7 @@ public class frmMain extends javax.swing.JFrame {
 		RefreshStatusbar(Track);
 
 		CalcClimbResult ccr = new CalcClimbResult();
-		ccr = Track.CalcClimb(0, Track.data.size() - 1, ccr);
+		ccr = Track.CalcClimb(CgConst.ELEV_NORM, 0, Track.data.size() - 1, ccr);
 		Track.setClimbP(ccr.cp);
 		Track.setClimbM(ccr.cm);
 		Track.AscTime = ccr.tp;
@@ -1235,6 +1238,18 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuTools.add(mnuDefineNewStart);
+		
+		// -- Smooth the elevation values
+		// ------------------------------------------------
+		mnuSmoothElevation = new javax.swing.JMenuItem();
+		mnuSmoothElevation.setEnabled(false);
+		mnuSmoothElevation.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				SmoothElevation();
+			}
+		});
+		mnuTools.add(mnuSmoothElevation);
+				
 
 		// -- Calculate the track time
 		// -------------------------------------------
@@ -1630,6 +1645,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuFindMinMax.setText(bundle.getString("frmMain.mnuFindMinMax.text"));
 		mnuInvertTrack.setText(bundle.getString("frmMain.mnuInvertTrack.text"));
 		mnuDefineNewStart.setText(bundle.getString("frmMain.mnuDefineNewStart.text"));
+		mnuSmoothElevation.setText("Smooth elevation data"); //bundle.getString("frmMain.mnuDefineNewStart.text")); //TODO
 		mnuCalculateTrackTime.setText(bundle.getString("frmMain.mnuCalculateTackTime.text"));
 		mnuSearchCurveFromFinalTime.setText(bundle.getString("frmMain.mnuSearchCurveFromCurve.text"));
 		mnuInternetTools.setText(bundle.getString("frmMain.mnuInternetTools.text"));
@@ -1990,6 +2006,27 @@ public class frmMain extends javax.swing.JFrame {
 		//RefreshStatusbar(Track);
 	}
 	
+	
+	/**
+	 * Open the dialog to smooth the elevation data
+	 */
+	private void SmoothElevation() {
+		if (Track==null) 
+			return;
+		if (Track.data.isEmpty())
+			return;
+		
+		FrmElevationFilter frm = new FrmElevationFilter(Settings);
+		if (frm.showDialog(Settings, Track)) {
+			CalcTrackTime();
+			panelProfil.RefreshProfilChart();
+			jPanelSpeed.Refresh(Track, Settings);
+			jPanelTimeDist.Refresh(Track, Settings);
+			jPanelSpeedSlope.Refresh(Track, Settings);
+		}
+		//RefreshStatusbar(Track);
+	}
+
 	
 	/**
 	 * Affiche le répertoire des logs
@@ -3766,6 +3803,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuImportPoints.setEnabled(isLoaded);
 		mnuImportCGX.setEnabled(isLoaded);
 		mnuImportGPX.setEnabled(isLoaded);
+		mnuSmoothElevation.setEnabled(isLoaded);
 	}
 
 
