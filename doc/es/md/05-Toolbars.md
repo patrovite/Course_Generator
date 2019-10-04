@@ -1,4 +1,4 @@
-# The Toolbar
+# La barra de herramientas
 
 ![Main Toolbar](./images/Toolbar/CG40_Main_Toolbar.png)
 

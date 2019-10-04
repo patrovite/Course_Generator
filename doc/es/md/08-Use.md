@@ -1,49 +1,50 @@
-# Using Course Generator
+# Utilizando Course Generator
 
-The normal procedure for using **Course Generator** is:
+La forma normal de proceder para utilizar **Course Generator** es:
 
-* Upload a GPS file
-* Set the global track parameters (Name, date and start time)
-* Choose the "Speed/Slope"curve
-* Set the track parameters (terrain difficulty, fatigue coefficient, aid stations...)
-* Start the calculation
-* Save the track in CGX or GPX format
+* Subir un archivo GPS
+* Establecer los parámetros globales de la ruta (Nombre, fecha y hora de comienzo)
+* Escoger la curva de "Velocidad/Desnivel"
+* Establecer los parámetros de la ruta (dificultad del terrno, coeficiente de fatiga, estaciones de ayuda, etc)
+* Comenzar el cálculo
+* Guardad la ruta en formato CGX o GPX
 
-The below chapters will describe all these manipulations (And much more).
+Los capítulos a continuación describen todas estas acciones  (y muchas más).
 
-## Load a track
+## Cargar una ruta
 
-Two types of files can be opened by **Course Generator**.
+Dos tipos de archivos pueden ser abierto por **Course Generator**
 
-* The GPX format contains a GPS track from a recording made with a GPS, a mapping software or a website. This format does not contain specific **Course Generator** data. This format is to use if you don't have a CGX file of your track.
-* The CGX format, which is the format of **Course Generator**, stores all the specific data of the software. It is preferred if you want to keep your work.
+* El formato GPX contine una ruta GPS de una grabación realizada con un GPS, un software de mapeado o un sitio web. Este formato no contiene datos específicos para **Course Generator**. Este formato es utilizado si no tiene un archivo CGX de su ruta.
+* El formato CGX, que es el formato de **Course Generator**, almacena todos los datos específicos del software. Es el recomendado si quiere mantener sus datos.
 
-The loading of a track is done by the menu "File> Open GPX" or "File> Open CGX" according to the chosen format.
+La carga de la ruta es realizada mediante el menú "Archivo> Abrir GPX" o "Abrir> Abrir CGX" de acuerdo al formato escogido.
 
-If the track contain a too high density of GPS points, the software will ask you if you want to apply a filter to reduce the number of GPS points. A too high density of GPS points can disturb the distance calculations.
+Si la ruta contiene una alta densidad de puntos GPS, el software le preguntará si quiere aplicar un filtro para reducir el número de puntos GPS. Una desnsidad alta de puntos GPS puede interferir en los cálculos de la distancia.
 
-If you load a GPX file that have no time data the **Course Generator** will the time for each point of the track at 0. It will be necessary to click on the button ![refresh button](./images/Toolbar/refresh.png) to start the calculation of the time for each point.
+Si carga un archivo GPX que no tiene hora o fecha **Course Generator** pondrá cada punto del tiempo de la ruta a 0. Será
+necesario hacer clic en el botón ![refresh button](./images/Toolbar/refresh.png) para comenzar los cálculos del tiempo para
+cada punto.
 
+## Configurar una ruta
 
-## Set up a track
+El ajuste de la ruta es realizado mediante "Ajustes>Ajustes de la ruta..." o [F9]
 
-The setting of the track is done with "Settings>Track settings..." or [F9].
+Se muestra la ventana de configuración que se muestra a continuación.
 
-The configuration window below is then displayed.
+![Diálogo de los parámetros de la ruta](./images/CG40_Track_Param.png)
 
-![Track parameters dialog](./images/CG40_Track_Param.png)
+A continuación puede:
 
-You can then:
+* Introducir el nombre de la ruta (15 caracteres como máximo).
+* Añadir una descripción de la ruta. Esta descripción aparecerá en el libro de ruta.
+* Establecer la fecha y hora de comienzo.
+* Seleccionar si quiere utilizar la funcionalidad del efecto de altitud.
+* Seleccionar si quiere utilizar la funcionalidad del efecto noche. Entonces deberá introducir los tiempos de comienzo y finalización de la noche y el factor de corrección aplicado para cada posición. El botón de "Auto ajuste" abre el la caja de diálogo para calcular automáticamente la hora de amanecer y anochecer. El cálculo es realizado desde la información del primer punto GPS de la tabla (coordenadas GPS, fecha y horas).
 
-* Enter the name of the track (maximum 15 characters).
-* Add a description of the track. This description will appear in the roadbook.
-* Set the date and time of start.
-* Select if you want to use the altitude effect feature.
-* Select if you want to use the night effect feature. You must then enter the times for the beginning and ending of the night and the correction factor to be applied to each position. The "Auto-adjustment" button opens the dialog box to automatically calculate the sunset and sunrise time. The calculation is made from the information of the first GPS point of the table(GPS coordinates, date and hours).
+Aparecerá la siguiente ventana:
 
-The following window appears:
-
-![Sun dialog](./images/CG40_Track_Param_Sun_Dlg.png)
+![Diálogo solar](./images/CG40_Track_Param_Sun_Dlg.png)
 
 Enter the time zone (1 for France).
 
