@@ -115,92 +115,89 @@ Los ajustes realizados en esta ventana serán globales y se guardarán en el arc
 
 El área "Ayuda" permite de acuerdo con sus estimaciones darle un valor aproximado del coeficiente de fatiga. Este valor puede ser copiado en el "Valor inicial" y "Valor final" con los botones "> Comienzo" y "> Fin".
 
-## Set the refueling times
+## Establecer los tiempos de abituallamiento
 
-In order to stick to reality, you can enter the time you plan to spend at a specific location (refueling, rest...).
+Para ajustarse más a la realidad, puede introducir el tiempo que planea pasar en una ubicación específica (abituallamiento, descanso, etc).
 
-The following dialog box is displayed:
+Se mosatrará el siguiente diálogo:
 
-![Line editor](./images/CG40_Line_Editor.png)
+![Editor de línea](./images/CG40_Line_Editor.png)
 
-The "Aid station time" fields are used to enter the time at this location (hours, minutes and seconds). The "0" button allows you to reset the time to 00h00mm00s.
+Los campos de "tiempo en una estación de ayuda" son utilizados para introsducir el tiempo en esa localización (horas, minutos y segundos). El botón "0" permite establecer el tiempo en 00h00mm00ss.
 
-> **FAQ!**
-> The time or hour displayed on the line containing a refueling time is the time or hour you plan to leave from this position, NOT the time you plan to arrive at this position.
-> It's the design of **Course Generator** that forces this method of calculation.
+> **¡FAQ!**
+> El tiempo u horas mostradas en la línea que contiene el tiempo de abituallamiento es el tiempo u hora en la que planea dejar esa posición, NO el tiempo en el que planea llegar a esa posición.
+> Es el diseño de **Course Generator** el que fuerza este método de cálculo.
 >
-> To summarize:
-> [Hour] = [Hour of the previous position] + [Travel time between 2 positions] + [Refueling time]
+> Para resumir:
+> [Hora] = [Hora de la posición anterior] + [Tiempo de recorrido entre 2 posiciones] + [Tiempo de abituallamiento]
 >
-> [Time] = [Time of the previous position] + [Travel time between 2 positions] + [Refueling time]
+> [Tiempo] = [Tiempo de la posición anterior] + [Tiempo de recorrido entre 2 posiciones] + [Tiempo de abituallamiento]
 
-## Set the recovery times
+## Establecer los tiempos de recuperación
 
-You can enter for a given point the recovery coefficient after refueling or rest. To do this, go to the corresponding cell and open the line editor by double-clicking.
+Puede introducir para un punto dado el coeficiente de recuperación despues de descansar. Para hacer esto, vaya a la celda correspondiente y abra el editor de línea haciendo doble clic.
 
-The following dialog box is displayed:
+Se mostrará el siguiente diálogo:
 
-![Line editor](./images/CG40_Line_Editor.png)
+![Editor de línea](./images/CG40_Line_Editor.png)
 
-The "Recovery" field is used to enter the recovery coefficient (between 0 and 100). This value is relative. If you think that you will recover 5% of fatigue coefficient, you must enter 5 and not the value you think you will have (eg from 85% to 90%).
+El campo "Recuperación" es utilizado para introducir el coeficiente de recuperación (entre 0 y 100). Este valor es relativo. Si piensa que puede recuperar un 5% del coeficiente de fatiga, debería introducir un 5 no el valor que piensa que tendrá (por ejemplo de 85% a 90%).
 
-**Note :**  
-After modifying the "Recovery" column, it is necessary to restart a global calculation with the button ![fill coeff](./images/Toolbar/fill_coeff.png) in order to have your input taken into account.
+**Nota :**  
+Después de modificar la columna de "Recuperación", es necesario realizar un cálculo global con el botón ![fill coeff](./images/Toolbar/fill_coeff.png) para que las nuevas entradas sean tenidas en cuenta.
 
-## Set the cut-off times
+## Establecer los tiempos de corte
 
-You can enter for a given point the scheduled ccut-off time. This cut-off time is expressed in time since the start and not the time at the point. This makes it possible to take into account the departure delays (for example the UTMB 2011 was delayed by 5 hours). To do this, go to the corresponding cell and open the line editor by double-clicking.
+Puede introducir para un punto dado el tiempo de corte programado. Este tiempo de corte está expresado en tiempo desde el comienzo no el tiempo en ese punto. Esto hace posible el tener en cuenta los retrasos en la salida (por ejemplo la UTMB 2011 fue retrasada 5 horas). Para realizar esto, vaya a la celda correspondiente y abra el editor de línea haciendo doble clic.
 
-The following dialog box is displayed:
+Se mostrará el siguiente diálogo:
 
-![Line editor](./images/CG40_Line_Editor.png)
+![Editr de línea](./images/CG40_Line_Editor.png)
 
-The "Cut-off time" fields are used to enter the cut-off time (hours, minutes and seconds). The "0" button allows you to reset the time to 00h00mm00s.
+Los campos de "Tiempo de corte" son utilizados para introducir el tiempo de corte (horas, minutos y segundos). El botón "0" le permitirá establecer el tiempo en 00h00m00s.
 
-In order to take into account the input it is necessary to run a calculation with the button  ![refresh button](./images/Toolbar/refresh.png). After the calculation if one of the position time exceeds a cut-off time then a red indicator "Cut-off time" will appear in the status bar. A click on the indicator will select the first line of the trackthe first line where the cut-off time has been exceeded.
+Para que los cambios sean tenidos en cuenta es necesario realizar un cálculo mediante el botón ![refresh button](./images/Toolbar/refresh.png). Después del cálculo si el tiempo de una posición excede el tiempo de corte entonces aparecerá un indicador en rojo "Tiempo de corte" en la barra de estado. Haciendo clic sobre el indicador seleccionará la primera línea de la ruta donde el tiempo de corte ha sido excedido.
 
-## Indicators or tags
+## Indicadores o etiquetas
 
-For each point you can have indicators or tags that indicates a particularity of the point.
+Para cada punto tiene indicadores o etiqueta que indican una particularidad en el punto.
 
-The different indicators are as follows:
+Los diferente indicadores son los siguientes:
 
-* ![high point indicator](./images/Tags/high_point.png) : Indicates a high point. This indicator is selected manually or automatically by the function "Find Min/Max".
-* ![low point indicator](./images/Tags/low_point.png) : Indicates a low point. This indicator is selected manually or automatically by the function "Find Min/Max".
-* ![eat indicator](./images/Tags/eat.png) : Indicates a refueling point (eat or drink).
-* ![drink indicator](./images/Tags/drink.png) : Indicates a water point.
-* ![photo indicator](./images/Tags/photo.png) : Indicates a view point.
-* ![mark indicator](./images/Tags/flag.png) : Indicates a special point. This indicator is called "Mark" and allows you to split the track into steps. Each mark adds a line in the summary table.
-* ![note indicator](./images/Tags/note.png) : Indicates a note.
-* ![info indicator](./images/Tags/info.png) : Indicates information.
-* ![roadbook indicator](./images/Tags/roadbook.png) : Indicates the beginning of a new part of the roadbook.
-* ![](./images/Tags/dropbag.png) : Indicates a drop bag
-* ![](./images/Tags/crew.png) : Indicates the presence of crew
-* ![](./images/Tags/first_aid.png) : Indicates a first aid
+* ![indicador de punto alto](./images/Tags/high_point.png) : Indica un punto alto. Este indicador es seleccionado manualmente o automáticamente por la función "Encontrar Min/Max".
+* ![indicador de punto bajo](./images/Tags/low_point.png) : Indica un punto bajo. Este indicador es seleccionado manualmente o automáticamente por la función "Encontrar Min/Max".
+* ![indicador de comida](./images/Tags/eat.png) : Indica un punto de abituallamiento(comida o bebida.
+* ![indicador de bebida](./images/Tags/drink.png) : Indica un punto de agua.
+* ![indicador de foto](./images/Tags/photo.png) : Indica una vista panorámica.
+* ![indicador de marca](./images/Tags/flag.png) : Indica un punto especial. Este indicador es llamado "Marca" y permite dividir la ruta en pasos. Cada marca añade una línea en la tabla del sumario.
+* ![](./images/Tags/dropbag.png) : Indica un punto para dejar la bolsa.
+* ![](./images/Tags/crew.png) : Indica la presencia de público.
+* ![](./images/Tags/first_aid.png) : Indica un puesto de ayuda.
 
-To set the indicators for a position, select the corresponding cell and open the line editor by double-clicking.
+Para establecer los indicadores a una posición, seleccione la celda correspondiente y abra el editor de línea haciendo doble clic.
 
-The following dialog box is displayed:
+Se mostrará el siguiente diálogo.
 
-![Line editor](./images/CG40_Line_Editor.png)
+![Editor de línea](./images/CG40_Line_Editor.png)
 
-The indicators appear in front of "Tags".
+Los indicadores aparecen delante de las "Etiquetas".
 
-In order to save time, keyboard shortcuts are available:
+Para ahorrar tiempo, hay atajos de teclado disponibles:
 
-* [F6] allows to put or remove a "Mark" on the selected line.
-* [F7] allows you to move quickly to the next line containing an indicator.
-* [Ctrl+F7] allows you to move quickly to the previous line containing an indicator.
+* [F6] permite colocar o eliminar una "Marca" en la línea seleccionada.
+* [F7] permite moverse rápidamente a la siguiente línea que contiene un indicador.
+* [Ctrl+F7] permite moverse rápidamente a la línea previa que contiene un indicador.
 
-## Calculate the track time
+## Calcular el tiempo de la ruta
 
-Once the track parameters have been entered, it is necessary to click on the button ![refresh button](./images/Toolbar/refresh.png) to start the calculation of the time for each point.
-The columns 'Time' and 'Hours' are then updated according to the settings you have made previously. In the status bar at the bottom of the window, the total time is updated.
+Una vez que los parámetros de la ruta han sido introducidos, es necesario hacer clic en el botón ![refresh button](./images/Toolbar/refresh.png) para comenzar el cálculo del tiempo para cada punto.
+Las columnas de "Tiempo" y "Horas" serán entonces actualizadas de acuerdo a los ajustes que ha realizado previamente. En la barra de estado al final de la ventana, se actualiza el tiempo total.
 
-## Save the track
+## Guardar la ruta
 
-**Course Generator** offers the possibility to save your track in several formats.
+**Course Generator** ofrece la posibilidad de guardar la ruta en diversos formatos.
 
-* "File>Save as GPX" save the track in GPX format which is the standard track exchange format. The problem with this format is that it does not store specific data of **Course Generator**.
-* "File>Save as CGX" saves the track in CGX format which is the standard file format of **Course Generator**. This format should be used as soon as you want to keep the settings made on a track.
-* "File>Save as CSV" saves the track in CSV format which is a standard format for saving data as semicolon-separated text. These files can be opened by a spreadsheet program such as EXCEL, OpenOffice Calc or Libre Office Calc.
+* "Archivo>Guardar como GPX" guarda la ruta en formato GPX que es el estándar de formatos de intercambios de rutas. El problema es que no guarda datos específicso de **Course Generator**
+* "Archivo>Guardar como CGX" guarda la ruta en formato CGX que es el estándar de **Course Generator**. Este formato debería ser utilizado tan pronto como desee mantener los ajustes realizados en la ruta.
+* "Archivo>Guardar como CSV" guarda la ruta en formato CSV que es el estándar para guardar datos en formato texto separados por comas. Estos archivos pueden ser abierto por programas como EXCEL, OpenOffice Calc o Libre Office Calc.Calc.
