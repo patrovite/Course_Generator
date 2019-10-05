@@ -46,74 +46,74 @@ Aparecerá la siguiente ventana:
 
 ![Diálogo solar](./images/CG40_Track_Param_Sun_Dlg.png)
 
-Enter the time zone (1 for France).
+Introducir la zona horaria (1 para Francia).
 
-Once the setting is completed, press "Ok" to validate.
-If you have chosen to take into account the night effect, you will see that :
+Una vez que el ajuste está completad, pulse sobre "Ok" para validar.
+Si ha escogido tener en cuenta el efecto nocho, verá esto:
 
-* the "Time" column shows a blue background during the night and green periods during the daytime periods.
-* on the map the areas traveled at night have a highlighted plot.
+* la columna "Tiempo" muestra un fondo azul durante la noche y verde en los períodos de día.
+* en el mapa las áreas recorridad durante la noche tienen una trama resaltada.
 
-## Set the speed/slope curve
+## Establecer la curva de velocidad/pendiente
 
-In order to have a track time consistent with your speed, you have to choose or create a speed curve according to the slope. This curve goes from -50% slope (downhill) to + 50% slope (climb). The choice of the curve is made by the choice of the speed that one wants to "hold" when the slope is null (0%) on a road. A set of curves has been created to cover most running speeds.
+Para tener un tiempo de ruta consistente con su velocidad, tiene que escoger o crear una curva de velocidad de acuerdo con la pendiente. Esta curva va desde -50% (pendiente cuesta abajo) a +50% (pendiente cuesta arriba). La elección de la curva se realiza con la elección de la velocidad que uno quiere mantener cuando la pendiente es nula (0%) en el camino. Se ha creado un juego de curvas para cubrir la mayoría de las velocidades de la carrera.
 
-The menu "Settings>Speed/Slope curves..." or the button ![curve button](./images/Toolbar/chart_curve.png) will display the dialog box for selecting and managing curves.
+El menú "Ajustes>Curvas de velocidad/pendiente..." o el botón ![botón curva](./images/Toolbar/chart_curve.png) mostrará la caja de diálogo para seleccionar y gestionar las curvas.
 
-![Curves dialog](./images/Curve/CG40_Dlg_Curves.png)
+![Diálogo de curvas](./images/Curve/CG40_Dlg_Curves.png)
 
-On the left appears the list of curves already created. During the creation, an explicit name was assigned to them to find them quickly. Try to preserve this principle if you create new curves.
+En la izquierda aparece la listas de curvas ya creadas. Durante la creación, se asigna un nombre explícito para encontrarlas rápidamente. Intente preservar este principio si quiere crear nuevas curvas.
 
-The button ![open curve button](./images/Curve/chart_curve_open.png) loads the data from the selected curve file into the list.  
-The button ![edit curve button](./images/Curve/chart_curve_edit.png) allows you to modify the data of the selected curve.  
-The button ![add curve button](./images/Curve/chart_curve_add.png) allows you to create a new curve.  
-The button ![duplicate curve button](./images/Curve/chart_curve_duplicate.png) duplicates the selected curve.  
-The button ![delete curve button](./images/Curve/chart_curve_delete.png) deletes the selected curve.  
+El botón ![open curve button](./images/Curve/chart_curve_open.png) carga los datos de la curva seleccionada en la lista.
+El botón ![edit curve button](./images/Curve/chart_curve_edit.png) permite modificar el dato de la curva seleccionada.
+El botón ![add curve button](./images/Curve/chart_curve_add.png) permite crear una nueva curva.
+El botón ![duplicate curve button](./images/Curve/chart_curve_duplicate.png) duplica la curva seleccionada.
+El botón ![delete curve button](./images/Curve/chart_curve_delete.png) elimina la curva seleccionada.
 
-> **How to choose a speed curve?**
-> This will depend on you, your goals... You can base yourself on a percentage of your vVO2max.
-> For example for a long trail you can take 60% of your vVO2max. About 10km/h in my case, I then select the curve of 10km/h.
-> There is also the pratice. At the beginning you will surely underestimate or overestimate your speed. But over time your choice will become more and more accurate.
+> **Cómo seleccionar una curva de velocidad?**
+> Esto depende de usted, de sus metas... Puede basarse en un porcentaje de su vVO2max.
+> Por ejemplo para una ruta larga puede escoger 60% de su vVO2max. Sobre los 10Km/h en mi caso, entonces selecciono la curva de 10Km/h.
+> También existe la práctica. Al principio seguro que subestima o sobreestima su velocidad. Pero con el tiempo su elección será más y más acertada.
 
-**Notes:**  
-* If you create new curves that seem interesting to you, do not hesitate to send them to me so that I can add them on the website as well as in the next versions.
-* Each curve is a file whose extension is '.par'. These files are accessible through the menu "Tools>Open "Speed/Slope" folder". This will open the file manager and display the contents of the directory.
+**Notas:**  
+* Si crea nuevas curvas que le interesen, no dude en enviármelas así podré añadirlas a la página web e incluirlas en próximas versiones.
+* Cada curva es un archivo cuya extensión es '.par'. Estos archivos son accesible a través del menú "Herramientas>Abrir carpeta "Velocidad/pendiente"". Esto abrirá el gestor de archivos y mostrará el contenido del directorio.
 
-## Set the terrain difficulty
+## Establecer la dificultad del terrno
 
-The "Diff" column is used to 'quantify' the difficulty of the terrain.
+La columna "Dif" es utilizada para 'cuantificar' la dificultad del terreno.
 
-You can quickly enter terrain difficulty for a set of points. Simply select the first line and then while holding down the SHIFT key you select the following lines (with mouse or keyboard). The button ![diff button](./images/Toolbar/fill_diff.png) will display the auto-fill dialog.
+Puede introducir rápidamente la dificultad del terreno para un grupo de puntos. Simplemente seleccione la primera línea y después manteniendo pulsada la tecla Shift seleccione las líneas siguientes (con el ratón o con el teclado). El botón ![diff button](./images/Toolbar/fill_diff.png) mostrará el diálogo para auto rellenarlo
 
-![Terrain Difficulty dialog](./images/CG40_Dlg_Fill_Diff.png)
+![Diálogo de dificultad del terreno](./images/CG40_Dlg_Fill_Diff.png)
 
-The "Start" area is used to define the start line (from the beginning or from a specific line number).
-The "End" area is used to define the end line (to the end or to a specific line number).
-The zone "Difficulty" makes it possible to choose the difficulty of the terrain. You can either use the pre-determined values or enter your own difficulty value.
+El área "Comienzo" es utilizada para definir el comienzo de la línea (desde el principio o desde un número de línea específico).
+El área "Fin" es utilizada para definir el final de la línea (hasta el final o hasta un número de línea específico).
+La zona "Dificultad" hace posible el poder escoger entre la dificultad del terreno. También puede utilizar valore predefinidos o introducir sus propios valores de dificultad.
 
-This action can also be done on the track map (see below).
+Esta acción también puede realizarse en el mapa de la ruta (ve a continuación).
 
-**Note:**  
-It is sometimes impossible to determine or know the quality of the terrain. It may be wise to set an average terrain quality for the entire track. For example, the "Montagn'hard 100" has been rated as "average" terrain. Even if some sections were very difficult (scree, slippery areas ...) and other very easy (roads or tracks).
-Don't try to take into account the slope of the terrain because this is taken into account via the "Speed/Slope" curve and the calculation of the slope is automatically done by **Course Generator**.
+**Nota:**  
+A veces es imposible determinar o saber la calidad del terreno. Puede ser prudente establecer una calidad del terreno media para la ruta entera. Por ejemplo, "Montagn'hard 100" ha sido calificada como terreno "medi". Incluso si algunas secciones fueron muy difíciles (áreas rocosas, resbaladizas, etc) y otras zonas muy fáciles (caminos o rutas)
+No intente tomar en cuenta la pendiente del terreno porque esto es tomado en cuenta mediante la curva de "Velocidad/Pendiente" y el cálculo de la pendiente es automáticamente realizada por **Course Generator**.
 
-## Set the fatigue coefficient
+## Establecer el coeficiente de fatiga
 
-The "Coeff" column is used to 'quantify' fatigue over time.
+La columna de "Coef" es utilizada para 'cuantificar' la fatig durante el tiempo.
 
-You can quickly enter the fatigue coefficient for a set of points (usually for the entire track). Simply select the first line and then while holding down the SHIFT key select the following lines (with mouse or keyboard). The button ![coeff button](./images/Toolbar/fill_coeff.png) allows to display the auto-fill dialog.
+Puede introducir rápidamente el coeficiente de fatiga para un conjunto de puntos (normalmente para la ruta entera). Simplemente seleccionando la primera línea y después manteniendo pulsada la tecla Shift seleccione la líneas siguientes (con el ratón o con el teclado). El botón ![coeff button](./images/Toolbar/fill_coeff.png) permite mostrar el diálogo para el auto rellenado.
 
-![Health coefficient dialog](./images/CG40_Dlg_Fill_Coeff.png)
+![Diálogo de coeficiente de salud](./images/CG40_Dlg_Fill_Coeff.png)
 
-The "Start" area is used to define the start line (from the beginning or from a specific line number). The "Initial value" field is used to enter the corresponding value.
+El área "Comienzo" es utilizada para definir la línea de comienzo (desde el comienzo o desde una línea específica). El campo de "Valor inicial" es utilizado para introducir el valor correspondiente.
 
-The "End" area is used to define the end line (to the end or to a specific line number). The "Ending value" field is used to enter the corresponding value.
+El área "Fin" es utilizada para definir el final de la línea (hasta el final o a hasta un número de línea específico). El campo del "Valor final" es utilizado para introducir el valor correspondiente.
 
-If the ending value is not equal to the initial value then the intermediate lines will have a gradual and linear variation of the values. Manual edits made through the line editor will be overwritten.
+Si el valor final no es igual al inicial entonces las líneas intermedias tendrán una variación gradual y lineal de sus valores. Las ediciones manuales realizadas mediante el editr de línea serán sobreescritas.
 
-The settings made in this window will be global and stored in the CGX file.
+Los ajustes realizados en esta ventana serán globales y se guardarán en el archivo CGX.
 
-The area "Help" allows according to your estimated to give you an approximate value of the coefficient of fatigue. This value can be copied to in the "Initial value" and "Ending value" fields with the buttons "> Start" and "> End".
+El área "Ayuda" permite de acuerdo con sus estimaciones darle un valor aproximado del coeficiente de fatiga. Este valor puede ser copiado en el "Valor inicial" y "Valor final" con los botones "> Comienzo" y "> Fin".
 
 ## Set the refueling times
 
