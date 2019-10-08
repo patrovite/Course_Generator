@@ -1,55 +1,55 @@
-# Advanced use of Course Generator
+# Uso avanzado de Course Generator
 
-This chapter will introduce you to more advanced uses of **Course Generator**.
+Este capítulo le enseñará a hacer un uso más avanzado de **Course Generator**.
 
-## Find a GPS point
+## Encontrar un punto GPS
 
-It is possible to search for a GPS point on the track via the "Edit>Search a point..." menu or with the keyboard shortcut [Ctrl + F].
+Es posible buscar un punto GPS en una ruta mediante el menú "Editar>Buscar un punto..." o mediante el atajo de teclado [Ctrl + F]
 
-![Search dialog](./images/CG40_Search.png)
+![Diálogo de búsqueda](./images/CG40_Search.png)
 
-In the dialog box, it is necessary to enter the latitude and longitude of the point and then press the search button ![search button](./images/Toolbar/search.png).
+En la caja de diálogo, es necesario introducir la latitud y longitud del punto y presionar el botón de buscar ![search button](./images/Toolbar/search.png).
 
-**Course Generator** will search for the closest point given a set of coordinates. It will indicate the line corresponding to the point found as well as the distance between the point found and the coordinates entered. The line containing the found point will then be selected.
+**Course Generator** buscará el punto más cercano al conjunto de coordenadas proporcionadas. indicará la línea correspondiente al punto encontrado y también la distancia entre el punto encontrado y las coordenadas introducidas. La línea que contiene el punto encontrado será seleccionada.
 
-## Find the high and low points of the track
+## Encontrar los puntos más altos y bajos de una ruta
 
-The "Tools>Find Min/Max" menu is used to automatically find the highest and lowest point of the track.  
-Each found position is marked with an indicator ![high point indicator](./images/Tags/high_point.png) (high point) or ![low point indicator](./images/Tags/low_point.png) (low point).
+El menú "Herramientas>Encontrar Min/Max" es utilizado para encontrar automáticamente los puntos más altos y bajos de la ruta.
+Cada posición encontrada es marcada con un indicador ![indicador punto más alto](./images/Tags/high_point.png) (punto alto) o ![indicador punto más bajo](./images/Tags/low_point.png) (punto bajo).
 
-## Change the altitude of a point on the track
+## Cambiar la altitud de un punto de la ruta
 
-It can happen that the elevation data of a track is inaccurate. This can happen if you, or an Openrunner type website, have made an automatic correction of altitudes. The SRTM database on which these sites are based has area without altitude. The given base then returns an altitude of 32768m. In order to overcome this problem you can edit the altitude of the erroneous point(s).
+Puede ocurrir que el dato de la elevación de una ruta no sea correcto. Esto puede ocurrir, si usted, o un sitio web como Openrunner, han realizado una corrección automática de las altitudes. La base de datos de SRTM en los cuales estos sitios se basan tienen áreas sin altitud. La base dada entonces devuelve una altitud de 32768m. Para poder solucionar este problema, puede editar la altitud del punto o los puntos erróneos
 
-To do this, go to the corresponding cell and open the line editor by double-clicking.
+Para hacer esto, vaya a la casilla correspondiente y abra el editor de línea haciendo doble clic.
 
-The following dialog box is displayed:
+Se mostrará el siguiente diálogo:
 
-![Line editor](./images/CG40_Line_Editor.png)
+![Editor de línea](./images/CG40_Line_Editor.png)
 
-The "Altitude" field is used to enter the new altitude.
+El campo "Altitud" es utilizado para introducir una nueva altitud.
 
-It will be necessary to restart a calculation with the button ![refresh button](./images/Toolbar/refresh.png) to take into account the new altitude.
+Será necesario reiniciar el cálculo de la ruta mediante el botón ![refresh button](./images/Toolbar/refresh.png) para que la nueva altitud sea tomada en cuenta.
 
-## Merge two tracks
+## Unir dos rutas
 
-**Course Generator** offers the opportunity to merge two tracks.
+**Course Generator** ofrece la posibilidad de unir dos rutas.
 
-The procedure is as follows:
+Se debe proceder de la siguiente manera:
 
-* Load the first track in **Course Generator** (GPX or CGX format).
-* Import the second track using "File>Import a GPX File" or "File>Import a CGX File".
-* The dialog box below appears:  
-![Import track dialog](./images/CG40_Import_Track.png)
-* Select "Insert at the beginning" if you want to insert the track before the one present in memory. If not, select "Append" and the track will be added after the current loaded track.
-* The file selection dialog box appears. Make your choice then click on "Open"
-* The merge is then realized
+* Cargar la primera ruta en **Course Generator** (formato GPX o CGX).
+* Importar la segunda ruta mediante "Archivo>Importar un archivo GPX" o "Archivo>Importar un archivo CGX".
+* Aparecerá el siguiente diálogo:
+![Diálogo de importar ruta](./images/CG40_Import_Track.png)
+* Seleccionar "Insertar al principio" si quiere insertar la ruta antes que la actual ya cargada en la memoria. Si no es así, seleccione "añadir" y la ruta será añadida después de la ruta actual.
+* Aparecerá la caja de diálogo de selección de archivo. Haga su elección y haga clic en "Abrir".
+* La unión será realizada.
 
-If you have other tracks to merge, simply repeat the process.
+Si tiene otras rutas para unir, simplemente repita el proceso.
 
-After merging the tracks you will have to modify the settings of the fatigue coefficients and restart a computation (button ![refresh button](./images/Toolbar/refresh.png) or [F5]) because the time data will be wrong.
+Después de unir las rutas deberá modificar los ajustes de coeficiente de fatiga y  realizar un nuevo cálculo de la ruta mediante el (botón ![botón refrescar](./images/Toolbar/refresh.png) o [F5]) debido a que los datos del tiempp serán erróneos.
 
-Once you have completed the merge and restarted a calculation, you will be able to save the track.
+Una vez completada la unión y realizado un nuevo cálculo de la ruta, ya podrá guardar la nueva ruta.
 
 ## Save part of the track
 
