@@ -51,85 +51,86 @@ Después de unir las rutas deberá modificar los ajustes de coeficiente de fatig
 
 Una vez completada la unión y realizado un nuevo cálculo de la ruta, ya podrá guardar la nueva ruta.
 
-## Save part of the track
+## Guardar parte de la ruta
 
-**Course Generator** allows to save a section of a track.  
+**Course Generator** permite guardar la sección de una ruta.
 
-The procedure is as follows:
+Se debe proceder de la siguiente manera:
 
-* In the table select the first line you want to save,
-* While holding down the SHIFT key, select the last line to save.
-* Select "File>Save selection as xxx" (xxx corresponds to the file format you want).
-* The file save dialog box appears. Enter the file name and confirm.
-* It's done!
+* En la tabla seleccionar la primera línea que quiere guardar.
+* Mientras mantiene presionada la tecla Shift, seleccionar la última línea que quiere guardar.
+* Seleccionar "Archivo>Guardar selección como xxx" (donde xxx corresponde al formato de archivo que desea).
+* Aparecerá la caja del diálogo de guardar. Introduzca el nombre del archivo y confirme.
+* ¡Ya está!
 
-## Export tags as waypoints
+## Exportar etiquetas como puntos de la ruta
 
-**Course Generator** offers the ability to save GPS points containing tags (or indicator) as a waypoint. These waypoints can be added to your GPS to have, for example, the display of the track with additional information such as passes, aid stations and cities.
+**Course Generator** ofrece la posibilidad de guardar puntos GPS que contienen etiquetas (o indicadores) como puntos de la ruta. Estos puntos pueden ser añadidos a su GPS par atener, por ejemplo, la indicación de la ruta con información adicional como pases, estaciones de ayuda o ciudades.
 
-The procedure is as follows:
+Se debe proceder de la siguiente manera:
 
-* Select "File>Export tags as waypoint".
+* Seleccionar "Archivo>Exportar etiquetas como puntos de la ruta".
+* Aparecerá el siguiente diálogo".
 * The dialog box below appears:  
-![Export as waypoints dialog](./images/CG40_Export_Waypoints.png)
-* Select the types of tags you want to export.
-* The save dialog box appears. 
-* Waypoints will be saved to a file that has the name entered and with a GPX extension.
+![Diálogo de exportar puntos de la ruta](./images/CG40_Export_Waypoints.png)
+* Seleccionar los tipos de etiquetas que quiere exportar.
+* Aparecerá la caja de diálogo de guardar.
+* Los puntos serán guardados como un archivo que tiene el nombre introducido y la extensión GPX.
 
-The operation of this file can be done, for example, with Garmin's Basecamp software.
+Este archivo podrá ser utilizado, por ejemplo con el software Basecamp de Garmin.
 
-## Copy the contents of a cell
+## Copiar el contenido de una celda
 
-The contents of a cell in the track table can be copied to the clipboard for use in other software. To perform this action simply select "Edit>Copy". The content of the selected cell is copied to the clipboard as text.
+El contenido de una celda en la tabla de la ruta puede ser copiado al portapapeles para utilizarlo en otro software. Para realizar esta operación simplemente seleccione "Editar>Copiar". El contenido de la celda seleccionada es copiado al portapapeles como texto.
 
-## Generate a mini roadbook
+## Generar un mini libro de ruta
 
-**Course Generator** offers the possibility to generate a mini roadbook. This will contain the profile of the track and informations on your way points. The mini roadbook is accessible via "Display>Generate mini roadbook".
+**Course Generator** ofrece la posibilidad de generar un mini libro de ruta. Este contendrá el perfil de la carrera e informaciones sobre puntos de la ruta. Este libro de ruta está disponible mediante "Mostrar>Generar mini libro de ruta".
 
-At the end of the process the mini-roadbook is an image. This image can be printed using drawing software such as Paint, Photoshop or The Gimp. It can also be used in other software like Word, Excel, Inkscape, Illustrator ...
+Al final del proceso el mini libro de ruta es una imagen. Esta imagen puede ser imprimida utilizando software de dibujo como Paint, Photoshop o Gimp. También puede ser utilizada en otro software como Word, Excel, Inkscape, Illustrator, etc.
 
-The settings made to generate the mini roadbook are saved in the CGX file of the track. If you exchange a track in CGX format, you will exchange the track with all its informations (refueling, terrain quality, cut-off times ...) and the mini roadbook.
+Los ajustes realizados para genera el mini libro de ruta son almacenados en un archivo CGX en la ruta. Si intercambia una ruta en formato CGX, intercambiará la ruta como toda su información (repostaje, calidad del terreno, tiempos de corte, etc) y también el mini libro de ruta.
 
-To be able to use the mini roadbook it is necessary to have previously set the parameters of your track. This includes:
+Para poder utilizar el mini libro de ruta es necesario previamente establecer los parámetros de su ruta. Esto incluye:
 
-* Having entered the terrain difficulty (useful for the type "Roads/Trails").
-* Fill in the fatigue coefficient, refueling times, cut-off times, names of important points.
-* Having the calculation updated (F5 key).
-* Having marked the important positions with the indicator ![mark indicator](./images/Tags/roadbook.png).
-* Having marked the important points with one or more of the following indicators: ![hight point](./images/Tags/high_point.png) ![low point](./images/Tags/low_point.png) ![eat](./images/Tags/eat.png) ![drink](./images/Tags/drink.png) ![flag](./images/Tags/flag.png) ![](./images/Tags/dropbag.png) ![](./images/Tags/crew.png) ![](./images/Tags/first_aid.png)
+* Haber introducido la dificultad del terreno (útil para el tipo "Caminos/Senderos").
+* Rellenar el coeficiente de fatiga, tiempos de abituallamiento, tiempos de corte, nombres de los puntos importantes.
+* Haber actualizado los cálculos (Tecla F5).
+* Haber marcado las posiciones importantes con el indicador ![marca del indicador](./images/Tags/roadbook.png).
+* Haber marcado los puntos importante con uno o más de los siguientes indicadores: ![punto más alto](./images/Tags/high_point.png) ![punto más bajo](./images/Tags/low_point.png) ![comida](./images/Tags/eat.png) ![bebida](./images/Tags/drink.png) ![bandera](./images/Tags/flag.png) ![](./images/Tags/dropbag.png) ![](./images/Tags/crew.png) ![](./images/Tags/first_aid.png)
 
 
-### Presentation
+### Presentación
 
-"Display>Generate mini roadbook" or the button ![mrb](./images/Toolbar/roadbook.png) displays the following window:  
-![Mini raodbook dialog](./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png)
+"Mostrar>Generar mini libro de ruta" o el botón ![mrb](./images/Toolbar/roadbook.png) muestra la siguiente ventana:
+![Diálogo del mini libro de ruta](./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png)
 
-It contains the following elements:
+Contiene los siguiente elementos:
 
-* Top: the toolbar to perform actions
-* Middle right: Contains a table with all the rows of the track table that contained the indicator ![roadbook](./images/Tags/roadbook.png) and one or more of the following indicators: ![](./images/Tags/high_point.png) ![](./images/Tags/low_point.png) ![](./images/Tags/eat.png) ![](./images/Tags/drink.png) ![](./images/Tags/flag.png) ![](./images/Tags/dropbag.png) ![](./images/Tags/crew.png) ![](./images/Tags/first_aid.png). Each line generates a label in the mini roadbook
-* Middle left: This area allows you to change the content of the currently selected table row
-* Bottom: Contains the mini roadbook with tags
+* Parte superior: La barra te herramientas para realizar acciones
+* Parte media derecha: Contiene la tabal con todas las filas de la tabla de la ruta que contienen un indicador ![roadbook](./images/Tags/roadbook.png) y uno o más de los siguientes indicadores: ![](./images/Tags/high_point.png) ![](./images/Tags/low_point.png) ![](./images/Tags/eat.png) ![](./images/Tags/drink.png) ![](./images/Tags/flag.png) ![](./images/Tags/dropbag.png) ![](./images/Tags/crew.png) ![](./images/Tags/first_aid.png). Cada línea genera una etiqueta en el mini libro de ruta
+* Parte media izquierda: Este área permita cambiar el contenido de la fila actualmente seleccionada
+* Parte inferior: Contiene el mini libro de ruta con las etiquetas
 
-When a line is selected then the corresponding label color change (salmon color).
+Cuando una línea es seleccionada entonces la etiqueta correspondiente cambia de color (color salmón).
 
-### The types of mini roadbook
+### Los tipos de mini libros de ruta
 
-In the top bar, the "Profile type" drop-down list allows you to choose among the 3 types of profile:
+En la barra superior, la lista desplegable de "Tipo de perfil" permite escoger entre 3 tipos de perfiles:
 
-The "Simple" type:  
-![Simple type](./images/MRB/CG40_MRB_Simple_Label.png)    
-The track profile does not contain any additional information.
+El tipo "Simple":
+![Tipo simple](./images/MRB/CG40_MRB_Simple_Label.png)    
+El perfir de la ruta no incluye información adicional.
 
-The "Roads/Trails" type:  
-![Road/trails type](./images/MRB/CG40_MRB_Road_Track_Label.png)  
-The profile highlights the portions of the roads and trails with a color code. The roads are the points of the track table whose field coefficient is equal to 100%. The others are considered as trails.
+El tipo "Camino/Senderos":
+![Tipo Camino/Senderos](./images/MRB/CG40_MRB_Road_Track_Label.png)  
+El perfil resalta las partes de las carreteras y sendas con un código de color. Las carreteras son puntos de la tabla de la ruta cuyo coeficiente de campo es igual a 100%. El resto son considerados senderos.
 
-The "Slope" type :  
-![Slope type](./images/MRB/CG40_MRB_Slope_Label.png)  
-The profile highlights the degree of slope by a color code.
+El timpo "Desnivel":
+![Tipo desnivel](./images/MRB/CG40_MRB_Slope_Label.png)  
+El perfil destaca los grados de desnivel con un código de colores.
 
-The colors used in the mini roadbook can be set in the configuration window accessible with the button ![](./images/MRB/Toolbar/setting.png).
+Los colores utilizados en el mini libro de ruta puedes ser configurads en la ventana de configuración accesible mediante el botón ![](./images/MRB/Toolbar/setting.png).
 
 ### The toolbar
 
