@@ -132,20 +132,20 @@ El perfil destaca los grados de desnivel con un código de colores.
 
 Los colores utilizados en el mini libro de ruta puedes ser configurads en la ventana de configuración accesible mediante el botón ![](./images/MRB/Toolbar/setting.png).
 
-### The toolbar
+### La barra de herramientas
 
 ![](./images/MRB/CG40_MRB_Toolbar.png)  
 
 
-* ![save](./images/MRB/Toolbar/save.png) : Saves the mini roadbook as an image. The available format is PNG.
-* ![settings](./images/MRB/Toolbar/setting.png) : Opens the mini roadbook configuration window
-* ![](./images/MRB/Toolbar/pipette.png) : Copies the current label format to reproduce it on one or more other labels. This function is also accessible with the keyboard shortcut CTRL + C
-* ![](./images/MRB/Toolbar/replicate.png) :  Paste the formatting on the selected label. Only the properties selected in the function's configuration window will be pasted. This function is also accessible with the keyboard shortcut CTRL + V
-* ![](./images/MRB/Toolbar/replicate_config.png) : Opens a window for configuring the duplicate formatting feature as shown below:
-![Duplicate configuration dialog](./images/MRB/CG40_MRB_Replicate_Dlg.png)    
-Select the settings you want to duplicate when copying.
+* ![guardar](./images/MRB/Toolbar/save.png) : Guarda el mini libro de ruta como una imagen. La formato disponible es PNG.
+* ![ajustes](./images/MRB/Toolbar/setting.png) : Abre la ventana de configuración del mini libro de ruta.
+* ![](./images/MRB/Toolbar/pipette.png) : Copia el formato de la etiqueta actual para reproducirla en una o más etiquetas. Esta función está también accesible mediante el atajo de teclado CTRL + C
+* ![](./images/MRB/Toolbar/replicate.png) :  Pega el formato en la etiqueta seleccionada. Solo se pegarán las propiedades seleccionadas en la ventana de configuración de la función. Esta función está también accesible mediante el atajo de teclado CTRL + V
+* ![](./images/MRB/Toolbar/replicate_config.png) : Abre una ventana par ala configuración de la característica de formato duplicado como se muestra a continuación:
+![Diálogo de configuración duplicado](./images/MRB/CG40_MRB_Replicate_Dlg.png)    
+Selecciona el ajuste que quiere duplicar cuando copie.
 
-* ![](./images/MRB/Toolbar/label_to_bottom.png) : Allows you to specify that labels must be connected to the bottom of the profile.
+* ![](./images/MRB/Toolbar/label_to_bottom.png) : Permite especificar las etiquetas que serán conectadas en la parte inferior del perfil. 
 * ![](./images/MRB/Toolbar/label_to_profil.png) : Allows you to specify that labels must be connected to the profile.
 * ![](./images/MRB/Toolbar/night_day.png) : Specify whether to show the day and night areas on the profile.
 * "Profile type" : Allows you to select the type of mini roadbook.
