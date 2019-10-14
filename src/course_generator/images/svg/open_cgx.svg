@@ -43,8 +43,8 @@
      id="namedview6"
      showgrid="false"
      inkscape:zoom="0.92187502"
-     inkscape:cx="422.77411"
-     inkscape:cy="381.61161"
+     inkscape:cx="383.07291"
+     inkscape:cy="415.99656"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="1"
@@ -72,5 +72,11 @@
          x="284.01251"
          y="358.80865"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';fill:#000000;stroke-width:2.22208118">CGX</tspan></text>
+    <path
+       style="fill:#ff6600;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 51.004065,54.07888 c 0,0 -8.430487,-1.270069 -16.682165,4.723289 -5.814353,4.22308 -5.753742,19.903303 -5.753742,19.903303 l 0.255718,51.165728 231.394144,-0.006 -64.14408,-75.881919 z"
+       id="path1871"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csccccc" />
   </g>
 </svg>

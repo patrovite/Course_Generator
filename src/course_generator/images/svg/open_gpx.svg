@@ -42,9 +42,9 @@
      inkscape:window-height="1033"
      id="namedview6"
      showgrid="false"
-     inkscape:zoom="1.3037282"
-     inkscape:cx="338.79332"
-     inkscape:cy="134.35094"
+     inkscape:zoom="0.6518641"
+     inkscape:cx="-313.33043"
+     inkscape:cy="821.00588"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:window-maximized="1"
@@ -72,5 +72,11 @@
          x="284.01251"
          y="358.80865"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';fill:#000000;stroke-width:2.22208118">GPX</tspan></text>
+    <path
+       style="display:inline;opacity:1;fill:#ffcc00;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 50.812827,53.936434 c 0,0 -8.43049,-1.270069 -16.68217,4.723289 -5.81435,4.22308 -5.75374,19.903303 -5.75374,19.903303 l 0.25572,51.165754 231.394143,-0.006 -64.14408,-75.881945 z"
+       id="path1871"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csccccc" />
   </g>
 </svg>

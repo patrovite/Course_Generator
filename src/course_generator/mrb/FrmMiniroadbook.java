@@ -236,7 +236,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Save as image
 		btSaveAsImage = new javax.swing.JButton();
-		btSaveAsImage.setIcon(Utils.getIcon(this, "save.png", settings.DialogIconSize));
+		btSaveAsImage.setIcon(Utils.getIcon(this, "save_png.png", settings.DialogIconSize));
 		btSaveAsImage.setToolTipText(bundle.getString("FrmMiniroadbook.btSaveAsImage.toolTipText"));
 		btSaveAsImage.setPreferredSize(new Dimension(btw, bth));
 		btSaveAsImage.setFocusable(false);

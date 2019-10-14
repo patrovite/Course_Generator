@@ -89,7 +89,6 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 	private XYSeriesCollection datasetElevDist = null;
 	private XYSeriesCollection datasetElevDistSmooth = null;	
 	private ChartPanel ChartPanelProfil;
-	private JPanel jPanelButtons;
 	private JLabel lbFilter;
 	private CgSpinner spinFilter;
 	private JButton btSelectNormal;
@@ -186,7 +185,7 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 		int line = 0;
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle("Elevation smoothing"); //bundle.getString("frmSearchCurve.title"));
+		setTitle(bundle.getString("frmElevationFilter.title")); //"Elevation smoothing"
 		setAlwaysOnTop(true);
 		setResizable(false);
 		//setMinimumSize(new Dimension(1000, 400));
@@ -212,7 +211,7 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 
 		//
 		lbFilter = new javax.swing.JLabel();
-		lbFilter.setText("Filter"); //bundle.getString("frmSearchCurve.lbFoundTime1.Text")); 
+		lbFilter.setText(bundle.getString("frmElevationFilter.lbFilter")); //"Filter"); //bundle.getString("frmSearchCurve.lbFoundTime1.Text")); 
 		Utils.addComponent(paneGlobal, lbFilter, 
 				0, line, 
 				1, 1, 
@@ -256,7 +255,7 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 		
 		//
 		btSelectNormal = new javax.swing.JButton();
-		btSelectNormal.setText("Select normal elevations"); //bundle.getString("frmSearchCurve.btSearch.tooltips"));
+		btSelectNormal.setText(bundle.getString("frmElevationFilter.btSelectNormal")); //"Select normal elevations"); //bundle.getString("frmSearchCurve.btSearch.tooltips"));
 		btSelectNormal.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				track.SelectNotSmoothedElevation();
@@ -272,7 +271,7 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 
 		//
 		btSelectSmoothed = new javax.swing.JButton();
-		btSelectSmoothed.setText("Select smoothed elevations"); //bundle.getString("frmSearchCurve.btSearch.tooltips"));
+		btSelectSmoothed.setText(bundle.getString("frmElevationFilter.btSelectSmoothed"));//"Select smoothed elevations"); //bundle.getString("frmSearchCurve.btSearch.tooltips"));
 		btSelectSmoothed.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				track.SelectSmoothedElevation();
@@ -318,9 +317,9 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 	private JFreeChart CreateChart(XYDataset dataset1, XYDataset dataset2) {
 		JFreeChart chart = ChartFactory.createXYAreaChart("",
 				// x axis label
-				bundle.getString("JPanelAnalysisTimeDist.labelX"), // "Distance"
+				bundle.getString("frmElevationFilter.labelX"), // "Distance"
 				// y axis label
-				bundle.getString("JPanelAnalysisTimeDist.labelY1"), // "Elevation"
+				bundle.getString("frmElevationFilter.labelY1"), // "Elevation"
 				dataset1, // data
 				PlotOrientation.VERTICAL, false, // include legend
 				true, // tooltips
@@ -345,12 +344,13 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 
 
 		NumberAxis rangeAxis2 = new NumberAxis("");//bundle.getString("JPanelAnalysisTimeDist.labelY2")); // "Time"
-		plot.setRangeAxis(1, rangeAxis2);
+		//plot.setRangeAxis(1, rangeAxis2);
 		plot.setDataset(1, dataset2);
 		plot.setRangeAxis(1, rangeAxis2);
 		//plot.mapDatasetToRangeAxis(1, 1);
 		StandardXYItemRenderer renderer2 = new StandardXYItemRenderer();
 		renderer2.setSeriesPaint(0, Color.red);
+		renderer2.setSeriesStroke(0,  new BasicStroke(1.0f));
 		plot.setRenderer(1, renderer2);
 
 		// -- Select the display order
@@ -406,8 +406,12 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 		ccrS = track.CalcClimb(CgConst.ELEV_SMOOTHED, 0, track.data.size() - 1, ccrS);
 		
 		//-- Display the result
-		lbInfo.setText(	"Climb + (normal):"+ ccrNS.cp + "m - Climb - (normal):"+ ccrNS.cm +
-						"m -- Climb + (smoothed):"+ ccrS.cp + "m - Climb - (smoothed):"+ ccrS.cm + "m");
+		
+		lbInfo.setText(String.format(bundle.getString("frmElevationFilter.lbInfo"),
+				ccrNS.cp, ccrNS.cm, ccrS.cp, ccrS.cm ));
+		
+		//lbInfo.setText(String.format("Climb + (normal):%1.0f - m - Climb - (normal):%1.0fm -- Climb + (smoothed):%1.0f - m - Climb - (smoothed):%1.0fm",
+		//		ccrNS.cp, ccrNS.cm, ccrS.cp, ccrS.cm ));
 	}
 
 	

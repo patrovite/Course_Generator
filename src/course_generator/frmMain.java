@@ -166,7 +166,7 @@ import course_generator.utils.Utils.CalcLineResult;
 public class frmMain extends javax.swing.JFrame {
 	private static final long serialVersionUID = 6484405417503538528L;
 
-	private final static String Version = "4.4.0-Alpha5";
+	private final static String Version = "4.4.0-Alpha6";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -937,7 +937,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		//##########################
 		
-		// -- Sous-menu "Marques"
+		// -- Set marker
 		mnuTags = new javax.swing.JMenu();
 		mnuTags.setIcon(Utils.getIcon(this, "flag.png", Settings.MenuIconSize));
 		
@@ -1231,6 +1231,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Define a new start
 		// ------------------------------------------------
 		mnuDefineNewStart = new javax.swing.JMenuItem();
+		mnuDefineNewStart.setIcon(Utils.getIcon(this, "flag_new.png", Settings.MenuIconSize));
 		mnuDefineNewStart.setEnabled(false);
 		mnuDefineNewStart.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1242,6 +1243,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Smooth the elevation values
 		// ------------------------------------------------
 		mnuSmoothElevation = new javax.swing.JMenuItem();
+		mnuSmoothElevation.setIcon(Utils.getIcon(this, "elev_smoothing.png", Settings.MenuIconSize));
 		mnuSmoothElevation.setEnabled(false);
 		mnuSmoothElevation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1311,6 +1313,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Display the directory containing the speed/slope files
 		// ------------
 		mnuDisplaySSDir = new javax.swing.JMenuItem();
+		mnuDisplaySSDir.setIcon(Utils.getIcon(this, "open.png", Settings.MenuIconSize));
 		mnuDisplaySSDir.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
@@ -1329,6 +1332,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Display the directory containing the logs
 		// ------------
 		mnuDisplayLogDir = new javax.swing.JMenuItem();
+		mnuDisplayLogDir.setIcon(Utils.getIcon(this, "open.png", Settings.MenuIconSize));
 		mnuDisplayLogDir.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				DisplayLogDir();
@@ -1645,7 +1649,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuFindMinMax.setText(bundle.getString("frmMain.mnuFindMinMax.text"));
 		mnuInvertTrack.setText(bundle.getString("frmMain.mnuInvertTrack.text"));
 		mnuDefineNewStart.setText(bundle.getString("frmMain.mnuDefineNewStart.text"));
-		mnuSmoothElevation.setText("Smooth elevation data"); //bundle.getString("frmMain.mnuDefineNewStart.text")); //TODO
+		mnuSmoothElevation.setText(bundle.getString("frmMain.mnuSmoothElevation.text"));
 		mnuCalculateTrackTime.setText(bundle.getString("frmMain.mnuCalculateTackTime.text"));
 		mnuSearchCurveFromFinalTime.setText(bundle.getString("frmMain.mnuSearchCurveFromCurve.text"));
 		mnuInternetTools.setText(bundle.getString("frmMain.mnuInternetTools.text"));
@@ -1723,6 +1727,19 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
+	
+	/**
+	 * Open a dialog where you select the number separator
+	 * @return 0=dot 1=comma
+	 */
+	private int SelectSeparator() {
+		//-- Dot or comma for the numbers
+		String[] options = {bundle.getString("frmMain.Dot"),bundle.getString("frmMain.Comma")}; //"Dot '.' ", "Comma ',' "
+		
+        return JOptionPane.showOptionDialog(null, bundle.getString("frmMain.SelectSeparator"), "", //"Select the decimal separator"
+        		JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+        
+	}
 
 	/**
 	 * Save a part of the data in a CSV file
@@ -1743,7 +1760,7 @@ public class frmMain extends javax.swing.JFrame {
 			int start = panelTrackData.getSelectedRow();
 			int end = start + panelTrackData.getSelectedRowCount() - 1;
 
-			Track.SaveCSV(s, start, end, Settings.Unit);
+			Track.SaveCSV(s, start, end, Settings.Unit, SelectSeparator());
 			// -- Store the directory
 			Settings.previousCSVDirectory = Utils.GetDirFromFilename(s);
 
@@ -1766,7 +1783,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		if (!s.isEmpty()) {
 			// -- Save track
-			Track.SaveCSV(s, 0, Track.data.size() - 1, Settings.Unit);
+			Track.SaveCSV(s, 0, Track.data.size() - 1, Settings.Unit, SelectSeparator());
 			// -- Store the directory
 			Settings.previousCSVDirectory = Utils.GetDirFromFilename(s);
 		}
@@ -2017,8 +2034,16 @@ public class frmMain extends javax.swing.JFrame {
 			return;
 		
 		FrmElevationFilter frm = new FrmElevationFilter(Settings);
-		if (frm.showDialog(Settings, Track)) {
-			CalcTrackTime();
+		if (frm.showDialog(Settings, Track)) {	
+			Track.CalcMainData(false,true); //No hour calculation
+			
+			// -- Refresh
+			Track.isModified = true;
+			RefreshStatusbar(Track);
+			
+			panelTrackData.refresh();
+			PanelResume.refresh();
+			panelStatistics.refresh();
 			panelProfil.RefreshProfilChart();
 			jPanelSpeed.Refresh(Track, Settings);
 			jPanelTimeDist.Refresh(Track, Settings);
