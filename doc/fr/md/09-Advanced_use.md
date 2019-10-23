@@ -257,6 +257,24 @@ La procédure est la suivante:
 
 Après l'opération il est nécessaire de redéfinir les coefficients de fatigues et les barrières horaires puis de relancer un calcul (bouton ![](./images/Toolbar/refresh.png) ou [F5]).
 
+## Déterminer la meilleure courbe "Vitesse/Pente" à partir du temps final
+
+Le menu "Outils>Rechercher la courbe 'Vitesse/Pente' en fonction du temps final" permet à partir du temps final que vous voulez réaliser de trouver la courbe 'Vitesse/Pente' la plus adaptée.
+
+![](./images/CG40_Search_Curve.png)
+
+Vous saisissez le temps final que vous voulez réaliser (heure:minute:seconde) puis vous appuyez sur le bouton de recherche.
+
+**Course Generator** va rechercher la meilleure courbe. La plupart du temps le logiciel ne va pas trouver exactement la courbe qui correspond à votre attente et va vous indiquer les courbes en-dessous et au-dessus de votre temps cible.
+Pour chaque courbe, vous aurez le temps estimé.
+Vous pouvez alors :
+
+* Sélectionner la courbe en-dessous du temps cible avec le bouton "Sélection"
+* Sélectionner la courbe au-dessus du temps cible avec le bouton "Sélection"
+* Sortir de la boite de dialogue avec le bouton "Annuler"
+
+L'appuie sur un des boutons "Sélection" va sélectionner la courbe correspondante. Elle sera utilisée lors de vos prochain calcul.
+
 ## Les paramètres généraux de Course Generator
 
 Le menu "Paramètres>Paramètres de Course Generator" affiche la fenêtre de configuration du logiciel.

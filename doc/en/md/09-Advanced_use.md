@@ -257,6 +257,24 @@ The procedure is as follows:
 
 After the operation it is necessary to redefine the fatigue coefficients and cut-off times and then restart a calculation (button ![](./images/Toolbar/refresh.png) or [F5]).
 
+## Find the best "Speed/Slope" curve from the final time
+
+Le menu "Tools>Search "Speed/Slope" curve from the final time" allow to find the best curve from the final time.
+
+![](./images/CG40_Search_Curve.png)
+
+You enter the final time (hour:minute:second) then you press the search button.
+
+**Course Generator** will search the best curve. Most of the time the software will not find the exact curve and it will show the curve bellow and over your final time. For every curve, you will have the estimated time.
+The you can :
+
+* Select the curve bellow the final time withe the "Select" button
+* Select the curve over the final time withe the "Select" button
+* Exit from the dialog box with the "Cancel" button
+
+The press o one "Select" button will select the the corresponding curve. It will be used for your next calculation.
+
+
 ## The general parameters of Course Generator
 
 Le menu "Paramètres>Paramètres de Course Generator" affiche la fenêtre de configuration du logiciel.

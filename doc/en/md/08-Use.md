@@ -55,7 +55,12 @@ If you have chosen to take into account the night effect, you will see that :
 
 ## Set the speed/slope curve
 
-In order to have a track time consistent with your speed, you have to choose or create a speed curve according to the slope. This curve goes from -50% slope (downhill) to + 50% slope (climb). The choice of the curve is made by the choice of the speed that one wants to "hold" when the slope is null (0%) on a road. A set of curves has been created to cover most running speeds.
+In order to have a track time consistent with your speed, you have to choose or create a speed curve according to the slope. This curve goes from -50% slope (downhill) to + 50% slope (climb). The choice of the curve is made by the choice of the speed that one wants to "hold" when the slope is null (0%) on a road. 
+The curves are divided into 3 groups :
+
+* The "km/h" curves are standard read-only curves within the range 3.6km/h to 18km/h.
+* The "min/miles" curves are standard read-only curves within the range 5min30s/miles to 24min/miles.
+* The "user" curves that you create. If you duplicate a standard curve, the new curve will be in the "user" tab. You can access to the "user" curve files with the menu "Tools > Open the "Speed/Slope" curves folder".
 
 The menu "Settings>Speed/Slope curves..." or the button ![curve button](./images/Toolbar/chart_curve.png) will display the dialog box for selecting and managing curves.
 

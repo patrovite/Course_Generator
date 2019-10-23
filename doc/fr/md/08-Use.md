@@ -52,7 +52,12 @@ Si vous avez sélectionné la prise en compte de la nuit, vous pourrez constater
 
 ## Paramétrer la courbe de vitesse/pente
 
-Afin d'avoir une durée de parcours cohérente avec votre niveau, il faut choisir ou créer une courbe de vitesse par rapport à la pente. Cette courbe va de -50% de pente (descente) à +50% de pente (montée). Le choix de la courbe se fait par le choix de la vitesse que l'on veut "tenir" lorsque la pente est nulle (0%) sur un terrain goudronné. Un ensemble de courbes ont été créée afin de couvrir la plupart des utilisations en course à pied.
+Afin d'avoir une durée de parcours cohérente avec votre niveau, il faut choisir ou créer une courbe de vitesse par rapport à la pente. Cette courbe va de -50% de pente (descente) à +50% de pente (montée). Le choix de la courbe se fait par le choix de la vitesse que l'on veut "tenir" lorsque la pente est nulle (0%) sur un terrain goudronné. 
+Les courbes sont réparties en 3 groupes :
+
+* Les courbes "km/h" sont des courbes standards non-modifiable en 'km/h' couvrant la plage de 3.6km/h à 18km/h.
+* Les courbes "min/miles" sont des courbes standards non-modifiable en 'min/miles' couvrant la plage de 5min30s/miles à 24min/miles.
+* Les courbes "user" sont les courbes que vous avez créée. Si vous dupliquez une courbe standard, la nouvelle courbe se trouvera dans l'onglet "user". Les fichiers courbes "user" sont accessible par le menu "Outils > Afficher le répertoire contenant les courbes 'Vitesse/Pente'"
 
 Le menu "Paramètres>Courbes Vitesse/Pente..." ou le bouton ![](./images/Toolbar/chart_curve.png) permettent d'afficher la boite de dialogue permettant de sélectionner et gérer les courbes.  
 ![](./images/Curve/CG40_Dlg_Curves.png)
