@@ -370,3 +370,20 @@ Pour changer la qualité du terrain pour une partie de parcours il faut:
 * Cliquer sur le bouton correspondant à la qualité de terrain requise (par exemple ![](./images/Map/track_average.png))
 
 Dans la barre d'état l'indicateur ![](./images/Statusbar/CG40_Statusbar_Map_Size.png) indique la taille disque utilisée par les cartes. Le menu "Outils>Afficher le répertoire contenant les fichiers courbes vitesse/pente" permet d'ouvrir le gestionnaire de fichier et d'afficher le contenu du répertoire contenant les courbes, les logs et le répertoire contenant les cartes. Le répertoire  "OpenStreetMapTileCache" contient les parties de carte. Si nécessaire vous pouvez effacer le contenu afin de gagner de la place.
+
+## Filtrer les altitudes
+
+Si le profil d'altitude de votre parcours est bruité (présence de pics), **Course Generator** vous offre la possibilité de le filtrer. Afin de réaliser cette action il faut sélectionner "Outils>Filtrer les données d'altitude".
+
+![](./images/CG40_Elev_Filter.png)
+
+La profil d'origine est affiché en image de fond et le profil corrigé apparait en rouge.
+Le champ "filtre" permet de régler l'intensité du lissage du profil. Les dénivelés positifs et négatifs non-corrigé et corrigé sont affichés.
+
+Une fois que vous avez obtenu le profil désiré vous avez 3 possibilités:
+
+* Appuyez sur "Sélectionner les altitudes normales" permet de sélectionner les altitudes non-filtrées. Cela ferme la boite de dialogue et transfert les altitudes non-filtrées dans les altitudes du parcours.
+* Appuyez sur "Sélectionner les altitudes filtrées" permet de sélectionner les altitudes filtrées. Cela ferme la boite de dialogue et transfert les altitudes filtrées dans les altitudes du parcours.
+* Appuyez sur "Annuler" pour fermer la boite de dialogue sans modifier les altitudes du parcours.
+
+La sauvegarde du parcours au format CGX sauvegarde, par point du parcours, les 3 altitudes (active, non-filtrée, filtrée). Pour les calculs seul l'altitude "active" est utilisée. Vous pouvez passer des données filtrées à non-filtrées via la boite dialogue. 

@@ -99,6 +99,7 @@
 <li><a href="#importer-et-exporter-les-points-marqués"><span class="toc-section-number">9.13</span> Importer et exporter les points marqués</a></li>
 <li><a href="#analyser-les-données-après-une-course"><span class="toc-section-number">9.14</span> Analyser les données après une course</a></li>
 <li><a href="#utiliser-les-fonctionnalités-de-la-partie-carte"><span class="toc-section-number">9.15</span> Utiliser les fonctionnalités de la partie carte</a></li>
+<li><a href="#filtrer-les-altitudes"><span class="toc-section-number">9.16</span> Filtrer les altitudes</a></li>
 </ul></li>
 <li><a href="#les-outils-utiles"><span class="toc-section-number">10</span> Les outils utiles</a><ul>
 <li><a href="#la-correction-des-altitudes"><span class="toc-section-number">10.1</span> La correction des altitudes</a></li>
@@ -883,6 +884,17 @@ Vous avez récupéré le parcours de l’UTMB. Vous avez passez du temps à rep�
 <li>Cliquer sur le bouton correspondant à la qualité de terrain requise (par exemple <img src="./images/Map/track_average.png" />)</li>
 </ul>
 <p>Dans la barre d’état l’indicateur <img src="./images/Statusbar/CG40_Statusbar_Map_Size.png" /> indique la taille disque utilisée par les cartes. Le menu “Outils&gt;Afficher le répertoire contenant les fichiers courbes vitesse/pente” permet d’ouvrir le gestionnaire de fichier et d’afficher le contenu du répertoire contenant les courbes, les logs et le répertoire contenant les cartes. Le répertoire “OpenStreetMapTileCache” contient les parties de carte. Si nécessaire vous pouvez effacer le contenu afin de gagner de la place.</p>
+<h2 id="filtrer-les-altitudes"><span class="header-section-number">9.16</span> Filtrer les altitudes</h2>
+<p>Si le profil d’altitude de votre parcours est bruité (présence de pics), <strong>Course Generator</strong> vous offre la possibilité de le filtrer. Afin de réaliser cette action il faut sélectionner “Outils&gt;Filtrer les données d’altitude”.</p>
+<p><img src="./images/CG40_Elev_Filter.png" /></p>
+<p>La profil d’origine est affiché en image de fond et le profil corrigé apparait en rouge. Le champ “filtre” permet de régler l’intensité du lissage du profil. Les dénivelés positifs et négatifs non-corrigé et corrigé sont affichés.</p>
+<p>Une fois que vous avez obtenu le profil désiré vous avez 3 possibilités:</p>
+<ul>
+<li>Appuyez sur “Sélectionner les altitudes normales” permet de sélectionner les altitudes non-filtrées. Cela ferme la boite de dialogue et transfert les altitudes non-filtrées dans les altitudes du parcours.</li>
+<li>Appuyez sur “Sélectionner les altitudes filtrées” permet de sélectionner les altitudes filtrées. Cela ferme la boite de dialogue et transfert les altitudes filtrées dans les altitudes du parcours.</li>
+<li>Appuyez sur “Annuler” pour fermer la boite de dialogue sans modifier les altitudes du parcours.</li>
+</ul>
+<p>La sauvegarde du parcours au format CGX sauvegarde, par point du parcours, les 3 altitudes (active, non-filtrée, filtrée). Pour les calculs seul l’altitude “active” est utilisée. Vous pouvez passer des données filtrées à non-filtrées via la boite dialogue.</p>
 <h1 id="les-outils-utiles"><span class="header-section-number">10</span> Les outils utiles</h1>
 <h2 id="la-correction-des-altitudes"><span class="header-section-number">10.1</span> La correction des altitudes</h2>
 <p>Les mesures d’altitudes faites par un GPS sont basées, comme pour la position, sur une triangulation. Malheureusement cette triangulation est moins précise que pour la position. Sur de longue distance ces erreurs ne sont pas négligeables et peuvent provoquer des erreurs de calcul sur la distance parcouru et sur le dénivelé total.</p>

@@ -372,3 +372,20 @@ To change the quality of the terrain for a part of the track, you must:
 * Click on the button corresponding to the required field quality (for example ![](./images/Map/track_average.png)).
 
 In the status bar, the indicator ![](./images/Statusbar/CG40_Statusbar_Map_Size.png) indicates the disk size used by the maps. The menu "Tools>Open 'Speed/slope' folder" will open the file manager and display the contents of the directory containing the curves, the logs and the directory containing the maps. The directory "OpenStreetMapTileCache" contains the map files. If needed, you can delete its contents to save space.
+
+## Filter altitudes
+
+If the altitude profile of your track is noisy (presence of peaks), **Course Generator** offers you the possibility to filter it. To perform this action, select "Tools>Smooth elevation data".
+
+![](./images/CG40_Elev_Filter.png)
+
+The original profile is displayed as a background image and the corrected profile appears in red.
+The "filter" field allows you to adjust the intensity of the profile smoothing. The uncorrected and corrected positive and negative climbs are displayed.
+
+Once you have obtained the desired profile you have 3 possibilities:
+
+* Press "Select normal elevations" to select unfiltered elevations. This closes the dialog box and transfers the unfiltered elevations to the track elevations.
+* Press "Select smoothed elevations" to select filtered elevations. This closes the dialog box and transfers the filtered elevations to the elevations of the track.
+* Press "Cancel" to close the dialog box without changing the elevation of the track.
+
+The CGX format saves, per point of the track, the 3 elevations (active, unfiltered, filtered). For the calculations only the "active" elevation is used. You can switch from filtered to unfiltered elevation via the dialog box.
