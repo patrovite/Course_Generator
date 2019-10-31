@@ -47,9 +47,9 @@ public class SaxThemeHandler extends DefaultHandler {
 	private Locator locator;
 
 	private final int ERR_READ_NO = 0;
-	private final int ERR_READ_DOUBLE = -1;
+	//private final int ERR_READ_DOUBLE = -1;
 	private final int ERR_READ_INT = -2;
-	private final int ERR_READ_BOOL = -3;
+	//private final int ERR_READ_BOOL = -3;
 	private final int ERR_READ_NOTEXIST = -6;
 	private final int ERR_READ_COLOR = -7;
 	private ColorTheme colors;
@@ -119,11 +119,10 @@ public class SaxThemeHandler extends DefaultHandler {
 	 * 
 	 * @return Return the parsed value
 	 */
-	private String ManageString() {
-		String S = characters;
-		characters = "";
-		return S;
-	}
+	/*
+	 * private String ManageString() { String S = characters; characters = "";
+	 * return S; }
+	 */
 
 
 	/**
@@ -135,15 +134,11 @@ public class SaxThemeHandler extends DefaultHandler {
 	 *            Error code if a parse error occure
 	 * @return Return the parsed value
 	 */
-	private double ManageDouble(double _default, int _errcode) {
-		try {
-			return Double.parseDouble(characters);
-		} catch (NumberFormatException e) {
-			ReadError = _errcode;
-			errline = locator.getLineNumber();
-			return _default;
-		}
-	}
+	/*
+	 * private double ManageDouble(double _default, int _errcode) { try { return
+	 * Double.parseDouble(characters); } catch (NumberFormatException e) { ReadError
+	 * = _errcode; errline = locator.getLineNumber(); return _default; } }
+	 */
 
 
 	/**
@@ -175,15 +170,11 @@ public class SaxThemeHandler extends DefaultHandler {
 	 *            Error code if a parse error occure
 	 * @return Return the parsed value
 	 */
-	private boolean ManageBoolean(boolean _default, int _errcode) {
-		try {
-			return Boolean.parseBoolean(characters);
-		} catch (NumberFormatException e) {
-			ReadError = _errcode;
-			errline = locator.getLineNumber();
-			return _default;
-		}
-	}
+	/*
+	 * private boolean ManageBoolean(boolean _default, int _errcode) { try { return
+	 * Boolean.parseBoolean(characters); } catch (NumberFormatException e) {
+	 * ReadError = _errcode; errline = locator.getLineNumber(); return _default; } }
+	 */
 
 
 	/**

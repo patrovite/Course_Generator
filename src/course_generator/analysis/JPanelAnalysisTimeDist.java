@@ -70,6 +70,7 @@ public class JPanelAnalysisTimeDist extends JPanel {
 	private JLabel lbTimeDistSlope;
 	private ChartPanel ChartPanelTimeDist;
 	private Crosshair xCrosshair;
+	private int index=0;
 
 
 	public JPanelAnalysisTimeDist(CgSettings settings) {
@@ -170,13 +171,6 @@ public class JPanelAnalysisTimeDist extends JPanel {
 					double x = d.getXValue(s, i);
 					xCrosshair.setValue(x);
 					RefreshInfo(i);
-					// Refresh the position on the data grid
-					// TableMain.setRowSelectionInterval(i, i);
-					// Rectangle rect = TableMain.getCellRect(i, 0, true);
-					// TableMain.scrollRectToVisible(rect);
-					// Refresh the marker position on the map
-					// RefreshCurrentPosMarker(Track.data.get(i).getLatitude(),
-					// Track.data.get(i).getLongitude());
 				}
 			}
 
@@ -193,6 +187,8 @@ public class JPanelAnalysisTimeDist extends JPanel {
 		if ((track == null) || (settings == null))
 			return;
 
+		index=i;
+		
 		// -- Get the data
 		CgData d = track.data.get(i);
 
@@ -300,6 +296,14 @@ public class JPanelAnalysisTimeDist extends JPanel {
 
 		chart = CreateChart(datasetElevDist, datasetTimeDist);
 		RefreshInfo(0);
+	}
+	
+	public void ChangLang() {
+		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		chart.getXYPlot().getDomainAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisTimeDist.labelX")); //X
+		chart.getXYPlot().getRangeAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisTimeDist.labelY1")); //Y1
+		chart.getXYPlot().getRangeAxis(1).setAttributedLabel(bundle.getString("JPanelAnalysisTimeDist.labelY2")); //Y2
+		RefreshInfo(index);
 	}
 
 }

@@ -6,6 +6,7 @@ target/**
 *.class
 *.msi
 *.zip
+*.exe
 
 ###########
 # GNU/Linux

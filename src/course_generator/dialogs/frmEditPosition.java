@@ -446,7 +446,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 		Utils.addComponent(panelRight, lbElevation, 0, line, 1, 1, 0, 0, 5, 0, 0, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		spinElevation = new CgSpinner(0, 0, 100000, 1);
+		spinElevation = new CgSpinner(0, -1000, 100000, 1);
 		Utils.addComponent(panelRight, spinElevation, 1, line, 3, 1, 0, 0, 5, 0, 0, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 

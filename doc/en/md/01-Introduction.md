@@ -17,6 +17,8 @@
 * Set a new starting point for a loop track,
 * Insert a track at the beginning or at the end of another track,
 * To extract part of the track,
+* To determine from a finish time the speed/slope curve,
+* vitesse/pente correspondante,
 * To save the modified track, containing calculated track times, in GPX format. This will allow you, for example, to use the "Virtual Partner" function of GARMIN GPS,
 * Save the track in CGX format which is the backup format of **Course Generator** in order to be able to exchange tracks while keeping the ground data, markers, the comments ...
 
@@ -52,4 +54,4 @@ Pierre DELORE
 
 ## Personal data protection
 
-The software collects information about your hardware and software configuration in the logs. These data are in the 'logs' directory which can be accessed via the menu "Tools> Open the "Speed/Slope" folder". Nothing exits from your computer. It is only in case of problem that I will ask you to send me the 'logs' files.
+The software collects information about your hardware and software configuration in the logs. These data are in the 'logs' directory which can be accessed via the menu "Tools> Open the "Logs" folder". Nothing is sent outside from your computer. It is only in case of problem that I will ask you to send me the 'logs' files.

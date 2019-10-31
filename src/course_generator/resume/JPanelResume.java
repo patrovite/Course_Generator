@@ -170,10 +170,16 @@ public class JPanelResume extends JPanel {
 			}
 		});
 		ToolBarResume.add(btRefreshRefresh);
-
+		
+		SetText_Resume_Toolbar();
 	}
 
+	private void SetText_Resume_Toolbar() {
+		btResumeSave.setToolTipText(bundle.getString("JPanelResume.btResumeSave.toolTipText"));
+		btRefreshRefresh.setToolTipText(bundle.getString("JPanelResume.btRefreshRefresh.toolTipText"));
+	}
 
+	
 	private void TableResumeKeyReleased(KeyEvent evt) {
 		int row = TableResume.getSelectedRow();
 		int col = TableResume.getSelectedColumn();
@@ -296,7 +302,7 @@ public class JPanelResume extends JPanel {
 				dst.setLine(src.getNum());
 				dst.setElevation(src.getElevation(CgConst.UNIT_METER));
 
-				ccr = Track.CalcClimb(0, i, ccr);
+				ccr = Track.CalcClimb(CgConst.ELEV_NORM, 0, i, ccr);
 				dst.setClimbP(ccr.cp);
 				dst.setClimbM(ccr.cm);
 
@@ -310,7 +316,7 @@ public class JPanelResume extends JPanel {
 				dst.setdTime_f(src.getTime() - OldData.getTime());
 				dst.setdDist((src.getTotal(CgConst.UNIT_METER) - OldData.getTotal(CgConst.UNIT_METER)) / 1000.0);
 
-				ccr = Track.CalcClimb(old, i, ccr);
+				ccr = Track.CalcClimb(CgConst.ELEV_NORM, old, i, ccr);
 				casr = Track.CalcAvrSlope(old, i, casr);
 				speedResult = Track.CalcAvrSpeed(old, i, speedResult);
 
@@ -345,4 +351,10 @@ public class JPanelResume extends JPanel {
 		refresh();
 	}
 
+	public void ChangLang() {
+		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		SetText_Resume_Toolbar();
+		ModelTableResume.SetTexts();
+		ModelTableResume.fireTableStructureChanged();
+	}
 }

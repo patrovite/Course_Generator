@@ -51,7 +51,6 @@ import org.jfree.chart.plot.Crosshair;
 import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYAreaRenderer;
 import org.jfree.chart.renderer.xy.XYDotRenderer;
 import org.jfree.data.xy.XYDataset;
@@ -85,6 +84,8 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 	private JButton btSpeedSlopeCorr;
 	private JButton btSpeedSlopeFilter;
 
+	private double lastX=0.0;
+	private double lastY=0.0;
 
 	public JPanelAnalysisSpeedSlope(CgSettings settings) {
 		super();
@@ -236,9 +237,17 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		});
 		toolBar.add(btSpeedSlopeFilter);
 
+		SetText_Toolbar();
 	}
 
+	
+	private void SetText_Toolbar() {
+		btSpeedSlopeSave.setToolTipText(bundle.getString("JPanelAnalysisSpeedSlope.btSpeedSlopeSave.toolTipText"));
+		btSpeedSlopeCorr.setToolTipText(bundle.getString("JPanelAnalysisSpeedSlope.btSpeedSlopeCorr.toolTipText"));
+		btSpeedSlopeFilter.setToolTipText(bundle.getString("JPanelAnalysisSpeedSlope.btSpeedSlopeFilter.toolTipText"));
+	}
 
+	
 	/**
 	 * Save the generated curve as a standard curve
 	 * 
@@ -347,6 +356,9 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		if ((track == null) || (settings == null))
 			return;
 
+		lastX = x;
+		lastY = y;
+		
 		lbSpeedSlopeInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSpeed.text")
 		+ "=" + Utils.FormatSpeed(y, settings.Unit, settings.isPace, true) + " ");
 		
@@ -586,4 +598,11 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		}
 	}
 
+	public void ChangeLang() {
+		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		chart.getXYPlot().getDomainAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisSpeedSlope.labelX")); //X
+		chart.getXYPlot().getRangeAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisSpeedSlope.labelY")); //Y
+		RefreshInfo(lastX,lastY);
+		SetText_Toolbar();
+	}
 }

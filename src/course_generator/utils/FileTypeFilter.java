@@ -31,7 +31,7 @@ public class FileTypeFilter extends FileFilter {
 
 
 	public FileTypeFilter(String extension, String description) {
-		this.extension = extension;
+		this.extension = extension.toLowerCase();
 		this.description = description;
 	}
 
@@ -40,7 +40,7 @@ public class FileTypeFilter extends FileFilter {
 		if (file.isDirectory()) {
 			return true;
 		}
-		return file.getName().endsWith(extension);
+		return file.getName().toLowerCase().endsWith(extension);
 	}
 
 

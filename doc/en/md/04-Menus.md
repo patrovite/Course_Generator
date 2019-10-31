@@ -1,43 +1,46 @@
 # Menus
 ## "File" Menu
 
-* **Open GPX** : Loads a GPX format file. Keyboard shortcut: [MAJ+CTRL+O].
-
-* **Recent GPX files** : Displays a list of the last 5 GPX files that have been loaded. Clicking on one of those files will load them again.
-
 * **Open CGX** : Loads a CGX format file. Keyboard shortcut: [CTRL+O].
 
-* **Recent CGX files** : Displays a list of the last 5 CGX files that have been loaded. Clicking on one of those files will load them again.
+* **Recent CGX files...** : Displays a list of the last 5 CGX files that have been loaded. Clicking on one of those files will load them again.
 
 * **Save as CGX** : Saves the course data in CGX format.
 All the course data (difficulty, fatigue coefficient, aid station time...) will be saved. Keyboard shortcut: [CTRL+S].
 
-* **Save as GPX** : Saves the course data in GPX format.
-Warning! Only latitude, longitude and altitude data will be saved.
+* **Save as CGX as...** : Saves the course data in CGX format. A dialog allow to enter the file name.
+All the course data (difficulty, fatigue coefficient, aid station time...) will be saved.
 
-* **Save as CSV** : Saves the course data in CSV format.
+* **Open GPX** : Loads a GPX format file. Keyboard shortcut: [MAJ+CTRL+O].
+
+* **Recent GPX files...** : Displays a list of the last 5 GPX files that have been loaded. Clicking on one of those files will load them again.
+
+* **Import > Add a GPX file to the track** : Imports a GPX file at the beginning or end of the current course.
+
+* **Import > Add a CGX file to the track** : Imports a CGX file at the beginning or end of the current course.
+
+* **Export > Export track as CSV** : Saves the course data in CSV format.
 The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
-* **Import a GPX file** : Imports a GPX file at the beginning or end of the current course.
+* **Export > Export track as GPX** : Saves the course data in GPX format.
+Warning! Only latitude, longitude and altitude data will be saved.
 
-* **Import a CGX file** : Imports a CGX file at the beginning or end of the current course.
-
-* **Save selection as CGX** : Saves the selected line(s) in a CGX file.
+* **Export > Save selection as CGX** : Saves the selected line(s) in a CGX file.
 All the course data (difficulties, fatigue coefficient, aid station time....) will be saved.
 
-* **Save selection as GPX** : Saves the selected lines in a GPX file.
+* **Export > Save selection as GPX** : Saves the selected lines in a GPX file.
 Warning! Only latitude, longitude and altitude data will be saved.
 
-* **Save selection as CSV** : Saves the selected lines in a CSV file.
+* **Export > Save selection as CSV** : Saves the selected lines in a CSV file.
 The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
-* **Import points** : Imports waypoints as CGP format.
+* **Tags > Import** : Imports waypoints as CGP format.
 
-* **Export points** : Saves the selected waypoints in a CGP file.
+* **Tags > Export** : Saves the selected waypoints in a CGP file.
 
-* **Export tags as waypoints** : Saves the selected tags as waypoints in a GPX file. This allows to benefitiate, when using a GPS device, additional information on top of the course.
+* **Tags > Export as waypoints** : Saves the selected tags as waypoints in a GPX file. This allows to benefitiate, when using a GPS device, additional information on top of the course.
 
-* **Exit Course Generator** : Exits **Course Generator**. Keyboard shortcut: [Alt+F4].
+* **Exit** : Exits **Course Generator**. Keyboard shortcut: [Alt+F4].
 
 ## "Edit" Menu 
 
@@ -65,11 +68,15 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 * **Define a new start**: For a given course as a loop, sets the selected point as the start of the course.
 
+* **Smooth elevation data** : Open a dialog box where you can smooth the elevation data of the track.
+
 * **Estimate track time** : Compute the estimated time for each of the course's points. Keyboard shortcut: [F5].
 
-* **Update standard curves** : The standard "Speed/Slope" will be updated with standard settings. It's necessary to use this menu if you modified a standard curve and you want to retrieve the standard settings. It's also necessary after a software update that introduce new standard curves. It doesn't affect the custom curves.
+* **Search 'Speed/Slope' curve from the final time** : Open a dialog box where, from the final expected time, the software will select the best 'Speed/Slope' curve.
 
 * **Open the "Speed/Slope" folder** : Opens the folder containing the speed curve files in File Explorer.
+
+* **Open the "Logs" folder** : Opens the folder containing the logs files in File Explorer.
 
 ## "Parameters" Menu 
 
@@ -84,8 +91,6 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 * **Help** : Displays this current document.
 
 * **F.A.Q.** : Open your browser and display the Frequently Asked Question page about **Course Generator**. 
-
-* **Download courses** : Open your browser and display the Freemovin page where you can download tracks in CGX format.
 
 * **Check for update** : Check if a **Course Generator** update exists.
 

@@ -36,6 +36,10 @@ public class CgData {
 	private double Longitude;
 	/** Elevation of the position in meter **/
 	private double Elevation;
+	/** Not smoothed elevation of the position in meter. **/
+	private double ElevationNotSmoothed;
+	/** Smoothed elevation of the position in meter **/
+	private double ElevationSmoothed;
 	/** Memorized elevation of the position in meter **/
 	private double ElevationMemo;
 	/** Tag of the position **/
@@ -94,7 +98,8 @@ public class CgData {
 
 	public boolean ToDelete;
 
-	public CgData(double Num, double Latitude, double Longitude, double Elevation, double ElevationMemo, int Tag,
+	public CgData(double Num, double Latitude, double Longitude, double Elevation, double ElevationNotSmoothed,
+			double ElevationSmoothed, double ElevationMemo, int Tag,
 			double Dist, double Total, double Diff, double Coeff, double Recup, double Slope, double Speed,
 			double dElevation, int Time, double dTime_f, int TimeLimit, DateTime Hour, int Station, String Name,
 			String Comment, double tmp1, double tmp2, String FmtLbMiniRoadbook, int OptionMiniRoadbook,
@@ -103,6 +108,8 @@ public class CgData {
 		this.Latitude = Latitude;
 		this.Longitude = Longitude;
 		this.Elevation = Elevation;
+		this.ElevationNotSmoothed = ElevationNotSmoothed;
+		this.ElevationSmoothed = ElevationSmoothed;		
 		this.ElevationMemo = ElevationMemo;
 		this.Tag = Tag;
 		this.Dist = Dist;
@@ -139,6 +146,8 @@ public class CgData {
 		this.Latitude = 0;
 		this.Longitude = 0;
 		this.Elevation = 0;
+		this.ElevationNotSmoothed = 0;
+		this.ElevationSmoothed = 0;		
 		this.ElevationMemo = 0;
 		this.Tag = 0;
 		this.Dist = 0;
@@ -206,6 +215,7 @@ public class CgData {
 		Longitude = longitude;
 	}
 
+	// -----------------------------------------------------
 	public double getElevation(int unit) {
 		switch (unit) {
 		case CgConst.UNIT_METER:
@@ -247,6 +257,92 @@ public class CgData {
 		Elevation = elevation;
 	}
 
+	// -------------------------------
+
+	public double getElevationNotSmoothed(int unit) {
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			return ElevationNotSmoothed;
+		case CgConst.UNIT_MILES_FEET:
+			// meter to miles
+			return Utils.Meter2Feet(ElevationNotSmoothed);
+		default:
+			return ElevationNotSmoothed;
+		}
+	}
+
+	public String getElevationNotSmoothedString(int unit, boolean withunit) {
+
+		double e = getElevationNotSmoothed(unit);
+
+		String s = "";
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			s = String.format("%1.0f ", e);
+			if (withunit)
+				s = s + "m";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			s = String.format("%1.0f ", e);
+			if (withunit)
+				s = s + "feet";
+			break;
+		default:
+			s = String.format("%1.0f ", e);
+			if (withunit)
+				s = s + "m";
+			break;
+		}
+		return s;
+	}
+
+	public void setElevationNotSmoothed(double elevationNotSmoothed) {
+		ElevationNotSmoothed = elevationNotSmoothed;
+	}
+	
+	// -------------------------------
+
+	public double getElevationSmoothed(int unit) {
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			return ElevationSmoothed;
+		case CgConst.UNIT_MILES_FEET:
+			// meter to miles
+			return Utils.Meter2Feet(ElevationSmoothed);
+		default:
+			return ElevationSmoothed;
+		}
+	}
+
+	public String getElevationSmoothedString(int unit, boolean withunit) {
+
+		double e = getElevationSmoothed(unit);
+
+		String s = "";
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			s = String.format("%1.0f ", e);
+			if (withunit)
+				s = s + "m";
+			break;
+		case CgConst.UNIT_MILES_FEET:
+			s = String.format("%1.0f ", e);
+			if (withunit)
+				s = s + "feet";
+			break;
+		default:
+			s = String.format("%1.0f ", e);
+			if (withunit)
+				s = s + "m";
+			break;
+		}
+		return s;
+	}
+
+	public void setElevationSmoothed(double elevationSmoothed) {
+		ElevationSmoothed = elevationSmoothed;
+	}
+	
 	// -------------------------------
 	public int getTag() {
 		return Tag;
@@ -588,6 +684,8 @@ public class CgData {
 		d.Latitude = Latitude;
 		d.Longitude = Longitude;
 		d.Elevation = Elevation;
+		d.ElevationNotSmoothed = ElevationNotSmoothed;
+		d.ElevationSmoothed = ElevationSmoothed;		
 		d.ElevationMemo = ElevationMemo;
 		d.Tag = Tag;
 		d.Dist = Dist;

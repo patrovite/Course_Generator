@@ -84,6 +84,7 @@ public class JPanelProfil extends JPanel {
 	private JLabel lbProfilComment;
 	private List<JPanelProfilListener> listeners = new ArrayList<JPanelProfilListener>();
 	private int index;
+	
 
 
 	public JPanelProfil(CgSettings settings) {
@@ -181,17 +182,6 @@ public class JPanelProfil extends JPanel {
 					yCrosshair.setValue(y);
 					RefreshProfilInfo(i);
 					notifyProfilSelection();
-
-					index = i;
-
-					// //Refresh the position on the data grid
-					// TableMain.setRowSelectionInterval(i, i);
-					// Rectangle rect = TableMain.getCellRect(i, 0, true);
-					// TableMain.scrollRectToVisible(rect);
-					// //Refresh the marker position on the map
-					// RefreshCurrentPosMarker(Track.data.get(i).getLatitude(),
-					// Track.data.get(i).getLongitude());
-
 				}
 			}
 
@@ -311,7 +301,6 @@ public class JPanelProfil extends JPanel {
 		// --------------------------------------------------------------
 		btProfilMarker = new javax.swing.JButton();
 		btProfilMarker.setIcon(Utils.getIcon(this, "profil_marker.png", settings.ToolbarIconSize));
-		btProfilMarker.setToolTipText(bundle.getString("frmMain.btProfilMarker.toolTipText"));
 		btProfilMarker.setFocusable(false);
 		btProfilMarker.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -322,9 +311,15 @@ public class JPanelProfil extends JPanel {
 		});
 		ToolBarProfil.add(btProfilMarker);
 
+		//-- Set Texts
+		SetText_Profil_Toolbar();
 	}
 
+	private void SetText_Profil_Toolbar() {
+		btProfilMarker.setToolTipText(bundle.getString("frmMain.btProfilMarker.toolTipText"));
+	}
 
+	
 	/**
 	 * Refresh the fields in the profil info panel
 	 * 
@@ -338,6 +333,8 @@ public class JPanelProfil extends JPanel {
 		if ((index < 0) || (index >= track.data.size()))
 			return;
 
+		this.index = index;
+		
 		// -- Get the data
 		CgData d = track.data.get(index);
 
@@ -431,4 +428,13 @@ public class JPanelProfil extends JPanel {
 		this.settings = settings;
 	}
 
+	/**
+	 * To call when language change to update the text
+	 */
+	public void ChangeLang() {
+		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		RefreshProfilInfo(index);
+		SetText_Profil_Toolbar();
+	}
+	
 }

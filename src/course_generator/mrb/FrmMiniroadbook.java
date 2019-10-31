@@ -143,7 +143,8 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		for (CgData r : track.data) {
 			if ((r.getTag() & CgConst.TAG_ROADBOOK) != 0) {
 				MrbData d = new MrbData(r.getNum(), r.getLatitude(), r.getLongitude(),
-						r.getElevation(CgConst.UNIT_METER), r.getElevationMemo(), r.getTag(),
+						r.getElevation(CgConst.UNIT_METER), r.getElevationNotSmoothed(CgConst.UNIT_METER), 
+						r.getElevationSmoothed(CgConst.UNIT_METER),	r.getElevationMemo(), r.getTag(),
 						r.getDist(CgConst.UNIT_METER), r.getTotal(CgConst.UNIT_METER), r.getDiff(), r.getCoeff(),
 						r.getRecovery(), r.getSlope(), r.getSpeed(CgConst.UNIT_METER),
 						r.getdElevation(CgConst.UNIT_METER), r.getTime(), r.getdTime_f(), r.getTimeLimit(), r.getHour(),
@@ -235,7 +236,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 
 		// -- Save as image
 		btSaveAsImage = new javax.swing.JButton();
-		btSaveAsImage.setIcon(Utils.getIcon(this, "save.png", settings.DialogIconSize));
+		btSaveAsImage.setIcon(Utils.getIcon(this, "save_png.png", settings.DialogIconSize));
 		btSaveAsImage.setToolTipText(bundle.getString("FrmMiniroadbook.btSaveAsImage.toolTipText"));
 		btSaveAsImage.setPreferredSize(new Dimension(btw, bth));
 		btSaveAsImage.setFocusable(false);
