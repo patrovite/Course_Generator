@@ -257,6 +257,24 @@ The procedure is as follows:
 
 After the operation it is necessary to redefine the fatigue coefficients and cut-off times and then restart a calculation (button ![](./images/Toolbar/refresh.png) or [F5]).
 
+## Find the best "Speed/Slope" curve from the final time
+
+Le menu "Tools>Search "Speed/Slope" curve from the final time" allow to find the best curve from the final time.
+
+![](./images/CG40_Search_Curve.png)
+
+You enter the final time (hour:minute:second) then you press the search button.
+
+**Course Generator** will search the best curve. Most of the time the software will not find the exact curve and it will show the curve bellow and over your final time. For every curve, you will have the estimated time.
+The you can :
+
+* Select the curve bellow the final time withe the "Select" button
+* Select the curve over the final time withe the "Select" button
+* Exit from the dialog box with the "Cancel" button
+
+The press o one "Select" button will select the the corresponding curve. It will be used for your next calculation.
+
+
 ## The general parameters of Course Generator
 
 Le menu "Paramètres>Paramètres de Course Generator" affiche la fenêtre de configuration du logiciel.
@@ -336,6 +354,8 @@ On the left, a vertical bar of buttons allows actions on this map.
 * ![](./images/Map/flag.png) : Adds a mark to the current point.
 * ![](./images/Map/eat.png) : Adds an aid station to the current point.
 * ![](./images/Map/drink.png) : Adds a water point to the current point.
+* ![](./images/Map/show_hide_markers.png) : Display or hide the marks.
+* ![](./images/Map/save_png.png) : Save the current map as a PNG image.
 * ![](./images/Map/select_map.png) : Allows you to select the map layer to be displayed.
 * ![](./images/Map/show_weather_stations.png) : Displays the closest weather station(s) on the map.
 
@@ -354,3 +374,20 @@ To change the quality of the terrain for a part of the track, you must:
 * Click on the button corresponding to the required field quality (for example ![](./images/Map/track_average.png)).
 
 In the status bar, the indicator ![](./images/Statusbar/CG40_Statusbar_Map_Size.png) indicates the disk size used by the maps. The menu "Tools>Open 'Speed/slope' folder" will open the file manager and display the contents of the directory containing the curves, the logs and the directory containing the maps. The directory "OpenStreetMapTileCache" contains the map files. If needed, you can delete its contents to save space.
+
+## Filter altitudes
+
+If the altitude profile of your track is noisy (presence of peaks), **Course Generator** offers you the possibility to filter it. To perform this action, select "Tools>Smooth elevation data".
+
+![](./images/CG40_Elev_Filter.png)
+
+The original profile is displayed as a background image and the corrected profile appears in red.
+The "filter" field allows you to adjust the intensity of the profile smoothing. The uncorrected and corrected positive and negative climbs are displayed.
+
+Once you have obtained the desired profile you have 3 possibilities:
+
+* Press "Select normal elevations" to select unfiltered elevations. This closes the dialog box and transfers the unfiltered elevations to the track elevations.
+* Press "Select smoothed elevations" to select filtered elevations. This closes the dialog box and transfers the filtered elevations to the elevations of the track.
+* Press "Cancel" to close the dialog box without changing the elevation of the track.
+
+The CGX format saves, per point of the track, the 3 elevations (active, unfiltered, filtered). For the calculations only the "active" elevation is used. You can switch from filtered to unfiltered elevation via the dialog box.

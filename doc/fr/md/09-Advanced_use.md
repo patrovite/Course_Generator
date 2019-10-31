@@ -257,6 +257,24 @@ La procédure est la suivante:
 
 Après l'opération il est nécessaire de redéfinir les coefficients de fatigues et les barrières horaires puis de relancer un calcul (bouton ![](./images/Toolbar/refresh.png) ou [F5]).
 
+## Déterminer la meilleure courbe "Vitesse/Pente" à partir du temps final
+
+Le menu "Outils>Rechercher la courbe 'Vitesse/Pente' en fonction du temps final" permet à partir du temps final que vous voulez réaliser de trouver la courbe 'Vitesse/Pente' la plus adaptée.
+
+![](./images/CG40_Search_Curve.png)
+
+Vous saisissez le temps final que vous voulez réaliser (heure:minute:seconde) puis vous appuyez sur le bouton de recherche.
+
+**Course Generator** va rechercher la meilleure courbe. La plupart du temps le logiciel ne va pas trouver exactement la courbe qui correspond à votre attente et va vous indiquer les courbes en-dessous et au-dessus de votre temps cible.
+Pour chaque courbe, vous aurez le temps estimé.
+Vous pouvez alors :
+
+* Sélectionner la courbe en-dessous du temps cible avec le bouton "Sélection"
+* Sélectionner la courbe au-dessus du temps cible avec le bouton "Sélection"
+* Sortir de la boite de dialogue avec le bouton "Annuler"
+
+L'appuie sur un des boutons "Sélection" va sélectionner la courbe correspondante. Elle sera utilisée lors de vos prochain calcul.
+
 ## Les paramètres généraux de Course Generator
 
 Le menu "Paramètres>Paramètres de Course Generator" affiche la fenêtre de configuration du logiciel.
@@ -334,6 +352,8 @@ Sur la droite, une barre verticale de boutons permet de réaliser des actions su
 * ![](./images/Map/flag.png) : Permet d'ajouter une marque au point courant.
 * ![](./images/Map/eat.png) : Permet d'ajouter un ravitaillement au point courant.
 * ![](./images/Map/drink.png) : Permet d'ajouter un point d'eau au point courant.
+* ![](./images/Map/show_hide_markers.png) : Permet d'afficher ou de cacher les étiquettes.
+* ![](./images/Map/save_png.png) : Permet de sauver la carte affichée dans une image au format PNG.
 * ![](./images/Map/select_map.png) : Permet de sélectionner le type de carte à utiliser.
 * ![](./images/Map/show_weather_stations.png) : Affiche sur la carte les stations météorologiques les plus proches.
 
@@ -352,3 +372,20 @@ Pour changer la qualité du terrain pour une partie de parcours il faut:
 * Cliquer sur le bouton correspondant à la qualité de terrain requise (par exemple ![](./images/Map/track_average.png))
 
 Dans la barre d'état l'indicateur ![](./images/Statusbar/CG40_Statusbar_Map_Size.png) indique la taille disque utilisée par les cartes. Le menu "Outils>Afficher le répertoire contenant les fichiers courbes vitesse/pente" permet d'ouvrir le gestionnaire de fichier et d'afficher le contenu du répertoire contenant les courbes, les logs et le répertoire contenant les cartes. Le répertoire  "OpenStreetMapTileCache" contient les parties de carte. Si nécessaire vous pouvez effacer le contenu afin de gagner de la place.
+
+## Filtrer les altitudes
+
+Si le profil d'altitude de votre parcours est bruité (présence de pics), **Course Generator** vous offre la possibilité de le filtrer. Afin de réaliser cette action il faut sélectionner "Outils>Filtrer les données d'altitude".
+
+![](./images/CG40_Elev_Filter.png)
+
+La profil d'origine est affiché en image de fond et le profil corrigé apparait en rouge.
+Le champ "filtre" permet de régler l'intensité du lissage du profil. Les dénivelés positifs et négatifs non-corrigé et corrigé sont affichés.
+
+Une fois que vous avez obtenu le profil désiré vous avez 3 possibilités:
+
+* Appuyez sur "Sélectionner les altitudes normales" permet de sélectionner les altitudes non-filtrées. Cela ferme la boite de dialogue et transfert les altitudes non-filtrées dans les altitudes du parcours.
+* Appuyez sur "Sélectionner les altitudes filtrées" permet de sélectionner les altitudes filtrées. Cela ferme la boite de dialogue et transfert les altitudes filtrées dans les altitudes du parcours.
+* Appuyez sur "Annuler" pour fermer la boite de dialogue sans modifier les altitudes du parcours.
+
+La sauvegarde du parcours au format CGX sauvegarde, par point du parcours, les 3 altitudes (active, non-filtrée, filtrée). Pour les calculs seul l'altitude "active" est utilisée. Vous pouvez passer des données filtrées à non-filtrées via la boite dialogue. 

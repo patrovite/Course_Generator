@@ -74,6 +74,7 @@ public class Utils {
 
 	public static final String htmlDocFile = "cg_doc_4.00.html";
 	private static TimeZoneEngine timeZoneEngine;
+	public static String ProgDir = ""; //Contain the folder where is the program
 
 
 	/**
@@ -164,6 +165,45 @@ public class Utils {
 			return "";
 	}
 
+	/**
+	 * Initialize program dir
+	 * @param inEclipse true if we are inside eclipse
+	 */
+	public static void SetProgDir(boolean inEclipse) {
+		ProgDir = new File(".").getAbsolutePath();
+		ProgDir = ProgDir.replaceAll("\\\\", "/");
+		if (ProgDir.endsWith("/."))
+			ProgDir = ProgDir.substring(0, ProgDir.length() - 2);
+		
+		if (inEclipse) 
+			ProgDir = ProgDir + "/build";
+	}
+	
+
+	public static String getSelectedCurveFolder(int sel)
+	{
+		if (sel==0)
+			return Utils.ProgDir + "/curves/km_h/";
+		else if (sel==1)
+			return Utils.ProgDir + "/curves/min_miles/";
+		else
+			return Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/curves/";
+	}
+
+	
+	public static int searchCurveFolder(String paramFileName) {
+		if (FileExist(getSelectedCurveFolder(CgConst.CURVE_FOLDER_USER)+ paramFileName + ".par")) {
+			return CgConst.CURVE_FOLDER_USER;
+		}
+		else if (FileExist(getSelectedCurveFolder(CgConst.CURVE_FOLDER_MIN_MILES)+ paramFileName + ".par")) {
+			return CgConst.CURVE_FOLDER_MIN_MILES;
+		}
+		else if (FileExist(getSelectedCurveFolder(CgConst.CURVE_FOLDER_KM_H)+ paramFileName + ".par")) {
+			return CgConst.CURVE_FOLDER_KM_H;
+		}
+		else return CgConst.CURVE_NOT_FOUND;
+	}
+	
 
 	/**
 	 * Return the icon in the resource library
@@ -1215,7 +1255,7 @@ public class Utils {
 
 		if (cd != null) {
 			CalcClimbResult res = new CalcClimbResult();
-			res = cd.CalcClimb(0, (int) (r.getNum() - 1), res);
+			res = cd.CalcClimb(CgConst.ELEV_NORM, 0, (int) (r.getNum() - 1), res);
 
 			for (i = 0; i < s.length(); i++) {
 				switch (step) {
@@ -1623,33 +1663,16 @@ public class Utils {
 			System.out.println(resourceName + " exported to " + dst);
 		}
 		return ok;
-
-		/*
-		 * InputStream stream = null; OutputStream resStreamOut = null; boolean
-		 * ok=false; String jarFolder; try { stream =
-		 * obj.getClass().getResourceAsStream(resourceName); if (stream == null) { throw
-		 * new Exception ("Cannot get resource \"" + resourceName + "\" from jar file");
-		 * } int readBytes; byte[] buffer = new byte[4096]; String
-		 * s=obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().
-		 * getPath(); System.out.println("resourceName="+resourceName);
-		 * System.out.println("s="+s); //jarFolder = new
-		 * File(obj.getClass().getProtectionDomain().getCodeSource().getLocation().toURI
-		 * ().getPath()).getParentFile().getPath().replace('\\', '/'); jarFolder = new
-		 * File(s).getParentFile().getPath().replace('\\', '/'); resStreamOut = new
-		 * FileOutputStream(dst); while ((readBytes = stream.read(buffer)) >0 ) {
-		 * resStreamOut.write(buffer, 0, readBytes); } ok=true; } catch (Exception ex) {
-		 * throw ex; } finally { if (stream!=null) stream.close(); if
-		 * (resStreamOut!=null) resStreamOut.close(); } return ok;
-		 */
 	}
 
 
-	public static boolean OpenHelp(String language) {
+	public static boolean OpenHelp(String ProgDir, String language) {
 		boolean success = false;
 		Map<String, String> environmentVariables = System.getenv();
 		String helpFolder = environmentVariables.get("CGInstallFolder");
 
-		String helpFilePath = helpFolder + "/help/" + language + "/" + language + "_" + htmlDocFile;
+		//String helpFilePath = helpFolder + "/help/" + language + "/" + language + "_" + htmlDocFile;
+		String helpFilePath = ProgDir + "/help/" + language + "/" + language + "_" + htmlDocFile;
 		File helpFile = new File(helpFilePath);
 		if (helpFile.exists() && !helpFile.isDirectory()) {
 			try {

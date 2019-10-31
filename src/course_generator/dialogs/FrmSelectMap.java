@@ -55,6 +55,7 @@ public class FrmSelectMap extends javax.swing.JDialog {
 	public JRadioButton rbIgn;
 	private ButtonGroup groupMap;
 	private JRadioButton rbBingAerialMap;
+	private JRadioButton rbStamenTonerMap;
 
 	/**
 	 * Creates new form frmSettings
@@ -84,10 +85,13 @@ public class FrmSelectMap extends javax.swing.JDialog {
 			rbOutdoors.setSelected(true);
 			break;
 		case 3:
-			rbIgn.setSelected(true);
+			rbBingAerialMap.setSelected(true);
 			break;
 		case 4:
-			rbBingAerialMap.setSelected(true);
+			rbStamenTonerMap.setSelected(true);
+			break;			
+		case 5:
+			rbIgn.setSelected(true);
 			break;
 		default:
 			rbOpenStreetMap.setSelected(true);
@@ -104,10 +108,12 @@ public class FrmSelectMap extends javax.swing.JDialog {
 				return 1;
 			if (rbOutdoors.isSelected())
 				return 2;
-			if (rbIgn.isSelected())
-				return 3;
 			if (rbBingAerialMap.isSelected())
+				return 3;
+			if (rbStamenTonerMap.isSelected())
 				return 4;
+			if (rbIgn.isSelected())
+				return 5;
 		}
 		return -1;
 	}
@@ -188,20 +194,28 @@ public class FrmSelectMap extends javax.swing.JDialog {
 		Utils.addComponent(panelMain, rbOutdoors, 0, 2, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 		
-		rbIgn = new JRadioButton(bundle.getString("FrmSelectMap.rbIgn.Text"));
-		Utils.addComponent(panelMain, rbIgn, 0, 3, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
-				GridBagConstraints.HORIZONTAL);
-
 		rbBingAerialMap = new JRadioButton(bundle.getString("FrmSelectMap.rbBingAerialMap.Text"));
-		Utils.addComponent(panelMain, rbBingAerialMap, 0, 4, 1, 1, 1, 1, 0, 0, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelMain, rbBingAerialMap, 0, 3, 1, 1, 1, 1, 0, 0, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+		
+		rbStamenTonerMap = new JRadioButton(bundle.getString("FrmSelectMap.rbStamenToner.Text"));
+		Utils.addComponent(panelMain, rbStamenTonerMap, 0, 4, 1, 1, 1, 1, 0, 0, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+	
+		rbIgn = new JRadioButton(bundle.getString("FrmSelectMap.rbIgn.Text"));
+		Utils.addComponent(panelMain, rbIgn, 0, 5, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
+
+		
 		groupMap = new ButtonGroup();
 		groupMap.add(rbOpenStreetMap);
 		groupMap.add(rbOpenTopoMap);
 		groupMap.add(rbOutdoors);
-		groupMap.add(rbIgn);
 		groupMap.add(rbBingAerialMap);
+		groupMap.add(rbStamenTonerMap);
+		groupMap.add(rbIgn);
+		
 
 		// == BUTTONS
 		// ===========================================================

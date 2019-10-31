@@ -181,6 +181,8 @@ public class frmSettings extends javax.swing.JDialog {
 			cbLanguage.setSelectedIndex(2);
 		else if (settings.Language.equalsIgnoreCase("ES"))
 			cbLanguage.setSelectedIndex(3);
+		else if (settings.Language.equalsIgnoreCase("PT"))
+			cbLanguage.setSelectedIndex(4);
 
 		// -- Units
 		if (settings.Unit == CgConst.UNIT_METER)
@@ -260,6 +262,9 @@ public class frmSettings extends javax.swing.JDialog {
 			case 3: // Spanish
 				settings.Language = "ES";
 				break;
+			case 4: // Portugues
+				settings.Language = "PT";
+				break;				
 			default: // Default
 				settings.Language = "";
 			}
@@ -339,8 +344,7 @@ public class frmSettings extends javax.swing.JDialog {
 			settings.NightTrackTransparency = spinNightTrackTransparency.getValueAsInt() * 255 / 100;
 
 			// -- Restart of the application needed?
-			if ((!old_language.equalsIgnoreCase(settings.Language))
-					|| (OldStatusbarIconSize != settings.StatusbarIconSize) || (OldTabIconSize != settings.TabIconSize)
+			if ( (OldStatusbarIconSize != settings.StatusbarIconSize) || (OldTabIconSize != settings.TabIconSize)
 					|| (OldToolbarIconSize != settings.ToolbarIconSize)
 					|| (OldMapToolbarIconSize != settings.MapToolbarIconSize)
 					|| (OldMenuIconSize != settings.MenuIconSize) || (OldTagIconSize != settings.TagIconSize)
@@ -348,11 +352,12 @@ public class frmSettings extends javax.swing.JDialog {
 					|| (OldCurveButtonsIconSize != settings.CurveButtonsIconSize))
 				JOptionPane.showMessageDialog(this, bundle.getString("frmSettings.MsgRestart"));
 
-			// Maps & Weather
+			// Maps
 			if (edThunderForestApiKey.getText() != ""
 					&& edThunderForestApiKey.getText() != settings.getThunderForestApiKey()) {
 				settings.setThunderForestApiKey(edThunderForestApiKey.getText());
 			}
+
 		}
 		return ok;
 	}
@@ -445,7 +450,7 @@ public class frmSettings extends javax.swing.JDialog {
 		cbLanguage = new javax.swing.JComboBox<>();
 		String language[] = { bundle.getString("frmSettings.LanguageDefault"),
 				bundle.getString("frmSettings.LanguageEN"), bundle.getString("frmSettings.LanguageFR"),
-				bundle.getString("frmSettings.LanguageES") };
+				bundle.getString("frmSettings.LanguageES"), bundle.getString("frmSettings.LanguagePT") };
 		cbLanguage.setModel(new javax.swing.DefaultComboBoxModel<>(language));
 		Utils.addComponent(panelGeneral, cbLanguage, 1, line++, 1, 1, 0, 0, 10, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
@@ -842,6 +847,8 @@ public class frmSettings extends javax.swing.JDialog {
 				GridBagConstraints.BOTH);
 
 		addTab(TabbedPaneGlobal, panelColors, bundle.getString("frmSettings.TabColors.tabTitle"), null);
+
+		// line = 0;
 
 		// -- Separator
 		// -- NOCONNECTIONONSTARTUP - Boolean -bNoConnectOnStartup

@@ -80,6 +80,10 @@ public class SaxCGXHandler extends DefaultHandler {
 	private double trkpt_lat = 0.0;
 	private double trkpt_lon = 0.0;
 	private double trkpt_ele = 0.0;
+	private double trkpt_eleNotSmoothed = 0.0;
+	private double trkpt_eleSmoothed = 0.0;	
+	private boolean trkpt_SmoothedData = false;	
+	private boolean trkpt_NotSmoothedData = false;
 	private double trkpt_dist = 0.0;
 	private double trkpt_distcumul = 0.0;
 	private double trkpt_diff = 0;
@@ -134,6 +138,7 @@ public class SaxCGXHandler extends DefaultHandler {
 	public static final String LEVEL_WEATHER_DAILY_SUMMARIES = "DAILY_SUMMARIES";
 	public static final String LEVEL_WEATHER_NORMALS = "NORMALS";
 
+	
 	private TrackData trkdata;
 	private int mode = 0;
 	// private int errcode = 0;
@@ -211,6 +216,10 @@ public class SaxCGXHandler extends DefaultHandler {
 		trkpt_lat = 0.0;
 		trkpt_lon = 0.0;
 		trkpt_ele = 0.0;
+		trkpt_eleNotSmoothed = 0.0;
+		trkpt_eleSmoothed = 0.0;
+		trkpt_SmoothedData = false;
+		trkpt_NotSmoothedData = false;
 		trkpt_name = "";
 		level = 0;
 		// errcode=ERR_READ_NO;
@@ -266,6 +275,8 @@ public class SaxCGXHandler extends DefaultHandler {
 				|| qName.equalsIgnoreCase(LEVEL_WEATHER_DAILY_SUMMARIES)
 				|| qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
 			// trk_nb++;
+			trkpt_SmoothedData=false; //Reset the flag to detect smoothed data
+			trkpt_NotSmoothedData=false;
 			level++;
 			levelName = qName;
 		}
@@ -453,7 +464,8 @@ public class SaxCGXHandler extends DefaultHandler {
 				trkdata.TrackUseDaylightSaving = ManageBoolean(false, ERR_READ_BOOL);
 			} else if (qName.equalsIgnoreCase("CURVE")) {
 				curve = ManageString();
-				if (!Utils.FileExist(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + curve + ".par")) {
+				int FolderType=Utils.searchCurveFolder(curve);				
+				if (!Utils.FileExist(Utils.getSelectedCurveFolder(FolderType)  + curve + ".par")) {
 					JOptionPane.showMessageDialog(Parent,
 							String.format(bundle.getString("loadCGX.CurveFileError"), curve + ".par"));
 					trkdata.Paramfile = "Default";
@@ -493,6 +505,8 @@ public class SaxCGXHandler extends DefaultHandler {
 				trkdata.MRBType = ManageInt(0, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("TOPMARGIN")) {
 				trkdata.TopMargin = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("SMOOTHFILTER")) {
+				trkdata.SmoothFilter = ManageInt(0, ERR_READ_INT);
 			}
 		} // End LEVEL_COURSEGENERATOR
 
@@ -503,6 +517,12 @@ public class SaxCGXHandler extends DefaultHandler {
 				trkpt_lon = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("ALTITUDEMETERS")) {
 				trkpt_ele = ManageDouble(0.0, ERR_READ_DOUBLE);
+			} else if (qName.equalsIgnoreCase("ALTITUDEMETERSNOTSMOOTHED")) {
+				trkpt_eleNotSmoothed = ManageDouble(0.0, ERR_READ_DOUBLE);
+				trkpt_NotSmoothedData = true;
+			} else if (qName.equalsIgnoreCase("ALTITUDEMETERSSMOOTHED")) {
+				trkpt_eleSmoothed = ManageDouble(0.0, ERR_READ_DOUBLE);
+				trkpt_SmoothedData = true;
 			} else if (qName.equalsIgnoreCase("DISTANCEMETERS")) {
 				trkpt_dist = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("DISTANCEMETERSCUMUL")) {
@@ -554,12 +574,22 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("TRACKPOINT")) {
 				level--;
 				if ((mode == 0) || (mode == 2)) {
+					//No smoothed elevation => set the normal elevation
+					if (!trkpt_SmoothedData) 
+						trkpt_eleSmoothed = trkpt_ele;
+					
+					//No not smoothed elevation => set the normal elevation
+					if (!trkpt_NotSmoothedData) 
+						trkpt_eleSmoothed = trkpt_ele;
+					
 					// Add data at the end of the array
 					Cmpt++;
 					trkdata.data.add(new CgData(Cmpt, // double Num
 							trkpt_lat, // double Latitude
 							trkpt_lon, // double Longitude
 							trkpt_ele, // double Elevation
+							trkpt_eleNotSmoothed, // double ElevationNotSmoothed
+							trkpt_eleSmoothed, // double ElevationSmoothed							
 							trkpt_ele, // double ElevationMemo
 							trkpt_tag, // int Tag
 							trkpt_dist, // double Dist
@@ -591,6 +621,8 @@ public class SaxCGXHandler extends DefaultHandler {
 							trkpt_lat, // double Latitude
 							trkpt_lon, // double Longitude
 							trkpt_ele, // double Elevation
+							trkpt_eleNotSmoothed, // double ElevationNotSmoothed
+							trkpt_eleSmoothed, // double ElevationSmoothed							
 							trkpt_ele, // double ElevationMemo
 							trkpt_tag, // int Tag
 							trkpt_dist, // double Dist
