@@ -142,6 +142,7 @@ import course_generator.mrb.FrmMiniroadbook;
 import course_generator.param.frmEditCurve;
 import course_generator.profil.JPanelProfil;
 import course_generator.profil.JPanelProfilListener;
+import course_generator.releaseNote.frmReleaseNote;
 //import course_generator.resume.JPanelListener;
 import course_generator.resume.JPanelResume;
 import course_generator.resume.JPanelResumeListener;
@@ -166,7 +167,7 @@ import course_generator.utils.Utils.CalcLineResult;
 public class frmMain extends javax.swing.JFrame {
 	private static final long serialVersionUID = 6484405417503538528L;
 
-	private final static String Version = "4.4.0-Alpha6";
+	private final static String Version = "4.4.0";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -179,6 +180,7 @@ public class frmMain extends javax.swing.JFrame {
 	private java.util.ResourceBundle bundle = null;
 	private int cmptInternetConnexion = 0;
 	private int cmptMinute = 0;
+	private int cmptRelease = -1;
 	private boolean InternetConnectionActive = false;
 	private Timer timer1s; // 1 second timer object
 	private boolean bNoBackup = true;
@@ -295,6 +297,8 @@ public class frmMain extends javax.swing.JFrame {
 
 	private JMenuItem mnuSmoothElevation;
 
+	private JMenuItem mnuReleaseNotes;
+
 	
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
@@ -312,6 +316,13 @@ public class frmMain extends javax.swing.JFrame {
 				// -- Check every minute if we need to switch log file
 				CgLog.checkFileSize();
 				CalcOfflineMapsSize();
+			}
+			if (cmptRelease>0) {
+				cmptRelease--;
+				if (cmptRelease==0) {
+					ShowReleaseNote();
+					cmptRelease=-1;
+				}
 			}
 
 		}
@@ -505,110 +516,18 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Display the splash screen
 		showDialogAbout(this, true, false, Version);
 
+		// -- Check if we need to display the release notes
+		if (!Settings.ReleaseVersion.equalsIgnoreCase(Version)) {
+			cmptRelease=3; //Delay the display of the release notes dialog box by x seconds
+		}
+
 		// -- Log the initialization time
 		CgLog.info("Application initialization time : " + (System.currentTimeMillis() - ts) + "ms");
 
 		// -- Check for update
 		if (Settings.Check4UpdateAtStart)
 			Check4Update();
-	}
-
-
-	/**
-	 * Copy the curves files from the resource to the config directory By default
-	 * it's automatic if "default.par is missing. It can be forced
-	 * 
-	 * @param force
-	 *            "true" force the copy with checking the presence of "default.par"
-	 */
-	//TODO To delete when the new curve system is validated
-	private void ExportCurvesFromResource(boolean force) {
-
-		String dst = DataDir + "/" + CgConst.CG_DIR + "/";
-		if ((!Utils.FileExist(DataDir + "/" + CgConst.CG_DIR + "/" + "Default.par")) || force) {
-			if (JOptionPane.showConfirmDialog(this, bundle.getString("frmMain.QuestionInstallCurves"), "",
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-
-				CgLog.info("Export curves from resource");
-
-				try {
-					// -- Curves in km/h
-					Utils.ExportResource(this, "/course_generator/curves/Default.par", dst + "Default.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_10_5km_h.par", dst + "Run_10_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_10km_h.par", dst + "Run_10km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_11_5km_h.par", dst + "Run_11_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_11km_h.par", dst + "Run_11km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_12_5km_h.par", dst + "Run_12_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_12km_h.par", dst + "Run_12km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_13_5km_h.par", dst + "Run_13_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_13km_h.par", dst + "Run_13km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_14_5km_h.par", dst + "Run_14_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_14km_h.par", dst + "Run_14km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_15_5km_h.par", dst + "Run_15_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_15km_h.par", dst + "Run_15km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_16_5km_h.par", dst + "Run_16_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_16km_h.par", dst + "Run_16km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_17_5km_h.par", dst + "Run_17_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_17km_h.par", dst + "Run_17km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_18km_h.par", dst + "Run_18km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_4_5km_h.par", dst + "Run_4_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_4km_h.par", dst + "Run_4km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_5_5km_h.par", dst + "Run_5_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_5km_h.par", dst + "Run_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_6_5km_h.par", dst + "Run_6_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_6km_h.par", dst + "Run_6km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_7_5km_h.par", dst + "Run_7_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_7km_h.par", dst + "Run_7km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_8_5km_h.par", dst + "Run_8_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_8km_h.par", dst + "Run_8km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_9_5km_h.par", dst + "Run_9_5km_h.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_9km_h.par", dst + "Run_9km_h.par");
-
-					// -- Curves in min/mile
-					Utils.ExportResource(this, "/course_generator/curves/Run_10min30sec_mile.par",
-							dst + "Run_10min30sec_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_10min_mile.par",
-							dst + "Run_10min_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_11min30sec_mile.par",
-							dst + "Run_11min30sec_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_11min_mile.par",
-							dst + "Run_11min_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_12min_mile.par",
-							dst + "Run_12min_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_13min_mile.par",
-							dst + "Run_13min_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_14min_mile.par",
-							dst + "Run_14min_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_15min_mile.par",
-							dst + "Run_15min_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_16min_mile.par",
-							dst + "Run_16min_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_18min_mile.par",
-							dst + "Run_18min_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_21min_mile.par",
-							dst + "Run_21min_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_24min_mile.par",
-							dst + "Run_24min_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_5min30sec_mile.par",
-							dst + "Run_5min30sec_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_6min30sec_mile.par",
-							dst + "Run_6min30sec_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_6min_mile.par", dst + "Run_6min_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_7min30sec_mile.par",
-							dst + "Run_7min30sec_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_7min_mile.par", dst + "Run_7min_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_8min30sec_mile.par",
-							dst + "Run_8min30sec_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_8min_mile.par", dst + "Run_8min_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_9min30sec_mile.par",
-							dst + "Run_9min30sec_mile.par");
-					Utils.ExportResource(this, "/course_generator/curves/Run_9min_mile.par", dst + "Run_9min_mile.par");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
+		
 	}
 
 
@@ -1475,6 +1394,17 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuHelp.add(mnuCGHelp);
 
+		// -- Release notes
+		// --------------------------------------------------------------
+		mnuReleaseNotes = new javax.swing.JMenuItem();
+		mnuReleaseNotes.setIcon(Utils.getIcon(this, "edit.png", Settings.MenuIconSize));
+		mnuReleaseNotes.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				ShowReleaseNote();
+			}
+		});
+		mnuHelp.add(mnuReleaseNotes);
+
 		// -- F.A.Q.
 		// --------------------------------------------------------------
 		menuCGFaq = new javax.swing.JMenuItem();
@@ -1666,6 +1596,7 @@ public class frmMain extends javax.swing.JFrame {
 		//-- Menu Help --------------------------------------------------------
 		mnuHelp.setText(bundle.getString("frmMain.mnuHelp.text"));
 		mnuCGHelp.setText(bundle.getString("frmMain.mnuCGHelp.text"));
+		mnuReleaseNotes.setText(bundle.getString("frmMain.mnuReleaseNotes.text"));
 		menuCGFaq.setText(bundle.getString("frmMain.menuCGFaq.text"));
 		menuCGCoursesLibrary.setText(bundle.getString("frmMain.menuCGCoursesLibrary.text"));
 		mnuCheckUpdate.setText(bundle.getString("frmMain.mnuCheckUpdate.text"));
@@ -3954,6 +3885,15 @@ public class frmMain extends javax.swing.JFrame {
 			mnuMruGPX5.setVisible(true);
 		}
 
+	}
+
+	
+	/**
+	 * Display the release note dialog
+	 */
+	public void ShowReleaseNote() {
+		frmReleaseNote frm = new frmReleaseNote(this, Settings, Version);
+		frm.showDialog(Settings);
 	}
 
 

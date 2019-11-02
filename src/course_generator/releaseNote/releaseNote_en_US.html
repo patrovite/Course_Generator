@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+	      <STYLE TYPE="text/css">
+		H1
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 24pt;
+			COLOR: black;
+			FONT-FAMILY: Arial;
+			TEXT-ALIGN: left;
+            PADDING-LEFT: 0px;
+		}
+		H2
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 16pt;
+			COLOR: black;
+			FONT-FAMILY: Arial;
+			TEXT-ALIGN: left;
+            PADDING-LEFT: 0px;
+		}
+		H3
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 14pt;
+			COLOR: black;
+			FONT-FAMILY: Arial;
+			TEXT-ALIGN: left;
+            PADDING: 0px 0px 0px 0px;
+		}
+		table {
+			PADDING-LEFT: 10px;
+		}
+		span.header
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 15pt;
+			FONT-FAMILY: Arial;
+			BACKGROUND-COLOR: #ffffff;
+			text-align: left;
+		}
+		span.item
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 14pt;
+			FONT-FAMILY: Arial;
+			BACKGROUND-COLOR: #ffffff;
+			text-align: left;
+		}
+		span.value
+		{
+			FONT-WEIGHT: normal;
+			FONT-SIZE: 14pt;
+			FONT-FAMILY: Arial;
+			BACKGROUND-COLOR: #ffffff;
+			TEXT-ALIGN: left;
+		}
+		span.separator
+		{
+			FONT-WEIGHT: normal;
+			FONT-SIZE: 14pt;
+			FONT-FAMILY: Arial;
+			BACKGROUND-COLOR: #ffffff;
+			TEXT-ALIGN: left;
+		}
+		P
+		{
+			FONT-SIZE: 14pt;
+			COLOR: black;
+			FONT-FAMILY: Arial;
+			TEXT-DECORATION: none
+            PADDING-LEFT: 30px;
+		}
+
+        </STYLE>
+   	    <title>Release notes</title>
+	</head>
+
+	<body>
+		<H1>Release notes for version 4.4.0</H1>
+		
+		<H2>New management of the "Speed/Slope" curves</H2>
+
+<P>In the previous versions, the curves were stored in"[User_directory]/.course_generator". There was no difference between the standard and user curves.
+Version 4.4 separates user curves from standard curves.</P> 
+<P>The standard curves are divided into 2 groups: "km/h" curves and "min/miles" curves. They are stored with the program and cannot be modified.</P>
+<P>The user curves can be modified and are stored in"[User_directory]/.course_generator/curves".</P>
+<P>If you have created curves with the old versions, you must move them to the "curves" directory so that they are visible from Course Generator.</P>
+
+<P>If you want to modify a standard curve, you must duplicate it. This will create a copy of the curve in the "curves" directory.</P>
+
+<H2>Search for the "Speed/Slope" curve according to a final time</H2>
+
+<P>You can now, from the final time you want to achieve, calculate the curve(s) closest to your objective.</P>
+<P>Either Course Generator will give you the curve that exactly matches your time, or it will give you the curve that just above and just below the target time.</P>
+	
+		
+<H2>New menu organization</H2>
+
+<P>The file menu has been modified to make it more logical.</P>
+<P>CTRL+S] saves the course in CGX format without asking you for the name, unless the course has never been saved.</P>
+
+<H2>Moving the marker on the map</H2>
+
+<P>If you click on the map by pressing the [CTRL] key then the marker will be positioned on the path as close as possible to the cursor.</P>
+<P>This makes it easier to enter the difficulty of a course.</P>
+
+<H2>Modification of the import and export of points</H2>
+
+<P>Now the CGP file contains the refueling times, time barriers and settings of the mini-roadbook.</P>
+
+<H2>New icons for loading and saving</H2>
+
+<P>Again...</P>
+
+
+<H2>The addition of the altitude filter function.</H2>
+
+<P>This filters the "noise" in your altitude readings.</P>
+<P>The algorithm really makes it possible to catch up errors, but it is at the cost of altitudes a little lower than reality.</P>
+<P>A correction with SRTM data (e.g. gpsvizualizer) provides better results. The advantage is that it's offline.</P>
+
+<P>Internally, for each point we have 3 altitudes.</P>
+<P>* The "active" altitude of the track. The one you see that allows you to calculate the difference in altitude.<BR/>
+* The "raw" altitude. It is not corrected<BR/>
+* The "filtered" altitude</P>
+<P>By exiting the dialog box you can copy:</P>
+<P>* The "raw" altitude in the "active" altitude<BR/>
+* The "filtered" altitude in the "active" altitude</P>
+<P>When you save the track in CGX, all 3 altitudes are saved.</P>
+			
+		
+	</body>
+</html>
