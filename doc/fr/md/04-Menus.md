@@ -91,6 +91,8 @@ Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
 
 * **Aide** : Affiche ce document.
 
+* **Notes sur cette version** : Affiche une boite de dialogue affichant les notes liés à la version courante de **Course Generator**. 
+
 * **F.A.Q.** : Ouvre votre navigateur et affiche la page des questions fréquements posées sur **Course Generator**. 
 
 * **Contrôle mise à jour** : Permet de vérifier si une mise à jour de **Course Generator** existe.

@@ -12,8 +12,8 @@
 !define DESCRIPTION "Calcul de vos temps parcours / Calculate your track time"
 # These three must be integers
 !define VERSIONMAJOR 4
-!define VERSIONMINOR 3
-!define VERSIONBUILD 2
+!define VERSIONMINOR 4
+!define VERSIONBUILD 0
 # These will be displayed by the "Click here for support information" link in "Add/Remove Programs"
 # It is possible to use "mailto:" links in here to open the email client
 !define HELPURL "https://techandrun.com/course-generator/" # "Support Information" link
@@ -74,6 +74,7 @@ section "install"
 	file "..\build\fr_cg_doc_4.00.pdf"
 	file "..\gpl-3.0.txt"
 	file /r "..\build\help"
+	file /r "..\build\curves"
 	file /r "..\build\course_generator_lib"
 
 	# Uninstaller - See function un.onInit and section "uninstall" for configuration
@@ -114,7 +115,7 @@ function un.onInit
 	SetShellVarContext all
 
 	#Verify the uninstaller - last chance to back out
-	MessageBox MB_OKCANCEL "Permanantly remove ${APPNAME}?" IDOK next
+	MessageBox MB_OKCANCEL "Permanently remove ${APPNAME}?" IDOK next
 		Abort
 	next:
 	#!insertmacro VerifyUserIsAdmin
@@ -144,6 +145,7 @@ section "uninstall"
 	delete $INSTDIR\fr_cg_doc_4.00.pdf
 	delete $INSTDIR\gpl-3.0.txt
         rmdir /r $INSTDIR\help
+        rmdir /r $INSTDIR\curves
 	rmdir /r $INSTDIR\course_generator_lib
 
 	# Always delete uninstaller as the last action
