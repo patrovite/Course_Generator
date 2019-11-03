@@ -62,6 +62,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
+import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
 public class frmEditCurve extends javax.swing.JDialog {
