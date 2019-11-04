@@ -529,8 +529,9 @@ public class frmEditCurve extends javax.swing.JDialog {
 				if (bEditMode) {
 					param.comment = tfComment.getText();
 					param.name = lbNameVal.getText();
-					param.SaveCurve(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + Paramfile + ".par",
-							settings.Unit);
+					//param.SaveCurve(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + Paramfile + ".par", settings.Unit);
+					param.SaveCurve(Utils.getSelectedCurveFolder(CgConst.CURVE_FOLDER_USER) + Paramfile + ".par", settings.Unit);
+				
 					bEditMode = false;
 					ChangeEditStatus();
 					RefreshView();

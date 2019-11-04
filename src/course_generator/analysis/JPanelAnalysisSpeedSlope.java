@@ -263,7 +263,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		XMLOutputFactory factory = XMLOutputFactory.newInstance();
 		try {
 			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
-					new FileOutputStream(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + name + ".par"));
+					new FileOutputStream(Utils.getSelectedCurveFolder(CgConst.CURVE_FOLDER_USER) + name + ".par"));
 			XMLStreamWriter writer = new IndentingXMLStreamWriter(
 					factory.createXMLStreamWriter(bufferedOutputStream, "UTF-8"));
 
