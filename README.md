@@ -4,7 +4,7 @@ Course Generator is a software which can estimate your time in road running race
 
 ![Course Generator Main window](https://imgur.com/4tM7kUR.png)
 
-## Status : Version 4.3.2 (stable)
+## Status : Version 4.4.1 (stable)
 
 ## History
 I created Course Generator in 2008 for my first 100 km ultra trail. Since then, I added a lot of features and it has been used by a lot of french ultra-runner. Up to the version 3.88 it has been written in C# and now java is used in order to be cross platform (Windows, Mac OS and Linux) and multilingual.
@@ -40,7 +40,7 @@ With Course Generator you can :
 
 ## How to run Course Generator - WINDOWS (with installer)
 
-* You need a version 7 (minimum) of the java runtime environment (JRE)
+* You need a version 8 (minimum) of the java runtime environment (JRE)
 * Download the latest version ('exe' file) from the [Release section](https://github.com/patrovite/Course_Generator/releases)
 * Execute the installer
 * Execute "course_generator"
@@ -49,7 +49,7 @@ With Course Generator you can :
 
 ## How to run Course Generator - WINDOWS (portable)
 
-* You need a version 7 (minimum) of the java runtime environment (JRE)
+* You need a version 8 (minimum) of the java runtime environment (JRE)
 * Download the latest version ('zip' file) from the [Release section](https://github.com/patrovite/Course_Generator/releases)
 * Unzip all the files in a folder
 * Execute "course_generator"
@@ -57,7 +57,7 @@ With Course Generator you can :
 * That's all. Enjoy ;)
 
 ## How to run Course Generator - LINUX
-* You need a version 7 (minimum) of the java runtime environment (JRE)
+* You need a version 8 (minimum) of the java runtime environment (JRE)
 * Download the latest version from the [Release section](https://github.com/patrovite/Course_Generator/releases)
 * Uncompress the archive in a directory (where you want)
 * Give the execution right to "course_generator.sh"
@@ -70,7 +70,7 @@ Note : Curves, log and tiles are store in "~/.course_generator".
 ## How to run Course Generator - MacOS
 I have no MacOS system but the installation is probably the same as LINUX.
 
-Note : Curves, log and tiles are store in "~/.course_generator".
+Note : User curves, log and tiles are stored in "~/.course_generator".
 
 ## Some screenshoots
 Mini roadbook - Simple view

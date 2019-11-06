@@ -1,6 +1,6 @@
 /*
  * Course Generator
- * Copyright (C) 2016 Pierre Delore
+ * Copyright (C) 2008-2019 Pierre Delore
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -109,6 +109,7 @@ public class frmAbout extends javax.swing.JDialog {
 			sb.append(" - JUnit - Eclipse Public License 1.0 - https://junit.org/junit4\n");
 			sb.append(" - JXMapViewer2 - LGPL - https://wiki.openstreetmap.org/wiki/JXMapViewer2\n");
 			sb.append(" - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf\n");
+			sb.append(" - Elevation smoothing algorithm - MIT - Brenda Zysman - https://www.potter.ca/Biking/smoother/gpxsmoother.html\n");
 			sb.append("\n");
 			sb.append(" Maps :\n");
 			sb.append(" - OpenStreetMap.org : https://www.openstreetmap.org\n");

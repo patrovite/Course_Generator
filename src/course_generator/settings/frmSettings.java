@@ -181,9 +181,11 @@ public class frmSettings extends javax.swing.JDialog {
 			cbLanguage.setSelectedIndex(2);
 		else if (settings.Language.equalsIgnoreCase("ES"))
 			cbLanguage.setSelectedIndex(3);
+		/* Disabled until I receive the translation
 		else if (settings.Language.equalsIgnoreCase("PT"))
 			cbLanguage.setSelectedIndex(4);
-
+		*/
+		
 		// -- Units
 		if (settings.Unit == CgConst.UNIT_METER)
 			cbUnit.setSelectedIndex(0);
@@ -262,9 +264,11 @@ public class frmSettings extends javax.swing.JDialog {
 			case 3: // Spanish
 				settings.Language = "ES";
 				break;
+			/* Disabled until I receive the translation
 			case 4: // Portugues
 				settings.Language = "PT";
-				break;				
+				break;
+			*/				
 			default: // Default
 				settings.Language = "";
 			}
@@ -448,9 +452,14 @@ public class frmSettings extends javax.swing.JDialog {
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		cbLanguage = new javax.swing.JComboBox<>();
+		/* Portugues disabled until I receive the translation
 		String language[] = { bundle.getString("frmSettings.LanguageDefault"),
 				bundle.getString("frmSettings.LanguageEN"), bundle.getString("frmSettings.LanguageFR"),
 				bundle.getString("frmSettings.LanguageES"), bundle.getString("frmSettings.LanguagePT") };
+		*/
+		String language[] = { bundle.getString("frmSettings.LanguageDefault"),
+				bundle.getString("frmSettings.LanguageEN"), bundle.getString("frmSettings.LanguageFR"),
+				bundle.getString("frmSettings.LanguageES") };
 		cbLanguage.setModel(new javax.swing.DefaultComboBoxModel<>(language));
 		Utils.addComponent(panelGeneral, cbLanguage, 1, line++, 1, 1, 0, 0, 10, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);

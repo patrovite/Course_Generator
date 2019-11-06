@@ -53,7 +53,7 @@ import course_generator.utils.JTimeSetting;
 import course_generator.utils.Utils;
 
 public class frmSearchCurve extends javax.swing.JDialog{
-	private static final long serialVersionUID = -4653557858071353735L;
+	private static final long serialVersionUID = 2889867873080848278L;
 	private ResourceBundle bundle;
 	private boolean ok;
 	private final int NbCurves = 145;

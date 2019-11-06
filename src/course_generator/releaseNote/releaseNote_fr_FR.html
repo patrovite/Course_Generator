@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+	      <STYLE TYPE="text/css">
+		H1
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 24pt;
+			COLOR: black;
+			FONT-FAMILY: Arial;
+			TEXT-ALIGN: left;
+            PADDING-LEFT: 0px;
+		}
+		H2
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 16pt;
+			COLOR: black;
+			FONT-FAMILY: Arial;
+			TEXT-ALIGN: left;
+            PADDING-LEFT: 0px;
+		}
+		H3
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 14pt;
+			COLOR: black;
+			FONT-FAMILY: Arial;
+			TEXT-ALIGN: left;
+            PADDING: 0px 0px 0px 0px;
+		}
+		table {
+			PADDING-LEFT: 10px;
+		}
+		span.header
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 15pt;
+			FONT-FAMILY: Arial;
+			BACKGROUND-COLOR: #ffffff;
+			text-align: left;
+		}
+		span.item
+		{
+			FONT-WEIGHT: bold;
+			FONT-SIZE: 14pt;
+			FONT-FAMILY: Arial;
+			BACKGROUND-COLOR: #ffffff;
+			text-align: left;
+		}
+		span.value
+		{
+			FONT-WEIGHT: normal;
+			FONT-SIZE: 14pt;
+			FONT-FAMILY: Arial;
+			BACKGROUND-COLOR: #ffffff;
+			TEXT-ALIGN: left;
+		}
+		span.separator
+		{
+			FONT-WEIGHT: normal;
+			FONT-SIZE: 14pt;
+			FONT-FAMILY: Arial;
+			BACKGROUND-COLOR: #ffffff;
+			TEXT-ALIGN: left;
+		}
+		P
+		{
+			FONT-SIZE: 14pt;
+			COLOR: black;
+			FONT-FAMILY: Arial;
+			TEXT-DECORATION: none
+            PADDING-LEFT: 30px;
+		}
+
+        </STYLE>
+   	    <title>Notes de version</title>
+	</head>
+
+	<body>
+<H1>Notes sur la version 4.4.1</H1>
+
+<P>Correctif: Dans la section "Vitesse/Pente" de l'onglet "Analyse", le bouton de sauvegarde sauvegarde maintenant la courbe dans le répertoire utilisateur.</P>
+
+
+<H1>Notes sur la version 4.4.0</H1>
+		
+<H2>Nouvelle gestion des courbes 'Vitesse/Pente'</H2>
+
+<P>Dans les anciennes versions, les courbes étaient stockées dans "[Répertoire_utilisateur]/.course_generator". Il n'y avait aucune différence entre les courbes standards et les courbes utilisateurs.
+La version 4.4 sépare les courbes utilisateurs des courbes standards.</P> 
+<P>Les courbes standards sont réparties en 2 groupes: Les courbes "km/h" et les courbes "min/miles". Elles sont stockées avec le programme et ne sont pas modifiables.</P>
+<P>Les courbes utilisateurs sont modifiables et sont stockées dans "[Répertoire_utilisateur]/.course_generator/curves".</P>
+<P>Si vous avez créé des courbes avec les anciennes versions, il faut les déplacer dans le répertoire "curves" afin qu'elles soient visible de Course Generator.</P>
+
+<P>Si vous voulez modifier une courbe standard, il faut la dupliquer. Cela va créer une copie de la courbe dans le répertoire "curves".</P>
+
+<H2>Recherche de la courbe 'Vitesse/Pente' en fonction d'un temps final</H2>
+
+<P>Vous pouvez maintenant, à partir du temps final que vous souhaitez réaliser, calculer la ou les courbes se rapprochant le plus de votre objectif.</P>
+<P>Soit Course Generator vous donnera la courbe qui exactement à votre temps, soit il vous donnera la courbe qui juste au-dessus et juste en-dessous de temps cible.</P>
+	
+	
+<H2>Nouvelle organisation des menus</H2>
+
+<P>Le menu fichier a été modififier afin plus logique.</P>
+<P>[CTRL+S] sauve le parcours au format CGX sans vous demander le nom, sauf si le parcours n'a jamais été sauvé.</P>
+
+<H2>Déplacement du marqueur sur la carte</H2>
+
+<P>Si vous cliquez sur la carte en appuyant sur la touche [CTRL] alors le marqueur sera positionné sur le parcours au plus près du curseur.</P>
+<P>Cela permet faciliter la saisie de difficulté d'un parcours.</P>
+
+<H2>Modification de l'import et l'export des points</H2>
+
+<P>Maintenant le fichier CGP contient les temps de ravitaillement, les barrières horaires et les paramétrages du mini-roadbook.</P>
+
+<H2>Des nouveaux icônes pour la chargement et la sauvegarde</H2>
+
+<P>Encore...</P>
+
+
+<H2>L'ajout de la fonction filtre des altitudes</H2>
+
+<P>Cela permet de filter le "bruit" qui se trouve dans vos relevés d'altitude.</P>
+<P>L'algorithme permet de vraiment rattraper les erreurs par contre c'est au prix d'altitudes un peu inférieures à la réalité.</P>
+<P>Une correction avec des données SRTM (gpsvizualizer par exemple) permet d'avoir de meilleurs résultats. L'avantage c'est que c'est hors ligne.</P>
+
+<P>En interne on a pour chaque point 3 altitudes.</P>
+<P>* L'altitude "active" du parcours. Celle que vous voyez et qui permet de calculer le dénivelé.<BR/>
+* L'altitude "brute". Elle n'est pas corrigée<BR/>
+* L'altitude "filtrée"</P>
+<P>En sortant de la boite de dialogue vous pouvez recopier :</P>
+<P>* L'altitude "brute" dans l'altitude "active"<BR/>
+* L'altitude "filtrée" dans l'altitude "active"</P>
+<P>Quand vous sauvegardez le parcours en CGX, les 3 altitudes sont sauvées.</P>
+
+	</body>
+</html>
