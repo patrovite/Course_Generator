@@ -381,6 +381,8 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.MapToolBarOrientation = ManageInt(javax.swing.SwingConstants.VERTICAL, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("SELECTEDCURVEFOLDER")) {
 				Settings.SelectedCurveFolder = ManageInt(javax.swing.SwingConstants.VERTICAL, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("RELEASEVERSION")) {
+				Settings.ReleaseVersion = ManageString();
 			}
 
 			else if (qName.equalsIgnoreCase("CONFIG")) {

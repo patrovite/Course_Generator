@@ -120,7 +120,8 @@ public class CgSettings {
 	public int NightTrackTransparency;
 	public String MapToolBarLayout;
 	public int MapToolBarOrientation;
-
+	public String ReleaseVersion; //To store the last release notes viewed
+		
 
 	public CgSettings() {
 		int i = 0;
@@ -200,6 +201,8 @@ public class CgSettings {
 
 		MapToolBarLayout = "WEST";
 		MapToolBarOrientation = javax.swing.SwingConstants.VERTICAL;
+		
+		ReleaseVersion = "";
 	}
 
 
@@ -325,6 +328,8 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "MAPTOOLBARORIENTATION", MapToolBarOrientation);
 
 			Utils.WriteIntToXML(writer, "SELECTEDCURVEFOLDER", SelectedCurveFolder);
+			
+			Utils.WriteStringToXML(writer, "RELEASEVERSION", ReleaseVersion);
 			
 			writer.writeEndElement();
 			writer.writeEndDocument();

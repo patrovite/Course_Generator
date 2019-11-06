@@ -90,6 +90,8 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 * **Help** : Displays this current document.
 
+* **Release notes** : Display a dialog box which shows notes about the current version of **Course Generator**. 
+
 * **F.A.Q.** : Open your browser and display the Frequently Asked Question page about **Course Generator**. 
 
 * **Check for update** : Check if a **Course Generator** update exists.
