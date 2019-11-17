@@ -343,6 +343,7 @@ public class JPanelResume extends JPanel {
 		}
 		// -- Refresh the grid
 		TableResume.invalidate();
+		ModelTableResume.fireTableStructureChanged();
 	}
 
 
