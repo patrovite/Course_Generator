@@ -821,6 +821,37 @@ public class TrackData {
 		return new SearchPointResult(p, best);
 	}
 
+	/**
+	 * Search the best point from the latitude and longitude
+	 * 
+	 * @param dist
+	 *            Distance to search
+	 *            
+	 * @return Index of the found point
+	 */
+	public int SearchDistance(double dist) {
+		CgData cdata;
+		double d, best;
+		int p;
+		
+		double val=Utils.Distance2Meter(dist, Settings.Unit);
+		
+		best = 10000000000.0; // Big value. It's normal
+		p = -1;
+
+		if (data.size() >= 0) {
+			for (int i = 0; i < data.size() - 1; i++) {
+				cdata = data.get(i);
+				d = Math.abs(val-cdata.getTotal(CgConst.UNIT_METER));
+				if (d < best) {
+					best = d;
+					p = i;
+				}
+			}
+		}
+		return p;
+	}
+	
 
 	/*
 	 * private void AltitudeFilter() { if (data.size() <= 1) { return; } CgData r =

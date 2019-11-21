@@ -132,6 +132,7 @@ import course_generator.dialogs.frmFillCoeff.EditCoeffResult;
 import course_generator.dialogs.frmFillDiff;
 import course_generator.dialogs.frmFillDiff.EditDiffResult;
 import course_generator.dialogs.frmSearchCurve;
+import course_generator.dialogs.frmSearchDistance;
 import course_generator.dialogs.frmSearchPoint;
 import course_generator.dialogs.frmSearchPointListener;
 import course_generator.dialogs.frmTrackSettings;
@@ -167,7 +168,7 @@ import course_generator.utils.Utils.CalcLineResult;
 public class frmMain extends javax.swing.JFrame {
 	private static final long serialVersionUID = 6484405417503538528L;
 
-	private final static String Version = "4.4.1";
+	private final static String Version = "4.5.0-Alpha1";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -298,6 +299,8 @@ public class frmMain extends javax.swing.JFrame {
 	private JMenuItem mnuSmoothElevation;
 
 	private JMenuItem mnuReleaseNotes;
+
+	private JMenuItem mnuSearchDistance;
 
 	
 	// -- Called every second
@@ -952,6 +955,19 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		mnuEdit.add(mnuSearchPoint);
 
+		// -- Search a distance...
+		mnuSearchDistance = new javax.swing.JMenuItem();
+		mnuSearchDistance.setAccelerator(
+				javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+		mnuSearchDistance.setIcon(Utils.getIcon(this, "search.png", Settings.MenuIconSize));
+		mnuSearchDistance.setEnabled(false);
+		mnuSearchDistance.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				SearchDistanceDialog();
+			}
+		});
+		mnuEdit.add(mnuSearchDistance);
+		
 		// -- Separator
 		mnuEdit.add(new javax.swing.JPopupMenu.Separator());
 
@@ -1559,6 +1575,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Copy
 		mnuCopy.setText(bundle.getString("frmMain.mnuCopy.text"));
 		mnuSearchPoint.setText(bundle.getString("frmMain.mnuSearchPoint.text"));
+		mnuSearchDistance.setText(bundle.getString("frmMain.mnuSearchDistance.text"));
 		mnuReadOnly.setText(bundle.getString("frmMain.mnuReadOnly.text"));
 		mnuMarkPosition.setText(bundle.getString("frmMain.mnuMarkPosition.text"));
 		mnuGotoNextMark.setText(bundle.getString("frmMain.mnuGotoNextMark.text"));
@@ -3101,7 +3118,7 @@ public class frmMain extends javax.swing.JFrame {
 
 
 	/**
-	 * Display the search dialog
+	 * Display the search point dialog
 	 */
 	private void SearchPointDialog() {
 		if (Track.data.size() <= 0)
@@ -3128,6 +3145,31 @@ public class frmMain extends javax.swing.JFrame {
 		frm.showDialog(Settings, Track);
 	}
 
+
+	/**
+	 * Display the search distance dialog
+	 */
+	private void SearchDistanceDialog() {
+		if (Track.data.size() <= 0)
+			return;
+
+		final frmSearchDistance frm = new frmSearchDistance(Settings);
+		double retDist=frm.showDialog(Settings);
+		if (retDist!=-1) {
+			int index=Track.SearchDistance(retDist);
+			if (index!=-1)
+			{
+				panelMap.RefreshCurrentPosMarker(Track.data.get(index).getLatitude(), Track.data.get(index).getLongitude());
+				panelTrackData.setSelectedRow(index);
+				// -- Refresh the profil cursor position
+				panelProfil.RefreshProfilInfo(index);
+				panelProfil.setCrosshairPosition(Track.data.get(index).getTotal(Settings.Unit) / 1000.0,
+						Track.data.get(index).getElevation(Settings.Unit));
+			}
+		}
+	}
+	
+	
 
 	public void ImportGPX() {
 		if (Track.data.isEmpty())
@@ -3745,6 +3787,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuExportTagAsWaypoints.setEnabled(isLoaded);
 		mnuCopy.setEnabled(isLoaded);
 		mnuSearchPoint.setEnabled(isLoaded);
+		mnuSearchDistance.setEnabled(isLoaded);
 		mnuReadOnly.setEnabled(isLoaded);
 		mnuMarkPosition.setEnabled(isLoaded);
 		mnuGotoNextMark.setEnabled(isLoaded);
