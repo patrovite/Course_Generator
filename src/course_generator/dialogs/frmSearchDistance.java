@@ -42,6 +42,7 @@ import course_generator.utils.JTextFieldLimit;
 import course_generator.utils.Utils;
 
 public class frmSearchDistance extends javax.swing.JDialog {
+	private static final long serialVersionUID = 2353353406416913549L;
 	private double value;
 	private CgSettings settings;
 	private java.util.ResourceBundle bundle;
