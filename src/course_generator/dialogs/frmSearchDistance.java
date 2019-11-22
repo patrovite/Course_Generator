@@ -42,6 +42,7 @@ import course_generator.utils.JTextFieldLimit;
 import course_generator.utils.Utils;
 
 public class frmSearchDistance extends javax.swing.JDialog {
+	private static final long serialVersionUID = 2353353406416913549L;
 	private double value;
 	private CgSettings settings;
 	private java.util.ResourceBundle bundle;
@@ -59,6 +60,7 @@ public class frmSearchDistance extends javax.swing.JDialog {
 		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
+		setModal(true);
 	}
 
 
@@ -68,8 +70,8 @@ public class frmSearchDistance extends javax.swing.JDialog {
 	 * @param track
 	 * @return -1 if invalid input or cancel
 	 */
-	public double showDialog(CgSettings settings, TrackData track) {
-		if ((track == null) || (settings == null))
+	public double showDialog(CgSettings settings) {
+		if (settings == null)
 			return -1;
 		
 		this.value = -1;
@@ -147,7 +149,7 @@ public class frmSearchDistance extends javax.swing.JDialog {
 				0, 0, 
 				1, 1, 
 				0, 0, 
-				0, 5, 2, 0, 
+				10, 5, 2, 0, 
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		tfDistance = new JTextFieldLimit(10);
@@ -158,7 +160,7 @@ public class frmSearchDistance extends javax.swing.JDialog {
 				1, 0, 
 				1, 1, 
 				1, 0, 
-				0, 5, 2, 5, GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+				10, 5, 2, 5, GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 
 		// == BUTTONS

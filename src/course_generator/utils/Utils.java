@@ -459,6 +459,24 @@ public class Utils {
 
 
 	/**
+	 * Convert distance in km or miles in meter
+	 * @param dist Disatnce in km or miles
+	 * @param unit Unit
+	 * @return Distance in meter
+	 */
+	public static double Distance2Meter(double dist, int unit) {
+		switch (unit) {
+		case CgConst.UNIT_METER:
+			return dist*1000.0;
+		case CgConst.UNIT_MILES_FEET:
+			return Miles2Meter(dist);
+		default:
+			return dist*1000.0;
+		}	
+	}
+	
+	
+	/**
 	 * Convert �C to �F
 	 * 
 	 * @param c
