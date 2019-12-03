@@ -2317,7 +2317,7 @@ public class frmMain extends javax.swing.JFrame {
 		btSearch.setEnabled(false);
 		btSearch.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SearchPointDialog();
+				SearchDistanceDialog();
 			}
 		});
 		ToolBarMain.add(btSearch);
