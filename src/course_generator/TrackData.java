@@ -163,7 +163,7 @@ public class TrackData {
 
 	// -- Profil mini-roadbook
 	/** Width of the mini roadbook (in pixels) **/
-	public int MrbSizeW = 640;
+	public int MrbSizeW = 1000;
 	/** Height of the mini roadbook (in pixels) **/
 	public int MrbSizeH = 480;
 	/** Curve filter in the mini roadbook **/

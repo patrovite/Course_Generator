@@ -174,6 +174,7 @@ The "General" tab allows you to:
 
 * Set the filter value to apply to the data when displaying the profile
 * Set the top area height of the profile. This size is in pixel.
+* Set the default text format when you create a new mark
 
 The "Simple" tab is used to adjust the colors of the "Simple" display of the profile.  
 ![Simple tab](./images/MRB/CG40_MRB_Settings2.png)  

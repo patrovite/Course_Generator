@@ -59,6 +59,7 @@ public class CgSettings {
 	public boolean offlineMap = true;
 
 	public String MemoFormat[] = new String[5];
+	public String DefaultFormat;
 	public String mruGPX[] = new String[5];
 	public String mruCGX[] = new String[5];
 	public int TableMainColWidth[] = new int[16];
@@ -142,6 +143,7 @@ public class CgSettings {
 		DistFar = 1000.0;
 
 		MemoFormat = new String[5];
+		DefaultFormat = "%N%L%A%L%D%L%H";
 		mruGPX = new String[5];
 		mruCGX = new String[5];
 		TableMainColWidth = new int[16];
@@ -250,6 +252,8 @@ public class CgSettings {
 			Utils.WriteStringToXML(writer, "MEMOFORMAT4", MemoFormat[3]);
 			Utils.WriteStringToXML(writer, "MEMOFORMAT5", MemoFormat[4]);
 
+			Utils.WriteStringToXML(writer, "DEFAULTFORMAT", DefaultFormat);
+			
 			Utils.WriteStringToXML(writer, "MRUGPX1", mruGPX[0]);
 			Utils.WriteStringToXML(writer, "MRUGPX2", mruGPX[1]);
 			Utils.WriteStringToXML(writer, "MRUGPX3", mruGPX[2]);
