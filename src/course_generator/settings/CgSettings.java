@@ -77,6 +77,8 @@ public class CgSettings {
 
 	/** Threshold where CG ask if a position filter must be apply (m) **/
 	public int PosFilterAskThreshold = 10;
+	
+	public int ClimbThresholdForCalculation = CgConst.MIN_ELEV;
 
 	public int Unit = CgConst.UNIT_METER; // Unit for the display 0=meter
 											// 1=Miles/feet
@@ -298,7 +300,8 @@ public class CgSettings {
 			Utils.WriteDoubleToXML(writer, "DISTFAR", DistFar);
 
 			Utils.WriteIntToXML(writer, "POSFILTERASKTHRESHOLD", PosFilterAskThreshold);
-
+			Utils.WriteIntToXML(writer, "CLIMBTHRESHOLDFORCALCULATION", ClimbThresholdForCalculation);
+			
 			Utils.WriteStringToXML(writer, "DEFAULTFONTNAME", DefaultFontName);
 			Utils.WriteIntToXML(writer, "DEFAULTFONTSTYLE", DefaultFontStyle);
 			Utils.WriteIntToXML(writer, "DEFAULTFONTSIZE", DefaultFontSize);

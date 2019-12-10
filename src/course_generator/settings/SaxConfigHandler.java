@@ -279,6 +279,7 @@ public class SaxConfigHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase("DISTNEAR")) { Settings.DistNear = ManageDouble(100.0, ERR_READ_DOUBLE); } 
 			else if (qName.equalsIgnoreCase("DISTFAR")) {	Settings.DistFar = ManageDouble(1000.0, ERR_READ_DOUBLE); } 
 			else if (qName.equalsIgnoreCase("POSFILTERASKTHRESHOLD")) { Settings.PosFilterAskThreshold = ManageInt(5, ERR_READ_INT); } 
+			else if (qName.equalsIgnoreCase("CLIMBTHRESHOLDFORCALCULATION")) { Settings.ClimbThresholdForCalculation = ManageInt(CgConst.MIN_ELEV, ERR_READ_INT); } 
 			else if (qName.equalsIgnoreCase("DEFAULTFONTNAME")) { Settings.DefaultFontName = ManageString().trim();	} 
 			else if (qName.equalsIgnoreCase("DEFAULTFONTSTYLE")) { Settings.DefaultFontStyle = ManageInt(0, ERR_READ_INT); } 
 			else if (qName.equalsIgnoreCase("DEFAULTFONTSIZE")) { Settings.DefaultFontSize = ManageInt(14, ERR_READ_INT); } 

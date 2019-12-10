@@ -1236,7 +1236,7 @@ public class TrackData {
 				de = (elev - oldElev);
 				dt = (time - oldTime);
 
-				if (Math.abs(de) > CgConst.MIN_ELEV) {
+				if (Math.abs(de) > (double)Settings.ClimbThresholdForCalculation) {
 					if (de > 0) {
 						r.cp += de;
 						r.tp += dt;
