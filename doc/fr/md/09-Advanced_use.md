@@ -288,7 +288,8 @@ Les réglages possibles sont les suivants:
 * "Langues" : Permet de sélectionner la langue utilisée dans l'interface. "Système" utilise les réglages du système d'exploitation pour déterminer la langue à utiliser. Si la langue système n'est pas géré par **Course Generator** alors l'anglais est sélectionné.
 * "Unité" : Permet de choisir entre "km/m" et "Miles/Pieds".
 * "Format vitesse" : Permet de choisir le format de la vitesse (Vitesse ou Allure).
-* "Seuil pour filtre position (en %) : Seuil, en %, à partir duquel le logiciel demande si on veut appliquer un filtre sur les points GPS lors du chargement d'un parcours.
+* "Seuil pour filtre position (en %)" : Seuil, en %, à partir duquel le logiciel demande si on veut appliquer un filtre sur les points GPS lors du chargement d'un parcours.
+* "Seuil pour le calcul du dénivelé (en mètre)" : Seuil, en mètre, à partir duquel on prend en compte une variation d'altitude. Utilisé lors du calcul de dénivelé.
 * "Contrôle mise à jour au démarrage" : Permet de choisir si on veut contrôler la présence d'une mise à jour de l'application au démarrage.
 
 ### Onglet "Affichage"  
