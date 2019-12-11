@@ -63,7 +63,7 @@ public class CgConst {
 	public static final double MAX_CLIMB = 50.0;
 
 	/** Delta value for the total elevation calculation **/
-	public static final double MIN_ELEV = 10.0;
+	public static final int MIN_ELEV = 10;
 
 	/** Tickness of the track on the map **/
 	public static final int TRACK_NORMAL_TICKNESS = 3;

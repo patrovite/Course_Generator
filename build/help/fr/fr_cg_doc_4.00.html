@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Pierre Delore" />
-  <title>Course Generator - V4.4</title>
+  <title>Course Generator - V4.5</title>
   <style>
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
@@ -19,7 +19,7 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Course Generator - V4.4</h1>
+<h1 class="title">Course Generator - V4.5</h1>
 <p class="author">Pierre Delore</p>
 <p class="date">© 2008-2019 Pierre Delore (pierre@TechAndRun.com), CC BY-NC</p>
 </header>
@@ -272,7 +272,7 @@ Source Wikipédia</p>
 <li><img src="./images/Toolbar/open_cgx.png" /> : Permet de charger un parcours au format CGX</li>
 <li><img src="./images/Toolbar/save_cgx.png" /> : Permet de sauvegarder le parcours au format CGX</li>
 <li><img src="./images/Toolbar/undo.png" /> : Permet d’annuler la dernière commande</li>
-<li><img src="./images/Toolbar/search.png" /> : Permet de faire la recherche d’une position GPS</li>
+<li><img src="./images/Toolbar/search.png" /> : Permet de faire une recherche à partir d’une distance</li>
 <li><img src="./images/Toolbar/prev.png" /> : Permet de rechercher la marque précédente</li>
 <li><img src="./images/Toolbar/next.png" /> : Permet de rechercher la marque suivante</li>
 <li><img src="./images/Toolbar/roadbook.png" /> : Permet d’afficher le mini roadbook</li>
@@ -726,6 +726,7 @@ Sélectionnez les paramètres que vous voulez utiliser lors de la copie.</p></li
 <ul>
 <li>Régler la valeur du filtre à appliquer sur les données lors de l’affichage du profil</li>
 <li>Régler la taille de zone haute du profil. Cette taille est en pixel.</li>
+<li>Régler le format du texte par défaut lorsque que vous créez une nouvelle marque</li>
 </ul>
 <p>L’onglet “Simple” permet de régler les couleurs de la représentation “Simple” du profil.<br />
 <img src="./images/MRB/CG40_MRB_Settings2.png" /><br />
@@ -811,7 +812,8 @@ Les zones de nuits apparaissent grâce au fond grisé.</p>
 <li>“Langues” : Permet de sélectionner la langue utilisée dans l’interface. “Système” utilise les réglages du système d’exploitation pour déterminer la langue à utiliser. Si la langue système n’est pas géré par <strong>Course Generator</strong> alors l’anglais est sélectionné.</li>
 <li>“Unité” : Permet de choisir entre “km/m” et “Miles/Pieds”.</li>
 <li>“Format vitesse” : Permet de choisir le format de la vitesse (Vitesse ou Allure).</li>
-<li>"Seuil pour filtre position (en %) : Seuil, en %, à partir duquel le logiciel demande si on veut appliquer un filtre sur les points GPS lors du chargement d’un parcours.</li>
+<li>“Seuil pour filtre position (en %)” : Seuil, en %, à partir duquel le logiciel demande si on veut appliquer un filtre sur les points GPS lors du chargement d’un parcours.</li>
+<li>“Seuil pour le calcul du dénivelé (en mètre)” : Seuil, en mètre, à partir duquel on prend en compte une variation d’altitude. Utilisé lors du calcul de dénivelé.</li>
 <li>“Contrôle mise à jour au démarrage” : Permet de choisir si on veut contrôler la présence d’une mise à jour de l’application au démarrage.</li>
 </ul>
 <h3 id="onglet-affichage"><span class="header-section-number">9.12.2</span> Onglet “Affichage”</h3>

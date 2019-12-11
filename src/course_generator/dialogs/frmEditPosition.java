@@ -189,6 +189,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 		if (ok && !track.ReadOnly) {
 			// Copy fields
 			track.data.get(line).setName(tfName.getText());
+			boolean newMRB=false;
 			int tag = 0;
 			// Higher point
 			if (chkHighPoint.isSelected())
@@ -211,9 +212,11 @@ public class frmEditPosition extends javax.swing.JDialog {
 				tag = tag | CgConst.TAG_MARK;
 
 			// Roadbook
-			if (chkRoadbook.isSelected())
+			if (chkRoadbook.isSelected()) {
 				tag = tag | CgConst.TAG_ROADBOOK;
-
+				newMRB=true;
+			}
+			
 			// Photo
 			if (chkPhoto.isSelected())
 				tag = tag | CgConst.TAG_COOL_PT;
@@ -239,7 +242,9 @@ public class frmEditPosition extends javax.swing.JDialog {
 				tag = tag | CgConst.TAG_FIRST_AID;
 
 			track.data.get(line).setTag(tag);
-
+			
+			if (newMRB) track.data.get(line).FmtLbMiniRoadbook=settings.DefaultFormat;
+				
 			track.data.get(line).setElevation(spinElevation.getValueAsDouble(settings.Unit)); // CgConst.UNIT_METER));
 			track.data.get(line).setDiff(spinDiff.getValueAsDouble());
 			track.data.get(line).setCoeff(spinCoeff.getValueAsDouble());

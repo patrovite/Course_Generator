@@ -174,6 +174,7 @@ The "General" tab allows you to:
 
 * Set the filter value to apply to the data when displaying the profile
 * Set the top area height of the profile. This size is in pixel.
+* Set the default text format when you create a new mark
 
 The "Simple" tab is used to adjust the colors of the "Simple" display of the profile.  
 ![Simple tab](./images/MRB/CG40_MRB_Settings2.png)  
@@ -288,7 +289,8 @@ The possible settings are:
 * "language" : Selects the language used in the interface. "System" uses operating system settings to determine which language to use. If the system language is not managed by **Course Generator** then English is selected.
 * "Units" : Chooses between "km/m" and "Miles/Feet".
 * "Speed format" : Chooses the type of speed to display (speed or pace).
-* "Threshold for position filter (in %) : Threshold, in%, from which the software asks if we want to apply a filter on GPS points when loading a track.
+* "Threshold for position filter (in %)" : Threshold, in %, from which the software asks if we want to apply a filter on GPS points when loading a track.
+* "Threshold for climb calculation (in meter)" : Threshold, in meter, from where you take into account a difference of elevation. Used the by the software to calcultate the ascending and descending climb.
 * "Check for update at startup" : Allows you to choose if you want to check for a newer version of **Course Generator** available at application startup.
 
 ### "Display" tab  

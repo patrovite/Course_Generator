@@ -170,7 +170,7 @@ import course_generator.weather.JPanelWeather;
 public class frmMain extends javax.swing.JFrame {
 	private static final long serialVersionUID = 6484405417503538528L;
 
-	private final static String Version = "4.5.0-Alpha1";
+	private final static String Version = "4.5.0";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -371,6 +371,9 @@ public class frmMain extends javax.swing.JFrame {
 		Track = new TrackData(Settings);
 		Backup_Track = new TrackData(Settings);
 
+		//-- Say to the system that we want to use the default proxy settings (the simpliest solution!)
+		System.setProperty("java.net.useSystemProxies", "true");
+		
 		// showProfilMarker=true;
 
 		// -- Load configuration
@@ -2320,7 +2323,7 @@ public class frmMain extends javax.swing.JFrame {
 		btSearch.setEnabled(false);
 		btSearch.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SearchPointDialog();
+				SearchDistanceDialog();
 			}
 		});
 		ToolBarMain.add(btSearch);

@@ -155,6 +155,8 @@ public class frmSettings extends javax.swing.JDialog {
 	private JButton btLoadColorTheme;
 	private JButton btSaveColorTheme;
 	private String DataDir;
+	private JLabel lbThresholdClimb;
+	private CgSpinner spinThresholdClimb;
 
 
 	/**
@@ -205,7 +207,8 @@ public class frmSettings extends javax.swing.JDialog {
 
 		// -- Threshold
 		spinThresholdAsk.setValue((int) settings.PosFilterAskThreshold);
-
+		spinThresholdClimb.setValue((int) settings.ClimbThresholdForCalculation);
+		
 		// -- Default font
 		DefaultFont = new Font(settings.DefaultFontName, settings.DefaultFontStyle, settings.DefaultFontSize);
 
@@ -302,7 +305,8 @@ public class frmSettings extends javax.swing.JDialog {
 
 			// -- Threshold
 			settings.PosFilterAskThreshold = spinThresholdAsk.getValueAsInt();
-
+			settings.ClimbThresholdForCalculation = spinThresholdClimb.getValueAsInt();
+			
 			// -- Default font
 			settings.DefaultFontName = DefaultFont.getFontName();
 			settings.DefaultFontStyle = DefaultFont.getStyle();
@@ -501,6 +505,16 @@ public class frmSettings extends javax.swing.JDialog {
 		Utils.addComponent(panelGeneral, spinThresholdAsk, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
+		// -- Minimum Threshold for climb calculation
+		lbThresholdClimb = new javax.swing.JLabel();
+		lbThresholdClimb.setText(bundle.getString("frmSettings.lbThresholdClimb.Text"));
+		Utils.addComponent(panelGeneral, lbThresholdClimb, 0, line, 1, 1, 1, 0, 2, 10, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
+		spinThresholdClimb = new CgSpinner(CgConst.MIN_ELEV, 1, 100, 1);
+		Utils.addComponent(panelGeneral, spinThresholdClimb, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+		
 		// -- Check for update
 		lbCheck = new javax.swing.JLabel();
 		lbCheck.setText(bundle.getString("frmSettings.lbCheck.text"));

@@ -59,6 +59,7 @@ public class CgSettings {
 	public boolean offlineMap = true;
 
 	public String MemoFormat[] = new String[5];
+	public String DefaultFormat;
 	public String mruGPX[] = new String[5];
 	public String mruCGX[] = new String[5];
 	public int TableMainColWidth[] = new int[16];
@@ -76,6 +77,8 @@ public class CgSettings {
 
 	/** Threshold where CG ask if a position filter must be apply (m) **/
 	public int PosFilterAskThreshold = 10;
+	
+	public int ClimbThresholdForCalculation = CgConst.MIN_ELEV;
 
 	public int Unit = CgConst.UNIT_METER; // Unit for the display 0=meter
 											// 1=Miles/feet
@@ -142,6 +145,7 @@ public class CgSettings {
 		DistFar = 1000.0;
 
 		MemoFormat = new String[5];
+		DefaultFormat = "%N%L%A%L%D%L%H";
 		mruGPX = new String[5];
 		mruCGX = new String[5];
 		TableMainColWidth = new int[16];
@@ -250,6 +254,8 @@ public class CgSettings {
 			Utils.WriteStringToXML(writer, "MEMOFORMAT4", MemoFormat[3]);
 			Utils.WriteStringToXML(writer, "MEMOFORMAT5", MemoFormat[4]);
 
+			Utils.WriteStringToXML(writer, "DEFAULTFORMAT", DefaultFormat);
+			
 			Utils.WriteStringToXML(writer, "MRUGPX1", mruGPX[0]);
 			Utils.WriteStringToXML(writer, "MRUGPX2", mruGPX[1]);
 			Utils.WriteStringToXML(writer, "MRUGPX3", mruGPX[2]);
@@ -294,7 +300,8 @@ public class CgSettings {
 			Utils.WriteDoubleToXML(writer, "DISTFAR", DistFar);
 
 			Utils.WriteIntToXML(writer, "POSFILTERASKTHRESHOLD", PosFilterAskThreshold);
-
+			Utils.WriteIntToXML(writer, "CLIMBTHRESHOLDFORCALCULATION", ClimbThresholdForCalculation);
+			
 			Utils.WriteStringToXML(writer, "DEFAULTFONTNAME", DefaultFontName);
 			Utils.WriteIntToXML(writer, "DEFAULTFONTSTYLE", DefaultFontStyle);
 			Utils.WriteIntToXML(writer, "DEFAULTFONTSIZE", DefaultFontSize);
