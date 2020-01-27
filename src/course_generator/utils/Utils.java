@@ -1393,6 +1393,10 @@ public class Utils {
 						sr = sr + Utils.Second2DateString(r.getTime());
 						step = 0;
 						break;
+					case 'd':
+						sr = sr + Utils.Second2DateString_HM(r.getDeltaTime());
+						step = 0;
+						break;
 					default:
 						sr = sr + Utils.Second2DateString_HM(r.getTime());
 						sr = sr + s.charAt(i);
