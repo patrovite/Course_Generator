@@ -120,7 +120,7 @@ public class PanelPreviewLabel extends JPanel {
 		int posy = 5;
 
 		// -- Generate the text to display
-		s = Utils.GenLabel(data.FmtLbMiniRoadbook, data, track, settings);
+		s = Utils.GenLabel(data.FmtLbMiniRoadbook, (MrbData) data, track, settings);
 		drawStringMulti.setText(g2d, s);
 
 		// -- Width calculation
