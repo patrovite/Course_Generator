@@ -61,6 +61,7 @@ import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.TrackData.CalcClimbResult;
 import course_generator.settings.CgSettings;
+import course_generator.mrb.MrbData;
 import net.iakovlev.timeshape.TimeZoneEngine;
 
 /**
@@ -1238,7 +1239,7 @@ public class Utils {
 	}
 
 
-	public static String GenLabel(String s, CgData r, TrackData cd, CgSettings settings) {
+	public static String GenLabel(String s, MrbData r, TrackData cd, CgSettings settings) {
 		/*
 		 * %N:Name %A:Elevation %D:Distance from the start %T:Time (hh:mm) %Ts:Time
 		 * (hh:mm) %Tl:Time (hh:mm:ss) %H: Hour (ddd hh:mm) %h: Hour (hh:mm) %hs:Hour
@@ -1340,14 +1341,12 @@ public class Utils {
 
 					// %+: Sum ascend
 					case '+':
-						sr = sr + String.format("%.0f", res.cp);
-						step = 0;
+						step = 5;
 						break;
 
 					// %-: Sum descend
 					case '-':
-						sr = sr + String.format("%.0f", res.cm);
-						step = 0;
+						step = 6;
 						break;
 
 					// %L: Carriage return
@@ -1423,6 +1422,40 @@ public class Utils {
 					break;
 				}
 
+				case 5: // %+: Sum ascend
+				{
+					switch (s.charAt(i)) {
+					case 'd':
+						sr = sr + String.format("%.0f", r.getDeltaClimb().cp);
+						step = 0;
+						break;
+					default:
+					
+						sr = sr + String.format("%.0f", res.cp);
+						sr = sr + s.charAt(i);
+						step = 0;
+						break;
+					}
+					break;
+
+
+				}
+				case 6: // %-: Sum descend
+				{
+					switch (s.charAt(i)) {
+					case 'd':
+						sr = sr + String.format("%.0f", r.getDeltaClimb().cm);
+						step = 0;
+						break;
+					default:
+					
+						sr = sr + String.format("%.0f", res.cm);
+						sr = sr + s.charAt(i);
+						step = 0;
+						break;
+					}
+					break;
+				}
 				}
 			}
 
@@ -1434,6 +1467,10 @@ public class Utils {
 				sr = sr + Utils.Second2DateString_HM(r.getTime());
 			} else if (step == 4) {
 				sr = sr + Utils.Second2DateString(r.getStation());
+			} else if (step == 5) {
+				sr = sr + String.format("%.0f", res.cp);
+			} else if (step == 6) {
+				sr = sr + String.format("%.0f", res.cm);
 			}
 
 			if (cd != null) {
