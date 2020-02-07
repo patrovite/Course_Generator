@@ -1241,12 +1241,15 @@ public class Utils {
 
 	public static String GenLabel(String s, MrbData r, TrackData cd, CgSettings settings) {
 		/*
-		 * %N:Name %A:Elevation %D:Distance from the start %T:Time (hh:mm) %Ts:Time
-		 * (hh:mm) %Tl:Time (hh:mm:ss) %H: Hour (ddd hh:mm) %h: Hour (hh:mm) %hs:Hour
+		 * %N:Name %A:Elevation %D:Distance from the start 
+		 * %T:Time (hh:mm) %Ts:Time (hh:mm) %Tl:Time (hh:mm:ss) %Td:Delta time from the previous location 
+		 * %H: Hour (ddd hh:mm) %h: Hour (hh:mm) %hs:Hour
 		 * (hh:mm) %hl:Hour (hh:mm:s) %B :Time limit (hh:mm) -> Time from the start %b
 		 * :Time limit (hh:mm) -> Limit hour %C :Comment %c :Comment from the main data
-		 * %L :Carriage return %R :Station time (hh:mm) %Rs:Station time (hh:mm)
-		 * %Rl:Station time (Duration) (hh:mm:ss) %+ :Sum ascend %- :Sum descend
+		 * %L :Carriage return 
+		 * %R :Station time (hh:mm) %Rs:Station time (hh:mm) %Rl:Station time (Duration) (hh:mm:ss) 
+		 * %+ :Ascend from start %- :Descend from start
+		 * %+d :Ascend from the previous location %-d :Descend from the previous location
 		 */
 		int i = 0;
 		int step = 0;
