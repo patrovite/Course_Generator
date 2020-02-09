@@ -174,7 +174,9 @@ L'onglet "Général" permet de:
 
 * Régler la valeur du filtre à appliquer sur les données lors de l'affichage du profil
 * Régler la taille de zone haute du profil. Cette taille est en pixel.
-* Régler le format du texte par défaut lorsque que vous créez une nouvelle marque
+* Régler le format du texte par défaut lorsque que vous créez une nouvelle marque.
+* Régler la largeur par défaut du MRB.
+* Régler la hauteur par défaut du MRB.
   
 L'onglet "Simple" permet de régler les couleurs de la représentation "Simple" du profil.  
 ![](./images/MRB/CG40_MRB_Settings2.png)  
