@@ -66,6 +66,8 @@ public class CgSettings {
 	public String Language;
 	public int MainWindowWidth;
 	public int MainWindowHeight;
+	public int DefMrbWidth;
+	public int DefMrbHeight;	
 	public int VertSplitPosition;
 	public int HorizSplitPosition;
 	/** Mini roadbook split position **/
@@ -140,7 +142,9 @@ public class CgSettings {
 		VertSplitPosition = 200;
 		HorizSplitPosition = 50;
 		MRB_SplitPosition = 220;
-
+		DefMrbWidth = 1000;		
+		DefMrbHeight = 480;
+		
 		DistNear = 100.0;
 		DistFar = 1000.0;
 
@@ -294,6 +298,8 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "VERTSPLITPOSITION", VertSplitPosition);
 			Utils.WriteIntToXML(writer, "HORIZSPLITPOSITION", HorizSplitPosition);
 			Utils.WriteIntToXML(writer, "MRBSPLITPOSITION", MRB_SplitPosition);
+			Utils.WriteIntToXML(writer, "DEFMRBWIDTH", DefMrbWidth);
+			Utils.WriteIntToXML(writer, "DEFMRBHEIGHT", DefMrbHeight);			
 			Utils.WriteIntToXML(writer, "MAP", map);
 
 			Utils.WriteDoubleToXML(writer, "DISTNEAR", DistNear);

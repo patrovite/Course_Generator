@@ -32,6 +32,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import course_generator.utils.CgConst;
+import course_generator.utils.Utils;
 
 /**
  *
@@ -274,7 +275,9 @@ public class SaxConfigHandler extends DefaultHandler {
 			else if (qName.equalsIgnoreCase("MAINWINDOWSHEIGHT")) { Settings.MainWindowHeight = ManageInt(0, ERR_READ_INT);	} 
 			else if (qName.equalsIgnoreCase("VERTSPLITPOSITION")) { Settings.VertSplitPosition = ManageInt(0, ERR_READ_INT); } 
 			else if (qName.equalsIgnoreCase("HORIZSPLITPOSITION")) { Settings.HorizSplitPosition = ManageInt(50, ERR_READ_INT);	} 
-			else if (qName.equalsIgnoreCase("MRBSPLITPOSITION")) { Settings.MRB_SplitPosition = ManageInt(220, ERR_READ_INT); } 
+			else if (qName.equalsIgnoreCase("MRBSPLITPOSITION")) { Settings.MRB_SplitPosition = ManageInt(220, ERR_READ_INT); }			
+			else if (qName.equalsIgnoreCase("DEFMRBWIDTH")) { Settings.DefMrbWidth = ManageInt(1000, ERR_READ_INT); }
+			else if (qName.equalsIgnoreCase("DEFMRBHEIGHT")) { Settings.DefMrbHeight = ManageInt(480, ERR_READ_INT); }
 			else if (qName.equalsIgnoreCase("MAP")) { Settings.map = ManageInt(0, ERR_READ_INT); } 
 			else if (qName.equalsIgnoreCase("DISTNEAR")) { Settings.DistNear = ManageDouble(100.0, ERR_READ_DOUBLE); } 
 			else if (qName.equalsIgnoreCase("DISTFAR")) {	Settings.DistFar = ManageDouble(1000.0, ERR_READ_DOUBLE); } 

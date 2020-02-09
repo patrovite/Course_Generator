@@ -227,8 +227,8 @@ public class TrackData {
 		StartNightTime = defaultSunriseSunsetTime;
 		EndNightTime = defaultSunriseSunsetTime;
 
-		MrbSizeW = 640;
-		MrbSizeH = 480;
+		MrbSizeW = settings.DefMrbWidth;
+		MrbSizeH = settings.DefMrbHeight;
 		CurveFilter = 1;
 		WordWrapLength = 25;
 		SmoothFilter = 0;
