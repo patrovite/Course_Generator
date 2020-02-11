@@ -143,6 +143,9 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		datalist.data.clear();
 		for (CgData r : track.data) {
 			if ((r.getTag() & CgConst.TAG_ROADBOOK) != 0) {
+				CalcClimbResult resClimb = new CalcClimbResult();
+				resClimb = track.CalcClimb(CgConst.ELEV_NORM, 0, (int)r.getNum()-1, resClimb);
+				
 				MrbData d = new MrbData(r.getNum(), r.getLatitude(), r.getLongitude(),
 						r.getElevation(CgConst.UNIT_METER), r.getElevationNotSmoothed(CgConst.UNIT_METER), 
 						r.getElevationSmoothed(CgConst.UNIT_METER),	r.getElevationMemo(), r.getTag(),
@@ -150,7 +153,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 						r.getRecovery(), r.getSlope(), r.getSpeed(CgConst.UNIT_METER),
 						r.getdElevation(CgConst.UNIT_METER), r.getTime(), r.getdTime_f(), r.getTimeLimit(), r.getHour(),
 						r.getStation(), r.getName(), r.getComment(), 0, 0, r.FmtLbMiniRoadbook, r.OptionMiniRoadbook,
-						r.VPosMiniRoadbook, r.CommentMiniRoadbook, r.FontSizeMiniRoadbook, 0, 0, null);
+						r.VPosMiniRoadbook, r.CommentMiniRoadbook, r.FontSizeMiniRoadbook, 0, 0, resClimb);
 				datalist.data.add(d);
 			}
 		}

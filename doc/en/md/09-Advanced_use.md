@@ -213,6 +213,7 @@ The following tags are available:
 * %T : Represents the travel time since the start. The format is "hh:mm".
 * %Tl : Represents the travel time since the start in long format "hh:mm:ss".
 * %Ts : Represents the travel time since the start in short format "hh:mm".
+* %Td : Represents the travel time since the last location in short format "hh:mm".
 * %H : Represents the time at this point. The format is "ddd hh:mm" (ddd = abbreviated day).
 * %h : Represents the time at this point. The format is "hh:mm".
 * %hl : Represents the time at this point in long format "hh:mm:ss".
@@ -227,6 +228,8 @@ The following tags are available:
 * %Rs : Represents refueling time this point in short format "hh:mm".
 * %+ : Represents the cumulative positive climb since the start. The unit is the meter/feet.
 * %- : Represents the cumulative negative climb since the start. The unit is the meter/feet. 
+* %+d : Represents the positive climb since the location. The unit is the meter/feet.
+* %-d : Represents the negative climb since the location. The unit is the meter/feet. 
 
 The "..." button, next to the "Format" field, opens a window allowing you to simplify the content of the selected label.
 

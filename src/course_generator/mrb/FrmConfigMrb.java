@@ -109,6 +109,10 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 	private JLabel lbDefaultFormat;
 	private JTextFieldLimit tfDefaultFormat;
 	private JButton btDefaultFormat;
+	private JLabel lbMrbDefWidth;
+	private CgSpinner spinMrbDefWidth;
+	private JLabel lbMrbDefHeight;
+	private CgSpinner spinMrbDefHeight;
 
 
 	/**
@@ -127,6 +131,9 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 
 		// spinCharPerLine.setValue(track.WordWrapLength);
 		spinCurveFilter.setValue(track.CurveFilter);
+		spinMrbDefWidth.setValue(settings.DefMrbWidth);
+		spinMrbDefHeight.setValue(settings.DefMrbHeight);
+		
 		spinTopSize.setValue(track.TopMargin);
 		tfDefaultFormat.setText(settings.DefaultFormat);
 		
@@ -156,6 +163,9 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 			// track.WordWrapLength=spinCharPerLine.getValueAsInt();
 			track.CurveFilter = spinCurveFilter.getValueAsInt();
 			track.TopMargin = spinTopSize.getValueAsInt();
+			settings.DefMrbWidth = spinMrbDefWidth.getValueAsInt();
+			settings.DefMrbHeight = spinMrbDefHeight.getValueAsInt();
+			
 			settings.DefaultFormat = tfDefaultFormat.getText();
 
 			track.clProfil_Simple_Fill = ColorSimpleFill;
@@ -277,10 +287,30 @@ public class FrmConfigMrb extends javax.swing.JDialog {
 		tfDefaultFormat.setPreferredSize(new Dimension(200, 25));
 		Utils.addComponent(panelGeneral, tfDefaultFormat, 1, 2, 1, 1, 1, 0, 5, 10, 0, 10, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.BOTH);
+
+		// --
+		lbMrbDefWidth = new JLabel(bundle.getString("FrmConfigMrb.lbMrbDefWidth.text"));
+		Utils.addComponent(panelGeneral, lbMrbDefWidth, 0, 3, 1, 1, 0, 0, 5, 10, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
+
+		spinMrbDefWidth = new CgSpinner(1000, 1, 4000, 1);
+		Utils.addComponent(panelGeneral, spinMrbDefWidth, 1, 3, 1, 1, 1, 0, 5, 10, 0, 10, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
+				
+		// --
+		lbMrbDefHeight = new JLabel(bundle.getString("FrmConfigMrb.lbMrbDefHeight.text"));
+		Utils.addComponent(panelGeneral, lbMrbDefHeight, 0, 4, 1, 1, 0, 0, 5, 10, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
+
+		spinMrbDefHeight = new CgSpinner(480, 1, 2000, 1);
+		Utils.addComponent(panelGeneral, spinMrbDefHeight, 1, 4, 1, 1, 1, 0, 5, 10, 0, 10, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
+		
+		
 		
 		// -- Empty line for resize purpose (not the best solution but it's simple ;) )
 		lbEmpty = new JLabel();
-		Utils.addComponent(panelGeneral, lbEmpty, 0, 3, 1, 1, 0, 1, 10, 10, 0, 0, GridBagConstraints.WEST,
+		Utils.addComponent(panelGeneral, lbEmpty, 0, 5, 1, 1, 0, 1, 10, 10, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
 
 		
