@@ -174,7 +174,9 @@ L'onglet "Général" permet de:
 
 * Régler la valeur du filtre à appliquer sur les données lors de l'affichage du profil
 * Régler la taille de zone haute du profil. Cette taille est en pixel.
-* Régler le format du texte par défaut lorsque que vous créez une nouvelle marque
+* Régler le format du texte par défaut lorsque que vous créez une nouvelle marque.
+* Régler la largeur par défaut du MRB.
+* Régler la hauteur par défaut du MRB.
   
 L'onglet "Simple" permet de régler les couleurs de la représentation "Simple" du profil.  
 ![](./images/MRB/CG40_MRB_Settings2.png)  
@@ -203,7 +205,7 @@ Chaque ligne du tableau représente une étiquette. Elle peut être paramétrée
 
 ### Configurer le format d'affichage des étiquettes {#format}
 
-Afin d'assurer une flexibilité optimale le format des étiquettes utilise des balises. Ces balises représentées par le signe "%" plus un ou plusieurs caractères, permettent de spécifier le type de donnée à afficher. Par exemple "%N" représente le nom du point. Au moment de l'affichage de l'étiquette les balises sont remplacées par leurs significations.
+Afin d'assurer une flexibilité optimale le format des étiquettes utilise des balises. Ces balises représentées par le signe "%" plus un ou plusieurs caractères, permettent de spécifier le type de donnée à afficher (bien respecter les minuscules et les majuscules). Par exemple "%N" représente le nom du point. Au moment de l'affichage de l'étiquette les balises sont remplacées par leurs significations.
 
 Les balises disponibles sont les suivantes:
 
@@ -213,6 +215,7 @@ Les balises disponibles sont les suivantes:
 * %T : Représente le temps de parcours depuis le départ. Le format est "hh:mm".
 * %Tl : Représente le temps de parcours depuis le départ au format long "hh:mm:ss".
 * %Ts : Représente le temps de parcours depuis le départ au format court "hh:mm".
+* %Td : Représente le temps de parcours depuis le dernier point au format court "hh:mm".
 * %H : Représente l'heure de passage au point. Le format est "ddd hh:mm" (ddd = Jour en abrégé).
 * %h : Représente l'heure de passage au point. Le format est "hh:mm".
 * %hl :Représente l'heure de passage au point au format long "hh:mm:ss".
@@ -227,6 +230,8 @@ Les balises disponibles sont les suivantes:
 * %Rs : Représente le temps de ravitaillement au point au format court "hh:mm".
 * %+ : Représente le cumul du D+ depuis le départ. L'unité est le mètre.
 * %- : Représente le cumul du D- depuis le départ. L'unité est le mètre.
+* %+d : Représente le D+ depuis le dernier point. L'unité est le mètre.
+* %-d : Représente le D- depuis le dernier point. L'unité est le mètre.
 
 Le bouton "...", à coté du champ "Format", permet d'ouvrir une fenêtre permettant de réaliser une saisie simplifiée du contenu de l'étiquette sélectionnée.
 

@@ -376,7 +376,12 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Load configuration
 		LoadConfig();
-
+		
+		//-- Post configuration loading settings
+		Track.MrbSizeW = Settings.DefMrbWidth;
+		Track.MrbSizeH = Settings.DefMrbHeight;
+				
+		//-- Application and system info in the log. Nothing exit from the computer!
 		CgLog.info("Start Course Generator version " + Version);
 		CgLog.info("Java version : " + System.getProperty("java.version"));
 		CgLog.info("java.runtime.name : " + System.getProperty("java.runtime.name"));

@@ -433,7 +433,7 @@ public class SaxCGXHandler extends DefaultHandler {
 				} else
 					trkdata.Paramfile = curve;
 			} else if (qName.equalsIgnoreCase("MRBSIZEW")) {
-				trkdata.MrbSizeW = ManageInt(640, ERR_READ_INT);
+				trkdata.MrbSizeW = ManageInt(1000, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("MRBSIZEH")) {
 				trkdata.MrbSizeH = ManageInt(480, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("CLPROFILSIMPLEFILL")) {

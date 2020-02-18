@@ -532,7 +532,7 @@ public class PanelProfilMRB extends JPanel {
 		// -- Text box drawing --
 		int miniRoadBookGridIndex = 0;
 		DrawStringMultiLine drawStringMulti = new DrawStringMultiLine();
-		for (CgData r : data.data) {
+		for (MrbData r : data.data) {
 			if ((r.OptionMiniRoadbook & CgConst.MRBOPT_SEL) != 0) {
 				// -- Calc the number of tag
 				nbtag = NbTag(r.getTag());
