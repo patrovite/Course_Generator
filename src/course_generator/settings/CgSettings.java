@@ -203,8 +203,8 @@ public class CgSettings {
 		NormalTrackTransparency = CgConst.NORMAL_TRACK_TRANSPARENCY;
 		NightTrackTransparency = CgConst.NIGHT_TRACK_TRANSPARENCY;
 
-		MapToolBarLayout = "WEST";
-		MapToolBarOrientation = javax.swing.SwingConstants.VERTICAL;
+		MapToolBarLayout = "NORTH";
+		MapToolBarOrientation = javax.swing.SwingConstants.HORIZONTAL;
 		
 		ReleaseVersion = "";
 	}

@@ -3072,8 +3072,11 @@ public class frmMain extends javax.swing.JFrame {
 		if (currentPosition >= trackDataSize)
 			currentPosition = 0;
 
-		if (currentPosition == -1 && direction == "backward") {
+		if (currentPosition <= -1 && direction == "backward") {
 			currentPosition = trackDataSize - 1;
+		}
+		else if (currentPosition <= -1) {
+			currentPosition = 0;
 		}
 
 		CgData positionData = Track.data.get(currentPosition);

@@ -160,7 +160,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 		create_Toolbar();
 		if (Settings.MapToolBarLayout == null || Settings.MapToolBarLayout.equals(""))
-			panelMain.add(jToolBarMapViewer, BorderLayout.WEST);
+			panelMain.add(jToolBarMapViewer, BorderLayout.NORTH);
 		else {
 			switch (Settings.MapToolBarLayout) {
 			case "NORTH":
@@ -245,7 +245,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 					} else if (con == BorderLayout.NORTH) {
 						Settings.MapToolBarLayout = "NORTH";
 					} else
-						Settings.MapToolBarLayout = "WEST";
+						Settings.MapToolBarLayout = "NORTH";
 				}
 
 				Settings.MapToolBarOrientation = jToolBarMapViewer.getOrientation();
