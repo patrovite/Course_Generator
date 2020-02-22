@@ -3272,47 +3272,48 @@ public class frmMain extends javax.swing.JFrame {
 		try {
 			Track.OpenGPX(filename, 0, (double) Settings.PosFilterAskThreshold);
 			AddMruGPX(filename);
+			
+			// -- Update the viewer
+			panelMap.setTrack(Track);
+			// -- Refresh the track information
+			RefreshStatusbar(Track);
+
+			// -- Force the update of the main table
+			panelTrackData.setSelectedRow(0);
+			panelTrackData.setTrack(Track);
+			panelTrackData.setSelectedRow(0);
+
+			// -- Refresh resume grid
+			PanelResume.setTrack(Track);
+			// -- Refresh statistic
+			panelStatistics.setTrack(Track);
+
+			RefreshMruGPX();
+			// -- Refresh profil tab
+			panelProfil.setTrack(Track);
+			panelProfil.setSettings(Settings);
+			panelProfil.RefreshProfilChart();
+			// -- Refresh analysis tab
+			jPanelTimeDist.Refresh(Track, Settings);
+			jPanelSpeed.Refresh(Track, Settings);
+			jPanelSpeedSlope.Refresh(Track, Settings);
+			// -- Refresh the form title
+			RefreshTitle();
+			// Refresh the main toolbar
+			RefreshMainToolbar();
+			// Refresh the main menu
+			RefreshMainMenu();
+			// Refresh map
+			panelMap.RefreshTrack(Track, true);
+
+			bNoBackup = true;
+
+			if (Track.data.size() > 0)
+				panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());			
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
+					"Course Generator", JOptionPane.ERROR_MESSAGE);
 		}
-
-		// -- Update the viewer
-		panelMap.setTrack(Track);
-		// -- Refresh the track information
-		RefreshStatusbar(Track);
-
-		// -- Force the update of the main table
-		panelTrackData.setSelectedRow(0);
-		panelTrackData.setTrack(Track);
-		panelTrackData.setSelectedRow(0);
-
-		// -- Refresh resume grid
-		PanelResume.setTrack(Track);
-		// -- Refresh statistic
-		panelStatistics.setTrack(Track);
-
-		RefreshMruGPX();
-		// -- Refresh profil tab
-		panelProfil.setTrack(Track);
-		panelProfil.setSettings(Settings);
-		panelProfil.RefreshProfilChart();
-		// -- Refresh analysis tab
-		jPanelTimeDist.Refresh(Track, Settings);
-		jPanelSpeed.Refresh(Track, Settings);
-		jPanelSpeedSlope.Refresh(Track, Settings);
-		// -- Refresh the form title
-		RefreshTitle();
-		// Refresh the main toolbar
-		RefreshMainToolbar();
-		// Refresh the main menu
-		RefreshMainMenu();
-		// Refresh map
-		panelMap.RefreshTrack(Track, true);
-
-		bNoBackup = true;
-
-		if (Track.data.size() > 0)
-			panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
-
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 
@@ -3386,45 +3387,46 @@ public class frmMain extends javax.swing.JFrame {
 		try {
 			Track.OpenCGX(this, filename, CgConst.IMPORT_MODE_LOAD, false);
 			AddMruCGX(filename);
+
+			// -- Update the viewer
+			panelMap.setTrack(Track);
+			// -- Refresh the track information
+			RefreshStatusbar(Track);
+			// -- Refresh resume grid
+			PanelResume.setTrack(Track);
+
+			// -- Refresh profil tab
+			panelProfil.setTrack(Track);
+			panelProfil.setSettings(Settings);
+			panelProfil.RefreshProfilChart();
+			// -- Refresh analysis tab
+			jPanelTimeDist.Refresh(Track, Settings);
+			jPanelSpeed.Refresh(Track, Settings);
+			jPanelSpeedSlope.Refresh(Track, Settings);
+			// -- Refresh the form title
+			RefreshTitle();
+			// Refresh the main toolbar
+			RefreshMainToolbar();
+			// Refresh the main menu
+			RefreshMainMenu();
+
+			// -- Refresh statistic
+			panelStatistics.setTrack(Track);
+
+			// -- Force the update of the main table
+			panelTrackData.setSelectedRow(0);
+			panelTrackData.setTrack(Track);
+			panelTrackData.setSelectedRow(0);
+
+			// Refresh map
+			panelMap.RefreshTrack(Track, true);
+
+			RefreshMruCGX();
+			bNoBackup = true;		
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
+					"Course Generator", JOptionPane.ERROR_MESSAGE);
 		}
-
-		// -- Update the viewer
-		panelMap.setTrack(Track);
-		// -- Refresh the track information
-		RefreshStatusbar(Track);
-		// -- Refresh resume grid
-		PanelResume.setTrack(Track);
-
-		// -- Refresh profil tab
-		panelProfil.setTrack(Track);
-		panelProfil.setSettings(Settings);
-		panelProfil.RefreshProfilChart();
-		// -- Refresh analysis tab
-		jPanelTimeDist.Refresh(Track, Settings);
-		jPanelSpeed.Refresh(Track, Settings);
-		jPanelSpeedSlope.Refresh(Track, Settings);
-		// -- Refresh the form title
-		RefreshTitle();
-		// Refresh the main toolbar
-		RefreshMainToolbar();
-		// Refresh the main menu
-		RefreshMainMenu();
-
-		// -- Refresh statistic
-		panelStatistics.setTrack(Track);
-
-		// -- Force the update of the main table
-		panelTrackData.setSelectedRow(0);
-		panelTrackData.setTrack(Track);
-		panelTrackData.setSelectedRow(0);
-
-		// Refresh map
-		panelMap.RefreshTrack(Track, true);
-
-		RefreshMruCGX();
-		bNoBackup = true;
-
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 
