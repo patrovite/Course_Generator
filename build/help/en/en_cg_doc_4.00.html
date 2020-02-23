@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Pierre Delore" />
-  <title>Course Generator - V4.5</title>
+  <title>Course Generator - V4.6</title>
   <style>
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
@@ -19,9 +19,9 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Course Generator - V4.5</h1>
+<h1 class="title">Course Generator - V4.6</h1>
 <p class="author">Pierre Delore</p>
-<p class="date">© 2008-2019 Pierre Delore (pierre@TechAndRun.com), CC BY-NC</p>
+<p class="date">© 2008-2020 Pierre Delore (pierre@TechAndRun.com), CC BY-NC</p>
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
@@ -771,6 +771,7 @@ The “Default Colors” button is used to replace the current colors with the d
 <li>%T : Represents the travel time since the start. The format is “hh:mm”.</li>
 <li>%Tl : Represents the travel time since the start in long format “hh:mm:ss”.</li>
 <li>%Ts : Represents the travel time since the start in short format “hh:mm”.</li>
+<li>%Td : Represents the travel time since the last location in short format “hh:mm”.</li>
 <li>%H : Represents the time at this point. The format is “ddd hh:mm” (ddd = abbreviated day).</li>
 <li>%h : Represents the time at this point. The format is “hh:mm”.</li>
 <li>%hl : Represents the time at this point in long format “hh:mm:ss”.</li>
@@ -785,6 +786,8 @@ The “Default Colors” button is used to replace the current colors with the d
 <li>%Rs : Represents refueling time this point in short format “hh:mm”.</li>
 <li>%+ : Represents the cumulative positive climb since the start. The unit is the meter/feet.</li>
 <li>%- : Represents the cumulative negative climb since the start. The unit is the meter/feet.</li>
+<li>%+d : Represents the positive climb since the location. The unit is the meter/feet.</li>
+<li>%-d : Represents the negative climb since the location. The unit is the meter/feet.</li>
 </ul>
 <p>The “…” button, next to the “Format” field, opens a window allowing you to simplify the content of the selected label.</p>
 <figure>

@@ -12,7 +12,7 @@
 !define DESCRIPTION "Calcul de vos temps parcours / Calculate your track time"
 # These three must be integers
 !define VERSIONMAJOR 4
-!define VERSIONMINOR 5
+!define VERSIONMINOR 6
 !define VERSIONBUILD 0
 # These will be displayed by the "Click here for support information" link in "Add/Remove Programs"
 # It is possible to use "mailto:" links in here to open the email client

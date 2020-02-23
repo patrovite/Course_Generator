@@ -3267,6 +3267,23 @@ public class frmMain extends javax.swing.JFrame {
 	 *            file name
 	 */
 	private void LoadGPX(String filename) {
+		//-- File Exist?
+		if (!Utils.FileExist(filename)) {
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
+					"Course Generator", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		//-- File size = 0?
+		File f = new File(filename);
+	    long size = f.length();
+	    if (size==0) {
+		    JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
+					"Course Generator", JOptionPane.ERROR_MESSAGE);
+		    return;
+	    }
+	    
+	    //-- Go!
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 		try {
@@ -3312,8 +3329,9 @@ public class frmMain extends javax.swing.JFrame {
 				panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
-					"Course Generator", JOptionPane.ERROR_MESSAGE);
+					"Course Generator", JOptionPane.ERROR_MESSAGE);			
 		}
+		
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 
@@ -3382,6 +3400,23 @@ public class frmMain extends javax.swing.JFrame {
 	 *            File name
 	 */
 	private void LoadCGX(String filename) {
+		//-- File Exist?
+		if (!Utils.FileExist(filename)) {
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
+					"Course Generator", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		//-- File size = 0?
+		File f = new File(filename);
+	    long size = f.length();
+	    if (size==0) {
+		    JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
+					"Course Generator", JOptionPane.ERROR_MESSAGE);
+		    return;
+	    }
+	    
+	    //-- Go!
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 		try {
