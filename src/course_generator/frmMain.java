@@ -3277,13 +3277,28 @@ public class frmMain extends javax.swing.JFrame {
 	 *            file name
 	 */
 	private void LoadGPX(String filename) {
+		//-- File Exist?
+		if (!Utils.FileExist(filename)) {
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
+					"Course Generator", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		//-- File size = 0?
+		File f = new File(filename);
+	    long size = f.length();
+	    if (size==0) {
+		    JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
+					"Course Generator", JOptionPane.ERROR_MESSAGE);
+		    return;
+	    }
+	    
+	    //-- Go!
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 		try {
 			Track.OpenGPX(filename, 0, (double) Settings.PosFilterAskThreshold);
 			AddMruGPX(filename);
-		} catch (Exception e) {
-		}
 
 		// -- Update the viewer
 		panelMap.setTrack(Track);
@@ -3324,6 +3339,13 @@ public class frmMain extends javax.swing.JFrame {
 		if (Track.data.size() > 0)
 			panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
 
+			if (Track.data.size() > 0)
+				panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
+					"Course Generator", JOptionPane.ERROR_MESSAGE);			
+		}
+		
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 
@@ -3392,13 +3414,28 @@ public class frmMain extends javax.swing.JFrame {
 	 *            File name
 	 */
 	private void LoadCGX(String filename) {
+		//-- File Exist?
+		if (!Utils.FileExist(filename)) {
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
+					"Course Generator", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		//-- File size = 0?
+		File f = new File(filename);
+	    long size = f.length();
+	    if (size==0) {
+		    JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
+					"Course Generator", JOptionPane.ERROR_MESSAGE);
+		    return;
+	    }
+	    
+	    //-- Go!
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 		try {
 			Track.OpenCGX(this, filename, CgConst.IMPORT_MODE_LOAD, false);
 			AddMruCGX(filename);
-		} catch (Exception e) {
-		}
 
 		// -- Update the viewer
 		panelMap.setTrack(Track);
@@ -3436,6 +3473,10 @@ public class frmMain extends javax.swing.JFrame {
 				panelWeather.refresh(Track, false);
 		RefreshMruCGX();
 		bNoBackup = true;
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
+					"Course Generator", JOptionPane.ERROR_MESSAGE);
+		}
 
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}

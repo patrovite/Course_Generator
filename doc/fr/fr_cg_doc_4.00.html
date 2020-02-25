@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Pierre Delore" />
-  <title>Course Generator - V4.5</title>
+  <title>Course Generator - V4.6</title>
   <style>
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
@@ -19,9 +19,9 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Course Generator - V4.5</h1>
+<h1 class="title">Course Generator - V4.6</h1>
 <p class="author">Pierre Delore</p>
-<p class="date">© 2008-2019 Pierre Delore (pierre@TechAndRun.com), CC BY-NC</p>
+<p class="date">© 2008-2020 Pierre Delore (pierre@TechAndRun.com), CC BY-NC</p>
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
@@ -726,7 +726,9 @@ Sélectionnez les paramètres que vous voulez utiliser lors de la copie.</p></li
 <ul>
 <li>Régler la valeur du filtre à appliquer sur les données lors de l’affichage du profil</li>
 <li>Régler la taille de zone haute du profil. Cette taille est en pixel.</li>
-<li>Régler le format du texte par défaut lorsque que vous créez une nouvelle marque</li>
+<li>Régler le format du texte par défaut lorsque que vous créez une nouvelle marque.</li>
+<li>Régler la largeur par défaut du MRB.</li>
+<li>Régler la hauteur par défaut du MRB.</li>
 </ul>
 <p>L’onglet “Simple” permet de régler les couleurs de la représentation “Simple” du profil.<br />
 <img src="./images/MRB/CG40_MRB_Settings2.png" /><br />
@@ -750,7 +752,7 @@ Le bouton “Couleurs par défaut” permet de remplacer les couleurs courantes 
 <li>Commentaire : Permet de saisir un commentaire spécifique à l’étiquette. Ce commentaire est différent du commentaire du tableau principal.</li>
 </ul>
 <h3 id="format"><span class="header-section-number">9.8.7</span> Configurer le format d’affichage des étiquettes</h3>
-<p>Afin d’assurer une flexibilité optimale le format des étiquettes utilise des balises. Ces balises représentées par le signe “%” plus un ou plusieurs caractères, permettent de spécifier le type de donnée à afficher. Par exemple “%N” représente le nom du point. Au moment de l’affichage de l’étiquette les balises sont remplacées par leurs significations.</p>
+<p>Afin d’assurer une flexibilité optimale le format des étiquettes utilise des balises. Ces balises représentées par le signe “%” plus un ou plusieurs caractères, permettent de spécifier le type de donnée à afficher (bien respecter les minuscules et les majuscules). Par exemple “%N” représente le nom du point. Au moment de l’affichage de l’étiquette les balises sont remplacées par leurs significations.</p>
 <p>Les balises disponibles sont les suivantes:</p>
 <ul>
 <li>%N : Représente le nom du point.</li>
@@ -759,6 +761,7 @@ Le bouton “Couleurs par défaut” permet de remplacer les couleurs courantes 
 <li>%T : Représente le temps de parcours depuis le départ. Le format est “hh:mm”.</li>
 <li>%Tl : Représente le temps de parcours depuis le départ au format long “hh:mm:ss”.</li>
 <li>%Ts : Représente le temps de parcours depuis le départ au format court “hh:mm”.</li>
+<li>%Td : Représente le temps de parcours depuis le dernier point au format court “hh:mm”.</li>
 <li>%H : Représente l’heure de passage au point. Le format est “ddd hh:mm” (ddd = Jour en abrégé).</li>
 <li>%h : Représente l’heure de passage au point. Le format est “hh:mm”.</li>
 <li>%hl :Représente l’heure de passage au point au format long “hh:mm:ss”.</li>
@@ -773,6 +776,8 @@ Le bouton “Couleurs par défaut” permet de remplacer les couleurs courantes 
 <li>%Rs : Représente le temps de ravitaillement au point au format court “hh:mm”.</li>
 <li>%+ : Représente le cumul du D+ depuis le départ. L’unité est le mètre.</li>
 <li>%- : Représente le cumul du D- depuis le départ. L’unité est le mètre.</li>
+<li>%+d : Représente le D+ depuis le dernier point. L’unité est le mètre.</li>
+<li>%-d : Représente le D- depuis le dernier point. L’unité est le mètre.</li>
 </ul>
 <p>Le bouton “…”, à coté du champ “Format”, permet d’ouvrir une fenêtre permettant de réaliser une saisie simplifiée du contenu de l’étiquette sélectionnée.</p>
 <p><img src="./images/MRB/CG40_MRB_Label_Editor.png" /></p>
