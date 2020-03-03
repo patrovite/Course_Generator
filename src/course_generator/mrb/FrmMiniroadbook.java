@@ -144,11 +144,11 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 		for (CgData r : track.data) {
 			if ((r.getTag() & CgConst.TAG_ROADBOOK) != 0) {
 				CalcClimbResult resClimb = new CalcClimbResult();
-				resClimb = track.CalcClimb(CgConst.ELEV_NORM, 0, (int)r.getNum()-1, resClimb);
-				
+				resClimb = track.CalcClimb(CgConst.ELEV_NORM, 0, (int) r.getNum() - 1, resClimb);
+
 				MrbData d = new MrbData(r.getNum(), r.getLatitude(), r.getLongitude(),
-						r.getElevation(CgConst.UNIT_METER), r.getElevationNotSmoothed(CgConst.UNIT_METER), 
-						r.getElevationSmoothed(CgConst.UNIT_METER),	r.getElevationMemo(), r.getTag(),
+						r.getElevation(CgConst.UNIT_METER), r.getElevationNotSmoothed(CgConst.UNIT_METER),
+						r.getElevationSmoothed(CgConst.UNIT_METER), r.getElevationMemo(), r.getTag(),
 						r.getDist(CgConst.UNIT_METER), r.getTotal(CgConst.UNIT_METER), r.getDiff(), r.getCoeff(),
 						r.getRecovery(), r.getSlope(), r.getSpeed(CgConst.UNIT_METER),
 						r.getdElevation(CgConst.UNIT_METER), r.getTime(), r.getdTime_f(), r.getTimeLimit(), r.getHour(),
@@ -166,7 +166,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 				d.setDeltaDist(d.getTotal(CgConst.UNIT_METER) - p.getTotal(CgConst.UNIT_METER));
 				d.setDeltaTime(d.getTime() - p.getTime());
 				CalcClimbResult res = new CalcClimbResult();
-				d.setDeltaClimb(track.CalcClimb(CgConst.ELEV_NORM, (int) p.getNum()-1,(int) d.getNum()-1, res));
+				d.setDeltaClimb(track.CalcClimb(CgConst.ELEV_NORM, (int) p.getNum() - 1, (int) d.getNum() - 1, res));
 			}
 		}
 
@@ -1133,7 +1133,7 @@ public class FrmMiniroadbook extends javax.swing.JFrame implements FocusListener
 	private String ShowEditMrbFormatDialog(int row) {
 		FrmEditMrbFormat frm = new FrmEditMrbFormat(SwingUtilities.windowForComponent(this), settings);
 		return frm.showDialog(datalist.data.get(row), track, tfFormat.getText());
-		//return frm.showDialog(track.data.get(line), track, tfFormat.getText());
+		// return frm.showDialog(track.data.get(line), track, tfFormat.getText());
 	}
 
 }

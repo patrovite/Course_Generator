@@ -24,11 +24,9 @@ public class CheckBoxNodeRenderer implements TreeCellRenderer {
 	private final Color selectionForeground, selectionBackground;
 	private final Color textForeground, textBackground;
 
-
 	protected CheckBoxNodePanel getPanel() {
 		return panel;
 	}
-
 
 	public CheckBoxNodeRenderer() {
 		final Font fontValue = UIManager.getFont("Tree.font");
@@ -44,12 +42,10 @@ public class CheckBoxNodeRenderer implements TreeCellRenderer {
 		textBackground = UIManager.getColor("Tree.textBackground");
 	}
 
-
 	public void addNodeListener(MouseAdapter listener) {
 		panel.addMouseListener(listener);
 	}
 	// -- TreeCellRenderer methods --
-
 
 	@Override
 	public Component getTreeCellRendererComponent(final JTree tree, final Object value, final boolean selected,

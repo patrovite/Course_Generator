@@ -33,7 +33,6 @@ public class CgSpinnerDouble extends JSpinner {
 	private double min;
 	private double max;
 
-
 	public CgSpinnerDouble(double start, double min, double max, double step) {
 		super();
 		this.min = min;
@@ -58,7 +57,6 @@ public class CgSpinnerDouble extends JSpinner {
 		spinnerEditor.getTextField().setHorizontalAlignment(JTextField.CENTER);
 	}
 
-
 	private void MouseWheelAction(int wheelRotation) {
 		double value = (Double) getValue();
 		int n = Math.abs(wheelRotation);
@@ -74,24 +72,20 @@ public class CgSpinnerDouble extends JSpinner {
 		setValue(value);
 	}
 
-
 	public void setMaximum(double value) {
 		max = value;
 		model.setMaximum(value);
 	}
-
 
 	public void setMinimum(double value) {
 		min = value;
 		model.setMinimum(value);
 	}
 
-
 	public void setStep(double value) {
 		step = value;
 		model.setStepSize(value);
 	}
-
 
 	/**
 	 * Returns the current value as a Double

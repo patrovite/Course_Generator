@@ -33,7 +33,7 @@ public class ColorTheme {
 	public int NightTrackWidth;
 	public int NormalTrackTransparency;
 	public int NightTrackTransparency;
-	
+
 	public ColorTheme() {
 		ColorVeryEasy = CgConst.CL_DIFF_VERYEASY;
 		ColorEasy = CgConst.CL_DIFF_EASY;
@@ -41,9 +41,9 @@ public class ColorTheme {
 		ColorHard = CgConst.CL_DIFF_HARD;
 		ColorVeryHard = CgConst.CL_DIFF_VERYHARD;
 		ColorNight = CgConst.CL_MAP_NIGHT_HIGHLIGHT;
-		NormalTrackWidth=CgConst.TRACK_NORMAL_TICKNESS;
-		NightTrackWidth=CgConst.TRACK_NIGHT_TICKNESS;
-		NormalTrackTransparency=CgConst.NORMAL_TRACK_TRANSPARENCY;
-		NightTrackTransparency=CgConst.NIGHT_TRACK_TRANSPARENCY;
+		NormalTrackWidth = CgConst.TRACK_NORMAL_TICKNESS;
+		NightTrackWidth = CgConst.TRACK_NIGHT_TICKNESS;
+		NormalTrackTransparency = CgConst.NORMAL_TRACK_TRANSPARENCY;
+		NightTrackTransparency = CgConst.NIGHT_TRACK_TRANSPARENCY;
 	}
 }

@@ -65,30 +65,24 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 	private JButton btPreviousDescend;
 	private JButton btTimeDelta;
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
 	public FrmEditMrbFormat(Window parent, CgSettings settings) {
-		super(parent); 
+		super(parent);
 		this.settings = settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 		setModal(true);
 	}
 
-
 	/**
 	 * Show the dialog
 	 * 
-	 * @param settings
-	 *            Object containing the settings
-	 * @param track
-	 *            Object containing the track
-	 * @param start_line
-	 *            Line number where to start
-	 * @param end_line
-	 *            Line number where to end
+	 * @param settings   Object containing the settings
+	 * @param track      Object containing the track
+	 * @param start_line Line number where to start
+	 * @param end_line   Line number where to end
 	 * @return Object containing the result
 	 */
 	public String showDialog(CgData r, TrackData track, String format) {
@@ -112,7 +106,6 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		} else
 			return format;
 	}
-
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -148,7 +141,6 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	/**
 	 * To call before a normal closing of he dialog
 	 */
@@ -162,7 +154,6 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -181,18 +172,18 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		paneGlobal.setLayout(new GridBagLayout());
 		int line = 0;
 
-		//-- Line 0
-		
+		// -- Line 0
+
 		lbLabelFormat = new JLabel(bundle.getString("FrmEditMrbFormat.lbLabelFormat.text"));
 		Utils.addComponent(paneGlobal, lbLabelFormat, 0, line, 3, 1, 0, 0, 10, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		lbResult = new JLabel(bundle.getString("FrmEditMrbFormat.lbResult.text"), JLabel.CENTER);
-		Utils.addComponent(paneGlobal, lbResult, 3, line++, 1, 1, 1, 0, 10, 10, 0, 10, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(paneGlobal, lbResult, 3, line++, 1, 1, 1, 0, 10, 10, 0, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
-		//-- Line 1
-		
+		// -- Line 1
+
 		tfLabelFormat = new JTextField();
 		Utils.addComponent(paneGlobal, tfLabelFormat, 0, line, 2, 1, 0, 0, 0, 10, 10, 0, GridBagConstraints.WEST,
 				GridBagConstraints.BOTH);
@@ -210,12 +201,11 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 
 		// pnResult = new JPanel();
 		pnResult = new PanelPreviewLabel();
-		Utils.addComponent(paneGlobal, pnResult, 3, line++, 1, 9, 1, 1, 0, 10, 0, 10, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.BOTH);
-		
+		Utils.addComponent(paneGlobal, pnResult, 3, line++, 1, 9, 1, 1, 0, 10, 0, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		//-- Line 2
-		
+		// -- Line 2
+
 		btName = new JButton(bundle.getString("FrmEditMrbFormat.btName.text"));
 		btName.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,7 +215,7 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		});
 		Utils.addComponent(paneGlobal, btName, 0, line, 1, 1, 0, 0, 0, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
-		
+
 		btTotalDist = new JButton(bundle.getString("FrmEditMrbFormat.btTotalDist.text"));
 		btTotalDist.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,8 +223,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				Refresh();
 			}
 		});
-		Utils.addComponent(paneGlobal, btTotalDist, 1, line, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(paneGlobal, btTotalDist, 1, line, 1, 1, 0, 0, 0, 0, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		btElevation = new JButton(bundle.getString("FrmEditMrbFormat.btElevation.text"));
 		btElevation.addActionListener(new java.awt.event.ActionListener() {
@@ -243,11 +233,11 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				Refresh();
 			}
 		});
-		Utils.addComponent(paneGlobal, btElevation, 2, line++, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(paneGlobal, btElevation, 2, line++, 1, 1, 0, 0, 0, 0, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
-		//-- Line 3
-		
+		// -- Line 3
+
 		btStation = new JButton(bundle.getString("FrmEditMrbFormat.btStation.text"));
 		btStation.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,8 +255,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				Refresh();
 			}
 		});
-		Utils.addComponent(paneGlobal, btStationLong, 1, line, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(paneGlobal, btStationLong, 1, line, 1, 1, 0, 0, 0, 0, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		btStationShort = new JButton(bundle.getString("FrmEditMrbFormat.btStationShort.text"));
 		btStationShort.addActionListener(new java.awt.event.ActionListener() {
@@ -278,8 +268,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		Utils.addComponent(paneGlobal, btStationShort, 2, line++, 1, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
-		//-- Line 4
-		
+		// -- Line 4
+
 		btHour = new JButton(bundle.getString("FrmEditMrbFormat.btHour.text"));
 		btHour.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -307,11 +297,11 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				Refresh();
 			}
 		});
-		Utils.addComponent(paneGlobal, btHourShort, 2, line++, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(paneGlobal, btHourShort, 2, line++, 1, 1, 0, 0, 0, 0, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
-		//-- Line 5
-		
+		// -- Line 5
+
 		btTime = new JButton(bundle.getString("FrmEditMrbFormat.btTime.text"));
 		btTime.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -339,10 +329,10 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				Refresh();
 			}
 		});
-		Utils.addComponent(paneGlobal, btComment, 2, line++, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
-		
-		//-- Line 6
+		Utils.addComponent(paneGlobal, btComment, 2, line++, 1, 1, 0, 0, 0, 0, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
+		// -- Line 6
 
 		btTimeShort = new JButton(bundle.getString("FrmEditMrbFormat.btTimeShort.text"));
 		btTimeShort.addActionListener(new java.awt.event.ActionListener() {
@@ -351,8 +341,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				Refresh();
 			}
 		});
-		Utils.addComponent(paneGlobal, btTimeShort, 0, line, 1, 1, 0, 0, 0, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(paneGlobal, btTimeShort, 0, line, 1, 1, 0, 0, 0, 10, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		btTimeDelta = new JButton(bundle.getString("FrmEditMrbFormat.btTimeDelta.text"));
 		btTimeDelta.addActionListener(new java.awt.event.ActionListener() {
@@ -361,8 +351,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				Refresh();
 			}
 		});
-		Utils.addComponent(paneGlobal, btTimeDelta, 1, line, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(paneGlobal, btTimeDelta, 1, line, 1, 1, 0, 0, 0, 0, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		btCommentSpecific = new JButton(bundle.getString("FrmEditMrbFormat.btCommentSpecific.text"));
 		btCommentSpecific.addActionListener(new java.awt.event.ActionListener() {
@@ -373,10 +363,9 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		});
 		Utils.addComponent(paneGlobal, btCommentSpecific, 2, line++, 1, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
 
-		//-- Line 7
-		
+		// -- Line 7
+
 		btTotalAscend = new JButton(bundle.getString("FrmEditMrbFormat.btTotalAscend.text"));
 		btTotalAscend.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -386,7 +375,7 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		});
 		Utils.addComponent(paneGlobal, btTotalAscend, 0, line, 1, 1, 0, 0, 0, 10, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
+
 		btPreviousAscend = new JButton(bundle.getString("FrmEditMrbFormat.btPreviousAscend.text"));
 		btPreviousAscend.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -407,8 +396,8 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		Utils.addComponent(paneGlobal, btTimeLimitTime, 2, line++, 1, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
-		//-- Line 8
-		
+		// -- Line 8
+
 		btTotalDescend = new JButton(bundle.getString("FrmEditMrbFormat.btTotalDescend.text"));
 		btTotalDescend.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -439,7 +428,7 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		Utils.addComponent(paneGlobal, btTimeLimitHour, 2, line++, 1, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
-		//-- Line 9
+		// -- Line 9
 
 		btNewLine = new JButton(bundle.getString("FrmEditMrbFormat.btNewLine.text"));
 		btNewLine.addActionListener(new java.awt.event.ActionListener() {
@@ -448,18 +437,17 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 				Refresh();
 			}
 		});
-		Utils.addComponent(paneGlobal, btNewLine, 0, line++, 1, 1, 0, 0, 0, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(paneGlobal, btNewLine, 0, line++, 1, 1, 0, 0, 0, 10, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
-		//...
-		
+		// ...
+
 		lbHelp = new JLabel(bundle.getString("FrmEditMrbFormat.lbHelp.text"));
 		lbHelp.setOpaque(true);
 		lbHelp.setBackground(Color.WHITE);
 		lbHelp.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		Utils.addComponent(paneGlobal, lbHelp, 0, line++, 3, 1, 0, 1, 10, 10, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
-
 
 		// == BUTTONS
 		// ===========================================================
@@ -496,7 +484,6 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		pack();
 		setLocationRelativeTo(null);
 	}
-
 
 	/**
 	 * Refresh the preview panel

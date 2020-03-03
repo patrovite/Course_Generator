@@ -99,17 +99,17 @@ public class CgData {
 	public boolean ToDelete;
 
 	public CgData(double Num, double Latitude, double Longitude, double Elevation, double ElevationNotSmoothed,
-			double ElevationSmoothed, double ElevationMemo, int Tag,
-			double Dist, double Total, double Diff, double Coeff, double Recup, double Slope, double Speed,
-			double dElevation, int Time, double dTime_f, int TimeLimit, DateTime Hour, int Station, String Name,
-			String Comment, double tmp1, double tmp2, String FmtLbMiniRoadbook, int OptionMiniRoadbook,
-			int VPosMiniRoadbook, String CommentMiniRoadbook, int FontSizeMiniRoadbook) {
+			double ElevationSmoothed, double ElevationMemo, int Tag, double Dist, double Total, double Diff,
+			double Coeff, double Recup, double Slope, double Speed, double dElevation, int Time, double dTime_f,
+			int TimeLimit, DateTime Hour, int Station, String Name, String Comment, double tmp1, double tmp2,
+			String FmtLbMiniRoadbook, int OptionMiniRoadbook, int VPosMiniRoadbook, String CommentMiniRoadbook,
+			int FontSizeMiniRoadbook) {
 		this.Num = Num;
 		this.Latitude = Latitude;
 		this.Longitude = Longitude;
 		this.Elevation = Elevation;
 		this.ElevationNotSmoothed = ElevationNotSmoothed;
-		this.ElevationSmoothed = ElevationSmoothed;		
+		this.ElevationSmoothed = ElevationSmoothed;
 		this.ElevationMemo = ElevationMemo;
 		this.Tag = Tag;
 		this.Dist = Dist;
@@ -147,7 +147,7 @@ public class CgData {
 		this.Longitude = 0;
 		this.Elevation = 0;
 		this.ElevationNotSmoothed = 0;
-		this.ElevationSmoothed = 0;		
+		this.ElevationSmoothed = 0;
 		this.ElevationMemo = 0;
 		this.Tag = 0;
 		this.Dist = 0;
@@ -299,7 +299,7 @@ public class CgData {
 	public void setElevationNotSmoothed(double elevationNotSmoothed) {
 		ElevationNotSmoothed = elevationNotSmoothed;
 	}
-	
+
 	// -------------------------------
 
 	public double getElevationSmoothed(int unit) {
@@ -342,7 +342,7 @@ public class CgData {
 	public void setElevationSmoothed(double elevationSmoothed) {
 		ElevationSmoothed = elevationSmoothed;
 	}
-	
+
 	// -------------------------------
 	public int getTag() {
 		return Tag;
@@ -685,7 +685,7 @@ public class CgData {
 		d.Longitude = Longitude;
 		d.Elevation = Elevation;
 		d.ElevationNotSmoothed = ElevationNotSmoothed;
-		d.ElevationSmoothed = ElevationSmoothed;		
+		d.ElevationSmoothed = ElevationSmoothed;
 		d.ElevationMemo = ElevationMemo;
 		d.Tag = Tag;
 		d.Dist = Dist;

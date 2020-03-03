@@ -54,7 +54,6 @@ public class frmAbout extends javax.swing.JDialog {
 		}
 	}
 
-
 	/**
 	 * Creates new form DialogAbout
 	 */
@@ -72,14 +71,11 @@ public class frmAbout extends javax.swing.JDialog {
 		}
 	}
 
-
 	/**
 	 * Show the dialog
 	 * 
-	 * @param parent
-	 *            Parent
-	 * @param version
-	 *            String containing the version of the software l
+	 * @param parent  Parent
+	 * @param version String containing the version of the software l
 	 */
 	public static void showDialogAbout(java.awt.Frame parent, boolean autoclose, boolean withcopyrights,
 			String version) {
@@ -88,12 +84,12 @@ public class frmAbout extends javax.swing.JDialog {
 		dlg.setVisible(true);
 	}
 
-
 	private void Refresh(boolean withcopyrights) {
 		if (withcopyrights) {
 			StringBuilder sb = new StringBuilder();
 			sb.append(" Thanks to the contributors :\n");
-			sb.append(" - Frederic Bard\n\n");
+			sb.append(" - Frederic Bard\n");
+			sb.append(" - Trilomix (https://github.com/trilomix)\n\n");
 
 			sb.append(" Translators\n");
 			sb.append(" - Spanish: victorhck@opensuse.org\n");
@@ -109,7 +105,8 @@ public class frmAbout extends javax.swing.JDialog {
 			sb.append(" - JUnit - Eclipse Public License 1.0 - https://junit.org/junit4\n");
 			sb.append(" - JXMapViewer2 - LGPL - https://wiki.openstreetmap.org/wiki/JXMapViewer2\n");
 			sb.append(" - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf\n");
-			sb.append(" - Elevation smoothing algorithm - MIT - Brenda Zysman - https://www.potter.ca/Biking/smoother/gpxsmoother.html\n");
+			sb.append(
+					" - Elevation smoothing algorithm - MIT - Brenda Zysman - https://www.potter.ca/Biking/smoother/gpxsmoother.html\n");
 			sb.append("\n");
 			sb.append(" Maps :\n");
 			sb.append(" - OpenStreetMap.org : https://www.openstreetmap.org\n");
@@ -128,7 +125,6 @@ public class frmAbout extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 
 	}
-
 
 	/**
 	 * This method initialize the form.

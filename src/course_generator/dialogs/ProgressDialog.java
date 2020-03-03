@@ -24,12 +24,10 @@ public class ProgressDialog extends JDialog {
 	private ProgressDialogListener progressDialogListener;
 	private ResourceBundle bundle;
 
-
 	/**
 	 * Constructor
 	 * 
-	 * @param progressBar
-	 *            The progress bar this has to update
+	 * @param progressBar The progress bar this has to update
 	 */
 	public ProgressDialog(Window parent, String dialogTitle) {
 		super(parent, dialogTitle, ModalityType.APPLICATION_MODAL);
@@ -41,20 +39,15 @@ public class ProgressDialog extends JDialog {
 		Container paneGlobal = getContentPane();
 		paneGlobal.setLayout(new GridBagLayout());
 
-		//-- Progress bar
+		// -- Progress bar
 		progressBar = new JProgressBar(0, 100);
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
 		progressBar.setPreferredSize(new Dimension(500, 30));
-		Utils.addComponent(paneGlobal, progressBar, 
-				0, 0, 
-				1, 1, 
-				0, 0, 
-				10, 10, 10, 10, 
-				GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.BOTH);
+		Utils.addComponent(paneGlobal, progressBar, 0, 0, 1, 1, 0, 0, 10, 10, 10, 10,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		//-- Cancel button
+		// -- Cancel button
 		buttonCancel = new JButton(bundle.getString("Global.btCancel.text"));
 		buttonCancel.addActionListener(new ActionListener() {
 			@Override
@@ -65,24 +58,17 @@ public class ProgressDialog extends JDialog {
 
 			}
 		});
-		Utils.addComponent(paneGlobal, buttonCancel, 
-				0, 1, 
-				1, 1, 
-				0, 0, 
-				0, 10, 10, 10, 
-				GridBagConstraints.CENTER,
+		Utils.addComponent(paneGlobal, buttonCancel, 0, 1, 1, 1, 0, 0, 0, 10, 10, 10, GridBagConstraints.CENTER,
 				GridBagConstraints.NONE);
 
 		pack();
-		//-- Center the dialog on the parent
-		setLocationRelativeTo(parent);		
+		// -- Center the dialog on the parent
+		setLocationRelativeTo(parent);
 	}
-
 
 	public void setValue(int value) {
 		progressBar.setValue(value);
 	}
-
 
 	public void setListener(ProgressDialogListener listener) {
 		this.progressDialogListener = listener;

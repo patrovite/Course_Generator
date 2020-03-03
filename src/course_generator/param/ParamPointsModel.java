@@ -32,7 +32,6 @@ public class ParamPointsModel extends AbstractTableModel {
 
 	private final String[] header; // = { "Slope", "Speed" };
 
-
 	/**
 	 * Constructor
 	 */
@@ -45,34 +44,28 @@ public class ParamPointsModel extends AbstractTableModel {
 		header[1] = bundle.getString("ParamPointsModel.speed");
 	}
 
-
 	public void setParam(ParamData p) {
 		param = p;
 	}
 
-
 	public void setSettings(CgSettings settings) {
 		this.settings = settings;
 	}
-
 
 	@Override
 	public int getColumnCount() {
 		return header.length;
 	}
 
-
 	@Override
 	public String getColumnName(int columnIndex) {
 		return header[columnIndex];
 	}
 
-
 	@Override
 	public int getRowCount() {
 		return param.data.size();
 	}
-
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
@@ -93,7 +86,6 @@ public class ParamPointsModel extends AbstractTableModel {
 			throw new IllegalArgumentException();
 		}
 	}
-
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {

@@ -79,7 +79,6 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 	private JCheckBox chkFirstAid;
 	private JLabel lbFirstAid;
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -89,7 +88,6 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
-
 
 	/**
 	 * Show the dialog
@@ -148,7 +146,7 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 			// Crew
 			if (chkCrew.isSelected())
 				tag = tag | CgConst.TAG_CREW;
-			
+
 			// First aid
 			if (chkFirstAid.isSelected())
 				tag = tag | CgConst.TAG_FIRST_AID;
@@ -156,7 +154,6 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 		}
 		return ok;
 	}
-
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -192,7 +189,6 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -203,7 +199,6 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -306,7 +301,7 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 				Utils.getIcon(this, "roadbook.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelTags, lbRoadbook, 1, 8, 1, 1, 1, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
-		
+
 		// -- Tag : Drop bag
 		chkDropBag = new JCheckBox();
 		Utils.addComponent(panelTags, chkDropBag, 0, 9, 1, 1, 0, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
@@ -315,7 +310,7 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 				Utils.getIcon(this, "dropbag.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelTags, lbDropBag, 1, 9, 1, 1, 1, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
-		
+
 		// -- Tag : Crew
 		chkCrew = new JCheckBox();
 		Utils.addComponent(panelTags, chkCrew, 0, 10, 1, 1, 0, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
@@ -324,7 +319,7 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 				Utils.getIcon(this, "crew.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelTags, lbCrew, 1, 10, 1, 1, 1, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
-		
+
 		// -- Tag : First aid
 		chkFirstAid = new JCheckBox();
 		Utils.addComponent(panelTags, chkFirstAid, 0, 11, 1, 1, 0, 0, 5, 5, 5, 0, GridBagConstraints.WEST,
@@ -370,7 +365,6 @@ public class FrmExportWaypoints extends javax.swing.JDialog {
 
 		setLocationRelativeTo(null);
 	}
-
 
 	public int getTag() {
 		return tag;

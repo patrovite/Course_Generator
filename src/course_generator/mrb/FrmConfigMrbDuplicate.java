@@ -60,7 +60,6 @@ public class FrmConfigMrbDuplicate extends javax.swing.JDialog {
 	private JCheckBox chkTags;
 	private JPanel panelCheck;
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -71,7 +70,6 @@ public class FrmConfigMrbDuplicate extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
-
 
 	public int showDialog(int config) {
 		this.config = config;
@@ -107,7 +105,6 @@ public class FrmConfigMrbDuplicate extends javax.swing.JDialog {
 		return config;
 	}
 
-
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -142,7 +139,6 @@ public class FrmConfigMrbDuplicate extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -153,7 +149,6 @@ public class FrmConfigMrbDuplicate extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 

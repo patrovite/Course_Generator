@@ -84,8 +84,8 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 	private JButton btSpeedSlopeCorr;
 	private JButton btSpeedSlopeFilter;
 
-	private double lastX=0.0;
-	private double lastY=0.0;
+	private double lastX = 0.0;
+	private double lastY = 0.0;
 
 	public JPanelAnalysisSpeedSlope(CgSettings settings) {
 		super();
@@ -96,7 +96,6 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		chart = CreateChart(datasetSpeedSlopePoint, datasetSpeedSlopeLine);
 		initComponents();
 	}
-
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -144,7 +143,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 
 		xCrosshair = new Crosshair(Double.NaN, Color.RED, new BasicStroke(0f));
 		xCrosshair.setLabelBackgroundPaint(Color.WHITE);
-		
+
 		crosshairOverlay.addDomainCrosshair(xCrosshair);
 
 		ChartPanelSpeedSlope.addOverlay(crosshairOverlay);
@@ -164,7 +163,7 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 					// double y = d.getYValue(s, i);
 					xCrosshair.setValue(x);
 					// yCrosshair.setValue(y);
-					RefreshInfo(x,y);
+					RefreshInfo(x, y);
 					// //Refresh the position on the data grid
 					// TableMain.setRowSelectionInterval(i, i);
 					// Rectangle rect = TableMain.getCellRect(i, 0, true);
@@ -175,7 +174,6 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 				}
 			}
 
-
 			@Override
 			public void chartMouseMoved(ChartMouseEvent event) {
 			}
@@ -183,7 +181,6 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		add(ChartPanelSpeedSlope, java.awt.BorderLayout.CENTER);
 
 	}
-
 
 	private void Create_Toolbar() {
 		toolBar = new javax.swing.JToolBar();
@@ -240,21 +237,17 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		SetText_Toolbar();
 	}
 
-	
 	private void SetText_Toolbar() {
 		btSpeedSlopeSave.setToolTipText(bundle.getString("JPanelAnalysisSpeedSlope.btSpeedSlopeSave.toolTipText"));
 		btSpeedSlopeCorr.setToolTipText(bundle.getString("JPanelAnalysisSpeedSlope.btSpeedSlopeCorr.toolTipText"));
 		btSpeedSlopeFilter.setToolTipText(bundle.getString("JPanelAnalysisSpeedSlope.btSpeedSlopeFilter.toolTipText"));
 	}
 
-	
 	/**
 	 * Save the generated curve as a standard curve
 	 * 
-	 * @param name
-	 *            Name of the curve
-	 * @param comment
-	 *            Comment for the curve
+	 * @param name    Name of the curve
+	 * @param comment Comment for the curve
 	 */
 	private void SaveCurve(String name, String comment) {
 		int n = datasetSpeedSlopeLine.getSeries(0).getItemCount();
@@ -296,7 +289,6 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 
 	}
 
-
 	private JFreeChart CreateChart(XYDataset dataset1, XYDataset dataset2) {
 		JFreeChart chart = ChartFactory.createScatterPlot("",
 				// x axis label
@@ -331,26 +323,23 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 		plot.setRangeAxis(1, rangeAxis2);
 		plot.mapDatasetToRangeAxis(1, 1);
 
-		
 		XYAreaRenderer renderer2 = new XYAreaRenderer();
 		renderer2.setSeriesPaint(0, new Color(0x99, 0xff, 0x00, 0x80));
 		renderer2.setOutline(true);
 		renderer2.setSeriesOutlinePaint(0, new Color(0x80, 0x80, 0x80, 0x80));
 		renderer2.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
 		plot.setRenderer(1, renderer2);
-		
+
 		/*
-		StandardXYItemRenderer renderer2 = new StandardXYItemRenderer();		
-		renderer2.setSeriesPaint(0, Color.red);
-		plot.setRenderer(1, renderer2);
-		*/
-		
+		 * StandardXYItemRenderer renderer2 = new StandardXYItemRenderer();
+		 * renderer2.setSeriesPaint(0, Color.red); plot.setRenderer(1, renderer2);
+		 */
+
 		// -- Select the display order
 		plot.setDatasetRenderingOrder(DatasetRenderingOrder.REVERSE);
 
 		return chart;
 	}
-
 
 	private void RefreshInfo(double x, double y) {
 		if ((track == null) || (settings == null))
@@ -358,14 +347,13 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 
 		lastX = x;
 		lastY = y;
-		
-		lbSpeedSlopeInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSpeed.text")
-		+ "=" + Utils.FormatSpeed(y, settings.Unit, settings.isPace, true) + " ");
-		
-		lbSpeedSlopeInfoSlope.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSlope.text")
-		+ "=" + String.format("%1.1f ", x) + "% ");
-	}
 
+		lbSpeedSlopeInfoSpeed.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSpeed.text")
+				+ "=" + Utils.FormatSpeed(y, settings.Unit, settings.isPace, true) + " ");
+
+		lbSpeedSlopeInfoSlope.setText(" " + bundle.getString("JPanelAnalysisSpeedSlope.lbSpeedSlopeInfoSlope.text")
+				+ "=" + String.format("%1.1f ", x) + "% ");
+	}
 
 	/**
 	 * Update the Slope/Speed chart
@@ -570,7 +558,6 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 
 	}
 
-
 	/**
 	 * Sliding average speed over 5 points
 	 */
@@ -600,9 +587,9 @@ public class JPanelAnalysisSpeedSlope extends JPanel {
 
 	public void ChangeLang() {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
-		chart.getXYPlot().getDomainAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisSpeedSlope.labelX")); //X
-		chart.getXYPlot().getRangeAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisSpeedSlope.labelY")); //Y
-		RefreshInfo(lastX,lastY);
+		chart.getXYPlot().getDomainAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisSpeedSlope.labelX")); // X
+		chart.getXYPlot().getRangeAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisSpeedSlope.labelY")); // Y
+		RefreshInfo(lastX, lastY);
 		SetText_Toolbar();
 	}
 }

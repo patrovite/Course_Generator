@@ -188,19 +188,19 @@ public class OsmFileCacheTileLoader extends OsmTileLoader implements CachedTileL
 
 				if (tileFile != null) {
 					switch (tile.getSource().getTileUpdate()) {
-						case IfModifiedSince:
-							urlConn.setIfModifiedSince(fileAge);
-							break;
-						case LastModified:
-							if (!isOsmTileNewer(fileAge)) {
-								log.finest("LastModified test: local version is up to date: " + tile);
-								tile.setLoaded(true);
-								tileFile.setLastModified(System.currentTimeMillis() - maxCacheFileAge + recheckAfter);
-								return;
-							}
-							break;
-						default:
-							break;
+					case IfModifiedSince:
+						urlConn.setIfModifiedSince(fileAge);
+						break;
+					case LastModified:
+						if (!isOsmTileNewer(fileAge)) {
+							log.finest("LastModified test: local version is up to date: " + tile);
+							tile.setLoaded(true);
+							tileFile.setLastModified(System.currentTimeMillis() - maxCacheFileAge + recheckAfter);
+							return;
+						}
+						break;
+					default:
+						break;
 					}
 				}
 				if (tile.getSource().getTileUpdate() == TileUpdate.ETag
@@ -208,18 +208,17 @@ public class OsmFileCacheTileLoader extends OsmTileLoader implements CachedTileL
 					String fileETag = tile.getValue("etag");
 					if (fileETag != null) {
 						switch (tile.getSource().getTileUpdate()) {
-							case IfNoneMatch:
-								urlConn.addRequestProperty("If-None-Match", fileETag);
-								break;
-							case ETag:
-								if (hasOsmTileETag(fileETag)) {
-									tile.setLoaded(true);
-									tileFile.setLastModified(
-											System.currentTimeMillis() - maxCacheFileAge + recheckAfter);
-									return;
-								}
-							default:
-								break;
+						case IfNoneMatch:
+							urlConn.addRequestProperty("If-None-Match", fileETag);
+							break;
+						case ETag:
+							if (hasOsmTileETag(fileETag)) {
+								tile.setLoaded(true);
+								tileFile.setLastModified(System.currentTimeMillis() - maxCacheFileAge + recheckAfter);
+								return;
+							}
+						default:
+							break;
 						}
 					}
 					tile.putValue("etag", urlConn.getHeaderField("ETag"));

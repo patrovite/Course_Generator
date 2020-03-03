@@ -37,7 +37,6 @@ public class MapPolyLine extends MapPolygonImpl {
 		super(null, null, points);
 	}
 
-
 	@Override
 	public void paint(Graphics g, List<Point> points) {
 		Graphics2D g2d = (Graphics2D) g.create();
@@ -47,7 +46,6 @@ public class MapPolyLine extends MapPolygonImpl {
 		g2d.draw(path);
 		g2d.dispose();
 	}
-
 
 	private Path2D buildPath(List<Point> points) {
 		Path2D path = new Path2D.Double();

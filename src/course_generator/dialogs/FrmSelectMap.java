@@ -197,7 +197,7 @@ public class FrmSelectMap extends javax.swing.JDialog {
 		rbBingAerialMap = new JRadioButton(bundle.getString("FrmSelectMap.rbBingAerialMap.Text"));
 		Utils.addComponent(panelMain, rbBingAerialMap, 0, 3, 1, 1, 1, 1, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
-		
+
 		rbStamenTonerMap = new JRadioButton(bundle.getString("FrmSelectMap.rbStamenToner.Text"));
 		Utils.addComponent(panelMain, rbStamenTonerMap, 0, 4, 1, 1, 1, 1, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
@@ -207,7 +207,6 @@ public class FrmSelectMap extends javax.swing.JDialog {
 				GridBagConstraints.HORIZONTAL);
 
 
-		
 		groupMap = new ButtonGroup();
 		groupMap.add(rbOpenStreetMap);
 		groupMap.add(rbOpenTopoMap);

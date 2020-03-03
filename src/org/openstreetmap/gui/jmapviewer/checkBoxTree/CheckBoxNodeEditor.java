@@ -19,84 +19,81 @@ import javax.swing.tree.TreePath;
  * 
  * @author galo
  */
-public class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor{
-    /** SerialVersionUID */
-    private static final long serialVersionUID = -8921320784224636657L;
+public class CheckBoxNodeEditor extends AbstractCellEditor implements TreeCellEditor {
+	/** SerialVersionUID */
+	private static final long serialVersionUID = -8921320784224636657L;
 
-    private final CheckBoxNodeRenderer renderer = new CheckBoxNodeRenderer();
+	private final CheckBoxNodeRenderer renderer = new CheckBoxNodeRenderer();
 
-    private final CheckBoxTree theTree;
+	private final CheckBoxTree theTree;
 
-    public CheckBoxNodeEditor(final CheckBoxTree tree) {
-        theTree = tree;
-    }
+	public CheckBoxNodeEditor(final CheckBoxTree tree) {
+		theTree = tree;
+	}
 
-    @Override
-    public Object getCellEditorValue() {
-        final CheckBoxNodePanel panel = renderer.getPanel();
-        /*final CheckBoxNodeData checkBoxNode =
-            new CheckBoxNodeData(panel.label.getText(), panel.check.isSelected());
-        return checkBoxNode;
-        CheckBoxNodeData data = search(theTree.rootNode(), panel.label.getText());
-        data.setSelected(panel.check.isSelected());*/
-        return panel.getData();
-    }
-    /*public CheckBoxNodeData search(DefaultMutableTreeNode node, String name){
-        CheckBoxNodeData data = CheckBoxTree.data(node);
-        if(data.getText().equals(name)) return data;
-        else{
-            data = null;
-            for(int i=0; i<node.getChildCount() && data==null; i++){
-                data = search((DefaultMutableTreeNode)node.getChildAt(i), name);
-            }
-            return data;
-        }
-    }*/
-    public void addNodeListener(MouseAdapter listener){
-        renderer.addNodeListener(listener);
-    }
-    @Override
-    public boolean isCellEditable(final EventObject event) {
-        if (!(event instanceof MouseEvent)) return false;
-        final MouseEvent mouseEvent = (MouseEvent) event;
+	@Override
+	public Object getCellEditorValue() {
+		final CheckBoxNodePanel panel = renderer.getPanel();
+		/*
+		 * final CheckBoxNodeData checkBoxNode = new
+		 * CheckBoxNodeData(panel.label.getText(), panel.check.isSelected()); return
+		 * checkBoxNode; CheckBoxNodeData data = search(theTree.rootNode(),
+		 * panel.label.getText()); data.setSelected(panel.check.isSelected());
+		 */
+		return panel.getData();
+	}
 
-        final TreePath path =
-            theTree.getPathForLocation(mouseEvent.getX(), mouseEvent.getY());
-        if (path == null) return false;
+	/*
+	 * public CheckBoxNodeData search(DefaultMutableTreeNode node, String name){
+	 * CheckBoxNodeData data = CheckBoxTree.data(node);
+	 * if(data.getText().equals(name)) return data; else{ data = null; for(int i=0;
+	 * i<node.getChildCount() && data==null; i++){ data =
+	 * search((DefaultMutableTreeNode)node.getChildAt(i), name); } return data; } }
+	 */
+	public void addNodeListener(MouseAdapter listener) {
+		renderer.addNodeListener(listener);
+	}
 
-        final Object node = path.getLastPathComponent();
-        if (!(node instanceof DefaultMutableTreeNode)) return false;
-        final DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) node;
+	@Override
+	public boolean isCellEditable(final EventObject event) {
+		if (!(event instanceof MouseEvent))
+			return false;
+		final MouseEvent mouseEvent = (MouseEvent) event;
 
-        final Object userObject = treeNode.getUserObject();
-        return userObject instanceof CheckBoxNodeData;
-    }
+		final TreePath path = theTree.getPathForLocation(mouseEvent.getX(), mouseEvent.getY());
+		if (path == null)
+			return false;
 
-    @Override
-    public Component getTreeCellEditorComponent(final JTree tree,
-        final Object value, final boolean selected, final boolean expanded,
-        final boolean leaf, final int row)
-    {
+		final Object node = path.getLastPathComponent();
+		if (!(node instanceof DefaultMutableTreeNode))
+			return false;
+		final DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) node;
 
-        final Component editor =
-            renderer.getTreeCellRendererComponent(tree, value, true, expanded, leaf,
-                row, true);
+		final Object userObject = treeNode.getUserObject();
+		return userObject instanceof CheckBoxNodeData;
+	}
 
-        // editor always selected / focused
-        final ItemListener itemListener = new ItemListener() {
+	@Override
+	public Component getTreeCellEditorComponent(final JTree tree, final Object value, final boolean selected,
+			final boolean expanded, final boolean leaf, final int row) {
 
-            @Override
-            public void itemStateChanged(final ItemEvent itemEvent) {
-                if (stopCellEditing()) {
-                    fireEditingStopped();
-                }
-            }
-        };
-        if (editor instanceof CheckBoxNodePanel) {
-            final CheckBoxNodePanel panel = (CheckBoxNodePanel) editor;
-            panel.check.addItemListener(itemListener);
-        }
+		final Component editor = renderer.getTreeCellRendererComponent(tree, value, true, expanded, leaf, row, true);
 
-        return editor;
-    }
+		// editor always selected / focused
+		final ItemListener itemListener = new ItemListener() {
+
+			@Override
+			public void itemStateChanged(final ItemEvent itemEvent) {
+				if (stopCellEditing()) {
+					fireEditingStopped();
+				}
+			}
+		};
+		if (editor instanceof CheckBoxNodePanel) {
+			final CheckBoxNodePanel panel = (CheckBoxNodePanel) editor;
+			panel.check.addItemListener(itemListener);
+		}
+
+		return editor;
+	}
 }

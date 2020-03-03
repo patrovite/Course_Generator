@@ -29,12 +29,10 @@ public class FileTypeFilter extends FileFilter {
 	private String extension;
 	private String description;
 
-
 	public FileTypeFilter(String extension, String description) {
 		this.extension = extension.toLowerCase();
 		this.description = description;
 	}
-
 
 	public boolean accept(File file) {
 		if (file.isDirectory()) {
@@ -42,7 +40,6 @@ public class FileTypeFilter extends FileFilter {
 		}
 		return file.getName().toLowerCase().endsWith(extension);
 	}
-
 
 	public String getDescription() {
 		return description + String.format(" (*%s)", extension);

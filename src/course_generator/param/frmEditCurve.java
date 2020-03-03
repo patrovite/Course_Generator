@@ -62,7 +62,6 @@ import org.jfree.data.xy.XYSeriesCollection;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
-import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
 public class frmEditCurve extends javax.swing.JDialog {
@@ -111,12 +110,10 @@ public class frmEditCurve extends javax.swing.JDialog {
 	private JToggleButton btMin_Miles;
 	private JToggleButton btUser_Def;
 
-
 	/**
 	 * Creates new form frmSettings
 	 * 
-	 * @param settings
-	 *            The Course Generator settings
+	 * @param settings The Course Generator settings
 	 */
 	public frmEditCurve(CgSettings settings) {
 		super();
@@ -132,7 +129,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 		setModal(true);
 	}
 
-
 	/**
 	 * Show the dialog
 	 * 
@@ -145,8 +141,8 @@ public class frmEditCurve extends javax.swing.JDialog {
 		bEditMode = false;
 		tablemodel.setSettings(settings);
 
-		int res=Utils.searchCurveFolder(Paramfile);
-		LoadCurve(Utils.getSelectedCurveFolder(res)+Paramfile + ".par", res);
+		int res = Utils.searchCurveFolder(Paramfile);
+		LoadCurve(Utils.getSelectedCurveFolder(res) + Paramfile + ".par", res);
 		ChangeEditStatus();
 		RefreshView();
 		// Set field
@@ -163,7 +159,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 		return ok;
 	}
 
-
 	/**
 	 * Called when we want to close the dialog
 	 */
@@ -178,12 +173,10 @@ public class frmEditCurve extends javax.swing.JDialog {
 		}
 	}
 
-
 	/**
 	 * Creates the chart
 	 * 
-	 * @param dataset
-	 *            Dataset to display
+	 * @param dataset Dataset to display
 	 * @return Return a JFreeChart object
 	 */
 	private JFreeChart CreateChartProfile(XYDataset dataset) {
@@ -219,7 +212,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 		return chart;
 	}
 
-	
 	/**
 	 * Refresh the curve list
 	 */
@@ -241,7 +233,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 		model.sort();
 	}
 
-	
 	/**
 	 * This method is called to initialize the form.
 	 */
@@ -266,13 +257,9 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 		// -- Selection buttons
 		CreateSelToolbar();
-		Utils.addComponent(paneGlobal, ToolBarSel, 
-				0, 0, 
-				1, 1, 
-				0, 0, 
-				0, 0, 0, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
-				
+		Utils.addComponent(paneGlobal, ToolBarSel, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.BOTH);
+
 		// -- Curves list
 		ListCurves = new javax.swing.JList<>();
 		model = new ParamListModel();
@@ -286,11 +273,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		jScrollPaneCurves = new javax.swing.JScrollPane();
 		jScrollPaneCurves.setViewportView(ListCurves);
 
-		Utils.addComponent(paneGlobal, jScrollPaneCurves, 
-				0, 1, 
-				1, 3, 
-				0.5,1, 
-				10, 10, 0, 0,
+		Utils.addComponent(paneGlobal, jScrollPaneCurves, 0, 1, 1, 3, 0.5, 1, 10, 10, 0, 0,
 				GridBagConstraints.PAGE_START, GridBagConstraints.BOTH);
 
 		// -- Curve management toolbar
@@ -396,7 +379,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 				}
 			}
 
-
 			@Override
 			public void chartMouseMoved(ChartMouseEvent event) {
 			}
@@ -425,12 +407,10 @@ public class frmEditCurve extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-
 	/**
 	 * Called when the form is closing. Check if we are still in edit mode
 	 * 
-	 * @param evt
-	 *            Event
+	 * @param evt Event
 	 */
 	protected void formWindowClosing(WindowEvent evt) {
 		if (bEditMode)
@@ -439,7 +419,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
-
 	/**
 	 * Select a curve
 	 */
@@ -447,18 +426,17 @@ public class frmEditCurve extends javax.swing.JDialog {
 		int index = ListCurves.getSelectedIndex();
 		if (index >= 0) {
 			Paramfile = (String) model.getElementAt(index);
-			LoadCurve(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder) + (String) model.getElementAt(index) + ".par", settings.SelectedCurveFolder);
+			LoadCurve(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder) + (String) model.getElementAt(index)
+					+ ".par", settings.SelectedCurveFolder);
 			bEditMode = false;
 			RefreshView();
 		}
 	}
 
-
 	/**
 	 * Load a curve
 	 * 
-	 * @param filename
-	 *            Curve file name
+	 * @param filename Curve file name
 	 */
 	protected void LoadCurve(String filename, int SelFolderType) {
 
@@ -466,13 +444,12 @@ public class frmEditCurve extends javax.swing.JDialog {
 
 			try {
 				param.Load(filename);
-				bCurveReadonly = (SelFolderType!=CgConst.CURVE_FOLDER_USER);
+				bCurveReadonly = (SelFolderType != CgConst.CURVE_FOLDER_USER);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
-
 
 	private void CreateEditToolbar() {
 		// -- Buttons bar
@@ -529,9 +506,11 @@ public class frmEditCurve extends javax.swing.JDialog {
 				if (bEditMode) {
 					param.comment = tfComment.getText();
 					param.name = lbNameVal.getText();
-					//param.SaveCurve(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + Paramfile + ".par", settings.Unit);
-					param.SaveCurve(Utils.getSelectedCurveFolder(CgConst.CURVE_FOLDER_USER) + Paramfile + ".par", settings.Unit);
-				
+					// param.SaveCurve(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + Paramfile +
+					// ".par", settings.Unit);
+					param.SaveCurve(Utils.getSelectedCurveFolder(CgConst.CURVE_FOLDER_USER) + Paramfile + ".par",
+							settings.Unit);
+
 					bEditMode = false;
 					ChangeEditStatus();
 					RefreshView();
@@ -550,7 +529,8 @@ public class frmEditCurve extends javax.swing.JDialog {
 				if (bEditMode) {
 					bEditMode = false;
 					Paramfile = Old_Paramfile;
-					LoadCurve(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder) + Paramfile + ".par", settings.SelectedCurveFolder);
+					LoadCurve(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder) + Paramfile + ".par",
+							settings.SelectedCurveFolder);
 					ChangeEditStatus();
 					RefreshView();
 				}
@@ -572,7 +552,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		btKM_H.setText("km/h");
 		btKM_H.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				settings.SelectedCurveFolder=CgConst.CURVE_FOLDER_KM_H;
+				settings.SelectedCurveFolder = CgConst.CURVE_FOLDER_KM_H;
 				UpdateSelBtStatus();
 				RefreshCurveList(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder));
 			}
@@ -584,7 +564,7 @@ public class frmEditCurve extends javax.swing.JDialog {
 		btMin_Miles.setText("min/miles");
 		btMin_Miles.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				settings.SelectedCurveFolder=CgConst.CURVE_FOLDER_MIN_MILES;
+				settings.SelectedCurveFolder = CgConst.CURVE_FOLDER_MIN_MILES;
 				UpdateSelBtStatus();
 				RefreshCurveList(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder));
 			}
@@ -596,13 +576,13 @@ public class frmEditCurve extends javax.swing.JDialog {
 		btUser_Def.setText("user");
 		btUser_Def.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				settings.SelectedCurveFolder=CgConst.CURVE_FOLDER_USER;
+				settings.SelectedCurveFolder = CgConst.CURVE_FOLDER_USER;
 				UpdateSelBtStatus();
 				RefreshCurveList(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder));
 			}
 		});
 		ToolBarSel.add(btUser_Def);
-		
+
 		UpdateSelBtStatus();
 	}
 
@@ -613,15 +593,15 @@ public class frmEditCurve extends javax.swing.JDialog {
 		btKM_H.setSelected(false);
 		btMin_Miles.setSelected(false);
 		btUser_Def.setSelected(false);
-		
-		if (settings.SelectedCurveFolder==CgConst.CURVE_FOLDER_KM_H)
+
+		if (settings.SelectedCurveFolder == CgConst.CURVE_FOLDER_KM_H)
 			btKM_H.setSelected(true);
-		else if (settings.SelectedCurveFolder==CgConst.CURVE_FOLDER_MIN_MILES)
+		else if (settings.SelectedCurveFolder == CgConst.CURVE_FOLDER_MIN_MILES)
 			btMin_Miles.setSelected(true);
-		else btUser_Def.setSelected(true);
+		else
+			btUser_Def.setSelected(true);
 	}
-	
-	
+
 	protected void RefreshView() {
 		// -- Refresh the fields
 		lbSelectedCurve.setText(" " + bundle.getString("frmEditCurve.lbSelectedCurve.text") + " " + Paramfile);
@@ -632,7 +612,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 		// -- Refresh chart
 		RefreshChart();
 	}
-
 
 	private void RefreshChart() {
 		if (param.data.size() <= 0)
@@ -659,7 +638,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 		dataset.addSeries(slopeVsSpeedSerie);
 	}
 
-
 	/**
 	 * Add a new line to the point list
 	 */
@@ -672,7 +650,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 			RefreshView();
 		}
 	}
-
 
 	/**
 	 * Edit the selected line
@@ -692,7 +669,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 			}
 		}
 	}
-
 
 	/**
 	 * Delete the selected line in the points table
@@ -716,7 +692,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 			}
 		}
 	}
-
 
 	/**
 	 * Create the left toolbar
@@ -784,7 +759,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 		ToolBarAction.add(btDeleteCurve);
 	}
 
-
 	/**
 	 * Refresh the status of form component
 	 */
@@ -806,7 +780,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 		btOk.setEnabled(!bEditMode);
 	}
 
-
 	/**
 	 * Refresh the table content
 	 */
@@ -823,12 +796,11 @@ public class frmEditCurve extends javax.swing.JDialog {
 			bEditMode = true;
 			ChangeEditStatus();
 			Old_Paramfile = Paramfile;
-		}
-		else {
+		} else {
 			JOptionPane.showMessageDialog(this, bundle.getString("frmEditCurve.ReadOnlyCurve"));
-		}	
+		}
 	}
-	
+
 	/**
 	 * Duplicate the selected curve Its new name is requested
 	 */
@@ -845,16 +817,18 @@ public class frmEditCurve extends javax.swing.JDialog {
 					bundle.getString("frmEditCurve.DuplicatePanel.title"), JOptionPane.OK_CANCEL_OPTION,
 					JOptionPane.PLAIN_MESSAGE);
 			if ((result == JOptionPane.OK_OPTION) && (!tfName.getText().isEmpty())) {
-				if (Utils.FileExist(Utils.getSelectedCurveFolder(CgConst.CURVE_FOLDER_USER) + tfName.getText() + ".par")) {
+				if (Utils.FileExist(
+						Utils.getSelectedCurveFolder(CgConst.CURVE_FOLDER_USER) + tfName.getText() + ".par")) {
 					JOptionPane.showMessageDialog(this, bundle.getString("frmEditCurve.DuplicatePanel.fileexist"));
 					return;
 				}
 				param.name = tfName.getText();
 				Paramfile = param.name;
-				param.SaveCurve(Utils.getSelectedCurveFolder(CgConst.CURVE_FOLDER_USER) + param.name + ".par", settings.Unit);
+				param.SaveCurve(Utils.getSelectedCurveFolder(CgConst.CURVE_FOLDER_USER) + param.name + ".par",
+						settings.Unit);
 				ChangeEditStatus();
-				
-				settings.SelectedCurveFolder=CgConst.CURVE_FOLDER_USER;
+
+				settings.SelectedCurveFolder = CgConst.CURVE_FOLDER_USER;
 				UpdateSelBtStatus();
 				RefreshCurveList(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder));
 				RefreshView();
@@ -862,12 +836,11 @@ public class frmEditCurve extends javax.swing.JDialog {
 		}
 	}
 
-
 	/**
 	 * Delete the selected curve
 	 */
 	protected void DeleteCurve() {
-		if (!bEditMode && !bCurveReadonly && (settings.SelectedCurveFolder==CgConst.CURVE_FOLDER_USER)) {
+		if (!bEditMode && !bCurveReadonly && (settings.SelectedCurveFolder == CgConst.CURVE_FOLDER_USER)) {
 			int index = ListCurves.getSelectedIndex();
 			if (index >= 0) {
 				String s = Paramfile = (String) model.getElementAt(index);
@@ -881,7 +854,8 @@ public class frmEditCurve extends javax.swing.JDialog {
 					if (ret == JOptionPane.YES_OPTION) {
 						File f = new File(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder) + s + ".par");
 						f.delete();
-						LoadCurve(Utils.getSelectedCurveFolder(CgConst.CURVE_FOLDER_KM_H) + "/default.par", CgConst.CURVE_FOLDER_KM_H);
+						LoadCurve(Utils.getSelectedCurveFolder(CgConst.CURVE_FOLDER_KM_H) + "/default.par",
+								CgConst.CURVE_FOLDER_KM_H);
 						Paramfile = "Default";
 						RefreshView();
 						RefreshCurveList(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder));
@@ -890,7 +864,6 @@ public class frmEditCurve extends javax.swing.JDialog {
 			}
 		}
 	}
-
 
 	/**
 	 * Add a new curve to the curve list
@@ -905,8 +878,9 @@ public class frmEditCurve extends javax.swing.JDialog {
 			int result = JOptionPane.showConfirmDialog(this, panel,
 					bundle.getString("frmEditCurve.AddCurvePanel.title"), JOptionPane.OK_CANCEL_OPTION,
 					JOptionPane.PLAIN_MESSAGE);
-			if ((result == JOptionPane.OK_OPTION) && (!tfName.getText().isEmpty())) {			
-				if (Utils.FileExist(Utils.getSelectedCurveFolder(CgConst.CURVE_FOLDER_USER) + tfName.getText() + ".par")) {
+			if ((result == JOptionPane.OK_OPTION) && (!tfName.getText().isEmpty())) {
+				if (Utils.FileExist(
+						Utils.getSelectedCurveFolder(CgConst.CURVE_FOLDER_USER) + tfName.getText() + ".par")) {
 					JOptionPane.showMessageDialog(this, bundle.getString("frmEditCurve.AddCurvePanelPanel.fileexist"));
 					return;
 				}
@@ -928,8 +902,8 @@ public class frmEditCurve extends javax.swing.JDialog {
 				bEditMode = true;
 				ChangeEditStatus();
 				RefreshView();
-				
-				settings.SelectedCurveFolder=CgConst.CURVE_FOLDER_USER;
+
+				settings.SelectedCurveFolder = CgConst.CURVE_FOLDER_USER;
 				UpdateSelBtStatus();
 				RefreshCurveList(Utils.getSelectedCurveFolder(settings.SelectedCurveFolder));
 			}

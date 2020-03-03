@@ -29,14 +29,14 @@ public class CgConst {
 	/** Course Generator config and curve directory **/
 	public static final String CG_DIR = ".course_generator";
 	public static final String CG_LOGS = "logs";
-		
+
 	public static final String OPENSTREETMAP_CACHE_DIR = "openstreetmap";
 	public static final String OPENTOPOMAP_CACHE_DIR = "opentopomap";
 	public static final String OUTDOORS_CACHE_DIR = "outdoors";
 	public static final String IGN_CACHE_DIR = "ign";
 	public static final String BING_CACHE_DIR = "bing";
 	public static final String STAMEN_TONER_CACHE_DIR = "StamenToner";
-	
+
 	/** Maximum version of the CGX file to read **/
 	public static final int MAX_CGX_VERSION_TO_READ = 5;
 	/** Maximum value of health coefficient **/
@@ -107,12 +107,12 @@ public class CgConst {
 	public static final int MRB_DUP_NONE = 0;
 	public static final int MRB_DUP_SIMPLE = 1;
 	public static final int MRB_DUP_MULTI = 2;
-		
+
 	public static final int CURVE_NOT_FOUND = -1;
 	public static final int CURVE_FOLDER_KM_H = 0;
 	public static final int CURVE_FOLDER_MIN_MILES = 1;
 	public static final int CURVE_FOLDER_USER = 2;
-	
+
 	public static final Color CL_LINE_SELECTION = new Color(151, 153, 255);
 	public static final Color CL_RESUME_ALTERNATE_LINE = new Color(220, 220, 220);
 
@@ -140,8 +140,8 @@ public class CgConst {
 	public static final Color CL_MAP_DIFF_AVERAGE = new Color(0, 0, 210); // -- Blue
 	public static final Color CL_MAP_DIFF_HARD = new Color(255, 0, 0); // -- Red
 	public static final Color CL_MAP_DIFF_VERYHARD = new Color(0, 0, 0); // -- Black
-	public static final Color CL_MAP_NIGHT_HIGHLIGHT = new Color(0.0f, 0.0f, 0.7f, 0.25f );
-	
+	public static final Color CL_MAP_NIGHT_HIGHLIGHT = new Color(0.0f, 0.0f, 0.7f, 0.25f);
+
 	public static final Color CL_TRACK_TABLE_HOUR_DAY = new Color(221, 255, 155);
 	public static final Color CL_TRACK_TABLE_HOUR_NIGHT = new Color(0, 128, 255);
 	public static final Color CL_TRACK_TABLE_TOTAL = new Color(221, 233, 175);

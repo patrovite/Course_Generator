@@ -11,13 +11,12 @@ import org.openstreetmap.gui.jmapviewer.Tile;
  */
 public interface TileLoader {
 
-    /**
-     * A typical implementation of this function should create and return a
-     * new {@link TileJob} instance that performs the load action.
-     *
-     * @param tile the tile to be loaded
-     * @return {@link TileJob} implementation that performs the desired load
-     *          action.
-     */
-    public TileJob createTileLoaderJob(Tile tile);
+	/**
+	 * A typical implementation of this function should create and return a new
+	 * {@link TileJob} instance that performs the load action.
+	 *
+	 * @param tile the tile to be loaded
+	 * @return {@link TileJob} implementation that performs the desired load action.
+	 */
+	public TileJob createTileLoaderJob(Tile tile);
 }

@@ -30,7 +30,6 @@ public class MrbTableDataModel extends AbstractTableModel {
 
 	private final String[] header;
 
-
 	/**
 	 * Constructor
 	 */
@@ -52,29 +51,24 @@ public class MrbTableDataModel extends AbstractTableModel {
 		header[10] = bundle.getString("MrbDataModel.line");
 	}
 
-
 	public void setData(MrbDataList p) {
 		list = p;
 	}
-
 
 	@Override
 	public int getColumnCount() {
 		return header.length;
 	}
 
-
 	@Override
 	public String getColumnName(int columnIndex) {
 		return header[columnIndex];
 	}
 
-
 	@Override
 	public int getRowCount() {
 		return list.data.size();
 	}
-
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
@@ -118,7 +112,6 @@ public class MrbTableDataModel extends AbstractTableModel {
 			throw new IllegalArgumentException();
 		}
 	}
-
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {

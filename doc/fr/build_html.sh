@@ -21,3 +21,5 @@ cp -Ru ./images/* ../../build/help/$lang/images
 # copy files
 cp -u ./$name ../../build/help/$lang
 cp -u ./cg_doc.css ../../build/help/$lang
+
+echo "Done! 'html' file generated in the local folder and files (even images) copied in the 'build/help' folder"

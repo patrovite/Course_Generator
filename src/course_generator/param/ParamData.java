@@ -41,17 +41,14 @@ public class ParamData {
 	public String comment = "";
 	public ArrayList<CgParam> data;
 
-
 	public ParamData() {
 		data = new ArrayList<CgParam>();
 	}
 
-
 	/**
 	 * Load parameters from disk
 	 * 
-	 * @param name
-	 *            File name to load
+	 * @param name File name to load
 	 * @throws Exception
 	 */
 	public void Load(String name) throws Exception {
@@ -63,12 +60,10 @@ public class ParamData {
 
 	} // -- Load
 
-
 	/**
 	 * Save parameters on disk
 	 * 
-	 * @param fname
-	 *            Name of the file
+	 * @param fname Name of the file
 	 */
 	public void SaveCurve(String fname, int unit) {
 		if (data.size() <= 0) {
@@ -105,7 +100,6 @@ public class ParamData {
 			e.printStackTrace();
 		}
 	}
-
 
 	/**
 	 * Find the maximum speed of the list

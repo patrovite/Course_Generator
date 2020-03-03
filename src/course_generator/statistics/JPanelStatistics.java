@@ -51,7 +51,6 @@ public class JPanelStatistics extends JPanel {
 	private JButton btStatisticSave;
 	private JButton btStatisticRefresh;
 
-
 	public JPanelStatistics(CgSettings settings) {
 		super();
 		track = null;
@@ -59,7 +58,6 @@ public class JPanelStatistics extends JPanel {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
-
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -75,7 +73,6 @@ public class JPanelStatistics extends JPanel {
 		scrollPaneStat = new JScrollPane(editorStat);
 		add(scrollPaneStat, java.awt.BorderLayout.CENTER);
 	}
-
 
 	/**
 	 * Create the status toolbar
@@ -113,8 +110,8 @@ public class JPanelStatistics extends JPanel {
 			}
 		});
 		toolBar.add(btStatisticRefresh);
-		
-		//-- Set Texts
+
+		// -- Set Texts
 		SetTexts();
 	}
 
@@ -133,11 +130,11 @@ public class JPanelStatistics extends JPanel {
 		if (track.data.isEmpty())
 			return;
 
-		//-- Set Texts
+		// -- Set Texts
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		SetTexts();
-		
-		//--
+
+		// --
 		StringBuilder sb = new StringBuilder();
 
 		// -- Get current language
@@ -329,14 +326,12 @@ public class JPanelStatistics extends JPanel {
 		editorStat.setCaretPosition(0);
 	}
 
-
 	/**
 	 * Returns the average speed as a string given a time and a distance.
 	 * 
-	 * @param distance
-	 *            The distance in the user preferred format (metric vs imperial).
-	 * @param time
-	 *            The total time.
+	 * @param distance The distance in the user preferred format (metric vs
+	 *                 imperial).
+	 * @param time     The total time.
 	 * @return A string containing the average time and its corresponding unit.
 	 */
 	private String CalcVMoy(double distance, double time) {
@@ -346,7 +341,6 @@ public class JPanelStatistics extends JPanel {
 		}
 		return Utils.FormatSpeed(averageSpeed, settings.Unit, settings.isPace, true);
 	}
-
 
 	/**
 	 * Save the statistics in TXT format
@@ -380,12 +374,10 @@ public class JPanelStatistics extends JPanel {
 		}
 	}
 
-
 	public void setTrack(TrackData track) {
 		this.track = track;
 		refresh();
 	}
-
 
 	public void setSettings(CgSettings settings) {
 		this.settings = settings;

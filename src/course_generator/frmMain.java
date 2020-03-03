@@ -170,7 +170,7 @@ import course_generator.weather.JPanelWeather;
 public class frmMain extends javax.swing.JFrame {
 	private static final long serialVersionUID = 6484405417503538528L;
 
-	private final static String Version = "4.5.0";
+	private final static String Version = "4.6.0";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -279,8 +279,6 @@ public class frmMain extends javax.swing.JFrame {
 	private JMenuItem mnuCheckUpdate;
 	private JCheckBoxMenuItem mnuReadOnly;
 	private JLabel LbReadOnly;
-	private JMenuItem mnuDisplayCopyCurves;
-	private Component TabMain;
 	private JLabel LbTabMain;
 	private JLabel LbTabProfil;
 	private JLabel LbTabStatistics;
@@ -304,7 +302,6 @@ public class frmMain extends javax.swing.JFrame {
 
 	private JMenuItem mnuSearchDistance;
 
-	
 	// -- Called every second
 	class TimerActionListener implements ActionListener {
 
@@ -322,17 +319,16 @@ public class frmMain extends javax.swing.JFrame {
 				CgLog.checkFileSize();
 				CalcOfflineMapsSize();
 			}
-			if (cmptRelease>0) {
+			if (cmptRelease > 0) {
 				cmptRelease--;
-				if (cmptRelease==0) {
+				if (cmptRelease == 0) {
 					ShowReleaseNote();
-					cmptRelease=-1;
+					cmptRelease = -1;
 				}
 			}
 
 		}
 	}
-
 
 	/**
 	 * Creates new form frmMain !!!! Everything start here !!!!
@@ -340,13 +336,13 @@ public class frmMain extends javax.swing.JFrame {
 	public frmMain(String args[]) {
 		// -- Get the current time to measure the initialization time
 		long ts = System.currentTimeMillis();
-		
+
 		// -- Initialize data dir
 		DataDir = Utils.GetHomeDir();
 
 		// -- Initialize program dir
 		Utils.SetProgDir(inEclipse);
-	
+
 		// -- Create the tiles cache folders if necessary
 		File dirs = new File(DataDir + "/" + CgConst.CG_DIR, "TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
 		dirs.mkdirs();
@@ -364,26 +360,27 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Create the curves folders if necessary
 		dirs = new File(DataDir + "/" + CgConst.CG_DIR, "curves/");
 		dirs.mkdirs();
-		
+
 		// -- Initialize data
 		Resume = new ResumeData();
 		Settings = new CgSettings();
 		Track = new TrackData(Settings);
 		Backup_Track = new TrackData(Settings);
 
-		//-- Say to the system that we want to use the default proxy settings (the simpliest solution!)
+		// -- Say to the system that we want to use the default proxy settings (the
+		// simpliest solution!)
 		System.setProperty("java.net.useSystemProxies", "true");
-		
+
 		// showProfilMarker=true;
 
 		// -- Load configuration
 		LoadConfig();
-		
-		//-- Post configuration loading settings
+
+		// -- Post configuration loading settings
 		Track.MrbSizeW = Settings.DefMrbWidth;
 		Track.MrbSizeH = Settings.DefMrbHeight;
-				
-		//-- Application and system info in the log. Nothing exit from the computer!
+
+		// -- Application and system info in the log. Nothing exit from the computer!
 		CgLog.info("Start Course Generator version " + Version);
 		CgLog.info("Java version : " + System.getProperty("java.version"));
 		CgLog.info("java.runtime.name : " + System.getProperty("java.runtime.name"));
@@ -516,7 +513,7 @@ public class frmMain extends javax.swing.JFrame {
 		panelMap.RefreshMapButtons();
 		panelProfil.RefreshProfilButtons();
 
-		//-- Used map dir. Ask to the user to delete it!
+		// -- Used map dir. Ask to the user to delete it!
 		String tmpstr = DataDir + "/" + CgConst.CG_DIR + "/OpenStreetMapTileCache";
 		Path DataFolder = Paths.get(tmpstr);
 		if (Files.exists(DataFolder)) {
@@ -524,14 +521,15 @@ public class frmMain extends javax.swing.JFrame {
 					"Course Generator", JOptionPane.INFORMATION_MESSAGE);
 		}
 
-		//ExportCurvesFromResource(false); //No more used since V4.4. When sure delete this line and the function
+		// ExportCurvesFromResource(false); //No more used since V4.4. When sure delete
+		// this line and the function
 
 		// -- Display the splash screen
 		showDialogAbout(this, true, false, Version);
 
 		// -- Check if we need to display the release notes
 		if (!Settings.ReleaseVersion.equalsIgnoreCase(Version)) {
-			cmptRelease=3; //Delay the display of the release notes dialog box by x seconds
+			cmptRelease = 3; // Delay the display of the release notes dialog box by x seconds
 		}
 
 		// -- Log the initialization time
@@ -540,9 +538,8 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Check for update
 		if (Settings.Check4UpdateAtStart)
 			Check4Update();
-		
-	}
 
+	}
 
 	/**
 	 * Launch the calculation on the track
@@ -586,7 +583,6 @@ public class frmMain extends javax.swing.JFrame {
 		panelMap.RefreshTrack(Track, true);
 
 	}
-
 
 	/**
 	 * Create the main menu
@@ -664,7 +660,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuLastCGX.add(mnuMruCGX5);
 
 		mnuFile.add(mnuLastCGX);
-		
+
 		// -- Save CGX
 		mnuSaveCGX = new javax.swing.JMenuItem();
 		mnuSaveCGX.setAccelerator(
@@ -673,7 +669,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSaveCGX.setEnabled(false);
 		mnuSaveCGX.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SaveCGX(); 
+				SaveCGX();
 			}
 		});
 		mnuFile.add(mnuSaveCGX);
@@ -688,14 +684,14 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuFile.add(mnuSaveAsCGX);
-		
-		//##########################
-		
+
+		// ##########################
+
 		// -- Separator
 		mnuFile.add(new javax.swing.JPopupMenu.Separator());
-				
-		//##########################	
-		
+
+		// ##########################
+
 		// -- Open GPX
 		mnuOpenGPX = new javax.swing.JMenuItem();
 		mnuOpenGPX.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O,
@@ -760,17 +756,17 @@ public class frmMain extends javax.swing.JFrame {
 
 		mnuFile.add(mnuLastGPX);
 
-		//##########################
-		
+		// ##########################
+
 		// -- Separator
 		mnuFile.add(new javax.swing.JPopupMenu.Separator());
-		
-		//##########################
+
+		// ##########################
 
 		// -- Sous-menu "Importer"
 		mnuImport = new javax.swing.JMenu();
 		mnuImport.setIcon(Utils.getIcon(this, "import.png", Settings.MenuIconSize));
-		
+
 		// -- Import GPX
 		mnuImportGPX = new javax.swing.JMenuItem();
 		mnuImportGPX.setIcon(Utils.getIcon(this, "import.png", Settings.MenuIconSize));
@@ -794,18 +790,18 @@ public class frmMain extends javax.swing.JFrame {
 		mnuImport.add(mnuImportCGX);
 
 		mnuFile.add(mnuImport);
-		
-		//##########################
-		
+
+		// ##########################
+
 		// -- Separator
 		mnuFile.add(new javax.swing.JPopupMenu.Separator());
-		
-		//##########################
+
+		// ##########################
 
 		// -- Sous-menu "Exporter"
-		mnuExport = new javax.swing.JMenu();	
+		mnuExport = new javax.swing.JMenu();
 		mnuExport.setIcon(Utils.getIcon(this, "export.png", Settings.MenuIconSize));
-		
+
 		// -- Save CSV
 		mnuSaveCSV = new javax.swing.JMenuItem();
 		mnuSaveCSV.setIcon(Utils.getIcon(this, "save_csv.png", Settings.MenuIconSize));
@@ -827,7 +823,7 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuExport.add(mnuSaveGPX);
-		
+
 		// -- Save a part of the track in CGX
 		mnuSavePartCGX = new javax.swing.JMenuItem();
 		mnuSavePartCGX.setIcon(Utils.getIcon(this, "save_cgx.png", Settings.MenuIconSize));
@@ -860,19 +856,19 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuExport.add(mnuSavePartCSV);
-		
+
 		mnuFile.add(mnuExport);
-		//##########################
-		
+		// ##########################
+
 		// -- Separator
 		mnuFile.add(new javax.swing.JPopupMenu.Separator());
 
-		//##########################
-		
+		// ##########################
+
 		// -- Set marker
 		mnuTags = new javax.swing.JMenu();
 		mnuTags.setIcon(Utils.getIcon(this, "flag.png", Settings.MenuIconSize));
-		
+
 		// -- Import points
 		mnuImportPoints = new javax.swing.JMenuItem();
 		mnuImportPoints.setIcon(Utils.getIcon(this, "import.png", Settings.MenuIconSize));
@@ -911,9 +907,9 @@ public class frmMain extends javax.swing.JFrame {
 		mnuTags.add(mnuExportTagAsWaypoints);
 
 		mnuFile.add(mnuTags);
-		
-		//##########################
-		
+
+		// ##########################
+
 		// -- Separator
 		mnuFile.add(new javax.swing.JPopupMenu.Separator());
 
@@ -934,7 +930,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Menu Edit --------------------------------------------------------
 		mnuEdit = new javax.swing.JMenu();
-		//mnuEdit.setText(bundle.getString("frmMain.mnuEdit.text"));
+		// mnuEdit.setText(bundle.getString("frmMain.mnuEdit.text"));
 
 		// -- Copy
 		mnuCopy = new javax.swing.JMenuItem();
@@ -977,7 +973,7 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuEdit.add(mnuSearchDistance);
-		
+
 		// -- Separator
 		mnuEdit.add(new javax.swing.JPopupMenu.Separator());
 
@@ -1037,7 +1033,7 @@ public class frmMain extends javax.swing.JFrame {
 		// == Display
 		// ===========================================================
 		mnuDisplay = new javax.swing.JMenu();
-		//mnuDisplay.setText(bundle.getString("frmMain.mnuDisplay.text"));
+		// mnuDisplay.setText(bundle.getString("frmMain.mnuDisplay.text"));
 
 		// -- HTML report
 		// -------------------------------------------------------
@@ -1136,7 +1132,7 @@ public class frmMain extends javax.swing.JFrame {
 		// == Tools
 		// =============================================================
 		mnuTools = new javax.swing.JMenu();
-		//mnuTools.setText(bundle.getString("frmMain.mnuTools.text"));
+		// mnuTools.setText(bundle.getString("frmMain.mnuTools.text"));
 
 		// -- Find Min / Max
 		// ----------------------------------------------------
@@ -1184,7 +1180,7 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuTools.add(mnuDefineNewStart);
-		
+
 		// -- Smooth the elevation values
 		// ------------------------------------------------
 		mnuSmoothElevation = new javax.swing.JMenuItem();
@@ -1196,7 +1192,6 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuTools.add(mnuSmoothElevation);
-				
 
 		// -- Calculate the track time
 		// -------------------------------------------
@@ -1222,7 +1217,7 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuTools.add(mnuSearchCurveFromFinalTime);
-		
+
 		// -- Separator
 		// ---------------------------------------------------------
 		mnuTools.add(new javax.swing.JPopupMenu.Separator());
@@ -1242,19 +1237,15 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Force curves copy from resources
 		// ------------
 		/*
-		mnuDisplayCopyCurves = new javax.swing.JMenuItem();
-		mnuDisplayCopyCurves.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ExportCurvesFromResource(true);
-			}
-		});
-		mnuTools.add(mnuDisplayCopyCurves);
+		 * mnuDisplayCopyCurves = new javax.swing.JMenuItem();
+		 * mnuDisplayCopyCurves.addActionListener(new java.awt.event.ActionListener() {
+		 * public void actionPerformed(java.awt.event.ActionEvent evt) {
+		 * ExportCurvesFromResource(true); } }); mnuTools.add(mnuDisplayCopyCurves);
+		 * 
+		 * // -- Separator // ---------------------------------------------------------
+		 * mnuTools.add(new javax.swing.JPopupMenu.Separator());
+		 */
 
-		// -- Separator
-		// ---------------------------------------------------------
-		mnuTools.add(new javax.swing.JPopupMenu.Separator());
-		*/
-		
 		// -- Display the directory containing the speed/slope files
 		// ------------
 		mnuDisplaySSDir = new javax.swing.JMenuItem();
@@ -1273,7 +1264,7 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Separator
 		// ---------------------------------------------------------
 		mnuTools.add(new javax.swing.JPopupMenu.Separator());
-				
+
 		// -- Display the directory containing the logs
 		// ------------
 		mnuDisplayLogDir = new javax.swing.JMenuItem();
@@ -1284,15 +1275,14 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		});
 		mnuTools.add(mnuDisplayLogDir);
-		
-		
+
 		// --
 		mnuMain.add(mnuTools);
 
 		// == Settings
 		// ==========================================================
 		mnuSettings = new javax.swing.JMenu();
-		//mnuSettings.setText(bundle.getString("frmMain.mnuSettings.text"));
+		// mnuSettings.setText(bundle.getString("frmMain.mnuSettings.text"));
 
 		// -- Track settings
 		// ----------------------------------------------------
@@ -1348,7 +1338,7 @@ public class frmMain extends javax.swing.JFrame {
 					} else if (Settings.Language.equalsIgnoreCase("PT")) {
 						loc = new Locale("pt", "PT");
 					}
-					//-- Change the language
+					// -- Change the language
 					Locale.setDefault(loc);
 					JComponent.setDefaultLocale(loc);
 					JFileChooser.setDefaultLocale(loc);
@@ -1369,8 +1359,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelTrackData.ChangeLang();
 					panelMap.ChangLang();
 				}
-				
-				
+
 				// -- Refresh data and display
 				SetDefaultFont();
 				RefreshWindows(); // Refresh the main window (after a font change)
@@ -1399,7 +1388,7 @@ public class frmMain extends javax.swing.JFrame {
 		// == Help
 		// ==============================================================
 		mnuHelp = new javax.swing.JMenu();
-		//mnuHelp.setText(bundle.getString("frmMain.mnuHelp.text"));
+		// mnuHelp.setText(bundle.getString("frmMain.mnuHelp.text"));
 
 		// -- Help
 		// --------------------------------------------------------------
@@ -1449,12 +1438,12 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Separator
 		// ---------------------------------------------------------
 		mnuHelp.add(new javax.swing.JPopupMenu.Separator());
-		
+
 		// -- Courses to download
 		// --------------------------------------------------------------
 		menuCGCoursesLibrary = new javax.swing.JMenuItem();
 		menuCGCoursesLibrary.setIcon(Utils.getIcon(this, "help.png", Settings.MenuIconSize));
-		menuCGCoursesLibrary.setVisible(false); //Hide the menu. Maybe in the future a new web page will be created 
+		menuCGCoursesLibrary.setVisible(false); // Hide the menu. Maybe in the future a new web page will be created
 		menuCGCoursesLibrary.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
@@ -1529,9 +1518,9 @@ public class frmMain extends javax.swing.JFrame {
 		// --
 		mnuMain.add(mnuHelp);
 
-		//-- Set Text
+		// -- Set Text
 		SetText_MenuBarMain();
-		
+
 		// -- Add the menu at the window
 		setJMenuBar(mnuMain);
 
@@ -1539,10 +1528,8 @@ public class frmMain extends javax.swing.JFrame {
 		mnuMain.getAccessibleContext().setAccessibleParent(this);
 	}
 
-
 	/**
-	 * Set the texts for the menu bar
-	 * Separated in order to have "live" translation
+	 * Set the texts for the menu bar Separated in order to have "live" translation
 	 */
 	private void SetText_MenuBarMain() {
 
@@ -1590,7 +1577,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuMarkPosition.setText(bundle.getString("frmMain.mnuMarkPosition.text"));
 		mnuGotoNextMark.setText(bundle.getString("frmMain.mnuGotoNextMark.text"));
 		mnuGotoPrevMark.setText(bundle.getString("frmMain.mnuGotoPrevMark.text"));
-		
+
 		// -- Menu Display ----------------------------------------------------
 		mnuDisplay.setText(bundle.getString("frmMain.mnuDisplay.text"));
 
@@ -1610,17 +1597,17 @@ public class frmMain extends javax.swing.JFrame {
 		mnuCalculateTrackTime.setText(bundle.getString("frmMain.mnuCalculateTackTime.text"));
 		mnuSearchCurveFromFinalTime.setText(bundle.getString("frmMain.mnuSearchCurveFromCurve.text"));
 		mnuInternetTools.setText(bundle.getString("frmMain.mnuInternetTools.text"));
-		//mnuDisplayCopyCurves.setText(bundle.getString("frmMain.mnuDisplayCopyCurves.text"));
+		// mnuDisplayCopyCurves.setText(bundle.getString("frmMain.mnuDisplayCopyCurves.text"));
 		mnuDisplaySSDir.setText(bundle.getString("frmMain.mnuDisplaySSDir.text"));
 		mnuDisplayLogDir.setText(bundle.getString("frmMain.mnuDisplayLogDir.text"));
-		
+
 		// -- Menu Settings ---------------------------------------------------
 		mnuSettings.setText(bundle.getString("frmMain.mnuSettings.text"));
 		mnuTrackSettings.setText(bundle.getString("frmMain.mnuTrackSettings.text"));
 		mnuSpeedSlopeCurves.setText(bundle.getString("frmMain.mnuSpeedSlopeCurves.text"));
 		mnuCGSettings.setText(bundle.getString("frmMain.mnuCGSettings.text"));
 
-		//-- Menu Help --------------------------------------------------------
+		// -- Menu Help --------------------------------------------------------
 		mnuHelp.setText(bundle.getString("frmMain.mnuHelp.text"));
 		mnuCGHelp.setText(bundle.getString("frmMain.mnuCGHelp.text"));
 		mnuReleaseNotes.setText(bundle.getString("frmMain.mnuReleaseNotes.text"));
@@ -1631,9 +1618,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuCGWebsite.setText(bundle.getString("frmMain.mnuCGWebsite.text"));
 		mnuAbout.setText(bundle.getString("frmMain.mnuAbout.text"));
 	}
-	
-	
-	
+
 	protected void ImportPoints() {
 		if (Track == null)
 			return;
@@ -1655,12 +1640,11 @@ public class frmMain extends javax.swing.JFrame {
 			panelMap.RefreshTrack(Track, true);
 			PanelResume.refresh();
 			panelStatistics.refresh();
-			
-		// -- Store the directory
-		Settings.setLastDirectory( Utils.GetDirFromFilename(s));
+
+			// -- Store the directory
+			Settings.setLastDirectory(Utils.GetDirFromFilename(s));
 		}
 	}
-
 
 	/**
 	 * Open a dialog to export a selection of points
@@ -1672,31 +1656,34 @@ public class frmMain extends javax.swing.JFrame {
 		frmExportPoints frm = new frmExportPoints(Settings);
 		int mask = frm.showDialog();
 		if (mask != -1) {
-			//if current file is cgx we get the last dir from cgx
-			String s = Utils.SaveDialog(this, Settings.getLastDirectory(), "", ".cgp", bundle.getString("frmMain.CGPFile"), true,
-					bundle.getString("frmMain.FileExist"));
+			// if current file is cgx we get the last dir from cgx
+			String s = Utils.SaveDialog(this, Settings.getLastDirectory(), "", ".cgp",
+					bundle.getString("frmMain.CGPFile"), true, bundle.getString("frmMain.FileExist"));
 
 			if (!s.isEmpty()) {
 				Track.ExportCGP(s, mask);
-				
-			// -- Store the directory
-			Settings.setLastDirectory(Utils.GetDirFromFilename(s));
+
+				// -- Store the directory
+				Settings.setLastDirectory(Utils.GetDirFromFilename(s));
 			}
 		}
 	}
 
-	
 	/**
 	 * Open a dialog where you select the number separator
+	 * 
 	 * @return 0=dot 1=comma
 	 */
 	private int SelectSeparator() {
-		//-- Dot or comma for the numbers
-		String[] options = {bundle.getString("frmMain.Dot"),bundle.getString("frmMain.Comma")}; //"Dot '.' ", "Comma ',' "
-		
-        return JOptionPane.showOptionDialog(null, bundle.getString("frmMain.SelectSeparator"), "", //"Select the decimal separator"
-        		JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-        
+		// -- Dot or comma for the numbers
+		String[] options = { bundle.getString("frmMain.Dot"), bundle.getString("frmMain.Comma") }; // "Dot '.' ", "Comma
+																									// ',' "
+
+		return JOptionPane.showOptionDialog(null, bundle.getString("frmMain.SelectSeparator"), "", // "Select the
+																									// decimal
+																									// separator"
+				JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+
 	}
 
 	/**
@@ -1726,7 +1713,6 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
 	/**
 	 * Save data in a CSV file
 	 */
@@ -1746,7 +1732,6 @@ public class frmMain extends javax.swing.JFrame {
 			Settings.previousCSVDirectory = Utils.GetDirFromFilename(s);
 		}
 	}
-
 
 	/**
 	 * Import a CGX file
@@ -1795,11 +1780,9 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
 	private void mnuAbout() {
 		showDialogAbout(this, false, true, Version);
 	}
-
 
 	private void BackupInCGX() {
 		Backup_Track = Track.CopyTo(Backup_Track);
@@ -1809,7 +1792,6 @@ public class frmMain extends javax.swing.JFrame {
 		// Track.data.size() - 1, true);
 		// bNoBackup = false;
 	}
-
 
 	private void RestoreInCGX() {
 		if ((Track.data.size() <= 0) || (bNoBackup))
@@ -1846,7 +1828,6 @@ public class frmMain extends javax.swing.JFrame {
 		// bAutorUpdatePos = true;
 		bNoBackup = true;
 	}
-
 
 	/**
 	 * Define a new starting point from the current position in the main table
@@ -1889,7 +1870,6 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
 	/**
 	 * Save the selected data to disk in GPX format
 	 */
@@ -1927,7 +1907,6 @@ public class frmMain extends javax.swing.JFrame {
 			setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		}
 	}
-
 
 	/**
 	 * Save the selected data to disk in CGX format
@@ -1971,35 +1950,34 @@ public class frmMain extends javax.swing.JFrame {
 	 * Open the dialog to search the curve from an estimated final time
 	 */
 	private void SearchCurveFromFinalTime() {
-		if (Track==null) 
+		if (Track == null)
 			return;
 		if (Track.data.isEmpty())
 			return;
-		
+
 		frmSearchCurve frm = new frmSearchCurve(Settings);
 		if (frm.showDialog(Settings, Track))
 			CalcTrackTime();
-		//RefreshStatusbar(Track);
+		// RefreshStatusbar(Track);
 	}
-	
-	
+
 	/**
 	 * Open the dialog to smooth the elevation data
 	 */
 	private void SmoothElevation() {
-		if (Track==null) 
+		if (Track == null)
 			return;
 		if (Track.data.isEmpty())
 			return;
-		
+
 		FrmElevationFilter frm = new FrmElevationFilter(Settings);
-		if (frm.showDialog(Settings, Track)) {	
-			Track.CalcMainData(false,true); //No hour calculation
-			
+		if (frm.showDialog(Settings, Track)) {
+			Track.CalcMainData(false, true); // No hour calculation
+
 			// -- Refresh
 			Track.isModified = true;
 			RefreshStatusbar(Track);
-			
+
 			panelTrackData.refresh();
 			PanelResume.refresh();
 			panelStatistics.refresh();
@@ -2008,24 +1986,22 @@ public class frmMain extends javax.swing.JFrame {
 			jPanelTimeDist.Refresh(Track, Settings);
 			jPanelSpeedSlope.Refresh(Track, Settings);
 		}
-		//RefreshStatusbar(Track);
+		// RefreshStatusbar(Track);
 	}
 
-	
 	/**
 	 * Affiche le répertoire des logs
 	 */
 	void DisplayLogDir() {
 		try {
-			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.LogReadme"),
-					"Course Generator", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.LogReadme"), "Course Generator",
+					JOptionPane.INFORMATION_MESSAGE);
 
-			Desktop.getDesktop().open(new File(DataDir + "/" + CgConst.CG_DIR + "/" +CgConst.CG_LOGS));
+			Desktop.getDesktop().open(new File(DataDir + "/" + CgConst.CG_DIR + "/" + CgConst.CG_LOGS));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 
 	/**
 	 * Separator for the status bar
@@ -2037,7 +2013,6 @@ public class frmMain extends javax.swing.JFrame {
 		x.setPreferredSize(new Dimension(3, 20));
 		return x;
 	}
-
 
 	/**
 	 * Create the status bar
@@ -2220,11 +2195,10 @@ public class frmMain extends javax.swing.JFrame {
 		LbInfoMapDirSize = new javax.swing.JLabel();
 		LbInfoMapDirSize.setIcon(Utils.getIcon(this, "world.png", Settings.StatusbarIconSize));
 		StatusBar.add(LbInfoMapDirSize);
-		
-		//-- Set text
+
+		// -- Set text
 		SetText_Statusbar();
 	}
-
 
 	private void SetText_Statusbar() {
 		LbInfoTotalDist.setToolTipText(bundle.getString("frmMain.LbInfoTotalDist.toolTipText"));
@@ -2249,7 +2223,6 @@ public class frmMain extends javax.swing.JFrame {
 		LbInfoMapDirSize.setToolTipText(bundle.getString("frmMain.LbInfoMapDirSize.toolTipText"));
 	}
 
-	
 	/**
 	 * Create the Main toolbar
 	 */
@@ -2530,7 +2503,7 @@ public class frmMain extends javax.swing.JFrame {
 		});
 		ToolBarMain.add(btCalculateTrackTime);
 
-		//-- Set texts
+		// -- Set texts
 		SetText_MainToolbar();
 	}
 
@@ -2550,7 +2523,6 @@ public class frmMain extends javax.swing.JFrame {
 		btCalculateTrackTime.setToolTipText(bundle.getString("frmMain.btCalculateTrackTime.toolTipText"));
 	}
 
-	
 	/**
 	 * Display the mini roadbook
 	 */
@@ -2561,7 +2533,6 @@ public class frmMain extends javax.swing.JFrame {
 		FrmMiniroadbook frm = new FrmMiniroadbook(Settings);
 		frm.showDialog(Track);
 	}
-
 
 	protected void TrackSettings() {
 		if (Track.data.size() <= 0)
@@ -2581,7 +2552,6 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
 	/**
 	 * Display the edition curves dialog
 	 */
@@ -2593,7 +2563,6 @@ public class frmMain extends javax.swing.JFrame {
 			RefreshStatusbar(Track);
 		}
 	}
-
 
 	private void JumpToTimelimitLine() {
 
@@ -2607,23 +2576,18 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
 	/**
 	 * Add a tab to JTabbedPane. The icon is at the left of the text and there some
 	 * space between the icon and the label
 	 * 
-	 * @param tabbedPane
-	 *            JTabbedPane where we want to add the tab
-	 * @param tab
-	 *            Tab to add
-	 * @param title
-	 *            Title of the tab
-	 * @param icon
-	 *            Icon of the tab
+	 * @param tabbedPane JTabbedPane where we want to add the tab
+	 * @param tab        Tab to add
+	 * @param title      Title of the tab
+	 * @param icon       Icon of the tab
 	 */
 	private JLabel addTab(JTabbedPane tabbedPane, Component tab, String title, Icon icon) {
 		tabbedPane.add(tab);
-		
+
 		// Create bespoke component for rendering the tab.
 		javax.swing.JLabel lbl = new javax.swing.JLabel(title);
 		if (icon != null)
@@ -2634,10 +2598,9 @@ public class frmMain extends javax.swing.JFrame {
 		lbl.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
 		tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
-		
+
 		return lbl;
 	}
-
 
 	/**
 	 * Refresh the main window Used after a font change
@@ -2645,7 +2608,6 @@ public class frmMain extends javax.swing.JFrame {
 	private void RefreshWindows() {
 		SwingUtilities.updateComponentTreeUI(this);
 	}
-
 
 	/**
 	 * Set the default interface font
@@ -2660,7 +2622,6 @@ public class frmMain extends javax.swing.JFrame {
 
 		CgLog.info("Default font: " + javax.swing.UIManager.getDefaults().getFont("TabbedPane.font").toString());
 	}
-
 
 	/**
 	 * This method is called to initialize the form.
@@ -2840,7 +2801,6 @@ public class frmMain extends javax.swing.JFrame {
 				}
 			}
 
-
 			@Override
 			public void simpleClickEvent() {
 				if (Track.data.size() > 0) {
@@ -2854,7 +2814,6 @@ public class frmMain extends javax.swing.JFrame {
 							Track.data.get(row).getElevation(Settings.Unit));
 				}
 			}
-
 
 			@Override
 			public void keyRealeasedEvent() {
@@ -2911,7 +2870,8 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Tab Analysis : Time/Distance
 		jPanelTimeDist = new JPanelAnalysisTimeDist(Settings);
-		LbTabTimeDist = addTab(TabbedPaneAnalysis, jPanelTimeDist, bundle.getString("frmMain.TabTimeDist.tabTitle"), null);
+		LbTabTimeDist = addTab(TabbedPaneAnalysis, jPanelTimeDist, bundle.getString("frmMain.TabTimeDist.tabTitle"),
+				null);
 
 		// -- Tab Analysis : Speed
 		jPanelSpeed = new JPanelAnalysisSpeed(Settings);
@@ -2919,7 +2879,8 @@ public class frmMain extends javax.swing.JFrame {
 
 		// -- Tab Analysis : Speed/slope
 		jPanelSpeedSlope = new JPanelAnalysisSpeedSlope(Settings);
-		LbTabSpeedSlope = addTab(TabbedPaneAnalysis, jPanelSpeedSlope, bundle.getString("frmMain.TabSpeedSlope.tabTitle"), null);
+		LbTabSpeedSlope = addTab(TabbedPaneAnalysis, jPanelSpeedSlope,
+				bundle.getString("frmMain.TabSpeedSlope.tabTitle"), null);
 
 		// -- Tab - Summary
 		// ------------------------------------------------------
@@ -2941,7 +2902,6 @@ public class frmMain extends javax.swing.JFrame {
 				}
 			}
 
-
 			@Override
 			public void lineChangeEvent() {
 				SelectPositionFromResume(PanelResume.getSelectedLine());
@@ -2959,12 +2919,10 @@ public class frmMain extends javax.swing.JFrame {
 				panelMap.setRow(panelTrackData.getSelectedRow());
 			}
 
-
 			@Override
 			public void changeEvent() {
 				panelTrackData.refresh();
 			}
-
 
 			@Override
 			public void mouseClicked(MouseEvent evt) {
@@ -2984,12 +2942,11 @@ public class frmMain extends javax.swing.JFrame {
 		SplitPaneMainRight.setRightComponent(panelMap);
 
 		SetText_Main();
-		
+
 		// -- Finished - Pack
 		// ---------------------------------------------------
 		pack();
 	}
-
 
 	private void SetText_Main() {
 		setTitle(bundle.getString("frmMain.title"));
@@ -3003,8 +2960,6 @@ public class frmMain extends javax.swing.JFrame {
 		LbTabResume.setText(bundle.getString("frmMain.TabResume.tabTitle"));
 	}
 
-	
-	
 	protected void SelectPositionFromResume(int selectedLine) {
 		if (Resume.data.size() > 0) {
 			int r = (int) (Resume.data.get(selectedLine).getLine()) - 1;
@@ -3018,7 +2973,6 @@ public class frmMain extends javax.swing.JFrame {
 					Track.data.get(r).getElevation(Settings.Unit));
 		}
 	}
-
 
 	private void SetMapMarker() {
 		if (Track.data.size() > 0) {
@@ -3046,7 +3000,6 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
 	/**
 	 * Go to the next mark.
 	 */
@@ -3063,15 +3016,12 @@ public class frmMain extends javax.swing.JFrame {
 		return indexNextMark;
 	}
 
-
 	/**
 	 * Find the previous or next mark from the current position.
 	 * 
-	 * @param currentPosition
-	 *            The index of the current position in the table.
-	 * @param direction
-	 *            The direction that should be used to find the next mark :
-	 *            "forward", "backward"
+	 * @param currentPosition The index of the current position in the table.
+	 * @param direction       The direction that should be used to find the next
+	 *                        mark : "forward", "backward"
 	 * @return The position of the previous or next mark.
 	 */
 	private int FindMark(int currentPosition, String direction) {
@@ -3088,8 +3038,7 @@ public class frmMain extends javax.swing.JFrame {
 
 		if (currentPosition <= -1 && direction == "backward") {
 			currentPosition = trackDataSize - 1;
-		}
-		else if (currentPosition <= -1) {
+		} else if (currentPosition <= -1) {
 			currentPosition = 0;
 		}
 
@@ -3117,7 +3066,6 @@ public class frmMain extends javax.swing.JFrame {
 		return -1;
 	}
 
-
 	/**
 	 * Go to the previous mark.
 	 */
@@ -3135,7 +3083,6 @@ public class frmMain extends javax.swing.JFrame {
 
 		return indexPreviousMark;
 	}
-
 
 	/**
 	 * Display the search point dialog
@@ -3165,7 +3112,6 @@ public class frmMain extends javax.swing.JFrame {
 		frm.showDialog(Settings, Track);
 	}
 
-
 	/**
 	 * Display the search distance dialog
 	 */
@@ -3174,12 +3120,12 @@ public class frmMain extends javax.swing.JFrame {
 			return;
 
 		final frmSearchDistance frm = new frmSearchDistance(Settings);
-		double retDist=frm.showDialog(Settings);
-		if (retDist!=-1) {
-			int index=Track.SearchDistance(retDist);
-			if (index!=-1)
-			{
-				panelMap.RefreshCurrentPosMarker(Track.data.get(index).getLatitude(), Track.data.get(index).getLongitude());
+		double retDist = frm.showDialog(Settings);
+		if (retDist != -1) {
+			int index = Track.SearchDistance(retDist);
+			if (index != -1) {
+				panelMap.RefreshCurrentPosMarker(Track.data.get(index).getLatitude(),
+						Track.data.get(index).getLongitude());
 				panelTrackData.setSelectedRow(index);
 				// -- Refresh the profil cursor position
 				panelProfil.RefreshProfilInfo(index);
@@ -3188,8 +3134,6 @@ public class frmMain extends javax.swing.JFrame {
 			}
 		}
 	}
-	
-	
 
 	public void ImportGPX() {
 		if (Track.data.isEmpty())
@@ -3235,7 +3179,6 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
 	/** Returns an ImageIcon, or null if the path was invalid. */
 	protected ImageIcon createImageIcon(String path, String description) {
 		java.net.URL imgURL = getClass().getResource(path);
@@ -3246,7 +3189,6 @@ public class frmMain extends javax.swing.JFrame {
 			return null;
 		}
 	}
-
 
 	/**
 	 * Display a dialog box to open a GPX file
@@ -3269,36 +3211,39 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
 	/**
 	 * Load a GPX file
 	 * 
-	 * @param filename
-	 *            file name
+	 * @param filename file name
 	 */
 	private void LoadGPX(String filename) {
-		//-- File Exist?
+		// -- File Exist?
 		if (!Utils.FileExist(filename)) {
-			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
-					"Course Generator", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"), "Course Generator",
+					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		
-		//-- File size = 0?
+
+		// -- File size = 0?
 		File f = new File(filename);
-	    long size = f.length();
-	    if (size==0) {
-		    JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
-					"Course Generator", JOptionPane.ERROR_MESSAGE);
-		    return;
-	    }
-	    
-	    //-- Go!
+		long size = f.length();
+		if (size == 0) {
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"), "Course Generator",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		// -- Go!
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 		try {
 			Track.OpenGPX(filename, 0, (double) Settings.PosFilterAskThreshold);
 			AddMruGPX(filename);
+
+			// -- Update the viewer
+			panelMap.setTrack(Track);
+			// -- Refresh the track information
+			RefreshStatusbar(Track);
 
 		// -- Update the viewer
 		panelMap.setTrack(Track);
@@ -3340,15 +3285,14 @@ public class frmMain extends javax.swing.JFrame {
 			panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
 
 			if (Track.data.size() > 0)
-				panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());			
+				panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
-					"Course Generator", JOptionPane.ERROR_MESSAGE);			
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"), "Course Generator",
+					JOptionPane.ERROR_MESSAGE);
 		}
-		
+
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
-
 
 	/**
 	 * Save the track in GPX format with file name input
@@ -3384,7 +3328,6 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-	
 	/**
 	 * Display a dialog box to open a CGX file
 	 */
@@ -3406,31 +3349,29 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
 	/**
 	 * Load a CGX file
 	 * 
-	 * @param filename
-	 *            File name
+	 * @param filename File name
 	 */
 	private void LoadCGX(String filename) {
-		//-- File Exist?
+		// -- File Exist?
 		if (!Utils.FileExist(filename)) {
-			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
-					"Course Generator", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"), "Course Generator",
+					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		
-		//-- File size = 0?
+
+		// -- File size = 0?
 		File f = new File(filename);
-	    long size = f.length();
-	    if (size==0) {
-		    JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
-					"Course Generator", JOptionPane.ERROR_MESSAGE);
-		    return;
-	    }
-	    
-	    //-- Go!
+		long size = f.length();
+		if (size == 0) {
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"), "Course Generator",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		// -- Go!
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 		try {
@@ -3473,14 +3414,18 @@ public class frmMain extends javax.swing.JFrame {
 				panelWeather.refresh(Track, false);
 		RefreshMruCGX();
 		bNoBackup = true;
+			// Refresh map
+			panelMap.RefreshTrack(Track, true);
+
+			RefreshMruCGX();
+			bNoBackup = true;
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"),
-					"Course Generator", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"), "Course Generator",
+					JOptionPane.ERROR_MESSAGE);
 		}
 
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
-
 
 	/**
 	 * Save the track in CGX format with file name input
@@ -3509,7 +3454,7 @@ public class frmMain extends javax.swing.JFrame {
 			// -- Reset the track modified flag
 			Track.isModified = false;
 			Track.isNewTrack = false;
-			
+
 			// -- Refresh info panel
 			RefreshStatusbar(Track);
 			RefreshTitle();
@@ -3518,40 +3463,38 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
 	/**
 	 * Save the track in CGX format
 	 */
 	private void SaveCGX() {
 		String s;
 
-		//-- New? 
-		if (Track.isNewTrack) 
+		// -- New?
+		if (Track.isNewTrack)
 			SaveAsCGX();
-		else {		
+		else {
 			if (Track.data.isEmpty())
 				return;
-	
+
 			if (!Track.FullName.isEmpty()) {
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-	
+
 				// -- Save track
 				Track.SaveCGX(Track.FullName, 0, Track.data.size() - 1, false);
-	
+
 				// -- Reset the track modified flag
 				Track.isModified = false;
 				Track.isNewTrack = false;
-				
+
 				// -- Refresh info panel
 				RefreshStatusbar(Track);
 				RefreshTitle();
-	
+
 				setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 			}
 		}
 	}
 
-	
 	/**
 	 * Export tags as waypoints
 	 */
@@ -3569,12 +3512,11 @@ public class frmMain extends javax.swing.JFrame {
 			if (frm.showDialog()) {
 				Track.SaveWaypoint(s, frm.getTag());
 			}
-			
+
 			// -- Store the directory
 			Settings.setLastDirectory(Utils.GetDirFromFilename(s));
 		}
 	}
-
 
 	/**
 	 * Calculate the offline map directories size
@@ -3584,14 +3526,12 @@ public class frmMain extends javax.swing.JFrame {
 				Utils.folderSize(new File(DataDir + "/" + CgConst.CG_DIR + "/TileCache")), true);
 	}
 
-
 	/**
 	 * Load the configuration file
 	 */
 	private void LoadConfig() {
 		Settings.Load(DataDir + "/" + CgConst.CG_DIR);
 	}
-
 
 	/**
 	 * Save the settings in a configuration file
@@ -3611,7 +3551,6 @@ public class frmMain extends javax.swing.JFrame {
 		Settings.Save(DataDir + "/" + CgConst.CG_DIR);
 	}
 
-
 	/**
 	 * Called by the quit application menu
 	 * 
@@ -3620,7 +3559,6 @@ public class frmMain extends javax.swing.JFrame {
 	private void mnuQuitActionPerformed(java.awt.event.ActionEvent evt) {
 		this.processWindowEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
-
 
 	/**
 	 * Called by the Read only menu item
@@ -3638,7 +3576,6 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Refresh the statusbar
 		RefreshStatusbar(Track);
 	}
-
 
 	// private void btTestActionPerformed(java.awt.event.ActionEvent evt) {
 	// // Bouge la carte de 100 pixel
@@ -3723,7 +3660,6 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
 	/**
 	 * Set form title
 	 */
@@ -3733,7 +3669,6 @@ public class frmMain extends javax.swing.JFrame {
 			s = s + " - " + Track.Name;
 		setTitle(s);
 	}
-
 
 	private void mnuMruGPXActionPerformed(java.awt.event.ActionEvent evt) {
 		JMenuItem m = (JMenuItem) evt.getSource();
@@ -3749,7 +3684,6 @@ public class frmMain extends javax.swing.JFrame {
 			tryOpenRecentFile(Settings.mruGPX[4]);
 	}
 
-
 	private void mnuMruCGXActionPerformed(java.awt.event.ActionEvent evt) {
 		JMenuItem m = (JMenuItem) evt.getSource();
 		if (m == mnuMruCGX1)
@@ -3764,12 +3698,10 @@ public class frmMain extends javax.swing.JFrame {
 			tryOpenRecentFile(Settings.mruCGX[4]);
 	}
 
-
 	/**
 	 * Attempts to open a file (GPX or CGX).
 	 * 
-	 * @param filePath
-	 *            The absolute file path.
+	 * @param filePath The absolute file path.
 	 */
 	private void tryOpenRecentFile(String filePath) {
 		File file = new File(filePath);
@@ -3808,7 +3740,6 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
 	/**
 	 * Refresh the main toolbar
 	 */
@@ -3829,7 +3760,6 @@ public class frmMain extends javax.swing.JFrame {
 		btCalculateTrackTime.setEnabled(isLoaded);
 		btMiniRoadbook.setEnabled(isLoaded);
 	}
-
 
 	/**
 	 * Refresh the main menu
@@ -3869,12 +3799,10 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSmoothElevation.setEnabled(isLoaded);
 	}
 
-
 	/**
 	 * Refresh the statusbar
 	 * 
-	 * @param tdata
-	 *            Track data object
+	 * @param tdata Track data object
 	 */
 	private void RefreshStatusbar(TrackData tdata) {
 
@@ -3947,7 +3875,6 @@ public class frmMain extends javax.swing.JFrame {
 		LbInfoMapDirSize.setText(StrMapsDirSize);
 	}
 
-
 	/**
 	 * Refresh the GPX most recent used files menu
 	 */
@@ -3994,7 +3921,6 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
-	
 	/**
 	 * Display the release note dialog
 	 */
@@ -4003,12 +3929,10 @@ public class frmMain extends javax.swing.JFrame {
 		frm.showDialog(Settings);
 	}
 
-
 	/**
 	 * Add "filename" to the CGX mru menu
 	 * 
-	 * @param filename
-	 *            name of the file to add
+	 * @param filename name of the file to add
 	 */
 	public void AddMruGPX(String filename) {
 		int i;
@@ -4020,7 +3944,6 @@ public class frmMain extends javax.swing.JFrame {
 			Settings.mruGPX[i] = Settings.mruGPX[i - 1];
 		Settings.mruGPX[0] = filename;
 	}
-
 
 	/**
 	 * Refresh the CGX most recent used files menu
@@ -4068,12 +3991,10 @@ public class frmMain extends javax.swing.JFrame {
 
 	}
 
-
 	/**
 	 * Add "filename" to the CGX mru menu
 	 * 
-	 * @param filename
-	 *            name of the file to add
+	 * @param filename name of the file to add
 	 */
 	public void AddMruCGX(String filename) {
 		int i;
@@ -4085,7 +4006,6 @@ public class frmMain extends javax.swing.JFrame {
 			Settings.mruCGX[i] = Settings.mruCGX[i - 1];
 		Settings.mruCGX[0] = filename;
 	}
-
 
 	/***
 	 * Check if a new version exist
@@ -4138,12 +4058,10 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
 	/**
 	 * Set the default font
 	 * 
-	 * @param f
-	 *            font
+	 * @param f font
 	 */
 	public static void setUIFont(javax.swing.plaf.FontUIResource f) {
 		Enumeration<Object> keys = javax.swing.UIManager.getDefaults().keys();
@@ -4156,12 +4074,10 @@ public class frmMain extends javax.swing.JFrame {
 		}
 	}
 
-
 	/**
 	 * Everything start here!!!
 	 * 
-	 * @param args
-	 *            the command line arguments
+	 * @param args the command line arguments
 	 */
 	public static void main(final String args[]) {
 		// -- Get the VM parameters
@@ -4184,9 +4100,18 @@ public class frmMain extends javax.swing.JFrame {
 			OsCheck.OSType ostype = OsCheck.getOperatingSystemType();
 			switch (ostype) {
 			case Windows:
-				//Force L&F and not the system L&F otherwise the the application crash (Java problem)
-				//javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel"); => Metal L&F works but it looks old!
-				javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel"); //Windows look but also a bit old fashion
+				// Force L&F and not the system L&F otherwise the the application crash (Java
+				// problem)
+				// javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+				// => Metal L&F works but it looks old!
+				javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel"); // Windows
+																													// look
+																													// but
+																													// also
+																													// a
+																													// bit
+																													// old
+																													// fashion
 				break;
 			case MacOS:
 				javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
@@ -4244,46 +4169,34 @@ public class frmMain extends javax.swing.JFrame {
 		}
 
 		/* Create and display the form */
-/*
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new frmMain(args).setVisible(true);
-			}
-		});
-	*/	
+		/*
+		 * java.awt.EventQueue.invokeLater(new Runnable() { public void run() { new
+		 * frmMain(args).setVisible(true); } });
+		 */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					frmMain window = new frmMain(args);
 					window.setVisible(true);
-                    //window.frame.setVisible(true);
-                    //new frmMain(args).setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+					// window.frame.setVisible(true);
+					// new frmMain(args).setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
-		
-		/*
-		EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    ChangeLocale window = new ChangeLocale();
-                    window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        */
-	}
 
+		/*
+		 * EventQueue.invokeLater(new Runnable() { public void run() { try {
+		 * ChangeLocale window = new ChangeLocale(); window.frame.setVisible(true); }
+		 * catch (Exception e) { e.printStackTrace(); } } });
+		 */
+	}
 
 	/**
 	 * Determines if a more recent version is available.
 	 * 
-	 * @param remoteVersionNumber
-	 *            The current version on the server.
+	 * @param remoteVersionNumber The current version on the server.
 	 */
 	public static boolean isRemoteVersionNewer(String remoteVersionNumber) {
 		StringTokenizer localVersion = new StringTokenizer(Version, ".");

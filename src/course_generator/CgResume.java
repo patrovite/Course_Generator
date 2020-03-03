@@ -74,55 +74,45 @@ public class CgResume {
 	/** Comment **/
 	private String Comment;
 
-
 	// -- Number
 	public double getNum() {
 		return Num;
 	}
 
-
 	public String getNumString() {
 		return String.format("%1.0f", Num);
 	}
 
-
 	public void setNum(double num) {
 		Num = num;
 	}
-
 
 	// -- Name
 	public String getName() {
 		return Name;
 	}
 
-
 	public void setName(String name) {
 		Name = name;
 	}
-
 
 	// -- Line number
 	public double getLine() {
 		return Line;
 	}
 
-
 	public String getLineString() {
 		return String.format("%1.0f", Line);
 	}
-
 
 	public void setLine(double line) {
 		Line = line;
 	}
 
-
 	// -- Elevation
 	public double getElevation() {
 		return Elevation;
 	}
-
 
 	public double getElevation(int unit) {
 		switch (unit) {
@@ -135,7 +125,6 @@ public class CgResume {
 			return Elevation;
 		}
 	}
-
 
 	public String getElevationString(int unit, boolean withunit) {
 
@@ -162,17 +151,14 @@ public class CgResume {
 		return s;
 	}
 
-
 	public void setElevation(double elevation) {
 		Elevation = elevation;
 	}
-
 
 	// -- positive climb
 	public double getClimbP() {
 		return ClimbP;
 	}
-
 
 	public double getClimbP(int unit) {
 		switch (unit) {
@@ -185,7 +171,6 @@ public class CgResume {
 			return ClimbP;
 		}
 	}
-
 
 	public String getClimbPString(int unit, boolean withunit) {
 
@@ -212,17 +197,14 @@ public class CgResume {
 		return s;
 	}
 
-
 	public void setClimbP(double climbP) {
 		ClimbP = climbP;
 	}
-
 
 	// -- Negative climb
 	public double getClimbM() {
 		return ClimbM;
 	}
-
 
 	public double getClimbM(int unit) {
 		switch (unit) {
@@ -235,7 +217,6 @@ public class CgResume {
 			return ClimbM;
 		}
 	}
-
 
 	public String getClimbMString(int unit, boolean withunit) {
 
@@ -262,17 +243,14 @@ public class CgResume {
 		return s;
 	}
 
-
 	public void setClimbM(double climbM) {
 		ClimbM = climbM;
 	}
-
 
 	// -- Distance
 	public double getDist() {
 		return Dist;
 	}
-
 
 	public double getDist(int unit) {
 		switch (unit) {
@@ -285,7 +263,6 @@ public class CgResume {
 			return Dist;
 		}
 	}
-
 
 	public String getDistString(int unit, boolean withunit) {
 
@@ -314,22 +291,18 @@ public class CgResume {
 		return s;
 	}
 
-
 	public void setDist(double dist) {
 		Dist = dist;
 	}
-
 
 	// -- Time
 	public int getTime() {
 		return Time;
 	}
 
-
 	public void setTime(int time) {
 		Time = time;
 	}
-
 
 	public String getTimeString() {
 		int nbh = Time / 3600;
@@ -338,33 +311,27 @@ public class CgResume {
 		return String.format("%02d:%02d:%02d ", nbh, nbm, nbs);
 	}
 
-
 	// -- Hour
 	public DateTime getHour() {
 		return Hour;
 	}
 
-
 	public void setHour(DateTime hour) {
 		Hour = hour;
 	}
 
-
 	public String getHourString() {
 		return Hour.toString("E HH:mm:ss ");
 	}
-
 
 	// -- Delta Time
 	public int getdTime_f() {
 		return dTime_f;
 	}
 
-
 	public void setdTime_f(int dTime_f) {
 		this.dTime_f = dTime_f;
 	}
-
 
 	public String getdTime_f_String() {
 		int nbh = dTime_f / 3600;
@@ -373,12 +340,10 @@ public class CgResume {
 		return String.format("%02d:%02d:%02d ", nbh, nbm, nbs);
 	}
 
-
 	// -- Total distance
 	public double getTotal() {
 		return Total;
 	}
-
 
 	public double getTotal(int unit) {
 		switch (unit) {
@@ -391,7 +356,6 @@ public class CgResume {
 			return Total;
 		}
 	}
-
 
 	public String getTotalString(int unit, boolean withunit) {
 
@@ -420,22 +384,18 @@ public class CgResume {
 		return s;
 	}
 
-
 	public void setTotal(double total) {
 		Total = total;
 	}
-
 
 	// -- Time limit
 	public int getTimeLimit() {
 		return TimeLimit;
 	}
 
-
 	public void setTimeLimit(int timeLimit) {
 		TimeLimit = timeLimit;
 	}
-
 
 	public String getTimeLimitString() {
 		if (TimeLimit != 0) {
@@ -448,17 +408,14 @@ public class CgResume {
 			return "";
 	}
 
-
 	// -- Station time
 	public int getStationTime() {
 		return StationTime;
 	}
 
-
 	public void setStationTime(int stationTime) {
 		StationTime = stationTime;
 	}
-
 
 	public String getStationTimeString() {
 		if (StationTime != 0) {
@@ -471,12 +428,10 @@ public class CgResume {
 			return "";
 	}
 
-
 	// -- Delta distance
 	public double getdDist() {
 		return dDist;
 	}
-
 
 	public double getdDist(int unit) {
 		switch (unit) {
@@ -489,7 +444,6 @@ public class CgResume {
 			return dDist;
 		}
 	}
-
 
 	public String getdDistString(int unit, boolean withunit) {
 
@@ -518,17 +472,14 @@ public class CgResume {
 		return s;
 	}
 
-
 	public void setdDist(double dDist) {
 		this.dDist = dDist;
 	}
-
 
 	// -- Delta Climb positive
 	public double getdClimbP() {
 		return dClimbP;
 	}
-
 
 	public double getdClimbP(int unit) {
 		switch (unit) {
@@ -541,7 +492,6 @@ public class CgResume {
 			return dClimbP;
 		}
 	}
-
 
 	public String getdClimbPString(int unit, boolean withunit) {
 
@@ -568,17 +518,14 @@ public class CgResume {
 		return s;
 	}
 
-
 	public void setdClimbP(double dClimbP) {
 		this.dClimbP = dClimbP;
 	}
-
 
 	// -- Delta climb negative
 	public double getdClimbM() {
 		return dClimbM;
 	}
-
 
 	public double getdClimbM(int unit) {
 		switch (unit) {
@@ -591,7 +538,6 @@ public class CgResume {
 			return dClimbM;
 		}
 	}
-
 
 	public String getdClimbMString(int unit, boolean withunit) {
 
@@ -618,17 +564,14 @@ public class CgResume {
 		return s;
 	}
 
-
 	public void setdClimbM(double dClimbM) {
 		this.dClimbM = dClimbM;
 	}
-
 
 	// -- Ascend speed
 	public double getSpeedP() {
 		return SpeedP;
 	}
-
 
 	public double getSpeedP(int unit) {
 		switch (unit) {
@@ -641,7 +584,6 @@ public class CgResume {
 			return SpeedP;
 		}
 	}
-
 
 	public String getSpeedPString(int unit, boolean withunit) {
 
@@ -671,17 +613,14 @@ public class CgResume {
 		return s;
 	}
 
-
 	public void setSpeedP(double speedP) {
 		SpeedP = speedP;
 	}
-
 
 	// -- Descend speed
 	public double getSpeedM() {
 		return SpeedM;
 	}
-
 
 	public double getSpeedM(int unit) {
 		switch (unit) {
@@ -694,7 +633,6 @@ public class CgResume {
 			return SpeedM;
 		}
 	}
-
 
 	public String getSpeedMString(int unit, boolean withunit) {
 
@@ -724,22 +662,18 @@ public class CgResume {
 		return s;
 	}
 
-
 	public void setSpeedM(double speedM) {
 		SpeedM = speedM;
 	}
-
 
 	// -- Average ascend slope
 	public double getAvgSlopeP() {
 		return AvgSlopeP;
 	}
 
-
 	public void setAvgSlopeP(double avgSlopeP) {
 		AvgSlopeP = avgSlopeP;
 	}
-
 
 	public String getAvgSlopePString() {
 		Double val = AvgSlopeP;
@@ -749,17 +683,14 @@ public class CgResume {
 			return "0.0";
 	}
 
-
 	// -- average descend slope
 	public double getAvgSlopeM() {
 		return AvgSlopeM;
 	}
 
-
 	public void setAvgSlopeM(double avgSlopeM) {
 		AvgSlopeM = avgSlopeM;
 	}
-
 
 	public String getAvgSlopeMString() {
 		Double val = AvgSlopeM;
@@ -769,23 +700,19 @@ public class CgResume {
 			return "0.0";
 	}
 
-
 	// -- Comment
 	public String getComment() {
 		return Comment;
 	}
 
-
 	public void setComment(String comment) {
 		Comment = comment;
 	}
-
 
 	// -- Average speed
 	public double getAvgSpeed() {
 		return AvgSpeed;
 	}
-
 
 	/*
 	 * public double getAvgSpeed(int unit, boolean pace) { switch (unit) { case
@@ -798,7 +725,6 @@ public class CgResume {
 	public String getAvgSpeedString(int unit, boolean withUnit, boolean pace) {
 		return Utils.FormatSpeed(AvgSpeed, unit, pace, withUnit);
 	}
-
 
 	public void setAvgSpeed(double avgSpeed) {
 		AvgSpeed = avgSpeed;

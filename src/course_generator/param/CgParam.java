@@ -28,12 +28,10 @@ public class CgParam implements Comparable<CgParam> {
 	private double Slope;
 	private String Speed;
 
-
 	public CgParam(double slope, String speed) {
 		Slope = slope;
 		Speed = speed;
 	}
-
 
 	@Override
 	public int compareTo(CgParam p) {
@@ -45,21 +43,17 @@ public class CgParam implements Comparable<CgParam> {
 			return 0;
 	}
 
-
 	public double getSlope() {
 		return Slope;
 	}
-
 
 	public void setSlope(double slope) {
 		Slope = slope;
 	}
 
-
 	public String getSpeed() {
 		return Speed;
 	}
-
 
 	public double getSpeedNumber() {
 		double speed = 0.0;
@@ -72,7 +66,6 @@ public class CgParam implements Comparable<CgParam> {
 		}
 		return speed;
 	}
-
 
 	public void setSpeed(double speed) {
 		Speed = String.valueOf(speed);

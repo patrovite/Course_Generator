@@ -78,7 +78,6 @@ public class frmExportPoints extends javax.swing.JDialog {
 	private JCheckBox chkIncludeFirstAid;
 	private JLabel lbIncludeFirstAid;
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -88,7 +87,6 @@ public class frmExportPoints extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
-
 
 	public int showDialog() {
 		chkIncludeHightPt.setSelected(true);
@@ -103,7 +101,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 		chkIncludeDropBag.setSelected(true);
 		chkIncludeCrew.setSelected(true);
 		chkIncludeFirstAid.setSelected(true);
-		
+
 		// End set field
 		ok = false;
 
@@ -147,7 +145,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 			// Info
 			if (chkIncludeInfo.isSelected())
 				tag = tag | CgConst.TAG_INFO;
-			
+
 			// Drop bag
 			if (chkIncludeDropBag.isSelected())
 				tag = tag | CgConst.TAG_DROPBAG;
@@ -155,16 +153,15 @@ public class frmExportPoints extends javax.swing.JDialog {
 			// Crew
 			if (chkIncludeCrew.isSelected())
 				tag = tag | CgConst.TAG_CREW;
-						
+
 			// First Aid
 			if (chkIncludeFirstAid.isSelected())
 				tag = tag | CgConst.TAG_FIRST_AID;
-			
+
 			return tag;
 		} else
 			return -1;
 	}
-
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -200,7 +197,6 @@ public class frmExportPoints extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -211,7 +207,6 @@ public class frmExportPoints extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -333,7 +328,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 				Utils.getIcon(this, "dropbag.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelMain, lbIncludeDropBag, 1, 9, 1, 1, 1, 1, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
-		
+
 		// --
 		chkIncludeCrew = new javax.swing.JCheckBox();
 		Utils.addComponent(panelMain, chkIncludeCrew, 0, 10, 1, 1, 0, 1, 5, 0, 0, 0, GridBagConstraints.WEST,
@@ -343,7 +338,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 				Utils.getIcon(this, "crew.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelMain, lbIncludeCrew, 1, 10, 1, 1, 1, 1, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
-		
+
 		// --
 		chkIncludeFirstAid = new javax.swing.JCheckBox();
 		Utils.addComponent(panelMain, chkIncludeFirstAid, 0, 11, 1, 1, 0, 1, 5, 0, 0, 0, GridBagConstraints.WEST,
@@ -353,8 +348,7 @@ public class frmExportPoints extends javax.swing.JDialog {
 				Utils.getIcon(this, "first_aid.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelMain, lbIncludeFirstAid, 1, 11, 1, 1, 1, 1, 5, 5, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
-		
-		
+
 		// == BUTTONS
 		// ===========================================================
 		jPanelButtons = new javax.swing.JPanel();
