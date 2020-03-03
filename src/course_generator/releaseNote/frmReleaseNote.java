@@ -47,7 +47,7 @@ import course_generator.settings.CgSettings;
 import course_generator.utils.CgLog;
 import course_generator.utils.Utils;
 
-public class frmReleaseNote extends javax.swing.JDialog  {
+public class frmReleaseNote extends javax.swing.JDialog {
 	private static final long serialVersionUID = -5710076240042256421L;
 	private ResourceBundle bundle;
 	private CgSettings settings;
@@ -61,30 +61,29 @@ public class frmReleaseNote extends javax.swing.JDialog  {
 	/**
 	 * Creates new form frmSettings
 	 */
-	
+
 	public frmReleaseNote(java.awt.Frame parent, CgSettings settings, String version) {
 		super(parent, true);
 		this.settings = settings;
 		this.version = version;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
-		//setModal(true);
+		// setModal(true);
 	}
-
 
 	public void showDialog(CgSettings _settings) {
 		settings = _settings;
 
 		// Set field
 		refresh();
-		
+
 		// -- Update the display
-		//Refresh();
+		// Refresh();
 
 		// -- Show the dialog
 		setVisible(true);
 	}
-	
+
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -108,12 +107,10 @@ public class frmReleaseNote extends javax.swing.JDialog  {
 		return rootPane;
 	}
 
-
-
 	private void initComponents() {
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle(bundle.getString("frmReleaseNote.title")); //Release notes
+		setTitle(bundle.getString("frmReleaseNote.title")); // Release notes
 		setAlwaysOnTop(true);
 
 		// -- Layout
@@ -126,59 +123,45 @@ public class frmReleaseNote extends javax.swing.JDialog  {
 		editorStat.setEditable(false);
 		editorStat.setPreferredSize(new Dimension(600, 400));
 		scrollPaneStat = new JScrollPane(editorStat);
-		
-		Utils.addComponent(paneGlobal, scrollPaneStat, 
-				0, 0, 
-				1, 1, 
-				1, 1, 
-				10, 10, 0, 10, 
+
+		Utils.addComponent(paneGlobal, scrollPaneStat, 0, 0, 1, 1, 1, 1, 10, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		chkDisable = new javax.swing.JCheckBox();
-		chkDisable.setText(bundle.getString("frmReleaseNote.chkDisable.Text")); //Stop displaying this dialog box.
-		Utils.addComponent(paneGlobal, chkDisable, 
-				0, 1, 
-				1, 1, 
-				1, 0, 
-				10, 10, 10, 10, 
+		chkDisable.setText(bundle.getString("frmReleaseNote.chkDisable.Text")); // Stop displaying this dialog box.
+		Utils.addComponent(paneGlobal, chkDisable, 0, 1, 1, 1, 1, 0, 10, 10, 10, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
-				
 
 		// == BUTTONS
 		// ===========================================================
 		jPanelButtons = new javax.swing.JPanel();
 		jPanelButtons.setLayout(new FlowLayout());
-		Utils.addComponent(paneGlobal, jPanelButtons, 
-				0, 2, 
-				GridBagConstraints.REMAINDER, 1, 
-				0, 0, 
-				0, 0, 0, 0,
+		Utils.addComponent(paneGlobal, jPanelButtons, 0, 2, GridBagConstraints.REMAINDER, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
 		btClose = new javax.swing.JButton();
-		btClose.setText(bundle.getString("frmReleaseNote.btClose.text")); //Close
+		btClose.setText(bundle.getString("frmReleaseNote.btClose.text")); // Close
 		btClose.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				//-- Is the checkbox checked? Yes, set ReleaseNote to version in order to avoid 
-				//   the display of the dialog at the next start
+				// -- Is the checkbox checked? Yes, set ReleaseNote to version in order to avoid
+				// the display of the dialog at the next start
 				if (chkDisable.isSelected()) {
 					settings.ReleaseVersion = version;
 				}
 				setVisible(false);
 			}
-		});	
-		
+		});
+
 		// -- Add buttons
 		jPanelButtons.add(btClose);
-		
+
 		// --
 		pack();
 		setLocationRelativeTo(null);
 	}
-	
-	
+
 	public void refresh() {
-		//--
+		// --
 		StringBuilder sb = new StringBuilder();
 
 		// -- Get current language
@@ -213,5 +196,4 @@ public class frmReleaseNote extends javax.swing.JDialog  {
 		editorStat.setCaretPosition(0);
 	}
 
-	
 }

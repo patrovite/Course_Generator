@@ -29,7 +29,6 @@ public class ResumeModel extends AbstractTableModel {
 	private ResumeData resume;
 	private CgSettings settings;
 
-
 	public ResumeModel(ResumeData data, CgSettings _settings) {
 		super();
 
@@ -62,37 +61,32 @@ public class ResumeModel extends AbstractTableModel {
 		header[17] = bundle.getString("frmMain.ResumeHeaderAvgSlopeP.text");
 		header[18] = bundle.getString("frmMain.ResumeHeaderAvgSlopeM.text");
 		header[19] = bundle.getString("frmMain.ResumeHeaderAvgSpeed.text");
-		header[20] = bundle.getString("frmMain.ResumeHeaderComment.text");		
+		header[20] = bundle.getString("frmMain.ResumeHeaderComment.text");
 	}
 
 	public CgSettings getSettings() {
 		return settings;
 	}
 
-
 	@Override
 	public int getColumnCount() {
 		return header.length;
 	}
-
 
 	@Override
 	public String getColumnName(int columnIndex) {
 		return header[columnIndex];
 	}
 
-
 	@Override
 	public int getRowCount() {
 		return resume.data.size();
 	}
 
-
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		return resume.data.get(rowIndex);// .getNum();
 	}
-
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {

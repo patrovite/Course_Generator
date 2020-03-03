@@ -55,7 +55,6 @@ public class CgImportPts {
 	/** Font size of the MRB **/
 	private int FontSizeMRB = 0;
 
-
 	// -- Constructor
 	public CgImportPts() {
 		Sel = false;
@@ -76,16 +75,8 @@ public class CgImportPts {
 		setFontSizeMRB(0);
 	}
 
-
-	public CgImportPts(double lat, double lon, double ele, int tag, String name, String comment,
-			int eattime,
-			int timelimit,
-			String fmtmrb,
-			int optmrb,
-			int	vposmrb,
-			String commentmrb,
-			int FontSizemrb			
-			) {
+	public CgImportPts(double lat, double lon, double ele, int tag, String name, String comment, int eattime,
+			int timelimit, String fmtmrb, int optmrb, int vposmrb, String commentmrb, int FontSizemrb) {
 		Sel = false;
 		Line = 0;
 		Dist = 0.0;
@@ -101,15 +92,13 @@ public class CgImportPts {
 		setOptMRB(optmrb);
 		setVPosMRB(vposmrb);
 		setCommentMRB(commentmrb);
-		setFontSizeMRB(FontSizemrb);			
+		setFontSizeMRB(FontSizemrb);
 	}
-
 
 	// -- Selection
 	public boolean getSel() {
 		return Sel;
 	}
-
 
 	public String getSelString() {
 		if (Sel)
@@ -118,22 +107,18 @@ public class CgImportPts {
 			return "0";
 	}
 
-
 	public void setSel(boolean sel) {
 		this.Sel = sel;
 	}
-
 
 	public void invSel() {
 		Sel = !Sel;
 	}
 
-
 	// -- Line number
 	public double getLine() {
 		return Line;
 	}
-
 
 	/**
 	 * Return the line as string
@@ -144,17 +129,14 @@ public class CgImportPts {
 		return String.format("%1.0f", Line + 1);
 	}
 
-
 	public void setLine(double line) {
 		Line = line;
 	}
-
 
 	// -- Distance
 	public double getDist() {
 		return Dist;
 	}
-
 
 	public double getDist(int unit) {
 		switch (unit) {
@@ -167,7 +149,6 @@ public class CgImportPts {
 			return Dist;
 		}
 	}
-
 
 	public String getDistString(int unit, boolean withunit) {
 
@@ -196,49 +177,40 @@ public class CgImportPts {
 		return s;
 	}
 
-
 	public void setDist(double dist) {
 		Dist = dist;
 	}
-
 
 	// -- Latitude
 	public double getLatitude() {
 		return Latitude;
 	}
 
-
 	public String getLatitudeString() {
 		return String.format("%1.7f", Latitude);
 	}
 
-
 	public void setLatitude(double latitude) {
 		Latitude = latitude;
 	}
-
 
 	// -- Longitude
 	public double getLongitude() {
 		return Longitude;
 	}
 
-
 	public String getLongitudeString() {
 		return String.format("%1.7f", Longitude);
 	}
-
 
 	public void setLongitude(double longitude) {
 		Longitude = longitude;
 	}
 
-
 	// -- Elevation
 	public double getElevation() {
 		return Elevation;
 	}
-
 
 	public double getElevation(int unit) {
 		switch (unit) {
@@ -251,7 +223,6 @@ public class CgImportPts {
 			return Elevation;
 		}
 	}
-
 
 	public String getElevationString(int unit, boolean withunit) {
 
@@ -278,113 +249,96 @@ public class CgImportPts {
 		return s;
 	}
 
-
 	public void setElevation(double elevation) {
 		Elevation = elevation;
 	}
-
 
 	// -- Tag
 	public int getTag() {
 		return Tag;
 	}
 
-
 	public void setTag(int tag) {
 		Tag = tag;
 	}
-
 
 	// -- Name
 	public String getName() {
 		return Name;
 	}
 
-
 	public void setName(String name) {
 		Name = name;
 	}
-
 
 	// -- Comment
 	public String getComment() {
 		return Comment;
 	}
 
-
 	public void setComment(String comment) {
 		Comment = comment;
 	}
 
-	//-- EatTime
+	// -- EatTime
 
 	public int getEatTime() {
 		return EatTime;
 	}
 
-
 	public void setEatTime(int eatTime) {
 		EatTime = eatTime;
 	}
 
-	//-- Timelimit
+	// -- Timelimit
 	public int getTimeLimit() {
 		return TimeLimit;
 	}
-
 
 	public void setTimeLimit(int timeLimit) {
 		TimeLimit = timeLimit;
 	}
 
-	
-	//-- FmtMRB
+	// -- FmtMRB
 	public String getFmtRB() {
 		return FmtMRB;
 	}
-
 
 	public void setFmtRB(String fmtRB) {
 		FmtMRB = fmtRB;
 	}
 
-
-	//-- OptMRB
+	// -- OptMRB
 	public int getOptMRB() {
 		return OptMRB;
 	}
-
 
 	public void setOptMRB(int optMRB) {
 		OptMRB = optMRB;
 	}
 
-
-	//-- VPosMRB
+	// -- VPosMRB
 	public int getVPosMRB() {
 		return VPosMRB;
 	}
-
 
 	public void setVPosMRB(int vPosMRB) {
 		VPosMRB = vPosMRB;
 	}
 
-	//-- Comment MRB
+	// -- Comment MRB
 	public String getCommentMRB() {
 		return CommentMRB;
 	}
-
 
 	public void setCommentMRB(String commentMRB) {
 		CommentMRB = commentMRB;
 	}
 
-	//-- FontSize MRB
+	// -- FontSize MRB
 	public int getFontSizeMRB() {
 		return FontSizeMRB;
 	}
-
 
 	public void setFontSizeMRB(int fontSizeMRB) {
 		FontSizeMRB = fontSizeMRB;

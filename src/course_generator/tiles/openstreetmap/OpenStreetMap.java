@@ -27,14 +27,14 @@ import org.openstreetmap.gui.jmapviewer.tilesources.AbstractOsmTileSource;
  */
 
 public class OpenStreetMap extends AbstractOsmTileSource {
-	//private static final String PATTERN = "http://%s.tile.openstreetmap.org";
-	//private static final String PATTERN = "https://%s.tile.openstreetmap.org";
-	private static final String PATTERN = "https://tile.openstreetmap.de"; //Openstreetmap.de because ".org" return error 429
+	// private static final String PATTERN = "http://%s.tile.openstreetmap.org";
+	// private static final String PATTERN = "https://%s.tile.openstreetmap.org";
+	private static final String PATTERN = "https://tile.openstreetmap.de"; // Openstreetmap.de because ".org" return
+																			// error 429
 
 	private static final String[] SERVER = { "a", "b", "c" };
 
 	private int SERVER_NUM = 0;
-
 
 	/**
 	 * Constructs a new {@code "Mapnik"} tile source.
@@ -43,7 +43,6 @@ public class OpenStreetMap extends AbstractOsmTileSource {
 		super("map", PATTERN);
 	}
 
-
 	@Override
 	public String getBaseUrl() {
 		String url = String.format(this.baseUrl, new Object[] { SERVER[SERVER_NUM] });
@@ -51,12 +50,10 @@ public class OpenStreetMap extends AbstractOsmTileSource {
 		return url;
 	}
 
-
 	@Override
 	public int getMaxZoom() {
 		return 18;
 	}
-
 
 	public TileSource.TileUpdate getTileUpdate() {
 		return TileSource.TileUpdate.IfNoneMatch;

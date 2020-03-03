@@ -33,7 +33,6 @@ public class CgSpinner extends JSpinner {
 	private int max;
 	private int step;
 
-
 	public CgSpinner(int start, int min, int max, int step) {
 		super();
 		this.min = min;
@@ -57,7 +56,6 @@ public class CgSpinner extends JSpinner {
 		spinnerEditor.getTextField().setHorizontalAlignment(JTextField.CENTER);
 	}
 
-
 	private void MouseWheelAction(int wheelRotation) {
 		int value = (int) getSpinnerValue();
 		int n = Math.abs(wheelRotation);
@@ -73,29 +71,24 @@ public class CgSpinner extends JSpinner {
 		setValue(value);
 	}
 
-
 	public void setMaximum(int value) {
 		max = value;
 		model.setMaximum(value);
 	}
-
 
 	public void setMinimum(int value) {
 		min = value;
 		model.setMinimum(value);
 	}
 
-
 	public void setStep(int value) {
 		step = value;
 		model.setStepSize(value);
 	}
 
-
 	public int getValueAsInt() {
 		return (int) this.getSpinnerValue();
 	}
-
 
 	// To make sure the model has the same value as the editor use the
 	// commitEdit method, eg:
@@ -106,7 +99,6 @@ public class CgSpinner extends JSpinner {
 		return (double) v;
 	}
 
-
 	private Object getSpinnerValue() {
 		try {
 			this.commitEdit();
@@ -116,7 +108,6 @@ public class CgSpinner extends JSpinner {
 
 		return this.getValue();
 	}
-
 
 	public double getValueAsDouble(int unit) {
 		switch (unit) {

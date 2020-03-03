@@ -6,73 +6,73 @@ package org.openstreetmap.gui.jmapviewer.tilesources;
  */
 public class OsmTileSource {
 
-    /**
-     * The default "Mapnik" OSM tile source.
-     */
-    public static class Mapnik extends AbstractOsmTileSource {
+	/**
+	 * The default "Mapnik" OSM tile source.
+	 */
+	public static class Mapnik extends AbstractOsmTileSource {
 
-        private static final String PATTERN = "https://%s.tile.openstreetmap.org";
+		private static final String PATTERN = "https://%s.tile.openstreetmap.org";
 
-        private static final String[] SERVER = { "a", "b", "c" };
+		private static final String[] SERVER = { "a", "b", "c" };
 
-        private int SERVER_NUM = 0;
-        
-        /**
-         * Constructs a new {@code "Mapnik"} tile source.
-         */
-        public Mapnik() {
-            super("Mapnik", PATTERN);
-        }
+		private int SERVER_NUM = 0;
 
-        @Override
-        public String getBaseUrl() {
-            String url = String.format(this.baseUrl, new Object[] { SERVER[SERVER_NUM] });
-            SERVER_NUM = (SERVER_NUM + 1) % SERVER.length;
-            return url;
-        }
+		/**
+		 * Constructs a new {@code "Mapnik"} tile source.
+		 */
+		public Mapnik() {
+			super("Mapnik", PATTERN);
+		}
 
-        @Override
-        public int getMaxZoom() {
-            return 19;
-        }
+		@Override
+		public String getBaseUrl() {
+			String url = String.format(this.baseUrl, new Object[] { SERVER[SERVER_NUM] });
+			SERVER_NUM = (SERVER_NUM + 1) % SERVER.length;
+			return url;
+		}
 
-        public TileUpdate getTileUpdate() {
-            return TileUpdate.IfNoneMatch;
-        }
-    }
+		@Override
+		public int getMaxZoom() {
+			return 19;
+		}
 
-    /**
-     * The "Cycle Map" OSM tile source.
-     */
-    public static class CycleMap extends AbstractOsmTileSource {
+		public TileUpdate getTileUpdate() {
+			return TileUpdate.IfNoneMatch;
+		}
+	}
 
-        private static final String PATTERN = "http://%s.tile.opencyclemap.org/cycle";
+	/**
+	 * The "Cycle Map" OSM tile source.
+	 */
+	public static class CycleMap extends AbstractOsmTileSource {
 
-        private static final String[] SERVER = { "a", "b", "c" };
+		private static final String PATTERN = "http://%s.tile.opencyclemap.org/cycle";
 
-        private int SERVER_NUM = 0;
+		private static final String[] SERVER = { "a", "b", "c" };
 
-        /**
-         * Constructs a new {@code CycleMap} tile source.
-         */
-        public CycleMap() {
-            super("Cyclemap", PATTERN);
-        }
+		private int SERVER_NUM = 0;
 
-        @Override
-        public String getBaseUrl() {
-            String url = String.format(this.baseUrl, new Object[] { SERVER[SERVER_NUM] });
-            SERVER_NUM = (SERVER_NUM + 1) % SERVER.length;
-            return url;
-        }
+		/**
+		 * Constructs a new {@code CycleMap} tile source.
+		 */
+		public CycleMap() {
+			super("Cyclemap", PATTERN);
+		}
 
-        @Override
-        public int getMaxZoom() {
-            return 18;
-        }
+		@Override
+		public String getBaseUrl() {
+			String url = String.format(this.baseUrl, new Object[] { SERVER[SERVER_NUM] });
+			SERVER_NUM = (SERVER_NUM + 1) % SERVER.length;
+			return url;
+		}
 
-        public TileUpdate getTileUpdate() {
-            return TileUpdate.LastModified;
-        }
-    }
+		@Override
+		public int getMaxZoom() {
+			return 18;
+		}
+
+		public TileUpdate getTileUpdate() {
+			return TileUpdate.LastModified;
+		}
+	}
 }

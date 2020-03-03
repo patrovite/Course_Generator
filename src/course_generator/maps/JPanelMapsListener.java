@@ -21,9 +21,7 @@ package course_generator.maps;
 public interface JPanelMapsListener {
 	void requestPositionIndexEvent();
 
-
 	void changeEvent();
-
 
 	void mouseClicked(java.awt.event.MouseEvent evt);
 }

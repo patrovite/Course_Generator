@@ -77,8 +77,8 @@ public class SaxCGXHandler extends DefaultHandler {
 	private double trkpt_lon = 0.0;
 	private double trkpt_ele = 0.0;
 	private double trkpt_eleNotSmoothed = 0.0;
-	private double trkpt_eleSmoothed = 0.0;	
-	private boolean trkpt_SmoothedData = false;	
+	private double trkpt_eleSmoothed = 0.0;
+	private boolean trkpt_SmoothedData = false;
 	private boolean trkpt_NotSmoothedData = false;
 	private double trkpt_dist = 0.0;
 	private double trkpt_distcumul = 0.0;
@@ -133,12 +133,10 @@ public class SaxCGXHandler extends DefaultHandler {
 	private Locator locator;
 	DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
 
-
 	/**
 	 * Read the CGX file from disc
 	 * 
-	 * @param filename
-	 *            Name of the cgx file to read
+	 * @param filename Name of the cgx file to read
 	 * @return The error code Error explanation: ERR_READ_NO = No problem during the
 	 *         reading of the file ERR_READ_DOUBLE = Parsing error during the read
 	 *         of a double element ERR_READ_INT = Parsing error during the read of a
@@ -210,7 +208,6 @@ public class SaxCGXHandler extends DefaultHandler {
 		return trkdata.ReadError;
 	}
 
-
 	/*
 	 * @Override public void startDocument() throws SAXException {
 	 * //System.out.println("Start document"); }
@@ -223,26 +220,23 @@ public class SaxCGXHandler extends DefaultHandler {
 		return errline;
 	}
 
-
 	@Override
 	public void setDocumentLocator(final Locator locator) {
 		this.locator = locator; // Save the locator, so that it can be used later for line tracking when
 		// traversing nodes.
 	}
 
-
 	@Override
 	public void startElement(String uri, String localname, String qName, Attributes attributs) throws SAXException {
 		if (qName.equalsIgnoreCase("COURSEGENERATOR")) {
 			level++;
-		}else if (qName.equalsIgnoreCase("TRACKPOINT") ) {
+		} else if (qName.equalsIgnoreCase("TRACKPOINT")) {
 			// trk_nb++;
-			trkpt_SmoothedData=false; //Reset the flag to detect smoothed data
-			trkpt_NotSmoothedData=false;
+			trkpt_SmoothedData = false; // Reset the flag to detect smoothed data
+			trkpt_NotSmoothedData = false;
 			level++;
 		}
 	}
-
 
 	/**
 	 * Parse a string element
@@ -255,14 +249,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		return S;
 	}
 
-
 	/**
 	 * Parse a double element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private double ManageDouble(double _default, int _errcode) {
@@ -278,14 +269,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a integer element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private int ManageInt(int _default, int _errcode) {
@@ -301,14 +289,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a boolean element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private boolean ManageBoolean(boolean _default, int _errcode) {
@@ -324,14 +309,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a color element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed color
 	 */
 	private Color ManageColor(Color _default, int _errcode) {
@@ -346,7 +328,6 @@ public class SaxCGXHandler extends DefaultHandler {
 			return _default;
 		}
 	}
-
 
 	@Override
 	public void endElement(String uri, String localname, String qName) throws SAXException {
@@ -425,8 +406,8 @@ public class SaxCGXHandler extends DefaultHandler {
 				trkdata.TrackUseDaylightSaving = ManageBoolean(false, ERR_READ_BOOL);
 			} else if (qName.equalsIgnoreCase("CURVE")) {
 				curve = ManageString();
-				int FolderType=Utils.searchCurveFolder(curve);				
-				if (!Utils.FileExist(Utils.getSelectedCurveFolder(FolderType)  + curve + ".par")) {
+				int FolderType = Utils.searchCurveFolder(curve);
+				if (!Utils.FileExist(Utils.getSelectedCurveFolder(FolderType) + curve + ".par")) {
 					JOptionPane.showMessageDialog(Parent,
 							String.format(bundle.getString("loadCGX.CurveFileError"), curve + ".par"));
 					trkdata.Paramfile = "Default";
@@ -535,14 +516,14 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("TRACKPOINT")) {
 				level--;
 				if ((mode == 0) || (mode == 2)) {
-					//No smoothed elevation => set the normal elevation
-					if (!trkpt_SmoothedData) 
+					// No smoothed elevation => set the normal elevation
+					if (!trkpt_SmoothedData)
 						trkpt_eleSmoothed = trkpt_ele;
-					
-					//No not smoothed elevation => set the normal elevation
-					if (!trkpt_NotSmoothedData) 
+
+					// No not smoothed elevation => set the normal elevation
+					if (!trkpt_NotSmoothedData)
 						trkpt_eleSmoothed = trkpt_ele;
-					
+
 					// Add data at the end of the array
 					Cmpt++;
 					trkdata.data.add(new CgData(Cmpt, // double Num
@@ -550,7 +531,7 @@ public class SaxCGXHandler extends DefaultHandler {
 							trkpt_lon, // double Longitude
 							trkpt_ele, // double Elevation
 							trkpt_eleNotSmoothed, // double ElevationNotSmoothed
-							trkpt_eleSmoothed, // double ElevationSmoothed							
+							trkpt_eleSmoothed, // double ElevationSmoothed
 							trkpt_ele, // double ElevationMemo
 							trkpt_tag, // int Tag
 							trkpt_dist, // double Dist
@@ -583,7 +564,7 @@ public class SaxCGXHandler extends DefaultHandler {
 							trkpt_lon, // double Longitude
 							trkpt_ele, // double Elevation
 							trkpt_eleNotSmoothed, // double ElevationNotSmoothed
-							trkpt_eleSmoothed, // double ElevationSmoothed							
+							trkpt_eleSmoothed, // double ElevationSmoothed
 							trkpt_ele, // double ElevationMemo
 							trkpt_tag, // int Tag
 							trkpt_dist, // double Dist
@@ -617,7 +598,6 @@ public class SaxCGXHandler extends DefaultHandler {
 		} // End LEVEL_TRACKPOINT
 
 	}
-
 
 	@Override
 	public void characters(char[] chars, int start, int end) throws SAXException {

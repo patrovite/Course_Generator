@@ -28,7 +28,6 @@ public class ImportPtsHeaderRenderer implements TableCellRenderer {
 	private final JLabel lbl;
 	private final TableCellRenderer wrappedRenderer;
 
-
 	public ImportPtsHeaderRenderer(TableCellRenderer wrappedRenderer) {
 		if (!(wrappedRenderer instanceof JLabel)) {
 			throw new IllegalArgumentException("The supplied renderer must inherit from JLabel");
@@ -37,7 +36,6 @@ public class ImportPtsHeaderRenderer implements TableCellRenderer {
 		this.wrappedRenderer = wrappedRenderer;
 		this.lbl = (JLabel) wrappedRenderer;
 	}
-
 
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,

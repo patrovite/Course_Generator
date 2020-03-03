@@ -38,7 +38,6 @@ public class PanelPreviewLabel extends JPanel {
 	private TrackData track;
 	private CgSettings settings;
 
-
 	/**
 	 * Constructor
 	 */
@@ -49,36 +48,29 @@ public class PanelPreviewLabel extends JPanel {
 		settings = null;
 	}
 
-
 	public CgSettings getSettings() {
 		return settings;
 	}
-
 
 	public void setSettings(CgSettings settings) {
 		this.settings = settings;
 	}
 
-
 	public TrackData getTrack() {
 		return track;
 	}
-
 
 	public void setTrack(TrackData track) {
 		this.track = track;
 	}
 
-
 	public CgData getData() {
 		return data;
 	}
 
-
 	public void setData(CgData data) {
 		this.data = data;
 	}
-
 
 	/**
 	 * Refresh the display
@@ -86,7 +78,6 @@ public class PanelPreviewLabel extends JPanel {
 	public void Refresh() {
 		repaint();
 	}
-
 
 	/**
 	 * Refresh the panel

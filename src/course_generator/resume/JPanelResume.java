@@ -60,7 +60,6 @@ public class JPanelResume extends JPanel {
 	private JButton btRefreshRefresh;
 	private List<JPanelResumeListener> listeners = new ArrayList<JPanelResumeListener>();
 
-
 	public JPanelResume(ResumeData resume, CgSettings settings) {
 		super();
 		Resume = resume;
@@ -70,23 +69,19 @@ public class JPanelResume extends JPanel {
 		initComponents();
 	}
 
-
 	public void addListener(JPanelResumeListener toAdd) {
 		listeners.add(toAdd);
 	}
-
 
 	public void notifyLineChange() {
 		for (JPanelResumeListener hl : listeners)
 			hl.lineChangeEvent();
 	}
 
-
 	public void notifyDoubleClick() {
 		for (JPanelResumeListener hl : listeners)
 			hl.doubleClickEvent();
 	}
-
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -131,7 +126,6 @@ public class JPanelResume extends JPanel {
 		add(jScrollPaneResume, java.awt.BorderLayout.CENTER);
 	}
 
-
 	/**
 	 * Create resume toolbar
 	 */
@@ -170,7 +164,7 @@ public class JPanelResume extends JPanel {
 			}
 		});
 		ToolBarResume.add(btRefreshRefresh);
-		
+
 		SetText_Resume_Toolbar();
 	}
 
@@ -179,7 +173,6 @@ public class JPanelResume extends JPanel {
 		btRefreshRefresh.setToolTipText(bundle.getString("JPanelResume.btRefreshRefresh.toolTipText"));
 	}
 
-	
 	private void TableResumeKeyReleased(KeyEvent evt) {
 		int row = TableResume.getSelectedRow();
 		int col = TableResume.getSelectedColumn();
@@ -189,7 +182,6 @@ public class JPanelResume extends JPanel {
 		notifyLineChange();
 		// SelectPositionFromResume(row);
 	}
-
 
 	private void TableResumeMouseClicked(MouseEvent evt) {
 		int row = TableResume.rowAtPoint(evt.getPoint());
@@ -202,17 +194,14 @@ public class JPanelResume extends JPanel {
 		// SelectPositionFromResume(row);
 	}
 
-
 	public int getSelectedLine() {
 		return TableResume.getSelectedRow();
 	}
-
 
 	public int getDataTrackLine() {
 		int p = TableResume.getSelectedRow();
 		return (int) Resume.data.get(p).getLine() - 1;
 	}
-
 
 	// private void SelectPositionFromResume(int row) {
 	// if (Resume.data.size() > 0) {
@@ -241,12 +230,11 @@ public class JPanelResume extends JPanel {
 			TableResume.setRowSelectionInterval(r, r);
 	}
 
-
 	private void SaveResumeAsCSV() {
 		if (Resume.data.size() > 0) {
 			String s;
-			s = Utils.SaveDialog(this, Settings.getLastDirectory(), "", ".csv", bundle.getString("frmMain.CSVFile"), true,
-					bundle.getString("frmMain.FileExist"));
+			s = Utils.SaveDialog(this, Settings.getLastDirectory(), "", ".csv", bundle.getString("frmMain.CSVFile"),
+					true, bundle.getString("frmMain.FileExist"));
 
 			if (!s.isEmpty()) {
 				Resume.SaveAsCSV(s, Settings.Unit, Settings.isPace);
@@ -256,7 +244,6 @@ public class JPanelResume extends JPanel {
 			}
 		}
 	}
-
 
 	/**
 	 * Refresh the resume grid
@@ -345,7 +332,6 @@ public class JPanelResume extends JPanel {
 		TableResume.invalidate();
 		ModelTableResume.fireTableStructureChanged();
 	}
-
 
 	public void setTrack(TrackData track) {
 		Track = track;

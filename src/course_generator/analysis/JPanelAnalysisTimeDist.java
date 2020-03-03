@@ -70,8 +70,7 @@ public class JPanelAnalysisTimeDist extends JPanel {
 	private JLabel lbTimeDistSlope;
 	private ChartPanel ChartPanelTimeDist;
 	private Crosshair xCrosshair;
-	private int index=0;
-
+	private int index = 0;
 
 	public JPanelAnalysisTimeDist(CgSettings settings) {
 		super();
@@ -83,7 +82,6 @@ public class JPanelAnalysisTimeDist extends JPanel {
 		chart = CreateChart(datasetElevDist, datasetTimeDist);
 		initComponents();
 	}
-
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -174,7 +172,6 @@ public class JPanelAnalysisTimeDist extends JPanel {
 				}
 			}
 
-
 			@Override
 			public void chartMouseMoved(ChartMouseEvent event) {
 			}
@@ -182,13 +179,12 @@ public class JPanelAnalysisTimeDist extends JPanel {
 		add(ChartPanelTimeDist, java.awt.BorderLayout.CENTER);
 	}
 
-
 	private void RefreshInfo(int i) {
 		if ((track == null) || (settings == null))
 			return;
 
-		index=i;
-		
+		index = i;
+
 		// -- Get the data
 		CgData d = track.data.get(i);
 
@@ -207,7 +203,6 @@ public class JPanelAnalysisTimeDist extends JPanel {
 		lbTimeDistSlope.setText(" " + bundle.getString("JPanelAnalysisTimeDist.lbTimeDistSlope.text") + "="
 				+ d.getSlopeString(true) + " ");
 	}
-
 
 	private JFreeChart CreateChart(XYDataset dataset1, XYDataset dataset2) {
 		JFreeChart chart = ChartFactory.createXYAreaChart("",
@@ -237,7 +232,6 @@ public class JPanelAnalysisTimeDist extends JPanel {
 		renderer.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
 		plot.setRenderer(0, renderer);
 
-
 		NumberAxis rangeAxis2 = new NumberAxis(bundle.getString("JPanelAnalysisTimeDist.labelY2")); // "Time"
 		plot.setRangeAxis(1, rangeAxis2);
 		plot.setDataset(1, dataset2);
@@ -252,7 +246,6 @@ public class JPanelAnalysisTimeDist extends JPanel {
 
 		return chart;
 	}
-
 
 	/**
 	 * Update the Time/Distance chart
@@ -297,12 +290,12 @@ public class JPanelAnalysisTimeDist extends JPanel {
 		chart = CreateChart(datasetElevDist, datasetTimeDist);
 		RefreshInfo(0);
 	}
-	
+
 	public void ChangLang() {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
-		chart.getXYPlot().getDomainAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisTimeDist.labelX")); //X
-		chart.getXYPlot().getRangeAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisTimeDist.labelY1")); //Y1
-		chart.getXYPlot().getRangeAxis(1).setAttributedLabel(bundle.getString("JPanelAnalysisTimeDist.labelY2")); //Y2
+		chart.getXYPlot().getDomainAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisTimeDist.labelX")); // X
+		chart.getXYPlot().getRangeAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisTimeDist.labelY1")); // Y1
+		chart.getXYPlot().getRangeAxis(1).setAttributedLabel(bundle.getString("JPanelAnalysisTimeDist.labelY2")); // Y2
 		RefreshInfo(index);
 	}
 

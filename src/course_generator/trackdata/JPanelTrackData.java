@@ -49,7 +49,6 @@ public class JPanelTrackData extends JPanel {
 	private int selectedRow = -1;
 	private int old_row = -2;
 
-
 	public JPanelTrackData(TrackDataModel model, CgSettings settings) {
 		super();
 		this.settings = settings;
@@ -57,29 +56,24 @@ public class JPanelTrackData extends JPanel {
 		initComponents();
 	}
 
-
 	public void addListener(JPanelTrackDataListener toAdd) {
 		listeners.add(toAdd);
 	}
-
 
 	public void notifyDoubleClick() {
 		for (JPanelTrackDataListener hl : listeners)
 			hl.doubleClickEvent();
 	}
 
-
 	public void notifySimpleClick() {
 		for (JPanelTrackDataListener hl : listeners)
 			hl.simpleClickEvent();
 	}
 
-
 	public void notifyReleaseKey() {
 		for (JPanelTrackDataListener hl : listeners)
 			hl.keyRealeasedEvent();
 	}
-
 
 	private void initComponents() {
 		setPreferredSize(new java.awt.Dimension(677, 150));
@@ -119,7 +113,6 @@ public class JPanelTrackData extends JPanel {
 		add(jScrollPaneData, java.awt.BorderLayout.CENTER);
 	}
 
-
 	private void TableMainMouseClicked(java.awt.event.MouseEvent evt) {
 		selectedRow = TableMain.rowAtPoint(evt.getPoint());
 		if ((selectedRow < 0) || (selectedRow == old_row))
@@ -128,7 +121,6 @@ public class JPanelTrackData extends JPanel {
 		old_row = selectedRow;
 		notifySimpleClick();
 	}
-
 
 	private void TableMainKeyReleased(java.awt.event.KeyEvent evt) {
 		selectedRow = TableMain.getSelectedRow();
@@ -139,13 +131,11 @@ public class JPanelTrackData extends JPanel {
 		notifyReleaseKey();
 	}
 
-
 	public void setTrack(TrackData track) {
 		this.track = track;
 		old_row = -1;
 		refresh();
 	}
-
 
 	/**
 	 * Refresh the content of the data table
@@ -158,17 +148,14 @@ public class JPanelTrackData extends JPanel {
 			TableMain.setRowSelectionInterval(r, r);
 	}
 
-
 	public int getSelectedRow() {
 		// return selectedRow;
 		return TableMain.getSelectedRow();
 	}
 
-
 	public int getSelectedRowCount() {
 		return TableMain.getSelectedRowCount();
 	}
-
 
 	public void setColumnWidth() {
 		// -- Set the preferred column width
@@ -178,20 +165,17 @@ public class JPanelTrackData extends JPanel {
 		refresh();
 	}
 
-
 	public void updateColumnWidth() {
 		// -- Update the column width in the settings
 		for (int i = 0; i < 16; i++)
 			settings.TableMainColWidth[i] = TableMain.getColumnModel().getColumn(i).getWidth();
 	}
 
-
 	public void setSelectedRow(int row) {
 		TableMain.setRowSelectionInterval(row, row);
 		Rectangle rect = TableMain.getCellRect(row, 0, true);
 		TableMain.scrollRectToVisible(rect);
 	}
-
 
 	/**
 	 * Copy of the current cell in the clipboard --
@@ -247,11 +231,11 @@ public class JPanelTrackData extends JPanel {
 				// Note
 				if ((tag & CgConst.TAG_NOTE) != 0)
 					s = s + "Note ";
-				
+
 				// Roadbook
 				if ((tag & CgConst.TAG_ROADBOOK) != 0)
 					s = s + "Roadbook ";
-				
+
 				// Drop bag
 				if ((tag & CgConst.TAG_DROPBAG) != 0)
 					s = s + "Drop bag ";
@@ -259,7 +243,7 @@ public class JPanelTrackData extends JPanel {
 				// Crew
 				if ((tag & CgConst.TAG_CREW) != 0)
 					s = s + "Crew ";
-				
+
 				// First aid
 				if ((tag & CgConst.TAG_FIRST_AID) != 0)
 					s = s + "First aid ";
@@ -310,5 +294,5 @@ public class JPanelTrackData extends JPanel {
 		ModelTableMain.SetTexts();
 		ModelTableMain.fireTableStructureChanged();
 	}
-	
+
 }

@@ -26,12 +26,10 @@ public class ImportPtsData {
 
 	public ArrayList<CgImportPts> data;
 
-
 	// -- Constructeur --
 	public ImportPtsData() {
 		data = new ArrayList<CgImportPts>();
 	}
-
 
 	public static synchronized ImportPtsData getInstance() {
 		if (instance == null) {

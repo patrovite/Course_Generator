@@ -158,7 +158,6 @@ public class frmSettings extends javax.swing.JDialog {
 	private JLabel lbThresholdClimb;
 	private CgSpinner spinThresholdClimb;
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -169,7 +168,6 @@ public class frmSettings extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
-
 
 	public boolean showDialog() {
 		// Set field
@@ -183,11 +181,11 @@ public class frmSettings extends javax.swing.JDialog {
 			cbLanguage.setSelectedIndex(2);
 		else if (settings.Language.equalsIgnoreCase("ES"))
 			cbLanguage.setSelectedIndex(3);
-		/* Disabled until I receive the translation
-		else if (settings.Language.equalsIgnoreCase("PT"))
-			cbLanguage.setSelectedIndex(4);
-		*/
-		
+		/*
+		 * Disabled until I receive the translation else if
+		 * (settings.Language.equalsIgnoreCase("PT")) cbLanguage.setSelectedIndex(4);
+		 */
+
 		// -- Units
 		if (settings.Unit == CgConst.UNIT_METER)
 			cbUnit.setSelectedIndex(0);
@@ -208,7 +206,7 @@ public class frmSettings extends javax.swing.JDialog {
 		// -- Threshold
 		spinThresholdAsk.setValue((int) settings.PosFilterAskThreshold);
 		spinThresholdClimb.setValue((int) settings.ClimbThresholdForCalculation);
-		
+
 		// -- Default font
 		DefaultFont = new Font(settings.DefaultFontName, settings.DefaultFontStyle, settings.DefaultFontSize);
 
@@ -251,7 +249,7 @@ public class frmSettings extends javax.swing.JDialog {
 		if (ok) {
 			// Copy fields
 
-			String old_language = settings.Language;
+			//String old_language = settings.Language;
 
 			// -- Language
 			switch (cbLanguage.getSelectedIndex()) {
@@ -267,11 +265,10 @@ public class frmSettings extends javax.swing.JDialog {
 			case 3: // Spanish
 				settings.Language = "ES";
 				break;
-			/* Disabled until I receive the translation
-			case 4: // Portugues
-				settings.Language = "PT";
-				break;
-			*/				
+			/*
+			 * Disabled until I receive the translation case 4: // Portugues
+			 * settings.Language = "PT"; break;
+			 */
 			default: // Default
 				settings.Language = "";
 			}
@@ -306,7 +303,7 @@ public class frmSettings extends javax.swing.JDialog {
 			// -- Threshold
 			settings.PosFilterAskThreshold = spinThresholdAsk.getValueAsInt();
 			settings.ClimbThresholdForCalculation = spinThresholdClimb.getValueAsInt();
-			
+
 			// -- Default font
 			settings.DefaultFontName = DefaultFont.getFontName();
 			settings.DefaultFontStyle = DefaultFont.getStyle();
@@ -352,7 +349,7 @@ public class frmSettings extends javax.swing.JDialog {
 			settings.NightTrackTransparency = spinNightTrackTransparency.getValueAsInt() * 255 / 100;
 
 			// -- Restart of the application needed?
-			if ( (OldStatusbarIconSize != settings.StatusbarIconSize) || (OldTabIconSize != settings.TabIconSize)
+			if ((OldStatusbarIconSize != settings.StatusbarIconSize) || (OldTabIconSize != settings.TabIconSize)
 					|| (OldToolbarIconSize != settings.ToolbarIconSize)
 					|| (OldMapToolbarIconSize != settings.MapToolbarIconSize)
 					|| (OldMenuIconSize != settings.MenuIconSize) || (OldTagIconSize != settings.TagIconSize)
@@ -369,7 +366,6 @@ public class frmSettings extends javax.swing.JDialog {
 		}
 		return ok;
 	}
-
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -405,7 +401,6 @@ public class frmSettings extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -416,7 +411,6 @@ public class frmSettings extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	/**
 	 * This method is called to initialize the form.
@@ -456,11 +450,14 @@ public class frmSettings extends javax.swing.JDialog {
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		cbLanguage = new javax.swing.JComboBox<>();
-		/* Portugues disabled until I receive the translation
-		String language[] = { bundle.getString("frmSettings.LanguageDefault"),
-				bundle.getString("frmSettings.LanguageEN"), bundle.getString("frmSettings.LanguageFR"),
-				bundle.getString("frmSettings.LanguageES"), bundle.getString("frmSettings.LanguagePT") };
-		*/
+		/*
+		 * Portugues disabled until I receive the translation String language[] = {
+		 * bundle.getString("frmSettings.LanguageDefault"),
+		 * bundle.getString("frmSettings.LanguageEN"),
+		 * bundle.getString("frmSettings.LanguageFR"),
+		 * bundle.getString("frmSettings.LanguageES"),
+		 * bundle.getString("frmSettings.LanguagePT") };
+		 */
 		String language[] = { bundle.getString("frmSettings.LanguageDefault"),
 				bundle.getString("frmSettings.LanguageEN"), bundle.getString("frmSettings.LanguageFR"),
 				bundle.getString("frmSettings.LanguageES") };
@@ -514,7 +511,7 @@ public class frmSettings extends javax.swing.JDialog {
 		spinThresholdClimb = new CgSpinner(CgConst.MIN_ELEV, 1, 100, 1);
 		Utils.addComponent(panelGeneral, spinThresholdClimb, 1, line++, 1, 1, 0, 0, 2, 5, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-		
+
 		// -- Check for update
 		lbCheck = new javax.swing.JLabel();
 		lbCheck.setText(bundle.getString("frmSettings.lbCheck.text"));
@@ -914,7 +911,6 @@ public class frmSettings extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-
 	/**
 	 * Display the font chooser dialog
 	 */
@@ -924,19 +920,14 @@ public class frmSettings extends javax.swing.JDialog {
 			DefaultFont = res;
 	}
 
-
 	/**
 	 * Add a tab to JTabbedPane. The icon is at the left of the text and there some
 	 * space between the icon and the label
 	 * 
-	 * @param tabbedPane
-	 *            JTabbedPane where we want to add the tab
-	 * @param tab
-	 *            Tab to add
-	 * @param title
-	 *            Title of the tab
-	 * @param icon
-	 *            Icon of the tab
+	 * @param tabbedPane JTabbedPane where we want to add the tab
+	 * @param tab        Tab to add
+	 * @param title      Title of the tab
+	 * @param icon       Icon of the tab
 	 */
 	private void addTab(JTabbedPane tabbedPane, Component tab, String title, Icon icon) {
 		tabbedPane.add(tab);
@@ -953,13 +944,11 @@ public class frmSettings extends javax.swing.JDialog {
 		tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, lbl);
 	}
 
-
 	/**
 	 * Return the index in the "fontSize" array of the value containing the font
 	 * size
 	 * 
-	 * @param value
-	 *            Font size
+	 * @param value Font size
 	 * @return Index in the "fontSize" array
 	 */
 	private int FontSize2Index(int value) {
@@ -970,12 +959,10 @@ public class frmSettings extends javax.swing.JDialog {
 		return 0; // Default value if not found
 	}
 
-
 	/**
 	 * Return the font size corresponding at an index
 	 * 
-	 * @param value
-	 *            index
+	 * @param value index
 	 * @return Font size
 	 */
 	private int Index2FontSize(int value) {
@@ -985,11 +972,9 @@ public class frmSettings extends javax.swing.JDialog {
 		return fontSize[value];
 	}
 
-
 	private Color ChooseColor(Color cl) {
 		return FrmColorChooser.showDialog(this, "", cl, settings);
 	}
-
 
 	private void LoadTheme() {
 		JFileChooser fileChooser = new JFileChooser();
@@ -1035,7 +1020,6 @@ public class frmSettings extends javax.swing.JDialog {
 		}
 	}
 
-
 	private void SaveTheme() {
 		String s = Utils.SaveDialog(this, DataDir + "/" + CgConst.CG_DIR + "/themes/", "", ".theme",
 				bundle.getString("frmMain.themeFile"), true, bundle.getString("frmMain.FileExist"));
@@ -1073,7 +1057,6 @@ public class frmSettings extends javax.swing.JDialog {
 			}
 		}
 	}
-
 
 	/**
 	 * Refresh some dialog contents

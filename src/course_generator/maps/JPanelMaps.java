@@ -45,7 +45,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
 import org.openstreetmap.gui.jmapviewer.Coordinate;
-import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.OsmFileCacheTileLoader;
 import org.openstreetmap.gui.jmapviewer.interfaces.MapMarker;
 import org.openstreetmap.gui.jmapviewer.tilesources.BingAerialTileSource;
@@ -100,7 +99,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	private JButton btSaveMap;
 	private FrmSelectMap selectMap;
 
-
 	public JPanelMaps(CgSettings settings) {
 		super();
 		Settings = settings;
@@ -112,30 +110,24 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		initComponents();
 	}
 
-
 	public void addListener(JPanelMapsListener toAdd) {
 		listeners.add(toAdd);
 	}
-
 
 	public void notifyRequestPosition() {
 		for (JPanelMapsListener hl : listeners)
 			hl.requestPositionIndexEvent();
 	}
 
-
 	public void notifyChange() {
 		for (JPanelMapsListener hl : listeners)
 			hl.changeEvent();
 	}
 
-
-
 	public void notifyMouseClicked(java.awt.event.MouseEvent evt) {
 		for (JPanelMapsListener hl : listeners)
 			hl.mouseClicked(evt);
 	}
-
 
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals("ThunderForestApiKeyChanged")) {
@@ -150,7 +142,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			}
 		}
 	}
-
 
 	private void initComponents() {
 		setLayout(new BorderLayout());
@@ -212,7 +203,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		add(panelMain, BorderLayout.CENTER);
 	}
 
-
 	/**
 	 * Create the map toolbar
 	 */
@@ -227,7 +217,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			public void componentShown(ComponentEvent arg0) {
 				// TODO Auto-generated method stub
 			}
-
 
 			@Override
 			public void componentResized(ComponentEvent arg0) {
@@ -252,12 +241,10 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 
 			}
 
-
 			@Override
 			public void componentMoved(ComponentEvent arg0) {
 				// TODO Auto-generated method stub
 			}
-
 
 			@Override
 			public void componentHidden(ComponentEvent arg0) {
@@ -455,7 +442,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		});
 		jToolBarMapViewer.add(btMapSelect);
 
-		//-- Set Texts
+		// -- Set Texts
 		SetText_Toolbar();
 	}
 
@@ -487,7 +474,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	private void MapViewerMouseClicked(java.awt.event.MouseEvent evt) {
 		if (Track == null)
 			return;
@@ -505,25 +491,22 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		// Refresh position marker on the map
 		int i = Track.FindNearestPoint(c.getLat(), c.getLon());
 		RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
-		
-		//-- If CTRL key is pressed then set marker at this position
+
+		// -- If CTRL key is pressed then set marker at this position
 		if (evt.isControlDown())
 			ShowMapMarker();
 	}
-
 
 	public Coordinate getSelectedPosition() {
 		return selectedPosition;
 	}
 
-
 	/**
 	 * Display track stored in a TrackData class
 	 * 
-	 * @param tdata
-	 *            TrackData object to display
-	 * @param zoom2fit
-	 *            If true the zoom is set have the complete display of the track
+	 * @param tdata    TrackData object to display
+	 * @param zoom2fit If true the zoom is set have the complete display of the
+	 *                 track
 	 * 
 	 */
 	public void RefreshTrack(TrackData tdata, boolean zoom2fit) {
@@ -580,16 +563,16 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 				found = false;
 			}
 		}
-		
-		//-- Finish the night polyline
-		if (cmptNight>0) {
+
+		// -- Finish the night polyline
+		if (cmptNight > 0) {
 			polyLineNight = new MapPolyLine(routeNight);
 			polyLineNight.setColor(cl_Transp);
 			polyLineNight.setStroke(new BasicStroke(Settings.NightTrackWidth));
 			// -- Add the polyline to the viewer
 			MapViewer.addMapPolygon(polyLineNight);
 		}
-		
+
 		// -- Create the tracks (over the night tracks if necessary)
 		cmpt = 0;
 		List<Coordinate> routeNormal = new ArrayList<Coordinate>();
@@ -628,7 +611,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			last_diff = r.getDiff();
 		}
 
-		//-- Finish the polyline
+		// -- Finish the polyline
 		MapPolyLine polyLineNormal = new MapPolyLine(routeNormal);
 		// -- Set the line color
 		cl = getDiffColor(last_diff);
@@ -641,7 +624,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		// -- Add the polyline to the viewer
 		MapViewer.addMapPolygon(polyLineNormal);
 
-		
 		// -- Zoom to display the track
 		if (zoom2fit)
 			MapViewer.setDisplayToFitMapPolygons();
@@ -665,12 +647,10 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	/***
 	 * Return the color corresponding of the difficulty
 	 * 
-	 * @param diff
-	 *            difficulty between 0..100
+	 * @param diff difficulty between 0..100
 	 * @return color corresponding to the difficulty
 	 */
 	private Color getDiffColor(double diff) {
@@ -685,7 +665,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		else
 			return Settings.Color_Diff_VeryHard; // CgConst.CL_MAP_DIFF_VERYHARD);
 	}
-
 
 	/**
 	 * Set the track difficulty
@@ -733,7 +712,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	private void SetMarkMapMarker() {
 		if (Track.data.size() > 0) {
 			// int row = panelTrackData.getSelectedRow();
@@ -763,7 +741,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	private void HideMapMarker() {
 		if (Track.data.size() > 0) {
 			IndexMarker = -1;
@@ -774,7 +751,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			RefreshMapButtons();
 		}
 	}
-
 
 	private void ShowMapMarker() {
 		if (Track.data.size() > 0) {
@@ -794,7 +770,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			RefreshMapButtons();
 		}
 	}
-
 
 	private void SetEatMapMarker() {
 		if (Track.data.size() > 0) {
@@ -826,7 +801,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	private void SetDrinkMapMarker() {
 		if (Track.data.size() > 0) {
 			// int row = panelTrackData.getSelectedRow();
@@ -857,34 +831,34 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	public void RefreshMapType() {
 		MapViewer.Cache.clear();
 		MapViewer.getTileController().cancelOutstandingJobs();
 		switch (Settings.map) {
-		case 0: //OpenStreetMap
+		case 0: // OpenStreetMap
 			MapViewer.setTileSource(new OpenStreetMap());
 			offlineTileCache
 					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
 			break;
-		case 1: //OpenTopoMap
+		case 1: // OpenTopoMap
 			MapViewer.setTileSource(new OpenTopoMap());
 			offlineTileCache
 					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.OPENTOPOMAP_CACHE_DIR);
 			break;
-		case 2: //Outdoor
+		case 2: // Outdoor
 			MapViewer.setTileSource(new Outdoors(Settings));
 			offlineTileCache
 					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.OUTDOORS_CACHE_DIR);
 			break;
-		case 3: //Bing aerial
+		case 3: // Bing aerial
 			MapViewer.setTileSource(new BingAerialTileSource());
 			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.BING_CACHE_DIR);
 			break;
-			
-		case 4: //Stamen toner
+
+		case 4: // Stamen toner
 			MapViewer.setTileSource(new StamenToner());
-			offlineTileCache.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.STAMEN_TONER_CACHE_DIR);
+			offlineTileCache
+					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.STAMEN_TONER_CACHE_DIR);
 			break;
 
 		default:
@@ -893,7 +867,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.OPENSTREETMAP_CACHE_DIR);
 		}
 	}
-
 
 	public File getTileCacheDir() {
 		switch (Settings.map) {
@@ -910,14 +883,11 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	/**
 	 * Refresh the marker on the map
 	 * 
-	 * @param lat
-	 *            latitude of the position of the marker
-	 * @param lon
-	 *            longitude of the position of the marker
+	 * @param lat latitude of the position of the marker
+	 * @param lon longitude of the position of the marker
 	 */
 	public void RefreshMapMarker(double lat, double lon) {
 		if (MapMarker == null) {
@@ -930,7 +900,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			MapViewer.setDisplayPosition(new Coordinate(lat, lon), MapViewer.getZoom());
 		}
 	}
-
 
 	private void UndoMapFillDiff() {
 		if ((Old_MarkerStart >= 0) && (Old_MarkerEnd >= 0) && (UndoDiff.size() > 0)) {
@@ -964,13 +933,11 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	public void setTrack(TrackData track) {
 		Track = track;
 		MapViewer.removeAllMapMarkers();
 		RefreshTrack(Track, true);
 	}
-
 
 	/** Returns an ImageIcon, or null if the path was invalid. */
 	protected ImageIcon createImageIcon(String path, String description) {
@@ -983,14 +950,11 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	/**
 	 * Refresh the position of the marker on the map
 	 * 
-	 * @param lat
-	 *            latitude of the position of the marker
-	 * @param lon
-	 *            longitude of theinitComponents position of the marker
+	 * @param lat latitude of the position of the marker
+	 * @param lon longitude of theinitComponents position of the marker
 	 */
 	public void RefreshCurrentPosMarker(double lat, double lon) {
 		if (CurrentPosMarker == null) {
@@ -1005,7 +969,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	public void RefreshMapButtons() {
 		btMapTrackVeryHard.setEnabled(IndexMarker != -1);
 		btMapTrackHard.setEnabled(IndexMarker != -1);
@@ -1016,11 +979,9 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btMapUndo.setEnabled(Old_MarkerStart != -1);
 	}
 
-
 	public void setRow(int row) {
 		this.row = row;
 	}
-
 
 	private void SelectMap() {
 		int ret = selectMap.showDialog(Settings.map);
@@ -1030,7 +991,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		}
 	}
 
-
 	/**
 	 * Show/Hide markers on the maps
 	 */
@@ -1039,7 +999,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 		btShowHideMarkers.setSelected(ShowMarkers);
 		RefreshTrack(Track, false);
 	}
-
 
 	private Image getImage(String name, int size) {
 		return createImageIcon("/course_generator/images/" + size + "/" + name, "").getImage();

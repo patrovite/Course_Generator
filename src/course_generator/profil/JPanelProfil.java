@@ -84,8 +84,6 @@ public class JPanelProfil extends JPanel {
 	private JLabel lbProfilComment;
 	private List<JPanelProfilListener> listeners = new ArrayList<JPanelProfilListener>();
 	private int index;
-	
-
 
 	public JPanelProfil(CgSettings settings) {
 		super();
@@ -99,17 +97,14 @@ public class JPanelProfil extends JPanel {
 		initComponents();
 	}
 
-
 	public void addListener(JPanelProfilListener toAdd) {
 		listeners.add(toAdd);
 	}
-
 
 	public void notifyProfilSelection() {
 		for (JPanelProfilListener hl : listeners)
 			hl.profilSelectionEvent();
 	}
-
 
 	private JFreeChart CreateChartProfil(XYDataset dataset) {
 		JFreeChart chart = ChartFactory.createXYAreaChart("", "Distance", // x axis label
@@ -137,7 +132,6 @@ public class JPanelProfil extends JPanel {
 
 		return chart;
 	}
-
 
 	private void initComponents() {
 		setPreferredSize(new java.awt.Dimension(677, 150));
@@ -184,7 +178,6 @@ public class JPanelProfil extends JPanel {
 					notifyProfilSelection();
 				}
 			}
-
 
 			@Override
 			public void chartMouseMoved(ChartMouseEvent event) {
@@ -287,7 +280,6 @@ public class JPanelProfil extends JPanel {
 		// -- Elevation / Hour / Speed / Comment
 	}
 
-
 	/**
 	 * Create the profil toolbar
 	 */
@@ -311,7 +303,7 @@ public class JPanelProfil extends JPanel {
 		});
 		ToolBarProfil.add(btProfilMarker);
 
-		//-- Set Texts
+		// -- Set Texts
 		SetText_Profil_Toolbar();
 	}
 
@@ -319,12 +311,10 @@ public class JPanelProfil extends JPanel {
 		btProfilMarker.setToolTipText(bundle.getString("frmMain.btProfilMarker.toolTipText"));
 	}
 
-	
 	/**
 	 * Refresh the fields in the profil info panel
 	 * 
-	 * @param index
-	 *            Index of the line in the track data list
+	 * @param index Index of the line in the track data list
 	 * 
 	 */
 	public void RefreshProfilInfo(int index) {
@@ -334,7 +324,7 @@ public class JPanelProfil extends JPanel {
 			return;
 
 		this.index = index;
-		
+
 		// -- Get the data
 		CgData d = track.data.get(index);
 
@@ -351,7 +341,6 @@ public class JPanelProfil extends JPanel {
 				+ d.getSpeedString(settings.Unit, true, settings.isPace) + " ");
 		lbProfilComment.setText(" " + bundle.getString("frmMain.lbProfilComment.text") + "= " + d.getComment() + " ");
 	}
-
 
 	/**
 	 * Update the profil chart
@@ -399,7 +388,6 @@ public class JPanelProfil extends JPanel {
 		}
 	}
 
-
 	/*
 	 * Refresh the buttons status of the profil toolbar
 	 */
@@ -407,22 +395,18 @@ public class JPanelProfil extends JPanel {
 		btProfilMarker.setSelected(showProfilMarker);
 	}
 
-
 	public int getIndex() {
 		return index;
 	}
-
 
 	public void setCrosshairPosition(double x, double y) {
 		xCrosshair.setValue(x);
 		yCrosshair.setValue(y);
 	}
 
-
 	public void setTrack(TrackData track) {
 		this.track = track;
 	}
-
 
 	public void setSettings(CgSettings settings) {
 		this.settings = settings;
@@ -436,5 +420,5 @@ public class JPanelProfil extends JPanel {
 		RefreshProfilInfo(index);
 		SetText_Profil_Toolbar();
 	}
-	
+
 }

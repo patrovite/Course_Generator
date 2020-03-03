@@ -34,7 +34,6 @@ public class TrackDataModel extends AbstractTableModel {
 	private TrackData track;
 	private CgSettings settings;
 
-
 	public TrackDataModel(TrackData data, CgSettings _settings) {
 		super();
 
@@ -43,7 +42,6 @@ public class TrackDataModel extends AbstractTableModel {
 		settings = _settings;
 		track = data; // TrackData.getInstance();
 	}
-
 
 	public void SetTexts() {
 		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
@@ -63,31 +61,27 @@ public class TrackDataModel extends AbstractTableModel {
 		header[12] = bundle.getString("frmMain.HeaderHour.text");
 		header[13] = bundle.getString("frmMain.HeaderStation.text");
 		header[14] = bundle.getString("frmMain.HeaderName.text");
-		header[15] = bundle.getString("frmMain.HeaderComment.text");	
+		header[15] = bundle.getString("frmMain.HeaderComment.text");
 	}
-	
+
 	public CgSettings getSettings() {
 		return settings;
 	}
-
 
 	@Override
 	public int getColumnCount() {
 		return header.length;
 	}
 
-
 	@Override
 	public String getColumnName(int columnIndex) {
 		return header[columnIndex];
 	}
 
-
 	@Override
 	public int getRowCount() {
 		return track.data.size();
 	}
-
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
@@ -116,7 +110,6 @@ public class TrackDataModel extends AbstractTableModel {
 			throw new IllegalArgumentException();
 		}
 	}
-
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {

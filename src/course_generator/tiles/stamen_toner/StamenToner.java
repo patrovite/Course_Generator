@@ -23,16 +23,15 @@ import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 import org.openstreetmap.gui.jmapviewer.tilesources.AbstractOsmTileSource;
 
 /**
-*
-* @author pierre.delore
-*/
+ *
+ * @author pierre.delore
+ */
 public class StamenToner extends AbstractOsmTileSource {
-	//http://tile.stamen.com/toner/{z}/{x}/{y}.png
+	// http://tile.stamen.com/toner/{z}/{x}/{y}.png
 	private static final String PATTERN = "http://tile.stamen.com/toner";
 	private static final String[] SERVER = { "a", "b", "c" };
 
 	private int SERVER_NUM = 0;
-
 
 	/**
 	 * Constructs a new {@code "Mapnik"} tile source.
@@ -41,7 +40,6 @@ public class StamenToner extends AbstractOsmTileSource {
 		super("map", PATTERN);
 	}
 
-
 	@Override
 	public String getBaseUrl() {
 		String url = String.format(this.baseUrl, new Object[] { SERVER[SERVER_NUM] });
@@ -49,19 +47,17 @@ public class StamenToner extends AbstractOsmTileSource {
 		return url;
 	}
 
-
 	@Override
 	public int getMaxZoom() {
 		return 18;
 	}
 
-
 	public TileSource.TileUpdate getTileUpdate() {
 		return TileSource.TileUpdate.IfNoneMatch;
 	}
-	
+
 	@Override
-    public String getAttributionText(int zoom, Coordinate topLeft, Coordinate botRight) {
-        return "Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL";
-    }
+	public String getAttributionText(int zoom, Coordinate topLeft, Coordinate botRight) {
+		return "Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL";
+	}
 }

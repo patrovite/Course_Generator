@@ -36,7 +36,6 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
-import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.JTextFieldLimit;
 import course_generator.utils.Utils;
@@ -63,9 +62,9 @@ public class frmSearchDistance extends javax.swing.JDialog {
 		setModal(true);
 	}
 
-
 	/**
 	 * Display the dialog box
+	 * 
 	 * @param settings
 	 * @param track
 	 * @return -1 if invalid input or cancel
@@ -73,13 +72,12 @@ public class frmSearchDistance extends javax.swing.JDialog {
 	public double showDialog(CgSettings settings) {
 		if (settings == null)
 			return -1;
-		
+
 		this.value = -1;
 		this.settings = settings;
 		setVisible(true);
 		return value;
 	}
-
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -112,10 +110,9 @@ public class frmSearchDistance extends javax.swing.JDialog {
 		inputMap.put(strokeEnter, "ENTER");
 		rootPane.getActionMap().put("ENTER", actionListenerEnter);
 
-		return rootPane;		
+		return rootPane;
 	}
 
-	
 	private void RequestToClose() {
 		value = Utils.ParseDoubleEx(tfDistance.getText(), -1.0);
 		if (value == -1.0)
@@ -123,8 +120,6 @@ public class frmSearchDistance extends javax.swing.JDialog {
 		else
 			setVisible(false);
 	}
-
-
 
 	/**
 	 * This method is called to initialize the form.
@@ -145,23 +140,15 @@ public class frmSearchDistance extends javax.swing.JDialog {
 		lbDistance = new javax.swing.JLabel();
 		lbDistance.setFocusable(false);
 		lbDistance.setText(bundle.getString("frmSearchDistance.lbDistance.text"));
-		Utils.addComponent(paneGlobal, lbDistance, 
-				0, 0, 
-				1, 1, 
-				0, 0, 
-				10, 5, 2, 0, 
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+		Utils.addComponent(paneGlobal, lbDistance, 0, 0, 1, 1, 0, 0, 10, 5, 2, 0, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
 
 		tfDistance = new JTextFieldLimit(10);
 		tfDistance.setFocusable(true);
 		tfDistance.setMinimumSize(new Dimension(100, 20));
 		tfDistance.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-		Utils.addComponent(paneGlobal, tfDistance, 
-				1, 0, 
-				1, 1, 
-				1, 0, 
-				10, 5, 2, 5, GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
-
+		Utils.addComponent(paneGlobal, tfDistance, 1, 0, 1, 1, 1, 0, 10, 5, 2, 5, GridBagConstraints.BASELINE_LEADING,
+				GridBagConstraints.HORIZONTAL);
 
 		// == BUTTONS
 		// ===========================================================
@@ -175,7 +162,7 @@ public class frmSearchDistance extends javax.swing.JDialog {
 		btCancel.setText(bundle.getString("Global.btCancel.text"));
 		btCancel.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				value=-1.0;
+				value = -1.0;
 				setVisible(false);
 			}
 		});

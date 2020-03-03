@@ -32,12 +32,10 @@ public class JTextFieldLimit extends JTextField {
 	private static final long serialVersionUID = 7607169487202233565L;
 	private int limit;
 
-
 	public JTextFieldLimit(int limit) {
 		super();
 		this.limit = limit;
 	}
-
 
 	@Override
 	protected Document createDefaultModel() {
@@ -47,7 +45,6 @@ public class JTextFieldLimit extends JTextField {
 	private class LimitDocument extends PlainDocument {
 
 		private static final long serialVersionUID = -7611942577732373603L;
-
 
 		@Override
 		public void insertString(int offset, String str, AttributeSet attr) throws BadLocationException {

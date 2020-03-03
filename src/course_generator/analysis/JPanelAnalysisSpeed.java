@@ -69,8 +69,7 @@ public class JPanelAnalysisSpeed extends JPanel {
 	private CgSettings settings = null;
 	private double startSpeed = 0.0;
 	private double endSpeed = 0.0;
-	private int index=0;
-
+	private int index = 0;
 
 	public JPanelAnalysisSpeed(CgSettings settings) {
 		super();
@@ -82,7 +81,6 @@ public class JPanelAnalysisSpeed extends JPanel {
 		chart = CreateChart(datasetSpeedReg, datasetSpeed);
 		initComponents();
 	}
-
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -172,7 +170,6 @@ public class JPanelAnalysisSpeed extends JPanel {
 				}
 			}
 
-
 			@Override
 			public void chartMouseMoved(ChartMouseEvent event) {
 			}
@@ -180,7 +177,6 @@ public class JPanelAnalysisSpeed extends JPanel {
 		add(ChartPanelSpeed, java.awt.BorderLayout.CENTER);
 
 	}
-
 
 	private JFreeChart CreateChart(XYDataset dataset1, XYDataset dataset2) {
 		JFreeChart chart = ChartFactory.createXYAreaChart("",
@@ -225,13 +221,12 @@ public class JPanelAnalysisSpeed extends JPanel {
 		return chart;
 	}
 
-
 	private void RefreshInfo(int i) {
 		if ((track == null) || (settings == null))
 			return;
 
-		index= i;
-		
+		index = i;
+
 		// -- Get the data
 		CgData d = track.data.get(i);
 
@@ -247,7 +242,6 @@ public class JPanelAnalysisSpeed extends JPanel {
 		lbSpeedInfoDistance.setText(" " + bundle.getString("JPanelAnalysisSpeed.lbSpeedInfoDistance.text") + "="
 				+ d.getTotalString(settings.Unit, true) + " ");
 	}
-
 
 	/**
 	 * Update the Time/Distance chart
@@ -348,11 +342,10 @@ public class JPanelAnalysisSpeed extends JPanel {
 		RefreshInfo(0);
 	}
 
-
 	public void ChangLang() {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
-		chart.getXYPlot().getDomainAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisSpeed.labelX")); //X
-		chart.getXYPlot().getRangeAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisSpeed.labelY")); //Y
+		chart.getXYPlot().getDomainAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisSpeed.labelX")); // X
+		chart.getXYPlot().getRangeAxis(0).setAttributedLabel(bundle.getString("JPanelAnalysisSpeed.labelY")); // Y
 		RefreshInfo(index);
 	}
 }

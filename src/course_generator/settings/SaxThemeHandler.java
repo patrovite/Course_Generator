@@ -47,26 +47,22 @@ public class SaxThemeHandler extends DefaultHandler {
 	private Locator locator;
 
 	private final int ERR_READ_NO = 0;
-	//private final int ERR_READ_DOUBLE = -1;
+	// private final int ERR_READ_DOUBLE = -1;
 	private final int ERR_READ_INT = -2;
-	//private final int ERR_READ_BOOL = -3;
+	// private final int ERR_READ_BOOL = -3;
 	private final int ERR_READ_NOTEXIST = -6;
 	private final int ERR_READ_COLOR = -7;
 	private ColorTheme colors;
 	private int ReadError = ERR_READ_NO;
 
- 	
 	/**
 	 * Read the Theme file from disc
 	 * 
-	 * @param filename
-	 *            Name of the theme file to read
-	 * @param TData
-	 *            TrackData object where to store the read data
-	 * @param readmode
-	 *            Reading mode 0=Load the complete file 1=Insert the read data at
-	 *            the beginning of the current track 2=Insert the read data at the
-	 *            end of the current track
+	 * @param filename Name of the theme file to read
+	 * @param TData    TrackData object where to store the read data
+	 * @param readmode Reading mode 0=Load the complete file 1=Insert the read data
+	 *                 at the beginning of the current track 2=Insert the read data
+	 *                 at the end of the current track
 	 * @return The error code Erroce explanation: ERR_READ_NO = No problem during
 	 *         the reading of the file ERR_READ_LAT = Parsing error during the read
 	 *         of a latitude (lat) element ERR_READ_LON = Parsing error during the
@@ -108,11 +104,9 @@ public class SaxThemeHandler extends DefaultHandler {
 		return ReadError;
 	}
 
-
 	public int getErrLine() {
 		return errline;
 	}
-
 
 	/**
 	 * Parse a string element
@@ -124,14 +118,11 @@ public class SaxThemeHandler extends DefaultHandler {
 	 * return S; }
 	 */
 
-
 	/**
 	 * Parse a double element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occure
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occure
 	 * @return Return the parsed value
 	 */
 	/*
@@ -140,14 +131,11 @@ public class SaxThemeHandler extends DefaultHandler {
 	 * = _errcode; errline = locator.getLineNumber(); return _default; } }
 	 */
 
-
 	/**
 	 * Parse a integer element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occure
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occure
 	 * @return Return the parsed value
 	 */
 	private int ManageInt(int _default, int _errcode) {
@@ -160,14 +148,11 @@ public class SaxThemeHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a boolean element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occure
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occure
 	 * @return Return the parsed value
 	 */
 	/*
@@ -176,14 +161,11 @@ public class SaxThemeHandler extends DefaultHandler {
 	 * ReadError = _errcode; errline = locator.getLineNumber(); return _default; } }
 	 */
 
-
 	/**
 	 * Parse a color element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed color
 	 */
 	private Color ManageColor(Color _default, int _errcode) {
@@ -199,13 +181,11 @@ public class SaxThemeHandler extends DefaultHandler {
 		}
 	}
 
-
 	@Override
 	public void setDocumentLocator(final Locator locator) {
 		this.locator = locator; // Save the locator, so that it can be used later for line tracking when
 								// traversing nodes.
 	}
-
 
 	@Override
 	public void startElement(String uri, String localname, String qName, Attributes attributs) throws SAXException {
@@ -213,7 +193,6 @@ public class SaxThemeHandler extends DefaultHandler {
 			level++;
 		}
 	}
-
 
 	@Override
 	public void endElement(String uri, String localname, String qName) throws SAXException {
@@ -239,14 +218,13 @@ public class SaxThemeHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("NIGHTTRACKTRANSPARENCY")) {
 				colors.NightTrackTransparency = ManageInt(CgConst.NIGHT_TRACK_TRANSPARENCY, ERR_READ_INT);
 			}
-			
+
 			else if (qName.equalsIgnoreCase("THEME")) {
 				level--;
 			}
 			characters = "";
 		}
 	}
-
 
 	@Override
 	public void characters(char[] chars, int start, int end) throws SAXException {

@@ -27,12 +27,10 @@ public class ResumeData {
 
 	public ArrayList<CgResume> data;
 
-
 	// -- Constructeur --
 	public ResumeData() {
 		data = new ArrayList<CgResume>();
 	}
-
 
 	public static synchronized ResumeData getInstance() {
 		if (instance == null) {
@@ -41,14 +39,11 @@ public class ResumeData {
 		return instance;
 	}
 
-
 	/**
 	 * Save the resume data as a CSV file
 	 * 
-	 * @param filename
-	 *            Full path and name to the file to create
-	 * @param unit
-	 *            unit constant
+	 * @param filename Full path and name to the file to create
+	 * @param unit     unit constant
 	 */
 	public void SaveAsCSV(String filename, int unit, boolean pace) {
 		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");

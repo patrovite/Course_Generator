@@ -63,7 +63,6 @@ public class frmImportPoints extends javax.swing.JDialog {
 	private JButton btUnselAll;
 	private JButton btHelp;
 
-
 	/**
 	 * Creates new form frmImportPoints
 	 */
@@ -75,7 +74,6 @@ public class frmImportPoints extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
-
 
 	public int showDialog(String name, TrackData track) {
 		this.track = track;
@@ -121,7 +119,6 @@ public class frmImportPoints extends javax.swing.JDialog {
 			return -1;
 	}
 
-
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -156,7 +153,6 @@ public class frmImportPoints extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -167,7 +163,6 @@ public class frmImportPoints extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -279,7 +274,6 @@ public class frmImportPoints extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-
 	/**
 	 * Import the points in the track
 	 */
@@ -298,16 +292,15 @@ public class frmImportPoints extends javax.swing.JDialog {
 				track.data.get((int) r.getLine()).setStation(r.getEatTime());
 				track.data.get((int) r.getLine()).setTimeLimit(r.getTimeLimit());
 				track.data.get((int) r.getLine()).FmtLbMiniRoadbook = r.getFmtRB();
-				track.data.get((int) r.getLine()).OptionMiniRoadbook=r.getOptMRB();
+				track.data.get((int) r.getLine()).OptionMiniRoadbook = r.getOptMRB();
 				track.data.get((int) r.getLine()).VPosMiniRoadbook = r.getVPosMRB();
-				track.data.get((int) r.getLine()).CommentMiniRoadbook =r.getCommentMRB();
+				track.data.get((int) r.getLine()).CommentMiniRoadbook = r.getCommentMRB();
 				track.data.get((int) r.getLine()).FontSizeMiniRoadbook = r.getFontSizeMRB();
 
 				track.isModified = true;
 			}
 		}
 	}
-
 
 	/**
 	 * Unselect every line
@@ -322,7 +315,6 @@ public class frmImportPoints extends javax.swing.JDialog {
 		RefreshTable();
 	}
 
-
 	/**
 	 * Select every line
 	 */
@@ -336,12 +328,10 @@ public class frmImportPoints extends javax.swing.JDialog {
 		RefreshTable();
 	}
 
-
 	/**
 	 * Table key release managment SPACE key invert the selection
 	 * 
-	 * @param evt
-	 *            event
+	 * @param evt event
 	 */
 	protected void TableKeyReleased(KeyEvent evt) {
 		if (list.data.size() <= 0)
@@ -356,12 +346,10 @@ public class frmImportPoints extends javax.swing.JDialog {
 		}
 	}
 
-
 	/**
 	 * Table mouse click managment A click in the first column invert the selection
 	 * 
-	 * @param evt
-	 *            event
+	 * @param evt event
 	 */
 	protected void TableMouseClicked(MouseEvent evt) {
 		if (list.data.size() <= 0)
@@ -375,7 +363,6 @@ public class frmImportPoints extends javax.swing.JDialog {
 			RefreshTable();
 		}
 	}
-
 
 	/**
 	 * Refresh the table

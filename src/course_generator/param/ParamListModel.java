@@ -28,14 +28,12 @@ public class ParamListModel extends AbstractListModel {
 	private static final long serialVersionUID = 1179121524708948486L;
 	private ArrayList<String> names;
 
-
 	/**
 	 * Constructor
 	 */
 	public ParamListModel() {
 		names = new ArrayList<>();
 	}
-
 
 	/**
 	 * Return the size of the list
@@ -44,14 +42,12 @@ public class ParamListModel extends AbstractListModel {
 		return names.size();
 	}
 
-
 	/**
 	 * Return the element at a given index
 	 */
 	public Object getElementAt(int index) {
 		return (String) names.get(index);
 	}
-
 
 	/**
 	 * Return the complete list
@@ -62,30 +58,25 @@ public class ParamListModel extends AbstractListModel {
 		return names;
 	}
 
-
 	/**
 	 * Set the list
 	 * 
-	 * @param array
-	 *            List of string
+	 * @param array List of string
 	 */
 	public void setList(ArrayList<String> array) {
 		this.names = array;
 		fireContentsChanged(this, 0, names.size());
 	}
 
-
 	/**
 	 * Add an element to string
 	 * 
-	 * @param name
-	 *            Element to add
+	 * @param name Element to add
 	 */
 	public void addElement(String name) {
 		this.names.add(name);
 		fireContentsChanged(this, 0, names.size());
 	}
-
 
 	/**
 	 * Remove all the element from the list
@@ -95,7 +86,6 @@ public class ParamListModel extends AbstractListModel {
 		fireContentsChanged(this, 0, names.size());
 	}
 
-
 	/*
 	 * Return the a sorted list
 	 */
@@ -103,7 +93,6 @@ public class ParamListModel extends AbstractListModel {
 		Collections.sort(array);
 		names = array;
 	}
-
 
 	/**
 	 * Sort the list

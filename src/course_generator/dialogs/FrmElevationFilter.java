@@ -22,8 +22,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -36,35 +34,22 @@ import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartMouseEvent;
-import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.entity.ChartEntity;
-import org.jfree.chart.entity.XYItemEntity;
-import org.jfree.chart.panel.CrosshairOverlay;
-import org.jfree.chart.plot.Crosshair;
 import org.jfree.chart.plot.DatasetRenderingOrder;
-import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYAreaRenderer;
-import org.jfree.chart.ui.RectangleAnchor;
-import org.jfree.chart.ui.RectangleInsets;
-import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -75,11 +60,10 @@ import course_generator.TrackData.CalcClimbResult;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.CgSpinner;
-import course_generator.utils.JTimeSetting;
 import course_generator.utils.Utils;
 
-public class FrmElevationFilter extends javax.swing.JDialog{
-	//private static final long serialVersionUID = -4653557858071353735L;
+public class FrmElevationFilter extends javax.swing.JDialog {
+	// private static final long serialVersionUID = -4653557858071353735L;
 	private ResourceBundle bundle;
 	private boolean ok;
 	private CgSettings settings;
@@ -87,7 +71,7 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 	private CgData data;
 	private JFreeChart chartProfil = null;
 	private XYSeriesCollection datasetElevDist = null;
-	private XYSeriesCollection datasetElevDistSmooth = null;	
+	private XYSeriesCollection datasetElevDistSmooth = null;
 	private ChartPanel ChartPanelProfil;
 	private JLabel lbFilter;
 	private CgSpinner spinFilter;
@@ -96,7 +80,6 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 	private JLabel lbInfo;
 	private JButton btCancel;
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -104,19 +87,17 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 		settings = _settings;
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		datasetElevDist = new XYSeriesCollection();
-		datasetElevDistSmooth = new XYSeriesCollection();		
+		datasetElevDistSmooth = new XYSeriesCollection();
 		chartProfil = CreateChart(datasetElevDist, datasetElevDistSmooth);
 		initComponents();
 		setModal(true);
 	}
 
-
 	public boolean showDialog(CgSettings _settings, TrackData _track) {
 		settings = _settings;
 		track = _track;
-		
-		// Set field
 
+		// Set field
 
 		// End set field
 		ok = false;
@@ -129,11 +110,11 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 
 		if (ok && !track.ReadOnly) {
 			// Copy fields
-			//spinFilter.getValueAsDouble()
+			// spinFilter.getValueAsDouble()
 		}
 		return ok;
 	}
-	
+
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -168,7 +149,6 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -180,15 +160,14 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 		}
 	}
 
-
 	private void initComponents() {
 		int line = 0;
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle(bundle.getString("frmElevationFilter.title")); //"Elevation smoothing"
+		setTitle(bundle.getString("frmElevationFilter.title")); // "Elevation smoothing"
 		setAlwaysOnTop(true);
 		setResizable(false);
-		//setMinimumSize(new Dimension(1000, 400));
+		// setMinimumSize(new Dimension(1000, 400));
 		setType(java.awt.Window.Type.UTILITY);
 
 		// -- Layout
@@ -196,47 +175,35 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 		Container paneGlobal = getContentPane();
 		paneGlobal.setLayout(new GridBagLayout());
 
-		
 		// -- Profil chart
 		// ------------------------------------------------------
 		ChartPanelProfil = new ChartPanel(chartProfil);
 		ChartPanelProfil.setBackground(new java.awt.Color(255, 0, 51));
 
-		Utils.addComponent(paneGlobal, ChartPanelProfil, 
-				0, line++, 
-				2, 1, 
-				0, 1, 
-				10, 10, 0, 10, 
+		Utils.addComponent(paneGlobal, ChartPanelProfil, 0, line++, 2, 1, 0, 1, 10, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
 		//
 		lbFilter = new javax.swing.JLabel();
-		lbFilter.setText(bundle.getString("frmElevationFilter.lbFilter")); //"Filter"); //bundle.getString("frmSearchCurve.lbFoundTime1.Text")); 
-		Utils.addComponent(paneGlobal, lbFilter, 
-				0, line, 
-				1, 1, 
-				0, 0, 
-				10, 10, 0, 10, 
+		lbFilter.setText(bundle.getString("frmElevationFilter.lbFilter")); // "Filter");
+																			// //bundle.getString("frmSearchCurve.lbFoundTime1.Text"));
+		Utils.addComponent(paneGlobal, lbFilter, 0, line, 1, 1, 0, 0, 10, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		spinFilter = new CgSpinner(0, 0, 100, 2);
 		spinFilter.addChangeListener(new ChangeListener() {
 
-	        @Override
-	        public void stateChanged(ChangeEvent e) {
+			@Override
+			public void stateChanged(ChangeEvent e) {
 				Smooth(spinFilter.getValueAsInt());
 				Refresh();
-	        }
-	    });
-		
-		Utils.addComponent(paneGlobal, spinFilter, 
-				1, line++, 
-				1, 1, 
-				1, 0, 
-				10, 10, 0, 10, 
+			}
+		});
+
+		Utils.addComponent(paneGlobal, spinFilter, 1, line++, 1, 1, 1, 0, 10, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.VERTICAL);
 
-		//-- Info line
+		// -- Info line
 		lbInfo = new javax.swing.JLabel();
 		lbInfo.setFocusable(false);
 		lbInfo.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -245,45 +212,35 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 		lbInfo.setBackground(new java.awt.Color(255, 255, 255));
 		lbInfo.setOpaque(true);
 		lbInfo.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		Utils.addComponent(paneGlobal, lbInfo, 
-				0, line++, 
-				2, 1, 
-				1, 0, 
-				10, 10, 0, 10, 
+		Utils.addComponent(paneGlobal, lbInfo, 0, line++, 2, 1, 1, 0, 10, 10, 0, 10,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		
 		//
 		btSelectNormal = new javax.swing.JButton();
-		btSelectNormal.setText(bundle.getString("frmElevationFilter.btSelectNormal")); //"Select normal elevations"); //bundle.getString("frmSearchCurve.btSearch.tooltips"));
+		btSelectNormal.setText(bundle.getString("frmElevationFilter.btSelectNormal")); // "Select normal elevations");
+																						// //bundle.getString("frmSearchCurve.btSearch.tooltips"));
 		btSelectNormal.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				track.SelectNotSmoothedElevation();
 				RequestToClose();
 			}
 		});
-		Utils.addComponent(paneGlobal, btSelectNormal, 
-				0, line++, 
-				2, 1, 
-				1, 0, 
-				10, 10, 0, 10, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		Utils.addComponent(paneGlobal, btSelectNormal, 0, line++, 2, 1, 1, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
 
 		//
 		btSelectSmoothed = new javax.swing.JButton();
-		btSelectSmoothed.setText(bundle.getString("frmElevationFilter.btSelectSmoothed"));//"Select smoothed elevations"); //bundle.getString("frmSearchCurve.btSearch.tooltips"));
+		btSelectSmoothed.setText(bundle.getString("frmElevationFilter.btSelectSmoothed"));// "Select smoothed
+																							// elevations");
+																							// //bundle.getString("frmSearchCurve.btSearch.tooltips"));
 		btSelectSmoothed.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				track.SelectSmoothedElevation();
 				RequestToClose();
 			}
 		});
-		Utils.addComponent(paneGlobal, btSelectSmoothed, 
-				0, line++, 
-				2, 1, 
-				1, 0, 
-				10, 10, 0, 10, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		Utils.addComponent(paneGlobal, btSelectSmoothed, 0, line++, 2, 1, 1, 0, 10, 10, 0, 10, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
 
 		//
 		btCancel = new javax.swing.JButton();
@@ -294,22 +251,18 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 				setVisible(false);
 			}
 		});
-		Utils.addComponent(paneGlobal, btCancel, 
-				0, line++, 
-				2, 1, 
-				1, 0, 
-				10, 10, 10, 10, 
-				GridBagConstraints.WEST, GridBagConstraints.BOTH);
+		Utils.addComponent(paneGlobal, btCancel, 0, line++, 2, 1, 1, 0, 10, 10, 10, 10, GridBagConstraints.WEST,
+				GridBagConstraints.BOTH);
 
 		// --
 		pack();
 
 		setLocationRelativeTo(null);
 	}
-	
 
 	/**
 	 * Update the chart
+	 * 
 	 * @param dataset1
 	 * @param dataset2
 	 * @return
@@ -342,15 +295,14 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 		renderer.setSeriesOutlineStroke(0, new BasicStroke(2.0f));
 		plot.setRenderer(0, renderer);
 
-
-		NumberAxis rangeAxis2 = new NumberAxis("");//bundle.getString("JPanelAnalysisTimeDist.labelY2")); // "Time"
-		//plot.setRangeAxis(1, rangeAxis2);
+		NumberAxis rangeAxis2 = new NumberAxis("");// bundle.getString("JPanelAnalysisTimeDist.labelY2")); // "Time"
+		// plot.setRangeAxis(1, rangeAxis2);
 		plot.setDataset(1, dataset2);
 		plot.setRangeAxis(1, rangeAxis2);
-		//plot.mapDatasetToRangeAxis(1, 1);
+		// plot.mapDatasetToRangeAxis(1, 1);
 		StandardXYItemRenderer renderer2 = new StandardXYItemRenderer();
 		renderer2.setSeriesPaint(0, Color.red);
-		renderer2.setSeriesStroke(0,  new BasicStroke(1.0f));
+		renderer2.setSeriesStroke(0, new BasicStroke(1.0f));
 		plot.setRenderer(1, renderer2);
 
 		// -- Select the display order
@@ -358,8 +310,7 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 
 		return chart;
 	}
-	
-	
+
 	/**
 	 * Update the Time/Distance chart
 	 */
@@ -393,83 +344,81 @@ public class FrmElevationFilter extends javax.swing.JDialog{
 
 			ValueAxis axisYElevS = plot.getRangeAxis(1);
 			axisYElevS.setRange(Math.floor(track.getMinElev(settings.Unit) / 100.0) * 100.0,
-					Math.ceil(track.getMaxElev(settings.Unit) / 100.0) * 100.0);		
+					Math.ceil(track.getMaxElev(settings.Unit) / 100.0) * 100.0);
 		}
 		chartProfil = CreateChart(datasetElevDist, datasetElevDistSmooth);
-		
-		//-- Calc the climb for the none smoothed elevation
+
+		// -- Calc the climb for the none smoothed elevation
 		CalcClimbResult ccrNS = new CalcClimbResult();
 		ccrNS = track.CalcClimb(CgConst.ELEV_NOTSMOOTHED, 0, track.data.size() - 1, ccrNS);
 
-		//-- Calc the climb for the smoothed elevation
+		// -- Calc the climb for the smoothed elevation
 		CalcClimbResult ccrS = new CalcClimbResult();
 		ccrS = track.CalcClimb(CgConst.ELEV_SMOOTHED, 0, track.data.size() - 1, ccrS);
-		
-		//-- Display the result
-		
-		lbInfo.setText(String.format(bundle.getString("frmElevationFilter.lbInfo"),
-				ccrNS.cp, ccrNS.cm, ccrS.cp, ccrS.cm ));
-		
-		//lbInfo.setText(String.format("Climb + (normal):%1.0f - m - Climb - (normal):%1.0fm -- Climb + (smoothed):%1.0f - m - Climb - (smoothed):%1.0fm",
-		//		ccrNS.cp, ccrNS.cm, ccrS.cp, ccrS.cm ));
+
+		// -- Display the result
+
+		lbInfo.setText(
+				String.format(bundle.getString("frmElevationFilter.lbInfo"), ccrNS.cp, ccrNS.cm, ccrS.cp, ccrS.cm));
+
+		// lbInfo.setText(String.format("Climb + (normal):%1.0f - m - Climb -
+		// (normal):%1.0fm -- Climb + (smoothed):%1.0f - m - Climb - (smoothed):%1.0fm",
+		// ccrNS.cp, ccrNS.cm, ccrS.cp, ccrS.cm ));
 	}
 
-	
 	/**
-	 * Smooth the elevation profil 
-	 * Algorithm from Brenda Zysman (brendaz@rogers.com)
-	 * https://github.com/brenzy/gpx-smoother
-	 * https://www.potter.ca/
+	 * Smooth the elevation profil Algorithm from Brenda Zysman (brendaz@rogers.com)
+	 * https://github.com/brenzy/gpx-smoother https://www.potter.ca/
 	 */
 	private void Smooth(int filter) {
-        if (filter==0)
-        	return;
+		if (filter == 0)
+			return;
 		int dataLength = track.data.size();
-        if (dataLength == 0) {
-        	return;
-        }
+		if (dataLength == 0) {
+			return;
+		}
 
-        //-- Calc the smooth size => multiple of 2 with a min of 2
-        int smoothingSize = (int) Math.floor(filter/2);
-        if (smoothingSize < 2 || smoothingSize > dataLength / 2) {
-        	smoothingSize = 2;
-        }
-        
-        //-- Copy none smoothed elevation in smoothed elevation
-        track.CopyNotSmoothedInSmoothedElevation();
+		// -- Calc the smooth size => multiple of 2 with a min of 2
+		int smoothingSize = (int) Math.floor(filter / 2);
+		if (smoothingSize < 2 || smoothingSize > dataLength / 2) {
+			smoothingSize = 2;
+		}
 
-   
-        for (int i = 0; i < dataLength; i++) {
-        	data = track.data.get(i);
-        
-        	int sumValues = 0;
-            
-        	//-- Start = Actual pos - smoothingSize
-            int start = i - smoothingSize;
+		// -- Copy none smoothed elevation in smoothed elevation
+		track.CopyNotSmoothedInSmoothedElevation();
 
-            //-- Overflow?
-            if (start < 0) {
-            	start = 0;
-            }
+		for (int i = 0; i < dataLength; i++) {
+			data = track.data.get(i);
 
-            //-- End = Actual pos + smoothingSize
-            int end = i + smoothingSize;
+			int sumValues = 0;
 
-            //-- Overflow?
-            if (end > dataLength - 1){
-            	end = dataLength - 1;
-            }
+			// -- Start = Actual pos - smoothingSize
+			int start = i - smoothingSize;
 
-           //== Calculate the dynamic average with X points before and after the actual position
+			// -- Overflow?
+			if (start < 0) {
+				start = 0;
+			}
 
-           //-- Add the "smoothed" elevation between "start" and "end"
-           for (int j = start; j <= end; j++) {
-        	   sumValues += track.data.get(j).getElevationSmoothed(CgConst.UNIT_METER);
-           }
+			// -- End = Actual pos + smoothingSize
+			int end = i + smoothingSize;
 
-           //-- Divide the sum by the number of value (=>average!)
-          data.setElevationSmoothed(sumValues / (end - start + 1));
-        }
+			// -- Overflow?
+			if (end > dataLength - 1) {
+				end = dataLength - 1;
+			}
+
+			// == Calculate the dynamic average with X points before and after the actual
+			// position
+
+			// -- Add the "smoothed" elevation between "start" and "end"
+			for (int j = start; j <= end; j++) {
+				sumValues += track.data.get(j).getElevationSmoothed(CgConst.UNIT_METER);
+			}
+
+			// -- Divide the sum by the number of value (=>average!)
+			data.setElevationSmoothed(sumValues / (end - start + 1));
+		}
 	}
-	
+
 }

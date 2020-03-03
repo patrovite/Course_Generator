@@ -32,7 +32,6 @@ class GPX_Filter extends javax.swing.filechooser.FileFilter {
 		return file.isDirectory() || file.getAbsolutePath().endsWith(".gpx");
 	}
 
-
 	@Override
 	public String getDescription() {
 		// This description will be displayed in the dialog,

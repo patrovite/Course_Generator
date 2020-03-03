@@ -40,7 +40,6 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 
 	private static final long serialVersionUID = 6346080430098644037L;
 
-
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
@@ -251,28 +250,28 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
-				
+
 				// Drop bag
 				if ((tag & CgConst.TAG_DROPBAG) != 0) {
 					ImageIcon image = Utils.getIcon(this, "dropbag.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
-				
+
 				// Crew
 				if ((tag & CgConst.TAG_CREW) != 0) {
 					ImageIcon image = Utils.getIcon(this, "crew.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
-				
+
 				// First aid
 				if ((tag & CgConst.TAG_FIRST_AID) != 0) {
 					ImageIcon image = Utils.getIcon(this, "first_aid.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
-				
+
 				setIcon(new ImageIcon(combined));
 			} else
 				setIcon(null); // No image
@@ -343,13 +342,13 @@ public class TrackDataRenderer extends DefaultTableCellRenderer {
 			if ((diff <= CgConst.DIFF_VERYEASY) && (diff > CgConst.DIFF_EASY)) {
 				clDiff = settings.Color_Diff_VeryEasy; // CgConst.CL_DIFF_VERYEASY;
 			} else if ((diff <= CgConst.DIFF_EASY) && (diff > CgConst.DIFF_AVERAGE)) {
-				clDiff = settings.Color_Diff_Easy;  //CgConst.CL_DIFF_EASY;
+				clDiff = settings.Color_Diff_Easy; // CgConst.CL_DIFF_EASY;
 			} else if ((diff <= CgConst.DIFF_AVERAGE) && (diff > CgConst.DIFF_HARD)) {
-				clDiff = settings.Color_Diff_Average; //CgConst.CL_DIFF_AVERAGE;
+				clDiff = settings.Color_Diff_Average; // CgConst.CL_DIFF_AVERAGE;
 			} else if ((diff <= CgConst.DIFF_HARD) && (diff > CgConst.DIFF_VERYHARD)) {
-				clDiff = settings.Color_Diff_Hard; //CgConst.CL_DIFF_HARD;
+				clDiff = settings.Color_Diff_Hard; // CgConst.CL_DIFF_HARD;
 			} else if (diff <= CgConst.DIFF_VERYHARD) {
-				clDiff = settings.Color_Diff_VeryHard; //CgConst.CL_DIFF_VERYHARD;
+				clDiff = settings.Color_Diff_VeryHard; // CgConst.CL_DIFF_VERYHARD;
 			}
 
 			if (isSelected)

@@ -15,3 +15,4 @@ pandoc --toc --css cg_doc.css --pdf-engine=xelatex -o $name md/00-Title.md md/01
 # copy files
 cp -u ./$name ../../build/
 
+echo "Done! 'pdf' file generated in the local folder and copied in the 'build' folder"
