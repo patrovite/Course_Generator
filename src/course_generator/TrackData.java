@@ -22,13 +22,13 @@ import static course_generator.utils.Utils.CalcDistance;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,9 +50,6 @@ import course_generator.utils.CgLog;
 import course_generator.utils.StatData;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
-import course_generator.weather.HistoricalWeather;
-import course_generator.weather.NoaaWeatherData;
-import course_generator.weather.NoaaWeatherStation;
 
 /**
  * @author pierre.delore
@@ -69,11 +66,6 @@ public class TrackData {
 	/** Arraylist containing the main data **/
 	public ArrayList<CgData> data;
 
-	/** Historical weather data **/
-	public HistoricalWeather historicalWeatherData;
-
-	private PropertyChangeSupport HistoricalWeatherDataChanged = new PropertyChangeSupport(this);
-
 	/** Statistics data for 'in night' **/
 	public StatData tInNight;
 	/** Statistics data for 'in day' **/
@@ -89,8 +81,12 @@ public class TrackData {
 	public StatData[] StatElevDay;
 
 	/** Track name **/
-	public String Name; // Track
-	// name
+	public String Name; // Track name
+	/** Full track name with **/
+	public String FullName; // Track name
+	/** New track **/
+	public boolean isNewTrack;
+
 	/** Name of the track that appear in the track setting **/
 	public String CourseName = "";
 	/** Total distance in meters **/
@@ -123,6 +119,8 @@ public class TrackData {
 	private double MinElev = -1;
 	/** Maximum elevation of the track (in m) **/
 	private double MaxElev = -1;
+	/** Filter value for the elevation filter **/
+	public int SmoothFilter = 0;
 	/** Global start health coefficient **/
 	public double StartGlobalCoeff = 100;
 	/** Global end health coefficient **/
@@ -165,7 +163,7 @@ public class TrackData {
 
 	// -- Profil mini-roadbook
 	/** Width of the mini roadbook (in pixels) **/
-	public int MrbSizeW = 640;
+	public int MrbSizeW = 1000;
 	/** Height of the mini roadbook (in pixels) **/
 	public int MrbSizeH = 480;
 	/** Curve filter in the mini roadbook **/
@@ -198,14 +196,14 @@ public class TrackData {
 
 	private static CgSettings Settings;
 
-
 	// -- Constructor --
 	public TrackData(CgSettings settings) {
 		Name = "";
+		FullName = "";
+		isNewTrack = true;
 		param = new ParamData();
 		Paramfile = "Default";
 		data = new ArrayList<CgData>();
-		historicalWeatherData = new HistoricalWeather(settings);
 		tInNight = new StatData();
 		tInDay = new StatData();
 		StatSlope = new StatData[13]; // : Array [0..12] of TStat;
@@ -228,10 +226,11 @@ public class TrackData {
 		StartNightTime = defaultSunriseSunsetTime;
 		EndNightTime = defaultSunriseSunsetTime;
 
-		MrbSizeW = 640;
-		MrbSizeH = 480;
+		MrbSizeW = settings.DefMrbWidth;
+		MrbSizeH = settings.DefMrbHeight;
 		CurveFilter = 1;
 		WordWrapLength = 25;
+		SmoothFilter = 0;
 
 		DefaultMRBProfilSimpleColor();
 		DefaultMRBProfilRSColor();
@@ -241,14 +240,12 @@ public class TrackData {
 		Settings = settings;
 	}
 
-
 	public static synchronized TrackData getInstance() {
 		if (instance == null) {
 			instance = new TrackData(Settings);
 		}
 		return instance;
 	}
-
 
 	/**
 	 * Initialize the mini roadbook profil color (simple mode)
@@ -258,7 +255,6 @@ public class TrackData {
 		clProfil_Simple_Border = CgConst.CL_PROFIL_SIMPLE_BORDER;
 	}
 
-
 	/**
 	 * Initialize the mini roadbook profil color (Road and track mode)
 	 */
@@ -267,7 +263,6 @@ public class TrackData {
 		clProfil_RS_Path = CgConst.CL_PROFIL_RS_PATH;
 		clProfil_RS_Border = CgConst.CL_PROFIL_RS_BORDER;
 	}
-
 
 	/**
 	 * Initialize the mini roadbook profil color (Slope mode)
@@ -280,7 +275,6 @@ public class TrackData {
 		clProfil_SlopeBorder = CgConst.CL_PROFIL_SLOPE_BORDER;
 	}
 
-
 	/**
 	 * Return the total distance in meter
 	 * 
@@ -290,12 +284,10 @@ public class TrackData {
 		return TotalDistance;
 	}
 
-
 	/**
 	 * Return the total distance. Unit depend of the 'unit'
 	 * 
-	 * @param unit
-	 *            Unit
+	 * @param unit Unit
 	 * @return distance
 	 */
 	public double getTotalDistance(int unit) {
@@ -310,11 +302,9 @@ public class TrackData {
 		}
 	}
 
-
 	public void setTotalDistance(double totalDistance) {
 		TotalDistance = totalDistance;
 	}
-
 
 	/***
 	 * Check the GPS point density on the track. If the result is too high, ask if
@@ -350,16 +340,13 @@ public class TrackData {
 		return ok;
 	}
 
-
 	/**
 	 * Read a GPX file and store the data in the array
 	 * 
-	 * @param name
-	 *            Full name of the file
-	 * @param mode
-	 *            0 = Replace the existing data by the new data 1 = Insert the new
-	 *            data at the beginning of the existing data 2 = Add the new data at
-	 *            the end of the existing data
+	 * @param name Full name of the file
+	 * @param mode 0 = Replace the existing data by the new data 1 = Insert the new
+	 *             data at the beginning of the existing data 2 = Add the new data
+	 *             at the end of the existing data
 	 * @return Return true if time data have been loaded
 	 * @throws Exception
 	 */
@@ -390,37 +377,21 @@ public class TrackData {
 		isCalculated = false;
 		isModified = false;
 
-		CalcDist();
-		CalcSpeed();
-		CalcSlope();
+		if (mode == 0)
+			isNewTrack = true;
 
-		CalcClimbResult resClimb = new CalcClimbResult();
-		CalcClimb(0, data.size() - 1, resClimb);
-		StartTime = data.get(0).getHour().equals(new DateTime(1970, 1, 1, 0, 0, 0)) ? new DateTime(2010, 1, 1, 0, 0)
-				: data.get(0).getHour();
+		// -- Calculate the main data of the track
+		CalcMainData(true, false);
+
+		// StartTime = data.get(0).getHour().equals(new DateTime(1970, 1, 1, 0, 0, 0)) ?
+		// new DateTime(2010, 1, 1, 0, 0) : data.get(0).getHour();
 		StartTime = data.get(0).getHour().equals(new DateTime(1970, 1, 1, 0, 0, 0)) ? DateTime.now()
 				: data.get(0).getHour();
-		StartTime = data.get(0).getHour().equals(new DateTime(1970, 1, 1, 0, 0, 0)) ? DateTime.now()
-				: data.get(0).getHour();
-		ClimbP = resClimb.cp;
-		ClimbM = resClimb.cm;
-		AscTime = resClimb.tp;
-		DescTime = resClimb.tm;
-
-		TotalTime = CalcHour();
 
 		timeZoneOffsetHours = 0;
 		timeZoneId = "";
 		StartNightTime = defaultSunriseSunsetTime;
 		EndNightTime = defaultSunriseSunsetTime;
-
-		SearchMinMaxElevationResult resMinMaxElev = new SearchMinMaxElevationResult();
-		resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev); // ref
-		// MinElev,
-		// ref
-		// MaxElev);
-		MinElev = resMinMaxElev.min;
-		MaxElev = resMinMaxElev.max;
 
 		SetNightBit();
 
@@ -441,19 +412,15 @@ public class TrackData {
 		return isTimeLoaded;
 	} // -- OpenGPX
 
-
 	// -- Save GPX file (complet or partial) --
 	/**
 	 * Save the track in GPX format
 	 * 
-	 * @param name
-	 *            Name of the file
-	 * @param start
-	 *            Index of the first point to save
-	 * @param end
-	 *            Index of the last point to save
+	 * @param name  Name of the file
+	 * @param start Index of the first point to save
+	 * @param end   Index of the last point to save
 	 */
-	public void SaveGPX(String name, int start, int end) {
+	public void ExportGPX(String name, int start, int end) {
 		/*
 		 * <?xml version="1.0"?> <gpx creator=
 		 * "GPS Visualizer http://www.gpsvisualizer.com/" version="1.0"
@@ -597,7 +564,7 @@ public class TrackData {
 			bufferedOutputStream.close();
 
 			isModified = false;
-			Name = new File(name).getName();
+			// Name = new File(name).getName();
 
 			CgLog.info("TrackData.SaveGPX : '" + name + "' saved");
 			CgLog.info(cmpt + " positions saved.");
@@ -607,7 +574,6 @@ public class TrackData {
 
 		CgLog.info("Save time : " + (System.currentTimeMillis() - ts) + "ms");
 	}
-
 
 	// -- Save tags as waypoint in a GPX file --
 	public void SaveWaypoint(String name, int mask) {
@@ -692,7 +658,6 @@ public class TrackData {
 		}
 	}
 
-
 	public void ExportCGP(String name, int mask) {
 		if (data.size() <= 0) {
 			return;
@@ -738,20 +703,41 @@ public class TrackData {
 					Utils.WriteStringToXML(writer, "AltitudeMeters",
 							String.format(Locale.ROOT, "%1.1f", r.getElevation(CgConst.UNIT_METER)));
 
-					// <Comment>AAA<Comment>
+					// <Comment>AAA</Comment>
 					String s = r.getComment().trim();
 					if (s.equals(""))
 						s = " ";
 					Utils.WriteStringToXML(writer, "Comment", s);
 
-					// <Name>AAA<Namet>
+					// <Name>AAA</Name>
 					s = r.getName().trim();
 					if (s.equals(""))
 						s = " ";
 					Utils.WriteStringToXML(writer, "Name", s);
 
-					// <Tag>1234<Tag>
+					// <Tag>1234</Tag>
 					Utils.WriteStringToXML(writer, "Tag", String.format("%d", r.getTag()));
+
+					// <EatTime>1234</EatTime>
+					Utils.WriteIntToXML(writer, "EatTime", r.getStation());
+
+					// <TimeLimit>1234</TimeLimit>
+					Utils.WriteIntToXML(writer, "TimeLimit", r.getTimeLimit());
+
+					// <FmtLbMiniRoadbook>1234</FmtLbMiniRoadbook>
+					Utils.WriteStringToXML(writer, "FmtLbMiniRoadbook", r.FmtLbMiniRoadbook);
+
+					// <OptMiniRoadbook>1234</OptMiniRoadbook>
+					Utils.WriteIntToXML(writer, "OptMiniRoadbook", r.OptionMiniRoadbook);
+
+					// <VPosMiniRoadbook>1234</VPosMiniRoadbook>
+					Utils.WriteIntToXML(writer, "VPosMiniRoadbook", r.VPosMiniRoadbook);
+
+					// <CommentMiniRoadbook>1234</CommentMiniRoadbook>
+					Utils.WriteStringToXML(writer, "CommentMiniRoadbook", r.CommentMiniRoadbook);
+
+					// <FontSizeMiniRoadbook>1234</FontSizeMiniRoadbook>
+					Utils.WriteIntToXML(writer, "FontSizeMiniRoadbook", r.FontSizeMiniRoadbook);
 
 					writer.writeEndElement(); // Pt
 				} // if
@@ -779,21 +765,17 @@ public class TrackData {
 		public double Distance; // Distance in meter
 		public int Point; // -1= no point
 
-
 		public SearchPointResult(int _point, double _distance) {
 			Distance = _distance;
 			Point = _point;
 		}
 	}
 
-
 	/**
 	 * Search the best point from the latitude and longitude
 	 * 
-	 * @param lat
-	 *            Latitude of the point to search
-	 * @param lon
-	 *            Longitude of the point to search
+	 * @param lat Latitude of the point to search
+	 * @param lon Longitude of the point to search
 	 * @return Object that contain the found point and the distance from the
 	 *         searched point
 	 */
@@ -818,6 +800,35 @@ public class TrackData {
 		return new SearchPointResult(p, best);
 	}
 
+	/**
+	 * Search the best point from the latitude and longitude
+	 * 
+	 * @param dist Distance to search
+	 * 
+	 * @return Index of the found point
+	 */
+	public int SearchDistance(double dist) {
+		CgData cdata;
+		double d, best;
+		int p;
+
+		double val = Utils.Distance2Meter(dist, Settings.Unit);
+
+		best = 10000000000.0; // Big value. It's normal
+		p = -1;
+
+		if (data.size() >= 0) {
+			for (int i = 0; i < data.size() - 1; i++) {
+				cdata = data.get(i);
+				d = Math.abs(val - cdata.getTotal(CgConst.UNIT_METER));
+				if (d < best) {
+					best = d;
+					p = i;
+				}
+			}
+		}
+		return p;
+	}
 
 	/*
 	 * private void AltitudeFilter() { if (data.size() <= 1) { return; } CgData r =
@@ -844,7 +855,7 @@ public class TrackData {
 		CgData r4 = null;
 
 		// Threshold. Point at a distance less than +- threshold are removed
-		double threshold = 8.0;
+		double threshold = 15.0; // 8.0;
 
 		// Scan the data
 		for (i = 0; i < data.size() - 6; i++) {
@@ -884,6 +895,31 @@ public class TrackData {
 
 	}
 
+	/**
+	 * Calculate the main data of the track
+	 * 
+	 * @param CalcHour Indicate hour calculation need to be done
+	 */
+	public void CalcMainData(boolean CalcHour, boolean SpeedwithTime) {
+		CalcDist();
+		CalcSpeed(SpeedwithTime);
+		CalcSlope();
+
+		CalcClimbResult resClimb = new CalcClimbResult();
+		CalcClimb(CgConst.ELEV_NORM, 0, data.size() - 1, resClimb);
+		ClimbP = resClimb.cp;
+		ClimbM = resClimb.cm;
+		AscTime = resClimb.tp;
+		DescTime = resClimb.tm;
+
+		if (CalcHour)
+			TotalTime = CalcHour();
+
+		SearchMinMaxElevationResult resMinMaxElev = new SearchMinMaxElevationResult();
+		resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev);
+		MinElev = resMinMaxElev.min;
+		MaxElev = resMinMaxElev.max;
+	}
 
 	// -- Calculate Distance ---
 
@@ -929,26 +965,42 @@ public class TrackData {
 		}
 	} // Calcdist
 
-
 	/**
 	 * Calculate speed !!! To call after Calcdist()
 	 */
-	public void CalcSpeed() {
-		boolean b = false;
-		for (CgData r : data) {
-			if (b) {
-				if (r.getdTime_f() != 0.0) {
-					r.setSpeed(r.getDist(CgConst.UNIT_METER) / r.getdTime_f() * 3.6);
+	public void CalcSpeed(boolean withTime) {
+		if (withTime)
+//			CalcSpeedWithTime();
+		{
+			int prevTime = data.get(0).getTime();
+			// -- Calculation loop --
+			for (CgData r : data) {
+				int dTime = r.getTime() - prevTime;
+
+				//double dist = r.getDist(CgConst.UNIT_METER);
+				if (dTime != 0.0) {
+					r.setSpeed(r.getDist(CgConst.UNIT_METER) / dTime * 3.6);
 				} else {
 					r.setSpeed(0.0);
 				}
-			} else {
-				r.setSpeed(0.0);
-				b = true;
-			} // if
+				prevTime = r.getTime();
+			} // End of the calculation loop --
+		} else {
+			boolean b = false;
+			for (CgData r : data) {
+				if (b) {
+					if (r.getdTime_f() != 0.0) {
+						r.setSpeed(r.getDist(CgConst.UNIT_METER) / r.getdTime_f() * 3.6);
+					} else {
+						r.setSpeed(0.0);
+					}
+				} else {
+					r.setSpeed(0.0);
+					b = true;
+				} // if
+			}
 		}
 	} // CalcSpeed
-
 
 	/**
 	 * Calculate slope
@@ -1004,7 +1056,6 @@ public class TrackData {
 		/** Total distance with negative climb (stored in m) **/
 		private double TotClimbM;
 
-
 		public double getTotClimbP(int unit) {
 			switch (unit) {
 			case CgConst.UNIT_METER:
@@ -1017,11 +1068,9 @@ public class TrackData {
 			}
 		}
 
-
 		public void setTotClimbP(double totClimbP) {
 			TotClimbP = totClimbP;
 		}
-
 
 		public double getTotFlat(int unit) {
 			switch (unit) {
@@ -1035,11 +1084,9 @@ public class TrackData {
 			}
 		}
 
-
 		public void setTotFlat(double totFlat) {
 			TotFlat = totFlat;
 		}
-
 
 		public double getTotClimbM(int unit) {
 			switch (unit) {
@@ -1053,13 +1100,11 @@ public class TrackData {
 			}
 		}
 
-
 		public void setTotClimbM(double totClimbM) {
 			TotClimbM = totClimbM;
 		}
 
 	}
-
 
 	// -- Calculate climb - and + ---
 	public CalcAvrSlopeResult CalcAvrSlope(int StartLine, int EndLine, CalcAvrSlopeResult r) {
@@ -1104,15 +1149,90 @@ public class TrackData {
 	public static class CalcClimbResult {
 		public double cp, cm;
 		public int tp, tm;
+				
+		public double getAscendClimbSum(int unit) {
+			switch (unit) {
+			case CgConst.UNIT_METER:
+				return cp;
+			case CgConst.UNIT_MILES_FEET:
+				// meter to feet
+				return Utils.Meter2Feet(cp);
+			default:
+				return cp;
+			}
+		}
+		
+		
+		public String getAscendClimbSumString(int unit, boolean withunit) {
+
+			double e = getAscendClimbSum(unit);
+
+			String s = "";
+			switch (unit) {
+			case CgConst.UNIT_METER:
+				s = String.format("%1.0f", e);
+				if (withunit)
+					s = s + "m";
+				break;
+			case CgConst.UNIT_MILES_FEET:
+				s = String.format("%1.0f", e);
+				if (withunit)
+					s = s + "feet";
+				break;
+			default:
+				s = String.format("%1.0f", e);
+				if (withunit)
+					s = s + "m";
+				break;
+			}
+			return s;
+		}
+
+		public double getDescentClimbSum(int unit) {
+			switch (unit) {
+			case CgConst.UNIT_METER:
+				return cm;
+			case CgConst.UNIT_MILES_FEET:
+				// meter to feet
+				return Utils.Meter2Feet(cm);
+			default:
+				return cm;
+			}
+		}
+		
+		public String getDescentClimbSumString(int unit, boolean withunit) {
+
+			double e = getDescentClimbSum(unit);
+
+			String s = "";
+			switch (unit) {
+			case CgConst.UNIT_METER:
+				s = String.format("%1.0f", e);
+				if (withunit)
+					s = s + "m";
+				break;
+			case CgConst.UNIT_MILES_FEET:
+				s = String.format("%1.0f", e);
+				if (withunit)
+					s = s + "feet";
+				break;
+			default:
+				s = String.format("%1.0f", e);
+				if (withunit)
+					s = s + "m";
+				break;
+			}
+			return s;
+		}
 	}
 
-
+	
 	// -- Calculate climb - and + ---
 	// cp: cumul D+ (m)
 	// cm: cumul D- (m)
 	// tp: cumul temps en montée (s)
 	// tm: cumul temps en descente (s)
-	public CalcClimbResult CalcClimb(int StartLine, int EndLine, CalcClimbResult r) {
+	public CalcClimbResult CalcClimb(int elevType, int StartLine, int EndLine, CalcClimbResult r) {
 		int i = 0;
 		int oldTime = 0;
 		int dt = 0;
@@ -1127,17 +1247,37 @@ public class TrackData {
 		r.tm = 0;
 
 		if (data.size() > 0) {
-			oldElev = data.get(StartLine).getElevation(CgConst.UNIT_METER);
+			switch (elevType) {
+			case CgConst.ELEV_NOTSMOOTHED:
+				oldElev = data.get(StartLine).getElevationNotSmoothed(CgConst.UNIT_METER);
+				break;
+			case CgConst.ELEV_SMOOTHED:
+				oldElev = data.get(StartLine).getElevationSmoothed(CgConst.UNIT_METER);
+				break;
+			default:
+				oldElev = data.get(StartLine).getElevation(CgConst.UNIT_METER);
+			}
+
 			oldTime = data.get(StartLine).getTime();
 
 			for (i = StartLine; i <= EndLine; i++) {
-				elev = data.get(i).getElevation(CgConst.UNIT_METER);
+				switch (elevType) {
+				case CgConst.ELEV_NOTSMOOTHED:
+					elev = data.get(i).getElevationNotSmoothed(CgConst.UNIT_METER);
+					break;
+				case CgConst.ELEV_SMOOTHED:
+					elev = data.get(i).getElevationSmoothed(CgConst.UNIT_METER);
+					break;
+				default:
+					elev = data.get(i).getElevation(CgConst.UNIT_METER);
+				}
+
 				time = data.get(i).getTime();
 
 				de = (elev - oldElev);
 				dt = (time - oldTime);
 
-				if (Math.abs(de) > CgConst.MIN_ELEV) {
+				if (Math.abs(de) > (double) Settings.ClimbThresholdForCalculation) {
 					if (de > 0) {
 						r.cp += de;
 						r.tp += dt;
@@ -1164,17 +1304,14 @@ public class TrackData {
 		/** Average speed (km/h) **/
 		private double avrspeed;
 
-
 		public void setAvrspeed(double avrspeed) {
 			this.avrspeed = avrspeed;
 		}
-
 
 		public double getAvrspeed() {
 			return avrspeed;
 		}
 	}
-
 
 	// -- Calculate the average speed between 2 points
 	public CalcAvrSpeedResult CalcAvrSpeed(int StartLine, int EndLine, CalcAvrSpeedResult r) {
@@ -1192,7 +1329,7 @@ public class TrackData {
 		return r;
 	} // CalcAvrSpeed
 
-
+	
 	// -- Calculate Hour --
 	/**
 	 * Calculate the hour for each point
@@ -1207,7 +1344,6 @@ public class TrackData {
 		} // for i
 		return last;
 	}
-
 
 	// -- Calculate road distance (in meter) --
 	public double CalcRoad(int start, int end) {
@@ -1229,16 +1365,12 @@ public class TrackData {
 		public double min, max;
 	}
 
-
 	/**
 	 * Search the minmimum and maximum elevation of the track betwwen two points
 	 * 
-	 * @param start
-	 *            Starting point
-	 * @param end
-	 *            Ending point
-	 * @param r
-	 *            SearchMinMaxElevationResult object
+	 * @param start Starting point
+	 * @param end   Ending point
+	 * @param r     SearchMinMaxElevationResult object
 	 * @return Result in a SearchMinMaxElevationResult object
 	 */
 	private SearchMinMaxElevationResult SearchMinMaxElevation(int start, int end, SearchMinMaxElevationResult r) {
@@ -1256,7 +1388,6 @@ public class TrackData {
 		}
 		return r;
 	}
-
 
 	/*
 	 * public void SearchMinMaxElevation(int start, int end, ref min, ref max) {
@@ -1283,7 +1414,6 @@ public class TrackData {
 		return isTimeLimit;
 	}
 
-
 	/**
 	 * Calculate the time for each position of the track
 	 */
@@ -1309,7 +1439,12 @@ public class TrackData {
 
 		isTimeLoaded = false;
 
-		String sParamfile = Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + Paramfile + ".par";
+		// String sParamfile = Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" +
+		// Paramfile + ".par";
+
+		// -- Search the curve in a special order (user>min_miles>km_h)
+		int FolderType = Utils.searchCurveFolder(Paramfile);
+		String sParamfile = Utils.getSelectedCurveFolder(FolderType) + Paramfile + ".par";
 
 		try {
 			param.Load(sParamfile);
@@ -1426,6 +1561,28 @@ public class TrackData {
 		isModified = true;
 	} // Calculate
 
+	public void CalcSpeedWithTime() {
+		if (param == null) {
+			return;
+		}
+
+		isTimeLoaded = false;
+
+		int prevTime = data.get(0).getTime();
+		// -- Calculation loop --
+		for (CgData r : data) {
+			int dTime = r.getTime() - prevTime;
+
+			double dist = r.getDist(CgConst.UNIT_METER);
+			if (dTime != 0.0) {
+				r.setSpeed(dist * 3.6 / dTime);
+			} else {
+				r.setSpeed(0.0);
+			}
+			prevTime = r.getTime();
+		} // End of the calculation loop --
+		isModified = true;
+	} // Calculate
 
 	/**
 	 * Set night bit. Used when we load a track to avoid to launch a new calculation
@@ -1443,7 +1600,6 @@ public class TrackData {
 			}
 		}
 	} // SetNightBit
-
 
 	/**
 	 * Search the min/max elevation of the track
@@ -1552,7 +1708,6 @@ public class TrackData {
 		} // Main loop
 	} // CalcMinMax
 
-
 	/**
 	 * Invert track
 	 */
@@ -1573,7 +1728,7 @@ public class TrackData {
 			CalcSlope();
 
 			CalcClimbResult resClimb = new CalcClimbResult();
-			CalcClimb(0, data.size() - 1, resClimb);
+			CalcClimb(CgConst.ELEV_NORM, 0, data.size() - 1, resClimb);
 			ClimbP = resClimb.cp;
 			ClimbM = resClimb.cm;
 			AscTime = resClimb.tp;
@@ -1591,12 +1746,10 @@ public class TrackData {
 		}
 	}
 
-
 	/**
 	 * Invert track
 	 * 
-	 * @param start
-	 *            Index of the starting point
+	 * @param start Index of the starting point
 	 */
 	public void NewStartingPoint(int start) {
 
@@ -1610,7 +1763,9 @@ public class TrackData {
 			int nb = 0;
 			while (nb < data.size()) {
 				datatmp.add(new CgData((double) (nb + 1), data.get(n).getLatitude(), data.get(n).getLongitude(),
-						data.get(n).getElevation(CgConst.UNIT_METER), data.get(n).getElevationMemo(),
+						data.get(n).getElevation(CgConst.UNIT_METER),
+						data.get(n).getElevationNotSmoothed(CgConst.UNIT_METER),
+						data.get(n).getElevationSmoothed(CgConst.UNIT_METER), data.get(n).getElevationMemo(),
 						data.get(n).getTag(), data.get(n).getDist(CgConst.UNIT_METER),
 						data.get(n).getTotal(CgConst.UNIT_METER), data.get(n).getDiff(), data.get(n).getCoeff(), 0.0,
 						data.get(n).getSlope(), data.get(n).getSpeed(CgConst.UNIT_METER),
@@ -1633,6 +1788,8 @@ public class TrackData {
 				r.setLatitude(datatmp.get(n).getLatitude());
 				r.setLongitude(datatmp.get(n).getLongitude());
 				r.setElevation(datatmp.get(n).getElevation(CgConst.UNIT_METER));
+				r.setElevationNotSmoothed(datatmp.get(n).getElevationNotSmoothed(CgConst.UNIT_METER));
+				r.setElevationSmoothed(datatmp.get(n).getElevationSmoothed(CgConst.UNIT_METER));
 				r.setElevationMemo(datatmp.get(n).getElevationMemo());
 				r.setTag(datatmp.get(n).getTag());
 				r.setDist(datatmp.get(n).getDist(CgConst.UNIT_METER));
@@ -1657,11 +1814,11 @@ public class TrackData {
 			}
 
 			CalcDist();
-			CalcSpeed();
+			CalcSpeed(false);
 			CalcSlope();
 
 			CalcClimbResult resClimb = new CalcClimbResult();
-			resClimb = CalcClimb(0, data.size() - 1, resClimb);
+			resClimb = CalcClimb(CgConst.ELEV_NORM, 0, data.size() - 1, resClimb);
 			ClimbP = resClimb.cp;
 			ClimbM = resClimb.cm;
 			AscTime = resClimb.tp;
@@ -1679,17 +1836,13 @@ public class TrackData {
 		}
 	}
 
-
 	/**
 	 * Load a CGX file
 	 * 
-	 * @param name
-	 *            name of the file
-	 * @param mode
-	 *            reading mode (0=complet 1=partial)
-	 * @param backup
-	 *            Indicate if the load is a backup or not. If it's a backup the name
-	 *            will not be updated
+	 * @param name   name of the file
+	 * @param mode   reading mode (0=complet 1=partial)
+	 * @param backup Indicate if the load is a backup or not. If it's a backup the
+	 *               name will not be updated
 	 */
 	public void OpenCGX(Component parent, String name, int mode, boolean backup) {
 		SaxCGXHandler CGXhandler = new SaxCGXHandler();
@@ -1711,8 +1864,6 @@ public class TrackData {
 		 * " positions after positions filter.");
 		 */
 
-		// String moon =
-		// historicWeatherData.get(0).getDailyWeatherData().getMoonPhase();
 		// -- Set the line number
 		int cmpt = 1;
 		for (CgData r : data) {
@@ -1722,24 +1873,27 @@ public class TrackData {
 
 		isCalculated = false;
 		isModified = false;
+		if (mode == 0)
+			isNewTrack = true;
 
-		CalcDist();
-		CalcSpeed();
-		CalcSlope();
+		// -- Calculate the main data of the track
+		CalcMainData(true, false);
 
-		CalcClimbResult resClimb = new CalcClimbResult();
-		CalcClimb(0, data.size() - 1, resClimb);
-		ClimbP = resClimb.cp;
-		ClimbM = resClimb.cm;
-		AscTime = resClimb.tp;
-		DescTime = resClimb.tm;
-
-		TotalTime = CalcHour();
-
-		SearchMinMaxElevationResult resMinMaxElev = new SearchMinMaxElevationResult();
-		resMinMaxElev = SearchMinMaxElevation(0, (data.size() - 1), resMinMaxElev);
-		MinElev = resMinMaxElev.min;
-		MaxElev = resMinMaxElev.max;
+		/*
+		 * CalcDist(); CalcSpeed(); CalcSlope();
+		 * 
+		 * CalcClimbResult resClimb = new CalcClimbResult();
+		 * CalcClimb(CgConst.ELEV_NORM, 0, data.size() - 1, resClimb); ClimbP =
+		 * resClimb.cp; ClimbM = resClimb.cm; AscTime = resClimb.tp; DescTime =
+		 * resClimb.tm;
+		 * 
+		 * TotalTime = CalcHour();
+		 * 
+		 * SearchMinMaxElevationResult resMinMaxElev = new
+		 * SearchMinMaxElevationResult(); resMinMaxElev = SearchMinMaxElevation(0,
+		 * (data.size() - 1), resMinMaxElev); MinElev = resMinMaxElev.min; MaxElev =
+		 * resMinMaxElev.max;
+		 */
 
 		SetNightBit();
 
@@ -1748,6 +1902,7 @@ public class TrackData {
 
 		if (!backup) {
 			Name = new File(name).getName();
+			//String Dir = new File(name).getAbsolutePath();
 			switch (mode) {
 			case 1:
 				CgLog.info("TrackData.OpenCGX : '" + name + "' imported at the end of the data");
@@ -1759,19 +1914,16 @@ public class TrackData {
 				CgLog.info("TrackData.OpenCGX : '" + name + "' loaded");
 			}
 		}
+		FullName = name;
 
 	}// LoadCGX
-
 
 	/**
 	 * Save data in CGX format (complete and partial)
 	 * 
-	 * @param name
-	 *            name of the file
-	 * @param start
-	 *            first line to save
-	 * @param end
-	 *            last line to save
+	 * @param name  name of the file
+	 * @param start first line to save
+	 * @param end   last line to save
 	 */
 	public void SaveCGX(String name, int start, int end, boolean backup) {
 		if (data.isEmpty()) {
@@ -1834,6 +1986,8 @@ public class TrackData {
 			Utils.WriteIntToXML(writer, "MRBTYPE", MRBType);
 			Utils.WriteIntToXML(writer, "TOPMARGIN", TopMargin);
 
+			Utils.WriteIntToXML(writer, "SMOOTHFILTER", SmoothFilter);
+
 			NumberFormat nf = NumberFormat.getNumberInstance(Locale.ROOT);
 			nf.setGroupingUsed(false);
 			nf.setMaximumFractionDigits(7);
@@ -1846,6 +2000,10 @@ public class TrackData {
 				Utils.WriteStringToXML(writer, "LATITUDEDEGREES", nf.format(r.getLatitude()));
 				Utils.WriteStringToXML(writer, "LONGITUDEDEGREES", nf.format(r.getLongitude()));
 				Utils.WriteStringToXML(writer, "ALTITUDEMETERS", nf.format(r.getElevation(CgConst.UNIT_METER)));
+				Utils.WriteStringToXML(writer, "ALTITUDEMETERSNOTSMOOTHED",
+						nf.format(r.getElevationNotSmoothed(CgConst.UNIT_METER)));
+				Utils.WriteStringToXML(writer, "ALTITUDEMETERSSMOOTHED",
+						nf.format(r.getElevationSmoothed(CgConst.UNIT_METER)));
 				Utils.WriteStringToXML(writer, "DISTANCEMETERS", nf.format(r.getDist(CgConst.UNIT_METER)));
 				Utils.WriteStringToXML(writer, "DISTANCEMETERSCUMUL", nf.format(r.getTotal(CgConst.UNIT_METER)));
 				Utils.WriteStringToXML(writer, "DIFF", nf.format(r.getDiff()));
@@ -1869,121 +2027,6 @@ public class TrackData {
 				// TRACKPOINT
 			writer.writeEndElement();
 
-			// HISTORICAL WEATHER DATA
-
-			if (historicalWeatherData != null) {
-				writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINTS");
-				writer.writeStartElement(SaxCGXHandler.LEVEL_WEATHER_NORMALS_EPHEMERIS);
-				Utils.WriteStringToXML(writer, HistoricalWeather.DAYLIGHTHOURS, historicalWeatherData.daylightHours);
-				Utils.WriteStringToXML(writer, HistoricalWeather.MOONFRACTION,
-						String.format("%.3f", historicalWeatherData.moonFraction));
-				writer.writeEndElement();// "EPHEMERIS"
-				writer.writeStartElement(SaxCGXHandler.LEVEL_WEATHER_DAILY_SUMMARIES);
-
-				writer.writeStartElement("WEATHER_STATION");
-				if (historicalWeatherData.noaaSummariesWeatherStation != null) {
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID,
-							historicalWeatherData.noaaSummariesWeatherStation.getId());
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.NAME,
-							historicalWeatherData.noaaSummariesWeatherStation.getName());
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.LATITUDE,
-							historicalWeatherData.noaaSummariesWeatherStation.getLatitude());
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.LONGITUDE,
-							historicalWeatherData.noaaSummariesWeatherStation.getLongitude());
-					Utils.WriteDoubleToXML(writer, NoaaWeatherStation.DISTANCEFROMSTART,
-							historicalWeatherData.noaaSummariesWeatherStation.getDistanceFromStart());
-				} else {
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID, "");
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.NAME, "");
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.LATITUDE, "");
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.LONGITUDE, "");
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.DISTANCEFROMSTART, "");
-				}
-				writer.writeEndElement();// "WEATHER_STATION"
-
-				if (historicalWeatherData.pastDailySummaries != null) {
-					for (int i = 0; i < 3; i++) {
-						writer.writeStartElement("DAILY_SUMMARY");
-
-						if (historicalWeatherData.pastDailySummaries.get(i) != null) {
-							NoaaWeatherData currentDailySummary = historicalWeatherData.pastDailySummaries.get(i);
-
-							Utils.WriteStringToXML(writer, NoaaWeatherData.DATE,
-									currentDailySummary.getDate().toString("yyyy-MM-dd"));
-							Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE,
-									currentDailySummary.getTemperatureMax());
-							Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE,
-									currentDailySummary.getTemperatureMin());
-							Utils.WriteStringToXML(writer, NoaaWeatherData.PRECIPITATION,
-									currentDailySummary.getPrecipitation());
-						} else {
-							Utils.WriteStringToXML(writer, NoaaWeatherData.DATE, "");
-							Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE, "");
-							Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE, "");
-							Utils.WriteStringToXML(writer, NoaaWeatherData.PRECIPITATION, "");
-						}
-						writer.writeEndElement();// "DAILY_SUMMARY"
-					}
-				}
-				writer.writeEndElement();// "DAILY_SUMMARIES"
-
-				writer.writeStartElement(SaxCGXHandler.LEVEL_WEATHER_NORMALS);
-				writer.writeStartElement("WEATHER_STATION");
-				if (historicalWeatherData.noaaNormalsWeatherStation != null) {
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID,
-							historicalWeatherData.noaaNormalsWeatherStation.getId());
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.NAME,
-							historicalWeatherData.noaaNormalsWeatherStation.getName());
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.LATITUDE,
-							historicalWeatherData.noaaNormalsWeatherStation.getLatitude());
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.LONGITUDE,
-							historicalWeatherData.noaaNormalsWeatherStation.getLongitude());
-					Utils.WriteDoubleToXML(writer, NoaaWeatherStation.DISTANCEFROMSTART,
-							historicalWeatherData.noaaNormalsWeatherStation.getDistanceFromStart());
-				} else {
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID, "");
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.NAME, "");
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.LATITUDE, "");
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.LONGITUDE, "");
-					Utils.WriteStringToXML(writer, NoaaWeatherStation.DISTANCEFROMSTART, "");
-				}
-				writer.writeEndElement();// "WEATHER_STATION"
-
-				writer.writeStartElement("NORMALS_DAILY");
-				if (historicalWeatherData.normalsDaily != null) {
-					Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE,
-							historicalWeatherData.normalsDaily.getTemperatureMax());
-					Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE,
-							historicalWeatherData.normalsDaily.getTemperatureMin());
-					Utils.WriteStringToXML(writer, NoaaWeatherData.AVERAGETEMPERATURE,
-							historicalWeatherData.normalsDaily.getTemperatureAverage());
-				} else {
-					Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE, "");
-					Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE, "");
-					Utils.WriteStringToXML(writer, NoaaWeatherData.AVERAGETEMPERATURE, "");
-				}
-				writer.writeEndElement();// "NORMALS_DAILY"
-
-				writer.writeStartElement("NORMALS_MONTHLY");
-				if (historicalWeatherData.normalsDaily != null) {
-					Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE,
-							historicalWeatherData.normalsMonthly.getTemperatureMax());
-					Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE,
-							historicalWeatherData.normalsMonthly.getTemperatureMin());
-					Utils.WriteStringToXML(writer, NoaaWeatherData.AVERAGETEMPERATURE,
-							historicalWeatherData.normalsMonthly.getTemperatureAverage());
-				} else {
-					Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE, "");
-					Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE, "");
-					Utils.WriteStringToXML(writer, NoaaWeatherData.AVERAGETEMPERATURE, "");
-				}
-				writer.writeEndElement();// "NORMALS_MONTHLY"
-
-				writer.writeEndElement();// "NORMALS"
-
-				writer.writeEndElement();// "HISTORICAL_WEATHER_DATA_POINTS"
-			}
-
 			writer.writeEndElement();
 
 			writer.writeEndDocument();
@@ -1999,6 +2042,7 @@ public class TrackData {
 				CgLog.info("TrackData.SaveCGX : '" + name + "' saved");
 				CgLog.info(cmpt + " positions saved.");
 			}
+			FullName = name;
 		} catch (XMLStreamException |
 
 				IOException e) {
@@ -2008,18 +2052,15 @@ public class TrackData {
 		CgLog.info("Save time : " + (System.currentTimeMillis() - ts) + "ms");
 	}
 
-
 	/**
 	 * Save CSV file
 	 * 
-	 * @param name
-	 *            name of the CSV file
-	 * @param start
-	 *            first line of the data to save
-	 * @param end
-	 *            last line of the data to save
+	 * @param name      name of the CSV file
+	 * @param start     first line of the data to save
+	 * @param end       last line of the data to save
+	 * @param separator 0=dot 1=comma
 	 */
-	public void SaveCSV(String name, int start, int end, int unit) {
+	public void SaveCSV(String name, int start, int end, int unit, int separator) {
 		if (data.size() <= 0)
 			return;
 
@@ -2028,6 +2069,16 @@ public class TrackData {
 
 		long ts = System.currentTimeMillis();
 
+		DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.ROOT);
+		if (separator == 0)
+			symbols.setDecimalSeparator('.');
+		else
+			symbols.setDecimalSeparator(',');
+
+		DecimalFormat decimalFormat7 = new DecimalFormat("##0.#######", symbols);
+		DecimalFormat decimalFormat1 = new DecimalFormat("##0.#", symbols);
+
+		// TODO May be export alo elevationNotSmoothed and elevationSmoothed?
 		try {
 			PrintWriter writer = new PrintWriter(name, "UTF-8");
 
@@ -2035,6 +2086,10 @@ public class TrackData {
 			s.append(bundle.getString("frmMain.HeaderLat.text") + ";");
 			s.append(bundle.getString("frmMain.HeaderLon.text") + ";");
 			s.append(bundle.getString("frmMain.HeaderElev.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderElevNotSmoothed.text") + ";"); // "ElevationNotSmoothed" + ";");
+																					// //TODO translate
+			s.append(bundle.getString("frmMain.HeaderElevSmoothed.text") + ";"); // "ElevationSmoothed" + ";"); //TODO
+																					// translate
 			s.append(bundle.getString("frmMain.HeaderTag.text") + ";");
 			s.append(bundle.getString("frmMain.HeaderDist.text") + ";");
 			s.append(bundle.getString("frmMain.HeaderTotal.text") + ";");
@@ -2047,21 +2102,25 @@ public class TrackData {
 			s.append(bundle.getString("frmMain.HeaderStation.text") + ";");
 			s.append(bundle.getString("frmMain.HeaderName.text") + ";");
 			s.append(bundle.getString("frmMain.HeaderComment.text") + ";");
+			s.append(bundle.getString("frmMain.HeaderSpeed.text") + ";"); // "Speed;"); //TODO translate
+			s.append(bundle.getString("frmMain.HeaderSlope.text") + ";"); // "Slope;"); //TODO translate
 			writer.println(s);
 			s.setLength(0);
 
 			for (int i = start; i <= end; i++) {
 				CgData d = data.get(i);
 				s.append(d.getNumString() + ";");
-				s.append(d.getLatitudeString() + ";");
-				s.append(d.getLongitudeString() + ";");
-				s.append(d.getElevationString(unit, false) + ";");
+				s.append(decimalFormat7.format(d.getLatitude()) + ";");
+				s.append(decimalFormat7.format(d.getLongitude()) + ";");
+				s.append(d.getElevationString(unit, false) + ";"); // No decimal
+				s.append(d.getElevationNotSmoothedString(unit, false) + ";"); // No decimal
+				s.append(d.getElevationSmoothedString(unit, false) + ";"); // No decimal
 				s.append(d.getTag() + ";");
-				s.append(d.getDistString(unit, false) + ";");
-				s.append(d.getTotalString(unit, false) + ";");
-				s.append(d.getDiff() + ";");
-				s.append(d.getCoeff() + ";");
-				s.append(d.getRecovery() + ";");
+				s.append(d.getDistString(unit, false) + ";"); // No decimal
+				s.append(decimalFormat1.format(d.getTotal(unit)) + ";");
+				s.append(decimalFormat1.format(d.getDiff()) + ";");
+				s.append(decimalFormat1.format(d.getCoeff()) + ";");
+				s.append(decimalFormat1.format(d.getRecovery()) + ";");
 				s.append(d.getTimeString() + ";");
 				s.append(d.getTimeLimitString(false) + ";");
 				s.append(d.getHourString() + ";");
@@ -2073,7 +2132,10 @@ public class TrackData {
 
 				str = d.getComment();
 				str = str.replace("\n", "").replace("\r", "").trim();
-				s.append(str);
+				s.append(str + ";");
+
+				s.append(decimalFormat1.format(d.getSpeed(unit)) + ";");
+				s.append(decimalFormat1.format(d.getSlope()) + ";");
 
 				writer.println(s);
 				s.setLength(0);
@@ -2085,7 +2147,6 @@ public class TrackData {
 
 		CgLog.info("Save time : " + (System.currentTimeMillis() - ts) + "ms");
 	}
-
 
 	/**
 	 * Calculate the night and day time, speed and distance
@@ -2118,7 +2179,6 @@ public class TrackData {
 			}
 		}
 	}
-
 
 	/**
 	 * Calculate the slope statistic
@@ -2219,7 +2279,6 @@ public class TrackData {
 			}
 		} // foreach
 	}
-
 
 	/**
 	 * Calculate the elevation statistic
@@ -2398,14 +2457,11 @@ public class TrackData {
 		}
 	}
 
-
 	/**
 	 * Find the nearest point in the point list
 	 * 
-	 * @param lat
-	 *            latitude of the point
-	 * @param lon
-	 *            longitude of the point
+	 * @param lat latitude of the point
+	 * @param lon longitude of the point
 	 * @return index of the nearest point in the point list
 	 */
 	public int FindNearestPoint(double lat, double lon) {
@@ -2453,12 +2509,10 @@ public class TrackData {
 		return index;
 	}
 
-
 	/**
 	 * Return the minimum elevation of the track
 	 * 
-	 * @param unit
-	 *            Unit wanted (To get from the settings)
+	 * @param unit Unit wanted (To get from the settings)
 	 * @return Minimum elevation of the track
 	 */
 	public double getMinElev(int unit) {
@@ -2473,12 +2527,10 @@ public class TrackData {
 		}
 	}
 
-
 	/**
 	 * Return the maximum elevation of the track
 	 * 
-	 * @param unit
-	 *            Unit wanted (To get from the settings)
+	 * @param unit Unit wanted (To get from the settings)
 	 * @return Maximum elevation of the track
 	 */
 	public double getMaxElev(int unit) {
@@ -2493,7 +2545,6 @@ public class TrackData {
 		}
 	}
 
-
 	public double getClimbP(int unit) {
 		switch (unit) {
 		case CgConst.UNIT_METER:
@@ -2506,17 +2557,14 @@ public class TrackData {
 		}
 	}
 
-
 	/**
 	 * Set climbP variable
 	 * 
-	 * @param climbP
-	 *            Value in meter
+	 * @param climbP Value in meter
 	 */
 	public void setClimbP(double climbP) {
 		ClimbP = climbP;
 	}
-
 
 	public double getClimbM(int unit) {
 		switch (unit) {
@@ -2530,23 +2578,19 @@ public class TrackData {
 		}
 	}
 
-
 	/**
 	 * Set climbM variable
 	 * 
-	 * @param climbM
-	 *            Value in meter
+	 * @param climbM Value in meter
 	 */
 	public void setClimbM(double climbM) {
 		ClimbM = climbM;
 	}
 
-
 	/**
 	 * Return the road distance on the track
 	 * 
-	 * @param unit
-	 *            Unit for the returned value
+	 * @param unit Unit for the returned value
 	 * @return Road distance in meter
 	 */
 	public double getDistRoad(int unit) {
@@ -2561,23 +2605,19 @@ public class TrackData {
 		}
 	}
 
-
 	/**
 	 * Set distRoad variable
 	 * 
-	 * @param distRoad
-	 *            Value in meter
+	 * @param distRoad Value in meter
 	 */
 	public void setDistRoad(double distRoad) {
 		DistRoad = distRoad;
 	}
 
-
 	/**
 	 * Copy the current track to another
 	 * 
-	 * @param d
-	 *            track object where to copy the current track
+	 * @param d track object where to copy the current track
 	 * @return track object where the current is copied
 	 */
 	public TrackData CopyTo(TrackData d) {
@@ -2679,25 +2719,6 @@ public class TrackData {
 		return d;
 	}
 
-
-	public HistoricalWeather getHistoricalWeather() {
-		return historicalWeatherData;
-	}
-
-
-	public void setHistoricalWeather(HistoricalWeather weatherHistory) {
-		HistoricalWeather previousWeatherHistory = historicalWeatherData;
-		historicalWeatherData = weatherHistory;
-		HistoricalWeatherDataChanged.firePropertyChange("HistoricalWeatherDataChanged", previousWeatherHistory,
-				weatherHistory);
-	}
-
-
-	public void addHistoricalWeatherListener(PropertyChangeListener listener) {
-		HistoricalWeatherDataChanged.addPropertyChangeListener(listener);
-	}
-
-
 	public void determineTrackTimeZone() {
 		if (this.data == null || this.data.isEmpty())
 			return;
@@ -2707,7 +2728,6 @@ public class TrackData {
 		timeZoneOffsetHours = Utils.hoursUTCOffsetFromLatLon(this.data.get(0).getLatitude(),
 				this.data.get(0).getLongitude());
 	}
-
 
 	public void determineSunriseSunsetTimes() {
 		if (this.data == null || this.data.isEmpty())
@@ -2722,5 +2742,64 @@ public class TrackData {
 				this.data.get(0).getLongitude(), timeZoneId);
 
 	}
+
+	/**
+	 * Copy the smoothed elevation in the elevation field
+	 */
+	public void SelectSmoothedElevation() {
+		if (this.data == null || this.data.isEmpty())
+			return;
+
+		for (CgData r : data) {
+			r.setElevation(r.getElevationSmoothed(CgConst.UNIT_METER));
+		}
+	}
+
+	/**
+	 * Copy the not smoothed elevation in the elevation field
+	 */
+	public void SelectNotSmoothedElevation() {
+		if (this.data == null || this.data.isEmpty())
+			return;
+
+		for (CgData r : data) {
+			r.setElevation(r.getElevationNotSmoothed(CgConst.UNIT_METER));
+		}
+	}
+
+	/**
+	 * Copy the Not smoothed elevation in the smoothed elevation field
+	 */
+	public void CopyNotSmoothedInSmoothedElevation() {
+		if (this.data == null || this.data.isEmpty())
+			return;
+
+		for (CgData r : data) {
+			r.setElevationSmoothed(r.getElevationNotSmoothed(CgConst.UNIT_METER));
+		}
+	}
+
+	/*
+	 * Keep these 2 methods because they can be used to remove enormous slope. Maybe
+	 * a bit of debug is necessary because input data are not the right ones (due
+	 * the method of calculation of dist and slope)
+	 * 
+	 * public double CalcNewSlope(double elevPrev, double elevNext, double distPrev,
+	 * double distNext) {
+	 * 
+	 * double de = elevNext-elevPrev; double dd = distPrev-distNext; double
+	 * value=elevPrev+(de*distPrev/dd); return value; }
+	 * 
+	 * public void FixIncorrectSlope() { if (this.data == null ||
+	 * this.data.isEmpty()) return;
+	 * 
+	 * for (int i=0; i<data.size()-1; i++) { CgData act = data.get(i); if
+	 * (Math.abs(act.getSlope())>50) { CgData prev = data.get(i-1); CgData next =
+	 * data.get(i+1); act.setElevation(CalcNewSlope(
+	 * prev.getdElevation(CgConst.UNIT_METER),
+	 * next.getdElevation(CgConst.UNIT_METER), prev.getDist(CgConst.UNIT_METER),
+	 * next.getDist(CgConst.UNIT_METER) ) ); }
+	 * //r.setElevationSmoothed(r.getElevationNotSmoothed(CgConst.UNIT_METER)); } }
+	 */
 
 } // TrackData

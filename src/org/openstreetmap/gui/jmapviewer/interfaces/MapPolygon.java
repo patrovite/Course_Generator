@@ -11,28 +11,28 @@ import java.util.List;
  *
  * @author Vincent
  */
-public interface MapPolygon extends MapObject{
+public interface MapPolygon extends MapObject {
 
-    /**
-     * @return Latitude/Longitude of each point of polygon
-     */
-    public List<? extends ICoordinate> getPoints();
+	/**
+	 * @return Latitude/Longitude of each point of polygon
+	 */
+	public List<? extends ICoordinate> getPoints();
 
-    /**
-     * Paints the map rectangle on the map. The <code>points</code>
-     * are specifying the coordinates within <code>g</code>
-     *
-     * @param g
-     * @param points
-     */
-    public void paint(Graphics g, List<Point> points);
+	/**
+	 * Paints the map rectangle on the map. The <code>points</code> are specifying
+	 * the coordinates within <code>g</code>
+	 *
+	 * @param g
+	 * @param points
+	 */
+	public void paint(Graphics g, List<Point> points);
 
-    /**
-     * Paints the map rectangle on the map. The <code>polygon</code>
-     * is specifying the coordinates within <code>g</code>
-     *
-     * @param g
-     * @param polygon
-     */
-    public void paint(Graphics g, Polygon polygon);
+	/**
+	 * Paints the map rectangle on the map. The <code>polygon</code> is specifying
+	 * the coordinates within <code>g</code>
+	 *
+	 * @param g
+	 * @param polygon
+	 */
+	public void paint(Graphics g, Polygon polygon);
 }

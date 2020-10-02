@@ -54,23 +54,19 @@ public class SaxConfigHandler extends DefaultHandler {
 	private final int ERR_READ_COLOR = -7;
 	private CgSettings Settings;
 
-
 	/**
 	 * Read the GPX file from disc
 	 * 
-	 * @param filename
-	 *            Name of the gpx file to read
-	 * @param TData
-	 *            TrackData object where to store the read data
-	 * @param readmode
-	 *            Reading mode 0=Load the complete file 1=Insert the read data at
-	 *            the beginning of the current track 2=Insert the read data at the
-	 *            end of the current track
-	 * @return The error code Erroce explanation: ERR_READ_NO = No problem during
-	 *         the reading of the file ERR_READ_LAT = Parsing error during the read
-	 *         of a latitude (lat) element ERR_READ_LON = Parsing error during the
-	 *         read of a longitude (lon) element ERR_READ_ELE = Parsing error during
-	 *         the read of a elevation (ele) element ERR_READ_TIME = Parsing error
+	 * @param filename Name of the gpx file to read
+	 * @param TData    TrackData object where to store the read data
+	 * @param readmode Reading mode 0=Load the complete file 1=Insert the read data
+	 *                 at the beginning of the current track 2=Insert the read data
+	 *                 at the end of the current track
+	 * @return The error code explanation: ERR_READ_NO = No problem during the
+	 *         reading of the file ERR_READ_LAT = Parsing error during the read of a
+	 *         latitude (lat) element ERR_READ_LON = Parsing error during the read
+	 *         of a longitude (lon) element ERR_READ_ELE = Parsing error during the
+	 *         read of a elevation (ele) element ERR_READ_TIME = Parsing error
 	 *         during the read of a time (time) element ERR_READ_VERSION = Parsing
 	 *         error during the read of a version of the GPX file. Must be 1.1
 	 *         ERR_READ_NOTEXIST = The file doesn't exist or can't by read
@@ -107,11 +103,9 @@ public class SaxConfigHandler extends DefaultHandler {
 		return Settings.ReadError;
 	}
 
-
 	public int getErrLine() {
 		return errline;
 	}
-
 
 	/**
 	 * Parse a string element
@@ -124,14 +118,11 @@ public class SaxConfigHandler extends DefaultHandler {
 		return S;
 	}
 
-
 	/**
 	 * Parse a double element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occure
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occure
 	 * @return Return the parsed value
 	 */
 	private double ManageDouble(double _default, int _errcode) {
@@ -144,14 +135,11 @@ public class SaxConfigHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a integer element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occure
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occure
 	 * @return Return the parsed value
 	 */
 	private int ManageInt(int _default, int _errcode) {
@@ -164,14 +152,11 @@ public class SaxConfigHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a boolean element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occure
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occure
 	 * @return Return the parsed value
 	 */
 	private boolean ManageBoolean(boolean _default, int _errcode) {
@@ -184,14 +169,11 @@ public class SaxConfigHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a color element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed color
 	 */
 	private Color ManageColor(Color _default, int _errcode) {
@@ -207,13 +189,11 @@ public class SaxConfigHandler extends DefaultHandler {
 		}
 	}
 
-
 	@Override
 	public void setDocumentLocator(final Locator locator) {
 		this.locator = locator; // Save the locator, so that it can be used later for line tracking when
 								// traversing nodes.
 	}
-
 
 	@Override
 	public void startElement(String uri, String localname, String qName, Attributes attributs) throws SAXException {
@@ -221,7 +201,6 @@ public class SaxConfigHandler extends DefaultHandler {
 			level++;
 		}
 	}
-
 
 	@Override
 	public void endElement(String uri, String localname, String qName) throws SAXException {
@@ -233,7 +212,7 @@ public class SaxConfigHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("CONNECTIONTIMEOUT")) {
 				Settings.ConnectionTimeout = ManageInt(10000, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("LASTDIR")) {
-				Settings.LastDir = ManageString().trim();
+				Settings.setLastDirectory(ManageString().trim());
 			} else if (qName.equalsIgnoreCase("PREVIOUSCGXDIR")) {
 				Settings.previousCGXDirectory = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("PREVIOUSGPXDIR")) {
@@ -252,6 +231,8 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.MemoFormat[3] = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("MEMOFORMAT5")) {
 				Settings.MemoFormat[4] = ManageString();
+			} else if (qName.equalsIgnoreCase("DEFAULTFORMAT")) {
+				Settings.DefaultFormat = ManageString();
 			} else if (qName.equalsIgnoreCase("MRUGPX1")) {
 				Settings.mruGPX[0] = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("MRUGPX2")) {
@@ -322,6 +303,10 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.HorizSplitPosition = ManageInt(50, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("MRBSPLITPOSITION")) {
 				Settings.MRB_SplitPosition = ManageInt(220, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("DEFMRBWIDTH")) {
+				Settings.DefMrbWidth = ManageInt(1000, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("DEFMRBHEIGHT")) {
+				Settings.DefMrbHeight = ManageInt(480, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("MAP")) {
 				Settings.map = ManageInt(0, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("DISTNEAR")) {
@@ -330,13 +315,14 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.DistFar = ManageDouble(1000.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("POSFILTERASKTHRESHOLD")) {
 				Settings.PosFilterAskThreshold = ManageInt(5, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("CLIMBTHRESHOLDFORCALCULATION")) {
+				Settings.ClimbThresholdForCalculation = ManageInt(CgConst.MIN_ELEV, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("DEFAULTFONTNAME")) {
 				Settings.DefaultFontName = ManageString().trim();
 			} else if (qName.equalsIgnoreCase("DEFAULTFONTSTYLE")) {
 				Settings.DefaultFontStyle = ManageInt(0, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("DEFAULTFONTSIZE")) {
 				Settings.DefaultFontSize = ManageInt(14, ERR_READ_INT);
-
 			} else if (qName.equalsIgnoreCase("STATUSBARICONSIZE")) {
 				Settings.StatusbarIconSize = ManageInt(22, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("TABICONSIZE")) {
@@ -357,8 +343,6 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.CurveButtonsIconSize = ManageInt(32, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("THUNDERFORESTAPIKEY")) {
 				Settings.setThunderForestApiKey(ManageString().trim());
-			} else if (qName.equalsIgnoreCase("NOAATOKEN")) {
-				Settings.setNoaaToken(ManageString().trim());
 			} else if (qName.equalsIgnoreCase("COLORDIFFVERYEASY")) {
 				Settings.Color_Diff_VeryEasy = ManageColor(CgConst.CL_DIFF_VERYEASY, ERR_READ_COLOR);
 			} else if (qName.equalsIgnoreCase("COLORDIFFEASY")) {
@@ -381,6 +365,10 @@ public class SaxConfigHandler extends DefaultHandler {
 				Settings.MapToolBarLayout = ManageString();
 			} else if (qName.equalsIgnoreCase("MAPTOOLBARORIENTATION")) {
 				Settings.MapToolBarOrientation = ManageInt(javax.swing.SwingConstants.VERTICAL, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("SELECTEDCURVEFOLDER")) {
+				Settings.SelectedCurveFolder = ManageInt(javax.swing.SwingConstants.VERTICAL, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("RELEASEVERSION")) {
+				Settings.ReleaseVersion = ManageString();
 			}
 
 			else if (qName.equalsIgnoreCase("CONFIG")) {
@@ -389,7 +377,6 @@ public class SaxConfigHandler extends DefaultHandler {
 			characters = "";
 		}
 	}
-
 
 	@Override
 	public void characters(char[] chars, int start, int end) throws SAXException {

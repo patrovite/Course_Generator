@@ -31,12 +31,10 @@ public class CgCoordinate extends Coordinate {
 	private static final long serialVersionUID = -4926982997021073873L;
 	private Color _color;
 
-
 	public CgCoordinate(double lat, double lon, Color color) {
 		super(lat, lon);
 		_color = color;
 	}
-
 
 	public Color getColor() {
 		return _color;

@@ -35,7 +35,6 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 
 	private static final long serialVersionUID = -7441702492576267791L;
 
-
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
@@ -47,6 +46,9 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 		setIcon(null);
 
 		data = (CgImportPts) value;
+
+		if (data == null)
+			return this;
 
 		// Depending of the column number return the rendered label
 		switch (column) {
@@ -222,28 +224,28 @@ public class ImportPtsRenderer extends DefaultTableCellRenderer {
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
-				
+
 				// DropBag
 				if ((tag & CgConst.TAG_DROPBAG) != 0) {
 					ImageIcon image = Utils.getIcon(this, "dropbag.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
-				
+
 				// Crew
 				if ((tag & CgConst.TAG_CREW) != 0) {
 					ImageIcon image = Utils.getIcon(this, "crew.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
-				
+
 				// First aid
 				if ((tag & CgConst.TAG_FIRST_AID) != 0) {
 					ImageIcon image = Utils.getIcon(this, "first_aid.png", settings.TagIconSize);
 					g.drawImage(image.getImage(), x, 0, null);
 					x += xoffset;
 				}
-				
+
 				setIcon(new ImageIcon(combined));
 			} else
 				setIcon(null); // No image

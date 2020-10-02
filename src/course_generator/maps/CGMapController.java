@@ -45,7 +45,6 @@ public class CGMapController extends JMapController implements MouseListener, Mo
 	// MouseEvent.BUTTON1_DOWN_MASK;
 	private static final int MAC_MOUSE_BUTTON1_MASK = MouseEvent.BUTTON1_DOWN_MASK;
 
-
 	public CGMapController(JMapViewer map) {
 		super(map);
 	}
@@ -61,7 +60,6 @@ public class CGMapController extends JMapController implements MouseListener, Mo
 
 	private boolean wheelZoomEnabled = true;
 	private boolean doubleClickZoomEnabled = true;
-
 
 	public void mouseDragged(MouseEvent e) {
 		debugMouseEvent("DefaultMapController.mouseDragged", e);
@@ -83,14 +81,12 @@ public class CGMapController extends JMapController implements MouseListener, Mo
 		}
 	}
 
-
 	public void mouseClicked(MouseEvent e) {
 		debugMouseEvent("DefaultMapController.mouseClicked", e);
 		if (doubleClickZoomEnabled && e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
 			map.zoomIn(e.getPoint());
 		}
 	}
-
 
 	public void mousePressed(MouseEvent e) {
 		debugMouseEvent("DefaultMapController.mousePressed", e);
@@ -104,7 +100,6 @@ public class CGMapController extends JMapController implements MouseListener, Mo
 		}
 	}
 
-
 	public void mouseReleased(MouseEvent e) {
 		debugMouseEvent("DefaultMapController.mouseReleased", e);
 		if (e.getButton() == movementMouseButton || isPlatformOsx() && e.getButton() == MouseEvent.BUTTON1) {
@@ -116,7 +111,6 @@ public class CGMapController extends JMapController implements MouseListener, Mo
 		}
 	}
 
-
 	public void debugMouseEvent(String s, MouseEvent e) {
 		if (JMapViewer.debug) {
 			System.err.println("(#9897) " + s + ": Button " + e.getButton() + " Modifiers: "
@@ -124,18 +118,15 @@ public class CGMapController extends JMapController implements MouseListener, Mo
 		}
 	}
 
-
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		if (wheelZoomEnabled) {
 			map.setZoom(map.getZoom() - e.getWheelRotation(), e.getPoint());
 		}
 	}
 
-
 	public boolean isMovementEnabled() {
 		return movementEnabled;
 	}
-
 
 	/**
 	 * Enables or disables that the map pane can be moved using the mouse.
@@ -146,11 +137,9 @@ public class CGMapController extends JMapController implements MouseListener, Mo
 		this.movementEnabled = movementEnabled;
 	}
 
-
 	public int getMovementMouseButton() {
 		return movementMouseButton;
 	}
-
 
 	/**
 	 * Sets the mouse button that is used for moving the map. Possible values are:
@@ -179,34 +168,27 @@ public class CGMapController extends JMapController implements MouseListener, Mo
 		}
 	}
 
-
 	public boolean isWheelZoomEnabled() {
 		return wheelZoomEnabled;
 	}
-
 
 	public void setWheelZoomEnabled(boolean wheelZoomEnabled) {
 		this.wheelZoomEnabled = wheelZoomEnabled;
 	}
 
-
 	public boolean isDoubleClickZoomEnabled() {
 		return doubleClickZoomEnabled;
 	}
-
 
 	public void setDoubleClickZoomEnabled(boolean doubleClickZoomEnabled) {
 		this.doubleClickZoomEnabled = doubleClickZoomEnabled;
 	}
 
-
 	public void mouseEntered(MouseEvent e) {
 	}
 
-
 	public void mouseExited(MouseEvent e) {
 	}
-
 
 	public void mouseMoved(MouseEvent e) {
 		// Mac OSX simulates with ctrl + mouse 1 the second mouse button hence no
@@ -225,7 +207,6 @@ public class CGMapController extends JMapController implements MouseListener, Mo
 		}
 
 	}
-
 
 	/**
 	 * Replies true if we are currently running on OSX

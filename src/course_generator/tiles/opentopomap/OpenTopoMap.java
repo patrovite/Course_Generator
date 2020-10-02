@@ -18,6 +18,7 @@
 
 package course_generator.tiles.opentopomap;
 
+import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.interfaces.TileSource;
 import org.openstreetmap.gui.jmapviewer.tilesources.AbstractOsmTileSource;
 
@@ -33,14 +34,12 @@ public class OpenTopoMap extends AbstractOsmTileSource {
 
 	private int SERVER_NUM = 0;
 
-
 	/**
 	 * Constructs a new {@code "Mapnik"} tile source.
 	 */
 	public OpenTopoMap() {
 		super("map", PATTERN);
 	}
-
 
 	@Override
 	public String getBaseUrl() {
@@ -49,14 +48,18 @@ public class OpenTopoMap extends AbstractOsmTileSource {
 		return url;
 	}
 
-
 	@Override
 	public int getMaxZoom() {
 		return 18;
 	}
 
-
 	public TileSource.TileUpdate getTileUpdate() {
 		return TileSource.TileUpdate.IfNoneMatch;
 	}
+
+	@Override
+	public String getAttributionText(int zoom, Coordinate topLeft, Coordinate botRight) {
+		return "Map data: © OpenStreetMap-contributors, SRTM | Map style : © OpenTopoMap (CC-BY-SA)";
+	}
+
 }

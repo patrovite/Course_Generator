@@ -94,7 +94,6 @@ public class PanelProfilMRB extends JPanel {
 	private BasicStroke PenSlopeBorder;
 	private BasicStroke myPenMoy;
 
-
 	public PanelProfilMRB(int width, int height) {
 		super();
 		track = null;
@@ -114,17 +113,14 @@ public class PanelProfilMRB extends JPanel {
 		PenSlopeBorder = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[] { 1, 0 }, 0);
 	}
 
-
 	/**
 	 * Set the CG settings on the object
 	 * 
-	 * @param settings
-	 *            CG settings
+	 * @param settings CG settings
 	 */
 	public void setSettings(CgSettings settings) {
 		this.settings = settings;
 	}
-
 
 	/**
 	 * Refresh the profil
@@ -132,7 +128,6 @@ public class PanelProfilMRB extends JPanel {
 	public void Refresh() {
 		repaint();
 	}
-
 
 	/**
 	 * Get the track object
@@ -143,17 +138,14 @@ public class PanelProfilMRB extends JPanel {
 		return track;
 	}
 
-
 	/**
 	 * Set the track object
 	 * 
-	 * @param track
-	 *            Track object
+	 * @param track Track object
 	 */
 	public void setTrack(TrackData track) {
 		this.track = track;
 	}
-
 
 	/**
 	 * Get the data list object
@@ -164,30 +156,25 @@ public class PanelProfilMRB extends JPanel {
 		return data;
 	}
 
-
 	/**
 	 * Set the data list object
 	 * 
-	 * @param data
-	 *            Get the data list object
+	 * @param data Get the data list object
 	 */
 	public void setData(MrbDataList data) {
 		this.data = data;
 	}
 
-
 	/**
 	 * Set the width of the panel
 	 * 
-	 * @param width
-	 *            Width of the panel
+	 * @param width Width of the panel
 	 */
 	public void setWidth(int width) {
 		this.width = width;
 		setPreferredSize(new Dimension(this.width, this.height));
 		repaint();
 	}
-
 
 	/**
 	 * Return the width of the panel
@@ -196,19 +183,16 @@ public class PanelProfilMRB extends JPanel {
 		return width;
 	}
 
-
 	/**
 	 * Set the height of the panel
 	 * 
-	 * @param height
-	 *            Width of the panel
+	 * @param height Width of the panel
 	 */
 	public void setHeight(int height) {
 		this.height = height;
 		setPreferredSize(new Dimension(this.width, this.height));
 		repaint();
 	}
-
 
 	/**
 	 * Return the height of the panel
@@ -217,11 +201,9 @@ public class PanelProfilMRB extends JPanel {
 		return height;
 	}
 
-
 	public int getProfileType() {
 		return ProfileType;
 	}
-
 
 	public void setProfileType(int profileType) {
 		if ((profileType < 0) || (profileType > 2))
@@ -230,7 +212,6 @@ public class PanelProfilMRB extends JPanel {
 		ProfileType = profileType;
 		repaint();
 	}
-
 
 	/**
 	 * Refresh the panel
@@ -532,7 +513,7 @@ public class PanelProfilMRB extends JPanel {
 		// -- Text box drawing --
 		int miniRoadBookGridIndex = 0;
 		DrawStringMultiLine drawStringMulti = new DrawStringMultiLine();
-		for (CgData r : data.data) {
+		for (MrbData r : data.data) {
 			if ((r.OptionMiniRoadbook & CgConst.MRBOPT_SEL) != 0) {
 				// -- Calc the number of tag
 				nbtag = NbTag(r.getTag());
@@ -649,13 +630,13 @@ public class PanelProfilMRB extends JPanel {
 						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
-					
+
 					if ((r.getTag() & CgConst.TAG_DROPBAG) != 0) {
 						Image img = getIcon("dropbag.png");
 						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
-					
+
 					if ((r.getTag() & CgConst.TAG_CREW) != 0) {
 						Image img = getIcon("crew.png");
 						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
@@ -666,7 +647,7 @@ public class PanelProfilMRB extends JPanel {
 						g2d.drawImage(img, (offx + posx + 2 + m + lt), height - offy - posy + 1 + htext, this);
 						m += 18;
 					}
-					
+
 				}
 			}
 			miniRoadBookGridIndex++;
@@ -679,22 +660,15 @@ public class PanelProfilMRB extends JPanel {
 		g2d.dispose();
 	}
 
-
 	/**
 	 * Draw the simple type profile
 	 * 
-	 * @param g2d
-	 *            Graphic context
-	 * @param xmin
-	 *            Minimum x axis value
-	 * @param ymin
-	 *            Minimum y axis value
-	 * @param resx
-	 *            x axis resolution
-	 * @param resy
-	 *            y axis resolution
-	 * @param TabY
-	 *            Array of y value for each x pixel
+	 * @param g2d  Graphic context
+	 * @param xmin Minimum x axis value
+	 * @param ymin Minimum y axis value
+	 * @param resx x axis resolution
+	 * @param resy y axis resolution
+	 * @param TabY Array of y value for each x pixel
 	 */
 	private void DrawSimpleProfile(Graphics2D g2d, double xmin, double ymin, double resx, double resy, int[] TabY) {
 		boolean first = true;
@@ -783,22 +757,15 @@ public class PanelProfilMRB extends JPanel {
 		g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
 	}
 
-
 	/**
 	 * Draw the road/path type profile
 	 * 
-	 * @param g2d
-	 *            Graphic context
-	 * @param xmin
-	 *            Minimum x axis value
-	 * @param ymin
-	 *            Minimum y axis value
-	 * @param resx
-	 *            x axis resolution
-	 * @param resy
-	 *            y axis resolution
-	 * @param TabY
-	 *            Array of y value for each x pixel
+	 * @param g2d  Graphic context
+	 * @param xmin Minimum x axis value
+	 * @param ymin Minimum y axis value
+	 * @param resx x axis resolution
+	 * @param resy y axis resolution
+	 * @param TabY Array of y value for each x pixel
 	 */
 	private void DrawRoadPathProfile(Graphics2D g2d, Double xmin, Double ymin, double resx, double resy, int[] TabY) {
 		int cmpt = 0;
@@ -899,22 +866,15 @@ public class PanelProfilMRB extends JPanel {
 		g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
 	}
 
-
 	/**
 	 * Draw the slope type profile
 	 * 
-	 * @param g2d
-	 *            Graphic context
-	 * @param xmin
-	 *            Minimum x axis value
-	 * @param ymin
-	 *            Minimum y axis value
-	 * @param resx
-	 *            x axis resolution
-	 * @param resy
-	 *            y axis resolution
-	 * @param TabY
-	 *            Array of y value for each x pixel
+	 * @param g2d  Graphic context
+	 * @param xmin Minimum x axis value
+	 * @param ymin Minimum y axis value
+	 * @param resx x axis resolution
+	 * @param resy y axis resolution
+	 * @param TabY Array of y value for each x pixel
 	 */
 	private void DrawSlopeProfile(Graphics2D g2d, Double xmin, Double ymin, double resx, double resy, int[] TabY) {
 		double avrSlope = 0.0;
@@ -1017,16 +977,13 @@ public class PanelProfilMRB extends JPanel {
 		g2d.drawLine(xCurvePts[1], yCurvePts[1], xCurvePts[2], yCurvePts[2]);
 	}
 
-
 	public float getTransparence() {
 		return transparence;
 	}
 
-
 	public void setTransparence(float transparence) {
 		this.transparence = transparence;
 	}
-
 
 	public void save(String filename) {
 		// -- Disable Highlight of the current box
@@ -1044,7 +1001,6 @@ public class PanelProfilMRB extends JPanel {
 		// -- Enable Highlight of the current box
 		WithHighlight = true;
 	}
-
 
 	private int NbTag(int Value) {
 		int n = 0;
@@ -1068,22 +1024,19 @@ public class PanelProfilMRB extends JPanel {
 		if ((Value & CgConst.TAG_CREW) != 0)
 			n++;
 		if ((Value & CgConst.TAG_FIRST_AID) != 0)
-			n++;		
+			n++;
 		// if ((Value | CgConst.TAG_ROADBOOK) != 0) n++;
 		return n;
 	}
-
 
 	public int getSelLine() {
 		return SelLine;
 	}
 
-
 	public void setSelLine(int selLine) {
 		SelLine = selLine;
 		repaint();
 	}
-
 
 	private Image getIcon(String name) {
 		return Toolkit.getDefaultToolkit().getImage(getClass().getResource("/course_generator/images/16/" + name));

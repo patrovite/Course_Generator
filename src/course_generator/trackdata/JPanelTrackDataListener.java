@@ -21,9 +21,7 @@ package course_generator.trackdata;
 public interface JPanelTrackDataListener {
 	void doubleClickEvent();
 
-
 	void simpleClickEvent();
-
 
 	void keyRealeasedEvent();
 }

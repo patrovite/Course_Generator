@@ -5,12 +5,14 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Pierre Delore" />
-  <title>Course Generator - V4.10</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <title>Course Generator - V4.6</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
   </style>
   <link rel="stylesheet" href="cg_doc.css" />
   <!--[if lt IE 9]>
@@ -18,25 +20,28 @@
   <![endif]-->
 </head>
 <body>
-<header>
-<h1 class="title">Course Generator - V4.10</h1>
+<header id="title-block-header">
+<h1 class="title">Course Generator - V4.6</h1>
 <p class="author">Pierre Delore</p>
-<p class="date">© 2008-2018 Pierre Delore (pierre@TechAndRun.com), CC BY-NC</p>
+<p class="date">© 2008-2020 Pierre Delore (pierre@TechAndRun.com), CC BY-NC</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a><ul>
+<li><a href="#introduction"><span class="toc-section-number">1</span> Introduction</a>
+<ul>
 <li><a href="#authors-note"><span class="toc-section-number">1.1</span> Author’s Note</a></li>
 <li><a href="#personal-data-protection"><span class="toc-section-number">1.2</span> Personal data protection</a></li>
 </ul></li>
-<li><a href="#the-principle"><span class="toc-section-number">2</span> The principle</a><ul>
+<li><a href="#the-principle"><span class="toc-section-number">2</span> The principle</a>
+<ul>
 <li><a href="#what-is-a-gpx-file"><span class="toc-section-number">2.1</span> What is a GPX file?</a></li>
 <li><a href="#the-cgx-format"><span class="toc-section-number">2.2</span> The CGX format</a></li>
 <li><a href="#the-operating-principle-of-course-generator"><span class="toc-section-number">2.3</span> The operating principle of Course Generator</a></li>
 <li><a href="#use-cases"><span class="toc-section-number">2.4</span> Use cases</a></li>
 </ul></li>
 <li><a href="#the-gui"><span class="toc-section-number">3</span> The GUI</a></li>
-<li><a href="#menus"><span class="toc-section-number">4</span> Menus</a><ul>
+<li><a href="#menus"><span class="toc-section-number">4</span> Menus</a>
+<ul>
 <li><a href="#file-menu"><span class="toc-section-number">4.1</span> “File” Menu</a></li>
 <li><a href="#edit-menu"><span class="toc-section-number">4.2</span> “Edit” Menu</a></li>
 <li><a href="#display-menu"><span class="toc-section-number">4.3</span> “Display” Menu</a></li>
@@ -46,18 +51,21 @@
 </ul></li>
 <li><a href="#the-toolbar"><span class="toc-section-number">5</span> The Toolbar</a></li>
 <li><a href="#the-status-bar"><span class="toc-section-number">6</span> The Status bar</a></li>
-<li><a href="#tabs"><span class="toc-section-number">7</span> Tabs</a><ul>
+<li><a href="#tabs"><span class="toc-section-number">7</span> Tabs</a>
+<ul>
 <li><a href="#gps-data-tab"><span class="toc-section-number">7.1</span> “GPS data” tab</a></li>
 <li><a href="#profile-tab"><span class="toc-section-number">7.2</span> “Profile” tab</a></li>
 <li><a href="#statistics-tab"><span class="toc-section-number">7.3</span> “Statistics” tab</a></li>
-<li><a href="#analysis-tab"><span class="toc-section-number">7.4</span> “Analysis” tab</a><ul>
+<li><a href="#analysis-tab"><span class="toc-section-number">7.4</span> “Analysis” tab</a>
+<ul>
 <li><a href="#analysistimedistance-tab"><span class="toc-section-number">7.4.1</span> “Analysis&gt;Time/Distance” tab</a></li>
 <li><a href="#analysisspeed-tab"><span class="toc-section-number">7.4.2</span> “Analysis&gt;Speed” tab</a></li>
 <li><a href="#analysisspeedslope-tab"><span class="toc-section-number">7.4.3</span> “Analysis&gt;Speed​​/Slope” tab</a></li>
 <li><a href="#summary-tab"><span class="toc-section-number">7.4.4</span> “Summary” tab</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#using-course-generator"><span class="toc-section-number">8</span> Using Course Generator</a><ul>
+<li><a href="#using-course-generator"><span class="toc-section-number">8</span> Using Course Generator</a>
+<ul>
 <li><a href="#load-a-track"><span class="toc-section-number">8.1</span> Load a track</a></li>
 <li><a href="#set-up-a-track"><span class="toc-section-number">8.2</span> Set up a track</a></li>
 <li><a href="#set-the-speedslope-curve"><span class="toc-section-number">8.3</span> Set the speed/slope curve</a></li>
@@ -70,7 +78,8 @@
 <li><a href="#calculate-the-track-time"><span class="toc-section-number">8.10</span> Calculate the track time</a></li>
 <li><a href="#save-the-track"><span class="toc-section-number">8.11</span> Save the track</a></li>
 </ul></li>
-<li><a href="#advanced-use-of-course-generator"><span class="toc-section-number">9</span> Advanced use of Course Generator</a><ul>
+<li><a href="#advanced-use-of-course-generator"><span class="toc-section-number">9</span> Advanced use of Course Generator</a>
+<ul>
 <li><a href="#find-a-gps-point"><span class="toc-section-number">9.1</span> Find a GPS point</a></li>
 <li><a href="#find-the-high-and-low-points-of-the-track"><span class="toc-section-number">9.2</span> Find the high and low points of the track</a></li>
 <li><a href="#change-the-altitude-of-a-point-on-the-track"><span class="toc-section-number">9.3</span> Change the altitude of a point on the track</a></li>
@@ -78,7 +87,8 @@
 <li><a href="#save-part-of-the-track"><span class="toc-section-number">9.5</span> Save part of the track</a></li>
 <li><a href="#export-tags-as-waypoints"><span class="toc-section-number">9.6</span> Export tags as waypoints</a></li>
 <li><a href="#copy-the-contents-of-a-cell"><span class="toc-section-number">9.7</span> Copy the contents of a cell</a></li>
-<li><a href="#generate-a-mini-roadbook"><span class="toc-section-number">9.8</span> Generate a mini roadbook</a><ul>
+<li><a href="#generate-a-mini-roadbook"><span class="toc-section-number">9.8</span> Generate a mini roadbook</a>
+<ul>
 <li><a href="#presentation"><span class="toc-section-number">9.8.1</span> Presentation</a></li>
 <li><a href="#the-types-of-mini-roadbook"><span class="toc-section-number">9.8.2</span> The types of mini roadbook</a></li>
 <li><a href="#the-toolbar-1"><span class="toc-section-number">9.8.3</span> The toolbar</a></li>
@@ -90,21 +100,24 @@
 </ul></li>
 <li><a href="#reverse-track-direction"><span class="toc-section-number">9.9</span> Reverse track direction</a></li>
 <li><a href="#set-a-new-starting-point-on-a-looped-track"><span class="toc-section-number">9.10</span> Set a new starting point on a looped track</a></li>
-<li><a href="#the-general-parameters-of-course-generator"><span class="toc-section-number">9.11</span> The general parameters of Course Generator</a><ul>
-<li><a href="#general-tab"><span class="toc-section-number">9.11.1</span> “General” tab</a></li>
-<li><a href="#display-tab"><span class="toc-section-number">9.11.2</span> “Display” tab</a></li>
+<li><a href="#find-the-best-speedslope-curve-from-the-final-time"><span class="toc-section-number">9.11</span> Find the best “Speed/Slope” curve from the final time</a></li>
+<li><a href="#the-general-parameters-of-course-generator"><span class="toc-section-number">9.12</span> The general parameters of Course Generator</a>
+<ul>
+<li><a href="#general-tab"><span class="toc-section-number">9.12.1</span> “General” tab</a></li>
+<li><a href="#display-tab"><span class="toc-section-number">9.12.2</span> “Display” tab</a></li>
+<li><a href="#maps-tab"><span class="toc-section-number">9.12.3</span> “Maps” tab</a></li>
 </ul></li>
-<li><a href="#import-and-export-marked-points"><span class="toc-section-number">9.12</span> Import and export marked points</a></li>
-<li><a href="#analyzing-data-after-a-race"><span class="toc-section-number">9.13</span> Analyzing data after a race</a></li>
-<li><a href="#using-the-map-features"><span class="toc-section-number">9.14</span> Using the map features</a></li>
-</ul></li>
-<li><a href="#useful-tools"><span class="toc-section-number">10</span> Useful tools</a><ul>
-<li><a href="#altitude-correction"><span class="toc-section-number">10.1</span> Altitude correction</a></li>
-<li><a href="#removing-unnecessary-points"><span class="toc-section-number">10.2</span> Removing unnecessary points</a></li>
+<li><a href="#import-and-export-marked-points"><span class="toc-section-number">9.13</span> Import and export marked points</a></li>
+<li><a href="#analyzing-data-after-a-race"><span class="toc-section-number">9.14</span> Analyzing data after a race</a></li>
+<li><a href="#using-the-map-features"><span class="toc-section-number">9.15</span> Using the map features</a></li>
+<li><a href="#filter-altitudes"><span class="toc-section-number">9.16</span> Filter altitudes</a></li>
+<li><a href="#altitude-correction"><span class="toc-section-number">9.17</span> Altitude correction</a></li>
+<li><a href="#removing-unnecessary-points"><span class="toc-section-number">9.18</span> Removing unnecessary points</a></li>
 </ul></li>
 </ul>
 </nav>
-<h1 id="introduction"><span class="header-section-number">1</span> Introduction</h1>
+<section id="introduction" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introduction</h1>
 <p><strong>Course Generator</strong> allows you to process your GPS files in order to :</p>
 <ul>
 <li>Calculate your travel time by having previously adjusted the parameters corresponding to the nature of the terrain and your abilities,</li>
@@ -122,6 +135,8 @@
 <li>Set a new starting point for a loop track,</li>
 <li>Insert a track at the beginning or at the end of another track,</li>
 <li>To extract part of the track,</li>
+<li>To determine from a finish time the speed/slope curve,</li>
+<li>vitesse/pente correspondante,</li>
 <li>To save the modified track, containing calculated track times, in GPX format. This will allow you, for example, to use the “Virtual Partner” function of GARMIN GPS,</li>
 <li>Save the track in CGX format which is the backup format of <strong>Course Generator</strong> in order to be able to exchange tracks while keeping the ground data, markers, the comments …</li>
 </ul>
@@ -131,7 +146,8 @@
 <li><em>“File&gt; Open GPX”</em> indicates that it is necessary to select the “File” menu then select, in this menu, “Open GPX”. This allows to simply describe a sequence of manipulation to be done with the mouse.</li>
 <li><em>“[CTRL + O]”</em> indicates one or a series of keys to activate in order to trigger an action. For example [CTRL + O] indicates that it is necessary to press the CTRL key while at the same time press the O key.</li>
 </ul>
-<h2 id="authors-note"><span class="header-section-number">1.1</span> Author’s Note</h2>
+<section id="authors-note" data-number="1.1">
+<h2 data-number="1.1"><span class="header-section-number">1.1</span> Author’s Note</h2>
 <p>I created <strong>Course Generator</strong> in 2008 to help me prepare for my first 100km Ultramarathon trail race. I improved the software based on my needs. A small article in Ultrafondu (French magazine) allowed me to start making it known and I then made it grow with the user feedbacks. It has evolved enormously and many times, I have rewritten it to fit my needs. Each time it was a challenge and like the races that I ran, it was an adventure that made me grow (knowledge, questioning, open-mindedness …).</p>
 <p><strong>Course Generator</strong> does not pretend to give you totally accurate results. Too much depends on you and external conditions. Consider this software as a help to prepare your futur adventures.</p>
 <p>You notice that I didn’t use the term “race” because for me the “adventure” approach of a race, as hard as it is, has always allowed me to go through with its positive approach (not to mention the chrono anyway:) ).</p>
@@ -146,16 +162,22 @@
 </ul>
 <p>Go on an adventure with <strong>Course Generator</strong>.</p>
 <p>Pierre DELORE</p>
-<h2 id="personal-data-protection"><span class="header-section-number">1.2</span> Personal data protection</h2>
-<p>The software collects information about your hardware and software configuration in the logs. These data are in the ‘logs’ directory which can be accessed via the menu “Tools&gt; Open the”Speed/Slope&quot; folder&quot;. Nothing exits from your computer. It is only in case of problem that I will ask you to send me the ‘logs’ files.</p>
-<h1 id="the-principle"><span class="header-section-number">2</span> The principle</h1>
+</section>
+<section id="personal-data-protection" data-number="1.2">
+<h2 data-number="1.2"><span class="header-section-number">1.2</span> Personal data protection</h2>
+<p>The software collects information about your hardware and software configuration in the logs. These data are in the ‘logs’ directory which can be accessed via the menu “Tools&gt; Open the”Logs" folder". Nothing is sent outside from your computer. It is only in case of problem that I will ask you to send me the ‘logs’ files.</p>
+</section>
+</section>
+<section id="the-principle" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> The principle</h1>
 <p>To work, <strong>Course Generator</strong> needs, as input, data containing a sequence of GPS points representing a track.</p>
 <p>This data can be:</p>
 <ul>
 <li>A file in GPX format. This file contains the data of a track that has been created or downloaded on websites,</li>
 <li>A file in CGX format which is the recording format of <strong>Course Generator</strong>.</li>
 </ul>
-<h2 id="what-is-a-gpx-file"><span class="header-section-number">2.1</span> What is a GPX file?</h2>
+<section id="what-is-a-gpx-file" data-number="2.1">
+<h2 data-number="2.1"><span class="header-section-number">2.1</span> What is a GPX file?</h2>
 <p>The GPX format is a standard cartographic data exchange format created by GARMIN.These data are either from a GPS or from a software or website.</p>
 <p>It allows to exchange:</p>
 <ul>
@@ -166,14 +188,20 @@
 <p><img src="./images/CG40_GPX.png" alt="Image Wikipedia" /><br />
 Wikipedia source</p>
 <p>When opening a GPX file, <strong>Course Generator</strong> only read tracks. Other type of data are ignored.</p>
-<h2 id="the-cgx-format"><span class="header-section-number">2.2</span> The CGX format</h2>
+</section>
+<section id="the-cgx-format" data-number="2.2">
+<h2 data-number="2.2"><span class="header-section-number">2.2</span> The CGX format</h2>
 <p>The CGX format is the native format of <strong>Course Generator</strong>. It allows in addition to the latitude, longitude and altitude, to store all specific data of <strong>Course Generator</strong>. This includes for example: ground difficulty, aid station, comments, mini-roadbook data … This format allows you to exchange a track with a complete set of information about it.</p>
-<h2 id="the-operating-principle-of-course-generator"><span class="header-section-number">2.3</span> The operating principle of Course Generator</h2>
+</section>
+<section id="the-operating-principle-of-course-generator" data-number="2.3">
+<h2 data-number="2.3"><span class="header-section-number">2.3</span> The operating principle of Course Generator</h2>
 <p>The diagram below shows the operating principle of <strong>Course Generator</strong>.</p>
 <figure>
-<img src="./images/CG40_Principe.png" alt="Principle of operation" /><figcaption>Principle of operation</figcaption>
+<img src="./images/CG40_Principe.png" alt="" /><figcaption>Principle of operation</figcaption>
 </figure>
-<h2 id="use-cases"><span class="header-section-number">2.4</span> Use cases</h2>
+</section>
+<section id="use-cases" data-number="2.4">
+<h2 data-number="2.4"><span class="header-section-number">2.4</span> Use cases</h2>
 <p>The following use cases could be considered (non-exhaustive list):</p>
 <ul>
 <li>Prepare a race. After downloading the race GPS track you will adjust your parameters, adjust the terrain “quality”, indicate the aid station and the planned downtime, add comments and many other things. Finally, <strong>Course Generator</strong> will calculate your time of passage for each point of the track. This will allow you to have your time at each point of the track, statistics (for example time spent at more than 2000m at night) and generate a mini-roadbook.</li>
@@ -185,10 +213,13 @@ Wikipedia source</p>
 <p><strong>Do I need to own a Garmin GPS device to use <strong>Course Generator</strong>?</strong></p>
 <p>No! But it’s a plus if you want to use the virtual partner feature. That’s what pushed me to create <strong>Course Generator</strong> (even though now I almost don’t use this feature anymore).</p>
 </blockquote>
-<h1 id="the-gui"><span class="header-section-number">3</span> The GUI</h1>
+</section>
+</section>
+<section id="the-gui" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> The GUI</h1>
 <p>Upon starting the software, the following window is displayed :</p>
 <figure>
-<img src="./images/CG40_Main.png" alt="Main GUI" /><figcaption>Main GUI</figcaption>
+<img src="./images/CG40_Main.png" alt="" /><figcaption>Main GUI</figcaption>
 </figure>
 <p>The software’s GUI is made of (from top to bottom):</p>
 <ul>
@@ -198,27 +229,33 @@ Wikipedia source</p>
 <li>A map.</li>
 <li>A footer showing quick important information.</li>
 </ul>
-<h1 id="menus"><span class="header-section-number">4</span> Menus</h1>
-<h2 id="file-menu"><span class="header-section-number">4.1</span> “File” Menu</h2>
+</section>
+<section id="menus" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Menus</h1>
+<section id="file-menu" data-number="4.1">
+<h2 data-number="4.1"><span class="header-section-number">4.1</span> “File” Menu</h2>
 <ul>
-<li><p><strong>Open GPX</strong> : Loads a GPX format file. Keyboard shortcut: [MAJ+CTRL+O].</p></li>
-<li><p><strong>Recent GPX files</strong> : Displays a list of the last 5 GPX files that have been loaded. Clicking on one of those files will load them again.</p></li>
 <li><p><strong>Open CGX</strong> : Loads a CGX format file. Keyboard shortcut: [CTRL+O].</p></li>
-<li><p><strong>Recent CGX files</strong> : Displays a list of the last 5 CGX files that have been loaded. Clicking on one of those files will load them again.</p></li>
-<li><p><strong>Save as CGX</strong> : Saves the course data in CGX format. All the course data (difficulty, fatigue coefficient, aid station time…) will be asved. Keyboard shortcut: [CTRL+S].</p></li>
-<li><p><strong>Save as GPX</strong> : Saves the course data in GPX format. Warning! Only latitude, longitude and altitude data will be saved.</p></li>
-<li><p><strong>Save as CSV</strong> : Saves the course data in CSV format. The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.</p></li>
-<li><p><strong>Import a GPX file</strong> : Imports a GPX file at the beginning or end of the current course</p></li>
-<li><p><strong>Import a CGX file</strong> : Imports a CGX file at the beginning or end of the current course.</p></li>
-<li><p><strong>Save selection as CGX</strong> : Saves the selected line(s) in a CGX file. All the course data (difficulties, fatigue coefficient, aid station time….) will be saved.</p></li>
-<li><p><strong>Save selection as GPX</strong> : Saves the selected lines in a GPX file. Warning! Only latitude, longitude and altitude data will be saved.</p></li>
-<li><p><strong>Save selection as CSV</strong> : Saves the selected lines in a CSV file. The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.</p></li>
-<li><p><strong>Import points</strong> : Imports waypoints as CGP format.</p></li>
-<li><p><strong>Export points</strong> : Saves the selected waypoints in a CGP file.</p></li>
-<li><p><strong>Export tags as waypoints</strong> : Saves the selected tags as waypoints in a GPX file. This allows to benefitiate, when using a GPS device, additional information on top of the course.</p></li>
-<li><p><strong>Exit Course Generator</strong> : Exits <strong>Course Generator</strong>. Keyboard shortcut: [Alt+F4].</p></li>
+<li><p><strong>Recent CGX files…</strong> : Displays a list of the last 5 CGX files that have been loaded. Clicking on one of those files will load them again.</p></li>
+<li><p><strong>Save as CGX</strong> : Saves the course data in CGX format. All the course data (difficulty, fatigue coefficient, aid station time…) will be saved. Keyboard shortcut: [CTRL+S].</p></li>
+<li><p><strong>Save as CGX as…</strong> : Saves the course data in CGX format. A dialog allow to enter the file name. All the course data (difficulty, fatigue coefficient, aid station time…) will be saved.</p></li>
+<li><p><strong>Open GPX</strong> : Loads a GPX format file. Keyboard shortcut: [MAJ+CTRL+O].</p></li>
+<li><p><strong>Recent GPX files…</strong> : Displays a list of the last 5 GPX files that have been loaded. Clicking on one of those files will load them again.</p></li>
+<li><p><strong>Import &gt; Add a GPX file to the track</strong> : Imports a GPX file at the beginning or end of the current course.</p></li>
+<li><p><strong>Import &gt; Add a CGX file to the track</strong> : Imports a CGX file at the beginning or end of the current course.</p></li>
+<li><p><strong>Export &gt; Export track as CSV</strong> : Saves the course data in CSV format. The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.</p></li>
+<li><p><strong>Export &gt; Export track as GPX</strong> : Saves the course data in GPX format. Warning! Only latitude, longitude and altitude data will be saved.</p></li>
+<li><p><strong>Export &gt; Save selection as CGX</strong> : Saves the selected line(s) in a CGX file. All the course data (difficulties, fatigue coefficient, aid station time….) will be saved.</p></li>
+<li><p><strong>Export &gt; Save selection as GPX</strong> : Saves the selected lines in a GPX file. Warning! Only latitude, longitude and altitude data will be saved.</p></li>
+<li><p><strong>Export &gt; Save selection as CSV</strong> : Saves the selected lines in a CSV file. The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.</p></li>
+<li><p><strong>Tags &gt; Import</strong> : Imports waypoints as CGP format.</p></li>
+<li><p><strong>Tags &gt; Export</strong> : Saves the selected waypoints in a CGP file.</p></li>
+<li><p><strong>Tags &gt; Export as waypoints</strong> : Saves the selected tags as waypoints in a GPX file. This allows to benefitiate, when using a GPS device, additional information on top of the course.</p></li>
+<li><p><strong>Exit</strong> : Exits <strong>Course Generator</strong>. Keyboard shortcut: [Alt+F4].</p></li>
 </ul>
-<h2 id="edit-menu"><span class="header-section-number">4.2</span> “Edit” Menu</h2>
+</section>
+<section id="edit-menu" data-number="4.2">
+<h2 data-number="4.2"><span class="header-section-number">4.2</span> “Edit” Menu</h2>
 <ul>
 <li><p><strong>Copy</strong> : Copies the selected line in the clipboard. Keyboard shortcut: [CTRL+C].</p></li>
 <li><p><strong>Search a point…</strong> : Searches a GPS point using longitude and latitude coordinates. The closest point found will be returned. Keyboard shortcut: [CTRL+F].</p></li>
@@ -227,45 +264,58 @@ Wikipedia source</p>
 <li><p><strong>Go to the next mark</strong> : Locates and selects the next mark. Keyboard shortcut: [F7].</p></li>
 <li><p><strong>Go to the previous mark</strong> : Locates and selects the previous mark. Keyboard shortcut: [Ctrl+F7].</p></li>
 </ul>
-<h2 id="display-menu"><span class="header-section-number">4.3</span> “Display” Menu</h2>
+</section>
+<section id="display-menu" data-number="4.3">
+<h2 data-number="4.3"><span class="header-section-number">4.3</span> “Display” Menu</h2>
 <ul>
 <li><strong>Generate mini roadbook</strong> : Opens a window and displays the course’s mini roadbook.</li>
 </ul>
-<h2 id="tools-menu"><span class="header-section-number">4.4</span> “Tools” Menu</h2>
+</section>
+<section id="tools-menu" data-number="4.4">
+<h2 data-number="4.4"><span class="header-section-number">4.4</span> “Tools” Menu</h2>
 <ul>
 <li><p><strong>Find Min/Max</strong> : Determines the highest and lowest course points.</p></li>
 <li><p><strong>Reverse track</strong> : Reverse the course direction.</p></li>
 <li><p><strong>Define a new start</strong>: For a given course as a loop, sets the selected point as the start of the course.</p></li>
+<li><p><strong>Smooth elevation data</strong> : Open a dialog box where you can smooth the elevation data of the track.</p></li>
 <li><p><strong>Estimate track time</strong> : Compute the estimated time for each of the course’s points. Keyboard shortcut: [F5].</p></li>
-<li><p><strong>Update standard curves</strong> : The standard “Speed/slope” will be updated with standard settings. It’s necessary to use this menu if you modified a standard curve and you want to retrieve the standard settings. It’s also necessary after a software update that introduce new standard curves. It doesn’t affect the custom curves.</p></li>
+<li><p><strong>Search ‘Speed/Slope’ curve from the final time</strong> : Open a dialog box where, from the final expected time, the software will select the best ‘Speed/Slope’ curve.</p></li>
 <li><p><strong>Open the “Speed/Slope” folder</strong> : Opens the folder containing the speed curve files in File Explorer.</p></li>
+<li><p><strong>Open the “Logs” folder</strong> : Opens the folder containing the logs files in File Explorer.</p></li>
 </ul>
-<h2 id="parameters-menu"><span class="header-section-number">4.5</span> “Parameters” Menu</h2>
+</section>
+<section id="parameters-menu" data-number="4.5">
+<h2 data-number="4.5"><span class="header-section-number">4.5</span> “Parameters” Menu</h2>
 <ul>
 <li><p><strong>Track settings…</strong> : Opens the dialog to configure the course settings. Keyboard shortcut: [F9].</p></li>
 <li><p><strong>Speed/Slope curves…</strong> : Opens the dialog to choose, create, modify or delete a speed/slope curve.</p></li>
 <li><p><strong>Course Generator settings…</strong> : Opens the dialog to change the main settings of <strong>Course Generator</strong>.</p></li>
 </ul>
-<h2 id="help-menu"><span class="header-section-number">4.6</span> “Help” Menu</h2>
+</section>
+<section id="help-menu" data-number="4.6">
+<h2 data-number="4.6"><span class="header-section-number">4.6</span> “Help” Menu</h2>
 <ul>
 <li><p><strong>Help</strong> : Displays this current document.</p></li>
+<li><p><strong>Release notes</strong> : Display a dialog box which shows notes about the current version of <strong>Course Generator</strong>.</p></li>
 <li><p><strong>F.A.Q.</strong> : Open your browser and display the Frequently Asked Question page about <strong>Course Generator</strong>.</p></li>
-<li><p><strong>Download courses</strong> : Open your browser and display the Freemovin page where you can download tracks in CGX format.</p></li>
 <li><p><strong>Check for update</strong> : Check if a <strong>Course Generator</strong> update exists.</p></li>
 <li><p><strong>Support the author…</strong> : This menu opens your web browser and displays a webpage where a donation can be made to the author in order to support him continue developing <strong>Course Generator</strong>.</p></li>
 <li><p><strong>Course Generator webpage…</strong> : This menu opens your web browser onto the main webpage of <strong>Course Generator</strong>.</p></li>
 <li><p><strong>About…</strong> : Displays the copyright and version information of <strong>Course Generator</strong>.</p></li>
 </ul>
-<h1 id="the-toolbar"><span class="header-section-number">5</span> The Toolbar</h1>
+</section>
+</section>
+<section id="the-toolbar" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> The Toolbar</h1>
 <figure>
-<img src="./images/Toolbar/CG40_Main_Toolbar.png" alt="Main Toolbar" /><figcaption>Main Toolbar</figcaption>
+<img src="./images/Toolbar/CG40_Main_Toolbar.png" alt="" /><figcaption>Main Toolbar</figcaption>
 </figure>
 <ul>
 <li><img src="./images/Toolbar/open_gpx.png" /> : Loads a GPX file format course</li>
 <li><img src="./images/Toolbar/open_cgx.png" /> : Loads a CGX file format course</li>
 <li><img src="./images/Toolbar/save_cgx.png" /> : Saves a CGX file format course</li>
 <li><img src="./images/Toolbar/undo.png" /> : Undo the last command</li>
-<li><img src="./images/Toolbar/search.png" /> : Searches for a specific GPS location</li>
+<li><img src="./images/Toolbar/search.png" /> : Searches for a specific distance</li>
 <li><img src="./images/Toolbar/prev.png" /> : Searches the previous mark</li>
 <li><img src="./images/Toolbar/next.png" /> : Searches the next mark</li>
 <li><img src="./images/Toolbar/roadbook.png" /> : Displays the mini road-book</li>
@@ -275,17 +325,19 @@ Wikipedia source</p>
 <li><img src="./images/Toolbar/fill_coeff.png" /> : Displays the global fatigue coefficient settings window</li>
 <li><img src="./images/Toolbar/refresh.png" /> : Computes the course estimated time</li>
 </ul>
-<h1 id="the-status-bar"><span class="header-section-number">6</span> The Status bar</h1>
+</section>
+<section id="the-status-bar" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> The Status bar</h1>
 <p>Located at the bottom of the main GUI, it displays the general information related to the software status and the course.</p>
 <figure>
-<img src="./images/Statusbar/CG40_Statusbar.png" alt="Status Bar" /><figcaption>Status Bar</figcaption>
+<img src="./images/Statusbar/CG40_Statusbar.png" alt="" /><figcaption>Status Bar</figcaption>
 </figure>
 <ul>
 <li><img src="./images/Statusbar/CG40_Statusbar_Dist.png" /> : Total distance.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Ascend.png" /> : Total elevation gain.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Descend.png" /> : Total elevation loss.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Time.png" /> : Total estimated time.</li>
-<li><img src="./images/Statusbar/CG40_Statusbar_Curve.png" /> : Chosen ‘speed/slope’.</li>
+<li><img src="./images/Statusbar/CG40_Statusbar_Curve.png" /> : Chosen ‘speed/slope’. A clic in this area opens the curves dialog.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Timelimit.png" /> : Indicates that a cut-off time has been exceeded for a specific course location. Clicking on it will bring the specific line into focus.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Modified.png" /> : The course has been modified. It is recommended to save it.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Calc.png" /> : The course has been modified. It is recommended to re-compute the estimated time. (button <img src="./images/Toolbar/refresh.png" /> or [F5]).</li>
@@ -293,9 +345,12 @@ Wikipedia source</p>
 <li><img src="./images/Statusbar/CG40_Statusbar_Unit.png" /> : Shows the selected measuring units.</li>
 <li><img src="./images/Statusbar/CG40_Statusbar_Map_Size.png" /> : Displays the disk space used for the maps.</li>
 </ul>
-<h1 id="tabs"><span class="header-section-number">7</span> Tabs</h1>
+</section>
+<section id="tabs" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Tabs</h1>
 <p>The top area contains a series of tabs that allow you to choose the type of data to display.</p>
-<h2 id="gps-data-tab"><span class="header-section-number">7.1</span> “GPS data” tab</h2>
+<section id="gps-data-tab" data-number="7.1">
+<h2 data-number="7.1"><span class="header-section-number">7.1</span> “GPS data” tab</h2>
 <p>This tab displays all the data of the track.<br />
 <img src="./images/Tabs/CG40_Tab_Data.png" alt="GPS data tab" /></p>
 <p>A double click on one of the lines opens the edit window.</p>
@@ -353,14 +408,18 @@ Wikipedia source</p>
 <li><strong>Name</strong> : Contains the name of the point. It is used in profile view, reports and mini roadbook.</li>
 <li><strong>Comment</strong> : Contains a comment on the point. It is used in reports and the mini roadbook.</li>
 </ul>
-<h2 id="profile-tab"><span class="header-section-number">7.2</span> “Profile” tab</h2>
+</section>
+<section id="profile-tab" data-number="7.2">
+<h2 data-number="7.2"><span class="header-section-number">7.2</span> “Profile” tab</h2>
 <p>This tab displays the track profile.<br />
 <img src="./images/Tabs/CG40_Tab_Profil.png" alt="Profile tab" /></p>
 <p>If a mark has been positioned in the table then a point appears on the curve as well as its serial number. This number corresponds to the table row of the Summary tab.</p>
 <p>A left click on the curve makes it possible to position a cursor and to obtain information on the point (information coming from the data table).</p>
 <p>A right click on the curve displays a menu to adjust the display of the curve and save the display as an image (PNG format).</p>
 <p>The button <img src="./images/Tabs/profil_marker.png" /> displays the row position of the “Summary” table.</p>
-<h2 id="statistics-tab"><span class="header-section-number">7.3</span> “Statistics” tab</h2>
+</section>
+<section id="statistics-tab" data-number="7.3">
+<h2 data-number="7.3"><span class="header-section-number">7.3</span> “Statistics” tab</h2>
 <p>This tab provides statistics on the track.<br />
 <img src="./images/Tabs/CG40_Tab_Stat.png" alt="Statistics tab" /></p>
 <p>Statistics contain among other things:</p>
@@ -373,14 +432,15 @@ Wikipedia source</p>
 <li>The distance traveled uphill, on the flat and downhill</li>
 <li>The temperature difference between the low point of the course and the high point. This value is purely indicative and theoretical. It does not take into account the wind chill effect and local phenomena. The basis of calculation is 0.6°C per 100m of elevation gain.</li>
 </ul>
-<p>The button <img src="./images/Tabs/save_html.png" /> saves this data in HTML format.<br />
-The button <img src="./images/Tabs/refresh.png" /> refreshes the data.</p>
-<h2 id="analysis-tab"><span class="header-section-number">7.4</span> “Analysis” tab</h2>
+</section>
+<section id="analysis-tab" data-number="7.4">
+<h2 data-number="7.4"><span class="header-section-number">7.4</span> “Analysis” tab</h2>
 <p>This tab allows to obtain an analysis of your track. It contains 3 sub-tabs which are detailed below.</p>
-<h3 id="analysistimedistance-tab"><span class="header-section-number">7.4.1</span> “Analysis&gt;Time/Distance” tab</h3>
+<section id="analysistimedistance-tab" data-number="7.4.1">
+<h3 data-number="7.4.1"><span class="header-section-number">7.4.1</span> “Analysis&gt;Time/Distance” tab</h3>
 <p>This tab allows you to analyze your speed over time.</p>
 <figure>
-<img src="./images/Tabs/CG40_Tab_Analyze_Dist_Time.png" alt="Time/Distance tab" /><figcaption>Time/Distance tab</figcaption>
+<img src="./images/Tabs/CG40_Tab_Analyze_Dist_Time.png" alt="" /><figcaption>Time/Distance tab</figcaption>
 </figure>
 <p>Two curves are displayed:</p>
 <ul>
@@ -394,7 +454,9 @@ The button <img src="./images/Tabs/refresh.png" /> refreshes the data.</p>
 <li>The slope of the curve becomes less steep. This indicates an acceleration.</li>
 <li>The slope changes abruptly. This indicates a stop.</li>
 </ul>
-<h3 id="analysisspeed-tab"><span class="header-section-number">7.4.2</span> “Analysis&gt;Speed” tab</h3>
+</section>
+<section id="analysisspeed-tab" data-number="7.4.2">
+<h3 data-number="7.4.2"><span class="header-section-number">7.4.2</span> “Analysis&gt;Speed” tab</h3>
 <p>This tab allows you to get an analysis of the speed on your track.<br />
 <img src="./images/Tabs/CG40_Tab_Analyze_Speed.png" alt="Speed tab" /></p>
 <p>Two curves are present:</p>
@@ -403,7 +465,9 @@ The button <img src="./images/Tabs/refresh.png" /> refreshes the data.</p>
 <li>A regression curve of speed</li>
 </ul>
 <p>A right click on the curve display a menu allowing to save the curve as an image.</p>
-<h3 id="analysisspeedslope-tab"><span class="header-section-number">7.4.3</span> “Analysis&gt;Speed​​/Slope” tab</h3>
+</section>
+<section id="analysisspeedslope-tab" data-number="7.4.3">
+<h3 data-number="7.4.3"><span class="header-section-number">7.4.3</span> “Analysis&gt;Speed​​/Slope” tab</h3>
 <p>This tab is used to extrapolate a speed curve over the slope.<br />
 <img src="./images/Tabs/CG40_Tab_Analyze_Speed_Slope.png" alt="Speed/slope tab" /></p>
 <p>This curve is useful for creating its own speed/slope curves according to a previous track.</p>
@@ -419,7 +483,9 @@ The “Name” input field is used to enter the name of the curve.<br />
 The “Comment” input field is used to enter a comment.</p>
 <p>The button <img src="./images/Tabs/correction.png" /> corrects the speed/slope curve with the track parameters (terrain difficulty and fatigue).<br />
 The button <img src="./images/Tabs/speed.png" /> allows to filter the speed of the speed/slope curve.</p>
-<h3 id="summary-tab"><span class="header-section-number">7.4.4</span> “Summary” tab</h3>
+</section>
+<section id="summary-tab" data-number="7.4.4">
+<h3 data-number="7.4.4"><span class="header-section-number">7.4.4</span> “Summary” tab</h3>
 <p>This tab displays a table containing all the lines of the track containing a mark.<br />
 <img src="./images/Tabs/CG40_Tab_Resume.png" alt="Summary tab" /></p>
 <p>For each line you have:</p>
@@ -449,7 +515,11 @@ The button <img src="./images/Tabs/speed.png" /> allows to filter the speed of t
 <p>The button <img src="./images/Tabs/save_csv.png" /> saves the table data in CSV format in order to be used in a spreadsheet (Excel, OpenOffice Calc …).<br />
 The button <img src="./images/Tabs/refresh.png" /> allows you to refresh the data.</p>
 <p>A double clic on a line open’s the line editor for the corresponding point.</p>
-<h1 id="using-course-generator"><span class="header-section-number">8</span> Using Course Generator</h1>
+</section>
+</section>
+</section>
+<section id="using-course-generator" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Using Course Generator</h1>
 <p>The normal procedure for using <strong>Course Generator</strong> is:</p>
 <ul>
 <li>Upload a GPS file</li>
@@ -460,7 +530,8 @@ The button <img src="./images/Tabs/refresh.png" /> allows you to refresh the dat
 <li>Save the track in CGX or GPX format</li>
 </ul>
 <p>The below chapters will describe all these manipulations (And much more).</p>
-<h2 id="load-a-track"><span class="header-section-number">8.1</span> Load a track</h2>
+<section id="load-a-track" data-number="8.1">
+<h2 data-number="8.1"><span class="header-section-number">8.1</span> Load a track</h2>
 <p>Two types of files can be opened by <strong>Course Generator</strong>.</p>
 <ul>
 <li>The GPX format contains a GPS track from a recording made with a GPS, a mapping software or a website. This format does not contain specific <strong>Course Generator</strong> data. This format is to use if you don’t have a CGX file of your track.</li>
@@ -469,11 +540,13 @@ The button <img src="./images/Tabs/refresh.png" /> allows you to refresh the dat
 <p>The loading of a track is done by the menu “File&gt; Open GPX” or “File&gt; Open CGX” according to the chosen format.</p>
 <p>If the track contain a too high density of GPS points, the software will ask you if you want to apply a filter to reduce the number of GPS points. A too high density of GPS points can disturb the distance calculations.</p>
 <p>If you load a GPX file that have no time data the <strong>Course Generator</strong> will the time for each point of the track at 0. It will be necessary to click on the button <img src="./images/Toolbar/refresh.png" alt="refresh button" /> to start the calculation of the time for each point.</p>
-<h2 id="set-up-a-track"><span class="header-section-number">8.2</span> Set up a track</h2>
+</section>
+<section id="set-up-a-track" data-number="8.2">
+<h2 data-number="8.2"><span class="header-section-number">8.2</span> Set up a track</h2>
 <p>The setting of the track is done with “Settings&gt;Track settings…” or [F9].</p>
 <p>The configuration window below is then displayed.</p>
 <figure>
-<img src="./images/CG40_Track_Param.png" alt="Track parameters dialog" /><figcaption>Track parameters dialog</figcaption>
+<img src="./images/CG40_Track_Param.png" alt="" /><figcaption>Track parameters dialog</figcaption>
 </figure>
 <p>You can then:</p>
 <ul>
@@ -485,7 +558,7 @@ The button <img src="./images/Tabs/refresh.png" /> allows you to refresh the dat
 </ul>
 <p>The following window appears:</p>
 <figure>
-<img src="./images/CG40_Track_Param_Sun_Dlg.png" alt="Sun dialog" /><figcaption>Sun dialog</figcaption>
+<img src="./images/CG40_Track_Param_Sun_Dlg.png" alt="" /><figcaption>Sun dialog</figcaption>
 </figure>
 <p>Enter the time zone (1 for France).</p>
 <p>Once the setting is completed, press “Ok” to validate. If you have chosen to take into account the night effect, you will see that :</p>
@@ -493,11 +566,18 @@ The button <img src="./images/Tabs/refresh.png" /> allows you to refresh the dat
 <li>the “Time” column shows a blue background during the night and green periods during the daytime periods.</li>
 <li>on the map the areas traveled at night have a highlighted plot.</li>
 </ul>
-<h2 id="set-the-speedslope-curve"><span class="header-section-number">8.3</span> Set the speed/slope curve</h2>
-<p>In order to have a track time consistent with your speed, you have to choose or create a speed curve according to the slope. This curve goes from -50% slope (downhill) to + 50% slope (climb). The choice of the curve is made by the choice of the speed that one wants to “hold” when the slope is null (0%) on a road. A set of curves has been created to cover most running speeds.</p>
+</section>
+<section id="set-the-speedslope-curve" data-number="8.3">
+<h2 data-number="8.3"><span class="header-section-number">8.3</span> Set the speed/slope curve</h2>
+<p>In order to have a track time consistent with your speed, you have to choose or create a speed curve according to the slope. This curve goes from -50% slope (downhill) to + 50% slope (climb). The choice of the curve is made by the choice of the speed that one wants to “hold” when the slope is null (0%) on a road. The curves are divided into 3 groups :</p>
+<ul>
+<li>The “km/h” curves are standard read-only curves within the range 3.6km/h to 18km/h.</li>
+<li>The “min/miles” curves are standard read-only curves within the range 5min30s/miles to 24min/miles.</li>
+<li>The “user” curves that you create. If you duplicate a standard curve, the new curve will be in the “user” tab. You can access to the “user” curve files with the menu “Tools &gt; Open the”Speed/Slope" curves folder".</li>
+</ul>
 <p>The menu “Settings&gt;Speed/Slope curves…” or the button <img src="./images/Toolbar/chart_curve.png" alt="curve button" /> will display the dialog box for selecting and managing curves.</p>
 <figure>
-<img src="./images/Curve/CG40_Dlg_Curves.png" alt="Curves dialog" /><figcaption>Curves dialog</figcaption>
+<img src="./images/Curve/CG40_Dlg_Curves.png" alt="" /><figcaption>Curves dialog</figcaption>
 </figure>
 <p>On the left appears the list of curves already created. During the creation, an explicit name was assigned to them to find them quickly. Try to preserve this principle if you create new curves.</p>
 <p>The button <img src="./images/Curve/chart_curve_open.png" alt="open curve button" /> loads the data from the selected curve file into the list.<br />
@@ -509,33 +589,39 @@ The button <img src="./images/Curve/chart_curve_delete.png" alt="delete curve bu
 <p><strong>How to choose a speed curve?</strong> This will depend on you, your goals… You can base yourself on a percentage of your vVO2max. For example for a long trail you can take 60% of your vVO2max. About 10km/h in my case, I then select the curve of 10km/h. There is also the pratice. At the beginning you will surely underestimate or overestimate your speed. But over time your choice will become more and more accurate.</p>
 </blockquote>
 <p><strong>Notes:</strong><br />
-* If you create new curves that seem interesting to you, do not hesitate to send them to me so that I can add them on the website as well as in the next versions. * Each curve is a file whose extension is ‘.par’. These files are accessible through the menu “Tools&gt;Open”Speed/Slope&quot; folder&quot;. This will open the file manager and display the contents of the directory.</p>
-<h2 id="set-the-terrain-difficulty"><span class="header-section-number">8.4</span> Set the terrain difficulty</h2>
+* If you create new curves that seem interesting to you, do not hesitate to send them to me so that I can add them on the website as well as in the next versions. * Each curve is a file whose extension is ‘.par’. These files are accessible through the menu “Tools&gt;Open”Speed/Slope" folder". This will open the file manager and display the contents of the directory.</p>
+</section>
+<section id="set-the-terrain-difficulty" data-number="8.4">
+<h2 data-number="8.4"><span class="header-section-number">8.4</span> Set the terrain difficulty</h2>
 <p>The “Diff” column is used to ‘quantify’ the difficulty of the terrain.</p>
 <p>You can quickly enter terrain difficulty for a set of points. Simply select the first line and then while holding down the SHIFT key you select the following lines (with mouse or keyboard). The button <img src="./images/Toolbar/fill_diff.png" alt="diff button" /> will display the auto-fill dialog.</p>
 <figure>
-<img src="./images/CG40_Dlg_Fill_Diff.png" alt="Terrain Difficulty dialog" /><figcaption>Terrain Difficulty dialog</figcaption>
+<img src="./images/CG40_Dlg_Fill_Diff.png" alt="" /><figcaption>Terrain Difficulty dialog</figcaption>
 </figure>
 <p>The “Start” area is used to define the start line (from the beginning or from a specific line number). The “End” area is used to define the end line (to the end or to a specific line number). The zone “Difficulty” makes it possible to choose the difficulty of the terrain. You can either use the pre-determined values or enter your own difficulty value.</p>
 <p>This action can also be done on the track map (see below).</p>
 <p><strong>Note:</strong><br />
 It is sometimes impossible to determine or know the quality of the terrain. It may be wise to set an average terrain quality for the entire track. For example, the “Montagn’hard 100” has been rated as “average” terrain. Even if some sections were very difficult (scree, slippery areas …) and other very easy (roads or tracks). Don’t try to take into account the slope of the terrain because this is taken into account via the “Speed/Slope” curve and the calculation of the slope is automatically done by <strong>Course Generator</strong>.</p>
-<h2 id="set-the-fatigue-coefficient"><span class="header-section-number">8.5</span> Set the fatigue coefficient</h2>
+</section>
+<section id="set-the-fatigue-coefficient" data-number="8.5">
+<h2 data-number="8.5"><span class="header-section-number">8.5</span> Set the fatigue coefficient</h2>
 <p>The “Coeff” column is used to ‘quantify’ fatigue over time.</p>
 <p>You can quickly enter the fatigue coefficient for a set of points (usually for the entire track). Simply select the first line and then while holding down the SHIFT key select the following lines (with mouse or keyboard). The button <img src="./images/Toolbar/fill_coeff.png" alt="coeff button" /> allows to display the auto-fill dialog.</p>
 <figure>
-<img src="./images/CG40_Dlg_Fill_Coeff.png" alt="Health coefficient dialog" /><figcaption>Health coefficient dialog</figcaption>
+<img src="./images/CG40_Dlg_Fill_Coeff.png" alt="" /><figcaption>Health coefficient dialog</figcaption>
 </figure>
 <p>The “Start” area is used to define the start line (from the beginning or from a specific line number). The “Initial value” field is used to enter the corresponding value.</p>
 <p>The “End” area is used to define the end line (to the end or to a specific line number). The “Ending value” field is used to enter the corresponding value.</p>
 <p>If the ending value is not equal to the initial value then the intermediate lines will have a gradual and linear variation of the values. Manual edits made through the line editor will be overwritten.</p>
 <p>The settings made in this window will be global and stored in the CGX file.</p>
 <p>The area “Help” allows according to your estimated to give you an approximate value of the coefficient of fatigue. This value can be copied to in the “Initial value” and “Ending value” fields with the buttons “&gt; Start” and “&gt; End”.</p>
-<h2 id="set-the-refueling-times"><span class="header-section-number">8.6</span> Set the refueling times</h2>
+</section>
+<section id="set-the-refueling-times" data-number="8.6">
+<h2 data-number="8.6"><span class="header-section-number">8.6</span> Set the refueling times</h2>
 <p>In order to stick to reality, you can enter the time you plan to spend at a specific location (refueling, rest…).</p>
 <p>The following dialog box is displayed:</p>
 <figure>
-<img src="./images/CG40_Line_Editor.png" alt="Line editor" /><figcaption>Line editor</figcaption>
+<img src="./images/CG40_Line_Editor.png" alt="" /><figcaption>Line editor</figcaption>
 </figure>
 <p>The “Aid station time” fields are used to enter the time at this location (hours, minutes and seconds). The “0” button allows you to reset the time to 00h00mm00s.</p>
 <blockquote>
@@ -543,24 +629,30 @@ It is sometimes impossible to determine or know the quality of the terrain. It m
 <p>To summarize: [Hour] = [Hour of the previous position] + [Travel time between 2 positions] + [Refueling time]</p>
 <p>[Time] = [Time of the previous position] + [Travel time between 2 positions] + [Refueling time]</p>
 </blockquote>
-<h2 id="set-the-recovery-times"><span class="header-section-number">8.7</span> Set the recovery times</h2>
+</section>
+<section id="set-the-recovery-times" data-number="8.7">
+<h2 data-number="8.7"><span class="header-section-number">8.7</span> Set the recovery times</h2>
 <p>You can enter for a given point the recovery coefficient after refueling or rest. To do this, go to the corresponding cell and open the line editor by double-clicking.</p>
 <p>The following dialog box is displayed:</p>
 <figure>
-<img src="./images/CG40_Line_Editor.png" alt="Line editor" /><figcaption>Line editor</figcaption>
+<img src="./images/CG40_Line_Editor.png" alt="" /><figcaption>Line editor</figcaption>
 </figure>
 <p>The “Recovery” field is used to enter the recovery coefficient (between 0 and 100). This value is relative. If you think that you will recover 5% of fatigue coefficient, you must enter 5 and not the value you think you will have (eg from 85% to 90%).</p>
 <p><strong>Note :</strong><br />
 After modifying the “Recovery” column, it is necessary to restart a global calculation with the button <img src="./images/Toolbar/fill_coeff.png" alt="fill coeff" /> in order to have your input taken into account.</p>
-<h2 id="set-the-cut-off-times"><span class="header-section-number">8.8</span> Set the cut-off times</h2>
+</section>
+<section id="set-the-cut-off-times" data-number="8.8">
+<h2 data-number="8.8"><span class="header-section-number">8.8</span> Set the cut-off times</h2>
 <p>You can enter for a given point the scheduled ccut-off time. This cut-off time is expressed in time since the start and not the time at the point. This makes it possible to take into account the departure delays (for example the UTMB 2011 was delayed by 5 hours). To do this, go to the corresponding cell and open the line editor by double-clicking.</p>
 <p>The following dialog box is displayed:</p>
 <figure>
-<img src="./images/CG40_Line_Editor.png" alt="Line editor" /><figcaption>Line editor</figcaption>
+<img src="./images/CG40_Line_Editor.png" alt="" /><figcaption>Line editor</figcaption>
 </figure>
 <p>The “Cut-off time” fields are used to enter the cut-off time (hours, minutes and seconds). The “0” button allows you to reset the time to 00h00mm00s.</p>
 <p>In order to take into account the input it is necessary to run a calculation with the button <img src="./images/Toolbar/refresh.png" alt="refresh button" />. After the calculation if one of the position time exceeds a cut-off time then a red indicator “Cut-off time” will appear in the status bar. A click on the indicator will select the first line of the trackthe first line where the cut-off time has been exceeded.</p>
-<h2 id="indicators-or-tags"><span class="header-section-number">8.9</span> Indicators or tags</h2>
+</section>
+<section id="indicators-or-tags" data-number="8.9">
+<h2 data-number="8.9"><span class="header-section-number">8.9</span> Indicators or tags</h2>
 <p>For each point you can have indicators or tags that indicates a particularity of the point.</p>
 <p>The different indicators are as follows:</p>
 <ul>
@@ -580,7 +672,7 @@ After modifying the “Recovery” column, it is necessary to restart a global c
 <p>To set the indicators for a position, select the corresponding cell and open the line editor by double-clicking.</p>
 <p>The following dialog box is displayed:</p>
 <figure>
-<img src="./images/CG40_Line_Editor.png" alt="Line editor" /><figcaption>Line editor</figcaption>
+<img src="./images/CG40_Line_Editor.png" alt="" /><figcaption>Line editor</figcaption>
 </figure>
 <p>The indicators appear in front of “Tags”.</p>
 <p>In order to save time, keyboard shortcuts are available:</p>
@@ -589,37 +681,51 @@ After modifying the “Recovery” column, it is necessary to restart a global c
 <li>[F7] allows you to move quickly to the next line containing an indicator.</li>
 <li>[Ctrl+F7] allows you to move quickly to the previous line containing an indicator.</li>
 </ul>
-<h2 id="calculate-the-track-time"><span class="header-section-number">8.10</span> Calculate the track time</h2>
+</section>
+<section id="calculate-the-track-time" data-number="8.10">
+<h2 data-number="8.10"><span class="header-section-number">8.10</span> Calculate the track time</h2>
 <p>Once the track parameters have been entered, it is necessary to click on the button <img src="./images/Toolbar/refresh.png" alt="refresh button" /> to start the calculation of the time for each point. The columns ‘Time’ and ‘Hours’ are then updated according to the settings you have made previously. In the status bar at the bottom of the window, the total time is updated.</p>
-<h2 id="save-the-track"><span class="header-section-number">8.11</span> Save the track</h2>
+</section>
+<section id="save-the-track" data-number="8.11">
+<h2 data-number="8.11"><span class="header-section-number">8.11</span> Save the track</h2>
 <p><strong>Course Generator</strong> offers the possibility to save your track in several formats.</p>
 <ul>
 <li>“File&gt;Save as GPX” save the track in GPX format which is the standard track exchange format. The problem with this format is that it does not store specific data of <strong>Course Generator</strong>.</li>
 <li>“File&gt;Save as CGX” saves the track in CGX format which is the standard file format of <strong>Course Generator</strong>. This format should be used as soon as you want to keep the settings made on a track.</li>
 <li>“File&gt;Save as CSV” saves the track in CSV format which is a standard format for saving data as semicolon-separated text. These files can be opened by a spreadsheet program such as EXCEL, OpenOffice Calc or Libre Office Calc.</li>
 </ul>
-<h1 id="advanced-use-of-course-generator"><span class="header-section-number">9</span> Advanced use of Course Generator</h1>
+</section>
+</section>
+<section id="advanced-use-of-course-generator" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Advanced use of Course Generator</h1>
 <p>This chapter will introduce you to more advanced uses of <strong>Course Generator</strong>.</p>
-<h2 id="find-a-gps-point"><span class="header-section-number">9.1</span> Find a GPS point</h2>
+<section id="find-a-gps-point" data-number="9.1">
+<h2 data-number="9.1"><span class="header-section-number">9.1</span> Find a GPS point</h2>
 <p>It is possible to search for a GPS point on the track via the “Edit&gt;Search a point…” menu or with the keyboard shortcut [Ctrl + F].</p>
 <figure>
-<img src="./images/CG40_Search.png" alt="Search dialog" /><figcaption>Search dialog</figcaption>
+<img src="./images/CG40_Search.png" alt="" /><figcaption>Search dialog</figcaption>
 </figure>
 <p>In the dialog box, it is necessary to enter the latitude and longitude of the point and then press the search button <img src="./images/Toolbar/search.png" alt="search button" />.</p>
 <p><strong>Course Generator</strong> will search for the closest point given a set of coordinates. It will indicate the line corresponding to the point found as well as the distance between the point found and the coordinates entered. The line containing the found point will then be selected.</p>
-<h2 id="find-the-high-and-low-points-of-the-track"><span class="header-section-number">9.2</span> Find the high and low points of the track</h2>
+</section>
+<section id="find-the-high-and-low-points-of-the-track" data-number="9.2">
+<h2 data-number="9.2"><span class="header-section-number">9.2</span> Find the high and low points of the track</h2>
 <p>The “Tools&gt;Find Min/Max” menu is used to automatically find the highest and lowest point of the track.<br />
 Each found position is marked with an indicator <img src="./images/Tags/high_point.png" alt="high point indicator" /> (high point) or <img src="./images/Tags/low_point.png" alt="low point indicator" /> (low point).</p>
-<h2 id="change-the-altitude-of-a-point-on-the-track"><span class="header-section-number">9.3</span> Change the altitude of a point on the track</h2>
+</section>
+<section id="change-the-altitude-of-a-point-on-the-track" data-number="9.3">
+<h2 data-number="9.3"><span class="header-section-number">9.3</span> Change the altitude of a point on the track</h2>
 <p>It can happen that the elevation data of a track is inaccurate. This can happen if you, or an Openrunner type website, have made an automatic correction of altitudes. The SRTM database on which these sites are based has area without altitude. The given base then returns an altitude of 32768m. In order to overcome this problem you can edit the altitude of the erroneous point(s).</p>
 <p>To do this, go to the corresponding cell and open the line editor by double-clicking.</p>
 <p>The following dialog box is displayed:</p>
 <figure>
-<img src="./images/CG40_Line_Editor.png" alt="Line editor" /><figcaption>Line editor</figcaption>
+<img src="./images/CG40_Line_Editor.png" alt="" /><figcaption>Line editor</figcaption>
 </figure>
 <p>The “Altitude” field is used to enter the new altitude.</p>
 <p>It will be necessary to restart a calculation with the button <img src="./images/Toolbar/refresh.png" alt="refresh button" /> to take into account the new altitude.</p>
-<h2 id="merge-two-tracks"><span class="header-section-number">9.4</span> Merge two tracks</h2>
+</section>
+<section id="merge-two-tracks" data-number="9.4">
+<h2 data-number="9.4"><span class="header-section-number">9.4</span> Merge two tracks</h2>
 <p><strong>Course Generator</strong> offers the opportunity to merge two tracks.</p>
 <p>The procedure is as follows:</p>
 <ul>
@@ -634,7 +740,9 @@ Each found position is marked with an indicator <img src="./images/Tags/high_poi
 <p>If you have other tracks to merge, simply repeat the process.</p>
 <p>After merging the tracks you will have to modify the settings of the fatigue coefficients and restart a computation (button <img src="./images/Toolbar/refresh.png" alt="refresh button" /> or [F5]) because the time data will be wrong.</p>
 <p>Once you have completed the merge and restarted a calculation, you will be able to save the track.</p>
-<h2 id="save-part-of-the-track"><span class="header-section-number">9.5</span> Save part of the track</h2>
+</section>
+<section id="save-part-of-the-track" data-number="9.5">
+<h2 data-number="9.5"><span class="header-section-number">9.5</span> Save part of the track</h2>
 <p><strong>Course Generator</strong> allows to save a section of a track.</p>
 <p>The procedure is as follows:</p>
 <ul>
@@ -644,7 +752,9 @@ Each found position is marked with an indicator <img src="./images/Tags/high_poi
 <li>The file save dialog box appears. Enter the file name and confirm.</li>
 <li>It’s done!</li>
 </ul>
-<h2 id="export-tags-as-waypoints"><span class="header-section-number">9.6</span> Export tags as waypoints</h2>
+</section>
+<section id="export-tags-as-waypoints" data-number="9.6">
+<h2 data-number="9.6"><span class="header-section-number">9.6</span> Export tags as waypoints</h2>
 <p><strong>Course Generator</strong> offers the ability to save GPS points containing tags (or indicator) as a waypoint. These waypoints can be added to your GPS to have, for example, the display of the track with additional information such as passes, aid stations and cities.</p>
 <p>The procedure is as follows:</p>
 <ul>
@@ -656,9 +766,13 @@ Each found position is marked with an indicator <img src="./images/Tags/high_poi
 <li>Waypoints will be saved to a file that has the name entered and with a GPX extension.</li>
 </ul>
 <p>The operation of this file can be done, for example, with Garmin’s Basecamp software.</p>
-<h2 id="copy-the-contents-of-a-cell"><span class="header-section-number">9.7</span> Copy the contents of a cell</h2>
+</section>
+<section id="copy-the-contents-of-a-cell" data-number="9.7">
+<h2 data-number="9.7"><span class="header-section-number">9.7</span> Copy the contents of a cell</h2>
 <p>The contents of a cell in the track table can be copied to the clipboard for use in other software. To perform this action simply select “Edit&gt;Copy”. The content of the selected cell is copied to the clipboard as text.</p>
-<h2 id="generate-a-mini-roadbook"><span class="header-section-number">9.8</span> Generate a mini roadbook</h2>
+</section>
+<section id="generate-a-mini-roadbook" data-number="9.8">
+<h2 data-number="9.8"><span class="header-section-number">9.8</span> Generate a mini roadbook</h2>
 <p><strong>Course Generator</strong> offers the possibility to generate a mini roadbook. This will contain the profile of the track and informations on your way points. The mini roadbook is accessible via “Display&gt;Generate mini roadbook”.</p>
 <p>At the end of the process the mini-roadbook is an image. This image can be printed using drawing software such as Paint, Photoshop or The Gimp. It can also be used in other software like Word, Excel, Inkscape, Illustrator …</p>
 <p>The settings made to generate the mini roadbook are saved in the CGX file of the track. If you exchange a track in CGX format, you will exchange the track with all its informations (refueling, terrain quality, cut-off times …) and the mini roadbook.</p>
@@ -670,7 +784,8 @@ Each found position is marked with an indicator <img src="./images/Tags/high_poi
 <li>Having marked the important positions with the indicator <img src="./images/Tags/roadbook.png" alt="mark indicator" />.</li>
 <li>Having marked the important points with one or more of the following indicators: <img src="./images/Tags/high_point.png" alt="hight point" /> <img src="./images/Tags/low_point.png" alt="low point" /> <img src="./images/Tags/eat.png" alt="eat" /> <img src="./images/Tags/drink.png" alt="drink" /> <img src="./images/Tags/flag.png" alt="flag" /> <img src="./images/Tags/dropbag.png" /> <img src="./images/Tags/crew.png" /> <img src="./images/Tags/first_aid.png" /></li>
 </ul>
-<h3 id="presentation"><span class="header-section-number">9.8.1</span> Presentation</h3>
+<section id="presentation" data-number="9.8.1">
+<h3 data-number="9.8.1"><span class="header-section-number">9.8.1</span> Presentation</h3>
 <p>“Display&gt;Generate mini roadbook” or the button <img src="./images/Toolbar/roadbook.png" alt="mrb" /> displays the following window:<br />
 <img src="./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png" alt="Mini raodbook dialog" /></p>
 <p>It contains the following elements:</p>
@@ -681,7 +796,9 @@ Each found position is marked with an indicator <img src="./images/Tags/high_poi
 <li>Bottom: Contains the mini roadbook with tags</li>
 </ul>
 <p>When a line is selected then the corresponding label color change (salmon color).</p>
-<h3 id="the-types-of-mini-roadbook"><span class="header-section-number">9.8.2</span> The types of mini roadbook</h3>
+</section>
+<section id="the-types-of-mini-roadbook" data-number="9.8.2">
+<h3 data-number="9.8.2"><span class="header-section-number">9.8.2</span> The types of mini roadbook</h3>
 <p>In the top bar, the “Profile type” drop-down list allows you to choose among the 3 types of profile:</p>
 <p>The “Simple” type:<br />
 <img src="./images/MRB/CG40_MRB_Simple_Label.png" alt="Simple type" /><br />
@@ -693,42 +810,49 @@ The profile highlights the portions of the roads and trails with a color code. T
 <img src="./images/MRB/CG40_MRB_Slope_Label.png" alt="Slope type" /><br />
 The profile highlights the degree of slope by a color code.</p>
 <p>The colors used in the mini roadbook can be set in the configuration window accessible with the button <img src="./images/MRB/Toolbar/setting.png" />.</p>
-<h3 id="the-toolbar-1"><span class="header-section-number">9.8.3</span> The toolbar</h3>
+</section>
+<section id="the-toolbar-1" data-number="9.8.3">
+<h3 data-number="9.8.3"><span class="header-section-number">9.8.3</span> The toolbar</h3>
 <p><img src="./images/MRB/CG40_MRB_Toolbar.png" /></p>
 <ul>
-<li><img src="./images/MRB/Toolbar/save.png" alt="save" /> : Saves the mini roadbook as an image. The available format is PNG.</li>
-<li><img src="./images/MRB/Toolbar/setting.png" alt="settings" /> : Opens the mini roadbook configuration window</li>
-<li><img src="./images/MRB/Toolbar/pipette.png" /> : Copies the current label format to reproduce it on one or more other labels. This function is also accessible with the keyboard shortcut CTRL + C</li>
-<li><img src="./images/MRB/Toolbar/replicate.png" /> : Paste the formatting on the selected label. Only the properties selected in the function’s configuration window will be pasted. This function is also accessible with the keyboard shortcut CTRL + V</li>
+<li><p><img src="./images/MRB/Toolbar/save.png" alt="save" /> : Saves the mini roadbook as an image. The available format is PNG.</p></li>
+<li><p><img src="./images/MRB/Toolbar/setting.png" alt="settings" /> : Opens the mini roadbook configuration window</p></li>
+<li><p><img src="./images/MRB/Toolbar/pipette.png" /> : Copies the current label format to reproduce it on one or more other labels. This function is also accessible with the keyboard shortcut CTRL + C</p></li>
+<li><p><img src="./images/MRB/Toolbar/replicate.png" /> : Paste the formatting on the selected label. Only the properties selected in the function’s configuration window will be pasted. This function is also accessible with the keyboard shortcut CTRL + V</p></li>
 <li><p><img src="./images/MRB/Toolbar/replicate_config.png" /> : Opens a window for configuring the duplicate formatting feature as shown below: <img src="./images/MRB/CG40_MRB_Replicate_Dlg.png" alt="Duplicate configuration dialog" /><br />
 Select the settings you want to duplicate when copying.</p></li>
-<li><img src="./images/MRB/Toolbar/label_to_bottom.png" /> : Allows you to specify that labels must be connected to the bottom of the profile.</li>
-<li><img src="./images/MRB/Toolbar/label_to_profil.png" /> : Allows you to specify that labels must be connected to the profile.</li>
-<li><img src="./images/MRB/Toolbar/night_day.png" /> : Specify whether to show the day and night areas on the profile.</li>
-<li>“Profile type” : Allows you to select the type of mini roadbook.
+<li><p><img src="./images/MRB/Toolbar/label_to_bottom.png" /> : Allows you to specify that labels must be connected to the bottom of the profile.</p></li>
+<li><p><img src="./images/MRB/Toolbar/label_to_profil.png" /> : Allows you to specify that labels must be connected to the profile.</p></li>
+<li><p><img src="./images/MRB/Toolbar/night_day.png" /> : Specify whether to show the day and night areas on the profile.</p></li>
+<li><p>“Profile type” : Allows you to select the type of mini roadbook.</p>
 <ul>
 <li>Simple</li>
 <li>With roads/trails</li>
 <li>With slope</li>
 </ul></li>
-<li><img src="./images/MRB/Toolbar/favori1.png" /> <img src="./images/MRB/Toolbar/favori2.png" /> <img src="./images/MRB/Toolbar/favori3.png" /> <img src="./images/MRB/Toolbar/favori4.png" /> <img src="./images/MRB/Toolbar/favori5.png" /> : These 5 buttons are used to store display formats.
+<li><p><img src="./images/MRB/Toolbar/favori1.png" /> <img src="./images/MRB/Toolbar/favori2.png" /> <img src="./images/MRB/Toolbar/favori3.png" /> <img src="./images/MRB/Toolbar/favori4.png" /> <img src="./images/MRB/Toolbar/favori5.png" /> : These 5 buttons are used to store display formats.</p>
 <ul>
 <li>A right click on a button memorizes in the button the setting displayed in the current format field.</li>
 <li>A left click on a button restores the format stored in the button in the format field.</li>
 </ul></li>
-<li>“Width” : Selects the width of the profile (Maximum value 4000 pixels).</li>
+<li><p>“Width” : Selects the width of the profile (Maximum value 4000 pixels).</p></li>
 <li><p>“Height” : Allows you to select the height of the profile (Maximum value 2000 pixels).</p></li>
 </ul>
-<h3 id="set-the-size-of-the-mini-roadbook"><span class="header-section-number">9.8.4</span> Set the size of the mini roadbook</h3>
+</section>
+<section id="set-the-size-of-the-mini-roadbook" data-number="9.8.4">
+<h3 data-number="9.8.4"><span class="header-section-number">9.8.4</span> Set the size of the mini roadbook</h3>
 <p>The maximum size of the mini roadbook is 4000x2000 pixels (Width x Height). It is also the size of the final image.</p>
 <p>The size setting is made by the “Width” and “Height” fields located in the icon bar.</p>
-<h3 id="configure-the-mini-roadbook"><span class="header-section-number">9.8.5</span> Configure the mini roadbook</h3>
+</section>
+<section id="configure-the-mini-roadbook" data-number="9.8.5">
+<h3 data-number="9.8.5"><span class="header-section-number">9.8.5</span> Configure the mini roadbook</h3>
 <p>The icon <img src="./images/MRB/Toolbar/setting.png" /> opens the configuration window.</p>
 <p>The “General” tab allows you to:<br />
 <img src="./images/MRB/CG40_MRB_Settings1.png" alt="General tab" /></p>
 <ul>
 <li>Set the filter value to apply to the data when displaying the profile</li>
 <li>Set the top area height of the profile. This size is in pixel.</li>
+<li>Set the default text format when you create a new mark</li>
 </ul>
 <p>The “Simple” tab is used to adjust the colors of the “Simple” display of the profile.<br />
 <img src="./images/MRB/CG40_MRB_Settings2.png" alt="Simple tab" /><br />
@@ -739,7 +863,9 @@ The “Default Colors” button is used to replace the current colors with the d
 <p>The “Slope” tab is used to adjust the colors of the “Slope” display of the profile.<br />
 <img src="./images/MRB/CG40_MRB_Settings4.png" alt="Slope tab" /><br />
 The “Default Colors” button is used to replace the current colors with the default colors.</p>
-<h3 id="configure-each-label"><span class="header-section-number">9.8.6</span> Configure each label</h3>
+</section>
+<section id="configure-each-label" data-number="9.8.6">
+<h3 data-number="9.8.6"><span class="header-section-number">9.8.6</span> Configure each label</h3>
 <p>Each line of the table represents a label. It can be configured by the setting items on the left of the table.<br />
 <img src="./images/MRB/CG40_MRB_Editor.png" alt="MRB editor" /></p>
 <ul>
@@ -751,7 +877,9 @@ The “Default Colors” button is used to replace the current colors with the d
 <li>Tags : Indicate if you want the indicators to be displayed in the labels.</li>
 <li>Comment : Enter a specific comment for the label. This comment is different from the main table comment.</li>
 </ul>
-<h3 id="format"><span class="header-section-number">9.8.7</span> Set the display format for labels</h3>
+</section>
+<section id="format" data-number="9.8.7">
+<h3 data-number="9.8.7"><span class="header-section-number">9.8.7</span> Set the display format for labels</h3>
 <p>To ensure optimal flexibility, the format of labels uses tags. These tags, represented by the sign “%” plus one or more characters, allow to specify the type of data to display. For example, “% N” represents the name of the point. When the tag is displayed, the tags are replaced by their meanings.</p>
 <p>The following tags are available:</p>
 <ul>
@@ -761,6 +889,7 @@ The “Default Colors” button is used to replace the current colors with the d
 <li>%T : Represents the travel time since the start. The format is “hh:mm”.</li>
 <li>%Tl : Represents the travel time since the start in long format “hh:mm:ss”.</li>
 <li>%Ts : Represents the travel time since the start in short format “hh:mm”.</li>
+<li>%Td : Represents the travel time since the last location in short format “hh:mm”.</li>
 <li>%H : Represents the time at this point. The format is “ddd hh:mm” (ddd = abbreviated day).</li>
 <li>%h : Represents the time at this point. The format is “hh:mm”.</li>
 <li>%hl : Represents the time at this point in long format “hh:mm:ss”.</li>
@@ -775,18 +904,27 @@ The “Default Colors” button is used to replace the current colors with the d
 <li>%Rs : Represents refueling time this point in short format “hh:mm”.</li>
 <li>%+ : Represents the cumulative positive climb since the start. The unit is the meter/feet.</li>
 <li>%- : Represents the cumulative negative climb since the start. The unit is the meter/feet.</li>
+<li>%+d : Represents the positive climb since the location. The unit is the meter/feet.</li>
+<li>%-d : Represents the negative climb since the location. The unit is the meter/feet.</li>
 </ul>
 <p>The “…” button, next to the “Format” field, opens a window allowing you to simplify the content of the selected label.</p>
 <figure>
-<img src="./images/MRB/CG40_MRB_Label_Editor.png" alt="Label editor dialog" /><figcaption>Label editor dialog</figcaption>
+<img src="./images/MRB/CG40_MRB_Label_Editor.png" alt="" /><figcaption>Label editor dialog</figcaption>
 </figure>
-<h3 id="showing-day-and-night-times"><span class="header-section-number">9.8.8</span> Showing day and night times</h3>
+</section>
+<section id="showing-day-and-night-times" data-number="9.8.8">
+<h3 data-number="9.8.8"><span class="header-section-number">9.8.8</span> Showing day and night times</h3>
 <p>If in the track settings the night effect has been activated, then the button <img src="./images/MRB/Toolbar/night_day.png" /> will display the day and night times.</p>
 <p><img src="./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png" alt="Day and night times" /><br />
 The night times are displayed with a gray background.</p>
-<h2 id="reverse-track-direction"><span class="header-section-number">9.9</span> Reverse track direction</h2>
+</section>
+</section>
+<section id="reverse-track-direction" data-number="9.9">
+<h2 data-number="9.9"><span class="header-section-number">9.9</span> Reverse track direction</h2>
 <p><strong>Course Generator</strong> can reverse the direction of any given track. To perform this action select “Tools&gt;Reverse track”. After the operation, it is necessary to redefine the fatigue coefficients and cut-off time and then restart a calculation (button <img src="./images/Toolbar/refresh.png" /> or [F5]).</p>
-<h2 id="set-a-new-starting-point-on-a-looped-track"><span class="header-section-number">9.10</span> Set a new starting point on a looped track</h2>
+</section>
+<section id="set-a-new-starting-point-on-a-looped-track" data-number="9.10">
+<h2 data-number="9.10"><span class="header-section-number">9.10</span> Set a new starting point on a looped track</h2>
 <p><strong>Course Generator</strong> offers the possibility, if the track loaded in memory is a loop, to define a new starting point.</p>
 <p>The procedure is as follows:</p>
 <ul>
@@ -797,26 +935,53 @@ The night times are displayed with a gray background.</p>
 <li>Confirm the order by clicking on “Yes”.</li>
 </ul>
 <p>After the operation it is necessary to redefine the fatigue coefficients and cut-off times and then restart a calculation (button <img src="./images/Toolbar/refresh.png" /> or [F5]).</p>
-<h2 id="the-general-parameters-of-course-generator"><span class="header-section-number">9.11</span> The general parameters of Course Generator</h2>
+</section>
+<section id="find-the-best-speedslope-curve-from-the-final-time" data-number="9.11">
+<h2 data-number="9.11"><span class="header-section-number">9.11</span> Find the best “Speed/Slope” curve from the final time</h2>
+<p>Le menu “Tools&gt;Search”Speed/Slope" curve from the final time" allow to find the best curve from the final time.</p>
+<p><img src="./images/CG40_Search_Curve.png" /></p>
+<p>You enter the final time (hour:minute:second) then you press the search button.</p>
+<p><strong>Course Generator</strong> will search the best curve. Most of the time the software will not find the exact curve and it will show the curve bellow and over your final time. For every curve, you will have the estimated time. The you can :</p>
+<ul>
+<li>Select the curve bellow the final time withe the “Select” button</li>
+<li>Select the curve over the final time withe the “Select” button</li>
+<li>Exit from the dialog box with the “Cancel” button</li>
+</ul>
+<p>The press o one “Select” button will select the the corresponding curve. It will be used for your next calculation.</p>
+</section>
+<section id="the-general-parameters-of-course-generator" data-number="9.12">
+<h2 data-number="9.12"><span class="header-section-number">9.12</span> The general parameters of Course Generator</h2>
 <p>Le menu “Paramètres&gt;Paramètres de Course Generator” affiche la fenêtre de configuration du logiciel. The “Settings&gt;Course Generator Settings” menu displays the software configuration window.</p>
-<h3 id="general-tab"><span class="header-section-number">9.11.1</span> “General” tab</h3>
+<section id="general-tab" data-number="9.12.1">
+<h3 data-number="9.12.1"><span class="header-section-number">9.12.1</span> “General” tab</h3>
 <p><img src="./images/CG40_Settings_General.png" /></p>
 <p>The possible settings are:</p>
 <ul>
 <li>“language” : Selects the language used in the interface. “System” uses operating system settings to determine which language to use. If the system language is not managed by <strong>Course Generator</strong> then English is selected.</li>
 <li>“Units” : Chooses between “km/m” and “Miles/Feet”.</li>
 <li>“Speed format” : Chooses the type of speed to display (speed or pace).</li>
-<li>&quot;Threshold for position filter (in %) : Threshold, in%, from which the software asks if we want to apply a filter on GPS points when loading a track.</li>
+<li>“Threshold for position filter (in %)” : Threshold, in %, from which the software asks if we want to apply a filter on GPS points when loading a track.</li>
+<li>“Threshold for climb calculation (in meter)” : Threshold, in meter, from where you take into account a difference of elevation. Used the by the software to calcultate the ascending and descending climb.</li>
 <li>“Check for update at startup” : Allows you to choose if you want to check for a newer version of <strong>Course Generator</strong> available at application startup.</li>
 </ul>
-<h3 id="display-tab"><span class="header-section-number">9.11.2</span> “Display” tab</h3>
+</section>
+<section id="display-tab" data-number="9.12.2">
+<h3 data-number="9.12.2"><span class="header-section-number">9.12.2</span> “Display” tab</h3>
 <p><img src="./images/CG40_Settings_Display.png" /></p>
 <p>The possible settings are:</p>
 <ul>
 <li>“Default font” : Allows you to choose the font that will be used for the display.</li>
 <li>Icons size : Specify the size of the interface icons.</li>
 </ul>
-<h2 id="import-and-export-marked-points"><span class="header-section-number">9.12</span> Import and export marked points</h2>
+</section>
+<section id="maps-tab" data-number="9.12.3">
+<h3 data-number="9.12.3"><span class="header-section-number">9.12.3</span> “Maps” tab</h3>
+<p><img src="./images/CG40_Settings_Maps.png" /></p>
+<p>Provides a field to enter a Thunderforest API key in order to show the Outdoors map layer. A free API key can be requested <a href="https://thunderforest.com/docs/apikeys/">here</a>.</p>
+</section>
+</section>
+<section id="import-and-export-marked-points" data-number="9.13">
+<h2 data-number="9.13"><span class="header-section-number">9.13</span> Import and export marked points</h2>
 <p>In some cases it is necessary to save only the marked points of the current track in a file. This allows, if you have a new version of the course, to import these points on the new track.</p>
 <p>For example:<br />
 You have the track of the UTMB. You’ve spent time scouting each pass, aid station, and you’ve entered comments on parts of the track. Unfortunately, the track of the following year is slightly different but the main points are the same. The import/export function of marked points will save you a lot of time.</p>
@@ -839,15 +1004,20 @@ You have the track of the UTMB. You’ve spent time scouting each pass, aid stat
 </ul></li>
 <li>Select the points to import and click on “Import”</li>
 </ul>
-<h2 id="analyzing-data-after-a-race"><span class="header-section-number">9.13</span> Analyzing data after a race</h2>
+</section>
+<section id="analyzing-data-after-a-race" data-number="9.14">
+<h2 data-number="9.14"><span class="header-section-number">9.14</span> Analyzing data after a race</h2>
 <p><strong>Course Generator</strong> allows you to analyze the data after completing the track. Just open the file containing the GPS data (often a GPX file). You will find in the table all your data. Reports allow you to have information that data.</p>
 <p>The data will remain unchanged until you ask for a calculation of the travel time. A window will ask you if you want to overwrite the temporal data.</p>
-<h2 id="using-the-map-features"><span class="header-section-number">9.14</span> Using the map features</h2>
+</section>
+<section id="using-the-map-features" data-number="9.15">
+<h2 data-number="9.15"><span class="header-section-number">9.15</span> Using the map features</h2>
 <p><strong>Course Generator</strong> displaying a course on an OpenStreetMap map.<br />
 <img src="./images/Map/CG40_Map_Area.png" alt="Map" /></p>
 <p>On the left, a vertical bar of buttons allows actions on this map.</p>
 <ul>
-<li><img src="./images/Map/marker.png" /> : Adds an start mark to the selected location</li>
+<li><img src="./images/Map/center.png" /> : Centers the track on the map</li>
+<li><img src="./images/Map/marker.png" /> : Adds a start mark to the selected location</li>
 <li><img src="./images/Map/hide_marker.png" /> : Deletes the mark</li>
 <li><img src="./images/Map/undo.png" /> : Cancels the last operation</li>
 <li><img src="./images/Map/track_very_easy.png" /> : Indicates that the field between <img src="./images/Map/marker.png" /> and the current point is “Very easy”</li>
@@ -858,6 +1028,8 @@ You have the track of the UTMB. You’ve spent time scouting each pass, aid stat
 <li><img src="./images/Map/flag.png" /> : Adds a mark to the current point.</li>
 <li><img src="./images/Map/eat.png" /> : Adds an aid station to the current point.</li>
 <li><img src="./images/Map/drink.png" /> : Adds a water point to the current point.</li>
+<li><img src="./images/Map/show_hide_markers.png" /> : Display or hide the marks.</li>
+<li><img src="./images/Map/save_png.png" /> : Save the current map as a PNG image.</li>
 <li><img src="./images/Map/select_map.png" /> : Allows you to select the map layer to be displayed.</li>
 </ul>
 <p>The mouse commands are as follows:</p>
@@ -874,8 +1046,22 @@ You have the track of the UTMB. You’ve spent time scouting each pass, aid stat
 <li>Click on the button corresponding to the required field quality (for example <img src="./images/Map/track_average.png" />).</li>
 </ul>
 <p>In the status bar, the indicator <img src="./images/Statusbar/CG40_Statusbar_Map_Size.png" /> indicates the disk size used by the maps. The menu “Tools&gt;Open ‘Speed/slope’ folder” will open the file manager and display the contents of the directory containing the curves, the logs and the directory containing the maps. The directory “OpenStreetMapTileCache” contains the map files. If needed, you can delete its contents to save space.</p>
-<h1 id="useful-tools"><span class="header-section-number">10</span> Useful tools</h1>
-<h2 id="altitude-correction"><span class="header-section-number">10.1</span> Altitude correction</h2>
+</section>
+<section id="filter-altitudes" data-number="9.16">
+<h2 data-number="9.16"><span class="header-section-number">9.16</span> Filter altitudes</h2>
+<p>If the altitude profile of your track is noisy (presence of peaks), <strong>Course Generator</strong> offers you the possibility to filter it. To perform this action, select “Tools&gt;Smooth elevation data”.</p>
+<p><img src="./images/CG40_Elev_Filter.png" /></p>
+<p>The original profile is displayed as a background image and the corrected profile appears in red. The “filter” field allows you to adjust the intensity of the profile smoothing. The uncorrected and corrected positive and negative climbs are displayed.</p>
+<p>Once you have obtained the desired profile you have 3 possibilities:</p>
+<ul>
+<li>Press “Select normal elevations” to select unfiltered elevations. This closes the dialog box and transfers the unfiltered elevations to the track elevations.</li>
+<li>Press “Select smoothed elevations” to select filtered elevations. This closes the dialog box and transfers the filtered elevations to the elevations of the track.</li>
+<li>Press “Cancel” to close the dialog box without changing the elevation of the track.</li>
+</ul>
+<p>The CGX format saves, per point of the track, the 3 elevations (active, unfiltered, filtered). For the calculations only the “active” elevation is used. You can switch from filtered to unfiltered elevation via the dialog box. # Useful tools</p>
+</section>
+<section id="altitude-correction" data-number="9.17">
+<h2 data-number="9.17"><span class="header-section-number">9.17</span> Altitude correction</h2>
 <p>The altitude measurements made by a GPS are based, as for the position, on triangulation. Unfortunately, this triangulation is less accurate than for the position. Over long distances, these errors are not negligible and can cause calculation errors on total distance or the total elevation gain.</p>
 <p>It is then necessary to carry out a calibration operation of the altitudes. This operation consists of replacing, for each GPS point, the altitude measured by the true altitude.</p>
 <p>There are several tools available to do this operation. Among these, GPSVisualizer will fix, for any given GPX file, the altitude of each GPS point and generate an output with the corrected values.</p>
@@ -884,9 +1070,13 @@ You have the track of the UTMB. You’ve spent time scouting each pass, aid stat
 <p>Note:<br />
 <strong>Course Generator</strong> does not contain an elaborate algorithm for filtering altitudes. The only filter used will work only if the elevation sum is greater than a specific threshold (10m). This is designed to hide the small asperities of the terrain like a rock or a tree trunk. The GPS devices being more and more accurate, these asperities are taken into account in the calculations and can create inaccuracies in the different computations.</p>
 </blockquote>
-<h2 id="removing-unnecessary-points"><span class="header-section-number">10.2</span> Removing unnecessary points</h2>
+</section>
+<section id="removing-unnecessary-points" data-number="9.18">
+<h2 data-number="9.18"><span class="header-section-number">9.18</span> Removing unnecessary points</h2>
 <p>Some tracks, especially when they have been recorded out in the field with a GPS device, contain several thousand points. This can cause problems with some software, websites or GPS.</p>
 <p>The GPSVisualizer website smartly reduces the number of points without loss of “information” on the track.</p>
 <p>The tool is available at the following address http://www.gpsvisualizer.com/convert_input</p>
+</section>
+</section>
 </body>
 </html>

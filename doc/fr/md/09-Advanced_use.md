@@ -174,7 +174,10 @@ L'onglet "Général" permet de:
 
 * Régler la valeur du filtre à appliquer sur les données lors de l'affichage du profil
 * Régler la taille de zone haute du profil. Cette taille est en pixel.
-
+* Régler le format du texte par défaut lorsque que vous créez une nouvelle marque.
+* Régler la largeur par défaut du MRB.
+* Régler la hauteur par défaut du MRB.
+  
 L'onglet "Simple" permet de régler les couleurs de la représentation "Simple" du profil.  
 ![](./images/MRB/CG40_MRB_Settings2.png)  
 Le bouton "Couleurs par défaut" permet de remplacer les couleurs courantes par les couleurs par défaut.
@@ -202,7 +205,7 @@ Chaque ligne du tableau représente une étiquette. Elle peut être paramétrée
 
 ### Configurer le format d'affichage des étiquettes {#format}
 
-Afin d'assurer une flexibilité optimale le format des étiquettes utilise des balises. Ces balises représentées par le signe "%" plus un ou plusieurs caractères, permettent de spécifier le type de donnée à afficher. Par exemple "%N" représente le nom du point. Au moment de l'affichage de l'étiquette les balises sont remplacées par leurs significations.
+Afin d'assurer une flexibilité optimale le format des étiquettes utilise des balises. Ces balises représentées par le signe "%" plus un ou plusieurs caractères, permettent de spécifier le type de donnée à afficher (bien respecter les minuscules et les majuscules). Par exemple "%N" représente le nom du point. Au moment de l'affichage de l'étiquette les balises sont remplacées par leurs significations.
 
 Les balises disponibles sont les suivantes:
 
@@ -212,6 +215,7 @@ Les balises disponibles sont les suivantes:
 * %T : Représente le temps de parcours depuis le départ. Le format est "hh:mm".
 * %Tl : Représente le temps de parcours depuis le départ au format long "hh:mm:ss".
 * %Ts : Représente le temps de parcours depuis le départ au format court "hh:mm".
+* %Td : Représente le temps de parcours depuis le dernier point au format court "hh:mm".
 * %H : Représente l'heure de passage au point. Le format est "ddd hh:mm" (ddd = Jour en abrégé).
 * %h : Représente l'heure de passage au point. Le format est "hh:mm".
 * %hl :Représente l'heure de passage au point au format long "hh:mm:ss".
@@ -226,6 +230,8 @@ Les balises disponibles sont les suivantes:
 * %Rs : Représente le temps de ravitaillement au point au format court "hh:mm".
 * %+ : Représente le cumul du D+ depuis le départ. L'unité est le mètre.
 * %- : Représente le cumul du D- depuis le départ. L'unité est le mètre.
+* %+d : Représente le D+ depuis le dernier point. L'unité est le mètre.
+* %-d : Représente le D- depuis le dernier point. L'unité est le mètre.
 
 Le bouton "...", à coté du champ "Format", permet d'ouvrir une fenêtre permettant de réaliser une saisie simplifiée du contenu de l'étiquette sélectionnée.
 
@@ -257,6 +263,24 @@ La procédure est la suivante:
 
 Après l'opération il est nécessaire de redéfinir les coefficients de fatigues et les barrières horaires puis de relancer un calcul (bouton ![](./images/Toolbar/refresh.png) ou [F5]).
 
+## Déterminer la meilleure courbe "Vitesse/Pente" à partir du temps final
+
+Le menu "Outils>Rechercher la courbe 'Vitesse/Pente' en fonction du temps final" permet à partir du temps final que vous voulez réaliser de trouver la courbe 'Vitesse/Pente' la plus adaptée.
+
+![](./images/CG40_Search_Curve.png)
+
+Vous saisissez le temps final que vous voulez réaliser (heure:minute:seconde) puis vous appuyez sur le bouton de recherche.
+
+**Course Generator** va rechercher la meilleure courbe. La plupart du temps le logiciel ne va pas trouver exactement la courbe qui correspond à votre attente et va vous indiquer les courbes en-dessous et au-dessus de votre temps cible.
+Pour chaque courbe, vous aurez le temps estimé.
+Vous pouvez alors :
+
+* Sélectionner la courbe en-dessous du temps cible avec le bouton "Sélection"
+* Sélectionner la courbe au-dessus du temps cible avec le bouton "Sélection"
+* Sortir de la boite de dialogue avec le bouton "Annuler"
+
+L'appuie sur un des boutons "Sélection" va sélectionner la courbe correspondante. Elle sera utilisée lors de vos prochain calcul.
+
 ## Les paramètres généraux de Course Generator
 
 Le menu "Paramètres>Paramètres de Course Generator" affiche la fenêtre de configuration du logiciel.
@@ -269,7 +293,8 @@ Les réglages possibles sont les suivants:
 * "Langues" : Permet de sélectionner la langue utilisée dans l'interface. "Système" utilise les réglages du système d'exploitation pour déterminer la langue à utiliser. Si la langue système n'est pas géré par **Course Generator** alors l'anglais est sélectionné.
 * "Unité" : Permet de choisir entre "km/m" et "Miles/Pieds".
 * "Format vitesse" : Permet de choisir le format de la vitesse (Vitesse ou Allure).
-* "Seuil pour filtre position (en %) : Seuil, en %, à partir duquel le logiciel demande si on veut appliquer un filtre sur les points GPS lors du chargement d'un parcours.
+* "Seuil pour filtre position (en %)" : Seuil, en %, à partir duquel le logiciel demande si on veut appliquer un filtre sur les points GPS lors du chargement d'un parcours.
+* "Seuil pour le calcul du dénivelé (en mètre)" : Seuil, en mètre, à partir duquel on prend en compte une variation d'altitude. Utilisé lors du calcul de dénivelé.
 * "Contrôle mise à jour au démarrage" : Permet de choisir si on veut contrôler la présence d'une mise à jour de l'application au démarrage.
 
 ### Onglet "Affichage"  
@@ -284,12 +309,6 @@ Les réglages possibles sont les suivants:
 ![](./images/CG40_Settings_Maps.png)
  Permet d'entrer une clef API Thunderforest pour pouvoir utiliser le fond de carte Outdoors. Une clef gratuite peut être obtenue [ici](https://thunderforest.com/docs/apikeys/).
  
- ### Onglet "Météo"  
-![](./images/CG40_Settings_Weather.png)
- Permet d'entrer un token NOAA API pour pouvoir récupérer les données historiques météorologiques du parcours. Une clef gratuite peut être obtenue [ici](https://www.ncdc.noaa.gov/cdo-web/token).
-
-
-
 ## Importer et exporter les points marqués
 
 Il est nécessaire dans certain cas de devoir sauvegarder uniquement les points marqués du parcours actuel dans un fichier. Cela permet si vous avez une nouvelle version du parcours de pouvoir importer ces points sur ce parcours.
@@ -339,8 +358,9 @@ Sur la droite, une barre verticale de boutons permet de réaliser des actions su
 * ![](./images/Map/flag.png) : Permet d'ajouter une marque au point courant.
 * ![](./images/Map/eat.png) : Permet d'ajouter un ravitaillement au point courant.
 * ![](./images/Map/drink.png) : Permet d'ajouter un point d'eau au point courant.
+* ![](./images/Map/show_hide_markers.png) : Permet d'afficher ou de cacher les étiquettes.
+* ![](./images/Map/save_png.png) : Permet de sauver la carte affichée dans une image au format PNG.
 * ![](./images/Map/select_map.png) : Permet de sélectionner le type de carte à utiliser.
-* ![](./images/Map/show_weather_stations.png) : Affiche sur la carte les stations météorologiques les plus proches.
 
 Les commandes à la souris sont les suivantes:
 
@@ -357,3 +377,20 @@ Pour changer la qualité du terrain pour une partie de parcours il faut:
 * Cliquer sur le bouton correspondant à la qualité de terrain requise (par exemple ![](./images/Map/track_average.png))
 
 Dans la barre d'état l'indicateur ![](./images/Statusbar/CG40_Statusbar_Map_Size.png) indique la taille disque utilisée par les cartes. Le menu "Outils>Afficher le répertoire contenant les fichiers courbes vitesse/pente" permet d'ouvrir le gestionnaire de fichier et d'afficher le contenu du répertoire contenant les courbes, les logs et le répertoire contenant les cartes. Le répertoire  "OpenStreetMapTileCache" contient les parties de carte. Si nécessaire vous pouvez effacer le contenu afin de gagner de la place.
+
+## Filtrer les altitudes
+
+Si le profil d'altitude de votre parcours est bruité (présence de pics), **Course Generator** vous offre la possibilité de le filtrer. Afin de réaliser cette action il faut sélectionner "Outils>Filtrer les données d'altitude".
+
+![](./images/CG40_Elev_Filter.png)
+
+La profil d'origine est affiché en image de fond et le profil corrigé apparait en rouge.
+Le champ "filtre" permet de régler l'intensité du lissage du profil. Les dénivelés positifs et négatifs non-corrigé et corrigé sont affichés.
+
+Une fois que vous avez obtenu le profil désiré vous avez 3 possibilités:
+
+* Appuyez sur "Sélectionner les altitudes normales" permet de sélectionner les altitudes non-filtrées. Cela ferme la boite de dialogue et transfert les altitudes non-filtrées dans les altitudes du parcours.
+* Appuyez sur "Sélectionner les altitudes filtrées" permet de sélectionner les altitudes filtrées. Cela ferme la boite de dialogue et transfert les altitudes filtrées dans les altitudes du parcours.
+* Appuyez sur "Annuler" pour fermer la boite de dialogue sans modifier les altitudes du parcours.
+
+La sauvegarde du parcours au format CGX sauvegarde, par point du parcours, les 3 altitudes (active, non-filtrée, filtrée). Pour les calculs seul l'altitude "active" est utilisée. Vous pouvez passer des données filtrées à non-filtrées via la boite dialogue. 

@@ -13,3 +13,5 @@ pandoc --toc --number-sections --epub-cover-image=./images/CG40_Image.png --css 
 
 # copy files
 cp -u ./$name ../../build/
+
+echo "Done! 'epub' file generated in the local folder and copied in the 'build' folder"

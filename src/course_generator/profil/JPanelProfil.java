@@ -85,7 +85,6 @@ public class JPanelProfil extends JPanel {
 	private List<JPanelProfilListener> listeners = new ArrayList<JPanelProfilListener>();
 	private int index;
 
-
 	public JPanelProfil(CgSettings settings) {
 		super();
 		track = null;
@@ -98,17 +97,14 @@ public class JPanelProfil extends JPanel {
 		initComponents();
 	}
 
-
 	public void addListener(JPanelProfilListener toAdd) {
 		listeners.add(toAdd);
 	}
-
 
 	public void notifyProfilSelection() {
 		for (JPanelProfilListener hl : listeners)
 			hl.profilSelectionEvent();
 	}
-
 
 	private JFreeChart CreateChartProfil(XYDataset dataset) {
 		JFreeChart chart = ChartFactory.createXYAreaChart("", "Distance", // x axis label
@@ -136,7 +132,6 @@ public class JPanelProfil extends JPanel {
 
 		return chart;
 	}
-
 
 	private void initComponents() {
 		setPreferredSize(new java.awt.Dimension(677, 150));
@@ -181,20 +176,8 @@ public class JPanelProfil extends JPanel {
 					yCrosshair.setValue(y);
 					RefreshProfilInfo(i);
 					notifyProfilSelection();
-
-					index = i;
-
-					// //Refresh the position on the data grid
-					// TableMain.setRowSelectionInterval(i, i);
-					// Rectangle rect = TableMain.getCellRect(i, 0, true);
-					// TableMain.scrollRectToVisible(rect);
-					// //Refresh the marker position on the map
-					// RefreshCurrentPosMarker(Track.data.get(i).getLatitude(),
-					// Track.data.get(i).getLongitude());
-
 				}
 			}
-
 
 			@Override
 			public void chartMouseMoved(ChartMouseEvent event) {
@@ -297,7 +280,6 @@ public class JPanelProfil extends JPanel {
 		// -- Elevation / Hour / Speed / Comment
 	}
 
-
 	/**
 	 * Create the profil toolbar
 	 */
@@ -311,7 +293,6 @@ public class JPanelProfil extends JPanel {
 		// --------------------------------------------------------------
 		btProfilMarker = new javax.swing.JButton();
 		btProfilMarker.setIcon(Utils.getIcon(this, "profil_marker.png", settings.ToolbarIconSize));
-		btProfilMarker.setToolTipText(bundle.getString("frmMain.btProfilMarker.toolTipText"));
 		btProfilMarker.setFocusable(false);
 		btProfilMarker.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -322,14 +303,18 @@ public class JPanelProfil extends JPanel {
 		});
 		ToolBarProfil.add(btProfilMarker);
 
+		// -- Set Texts
+		SetText_Profil_Toolbar();
 	}
 
+	private void SetText_Profil_Toolbar() {
+		btProfilMarker.setToolTipText(bundle.getString("frmMain.btProfilMarker.toolTipText"));
+	}
 
 	/**
 	 * Refresh the fields in the profil info panel
 	 * 
-	 * @param index
-	 *            Index of the line in the track data list
+	 * @param index Index of the line in the track data list
 	 * 
 	 */
 	public void RefreshProfilInfo(int index) {
@@ -337,6 +322,8 @@ public class JPanelProfil extends JPanel {
 			return;
 		if ((index < 0) || (index >= track.data.size()))
 			return;
+
+		this.index = index;
 
 		// -- Get the data
 		CgData d = track.data.get(index);
@@ -354,7 +341,6 @@ public class JPanelProfil extends JPanel {
 				+ d.getSpeedString(settings.Unit, true, settings.isPace) + " ");
 		lbProfilComment.setText(" " + bundle.getString("frmMain.lbProfilComment.text") + "= " + d.getComment() + " ");
 	}
-
 
 	/**
 	 * Update the profil chart
@@ -402,7 +388,6 @@ public class JPanelProfil extends JPanel {
 		}
 	}
 
-
 	/*
 	 * Refresh the buttons status of the profil toolbar
 	 */
@@ -410,25 +395,30 @@ public class JPanelProfil extends JPanel {
 		btProfilMarker.setSelected(showProfilMarker);
 	}
 
-
 	public int getIndex() {
 		return index;
 	}
-
 
 	public void setCrosshairPosition(double x, double y) {
 		xCrosshair.setValue(x);
 		yCrosshair.setValue(y);
 	}
 
-
 	public void setTrack(TrackData track) {
 		this.track = track;
 	}
 
-
 	public void setSettings(CgSettings settings) {
 		this.settings = settings;
+	}
+
+	/**
+	 * To call when language change to update the text
+	 */
+	public void ChangeLang() {
+		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		RefreshProfilInfo(index);
+		SetText_Profil_Toolbar();
 	}
 
 }

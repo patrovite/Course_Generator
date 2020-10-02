@@ -54,6 +54,7 @@ public class FrmSelectMap extends javax.swing.JDialog {
 	public JRadioButton rbOutdoors;
 	private ButtonGroup groupMap;
 	private JRadioButton rbBingAerialMap;
+	private JRadioButton rbStamenTonerMap;
 
 	/**
 	 * Creates new form frmSettings
@@ -85,6 +86,9 @@ public class FrmSelectMap extends javax.swing.JDialog {
 		case 3:
 			rbBingAerialMap.setSelected(true);
 			break;
+		case 4:
+			rbStamenTonerMap.setSelected(true);
+			break;
 		default:
 			rbOpenStreetMap.setSelected(true);
 		}
@@ -102,6 +106,8 @@ public class FrmSelectMap extends javax.swing.JDialog {
 				return 2;
 			if (rbBingAerialMap.isSelected())
 				return 3;
+			if (rbStamenTonerMap.isSelected())
+				return 4;
 		}
 		return -1;
 	}
@@ -186,11 +192,16 @@ public class FrmSelectMap extends javax.swing.JDialog {
 		Utils.addComponent(panelMain, rbBingAerialMap, 0, 3, 1, 1, 1, 1, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
 
+		rbStamenTonerMap = new JRadioButton(bundle.getString("FrmSelectMap.rbStamenToner.Text"));
+		Utils.addComponent(panelMain, rbStamenTonerMap, 0, 4, 1, 1, 1, 1, 0, 0, 0, 0, GridBagConstraints.WEST,
+				GridBagConstraints.HORIZONTAL);
+
 		groupMap = new ButtonGroup();
 		groupMap.add(rbOpenStreetMap);
 		groupMap.add(rbOpenTopoMap);
 		groupMap.add(rbOutdoors);
 		groupMap.add(rbBingAerialMap);
+		groupMap.add(rbStamenTonerMap);
 
 		// == BUTTONS
 		// ===========================================================

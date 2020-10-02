@@ -2,16 +2,16 @@
 package org.openstreetmap.gui.jmapviewer.interfaces;
 
 import java.io.File;
-    
+
 public interface TileClearController {
 
-    void initClearDir(File dir);
+	void initClearDir(File dir);
 
-    void initClearFiles(File[] files);
+	void initClearFiles(File[] files);
 
-    boolean cancel();
+	boolean cancel();
 
-    void fileDeleted(File file);
+	void fileDeleted(File file);
 
-    void clearFinished();
+	void clearFinished();
 }

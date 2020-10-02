@@ -12,34 +12,30 @@ import org.openstreetmap.gui.jmapviewer.Tile;
  */
 public interface TileCache {
 
-    /**
-     * Retrieves a tile from the cache if present, otherwise <code>null</code>
-     * will be returned.
-     *
-     * @param source
-     *            the tile source
-     * @param x
-     *            tile number on the x axis of the tile to be retrieved
-     * @param y
-     *            tile number on the y axis of the tile to be retrieved
-     * @param z
-     *            zoom level of the tile to be retrieved
-     * @return the requested tile or <code>null</code> if the tile is not
-     *         present in the cache
-     */
-    public Tile getTile(TileSource source, int x, int y, int z);
+	/**
+	 * Retrieves a tile from the cache if present, otherwise <code>null</code> will
+	 * be returned.
+	 *
+	 * @param source the tile source
+	 * @param x      tile number on the x axis of the tile to be retrieved
+	 * @param y      tile number on the y axis of the tile to be retrieved
+	 * @param z      zoom level of the tile to be retrieved
+	 * @return the requested tile or <code>null</code> if the tile is not present in
+	 *         the cache
+	 */
+	public Tile getTile(TileSource source, int x, int y, int z);
 
-    /**
-     * Adds a tile to the cache. How long after adding a tile can be retrieved
-     * via {@link #getTile(TileSource, int, int, int)} is unspecified and depends on the
-     * implementation.
-     *
-     * @param tile the tile to be added
-     */
-    public void addTile(Tile tile);
+	/**
+	 * Adds a tile to the cache. How long after adding a tile can be retrieved via
+	 * {@link #getTile(TileSource, int, int, int)} is unspecified and depends on the
+	 * implementation.
+	 *
+	 * @param tile the tile to be added
+	 */
+	public void addTile(Tile tile);
 
-    /**
-     * @return the number of tiles hold by the cache
-     */
-    public int getTileCount();
+	/**
+	 * @return the number of tiles hold by the cache
+	 */
+	public int getTileCount();
 }

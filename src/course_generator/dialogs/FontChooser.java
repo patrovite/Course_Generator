@@ -44,7 +44,6 @@ public class FontChooser extends javax.swing.JDialog {
 	public boolean ok = false;
 	java.util.ResourceBundle bundle;
 
-
 	/**
 	 * Creates new form FontChooser
 	 */
@@ -60,14 +59,11 @@ public class FontChooser extends javax.swing.JDialog {
 		styleList[3] = bundle.getString("FontChooser.Bold_Italic");
 	}
 
-
 	/**
 	 * Set the value of a JList
 	 * 
-	 * @param list
-	 *            JList component
-	 * @param values
-	 *            Array of string values
+	 * @param list   JList component
+	 * @param values Array of string values
 	 */
 	private void setListValues(JList<String> list, String[] values) {
 		list.removeAll();
@@ -79,7 +75,6 @@ public class FontChooser extends javax.swing.JDialog {
 		list.setModel(listModel);
 	}
 
-
 	/**
 	 * Set the font of the preview component
 	 */
@@ -89,12 +84,10 @@ public class FontChooser extends javax.swing.JDialog {
 		}
 	}
 
-
 	/**
 	 * Select the font name in the font name component
 	 * 
-	 * @param font
-	 *            Font where to get the font name to search to search
+	 * @param font Font where to get the font name to search to search
 	 */
 	private void SelectInFontList(Font font) {
 		String str;
@@ -109,12 +102,10 @@ public class FontChooser extends javax.swing.JDialog {
 		}
 	}
 
-
 	/**
 	 * Select the style in the style component
 	 * 
-	 * @param font
-	 *            Font where to get the style to search
+	 * @param font Font where to get the style to search
 	 */
 	private void SelectInStyleList(Font font) {
 		int index = 0;
@@ -130,13 +121,11 @@ public class FontChooser extends javax.swing.JDialog {
 		jStyleList.ensureIndexIsVisible(index);
 	}
 
-
 	/**
 	 * Search the size in the size list and select the corresponding size in the
 	 * SizeList component
 	 * 
-	 * @param font
-	 *            Font where to get the size to search
+	 * @param font Font where to get the size to search
 	 */
 	private void SelectInSizeList(Font font) {
 		for (int i = 0; i < sizeList.length; i++) {
@@ -148,7 +137,6 @@ public class FontChooser extends javax.swing.JDialog {
 		}
 	}
 
-
 	/**
 	 * Get the font from the preview component
 	 * 
@@ -157,7 +145,6 @@ public class FontChooser extends javax.swing.JDialog {
 	public Font getCurrentFont() {
 		return taPreview.getFont();
 	}
-
 
 	/**
 	 * Set the font in the preview component
@@ -169,7 +156,6 @@ public class FontChooser extends javax.swing.JDialog {
 			taPreview.setFont(font);
 		}
 	}
-
 
 	/**
 	 * This method is called from within the constructor to initialize the form.
@@ -309,17 +295,14 @@ public class FontChooser extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}// </editor-fold>//GEN-END:initComponents
 
-
 	private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btCancelActionPerformed
 		setVisible(false);
 	}// GEN-LAST:event_btCancelActionPerformed
-
 
 	private void btOkActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btOkActionPerformed
 		ok = true;
 		setVisible(false);
 	}// GEN-LAST:event_btOkActionPerformed
-
 
 	private void jStyleListValueChanged(javax.swing.event.ListSelectionEvent evt) {// GEN-FIRST:event_jStyleListValueChanged
 		String str = (String) jStyleList.getSelectedValue();
@@ -337,7 +320,6 @@ public class FontChooser extends javax.swing.JDialog {
 		}
 	}// GEN-LAST:event_jStyleListValueChanged
 
-
 	private void jSizeListValueChanged(javax.swing.event.ListSelectionEvent evt) {// GEN-FIRST:event_jSizeListValueChanged
 		String str = (String) jSizeList.getSelectedValue();
 		if (str != null) {
@@ -345,7 +327,6 @@ public class FontChooser extends javax.swing.JDialog {
 		}
 		setSampleFont();
 	}// GEN-LAST:event_jSizeListValueChanged
-
 
 	private void jFontListValueChanged(javax.swing.event.ListSelectionEvent evt) {// GEN-FIRST:event_jFontListValueChanged
 		String str = (String) jFontList.getSelectedValue();
@@ -355,17 +336,14 @@ public class FontChooser extends javax.swing.JDialog {
 		setSampleFont();
 	}// GEN-LAST:event_jFontListValueChanged
 
-
 	private void formComponentShown(java.awt.event.ComponentEvent evt) {// GEN-FIRST:event_formComponentShown
 		repaint();
 	}// GEN-LAST:event_formComponentShown
 
-
 	/**
 	 * Init the fontchooser dialog
 	 * 
-	 * @param font
-	 *            Initial font
+	 * @param font Initial font
 	 */
 	private void InitDialog(Font font) {
 		setListValues(jFontList, GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames());
@@ -378,7 +356,6 @@ public class FontChooser extends javax.swing.JDialog {
 		SelectInSizeList(font);
 	}
 
-
 	// Create font chooser dialog.
 	// If user selected a font (i.e. clicked OK button) - return the font that user
 	// has selected.
@@ -386,10 +363,8 @@ public class FontChooser extends javax.swing.JDialog {
 	/**
 	 * Create font chooser dialog.
 	 * 
-	 * @param title
-	 *            Dialog title
-	 * @param font
-	 *            Font to display
+	 * @param title Dialog title
+	 * @param font  Font to display
 	 * @return If user selected a font (i.e. clicked OK button) - return the font
 	 *         that user has selected. If user didn't click OK button - return
 	 *         "null".

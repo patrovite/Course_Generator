@@ -51,7 +51,6 @@ public class JPanelStatistics extends JPanel {
 	private JButton btStatisticSave;
 	private JButton btStatisticRefresh;
 
-
 	public JPanelStatistics(CgSettings settings) {
 		super();
 		track = null;
@@ -59,7 +58,6 @@ public class JPanelStatistics extends JPanel {
 		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
-
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -76,7 +74,6 @@ public class JPanelStatistics extends JPanel {
 		add(scrollPaneStat, java.awt.BorderLayout.CENTER);
 	}
 
-
 	/**
 	 * Create the status toolbar
 	 */
@@ -90,7 +87,6 @@ public class JPanelStatistics extends JPanel {
 		// --------------------------------------------------------------
 		btStatisticSave = new javax.swing.JButton();
 		btStatisticSave.setIcon(Utils.getIcon(this, "save_html.png", settings.ToolbarIconSize));
-		btStatisticSave.setToolTipText(bundle.getString("JPanelStastistics.btStatisticSave.toolTipText"));
 		btStatisticSave.setFocusable(false);
 		btStatisticSave.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,7 +103,6 @@ public class JPanelStatistics extends JPanel {
 		// --------------------------------------------------------------
 		btStatisticRefresh = new javax.swing.JButton();
 		btStatisticRefresh.setIcon(Utils.getIcon(this, "refresh.png", settings.ToolbarIconSize));
-		btStatisticRefresh.setToolTipText(bundle.getString("JPanelStastistics.btStatisticRefresh.toolTipText"));
 		btStatisticRefresh.setFocusable(false);
 		btStatisticRefresh.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,8 +110,15 @@ public class JPanelStatistics extends JPanel {
 			}
 		});
 		toolBar.add(btStatisticRefresh);
+
+		// -- Set Texts
+		SetTexts();
 	}
 
+	private void SetTexts() {
+		btStatisticSave.setToolTipText(bundle.getString("JPanelStastistics.btStatisticSave.toolTipText"));
+		btStatisticRefresh.setToolTipText(bundle.getString("JPanelStastistics.btStatisticRefresh.toolTipText"));
+	}
 
 	/**
 	 * Refresh the statistic tab
@@ -128,6 +130,11 @@ public class JPanelStatistics extends JPanel {
 		if (track.data.isEmpty())
 			return;
 
+		// -- Set Texts
+		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		SetTexts();
+
+		// --
 		StringBuilder sb = new StringBuilder();
 
 		// -- Get current language
@@ -319,14 +326,12 @@ public class JPanelStatistics extends JPanel {
 		editorStat.setCaretPosition(0);
 	}
 
-
 	/**
 	 * Returns the average speed as a string given a time and a distance.
 	 * 
-	 * @param distance
-	 *            The distance in the user preferred format (metric vs imperial).
-	 * @param time
-	 *            The total time.
+	 * @param distance The distance in the user preferred format (metric vs
+	 *                 imperial).
+	 * @param time     The total time.
 	 * @return A string containing the average time and its corresponding unit.
 	 */
 	private String CalcVMoy(double distance, double time) {
@@ -336,7 +341,6 @@ public class JPanelStatistics extends JPanel {
 		}
 		return Utils.FormatSpeed(averageSpeed, settings.Unit, settings.isPace, true);
 	}
-
 
 	/**
 	 * Save the statistics in TXT format
@@ -350,7 +354,7 @@ public class JPanelStatistics extends JPanel {
 		if (track.data.isEmpty())
 			return;
 
-		s = Utils.SaveDialog(this, settings.LastDir, "", ".html", bundle.getString("frmMain.HTMLFile"), true,
+		s = Utils.SaveDialog(this, settings.getLastDirectory(), "", ".html", bundle.getString("frmMain.HTMLFile"), true,
 				bundle.getString("frmMain.FileExist"));
 
 		if (!s.isEmpty()) {
@@ -366,16 +370,14 @@ public class JPanelStatistics extends JPanel {
 			}
 
 			// -- Store the directory
-			settings.LastDir = Utils.GetDirFromFilename(s);
+			settings.setLastDirectory(Utils.GetDirFromFilename(s));
 		}
 	}
-
 
 	public void setTrack(TrackData track) {
 		this.track = track;
 		refresh();
 	}
-
 
 	public void setSettings(CgSettings settings) {
 		this.settings = settings;

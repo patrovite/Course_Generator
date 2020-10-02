@@ -29,7 +29,6 @@ public class ImportPtsDataModel extends AbstractTableModel {
 	private ImportPtsData importPts;
 	private CgSettings settings;
 
-
 	public ImportPtsDataModel(CgSettings settings, ImportPtsData datalist) {
 		super();
 		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
@@ -48,29 +47,24 @@ public class ImportPtsDataModel extends AbstractTableModel {
 		this.settings = settings;
 	}
 
-
 	public CgSettings getSettings() {
 		return settings;
 	}
-
 
 	@Override
 	public int getColumnCount() {
 		return header.length;
 	}
 
-
 	@Override
 	public String getColumnName(int columnIndex) {
 		return header[columnIndex];
 	}
 
-
 	@Override
 	public int getRowCount() {
 		return importPts.data.size();
 	}
-
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
@@ -102,7 +96,6 @@ public class ImportPtsDataModel extends AbstractTableModel {
 	// public boolean isCellEditable(int row, int column) {
 	// return column == 0;
 	// }
-
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {

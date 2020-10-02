@@ -2,43 +2,46 @@
 
 ## Menu "Fichier"
 
-* **Ouvrir un fichier GPX** : Permet de charger un fichier au format GPX. Raccourci clavier: [MAJ+CTRL+O].
-
-* **Derniers fichiers GPX** : Permet l'affichage d'un sous-menu listant les 5 derniers fichiers GPX qui ont été ouvert. Un clic sur un de ces fichiers permet de l'ouvrir.
-
 * **Ouvrir un fichier CGX** : Permet de charger un fichier au format CGX. Raccourci clavier: [CTRL+O].
 
-* **Derniers fichiers CGX** : Permet l'affichage d'un sous-menu listant les 5 derniers fichiers CGX qui ont été ouvert. Un clic sur un de ces fichiers permet de l'ouvrir.
+* **Fichiers CGX récents...** : Permet l'affichage d'un sous-menu listant les 5 derniers fichiers CGX qui ont été ouvert. Un clic sur un de ces fichiers permet de l'ouvrir.
 
-* **Sauver CGX** : Permet de sauver les données du parcours au format CGX.
+* **Enregistrer en CGX** : Permet de sauver les données du parcours au format CGX.
 Toutes les données du parcours (difficultés, coefficient de fatigue, temps de ravitaillement....) sont sauvegardées. Raccourci clavier: [CTRL+S].
 
-* **Sauver GPX** : Permet de sauver les données du parcours au format GPX.
-Attention! Seules les données de latitude, de longitude, d'altitude et de temps sont sauvées.
-
-* **Sauver CSV** : Permet de sauver les données du parcours au format CSV.
-Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
-
-* **Importer un fichier GPX** : Permet d'insérer un fichier GPX au début ou à la fin du parcours actif.
-
-* **Importer un fichier CGX** : Permet d'insérer un fichier CGX au début ou à la fin du parcours actif.
-
-* **Sauver une partie du parcours en CGX** : Permet de sauver les lignes sélectionnées du tableau au format CGX.
+* **Enregistrer en CGX sous...** : Permet de sauver les données du parcours au format CGX. Une boite de dialogue permet de saisir le nom du fichier.
 Toutes les données du parcours (difficultés, coefficient de fatigue, temps de ravitaillement....) sont sauvegardées.
 
-* **Sauver une partie du parcours en GPX** : Permet de sauver les lignes sélectionnées du tableau au format GPX.
-Attention! Seules les données de latitude, de longitude, d'altitude et de temps sont sauvés.
+* **Ouvrir un fichier GPX** : Permet de charger un fichier au format GPX. Raccourci clavier: [MAJ+CTRL+O].
 
-* **Sauver une partie du parcours en CSV** : Permet de sauver les lignes sélectionnées du tableau au format CSV.
+* **Fichiers GPX récents...** : Permet l'affichage d'un sous-menu listant les 5 derniers fichiers GPX qui ont été ouvert. Un clic sur un de ces fichiers permet de l'ouvrir.
+
+* **Importer > Ajouter un fichier GPX au parcours** : Permet d'insérer un fichier GPX au début ou à la fin du parcours actif.
+
+* **Importer > Ajouter un fichier CGX au parcours** : Permet d'insérer un fichier CGX au début ou à la fin du parcours actif.
+
+* **Exporter > Exporter parcours en CSV** : Permet de sauver les données du parcours au format CSV.
 Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
 
-* **Importer des points** : Permet d'importer des points sauvegardés au format CGP.
+* **Exporter > Exporter parcours en GPX** : Permet de sauver les données du parcours au format GPX.
+Attention! Seules les données de latitude, de longitude, d'altitude et de temps sont sauvées.
 
-* **Exporter des points** : Permet de sauvegarder les points marqués dans un fichier au format CGP.
+* **Exporter > Sauver une partie du parcours en CGX** : Permet de sauver les lignes sélectionnées du tableau au format CGX.
+Toutes les données du parcours (difficultés, coefficient de fatigue, temps de ravitaillement....) sont sauvegardées.
 
-* **Exporter des tags en waypoints** : Permet de sauvegarder les tags sélectionnés dans un fichier GPX sous forme de waypoints. Cela permet d'avoir, sur les GPS, des informations complémentaires en plus des traces.
+* **Exporter > Sauver une partie du parcours en GPX** : Permet de sauver les lignes sélectionnées du tableau au format GPX.
+Attention! Seules les données de latitude, de longitude, d'altitude et de temps sont sauvés.
 
-* **Quitter Course Generator** : Permet d'arrêter l'exécution de **Course Generator**. raccourci clavier: [Alt+F4].
+* **Exporter > Sauver une partie du parcours en CSV** : Permet de sauver les lignes sélectionnées du tableau au format CSV.
+Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
+
+* **Marques > Importer...** : Permet d'importer des points sauvegardés au format CGP.
+
+* **Marques > Exporter...** : Permet de sauvegarder les points marqués dans un fichier au format CGP.
+
+* **Marques > Exporter comme waypoints** : Permet de sauvegarder les tags sélectionnés dans un fichier GPX sous forme de waypoints. Cela permet d'avoir, sur les GPS, des informations complémentaires en plus des traces.
+
+* **Quitter** : Permet d'arrêter l'exécution de **Course Generator**. raccourci clavier: [Alt+F4].
 
 ## Menu "Edition"
 
@@ -66,11 +69,15 @@ Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
 
 * **Définir un nouveau point de départ**: Permet, pour un circuit en boucle, de définir un nouveau point de départ.
 
+* **Filtrer les données d'altitude** : Ouvre une boite de dialogue permettant de corriger les altitudes en utilisant un filtre.
+
 * **Estimer le temps de parcours** : Permet de lancer le calcul afin de déterminer le temps de passage pour chaque point GPS du parcours. Raccourci clavier: [F5].
 
-* **Mise à jour des courbes standards** : Les courbes standards "Vitesse/Pente" vont être mise à jour avec les réglages par défaut. Cela est nécessaire si vous avez modifié une courbe standard et que vous voulez revenir en arrière. Cela est aussi nécessaire après une mise à jour logicielle qui introduit de nouvelles courbes. Cela n'affecte pas les courbes personnalisées.
+* **Rechercher  la courbe 'Vitesse/Pente' en fonction du temps final** : Ouvre une boite dialogue où, à partir du temps final voulu, le logiciel sélectionne la meilleure courbe 'Vitesse/Pente'.
 
 * **Afficher le répertoire contenant les fichiers courbes vitesse/pente** : Ouvre l'explorateur de fichier et affiche le répertoire correspondant.
+
+* **Afficher le répertoire contenant les 'logs'** : Ouvre l'explorateur de fichier et affiche le répertoire correspondant.
 
 ## Menu "Paramètres"
 
@@ -84,9 +91,9 @@ Ce fichier pourra être ouvert par un tableur comme Excel ou OpenOffice Calc.
 
 * **Aide** : Affiche ce document.
 
-* **F.A.Q.** : Ouvre votre navigateur et affiche la page des questions fréquements posées sur **Course Generator**. 
+* **Notes sur cette version** : Affiche une boite de dialogue affichant les notes liés à la version courante de **Course Generator**. 
 
-* **Parcours à télécharger** : Ouvre votre navigateur et affiche la page de téléchargement de parcours au format CGX du site Freemovin.
+* **F.A.Q.** : Ouvre votre navigateur et affiche la page des questions fréquements posées sur **Course Generator**. 
 
 * **Contrôle mise à jour** : Permet de vérifier si une mise à jour de **Course Generator** existe.
 

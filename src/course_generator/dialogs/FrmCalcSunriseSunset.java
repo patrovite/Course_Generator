@@ -87,12 +87,10 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		boolean valid;
 	}
 
-
 	/**
 	 * Creates new form frmSettings
 	 * 
-	 * @param settings
-	 *            Object containing the settings
+	 * @param settings Object containing the settings
 	 */
 	public FrmCalcSunriseSunset(JDialog parent, CgSettings settings) {
 		super(parent);
@@ -101,7 +99,6 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
-
 
 	public ResCalcSunriseSunset showDialog(double longitude, double latitude, DateTime starttime) {
 
@@ -151,7 +148,6 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		return res;
 	}
 
-
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -186,7 +182,6 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -197,7 +192,6 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 		int line = 0;
@@ -331,7 +325,6 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-
 	protected void Calc() {
 
 		sunrise = Utils.determineSunRiseTimes(date, latitude, longitude, courseStartZone.getID());
@@ -339,11 +332,9 @@ public class FrmCalcSunriseSunset extends javax.swing.JDialog {
 
 	}
 
-
 	protected void formComponentShown(ComponentEvent evt) {
 		repaint();
 	}
-
 
 	protected void Refresh() {
 		lbSunriseVal.setText(sunrise.toString("HH:mm"));

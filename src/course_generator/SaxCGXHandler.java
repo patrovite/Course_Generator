@@ -22,7 +22,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
@@ -39,9 +38,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
-import course_generator.weather.HistoricalWeather;
-import course_generator.weather.NoaaWeatherData;
-import course_generator.weather.NoaaWeatherStation;
 
 public class SaxCGXHandler extends DefaultHandler {
 	private java.util.ResourceBundle bundle = null;
@@ -80,6 +76,10 @@ public class SaxCGXHandler extends DefaultHandler {
 	private double trkpt_lat = 0.0;
 	private double trkpt_lon = 0.0;
 	private double trkpt_ele = 0.0;
+	private double trkpt_eleNotSmoothed = 0.0;
+	private double trkpt_eleSmoothed = 0.0;
+	private boolean trkpt_SmoothedData = false;
+	private boolean trkpt_NotSmoothedData = false;
 	private double trkpt_dist = 0.0;
 	private double trkpt_distcumul = 0.0;
 	private double trkpt_diff = 0;
@@ -99,40 +99,14 @@ public class SaxCGXHandler extends DefaultHandler {
 	private String trkpt_fmtmrb = "";
 	private int trkpt_FontSizemrb = 0;
 
-	// Historical weather data
-	public double moonFraction;
-	public String daylightHours = "";
-	private ArrayList<NoaaWeatherData> pastDailySummaries;
-	private NoaaWeatherData normalsDaily;
-	private NoaaWeatherData normalsMonthly;
-	private String maximumTemperature = "";
-	private String minimumTemperature = "";
-	private String averageTemperature = "";
-	private String precipitation = "";
-	private DateTime date;
-	private String summariesStationId;
-	private String summariesStationName;
-	private String summariesStationLatitude;
-	private String summariesStationLongitude;
-	private double summariesStationDistanceFromStart;
-	private String normalsStationId;
-	private String normalsStationName;
-	private String normalsStationLatitude;
-	private String normalsStationLongitude;
-	private double normalsStationDistanceFromStart;
-
 	// private int trk_nb=0;
 	// private int trkseg_nb=0;
 	private String characters = "";
 	private int old_time = 0;
 
 	private int level = 0;
-	private String levelName;
-	private final String LEVEL_COURSEGENERATOR = "COURSEGENERATOR";
-	private final String LEVEL_TRACKPOINT = "TRACKPOINT";
-	public static final String LEVEL_WEATHER_NORMALS_EPHEMERIS = "EPHEMERIS";
-	public static final String LEVEL_WEATHER_DAILY_SUMMARIES = "DAILY_SUMMARIES";
-	public static final String LEVEL_WEATHER_NORMALS = "NORMALS";
+	private final int LEVEL_COURSEGENERATOR = 1;
+	private final int LEVEL_TRACKPOINT = 2;
 
 	private TrackData trkdata;
 	private int mode = 0;
@@ -159,12 +133,10 @@ public class SaxCGXHandler extends DefaultHandler {
 	private Locator locator;
 	DateTimeFormatter fmt = DateTimeFormat.forPattern("HH:mm");
 
-
 	/**
 	 * Read the CGX file from disc
 	 * 
-	 * @param filename
-	 *            Name of the cgx file to read
+	 * @param filename Name of the cgx file to read
 	 * @return The error code Error explanation: ERR_READ_NO = No problem during the
 	 *         reading of the file ERR_READ_DOUBLE = Parsing error during the read
 	 *         of a double element ERR_READ_INT = Parsing error during the read of a
@@ -211,14 +183,15 @@ public class SaxCGXHandler extends DefaultHandler {
 		trkpt_lat = 0.0;
 		trkpt_lon = 0.0;
 		trkpt_ele = 0.0;
+		trkpt_eleNotSmoothed = 0.0;
+		trkpt_eleSmoothed = 0.0;
+		trkpt_SmoothedData = false;
+		trkpt_NotSmoothedData = false;
 		trkpt_name = "";
 		level = 0;
 		// errcode=ERR_READ_NO;
 		Cmpt = 0;
 		old_time = 0;
-		pastDailySummaries = new ArrayList<NoaaWeatherData>();
-		normalsDaily = null;
-		normalsMonthly = null;
 
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		SAXParser parser = factory.newSAXParser();
@@ -227,7 +200,6 @@ public class SaxCGXHandler extends DefaultHandler {
 		if (f.isFile() && f.canRead()) {
 			if (mode == 0) {
 				trkdata.data.clear();
-				trkdata.historicalWeatherData = null;
 			}
 			parser.parse(f, this);
 		} else
@@ -235,7 +207,6 @@ public class SaxCGXHandler extends DefaultHandler {
 
 		return trkdata.ReadError;
 	}
-
 
 	/*
 	 * @Override public void startDocument() throws SAXException {
@@ -249,28 +220,23 @@ public class SaxCGXHandler extends DefaultHandler {
 		return errline;
 	}
 
-
 	@Override
 	public void setDocumentLocator(final Locator locator) {
 		this.locator = locator; // Save the locator, so that it can be used later for line tracking when
 		// traversing nodes.
 	}
 
-
 	@Override
 	public void startElement(String uri, String localname, String qName, Attributes attributs) throws SAXException {
 		if (qName.equalsIgnoreCase("COURSEGENERATOR")) {
 			level++;
-			levelName = qName;
-		} else if (qName.equalsIgnoreCase("TRACKPOINT") || qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS_EPHEMERIS)
-				|| qName.equalsIgnoreCase(LEVEL_WEATHER_DAILY_SUMMARIES)
-				|| qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
+		} else if (qName.equalsIgnoreCase("TRACKPOINT")) {
 			// trk_nb++;
+			trkpt_SmoothedData = false; // Reset the flag to detect smoothed data
+			trkpt_NotSmoothedData = false;
 			level++;
-			levelName = qName;
 		}
 	}
-
 
 	/**
 	 * Parse a string element
@@ -283,14 +249,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		return S;
 	}
 
-
 	/**
 	 * Parse a double element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private double ManageDouble(double _default, int _errcode) {
@@ -306,14 +269,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a integer element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private int ManageInt(int _default, int _errcode) {
@@ -329,14 +289,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a boolean element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private boolean ManageBoolean(boolean _default, int _errcode) {
@@ -352,14 +309,11 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a color element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed color
 	 */
 	private Color ManageColor(Color _default, int _errcode) {
@@ -375,14 +329,13 @@ public class SaxCGXHandler extends DefaultHandler {
 		}
 	}
 
-
 	@Override
 	public void endElement(String uri, String localname, String qName) throws SAXException {
 		if (qName.equalsIgnoreCase("COURSEGENERATOR")) {
 			level--;
 		}
 
-		if (level == 1 && levelName.equals(LEVEL_COURSEGENERATOR)) {
+		if (level == LEVEL_COURSEGENERATOR) {
 			if (qName.equalsIgnoreCase("VERSION")) {
 				cgx_version = ManageDouble(0.0, ERR_READ_VERSION);
 
@@ -453,14 +406,15 @@ public class SaxCGXHandler extends DefaultHandler {
 				trkdata.TrackUseDaylightSaving = ManageBoolean(false, ERR_READ_BOOL);
 			} else if (qName.equalsIgnoreCase("CURVE")) {
 				curve = ManageString();
-				if (!Utils.FileExist(Utils.GetHomeDir() + "/" + CgConst.CG_DIR + "/" + curve + ".par")) {
+				int FolderType = Utils.searchCurveFolder(curve);
+				if (!Utils.FileExist(Utils.getSelectedCurveFolder(FolderType) + curve + ".par")) {
 					JOptionPane.showMessageDialog(Parent,
 							String.format(bundle.getString("loadCGX.CurveFileError"), curve + ".par"));
 					trkdata.Paramfile = "Default";
 				} else
 					trkdata.Paramfile = curve;
 			} else if (qName.equalsIgnoreCase("MRBSIZEW")) {
-				trkdata.MrbSizeW = ManageInt(640, ERR_READ_INT);
+				trkdata.MrbSizeW = ManageInt(1000, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("MRBSIZEH")) {
 				trkdata.MrbSizeH = ManageInt(480, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("CLPROFILSIMPLEFILL")) {
@@ -493,16 +447,24 @@ public class SaxCGXHandler extends DefaultHandler {
 				trkdata.MRBType = ManageInt(0, ERR_READ_INT);
 			} else if (qName.equalsIgnoreCase("TOPMARGIN")) {
 				trkdata.TopMargin = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("SMOOTHFILTER")) {
+				trkdata.SmoothFilter = ManageInt(0, ERR_READ_INT);
 			}
 		} // End LEVEL_COURSEGENERATOR
 
-		if (level == 2 && levelName.equals(LEVEL_TRACKPOINT)) {
+		if (level == LEVEL_TRACKPOINT) {
 			if (qName.equalsIgnoreCase("LATITUDEDEGREES")) {
 				trkpt_lat = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("LONGITUDEDEGREES")) {
 				trkpt_lon = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("ALTITUDEMETERS")) {
 				trkpt_ele = ManageDouble(0.0, ERR_READ_DOUBLE);
+			} else if (qName.equalsIgnoreCase("ALTITUDEMETERSNOTSMOOTHED")) {
+				trkpt_eleNotSmoothed = ManageDouble(0.0, ERR_READ_DOUBLE);
+				trkpt_NotSmoothedData = true;
+			} else if (qName.equalsIgnoreCase("ALTITUDEMETERSSMOOTHED")) {
+				trkpt_eleSmoothed = ManageDouble(0.0, ERR_READ_DOUBLE);
+				trkpt_SmoothedData = true;
 			} else if (qName.equalsIgnoreCase("DISTANCEMETERS")) {
 				trkpt_dist = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase("DISTANCEMETERSCUMUL")) {
@@ -554,12 +516,22 @@ public class SaxCGXHandler extends DefaultHandler {
 			} else if (qName.equalsIgnoreCase("TRACKPOINT")) {
 				level--;
 				if ((mode == 0) || (mode == 2)) {
+					// No smoothed elevation => set the normal elevation
+					if (!trkpt_SmoothedData)
+						trkpt_eleSmoothed = trkpt_ele;
+
+					// No not smoothed elevation => set the normal elevation
+					if (!trkpt_NotSmoothedData)
+						trkpt_eleSmoothed = trkpt_ele;
+
 					// Add data at the end of the array
 					Cmpt++;
 					trkdata.data.add(new CgData(Cmpt, // double Num
 							trkpt_lat, // double Latitude
 							trkpt_lon, // double Longitude
 							trkpt_ele, // double Elevation
+							trkpt_eleNotSmoothed, // double ElevationNotSmoothed
+							trkpt_eleSmoothed, // double ElevationSmoothed
 							trkpt_ele, // double ElevationMemo
 							trkpt_tag, // int Tag
 							trkpt_dist, // double Dist
@@ -591,6 +563,8 @@ public class SaxCGXHandler extends DefaultHandler {
 							trkpt_lat, // double Latitude
 							trkpt_lon, // double Longitude
 							trkpt_ele, // double Elevation
+							trkpt_eleNotSmoothed, // double ElevationNotSmoothed
+							trkpt_eleSmoothed, // double ElevationSmoothed
 							trkpt_ele, // double ElevationMemo
 							trkpt_tag, // int Tag
 							trkpt_dist, // double Dist
@@ -623,114 +597,7 @@ public class SaxCGXHandler extends DefaultHandler {
 			}
 		} // End LEVEL_TRACKPOINT
 
-		else if (level == 2 && levelName.equals(LEVEL_WEATHER_NORMALS_EPHEMERIS)) {
-			if (qName.equalsIgnoreCase(HistoricalWeather.MOONFRACTION)) {
-				moonFraction = ManageDouble(0.0, ERR_READ_DOUBLE);
-			} else if (qName.equalsIgnoreCase(HistoricalWeather.DAYLIGHTHOURS)) {
-				daylightHours = ManageString();
-			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS_EPHEMERIS))
-				// End element
-				level--;
-		} else if (level == 2 && levelName.equals(LEVEL_WEATHER_DAILY_SUMMARIES)) {
-			if (qName.equalsIgnoreCase(NoaaWeatherStation.STATIONID)) {
-				summariesStationId = ManageString();
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherStation.NAME)) {
-				summariesStationName = ManageString();
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherStation.DISTANCEFROMSTART)) {
-				summariesStationDistanceFromStart = ManageDouble(0.0, ERR_READ_DOUBLE);
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherStation.LATITUDE)) {
-				summariesStationLatitude = ManageString();
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherStation.LONGITUDE)) {
-				summariesStationLongitude = ManageString();
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherData.MAXIMUMTEMPERATURE)) {
-				maximumTemperature = ManageString();
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherData.MINIMUMTEMPERATURE)) {
-				minimumTemperature = ManageString();
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherData.PRECIPITATION)) {
-				precipitation = ManageString();
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherData.DATE)) {
-				date = DateTime.parse(characters);
-			} else if (qName.equalsIgnoreCase("DAILY_SUMMARY")) {
-				if (!summariesStationId.equals("")) {
-					pastDailySummaries
-							.add(new NoaaWeatherData(maximumTemperature, minimumTemperature, "", precipitation, date));
-				}
-			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_DAILY_SUMMARIES))
-				level--;
-
-		} else if (level == 2 && levelName.equals(LEVEL_WEATHER_NORMALS)) {
-			if (qName.equalsIgnoreCase(NoaaWeatherStation.STATIONID)) {
-				normalsStationId = ManageString();
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherStation.NAME)) {
-				normalsStationName = ManageString();
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherStation.DISTANCEFROMSTART)) {
-				normalsStationDistanceFromStart = ManageDouble(0.0, ERR_READ_DOUBLE);
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherStation.LATITUDE)) {
-				normalsStationLatitude = ManageString();
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherStation.LONGITUDE)) {
-				normalsStationLongitude = ManageString();
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherData.MAXIMUMTEMPERATURE)) {
-				maximumTemperature = ManageString();
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherData.MINIMUMTEMPERATURE)) {
-				minimumTemperature = ManageString();
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherData.AVERAGETEMPERATURE)) {
-				averageTemperature = ManageString();
-			}
-			if (qName.equalsIgnoreCase(NoaaWeatherData.DATE)) {
-				date = DateTime.parse(characters);
-			} else if (qName.equalsIgnoreCase("NORMALS_DAILY")) {
-				if (!normalsStationId.equals("")) {
-					normalsDaily = new NoaaWeatherData(maximumTemperature, minimumTemperature, averageTemperature, "",
-							date);
-				}
-			} else if (qName.equalsIgnoreCase("NORMALS_MONTHLY")) {
-				if (!normalsStationId.equals("")) {
-					normalsMonthly = new NoaaWeatherData(maximumTemperature, minimumTemperature, averageTemperature, "",
-							date);
-				}
-			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS)) {
-				// End element
-				level--;
-
-				NoaaWeatherStation noaaSummariesWeatherStation = null;
-				if (!summariesStationId.equals(""))
-					noaaSummariesWeatherStation = new NoaaWeatherStation(summariesStationId, summariesStationName,
-							summariesStationLatitude, summariesStationLongitude, summariesStationDistanceFromStart);
-
-				NoaaWeatherStation noaaNormalsWeatherStation = null;
-				if (!normalsStationId.equals(""))
-					noaaNormalsWeatherStation = new NoaaWeatherStation(normalsStationId, normalsStationName,
-							normalsStationLatitude, normalsStationLongitude, normalsStationDistanceFromStart);
-
-				// The daylight hours data is the minimum data to have in order
-				// to justify the creation of the the HistoricalWeather object
-				if (!daylightHours.equals("")) {
-					HistoricalWeather historicalWeather = new HistoricalWeather(pastDailySummaries, normalsDaily,
-							normalsMonthly, noaaSummariesWeatherStation, noaaNormalsWeatherStation, daylightHours,
-							moonFraction);
-					trkdata.setHistoricalWeather(historicalWeather);
-				}
-
-			}
-		}
-
 	}
-
 
 	@Override
 	public void characters(char[] chars, int start, int end) throws SAXException {

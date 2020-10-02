@@ -55,7 +55,6 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 	private JLabel lbComment;
 	private JTextField tfComment;
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -65,7 +64,6 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
-
 
 	public boolean showDialog() {
 		// End set field
@@ -78,7 +76,6 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 		}
 		return ok;
 	}
-
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -114,7 +111,6 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -135,7 +131,6 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -208,14 +203,12 @@ public class frmSaveSSCurve extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-
 	public String getName() {
 		if (tfName != null)
 			return tfName.getText();
 		else
 			return "";
 	}
-
 
 	public String getComment() {
 		if (tfComment != null)

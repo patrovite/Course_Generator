@@ -17,7 +17,6 @@ public class JTimeSetting extends JPanel {
 	private CgSpinner spinSecond;
 	private JButton btCancel;
 
-
 	public JTimeSetting(int nbhour) {
 		super();
 		hour = 0;
@@ -49,49 +48,41 @@ public class JTimeSetting extends JPanel {
 				GridBagConstraints.NONE);
 	}
 
-
 	protected void Refresh() {
 		spinHour.setValue(hour);
 		spinMinute.setValue(minute);
 		spinSecond.setValue(second);
 	}
 
-
 	public int getHour() {
 		hour = (int) spinHour.getValue();
 		return hour;
 	}
-
 
 	public void setHour(int hour) {
 		this.hour = hour;
 		Refresh();
 	}
 
-
 	public int getMinute() {
 		minute = (int) spinMinute.getValue();
 		return minute;
 	}
-
 
 	public void setMinute(int minute) {
 		this.minute = minute;
 		Refresh();
 	}
 
-
 	public int getSecond() {
 		second = (int) spinSecond.getValue();
 		return second;
 	}
 
-
 	public void setSecond(int second) {
 		this.second = second;
 		Refresh();
 	}
-
 
 	public void setHMS(int hour, int minute, int second) {
 		this.hour = hour;
@@ -100,14 +91,12 @@ public class JTimeSetting extends JPanel {
 		Refresh();
 	}
 
-
 	public void setHMSinSecond(int HMSinSecond) {
 		this.hour = HMSinSecond / 3600;
 		this.minute = (HMSinSecond % 3600) / 60;
 		this.second = (HMSinSecond % 3600) % 60;
 		Refresh();
 	}
-
 
 	public int getHMSinSecond() {
 		getHour();

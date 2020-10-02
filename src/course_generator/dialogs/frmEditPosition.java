@@ -140,7 +140,6 @@ public class frmEditPosition extends javax.swing.JDialog {
 	private JLabel lbFirstAid;
 	private JCheckBox chkFirstAid;
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -150,7 +149,6 @@ public class frmEditPosition extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
-
 
 	public boolean showDialog(CgSettings _settings, TrackData _track, int _line) {
 		settings = _settings;
@@ -172,7 +170,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 		chkPhoto.setSelected((data.getTag() & CgConst.TAG_COOL_PT) != 0);
 		chkNote.setSelected((data.getTag() & CgConst.TAG_NOTE) != 0);
 		chkInfo.setSelected((data.getTag() & CgConst.TAG_INFO) != 0);
-		
+
 		chkDropBag.setSelected((data.getTag() & CgConst.TAG_DROPBAG) != 0);
 		chkCrew.setSelected((data.getTag() & CgConst.TAG_CREW) != 0);
 		chkFirstAid.setSelected((data.getTag() & CgConst.TAG_FIRST_AID) != 0);
@@ -189,6 +187,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 		if (ok && !track.ReadOnly) {
 			// Copy fields
 			track.data.get(line).setName(tfName.getText());
+			boolean newMRB = false;
 			int tag = 0;
 			// Higher point
 			if (chkHighPoint.isSelected())
@@ -211,8 +210,10 @@ public class frmEditPosition extends javax.swing.JDialog {
 				tag = tag | CgConst.TAG_MARK;
 
 			// Roadbook
-			if (chkRoadbook.isSelected())
+			if (chkRoadbook.isSelected()) {
 				tag = tag | CgConst.TAG_ROADBOOK;
+				newMRB = true;
+			}
 
 			// Photo
 			if (chkPhoto.isSelected())
@@ -225,20 +226,23 @@ public class frmEditPosition extends javax.swing.JDialog {
 			// Info
 			if (chkInfo.isSelected())
 				tag = tag | CgConst.TAG_INFO;
-			
+
 			// Drop bag
 			if (chkDropBag.isSelected())
 				tag = tag | CgConst.TAG_DROPBAG;
-			
+
 			// Crew
 			if (chkCrew.isSelected())
 				tag = tag | CgConst.TAG_CREW;
-			
+
 			// First aid
 			if (chkFirstAid.isSelected())
 				tag = tag | CgConst.TAG_FIRST_AID;
 
 			track.data.get(line).setTag(tag);
+
+			if (newMRB)
+				track.data.get(line).FmtLbMiniRoadbook = settings.DefaultFormat;
 
 			track.data.get(line).setElevation(spinElevation.getValueAsDouble(settings.Unit)); // CgConst.UNIT_METER));
 			track.data.get(line).setDiff(spinDiff.getValueAsDouble());
@@ -252,7 +256,6 @@ public class frmEditPosition extends javax.swing.JDialog {
 		}
 		return ok;
 	}
-
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -288,7 +291,6 @@ public class frmEditPosition extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -299,7 +301,6 @@ public class frmEditPosition extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 		int line = 0;
@@ -446,7 +447,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 		Utils.addComponent(panelRight, lbElevation, 0, line, 1, 1, 0, 0, 5, 0, 0, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
-		spinElevation = new CgSpinner(0, 0, 100000, 1);
+		spinElevation = new CgSpinner(0, -1000, 100000, 1);
 		Utils.addComponent(panelRight, spinElevation, 1, line, 3, 1, 0, 0, 5, 0, 0, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.BOTH);
 
@@ -590,17 +591,17 @@ public class frmEditPosition extends javax.swing.JDialog {
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		// -- Tag : Drop bag
-		lbDropBag = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbDropBag.Text"), 
+		lbDropBag = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbDropBag.Text"),
 				Utils.getIcon(this, "dropbag.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelRight, lbDropBag, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		chkDropBag = new javax.swing.JCheckBox();
-		Utils.addComponent(panelRight, chkDropBag, 2, line++, 1, 1, 0, 0, 5, 5, 0, 0, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
-		
+		Utils.addComponent(panelRight, chkDropBag, 2, line++, 1, 1, 0, 0, 5, 5, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
 		// -- Tag : Crew
-		lbCrew = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbCrew.Text"), 
+		lbCrew = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbCrew.Text"),
 				Utils.getIcon(this, "crew.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelRight, lbCrew, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
@@ -608,17 +609,17 @@ public class frmEditPosition extends javax.swing.JDialog {
 		chkCrew = new javax.swing.JCheckBox();
 		Utils.addComponent(panelRight, chkCrew, 2, line++, 1, 1, 0, 0, 5, 5, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
-		
+
 		// -- Tag : First aid
-		lbFirstAid = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbFirstAid.Text"), 
+		lbFirstAid = new javax.swing.JLabel(bundle.getString("frmEditPosition.lbFirstAid.Text"),
 				Utils.getIcon(this, "first_aid.png", settings.DialogIconSize), JLabel.LEFT);
 		Utils.addComponent(panelRight, lbFirstAid, 1, line, 1, 1, 0, 0, 5, 0, 0, 0, GridBagConstraints.BASELINE_LEADING,
 				GridBagConstraints.HORIZONTAL);
 
 		chkFirstAid = new javax.swing.JCheckBox();
-		Utils.addComponent(panelRight, chkFirstAid, 2, line++, 1, 1, 0, 0, 5, 5, 0, 0, GridBagConstraints.BASELINE_LEADING,
-				GridBagConstraints.HORIZONTAL);
-		
+		Utils.addComponent(panelRight, chkFirstAid, 2, line++, 1, 1, 0, 0, 5, 5, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+
 		// -- Diff
 		lbDiff = new javax.swing.JLabel();
 		lbDiff.setFont(font);
@@ -638,7 +639,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btVeryEasy = new javax.swing.JButton();
 		btVeryEasy.setOpaque(true);
-		btVeryEasy.setBackground(settings.Color_Diff_VeryEasy);  //CgConst.CL_DIFF_VERYEASY);
+		btVeryEasy.setBackground(settings.Color_Diff_VeryEasy); // CgConst.CL_DIFF_VERYEASY);
 		btVeryEasy.setToolTipText(bundle.getString("frmEditPosition.btVeryEasy.toolTipText"));
 		btVeryEasy.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -650,7 +651,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btEasy = new javax.swing.JButton();
 		btEasy.setOpaque(true);
-		btEasy.setBackground(settings.Color_Diff_Easy);//CgConst.CL_DIFF_EASY);
+		btEasy.setBackground(settings.Color_Diff_Easy);// CgConst.CL_DIFF_EASY);
 		btEasy.setToolTipText(bundle.getString("frmEditPosition.btEasy.toolTipText"));
 		btEasy.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -662,7 +663,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btAverage = new javax.swing.JButton();
 		btAverage.setOpaque(true);
-		btAverage.setBackground(settings.Color_Diff_Average); //CgConst.CL_DIFF_AVERAGE);
+		btAverage.setBackground(settings.Color_Diff_Average); // CgConst.CL_DIFF_AVERAGE);
 		btAverage.setToolTipText(bundle.getString("frmEditPosition.btAverage.toolTipText"));
 		btAverage.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -674,7 +675,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btHard = new javax.swing.JButton();
 		btHard.setOpaque(true);
-		btHard.setBackground(settings.Color_Diff_Hard); //CgConst.CL_DIFF_HARD);
+		btHard.setBackground(settings.Color_Diff_Hard); // CgConst.CL_DIFF_HARD);
 		btHard.setToolTipText(bundle.getString("frmEditPosition.btHard.toolTipText"));
 		btHard.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -686,7 +687,7 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		btVeryHard = new javax.swing.JButton();
 		btVeryHard.setOpaque(true);
-		btVeryHard.setBackground(settings.Color_Diff_VeryHard); //CgConst.CL_DIFF_VERYHARD);
+		btVeryHard.setBackground(settings.Color_Diff_VeryHard); // CgConst.CL_DIFF_VERYHARD);
 		btVeryHard.setToolTipText(bundle.getString("frmEditPosition.btVeryHard.toolTipText"));
 		btVeryHard.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -811,7 +812,6 @@ public class frmEditPosition extends javax.swing.JDialog {
 
 		setLocationRelativeTo(null);
 	}
-
 
 	private void Refresh() {
 		lbLineVal.setText(String.format(" : %1.0f", data.getNum()));

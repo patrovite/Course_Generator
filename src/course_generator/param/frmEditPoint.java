@@ -54,7 +54,6 @@ public class frmEditPoint extends javax.swing.JDialog {
 	private double speed;
 	private CgSettings settings;
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -65,7 +64,6 @@ public class frmEditPoint extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
-
 
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -147,7 +145,6 @@ public class frmEditPoint extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-
 	public boolean showDialog(CgParam p) {
 		slope = p.getSlope();
 		speed = p.getSpeedNumber();
@@ -172,7 +169,6 @@ public class frmEditPoint extends javax.swing.JDialog {
 		}
 		return ok;
 	}
-
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -208,7 +204,6 @@ public class frmEditPoint extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -235,7 +230,6 @@ public class frmEditPoint extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void formComponentShown(java.awt.event.ComponentEvent evt) {
 		repaint();

@@ -21,6 +21,7 @@ package course_generator.mrb;
 import org.joda.time.DateTime;
 
 import course_generator.CgData;
+import course_generator.TrackData.CalcClimbResult;
 import course_generator.utils.CgConst;
 import course_generator.utils.Utils;
 
@@ -29,19 +30,21 @@ public class MrbData extends CgData {
 	private double deltadistance;
 	/** Time from previous point **/
 	private int deltatime;
+	/** Elevation from previous point **/
+	private CalcClimbResult deltaclimb;
 
-	public MrbData(double Num, double Latitude, double Longitude, double Elevation, double ElevationMemo, int Tag,
-			double Dist, double Total, double Diff, double Coeff, double Recup, double Slope, double Speed,
-			double dElevation, int Time, // Time in second
+	public MrbData(double Num, double Latitude, double Longitude, double Elevation, double ElevationNotSmoothed,
+			double ElevationSmoothed, double ElevationMemo, int Tag, double Dist, double Total, double Diff,
+			double Coeff, double Recup, double Slope, double Speed, double dElevation, int Time, // Time in second
 			double dTime_f, // Time this part of the track in second (with decimal)
 			int TimeLimit, // Time limit
 			DateTime Hour, // Date and time at this point
 			int Station, String Name, String Comment, double tmp1, double tmp2, String FmtLbMiniRoadbook,
 			int OptionMiniRoadbook, int VPosMiniRoadbook, String CommentMiniRoadbook, int FontSizeMiniRoadbook,
-			double deltadistance, int deltatime) {
+			double deltadistance, int deltatime, CalcClimbResult deltaclimb) {
 
-		super(Num, Latitude, Longitude, Elevation, ElevationMemo, Tag, Dist, Total, Diff, Coeff, Recup, Slope, Speed,
-				dElevation, Time, // Time in second
+		super(Num, Latitude, Longitude, Elevation, ElevationNotSmoothed, ElevationSmoothed, ElevationMemo, Tag, Dist,
+				Total, Diff, Coeff, Recup, Slope, Speed, dElevation, Time, // Time in second
 				dTime_f, // Time this part of the track in second (with decimal)
 				TimeLimit, // Time limit
 				Hour, // Date and time at this point
@@ -50,6 +53,7 @@ public class MrbData extends CgData {
 
 		this.deltadistance = deltadistance;
 		this.deltatime = deltatime;
+		this.deltaclimb = deltaclimb;
 	}
 
 	public double getDeltaDist() {
@@ -117,4 +121,11 @@ public class MrbData extends CgData {
 		this.deltatime = deltatime;
 	}
 
+	public void setDeltaClimb(CalcClimbResult climb) {
+		deltaclimb = climb;
+	}
+
+	public CalcClimbResult getDeltaClimb() {
+		return deltaclimb;
+	}
 }

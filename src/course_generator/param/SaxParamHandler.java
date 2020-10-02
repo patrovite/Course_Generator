@@ -48,12 +48,10 @@ public class SaxParamHandler extends DefaultHandler {
 
 	private Locator locator;
 
-
 	/**
 	 * Read the CGX file from disc
 	 * 
-	 * @param filename
-	 *            Name of the cgx file to read
+	 * @param filename Name of the cgx file to read
 	 * @return The error code Erroce explanation: ERR_READ_NO = No problem during
 	 *         the reading of the file ERR_READ_DOUBLE = Parsing error during the
 	 *         read of a double element ERR_READ_INT = Parsing error during the read
@@ -88,18 +86,15 @@ public class SaxParamHandler extends DefaultHandler {
 		return errcode;
 	}
 
-
 	public int getErrLine() {
 		return errline;
 	}
-
 
 	@Override
 	public void setDocumentLocator(final Locator locator) {
 		this.locator = locator; // Save the locator, so that it can be used later for line tracking when
 								// traversing nodes.
 	}
-
 
 	@Override
 	public void startElement(String uri, String localname, String qName, Attributes attributs) throws SAXException {
@@ -114,7 +109,6 @@ public class SaxParamHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a string element
 	 * 
@@ -126,14 +120,11 @@ public class SaxParamHandler extends DefaultHandler {
 		return S;
 	}
 
-
 	/**
 	 * Parse a double element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occure
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occure
 	 * @return Return the parsed value
 	 */
 	private double ManageDouble(double _default, int _errcode) {
@@ -146,14 +137,11 @@ public class SaxParamHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a integer element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occure
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occure
 	 * @return Return the parsed value
 	 */
 	/*
@@ -165,10 +153,8 @@ public class SaxParamHandler extends DefaultHandler {
 	/**
 	 * Parse a boolean element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	/*
@@ -206,7 +192,6 @@ public class SaxParamHandler extends DefaultHandler {
 		} // End LEVEL_ITEM
 
 	}
-
 
 	@Override
 	public void characters(char[] chars, int start, int end) throws SAXException {

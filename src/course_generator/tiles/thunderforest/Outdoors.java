@@ -15,7 +15,6 @@ public class Outdoors extends AbstractOsmTileSource {
 
 	private CgSettings settings;
 
-
 	/**
 	 * Constructs a new {@code "Outdoors"} tile source.
 	 */
@@ -24,14 +23,12 @@ public class Outdoors extends AbstractOsmTileSource {
 		this.settings = settings;
 	}
 
-
 	@Override
 	public String getBaseUrl() {
 		String url = String.format(this.baseUrl, new Object[] { SERVER[SERVER_NUM] });
 		SERVER_NUM = (SERVER_NUM + 1) % SERVER.length;
 		return url;
 	}
-
 
 	@Override
 	public String getTileUrl(int zoom, int tilex, int tiley) throws IOException {
@@ -40,13 +37,10 @@ public class Outdoors extends AbstractOsmTileSource {
 		return tileUrl;
 	}
 
-
 	@Override
 	public int getMaxZoom() {
-		// TODO Check
 		return 18;
 	}
-
 
 	public TileSource.TileUpdate getTileUpdate() {
 		return TileSource.TileUpdate.IfNoneMatch;

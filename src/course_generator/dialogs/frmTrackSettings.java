@@ -287,9 +287,13 @@ public class frmTrackSettings extends javax.swing.JDialog {
 
 			@Override
 			public void yearMonthChanged(YearMonthChangeEvent event) {
-				YearMonth newYearMonth = event.getNewYearMonth();
-				newSelectedDate = LocalDate.of(newYearMonth.getYear(), newYearMonth.getMonth(),
-						newSelectedDate.getDayOfMonth());
+				try {
+					YearMonth newYearMonth = event.getNewYearMonth();
+					newSelectedDate = LocalDate.of(newYearMonth.getYear(), newYearMonth.getMonth(),
+							newSelectedDate.getDayOfMonth());
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 			}
 
 		});

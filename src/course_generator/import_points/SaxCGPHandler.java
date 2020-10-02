@@ -30,6 +30,7 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+
 public class SaxCGPHandler extends DefaultHandler {
 	private String characters = "";
 	private double tmp_lat = 0.0;
@@ -38,6 +39,14 @@ public class SaxCGPHandler extends DefaultHandler {
 	private int tmp_tag = 0;
 	private String tmp_name = "";
 	private String tmp_comment = "";
+
+	private int tmp_eattime = 0;
+	private int tmp_timelimit = 0;
+	private String tmp_fmtmrb = "";
+	private int tmp_optmrb = 0;
+	private int tmp_vposmrb = 0;
+	private String tmp_commentmrb = "";
+	private int tmp_FontSizemrb = 0;
 
 	private int level = 0;
 	private final int LEVEL_PTS = 2;
@@ -55,7 +64,6 @@ public class SaxCGPHandler extends DefaultHandler {
 
 	private ImportPtsData ptsdata;
 
-
 	/*
 	 * <?xml version="1.0" encoding="UTF-8"?> <COURSEGENERATOR VERSION="1"> <Points>
 	 * <Pt> <LatitudeDegrees>45.85291000000000</LatitudeDegrees>
@@ -67,10 +75,8 @@ public class SaxCGPHandler extends DefaultHandler {
 	/**
 	 * Read the CGP file from disc
 	 * 
-	 * @param filename
-	 *            Name of the gpx file to read
-	 * @param CGPData
-	 *            ImportPtsData object where to store the read data
+	 * @param filename Name of the gpx file to read
+	 * @param CGPData  ImportPtsData object where to store the read data
 	 * @return The error code Erroce explanation: ERR_READ_NO = No problem during
 	 *         the reading of the file ERR_READ_LAT = Parsing error during the read
 	 *         of a latitude (lat) element ERR_READ_LON = Parsing error during the
@@ -119,11 +125,9 @@ public class SaxCGPHandler extends DefaultHandler {
 		return ptsdata.ReadError;
 	}
 
-
 	public int getErrLine() {
 		return errline;
 	}
-
 
 	/**
 	 * Parse a string element
@@ -136,14 +140,11 @@ public class SaxCGPHandler extends DefaultHandler {
 		return S;
 	}
 
-
 	/**
 	 * Parse a double element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private double ManageDouble(double _default, int _errcode) {
@@ -159,14 +160,11 @@ public class SaxCGPHandler extends DefaultHandler {
 		}
 	}
 
-
 	/**
 	 * Parse a integer element
 	 * 
-	 * @param _default
-	 *            Default value
-	 * @param _errcode
-	 *            Error code if a parse error occur
+	 * @param _default Default value
+	 * @param _errcode Error code if a parse error occur
 	 * @return Return the parsed value
 	 */
 	private int ManageInt(int _default, int _errcode) {
@@ -182,14 +180,12 @@ public class SaxCGPHandler extends DefaultHandler {
 		}
 	}
 
-
 	@Override
 	public void setDocumentLocator(final Locator locator) {
 		this.locator = locator; // Save the locator, so that it can be used
 								// later for line tracking when traversing
 								// nodes.
 	}
-
 
 	@Override
 	public void startElement(String uri, String localname, String qName, Attributes attributs) throws SAXException {
@@ -212,7 +208,6 @@ public class SaxCGPHandler extends DefaultHandler {
 		}
 	}
 
-
 	@Override
 	public void endElement(String uri, String localname, String qName) throws SAXException {
 		if (qName.equalsIgnoreCase("COURSEGENERATOR")) {
@@ -222,7 +217,8 @@ public class SaxCGPHandler extends DefaultHandler {
 		} else if (qName.equalsIgnoreCase("PT") && (level == LEVEL_PT)) {
 			level--;
 			// Add data at the of the array
-			ptsdata.data.add(new CgImportPts(tmp_lat, tmp_lon, tmp_ele, tmp_tag, tmp_name, tmp_comment));
+			ptsdata.data.add(new CgImportPts(tmp_lat, tmp_lon, tmp_ele, tmp_tag, tmp_name, tmp_comment, tmp_eattime,
+					tmp_timelimit, tmp_fmtmrb, tmp_optmrb, tmp_vposmrb, tmp_commentmrb, tmp_FontSizemrb));
 		}
 		if (level == LEVEL_PT) {
 			if (qName.equalsIgnoreCase("LATITUDEDEGREES")) {
@@ -237,11 +233,23 @@ public class SaxCGPHandler extends DefaultHandler {
 				tmp_name = ManageString();
 			} else if (qName.equalsIgnoreCase("TAG")) {
 				tmp_tag = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("EATTIME")) {
+				tmp_eattime = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("TIMELIMIT")) {
+				tmp_timelimit = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("FMTLBMINIROADBOOK")) {
+				tmp_fmtmrb = ManageString();
+			} else if (qName.equalsIgnoreCase("OPTMINIROADBOOK")) {
+				tmp_optmrb = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("VPOSMINIROADBOOK")) {
+				tmp_vposmrb = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase("COMMENTMINIROADBOOK")) {
+				tmp_commentmrb = ManageString();
+			} else if (qName.equalsIgnoreCase("FONTSIZEMINIROADBOOK")) {
+				tmp_FontSizemrb = ManageInt(0, ERR_READ_INT);
 			}
 		}
-
 	}
-
 
 	@Override
 	public void characters(char[] chars, int start, int end) throws SAXException {

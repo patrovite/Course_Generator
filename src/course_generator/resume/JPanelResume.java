@@ -60,7 +60,6 @@ public class JPanelResume extends JPanel {
 	private JButton btRefreshRefresh;
 	private List<JPanelResumeListener> listeners = new ArrayList<JPanelResumeListener>();
 
-
 	public JPanelResume(ResumeData resume, CgSettings settings) {
 		super();
 		Resume = resume;
@@ -70,23 +69,19 @@ public class JPanelResume extends JPanel {
 		initComponents();
 	}
 
-
 	public void addListener(JPanelResumeListener toAdd) {
 		listeners.add(toAdd);
 	}
-
 
 	public void notifyLineChange() {
 		for (JPanelResumeListener hl : listeners)
 			hl.lineChangeEvent();
 	}
 
-
 	public void notifyDoubleClick() {
 		for (JPanelResumeListener hl : listeners)
 			hl.doubleClickEvent();
 	}
-
 
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
@@ -131,7 +126,6 @@ public class JPanelResume extends JPanel {
 		add(jScrollPaneResume, java.awt.BorderLayout.CENTER);
 	}
 
-
 	/**
 	 * Create resume toolbar
 	 */
@@ -171,8 +165,13 @@ public class JPanelResume extends JPanel {
 		});
 		ToolBarResume.add(btRefreshRefresh);
 
+		SetText_Resume_Toolbar();
 	}
 
+	private void SetText_Resume_Toolbar() {
+		btResumeSave.setToolTipText(bundle.getString("JPanelResume.btResumeSave.toolTipText"));
+		btRefreshRefresh.setToolTipText(bundle.getString("JPanelResume.btRefreshRefresh.toolTipText"));
+	}
 
 	private void TableResumeKeyReleased(KeyEvent evt) {
 		int row = TableResume.getSelectedRow();
@@ -183,7 +182,6 @@ public class JPanelResume extends JPanel {
 		notifyLineChange();
 		// SelectPositionFromResume(row);
 	}
-
 
 	private void TableResumeMouseClicked(MouseEvent evt) {
 		int row = TableResume.rowAtPoint(evt.getPoint());
@@ -196,17 +194,14 @@ public class JPanelResume extends JPanel {
 		// SelectPositionFromResume(row);
 	}
 
-
 	public int getSelectedLine() {
 		return TableResume.getSelectedRow();
 	}
-
 
 	public int getDataTrackLine() {
 		int p = TableResume.getSelectedRow();
 		return (int) Resume.data.get(p).getLine() - 1;
 	}
-
 
 	// private void SelectPositionFromResume(int row) {
 	// if (Resume.data.size() > 0) {
@@ -235,22 +230,20 @@ public class JPanelResume extends JPanel {
 			TableResume.setRowSelectionInterval(r, r);
 	}
 
-
 	private void SaveResumeAsCSV() {
 		if (Resume.data.size() > 0) {
 			String s;
-			s = Utils.SaveDialog(this, Settings.LastDir, "", ".csv", bundle.getString("frmMain.CSVFile"), true,
-					bundle.getString("frmMain.FileExist"));
+			s = Utils.SaveDialog(this, Settings.getLastDirectory(), "", ".csv", bundle.getString("frmMain.CSVFile"),
+					true, bundle.getString("frmMain.FileExist"));
 
 			if (!s.isEmpty()) {
 				Resume.SaveAsCSV(s, Settings.Unit, Settings.isPace);
 
 				// -- Store the directory
-				Settings.LastDir = Utils.GetDirFromFilename(s);
+				Settings.setLastDirectory(Utils.GetDirFromFilename(s));
 			}
 		}
 	}
-
 
 	/**
 	 * Refresh the resume grid
@@ -296,7 +289,7 @@ public class JPanelResume extends JPanel {
 				dst.setLine(src.getNum());
 				dst.setElevation(src.getElevation(CgConst.UNIT_METER));
 
-				ccr = Track.CalcClimb(0, i, ccr);
+				ccr = Track.CalcClimb(CgConst.ELEV_NORM, 0, i, ccr);
 				dst.setClimbP(ccr.cp);
 				dst.setClimbM(ccr.cm);
 
@@ -310,7 +303,7 @@ public class JPanelResume extends JPanel {
 				dst.setdTime_f(src.getTime() - OldData.getTime());
 				dst.setdDist((src.getTotal(CgConst.UNIT_METER) - OldData.getTotal(CgConst.UNIT_METER)) / 1000.0);
 
-				ccr = Track.CalcClimb(old, i, ccr);
+				ccr = Track.CalcClimb(CgConst.ELEV_NORM, old, i, ccr);
 				casr = Track.CalcAvrSlope(old, i, casr);
 				speedResult = Track.CalcAvrSpeed(old, i, speedResult);
 
@@ -337,12 +330,18 @@ public class JPanelResume extends JPanel {
 		}
 		// -- Refresh the grid
 		TableResume.invalidate();
+		ModelTableResume.fireTableStructureChanged();
 	}
-
 
 	public void setTrack(TrackData track) {
 		Track = track;
 		refresh();
 	}
 
+	public void ChangLang() {
+		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+		SetText_Resume_Toolbar();
+		ModelTableResume.SetTexts();
+		ModelTableResume.fireTableStructureChanged();
+	}
 }

@@ -17,6 +17,7 @@
 * De définir un nouveau point de départ pour un circuit en boucle,
 * D’insérer un parcours au début ou à la fin d’un autre parcours,
 * D'extraire une partie du parcours,
+* Déterminer à partir d'un cible la courbe vitesse/pente correspondante,
 * De sauvegarder le tracé modifié, contenant les temps de parcours calculés, au format GPX. Cela vous permettra, par exemple, d'utiliser la fonction "Partenaire virtuel" des GPS GARMIN,
 * De sauvegarder le tracé au format CGX qui est le format de sauvegarde de **Course Generator** afin de pouvoir échange des tracés tout en conservant les données sur le terrain, les commentaires...
 
@@ -54,4 +55,4 @@ Pierre DELORE
 
 ## Protection des données personnelles
 
-Le logiciel collecte dans les logs des informations sur votre configuration matérielle et logicielle. Ces données sont dans le répertoire 'logs' qui est accessible via le menu "Outils>Afficher le répertoire contenant les fichiers courbes vitesse/pente". Rien de sort de votre ordinateur. C'est uniquement en cas de problème que je vais vous demander de m'envoyer les fichiers 'logs'.
+Le logiciel collecte dans les logs des informations sur votre configuration matérielle et logicielle. Ces données sont dans le répertoire 'logs' qui est accessible via le menu "Outils>Afficher le répertoire contenant les logs". Rien de sort de votre ordinateur. C'est uniquement en cas de problème que je vais vous demander de m'envoyer les fichiers 'logs'.

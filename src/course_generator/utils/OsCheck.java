@@ -49,7 +49,6 @@ public final class OsCheck {
 	// cached result of OS detection
 	protected static OSType detectedOS;
 
-
 	/**
 	 * detect the operating system from the os.name System property and cache the
 	 * result

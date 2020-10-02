@@ -31,14 +31,12 @@ public class DrawStringMultiLine {
 	public final int ALIGN_LEFT = 1;
 	public final int ALIGN_RIGHT = 2;
 
-
 	public DrawStringMultiLine() {
 		Text = "";
 		Width = 0;
 		Height = 0;
 		Align = 0;
 	}
-
 
 	public void draw(Graphics2D g2d, String text, int x, int y) {
 		setText(g2d, text);
@@ -60,11 +58,9 @@ public class DrawStringMultiLine {
 		}
 	}
 
-
 	public String getText() {
 		return Text;
 	}
-
 
 	public void setText(Graphics2D g2d, String text) {
 		Text = text;
@@ -72,11 +68,9 @@ public class DrawStringMultiLine {
 		CalcDimension(g2d);
 	}
 
-
 	public int getWidth() {
 		return Width;
 	}
-
 
 	private void CalcDimension(Graphics2D g2d) {
 		int xmax = 0;
@@ -94,16 +88,13 @@ public class DrawStringMultiLine {
 		Height = h;
 	}
 
-
 	public int getHeight() {
 		return Height;
 	}
 
-
 	public int getAlign() {
 		return Align;
 	}
-
 
 	public void setAlign(int align) {
 		Align = align;

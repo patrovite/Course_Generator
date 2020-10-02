@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Include>
-  <?define EnglishImages = "..\..\build\help\en\images" ?>
-  <?define FrenchImages = "..\..\build\help\fr\images" ?>
-</Include>

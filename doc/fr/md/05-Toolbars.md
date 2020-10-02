@@ -6,7 +6,7 @@
 * ![](./images/Toolbar/open_cgx.png) : Permet de charger un parcours au format CGX
 * ![](./images/Toolbar/save_cgx.png) : Permet de sauvegarder le parcours au format CGX
 * ![](./images/Toolbar/undo.png) : Permet d'annuler la dernière commande
-* ![](./images/Toolbar/search.png) : Permet de faire la recherche d'une position GPS
+* ![](./images/Toolbar/search.png) : Permet de faire une recherche à partir d'une distance
 * ![](./images/Toolbar/prev.png) : Permet de rechercher la marque précédente
 * ![](./images/Toolbar/next.png) : Permet de rechercher la marque suivante
 * ![](./images/Toolbar/roadbook.png) : Permet d'afficher le mini roadbook

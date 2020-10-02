@@ -84,7 +84,6 @@ public class frmFillDiff extends javax.swing.JDialog {
 		public boolean Valid; // Indicate if the ok was pressed
 	}
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -95,18 +94,13 @@ public class frmFillDiff extends javax.swing.JDialog {
 		setModal(true);
 	}
 
-
 	/**
 	 * Show the dialog
 	 * 
-	 * @param settings
-	 *            Object containing the settings
-	 * @param track
-	 *            Object containing the track
-	 * @param start_line
-	 *            Line number where to start
-	 * @param end_line
-	 *            Line number where to end
+	 * @param settings   Object containing the settings
+	 * @param track      Object containing the track
+	 * @param start_line Line number where to start
+	 * @param end_line   Line number where to end
 	 * @return Object containing the result
 	 */
 	public EditDiffResult showDialog(CgSettings settings, TrackData track, int start_line, int end_line) {
@@ -169,7 +163,6 @@ public class frmFillDiff extends javax.swing.JDialog {
 		return res;
 	}
 
-
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -204,7 +197,6 @@ public class frmFillDiff extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -215,7 +207,6 @@ public class frmFillDiff extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -424,7 +415,6 @@ public class frmFillDiff extends javax.swing.JDialog {
 
 		setLocationRelativeTo(null);
 	}
-
 
 	protected void Refresh() {
 		spinFromLine.setEnabled(rbFromLine.isSelected());

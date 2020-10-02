@@ -70,7 +70,6 @@ public class frmSearchPoint extends javax.swing.JDialog {
 	private List<frmSearchPointListener> listeners = new ArrayList<frmSearchPointListener>();
 	private SearchPointResult result = null;
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -81,17 +80,14 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		initComponents();
 	}
 
-
 	public void addListener(frmSearchPointListener toAdd) {
 		listeners.add(toAdd);
 	}
-
 
 	public void notifyUpdateUI() {
 		for (frmSearchPointListener hl : listeners)
 			hl.UpdateUIEvent();
 	}
-
 
 	public boolean showDialog(CgSettings settings, TrackData track) {
 		if ((track == null) || (settings == null))
@@ -103,7 +99,6 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		setVisible(true);
 		return ok;
 	}
-
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -127,7 +122,6 @@ public class frmSearchPoint extends javax.swing.JDialog {
 
 		return rootPane;
 	}
-
 
 	/**
 	 * Search the point from the latitude and longitude Display the result
@@ -175,7 +169,6 @@ public class frmSearchPoint extends javax.swing.JDialog {
 			notifyUpdateUI();
 		}
 	}
-
 
 	/**
 	 * This method is called to initialize the form.
@@ -317,7 +310,6 @@ public class frmSearchPoint extends javax.swing.JDialog {
 		// -- Center the windows
 		setLocationRelativeTo(null);
 	}
-
 
 	public SearchPointResult getResult() {
 		return result;

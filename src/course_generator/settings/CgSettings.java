@@ -53,17 +53,21 @@ public class CgSettings {
 	 * Map selected : 0 => OpenStreetMap. 1 => OpenTopoMap. 2 => Outdoors. 3=>
 	 * BingAerial
 	 **/
+	public int SelectedCurveFolder = CgConst.CURVE_FOLDER_KM_H; // 0:km_h 1:min_miles 2:user
 	public int map = 0;
 
 	public boolean offlineMap = true;
 
 	public String MemoFormat[] = new String[5];
+	public String DefaultFormat;
 	public String mruGPX[] = new String[5];
 	public String mruCGX[] = new String[5];
 	public int TableMainColWidth[] = new int[16];
 	public String Language;
 	public int MainWindowWidth;
 	public int MainWindowHeight;
+	public int DefMrbWidth;
+	public int DefMrbHeight;
 	public int VertSplitPosition;
 	public int HorizSplitPosition;
 	/** Mini roadbook split position **/
@@ -76,6 +80,8 @@ public class CgSettings {
 	/** Threshold where CG ask if a position filter must be apply (m) **/
 	public int PosFilterAskThreshold = 10;
 
+	public int ClimbThresholdForCalculation = CgConst.MIN_ELEV;
+
 	public int Unit = CgConst.UNIT_METER; // Unit for the display 0=meter
 											// 1=Miles/feet
 	public boolean isPace = false; // 'true' the speed is display as pace
@@ -84,7 +90,7 @@ public class CgSettings {
 
 	public int ReadError = 0;
 	public int LineError = 0;
-	public String LastDir; // Store the last directory
+	private String LastDir; // Store the last directory
 	public String previousGPXDirectory;
 	public String previousCGXDirectory;
 	public String previousCSVDirectory;
@@ -107,9 +113,6 @@ public class CgSettings {
 	private String ThunderForestApiKey;
 	private PropertyChangeSupport ThunderForestApiKeyChanged = new PropertyChangeSupport(this);
 
-	private String NoaaToken;
-	private PropertyChangeSupport NoaaTokenChanged = new PropertyChangeSupport(this);
-
 	public Color Color_Diff_VeryEasy;
 	public Color Color_Diff_Easy;
 	public Color Color_Diff_Average;
@@ -122,7 +125,7 @@ public class CgSettings {
 	public int NightTrackTransparency;
 	public String MapToolBarLayout;
 	public int MapToolBarOrientation;
-
+	public String ReleaseVersion; // To store the last release notes viewed
 
 	public CgSettings() {
 		int i = 0;
@@ -131,17 +134,21 @@ public class CgSettings {
 		bNoConnectOnStartup = true;
 		ConnectionTimeout = 10;
 		Language = "en";
+		SelectedCurveFolder = CgConst.CURVE_FOLDER_KM_H;
 
 		MainWindowWidth = 800;
 		MainWindowHeight = 600;
 		VertSplitPosition = 200;
 		HorizSplitPosition = 50;
 		MRB_SplitPosition = 220;
+		DefMrbWidth = 1000;
+		DefMrbHeight = 480;
 
 		DistNear = 100.0;
 		DistFar = 1000.0;
 
 		MemoFormat = new String[5];
+		DefaultFormat = "%N%L%A%L%D%L%H";
 		mruGPX = new String[5];
 		mruCGX = new String[5];
 		TableMainColWidth = new int[16];
@@ -169,7 +176,7 @@ public class CgSettings {
 		previousPNGDirectory = "";
 
 		offlineMap = true;
-		map = 0;
+		map = 1; // OpenTopomap
 		PosFilterAskThreshold = 5;
 
 		DefaultFontName = "Arial";
@@ -199,16 +206,16 @@ public class CgSettings {
 		NormalTrackTransparency = CgConst.NORMAL_TRACK_TRANSPARENCY;
 		NightTrackTransparency = CgConst.NIGHT_TRACK_TRANSPARENCY;
 
-		MapToolBarLayout = "WEST";
-		MapToolBarOrientation = javax.swing.SwingConstants.VERTICAL;
-	}
+		MapToolBarLayout = "NORTH";
+		MapToolBarOrientation = javax.swing.SwingConstants.HORIZONTAL;
 
+		ReleaseVersion = "";
+	}
 
 	/**
 	 * Save the settings to the disk
 	 * 
-	 * @param path
-	 *            Path where the setting file is stored
+	 * @param path Path where the setting file is stored
 	 */
 	public void Save(String path) {
 		// -- Check if the data directory exist. If not! creation
@@ -248,6 +255,8 @@ public class CgSettings {
 			Utils.WriteStringToXML(writer, "MEMOFORMAT4", MemoFormat[3]);
 			Utils.WriteStringToXML(writer, "MEMOFORMAT5", MemoFormat[4]);
 
+			Utils.WriteStringToXML(writer, "DEFAULTFORMAT", DefaultFormat);
+
 			Utils.WriteStringToXML(writer, "MRUGPX1", mruGPX[0]);
 			Utils.WriteStringToXML(writer, "MRUGPX2", mruGPX[1]);
 			Utils.WriteStringToXML(writer, "MRUGPX3", mruGPX[2]);
@@ -286,12 +295,15 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "VERTSPLITPOSITION", VertSplitPosition);
 			Utils.WriteIntToXML(writer, "HORIZSPLITPOSITION", HorizSplitPosition);
 			Utils.WriteIntToXML(writer, "MRBSPLITPOSITION", MRB_SplitPosition);
+			Utils.WriteIntToXML(writer, "DEFMRBWIDTH", DefMrbWidth);
+			Utils.WriteIntToXML(writer, "DEFMRBHEIGHT", DefMrbHeight);
 			Utils.WriteIntToXML(writer, "MAP", map);
 
 			Utils.WriteDoubleToXML(writer, "DISTNEAR", DistNear);
 			Utils.WriteDoubleToXML(writer, "DISTFAR", DistFar);
 
 			Utils.WriteIntToXML(writer, "POSFILTERASKTHRESHOLD", PosFilterAskThreshold);
+			Utils.WriteIntToXML(writer, "CLIMBTHRESHOLDFORCALCULATION", ClimbThresholdForCalculation);
 
 			Utils.WriteStringToXML(writer, "DEFAULTFONTNAME", DefaultFontName);
 			Utils.WriteIntToXML(writer, "DEFAULTFONTSTYLE", DefaultFontStyle);
@@ -308,7 +320,6 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "CURVEBUTTONSICONSIZE", CurveButtonsIconSize);
 
 			Utils.WriteStringToXML(writer, "THUNDERFORESTAPIKEY", ThunderForestApiKey);
-			Utils.WriteStringToXML(writer, "NOAATOKEN", NoaaToken);
 
 			Utils.WriteIntToXML(writer, "COLORDIFFVERYEASY", Color_Diff_VeryEasy.getRGB());
 			Utils.WriteIntToXML(writer, "COLORDIFFEASY", Color_Diff_Easy.getRGB());
@@ -326,6 +337,10 @@ public class CgSettings {
 			Utils.WriteStringToXML(writer, "MAPTOOLBARLAYOUT", MapToolBarLayout);
 			Utils.WriteIntToXML(writer, "MAPTOOLBARORIENTATION", MapToolBarOrientation);
 
+			Utils.WriteIntToXML(writer, "SELECTEDCURVEFOLDER", SelectedCurveFolder);
+
+			Utils.WriteStringToXML(writer, "RELEASEVERSION", ReleaseVersion);
+
 			writer.writeEndElement();
 			writer.writeEndDocument();
 
@@ -338,12 +353,10 @@ public class CgSettings {
 		}
 	}
 
-
 	/**
 	 * Load the settings from disk
 	 * 
-	 * @param _Path
-	 *            Path where the setting file is stored
+	 * @param _Path Path where the setting file is stored
 	 */
 	public void Load(String _Path) {
 		// -- Test if the config file exist
@@ -363,6 +376,25 @@ public class CgSettings {
 					+ Confighandler.getErrLine());
 	}
 
+	/**
+	 * Returns the path of the last directory used to load or save: - Points -
+	 * Resume - Tags - Statistics
+	 * 
+	 * @return string with the full file path.
+	 */
+	public String getLastDirectory() {
+		return LastDir;
+	}
+
+	/**
+	 * Saves the path of the last directory used to load or save: - Points - Resume
+	 * - Tags - Statistics
+	 * 
+	 * @param lastDirectoryFullPath The full path of the last directory
+	 */
+	public void setLastDirectory(String lastDirectoryFullPath) {
+		LastDir = lastDirectoryFullPath;
+	}
 
 	/**
 	 * Return the distance unit as string
@@ -380,7 +412,6 @@ public class CgSettings {
 		}
 	}
 
-
 	/**
 	 * Return the distance unit as string (abbreviation)
 	 * 
@@ -396,7 +427,6 @@ public class CgSettings {
 			return "km";
 		}
 	}
-
 
 	/**
 	 * Return the elevation unit as string
@@ -414,7 +444,6 @@ public class CgSettings {
 		}
 	}
 
-
 	/**
 	 * Return the elevation unit as string (abbreviation)
 	 * 
@@ -431,7 +460,6 @@ public class CgSettings {
 		}
 	}
 
-
 	/**
 	 * Returns the user's thunderforest's API Key
 	 * 
@@ -441,12 +469,10 @@ public class CgSettings {
 		return ThunderForestApiKey == null ? "" : ThunderForestApiKey;
 	}
 
-
 	/**
 	 * Sets the user's thunderforest's API Key
 	 * 
-	 * @param key
-	 *            The entered key
+	 * @param key The entered key
 	 */
 	public void setThunderForestApiKey(String newKey) {
 		String oldKey = ThunderForestApiKey;
@@ -454,11 +480,9 @@ public class CgSettings {
 		ThunderForestApiKeyChanged.firePropertyChange("ThunderForestApiKeyChanged", oldKey, newKey);
 	}
 
-
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		ThunderForestApiKeyChanged.addPropertyChangeListener(listener);
 	}
-
 
 	/**
 	 * Verifies that the thunderforest's API Key is a valid one
@@ -471,48 +495,6 @@ public class CgSettings {
 			isKeyValid = true;
 
 		return isKeyValid;
-	}
-
-
-	/**
-	 * Returns the user's NOAA token.
-	 * 
-	 * @return string with the key
-	 */
-	public String getNoaaToken() {
-		return NoaaToken == null ? "" : NoaaToken;
-	}
-
-
-	/**
-	 * Sets the user's NOAA token.
-	 * 
-	 * @param token
-	 *            The entered token
-	 */
-	public void setNoaaToken(String token) {
-		String oldToken = NoaaToken;
-		NoaaToken = token;
-		NoaaTokenChanged.firePropertyChange("NoaaTokenChanged", oldToken, token);
-	}
-
-
-	public void addNoaaTokenChangeListener(PropertyChangeListener listener) {
-		NoaaTokenChanged.addPropertyChangeListener(listener);
-	}
-
-
-	/**
-	 * Verifies that the NOAA token is a valid one
-	 * 
-	 */
-	public boolean isNoaaTokenValid() {
-		boolean isTokenValid = false;
-
-		if (NoaaToken != null && NoaaToken.length() == 32)
-			isTokenValid = true;
-
-		return isTokenValid;
 	}
 
 }

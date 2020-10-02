@@ -98,7 +98,6 @@ public class frmFillCoeff extends javax.swing.JDialog {
 		public boolean Valid; // Indicate if the ok was pressed
 	}
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -109,7 +108,6 @@ public class frmFillCoeff extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
-
 
 	public EditCoeffResult showDialog(CgSettings settings, TrackData track, int start_line, int end_line) {
 		this.settings = settings;
@@ -165,7 +163,6 @@ public class frmFillCoeff extends javax.swing.JDialog {
 		return res;
 	}
 
-
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
 	 *
@@ -200,7 +197,6 @@ public class frmFillCoeff extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -211,7 +207,6 @@ public class frmFillCoeff extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -428,7 +423,6 @@ public class frmFillCoeff extends javax.swing.JDialog {
 		setLocationRelativeTo(null);
 	}
 
-
 	private void Calc() {
 		double t = spinHour.getValueAsDouble() * 3600 + spinMinute.getValueAsDouble() * 60;
 		if (t > 5400)
@@ -439,7 +433,6 @@ public class frmFillCoeff extends javax.swing.JDialog {
 		if (estimatedCoeff < 0)
 			estimatedCoeff = 0;
 	}
-
 
 	protected void Refresh() {
 		spinFromLine.setEnabled(rbFromLine.isSelected());

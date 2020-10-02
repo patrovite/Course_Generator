@@ -29,12 +29,18 @@ public class ResumeModel extends AbstractTableModel {
 	private ResumeData resume;
 	private CgSettings settings;
 
-
 	public ResumeModel(ResumeData data, CgSettings _settings) {
 		super();
-		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 
 		header = new String[21];
+		SetTexts();
+		settings = _settings;
+		resume = data;
+	}
+
+	public void SetTexts() {
+		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
+
 		header[0] = bundle.getString("frmMain.ResumeHeaderNum.text");
 		header[1] = bundle.getString("frmMain.ResumeHeaderName.text");
 		header[2] = bundle.getString("frmMain.ResumeHeaderLine.text");
@@ -56,40 +62,31 @@ public class ResumeModel extends AbstractTableModel {
 		header[18] = bundle.getString("frmMain.ResumeHeaderAvgSlopeM.text");
 		header[19] = bundle.getString("frmMain.ResumeHeaderAvgSpeed.text");
 		header[20] = bundle.getString("frmMain.ResumeHeaderComment.text");
-
-		settings = _settings;
-		resume = data;
 	}
-
 
 	public CgSettings getSettings() {
 		return settings;
 	}
-
 
 	@Override
 	public int getColumnCount() {
 		return header.length;
 	}
 
-
 	@Override
 	public String getColumnName(int columnIndex) {
 		return header[columnIndex];
 	}
-
 
 	@Override
 	public int getRowCount() {
 		return resume.data.size();
 	}
 
-
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		return resume.data.get(rowIndex);// .getNum();
 	}
-
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {

@@ -6,7 +6,7 @@
 * ![](./images/Toolbar/open_cgx.png) : Loads a CGX file format course
 * ![](./images/Toolbar/save_cgx.png) : Saves a CGX file format course
 * ![](./images/Toolbar/undo.png) : Undo the last command
-* ![](./images/Toolbar/search.png) : Searches for a specific GPS location
+* ![](./images/Toolbar/search.png) : Searches for a specific distance
 * ![](./images/Toolbar/prev.png) : Searches the previous mark
 * ![](./images/Toolbar/next.png) : Searches the next mark
 * ![](./images/Toolbar/roadbook.png) : Displays the mini road-book

@@ -43,16 +43,13 @@ public class MapMarkerImg extends MapObjectImpl implements MapMarker {
 	MapMarker.STYLE markerStyle;
 	Image img;
 
-
 	public MapMarkerImg(Coordinate coord, Image img) {
 		this(null, null, coord, img);
 	}
 
-
 	public MapMarkerImg(Layer layer, String name, Coordinate coord, Image img) {
 		this(layer, name, coord, img, MapMarker.STYLE.VARIABLE, getDefaultStyle());
 	}
-
 
 	public MapMarkerImg(Layer layer, String name, Coordinate coord, Image img, MapMarker.STYLE markerStyle,
 			Style style) {
@@ -62,36 +59,29 @@ public class MapMarkerImg extends MapObjectImpl implements MapMarker {
 		this.img = img;
 	}
 
-
 	public Coordinate getCoordinate() {
 		return coord;
 	}
-
 
 	public double getLat() {
 		return coord.getLat();
 	}
 
-
 	public double getLon() {
 		return coord.getLon();
 	}
-
 
 	public Image getImg() {
 		return img;
 	}
 
-
 	public MapMarker.STYLE getMarkerStyle() {
 		return markerStyle;
 	}
 
-
 	public double getRadius() {
 		return 0;
 	}
-
 
 	public void paint(Graphics g, Point position, int radio) {
 		// int size_h = radio;
@@ -114,17 +104,14 @@ public class MapMarkerImg extends MapObjectImpl implements MapMarker {
 			paintText(g, position);
 	}
 
-
 	public static Style getDefaultStyle() {
 		return new Style(Color.ORANGE, new Color(200, 200, 200, 200), null, getDefaultFont());
 	}
-
 
 	@Override
 	public String toString() {
 		return "MapMarkerImg at " + getLat() + " " + getLon();
 	}
-
 
 	@Override
 	public void setLat(double lat) {
@@ -134,7 +121,6 @@ public class MapMarkerImg extends MapObjectImpl implements MapMarker {
 			coord.setLat(lat);
 	}
 
-
 	@Override
 	public void setLon(double lon) {
 		if (coord == null)
@@ -142,7 +128,6 @@ public class MapMarkerImg extends MapObjectImpl implements MapMarker {
 		else
 			coord.setLon(lon);
 	}
-
 
 	public void setImg(Image img) {
 		this.img = img;

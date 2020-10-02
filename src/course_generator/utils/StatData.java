@@ -32,11 +32,9 @@ public class StatData {
 	/** Counter **/
 	public int Cmpt;
 
-
 	public StatData() {
 		Init();
 	}
-
 
 	public void Init() {
 		Speed = 0.0;
@@ -45,34 +43,28 @@ public class StatData {
 		Cmpt = 0;
 	}
 
-
 	/**
 	 * Set the speed
 	 * 
-	 * @param speed
-	 *            Speed in meter per hour
+	 * @param speed Speed in meter per hour
 	 */
 	public void setSpeed(double speed) {
 		this.Speed = speed;
 	}
 
-
 	/**
 	 * Set the speed
 	 * 
-	 * @param speed
-	 *            Speed in meter per hour
+	 * @param speed Speed in meter per hour
 	 */
 	public void setSpeed(String speed) {
 		this.Speed = Double.valueOf(speed);
 	}
 
-
 	/**
 	 * Get the speed depending the unit
 	 * 
-	 * @param unit
-	 *            Unit for the returned value
+	 * @param unit Unit for the returned value
 	 * @return Speed in the corresponding unit
 	 */
 	public double getSpeed(int unit) {
@@ -87,12 +79,10 @@ public class StatData {
 		}
 	}
 
-
 	/**
 	 * Get the speed as a string
 	 * 
-	 * @param unit
-	 *            Unit for the returned value
+	 * @param unit Unit for the returned value
 	 * @return String containing speed
 	 */
 	public String getSpeedString(int unit) {
@@ -116,25 +106,21 @@ public class StatData {
 		return s;
 	}
 
-
 	// -------------------------------------------
 
 	/**
 	 * Set the distance
 	 * 
-	 * @param dist
-	 *            Speed in meter per hour
+	 * @param dist Speed in meter per hour
 	 */
 	public void setDist(double dist) {
 		this.Dist = dist;
 	}
 
-
 	/**
 	 * Get the dist depending the unit
 	 * 
-	 * @param unit
-	 *            Unit for the returned value
+	 * @param unit Unit for the returned value
 	 * @return Dist in the corresponding unit
 	 */
 	public double getDist(int unit) {
@@ -149,7 +135,6 @@ public class StatData {
 		}
 	}
 
-
 	/**
 	 * Get the distance.
 	 * 
@@ -158,12 +143,10 @@ public class StatData {
 		return Dist;
 	}
 
-
 	/**
 	 * Get the dist as a string
 	 * 
-	 * @param unit
-	 *            Unit for the returned value
+	 * @param unit Unit for the returned value
 	 * @return String containing dist
 	 */
 	public String getDistString(int unit) {
@@ -187,12 +170,10 @@ public class StatData {
 		return s;
 	}
 
-
 	/**
 	 * Copy the content of the object to another object
 	 * 
-	 * @param d
-	 *            Destination object
+	 * @param d Destination object
 	 * @return Copied object
 	 */
 	public StatData CopyTo(StatData d) {

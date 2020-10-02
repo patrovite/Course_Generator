@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Uso avanzado de Course Generator
 
 Este capítulo le enseñará a hacer un uso más avanzado de **Course Generator**.
@@ -133,10 +134,147 @@ El perfil destaca los grados de desnivel con un código de colores.
 Los colores utilizados en el mini libro de ruta puedes ser configurads en la ventana de configuración accesible mediante el botón ![](./images/MRB/Toolbar/setting.png).
 
 ### La barra de herramientas
+=======
+# Advanced use of Course Generator
+
+This chapter will introduce you to more advanced uses of **Course Generator**.
+
+## Find a GPS point
+
+It is possible to search for a GPS point on the track via the "Edit>Search a point..." menu or with the keyboard shortcut [Ctrl + F].
+
+![Search dialog](./images/CG40_Search.png)
+
+In the dialog box, it is necessary to enter the latitude and longitude of the point and then press the search button ![search button](./images/Toolbar/search.png).
+
+**Course Generator** will search for the closest point given a set of coordinates. It will indicate the line corresponding to the point found as well as the distance between the point found and the coordinates entered. The line containing the found point will then be selected.
+
+## Find the high and low points of the track
+
+The "Tools>Find Min/Max" menu is used to automatically find the highest and lowest point of the track.  
+Each found position is marked with an indicator ![high point indicator](./images/Tags/high_point.png) (high point) or ![low point indicator](./images/Tags/low_point.png) (low point).
+
+## Change the altitude of a point on the track
+
+It can happen that the elevation data of a track is inaccurate. This can happen if you, or an Openrunner type website, have made an automatic correction of altitudes. The SRTM database on which these sites are based has area without altitude. The given base then returns an altitude of 32768m. In order to overcome this problem you can edit the altitude of the erroneous point(s).
+
+To do this, go to the corresponding cell and open the line editor by double-clicking.
+
+The following dialog box is displayed:
+
+![Line editor](./images/CG40_Line_Editor.png)
+
+The "Altitude" field is used to enter the new altitude.
+
+It will be necessary to restart a calculation with the button ![refresh button](./images/Toolbar/refresh.png) to take into account the new altitude.
+
+## Merge two tracks
+
+**Course Generator** offers the opportunity to merge two tracks.
+
+The procedure is as follows:
+
+* Load the first track in **Course Generator** (GPX or CGX format).
+* Import the second track using "File>Import a GPX File" or "File>Import a CGX File".
+* The dialog box below appears:  
+![Import track dialog](./images/CG40_Import_Track.png)
+* Select "Insert at the beginning" if you want to insert the track before the one present in memory. If not, select "Append" and the track will be added after the current loaded track.
+* The file selection dialog box appears. Make your choice then click on "Open"
+* The merge is then realized
+
+If you have other tracks to merge, simply repeat the process.
+
+After merging the tracks you will have to modify the settings of the fatigue coefficients and restart a computation (button ![refresh button](./images/Toolbar/refresh.png) or [F5]) because the time data will be wrong.
+
+Once you have completed the merge and restarted a calculation, you will be able to save the track.
+
+## Save part of the track
+
+**Course Generator** allows to save a section of a track.  
+
+The procedure is as follows:
+
+* In the table select the first line you want to save,
+* While holding down the SHIFT key, select the last line to save.
+* Select "File>Save selection as xxx" (xxx corresponds to the file format you want).
+* The file save dialog box appears. Enter the file name and confirm.
+* It's done!
+
+## Export tags as waypoints
+
+**Course Generator** offers the ability to save GPS points containing tags (or indicator) as a waypoint. These waypoints can be added to your GPS to have, for example, the display of the track with additional information such as passes, aid stations and cities.
+
+The procedure is as follows:
+
+* Select "File>Export tags as waypoint".
+* The dialog box below appears:  
+![Export as waypoints dialog](./images/CG40_Export_Waypoints.png)
+* Select the types of tags you want to export.
+* The save dialog box appears. 
+* Waypoints will be saved to a file that has the name entered and with a GPX extension.
+
+The operation of this file can be done, for example, with Garmin's Basecamp software.
+
+## Copy the contents of a cell
+
+The contents of a cell in the track table can be copied to the clipboard for use in other software. To perform this action simply select "Edit>Copy". The content of the selected cell is copied to the clipboard as text.
+
+## Generate a mini roadbook
+
+**Course Generator** offers the possibility to generate a mini roadbook. This will contain the profile of the track and informations on your way points. The mini roadbook is accessible via "Display>Generate mini roadbook".
+
+At the end of the process the mini-roadbook is an image. This image can be printed using drawing software such as Paint, Photoshop or The Gimp. It can also be used in other software like Word, Excel, Inkscape, Illustrator ...
+
+The settings made to generate the mini roadbook are saved in the CGX file of the track. If you exchange a track in CGX format, you will exchange the track with all its informations (refueling, terrain quality, cut-off times ...) and the mini roadbook.
+
+To be able to use the mini roadbook it is necessary to have previously set the parameters of your track. This includes:
+
+* Having entered the terrain difficulty (useful for the type "Roads/Trails").
+* Fill in the fatigue coefficient, refueling times, cut-off times, names of important points.
+* Having the calculation updated (F5 key).
+* Having marked the important positions with the indicator ![mark indicator](./images/Tags/roadbook.png).
+* Having marked the important points with one or more of the following indicators: ![hight point](./images/Tags/high_point.png) ![low point](./images/Tags/low_point.png) ![eat](./images/Tags/eat.png) ![drink](./images/Tags/drink.png) ![flag](./images/Tags/flag.png) ![](./images/Tags/dropbag.png) ![](./images/Tags/crew.png) ![](./images/Tags/first_aid.png)
+
+
+### Presentation
+
+"Display>Generate mini roadbook" or the button ![mrb](./images/Toolbar/roadbook.png) displays the following window:  
+![Mini raodbook dialog](./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png)
+
+It contains the following elements:
+
+* Top: the toolbar to perform actions
+* Middle right: Contains a table with all the rows of the track table that contained the indicator ![roadbook](./images/Tags/roadbook.png) and one or more of the following indicators: ![](./images/Tags/high_point.png) ![](./images/Tags/low_point.png) ![](./images/Tags/eat.png) ![](./images/Tags/drink.png) ![](./images/Tags/flag.png) ![](./images/Tags/dropbag.png) ![](./images/Tags/crew.png) ![](./images/Tags/first_aid.png). Each line generates a label in the mini roadbook
+* Middle left: This area allows you to change the content of the currently selected table row
+* Bottom: Contains the mini roadbook with tags
+
+When a line is selected then the corresponding label color change (salmon color).
+
+### The types of mini roadbook
+
+In the top bar, the "Profile type" drop-down list allows you to choose among the 3 types of profile:
+
+The "Simple" type:  
+![Simple type](./images/MRB/CG40_MRB_Simple_Label.png)    
+The track profile does not contain any additional information.
+
+The "Roads/Trails" type:  
+![Road/trails type](./images/MRB/CG40_MRB_Road_Track_Label.png)  
+The profile highlights the portions of the roads and trails with a color code. The roads are the points of the track table whose field coefficient is equal to 100%. The others are considered as trails.
+
+The "Slope" type :  
+![Slope type](./images/MRB/CG40_MRB_Slope_Label.png)  
+The profile highlights the degree of slope by a color code.
+
+The colors used in the mini roadbook can be set in the configuration window accessible with the button ![](./images/MRB/Toolbar/setting.png).
+
+### The toolbar
+>>>>>>> upstream/master
 
 ![](./images/MRB/CG40_MRB_Toolbar.png)  
 
 
+<<<<<<< HEAD
 * ![guardar](./images/MRB/Toolbar/save.png) : Guarda el mini libro de ruta como una imagen. La formato disponible es PNG.
 * ![ajustes](./images/MRB/Toolbar/setting.png) : Abre la ventana de configuración del mini libro de ruta.
 * ![](./images/MRB/Toolbar/pipette.png) : Copia el formato de la etiqueta actual para reproducirla en una o más etiquetas. Esta función está también accesible mediante el atajo de teclado CTRL + C
@@ -146,6 +284,17 @@ Los colores utilizados en el mini libro de ruta puedes ser configurads en la ven
 Selecciona el ajuste que quiere duplicar cuando copie.
 
 * ![](./images/MRB/Toolbar/label_to_bottom.png) : Permite especificar las etiquetas que serán conectadas en la parte inferior del perfil. 
+=======
+* ![save](./images/MRB/Toolbar/save.png) : Saves the mini roadbook as an image. The available format is PNG.
+* ![settings](./images/MRB/Toolbar/setting.png) : Opens the mini roadbook configuration window
+* ![](./images/MRB/Toolbar/pipette.png) : Copies the current label format to reproduce it on one or more other labels. This function is also accessible with the keyboard shortcut CTRL + C
+* ![](./images/MRB/Toolbar/replicate.png) :  Paste the formatting on the selected label. Only the properties selected in the function's configuration window will be pasted. This function is also accessible with the keyboard shortcut CTRL + V
+* ![](./images/MRB/Toolbar/replicate_config.png) : Opens a window for configuring the duplicate formatting feature as shown below:
+![Duplicate configuration dialog](./images/MRB/CG40_MRB_Replicate_Dlg.png)    
+Select the settings you want to duplicate when copying.
+
+* ![](./images/MRB/Toolbar/label_to_bottom.png) : Allows you to specify that labels must be connected to the bottom of the profile.
+>>>>>>> upstream/master
 * ![](./images/MRB/Toolbar/label_to_profil.png) : Allows you to specify that labels must be connected to the profile.
 * ![](./images/MRB/Toolbar/night_day.png) : Specify whether to show the day and night areas on the profile.
 * "Profile type" : Allows you to select the type of mini roadbook.

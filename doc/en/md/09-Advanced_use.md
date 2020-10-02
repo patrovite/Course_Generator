@@ -174,6 +174,7 @@ The "General" tab allows you to:
 
 * Set the filter value to apply to the data when displaying the profile
 * Set the top area height of the profile. This size is in pixel.
+* Set the default text format when you create a new mark
 
 The "Simple" tab is used to adjust the colors of the "Simple" display of the profile.  
 ![Simple tab](./images/MRB/CG40_MRB_Settings2.png)  
@@ -212,6 +213,7 @@ The following tags are available:
 * %T : Represents the travel time since the start. The format is "hh:mm".
 * %Tl : Represents the travel time since the start in long format "hh:mm:ss".
 * %Ts : Represents the travel time since the start in short format "hh:mm".
+* %Td : Represents the travel time since the last location in short format "hh:mm".
 * %H : Represents the time at this point. The format is "ddd hh:mm" (ddd = abbreviated day).
 * %h : Represents the time at this point. The format is "hh:mm".
 * %hl : Represents the time at this point in long format "hh:mm:ss".
@@ -226,6 +228,8 @@ The following tags are available:
 * %Rs : Represents refueling time this point in short format "hh:mm".
 * %+ : Represents the cumulative positive climb since the start. The unit is the meter/feet.
 * %- : Represents the cumulative negative climb since the start. The unit is the meter/feet. 
+* %+d : Represents the positive climb since the location. The unit is the meter/feet.
+* %-d : Represents the negative climb since the location. The unit is the meter/feet. 
 
 The "..." button, next to the "Format" field, opens a window allowing you to simplify the content of the selected label.
 
@@ -257,6 +261,24 @@ The procedure is as follows:
 
 After the operation it is necessary to redefine the fatigue coefficients and cut-off times and then restart a calculation (button ![](./images/Toolbar/refresh.png) or [F5]).
 
+## Find the best "Speed/Slope" curve from the final time
+
+Le menu "Tools>Search "Speed/Slope" curve from the final time" allow to find the best curve from the final time.
+
+![](./images/CG40_Search_Curve.png)
+
+You enter the final time (hour:minute:second) then you press the search button.
+
+**Course Generator** will search the best curve. Most of the time the software will not find the exact curve and it will show the curve bellow and over your final time. For every curve, you will have the estimated time.
+The you can :
+
+* Select the curve bellow the final time withe the "Select" button
+* Select the curve over the final time withe the "Select" button
+* Exit from the dialog box with the "Cancel" button
+
+The press o one "Select" button will select the the corresponding curve. It will be used for your next calculation.
+
+
 ## The general parameters of Course Generator
 
 Le menu "Paramètres>Paramètres de Course Generator" affiche la fenêtre de configuration du logiciel.
@@ -270,7 +292,8 @@ The possible settings are:
 * "language" : Selects the language used in the interface. "System" uses operating system settings to determine which language to use. If the system language is not managed by **Course Generator** then English is selected.
 * "Units" : Chooses between "km/m" and "Miles/Feet".
 * "Speed format" : Chooses the type of speed to display (speed or pace).
-* "Threshold for position filter (in %) : Threshold, in%, from which the software asks if we want to apply a filter on GPS points when loading a track.
+* "Threshold for position filter (in %)" : Threshold, in %, from which the software asks if we want to apply a filter on GPS points when loading a track.
+* "Threshold for climb calculation (in meter)" : Threshold, in meter, from where you take into account a difference of elevation. Used the by the software to calcultate the ascending and descending climb.
 * "Check for update at startup" : Allows you to choose if you want to check for a newer version of **Course Generator** available at application startup.
 
 ### "Display" tab  
@@ -285,13 +308,6 @@ The possible settings are:
 ![](./images/CG40_Settings_Maps.png)
 
 Provides a field to enter a Thunderforest API key in order to show the Outdoors map layer. A free API key can be requested [here](https://thunderforest.com/docs/apikeys/).
-
-### "Weather" tab  
-![](./images/CG40_Settings_Weather.png)
-
-Provides a field to enter a NOAA API token in order to retrieve historical weather data. A free token can be requested [here](https://www.ncdc.noaa.gov/cdo-web/token).
-
-
 
 ## Import and export marked points
 
@@ -342,8 +358,9 @@ On the left, a vertical bar of buttons allows actions on this map.
 * ![](./images/Map/flag.png) : Adds a mark to the current point.
 * ![](./images/Map/eat.png) : Adds an aid station to the current point.
 * ![](./images/Map/drink.png) : Adds a water point to the current point.
+* ![](./images/Map/show_hide_markers.png) : Display or hide the marks.
+* ![](./images/Map/save_png.png) : Save the current map as a PNG image.
 * ![](./images/Map/select_map.png) : Allows you to select the map layer to be displayed.
-* ![](./images/Map/show_weather_stations.png) : Displays the closest weather station(s) on the map.
 
 The mouse commands are as follows:
 
@@ -360,3 +377,20 @@ To change the quality of the terrain for a part of the track, you must:
 * Click on the button corresponding to the required field quality (for example ![](./images/Map/track_average.png)).
 
 In the status bar, the indicator ![](./images/Statusbar/CG40_Statusbar_Map_Size.png) indicates the disk size used by the maps. The menu "Tools>Open 'Speed/slope' folder" will open the file manager and display the contents of the directory containing the curves, the logs and the directory containing the maps. The directory "OpenStreetMapTileCache" contains the map files. If needed, you can delete its contents to save space.
+
+## Filter altitudes
+
+If the altitude profile of your track is noisy (presence of peaks), **Course Generator** offers you the possibility to filter it. To perform this action, select "Tools>Smooth elevation data".
+
+![](./images/CG40_Elev_Filter.png)
+
+The original profile is displayed as a background image and the corrected profile appears in red.
+The "filter" field allows you to adjust the intensity of the profile smoothing. The uncorrected and corrected positive and negative climbs are displayed.
+
+Once you have obtained the desired profile you have 3 possibilities:
+
+* Press "Select normal elevations" to select unfiltered elevations. This closes the dialog box and transfers the unfiltered elevations to the track elevations.
+* Press "Select smoothed elevations" to select filtered elevations. This closes the dialog box and transfers the filtered elevations to the elevations of the track.
+* Press "Cancel" to close the dialog box without changing the elevation of the track.
+
+The CGX format saves, per point of the track, the 3 elevations (active, unfiltered, filtered). For the calculations only the "active" elevation is used. You can switch from filtered to unfiltered elevation via the dialog box.

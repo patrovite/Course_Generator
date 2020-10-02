@@ -32,7 +32,6 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 
 	private static final long serialVersionUID = 7192299228959241742L;
 
-
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
@@ -63,7 +62,7 @@ public class ResumeRenderer extends DefaultTableCellRenderer {
 				setBackground(CgConst.CL_LINE_SELECTION);
 			else
 				setBackground(row % 2 == 0 ? CgConst.CL_RESUME_ALTERNATE_LINE : Color.WHITE);
-			
+
 			return this;
 
 		case 1: // Name

@@ -59,7 +59,6 @@ public class FrmImportChoice extends javax.swing.JDialog {
 	private JRadioButton rbAtEnd;
 	private ButtonGroup groupChoice;
 
-
 	/**
 	 * Creates new form frmSettings
 	 */
@@ -69,7 +68,6 @@ public class FrmImportChoice extends javax.swing.JDialog {
 		initComponents();
 		setModal(true);
 	}
-
 
 	public int showDialog() {
 		int res = RESULT_CANCEL;
@@ -91,7 +89,6 @@ public class FrmImportChoice extends javax.swing.JDialog {
 		}
 		return res;
 	}
-
 
 	/**
 	 * Manage low level key strokes ESCAPE : Close the window
@@ -127,7 +124,6 @@ public class FrmImportChoice extends javax.swing.JDialog {
 		return rootPane;
 	}
 
-
 	private void RequestToClose() {
 		boolean param_valid = true;
 		// check that the parameters are ok
@@ -138,7 +134,6 @@ public class FrmImportChoice extends javax.swing.JDialog {
 			setVisible(false);
 		}
 	}
-
 
 	private void initComponents() {
 		int line = 0;
@@ -205,7 +200,6 @@ public class FrmImportChoice extends javax.swing.JDialog {
 
 		setLocationRelativeTo(null);
 	}
-
 
 	protected void formComponentShown(ComponentEvent evt) {
 		repaint();

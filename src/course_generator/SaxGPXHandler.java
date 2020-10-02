@@ -142,7 +142,6 @@ public class SaxGPXHandler extends DefaultHandler {
 			// -- Clear the DataList? --
 			if (mode == 0) {
 				trkdata.data.clear();
-				trkdata.historicalWeatherData = null;
 			}
 			// -- Parse the file
 			parser.parse(f, this);
@@ -275,6 +274,8 @@ public class SaxGPXHandler extends DefaultHandler {
 							trkpt_lat, // double Latitude
 							trkpt_lon, // double Longitude
 							trkpt_ele, // double Elevation
+							trkpt_ele, // double ElevationNotSmoothed
+							trkpt_ele, // double ElevationSmoothed
 							trkpt_ele, // double ElevationMemo
 							0, // int Tag
 							0.0, // double Dist
@@ -306,6 +307,8 @@ public class SaxGPXHandler extends DefaultHandler {
 							trkpt_lat, // double Latitude
 							trkpt_lon, // double Longitude
 							trkpt_ele, // double Elevation
+							trkpt_ele, // double Elevation not smoothed
+							trkpt_ele, // double Elevation smoothed
 							trkpt_ele, // double ElevationMemo
 							0, // int Tag
 							0.0, // double Dist
