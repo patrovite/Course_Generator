@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+# La barra de herramientas
+=======
 # The Toolbar
+>>>>>>> upstream/master
 
 ![Main Toolbar](./images/Toolbar/CG40_Main_Toolbar.png)
 

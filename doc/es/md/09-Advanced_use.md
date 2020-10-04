@@ -1,3 +1,140 @@
+<<<<<<< HEAD
+# Uso avanzado de Course Generator
+
+Este capítulo le enseñará a hacer un uso más avanzado de **Course Generator**.
+
+## Encontrar un punto GPS
+
+Es posible buscar un punto GPS en una ruta mediante el menú "Editar>Buscar un punto..." o mediante el atajo de teclado [Ctrl + F]
+
+![Diálogo de búsqueda](./images/CG40_Search.png)
+
+En la caja de diálogo, es necesario introducir la latitud y longitud del punto y presionar el botón de buscar ![search button](./images/Toolbar/search.png).
+
+**Course Generator** buscará el punto más cercano al conjunto de coordenadas proporcionadas. indicará la línea correspondiente al punto encontrado y también la distancia entre el punto encontrado y las coordenadas introducidas. La línea que contiene el punto encontrado será seleccionada.
+
+## Encontrar los puntos más altos y bajos de una ruta
+
+El menú "Herramientas>Encontrar Min/Max" es utilizado para encontrar automáticamente los puntos más altos y bajos de la ruta.
+Cada posición encontrada es marcada con un indicador ![indicador punto más alto](./images/Tags/high_point.png) (punto alto) o ![indicador punto más bajo](./images/Tags/low_point.png) (punto bajo).
+
+## Cambiar la altitud de un punto de la ruta
+
+Puede ocurrir que el dato de la elevación de una ruta no sea correcto. Esto puede ocurrir, si usted, o un sitio web como Openrunner, han realizado una corrección automática de las altitudes. La base de datos de SRTM en los cuales estos sitios se basan tienen áreas sin altitud. La base dada entonces devuelve una altitud de 32768m. Para poder solucionar este problema, puede editar la altitud del punto o los puntos erróneos
+
+Para hacer esto, vaya a la casilla correspondiente y abra el editor de línea haciendo doble clic.
+
+Se mostrará el siguiente diálogo:
+
+![Editor de línea](./images/CG40_Line_Editor.png)
+
+El campo "Altitud" es utilizado para introducir una nueva altitud.
+
+Será necesario reiniciar el cálculo de la ruta mediante el botón ![refresh button](./images/Toolbar/refresh.png) para que la nueva altitud sea tomada en cuenta.
+
+## Unir dos rutas
+
+**Course Generator** ofrece la posibilidad de unir dos rutas.
+
+Se debe proceder de la siguiente manera:
+
+* Cargar la primera ruta en **Course Generator** (formato GPX o CGX).
+* Importar la segunda ruta mediante "Archivo>Importar un archivo GPX" o "Archivo>Importar un archivo CGX".
+* Aparecerá el siguiente diálogo:
+![Diálogo de importar ruta](./images/CG40_Import_Track.png)
+* Seleccionar "Insertar al principio" si quiere insertar la ruta antes que la actual ya cargada en la memoria. Si no es así, seleccione "añadir" y la ruta será añadida después de la ruta actual.
+* Aparecerá la caja de diálogo de selección de archivo. Haga su elección y haga clic en "Abrir".
+* La unión será realizada.
+
+Si tiene otras rutas para unir, simplemente repita el proceso.
+
+Después de unir las rutas deberá modificar los ajustes de coeficiente de fatiga y  realizar un nuevo cálculo de la ruta mediante el (botón ![botón refrescar](./images/Toolbar/refresh.png) o [F5]) debido a que los datos del tiempp serán erróneos.
+
+Una vez completada la unión y realizado un nuevo cálculo de la ruta, ya podrá guardar la nueva ruta.
+
+## Guardar parte de la ruta
+
+**Course Generator** permite guardar la sección de una ruta.
+
+Se debe proceder de la siguiente manera:
+
+* En la tabla seleccionar la primera línea que quiere guardar.
+* Mientras mantiene presionada la tecla Shift, seleccionar la última línea que quiere guardar.
+* Seleccionar "Archivo>Guardar selección como xxx" (donde xxx corresponde al formato de archivo que desea).
+* Aparecerá la caja del diálogo de guardar. Introduzca el nombre del archivo y confirme.
+* ¡Ya está!
+
+## Exportar etiquetas como puntos de la ruta
+
+**Course Generator** ofrece la posibilidad de guardar puntos GPS que contienen etiquetas (o indicadores) como puntos de la ruta. Estos puntos pueden ser añadidos a su GPS par atener, por ejemplo, la indicación de la ruta con información adicional como pases, estaciones de ayuda o ciudades.
+
+Se debe proceder de la siguiente manera:
+
+* Seleccionar "Archivo>Exportar etiquetas como puntos de la ruta".
+* Aparecerá el siguiente diálogo".
+* The dialog box below appears:  
+![Diálogo de exportar puntos de la ruta](./images/CG40_Export_Waypoints.png)
+* Seleccionar los tipos de etiquetas que quiere exportar.
+* Aparecerá la caja de diálogo de guardar.
+* Los puntos serán guardados como un archivo que tiene el nombre introducido y la extensión GPX.
+
+Este archivo podrá ser utilizado, por ejemplo con el software Basecamp de Garmin.
+
+## Copiar el contenido de una celda
+
+El contenido de una celda en la tabla de la ruta puede ser copiado al portapapeles para utilizarlo en otro software. Para realizar esta operación simplemente seleccione "Editar>Copiar". El contenido de la celda seleccionada es copiado al portapapeles como texto.
+
+## Generar un mini libro de ruta
+
+**Course Generator** ofrece la posibilidad de generar un mini libro de ruta. Este contendrá el perfil de la carrera e informaciones sobre puntos de la ruta. Este libro de ruta está disponible mediante "Mostrar>Generar mini libro de ruta".
+
+Al final del proceso el mini libro de ruta es una imagen. Esta imagen puede ser imprimida utilizando software de dibujo como Paint, Photoshop o Gimp. También puede ser utilizada en otro software como Word, Excel, Inkscape, Illustrator, etc.
+
+Los ajustes realizados para genera el mini libro de ruta son almacenados en un archivo CGX en la ruta. Si intercambia una ruta en formato CGX, intercambiará la ruta como toda su información (repostaje, calidad del terreno, tiempos de corte, etc) y también el mini libro de ruta.
+
+Para poder utilizar el mini libro de ruta es necesario previamente establecer los parámetros de su ruta. Esto incluye:
+
+* Haber introducido la dificultad del terreno (útil para el tipo "Caminos/Senderos").
+* Rellenar el coeficiente de fatiga, tiempos de abituallamiento, tiempos de corte, nombres de los puntos importantes.
+* Haber actualizado los cálculos (Tecla F5).
+* Haber marcado las posiciones importantes con el indicador ![marca del indicador](./images/Tags/roadbook.png).
+* Haber marcado los puntos importante con uno o más de los siguientes indicadores: ![punto más alto](./images/Tags/high_point.png) ![punto más bajo](./images/Tags/low_point.png) ![comida](./images/Tags/eat.png) ![bebida](./images/Tags/drink.png) ![bandera](./images/Tags/flag.png) ![](./images/Tags/dropbag.png) ![](./images/Tags/crew.png) ![](./images/Tags/first_aid.png)
+
+
+### Presentación
+
+"Mostrar>Generar mini libro de ruta" o el botón ![mrb](./images/Toolbar/roadbook.png) muestra la siguiente ventana:
+![Diálogo del mini libro de ruta](./images/MRB/CG40_MRB_Global_Simple_Nigh_Day.png)
+
+Contiene los siguiente elementos:
+
+* Parte superior: La barra te herramientas para realizar acciones
+* Parte media derecha: Contiene la tabal con todas las filas de la tabla de la ruta que contienen un indicador ![roadbook](./images/Tags/roadbook.png) y uno o más de los siguientes indicadores: ![](./images/Tags/high_point.png) ![](./images/Tags/low_point.png) ![](./images/Tags/eat.png) ![](./images/Tags/drink.png) ![](./images/Tags/flag.png) ![](./images/Tags/dropbag.png) ![](./images/Tags/crew.png) ![](./images/Tags/first_aid.png). Cada línea genera una etiqueta en el mini libro de ruta
+* Parte media izquierda: Este área permita cambiar el contenido de la fila actualmente seleccionada
+* Parte inferior: Contiene el mini libro de ruta con las etiquetas
+
+Cuando una línea es seleccionada entonces la etiqueta correspondiente cambia de color (color salmón).
+
+### Los tipos de mini libros de ruta
+
+En la barra superior, la lista desplegable de "Tipo de perfil" permite escoger entre 3 tipos de perfiles:
+
+El tipo "Simple":
+![Tipo simple](./images/MRB/CG40_MRB_Simple_Label.png)    
+El perfir de la ruta no incluye información adicional.
+
+El tipo "Camino/Senderos":
+![Tipo Camino/Senderos](./images/MRB/CG40_MRB_Road_Track_Label.png)  
+El perfil resalta las partes de las carreteras y sendas con un código de color. Las carreteras son puntos de la tabla de la ruta cuyo coeficiente de campo es igual a 100%. El resto son considerados senderos.
+
+El timpo "Desnivel":
+![Tipo desnivel](./images/MRB/CG40_MRB_Slope_Label.png)  
+El perfil destaca los grados de desnivel con un código de colores.
+
+Los colores utilizados en el mini libro de ruta puedes ser configurads en la ventana de configuración accesible mediante el botón ![](./images/MRB/Toolbar/setting.png).
+
+### La barra de herramientas
+=======
 # Advanced use of Course Generator
 
 This chapter will introduce you to more advanced uses of **Course Generator**.
@@ -132,10 +269,22 @@ The profile highlights the degree of slope by a color code.
 The colors used in the mini roadbook can be set in the configuration window accessible with the button ![](./images/MRB/Toolbar/setting.png).
 
 ### The toolbar
+>>>>>>> upstream/master
 
 ![](./images/MRB/CG40_MRB_Toolbar.png)  
 
 
+<<<<<<< HEAD
+* ![guardar](./images/MRB/Toolbar/save.png) : Guarda el mini libro de ruta como una imagen. La formato disponible es PNG.
+* ![ajustes](./images/MRB/Toolbar/setting.png) : Abre la ventana de configuración del mini libro de ruta.
+* ![](./images/MRB/Toolbar/pipette.png) : Copia el formato de la etiqueta actual para reproducirla en una o más etiquetas. Esta función está también accesible mediante el atajo de teclado CTRL + C
+* ![](./images/MRB/Toolbar/replicate.png) :  Pega el formato en la etiqueta seleccionada. Solo se pegarán las propiedades seleccionadas en la ventana de configuración de la función. Esta función está también accesible mediante el atajo de teclado CTRL + V
+* ![](./images/MRB/Toolbar/replicate_config.png) : Abre una ventana par ala configuración de la característica de formato duplicado como se muestra a continuación:
+![Diálogo de configuración duplicado](./images/MRB/CG40_MRB_Replicate_Dlg.png)    
+Selecciona el ajuste que quiere duplicar cuando copie.
+
+* ![](./images/MRB/Toolbar/label_to_bottom.png) : Permite especificar las etiquetas que serán conectadas en la parte inferior del perfil. 
+=======
 * ![save](./images/MRB/Toolbar/save.png) : Saves the mini roadbook as an image. The available format is PNG.
 * ![settings](./images/MRB/Toolbar/setting.png) : Opens the mini roadbook configuration window
 * ![](./images/MRB/Toolbar/pipette.png) : Copies the current label format to reproduce it on one or more other labels. This function is also accessible with the keyboard shortcut CTRL + C
@@ -145,6 +294,7 @@ The colors used in the mini roadbook can be set in the configuration window acce
 Select the settings you want to duplicate when copying.
 
 * ![](./images/MRB/Toolbar/label_to_bottom.png) : Allows you to specify that labels must be connected to the bottom of the profile.
+>>>>>>> upstream/master
 * ![](./images/MRB/Toolbar/label_to_profil.png) : Allows you to specify that labels must be connected to the profile.
 * ![](./images/MRB/Toolbar/night_day.png) : Specify whether to show the day and night areas on the profile.
 * "Profile type" : Allows you to select the type of mini roadbook.
