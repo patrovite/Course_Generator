@@ -22,15 +22,15 @@ Located at the bottom of the main GUI, it displays the general information relat
 * ![](./images/Statusbar/CG40_Statusbar_Unit.png) : Muestra las unidades de medida seleccionadas.
 * ![](./images/Statusbar/CG40_Statusbar_Map_Size.png) : Muestra el espacio de disco utilizado para los mapas.
 =======
-* ![](./images/Statusbar/CG40_Statusbar_Dist.png) : Total distance.
-* ![](./images/Statusbar/CG40_Statusbar_Ascend.png) : Total elevation gain.
-* ![](./images/Statusbar/CG40_Statusbar_Descend.png) : Total elevation loss.
-* ![](./images/Statusbar/CG40_Statusbar_Time.png) : Total estimated time.
-* ![](./images/Statusbar/CG40_Statusbar_Curve.png) : Chosen 'speed/slope'.
-* ![](./images/Statusbar/CG40_Statusbar_Timelimit.png) : Indicates that a cut-off time has been exceeded for a specific course location. Clicking on it will bring the specific line into focus.
-* ![](./images/Statusbar/CG40_Statusbar_Modified.png) : The course has been modified. It is recommended to save it.
-* ![](./images/Statusbar/CG40_Statusbar_Calc.png) : The course has been modified. It is recommended to re-compute the estimated time. (button ![](./images/Toolbar/refresh.png) or [F5]).
-* ![](./images/Statusbar/CG40_Statusbar_Online.png) : Displays the current internet connection status.
-* ![](./images/Statusbar/CG40_Statusbar_Unit.png) : Shows the selected measuring units.
-* ![](./images/Statusbar/CG40_Statusbar_Map_Size.png) : Displays the disk space used for the maps.
+* ![](./images/Statusbar/CG40_Statusbar_Dist.png) : Distancia total.
+* ![](./images/Statusbar/CG40_Statusbar_Ascend.png) : Ganancia total de elevación.
+* ![](./images/Statusbar/CG40_Statusbar_Descend.png) : Pérdida total de elevación.
+* ![](./images/Statusbar/CG40_Statusbar_Time.png) : Tiempo estimado total.
+* ![](./images/Statusbar/CG40_Statusbar_Curve.png) : 'velocidad/desnivel' escogida.
+* ![](./images/Statusbar/CG40_Statusbar_Timelimit.png) : Indica que un tiempo de corte ha sido excedido para una localización específica de la carrera. Haciendo clic sobre él, llevará la línea específica al foco del programa.
+* ![](./images/Statusbar/CG40_Statusbar_Modified.png) : El recorrido ha sido modificado. Se recomienda guardarlo.
+* ![](./images/Statusbar/CG40_Statusbar_Calc.png) : El recorrido ha sido modificado. Se recomienda volver a calcular el tiempo estimado. (botón ![](./images/Toolbar/refresh.png) o [F5]).
+* ![](./images/Statusbar/CG40_Statusbar_Online.png) : Muestra el estado actual de la conexión de internet.
+* ![](./images/Statusbar/CG40_Statusbar_Unit.png) : Muestra las unidades seleccionadas de medida.
+* ![](./images/Statusbar/CG40_Statusbar_Map_Size.png) : Muestra el espacio de disco utilizado para los mapas.
 >>>>>>> upstream/master
