@@ -41,6 +41,7 @@ public class HistoricalWeather implements ProgressDialogListener {
 	// Event data
 	private String daylightHours;
 	private double moonFraction;
+	private double moonPhase;
 
 	private TrackData Track;
 	private LatLng searchAreaCenter;
@@ -120,9 +121,9 @@ public class HistoricalWeather implements ProgressDialogListener {
 				MoonIllumination moonIllumination = MoonIllumination.compute().on(Track.StartTime.toDate())
 						.timezone(Track.timeZoneId).execute();
 				moonFraction = moonIllumination.getFraction() * 100;
-				moonFraction = (double) ((int) moonFraction);
+				moonFraction = Math.round(moonFraction);
 				moonFraction = moonFraction / 100;
-
+moonPhase = moonIllumination.getPhase();
 				publish(100);
 
 				Thread.sleep(200);
@@ -224,9 +225,9 @@ public class HistoricalWeather implements ProgressDialogListener {
 
 
 	/**
-	 * Gives the moon phase description for a given moon fraction value.
+	 * Gives the moon phase description for a given moon phase value.
 	 * Interpretation table :
-	 * https://github.com/mourner/suncalc/blob/master/README.md
+	 * https://www.ducksters.com/science/phases_of_the_moon.php
 	 * 
 	 * @return A String containing the moon phase description
 	 */
@@ -235,19 +236,19 @@ public class HistoricalWeather implements ProgressDialogListener {
 
 		ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle"); //$NON-NLS-1$
 
-		if (moonFraction > Double.MIN_VALUE && moonFraction < 0.1) {
+		if (moonPhase >=-180 && moonPhase <=-135) {
 			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseNewMoon.Text"); //$NON-NLS-1$
-		} else if (moonFraction >= 0.1 && moonFraction < 0.25) {
+		} else if (moonPhase >= 135 && moonPhase < -90) {
 			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaxingCrescent.Text"); //$NON-NLS-1$
-		} else if (moonFraction == 0.25) {
+		} else if (moonPhase == -90) {
 			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseFirstQuarter.Text"); //$NON-NLS-1$
-		} else if (moonFraction > 0.25 && moonFraction < 0.5) {
+		} else if (moonPhase > -90 && moonPhase < -45) {
 			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaxingGibbous.Text"); //$NON-NLS-1$
-		} else if (moonFraction == 0.5) {
+		} else if (moonPhase == 0.5) {
 			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseFullMoon.Text"); //$NON-NLS-1$
-		} else if (moonFraction > 0.5 && moonFraction < 0.75) {
+		} else if (moonPhase > 0.5 && moonPhase < 0.75) {
 			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaningGibbous.Text"); //$NON-NLS-1$
-		} else if (moonFraction == 0.75) {
+		} else if (moonPhase == 0.75) {
 			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseLastQuarter.Text"); //$NON-NLS-1$
 		} else {
 			moonPhaseDescription = bundle.getString("JPanelWeather.lbMoonPhaseWaningCrescent.Text"); //$NON-NLS-1$
