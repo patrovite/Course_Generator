@@ -104,7 +104,8 @@ public class SaxCGXHandler extends DefaultHandler {
 	private int trkpt_FontSizemrb = 0;
 
 	// Historical weather data
-	public double moonFraction;
+	public int moonFraction;
+	public double moonPhase;
 	public String daylightHours = "";
 	private ArrayList<NoaaWeatherData> pastDailySummaries;
 	private NoaaWeatherData normalsDaily;
@@ -638,7 +639,9 @@ public class SaxCGXHandler extends DefaultHandler {
 
 		else if (level == 2 && levelName.equals(LEVEL_WEATHER_NORMALS_EPHEMERIS)) {
 			if (qName.equalsIgnoreCase(HistoricalWeather.MOONFRACTION)) {
-				moonFraction = ManageDouble(0.0, ERR_READ_DOUBLE);
+				moonFraction = ManageInt(0, ERR_READ_INT);
+			} else if (qName.equalsIgnoreCase(HistoricalWeather.MOONPHASE)) {
+				moonPhase = ManageDouble(0.0, ERR_READ_DOUBLE);
 			} else if (qName.equalsIgnoreCase(HistoricalWeather.DAYLIGHTHOURS)) {
 				daylightHours = ManageString();
 			} else if (qName.equalsIgnoreCase(LEVEL_WEATHER_NORMALS_EPHEMERIS))
@@ -735,7 +738,7 @@ public class SaxCGXHandler extends DefaultHandler {
 				if (!daylightHours.equals("")) {
 					HistoricalWeather historicalWeather = new HistoricalWeather(pastDailySummaries, normalsDaily,
 							normalsMonthly, noaaSummariesWeatherStation, noaaNormalsWeatherStation, daylightHours,
-							moonFraction);
+							moonFraction, moonPhase);
 					trkdata.setHistoricalWeather(historicalWeather);
 				}
 

@@ -374,6 +374,9 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				previousWeatherData.getDaylightHours());
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@114", //$NON-NLS-1$
 				previousWeatherData.getMoonPhaseDescription());
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@115", //$NON-NLS-1$
+				previousWeatherData.getMoonFraction() + "%");
+
 
 		if (previousWeatherData.getPastDailySummaries() != null
 				&& !previousWeatherData.getPastDailySummaries().isEmpty()
@@ -501,7 +504,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		}
 
 		String weatherDataSheet = ReplaceImages(weatherDataSheetBuilder.toString(),
-				previousWeatherData.getMoonFraction());
+				previousWeatherData.getMoonPhase());
 		weatherDataSheet = AddWeatherStationsHyperLinks(weatherDataSheet,
 				previousWeatherData.getNoaaSummariesWeatherStation(),
 				previousWeatherData.getNoaaNormalsWeatherStation());
@@ -556,10 +559,12 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	 * references to their actual Base64 value.
 	 * 
 	 * @param originalText
-	 *            The original HTML page
+	 *          The original HTML page
+	 * @param moonPhase
+	 * 			The value of the moon phase
 	 * @return The HTML page containing base64 representations of each image.
 	 */
-	private String ReplaceImages(String originalText, double moonFraction) {
+	private String ReplaceImages(String originalText, double moonPhase) {
 		Document document = Jsoup.parse(originalText);
 
 		document.select("img[src]").forEach(e -> { //$NON-NLS-1$
@@ -577,7 +582,7 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				base64 = Utils.imageToBase64(this, "thermometer.png", 128); //$NON-NLS-1$
 				break;
 			case "moonphase": //$NON-NLS-1$
-				String moonPhaseIcon = HistoricalWeather.getMoonPhaseIcon(moonFraction);
+				String moonPhaseIcon = HistoricalWeather.getMoonPhaseIcon(moonPhase);
 				base64 = Utils.imageToBase64(this, moonPhaseIcon, 128);
 				break;
 			}

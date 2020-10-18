@@ -2047,8 +2047,10 @@ public class TrackData {
 				writer.writeStartElement(SaxCGXHandler.LEVEL_WEATHER_NORMALS_EPHEMERIS);
 				Utils.WriteStringToXML(writer, HistoricalWeather.DAYLIGHTHOURS,
 						historicalWeatherData.getDaylightHours());
-				Utils.WriteStringToXML(writer, HistoricalWeather.MOONFRACTION,
-						String.format("%.3f", historicalWeatherData.getMoonFraction()));
+				Utils.WriteIntToXML(writer, HistoricalWeather.MOONFRACTION,
+						historicalWeatherData.getMoonFraction());
+				Utils.WriteStringToXML(writer, HistoricalWeather.MOONPHASE,
+						String.format("%.3f", historicalWeatherData.getMoonPhase()));
 				writer.writeEndElement();// "EPHEMERIS"
 				writer.writeStartElement(SaxCGXHandler.LEVEL_WEATHER_DAILY_SUMMARIES);
 

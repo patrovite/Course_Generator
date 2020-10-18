@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.xmlunit.builder.DiffBuilder;
@@ -21,7 +22,7 @@ import course_generator.weather.JPanelWeather;
  */
 public class WeatherTests {
 
-	public static final String IMPORT_FILE_PATH = "/src/Course_Generator/tests/files/"; //$NON-NLS-1$
+	public static final String IMPORT_FILE_PATH = "/src/course_generator/tests/files/"; //$NON-NLS-1$
 
 
 	@Test
@@ -60,12 +61,13 @@ public class WeatherTests {
 
 		// We wait that weather retrieval is done
 		try {
-			Thread.sleep(10000);
+			Thread.sleep(40000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		trackData.StartTime = new DateTime("2020-01-01T13:00:00Z");
 		trackData.SaveCGX(testGeneratedFilePath, 0, trackData.data.size() - 1, false);
 
 		// Compare with the control file
@@ -101,7 +103,10 @@ public class WeatherTests {
 		}
 
 		Diff myDiff = DiffBuilder.compare(Input.fromString(controlDocumentContent.toString()))
-				.withTest(Input.fromString(testDocumentContent.toString())).ignoreWhitespace().build();
+				.withTest(Input.fromString(testDocumentContent.toString()))
+				.ignoreWhitespace()
+				.withNodeFilter(node -> !node.getNodeName().equals("MOONPHASE"))	
+				.build();
 
 		return !myDiff.hasDifferences();
 	}
