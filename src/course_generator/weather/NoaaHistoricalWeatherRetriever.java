@@ -1,8 +1,6 @@
 package course_generator.weather;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +13,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Instant;
 
@@ -113,9 +112,9 @@ final public class NoaaHistoricalWeatherRetriever {
 
 	/**
 	 * This method builds a NoaaHistoricalWeatherRetriever object and retrieves, if
-	 * found, the weather data.
+	 * found, the historical weather data.
 	 *
-	 * @return the collected weather data.
+	 * @return the collected historical weather data.
 	 */
 	public NoaaHistoricalWeatherRetriever retrieve() {
 
@@ -172,7 +171,8 @@ final public class NoaaHistoricalWeatherRetriever {
 	 * @return The result of the NOAA query.
 	 */
 	private String processNoaaRequest(String parameters) {
-		StringBuffer weatherHistory = new StringBuffer();
+		
+		String weatherHistory = "";
 		try {
 			HttpClientBuilder clientBuilder = HttpClientBuilder.create();
 			
@@ -187,25 +187,22 @@ final public class NoaaHistoricalWeatherRetriever {
 			HttpGet request = new HttpGet(NoaaBaseUrl + parameters + "&units=metric&limit=1000"); //$NON-NLS-1$
 
 			HttpResponse response = client.execute(request);
-
+			
 			if (response.getStatusLine().getStatusCode() != 200)
 				CgLog.error("NoaaWeatherHistoryRetriever.processNoaaRequest : Error code '" //$NON-NLS-1$
 						+ response.getStatusLine().getStatusCode()
 						+ "' while executing the NOAA request with the parameters " + parameters + ":\n" //$NON-NLS-2$
 						+ response.getStatusLine().getReasonPhrase());
 
-			BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+			weatherHistory = EntityUtils.toString(response.getEntity());
 
-			String line = ""; //$NON-NLS-1$
-			while ((line = rd.readLine()) != null) {
-				weatherHistory.append(line);
-			}
 		} catch (Exception ex) {
 			CgLog.error(
 					"NoaaWeatherHistoryRetriever.processNoaaRequest : Error while executing the NOAA request with the parameters " //$NON-NLS-1$
 							+ parameters + "\n" + ex.getMessage()); //$NON-NLS-1$
 		}
-		return weatherHistory.toString();
+		
+		return weatherHistory;
 	}
 
 

@@ -39,7 +39,6 @@ import course_generator.utils.Utils;
  * 
  * @author Frédéric Bard
  */
-//TODO FB // Why does the weather retrieval take so long ???
 public class JPanelWeather extends JPanel implements PropertyChangeListener {
 	private static final long serialVersionUID = -7168142806619093218L;
 	private ResourceBundle bundle;

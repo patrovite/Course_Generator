@@ -61,7 +61,7 @@ public class WeatherTests {
 
 		// We wait that weather retrieval is done
 		try {
-			Thread.sleep(40000);
+			Thread.sleep(60000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
