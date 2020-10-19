@@ -53,7 +53,6 @@ import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.dialogs.FrmSelectMap;
 import course_generator.settings.CgSettings;
-import course_generator.tiles.geoportail.Ign;
 import course_generator.tiles.openstreetmap.OpenStreetMap;
 import course_generator.tiles.opentopomap.OpenTopoMap;
 import course_generator.tiles.stamen_toner.StamenToner;
@@ -950,11 +949,6 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 			MapViewer.setTileSource(new StamenToner());
 			offlineTileCache
 					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.STAMEN_TONER_CACHE_DIR);
-			break;
-		case 5:
-			MapViewer.setTileSource(new Ign());
-			offlineTileCache
-					.setTileCacheDir(DataDir + "/" + CgConst.CG_DIR + "/TileCache/" + CgConst.IGN_CACHE_DIR);
 			break;
 		default:
 			MapViewer.setTileSource(new OpenStreetMap());

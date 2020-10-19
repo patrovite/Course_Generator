@@ -53,7 +53,7 @@ public class CgSettings {
 	 * Map selected : 0 => OpenStreetMap. 1 => OpenTopoMap. 2 => Outdoors. 3=>
 	 * BingAerial
 	 **/
-	public int SelectedCurveFolder = CgConst.CURVE_FOLDER_KM_H; //0:km_h 1:min_miles 2:user
+	public int SelectedCurveFolder = CgConst.CURVE_FOLDER_KM_H; // 0:km_h 1:min_miles 2:user
 	public int map = 0;
 
 	public boolean offlineMap = true;
@@ -67,7 +67,7 @@ public class CgSettings {
 	public int MainWindowWidth;
 	public int MainWindowHeight;
 	public int DefMrbWidth;
-	public int DefMrbHeight;	
+	public int DefMrbHeight;
 	public int VertSplitPosition;
 	public int HorizSplitPosition;
 	/** Mini roadbook split position **/
@@ -79,7 +79,7 @@ public class CgSettings {
 
 	/** Threshold where CG ask if a position filter must be apply (m) **/
 	public int PosFilterAskThreshold = 10;
-	
+
 	public int ClimbThresholdForCalculation = CgConst.MIN_ELEV;
 
 	public int Unit = CgConst.UNIT_METER; // Unit for the display 0=meter
@@ -125,8 +125,7 @@ public class CgSettings {
 	public int NightTrackTransparency;
 	public String MapToolBarLayout;
 	public int MapToolBarOrientation;
-	public String ReleaseVersion; //To store the last release notes viewed
-		
+	public String ReleaseVersion; // To store the last release notes viewed
 
 	public CgSettings() {
 		int i = 0;
@@ -142,9 +141,9 @@ public class CgSettings {
 		VertSplitPosition = 200;
 		HorizSplitPosition = 50;
 		MRB_SplitPosition = 220;
-		DefMrbWidth = 1000;		
+		DefMrbWidth = 1000;
 		DefMrbHeight = 480;
-		
+
 		DistNear = 100.0;
 		DistFar = 1000.0;
 
@@ -177,7 +176,7 @@ public class CgSettings {
 		previousPNGDirectory = "";
 
 		offlineMap = true;
-		map = 1; //OpenTopomap
+		map = 1; // OpenTopomap
 		PosFilterAskThreshold = 5;
 
 		DefaultFontName = "Arial";
@@ -209,16 +208,14 @@ public class CgSettings {
 
 		MapToolBarLayout = "NORTH";
 		MapToolBarOrientation = javax.swing.SwingConstants.HORIZONTAL;
-		
+
 		ReleaseVersion = "";
 	}
-
 
 	/**
 	 * Save the settings to the disk
 	 * 
-	 * @param path
-	 *            Path where the setting file is stored
+	 * @param path Path where the setting file is stored
 	 */
 	public void Save(String path) {
 		// -- Check if the data directory exist. If not! creation
@@ -259,7 +256,7 @@ public class CgSettings {
 			Utils.WriteStringToXML(writer, "MEMOFORMAT5", MemoFormat[4]);
 
 			Utils.WriteStringToXML(writer, "DEFAULTFORMAT", DefaultFormat);
-			
+
 			Utils.WriteStringToXML(writer, "MRUGPX1", mruGPX[0]);
 			Utils.WriteStringToXML(writer, "MRUGPX2", mruGPX[1]);
 			Utils.WriteStringToXML(writer, "MRUGPX3", mruGPX[2]);
@@ -299,7 +296,7 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "HORIZSPLITPOSITION", HorizSplitPosition);
 			Utils.WriteIntToXML(writer, "MRBSPLITPOSITION", MRB_SplitPosition);
 			Utils.WriteIntToXML(writer, "DEFMRBWIDTH", DefMrbWidth);
-			Utils.WriteIntToXML(writer, "DEFMRBHEIGHT", DefMrbHeight);			
+			Utils.WriteIntToXML(writer, "DEFMRBHEIGHT", DefMrbHeight);
 			Utils.WriteIntToXML(writer, "MAP", map);
 
 			Utils.WriteDoubleToXML(writer, "DISTNEAR", DistNear);
@@ -307,7 +304,7 @@ public class CgSettings {
 
 			Utils.WriteIntToXML(writer, "POSFILTERASKTHRESHOLD", PosFilterAskThreshold);
 			Utils.WriteIntToXML(writer, "CLIMBTHRESHOLDFORCALCULATION", ClimbThresholdForCalculation);
-			
+
 			Utils.WriteStringToXML(writer, "DEFAULTFONTNAME", DefaultFontName);
 			Utils.WriteIntToXML(writer, "DEFAULTFONTSTYLE", DefaultFontStyle);
 			Utils.WriteIntToXML(writer, "DEFAULTFONTSIZE", DefaultFontSize);
@@ -341,9 +338,9 @@ public class CgSettings {
 			Utils.WriteIntToXML(writer, "MAPTOOLBARORIENTATION", MapToolBarOrientation);
 
 			Utils.WriteIntToXML(writer, "SELECTEDCURVEFOLDER", SelectedCurveFolder);
-			
+
 			Utils.WriteStringToXML(writer, "RELEASEVERSION", ReleaseVersion);
-			
+
 			writer.writeEndElement();
 			writer.writeEndDocument();
 
@@ -356,12 +353,10 @@ public class CgSettings {
 		}
 	}
 
-
 	/**
 	 * Load the settings from disk
 	 * 
-	 * @param _Path
-	 *            Path where the setting file is stored
+	 * @param _Path Path where the setting file is stored
 	 */
 	public void Load(String _Path) {
 		// -- Test if the config file exist
@@ -381,36 +376,24 @@ public class CgSettings {
 					+ Confighandler.getErrLine());
 	}
 
-	
 	/**
-	 * Returns the path of the last directory used to load or 
-	 * save:
-	 * - Points
-	 * - Resume
-	 * - Tags
-	 * - Statistics
-	 * - Weather data
+	 * Returns the path of the last directory used to load or save: - Points -
+	 * Resume - Tags - Statistics
 	 * 
 	 * @return string with the full file path.
 	 */
 	public String getLastDirectory() {
 		return LastDir;
 	}
-	
+
 	/**
-	 * Saves the path of the last directory used to load or 
-	 * save:
-	 * - Points
-	 * - Resume
-	 * - Tags
-	 * - Statistics
-	 * - Weather data
+	 * Saves the path of the last directory used to load or save: - Points - Resume
+	 * - Tags - Statistics
 	 * 
-	 * @param lastDirectoryFullPath 
-	 * The full path of the last directory
+	 * @param lastDirectoryFullPath The full path of the last directory
 	 */
 	public void setLastDirectory(String lastDirectoryFullPath) {
-		 LastDir = lastDirectoryFullPath;
+		LastDir = lastDirectoryFullPath;
 	}
 
 	/**
@@ -429,7 +412,6 @@ public class CgSettings {
 		}
 	}
 
-
 	/**
 	 * Return the distance unit as string (abbreviation)
 	 * 
@@ -445,7 +427,6 @@ public class CgSettings {
 			return "km";
 		}
 	}
-
 
 	/**
 	 * Return the elevation unit as string
@@ -463,7 +444,6 @@ public class CgSettings {
 		}
 	}
 
-
 	/**
 	 * Return the elevation unit as string (abbreviation)
 	 * 
@@ -480,7 +460,6 @@ public class CgSettings {
 		}
 	}
 
-
 	/**
 	 * Returns the user's thunderforest's API Key
 	 * 
@@ -490,12 +469,10 @@ public class CgSettings {
 		return ThunderForestApiKey == null ? "" : ThunderForestApiKey;
 	}
 
-
 	/**
 	 * Sets the user's thunderforest's API Key
 	 * 
-	 * @param key
-	 *            The entered key
+	 * @param key The entered key
 	 */
 	public void setThunderForestApiKey(String newKey) {
 		String oldKey = ThunderForestApiKey;
@@ -503,11 +480,9 @@ public class CgSettings {
 		ThunderForestApiKeyChanged.firePropertyChange("ThunderForestApiKeyChanged", oldKey, newKey);
 	}
 
-
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		ThunderForestApiKeyChanged.addPropertyChangeListener(listener);
 	}
-
 
 	/**
 	 * Verifies that the thunderforest's API Key is a valid one
@@ -521,6 +496,5 @@ public class CgSettings {
 
 		return isKeyValid;
 	}
-
 
 }
