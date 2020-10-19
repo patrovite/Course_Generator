@@ -2,6 +2,7 @@
 package course_generator.weather;
 
 import java.awt.Component;
+import java.awt.Desktop;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
@@ -10,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
@@ -19,6 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -35,8 +39,7 @@ import course_generator.utils.Utils;
  * 
  * @author Frederic Bard
  */
-//TODO FB When clicking on the weather station link, the browser doesn't open
-// Why does the weather retrieval take so long ???
+//TODO FB // Why does the weather retrieval take so long ???
 public class JPanelWeather extends JEditorPane implements PropertyChangeListener {
 	private static final long serialVersionUID = -7168142806619093218L;
 	private ResourceBundle bundle;
@@ -76,6 +79,22 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 		editorWeather = new JEditorPane();
 		editorWeather.setContentType("text/html");
 		editorWeather.setEditable(false);
+		editorWeather.addHyperlinkListener(new HyperlinkListener() {
+		    public void hyperlinkUpdate(HyperlinkEvent e) {
+		        if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+		        	if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+						try {
+							Desktop.getDesktop().browse(e.getURL().toURI());
+						} catch (IOException | URISyntaxException ex) {
+							ex.printStackTrace();
+						}
+					} else {
+						System.err.println("Opening link not supported on current platform ('"+ e.getURL()+"')");
+					}
+		        }
+		    }
+		}
+		);
 		scrollPaneWeather = new JScrollPane(editorWeather);
 		add(scrollPaneWeather, java.awt.BorderLayout.CENTER);
 	}
