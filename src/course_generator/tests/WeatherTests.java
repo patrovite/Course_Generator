@@ -56,7 +56,7 @@ public class WeatherTests {
 
 		// Retrieve the weather data
 
-		JPanelWeather panelWeather = new JPanelWeather(settings, null);
+		JPanelWeather panelWeather = new JPanelWeather(settings);
 		panelWeather.refresh(trackData, true);
 
 		// We wait that weather retrieval is done

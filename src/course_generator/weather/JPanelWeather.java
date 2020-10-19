@@ -2,7 +2,6 @@
 package course_generator.weather;
 
 import java.awt.Component;
-import java.awt.Desktop;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
@@ -10,70 +9,59 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 
 import course_generator.TrackData;
 import course_generator.dialogs.ProgressDialog;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.CgLog;
+import course_generator.utils.CustomToolKit;
 import course_generator.utils.Utils;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker;
-import javafx.concurrent.Worker.State;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javafx.scene.web.WebView;
 
 /**
  * A class that generates a GUI panel for the weather data.
  * 
  * @author Frederic Bard
  */
-
-public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
+//TODO FB : The JEditorPane only supports <= HTML 3.2 and only 1 base64 image is displayed.
+//cf. https://stackoverflow.com/questions/51103717/jeditorpane-content-type-for-html-embedded-base64-images
+// When clicking on the weather station link, the browser doesn't open
+// Why does the weather retrieval take so long ???
+public class JPanelWeather extends JEditorPane implements PropertyChangeListener {
 	private static final long serialVersionUID = -7168142806619093218L;
 	private ResourceBundle bundle;
 	private CgSettings settings = null;
+	private JEditorPane editorStat;
+	private JScrollPane scrollPaneStat;
 	private JToolBar toolBar;
 	private JButton btWeatherDataSave;
 	private JButton btWeatherRefresh;
 	private JLabel lbInformation;
 	private JLabel InformationWarning;
 	private TrackData track = null;
-	private WebView webView;
 	HistoricalWeather previousWeatherData;
 	private String weatherDataSheetContent;
 	private ProgressDialog progressDialog;
 	private JFrame parentFrame;
 
-	public static final String EVENT_TYPE_CLICK = "click"; //$NON-NLS-1$
 
-
-	public JPanelWeather(CgSettings settings, JFrame parentFrame) {
+	public JPanelWeather(CgSettings settings) {
 		super();
 		this.settings = settings;
-		this.parentFrame = parentFrame;
 		this.previousWeatherData = null;
-		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle"); //$NON-NLS-1$
+		bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
 		initComponents();
 	}
 
@@ -86,49 +74,13 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 		createWeatherToolbar();
 		add(toolBar, java.awt.BorderLayout.NORTH);
 
-		final JFXPanel fxPanel = new JFXPanel();
-
-		// Creation of scene and future interactions with JFXPanel
-		// should take place on the JavaFX Application Thread
-		Platform.runLater(() -> {
-			webView = new WebView();
-			fxPanel.setScene(new Scene(webView));
-
-			webView.getEngine().getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
-				public void changed(ObservableValue<? extends State> ov, State oldState, State newState) {
-					if (newState == Worker.State.SUCCEEDED) {
-						EventListener listener = new EventListener() {
-							@Override
-							public void handleEvent(Event ev) {
-								String domEventType = ev.getType();
-								if (domEventType.equals(EVENT_TYPE_CLICK)) {
-									String href = ((Element) ev.getTarget()).getAttribute("href"); //$NON-NLS-1$
-									if (Desktop.isDesktopSupported()) {
-										new Thread(() -> {
-											try {
-												Desktop.getDesktop().browse(new URI(href));
-											} catch (IOException | URISyntaxException e1) {
-												e1.printStackTrace();
-											}
-										}).start();
-									}
-									ev.preventDefault();
-								}
-							}
-						};
-
-						org.w3c.dom.Document doc = webView.getEngine().getDocument();
-						NodeList nodeList = doc.getElementsByTagName("a"); //$NON-NLS-1$
-						for (int i = 0; i < nodeList.getLength(); i++) {
-							((EventTarget) nodeList.item(i)).addEventListener(EVENT_TYPE_CLICK, listener, false);
-
-						}
-					}
-				}
-			});
-
-		});
-		add(fxPanel, java.awt.BorderLayout.CENTER);
+		editorStat = new JEditorPane();
+		editorStat.setContentType("text/html");
+		editorStat.setEditable(false);
+		CustomToolKit toolKit = new CustomToolKit();
+		editorStat.setEditorKit(toolKit);
+		scrollPaneStat = new JScrollPane(editorStat);
+		add(scrollPaneStat, java.awt.BorderLayout.CENTER);
 	}
 
 
@@ -250,9 +202,8 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 	 */
 	private void updateDataSheet(String dataSheetContent) {
 		weatherDataSheetContent = dataSheetContent;
-		Platform.runLater(() -> {
-			webView.getEngine().loadContent(weatherDataSheetContent);
-		});
+		editorStat.setText(dataSheetContent);
+		editorStat.setCaretPosition(0);
 	}
 
 
@@ -522,11 +473,10 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 				bundle.getString("frmMain.FileExist")); //$NON-NLS-1$
 
 		if (!s.isEmpty()) {
-			try {
-				FileWriter out = new FileWriter(s);
-
+			try (FileWriter out = new FileWriter(s)){
+				
 				out.write(weatherDataSheetContent);
-				out.close();
+				
 			} catch (Exception f) {
 				CgLog.error("SaveStat : impossible to save the weather data file"); //$NON-NLS-1$
 				f.printStackTrace();
@@ -628,4 +578,5 @@ public class JPanelWeather extends JFXPanel implements PropertyChangeListener {
 
 		return document.toString();
 	}
+
 }

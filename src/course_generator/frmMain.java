@@ -2853,7 +2853,7 @@ public class frmMain extends javax.swing.JFrame {
 		
 		// -- Tab - Weather
 				// ---------------------------------------------------
-				panelWeather = new JPanelWeather(Settings, this);
+				panelWeather = new JPanelWeather(Settings);
 				addTab(TabbedPaneMain, panelWeather, bundle.getString("frmMain.TabWeather.tabTitle"),
 						Utils.getIcon(this, "weather.png", Settings.TabIconSize));
 
