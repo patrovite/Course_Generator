@@ -158,7 +158,7 @@ public class Utils {
 	 * @param inEclipse true if we are inside eclipse
 	 */
 	public static void SetProgDir(boolean inEclipse) {
-		ProgDir = new File("/home/frederic/Documents/Projects/CourseGenerator").getAbsolutePath();
+		ProgDir = new File(".").getAbsolutePath();
 		ProgDir = ProgDir.replaceAll("\\\\", "/");
 		if (ProgDir.endsWith("/."))
 			ProgDir = ProgDir.substring(0, ProgDir.length() - 2);
