@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +28,6 @@ import course_generator.dialogs.ProgressDialog;
 import course_generator.settings.CgSettings;
 import course_generator.utils.CgConst;
 import course_generator.utils.CgLog;
-import course_generator.utils.CustomToolKit;
 import course_generator.utils.Utils;
 
 /**
@@ -35,16 +35,14 @@ import course_generator.utils.Utils;
  * 
  * @author Frederic Bard
  */
-//TODO FB : The JEditorPane only supports <= HTML 3.2 and only 1 base64 image is displayed.
-//cf. https://stackoverflow.com/questions/51103717/jeditorpane-content-type-for-html-embedded-base64-images
-// When clicking on the weather station link, the browser doesn't open
+//TODO FB When clicking on the weather station link, the browser doesn't open
 // Why does the weather retrieval take so long ???
 public class JPanelWeather extends JEditorPane implements PropertyChangeListener {
 	private static final long serialVersionUID = -7168142806619093218L;
 	private ResourceBundle bundle;
 	private CgSettings settings = null;
-	private JEditorPane editorStat;
-	private JScrollPane scrollPaneStat;
+	private JEditorPane editorWeather;
+	private JScrollPane scrollPaneWeather;
 	private JToolBar toolBar;
 	private JButton btWeatherDataSave;
 	private JButton btWeatherRefresh;
@@ -55,6 +53,7 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 	private String weatherDataSheetContent;
 	private ProgressDialog progressDialog;
 	private JFrame parentFrame;
+	private double moonPhase;
 
 
 	public JPanelWeather(CgSettings settings) {
@@ -69,18 +68,16 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 	private void initComponents() {
 		setLayout(new java.awt.BorderLayout());
 
-		// -- Statistic tool bar
+		// -- Weather tool bar
 		// ---------------------------------------------------
 		createWeatherToolbar();
 		add(toolBar, java.awt.BorderLayout.NORTH);
 
-		editorStat = new JEditorPane();
-		editorStat.setContentType("text/html");
-		editorStat.setEditable(false);
-		CustomToolKit toolKit = new CustomToolKit();
-		editorStat.setEditorKit(toolKit);
-		scrollPaneStat = new JScrollPane(editorStat);
-		add(scrollPaneStat, java.awt.BorderLayout.CENTER);
+		editorWeather = new JEditorPane();
+		editorWeather.setContentType("text/html");
+		editorWeather.setEditable(false);
+		scrollPaneWeather = new JScrollPane(editorWeather);
+		add(scrollPaneWeather, java.awt.BorderLayout.CENTER);
 	}
 
 
@@ -202,8 +199,8 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 	 */
 	private void updateDataSheet(String dataSheetContent) {
 		weatherDataSheetContent = dataSheetContent;
-		editorStat.setText(dataSheetContent);
-		editorStat.setCaretPosition(0);
+		editorWeather.setText(dataSheetContent);
+		editorWeather.setCaretPosition(0);
 	}
 
 
@@ -454,8 +451,9 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@245", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
-		String weatherDataSheet = ReplaceImages(weatherDataSheetBuilder.toString(),
-				previousWeatherData.getMoonPhase());
+		moonPhase = previousWeatherData.getMoonPhase();
+		String weatherDataSheet = InsertImages(weatherDataSheetBuilder.toString(),
+				moonPhase);
 		weatherDataSheet = AddWeatherStationsHyperLinks(weatherDataSheet,
 				previousWeatherData.getNoaaSummariesWeatherStation(),
 				previousWeatherData.getNoaaNormalsWeatherStation());
@@ -465,16 +463,16 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 
 
 	/**
-	 * Save the statistics in HTML format
+	 * Save the Weather in HTML format
 	 */
 	private void SaveStat() {
-		String s;
-		s = Utils.SaveDialog(this, settings.getLastDirectory(), "", ".html", bundle.getString("frmMain.HTMLFile"), true, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		String s = Utils.SaveDialog(this, settings.getLastDirectory(), "", ".html", bundle.getString("frmMain.HTMLFile"), true, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				bundle.getString("frmMain.FileExist")); //$NON-NLS-1$
 
 		if (!s.isEmpty()) {
 			try (FileWriter out = new FileWriter(s)){
 				
+				weatherDataSheetContent = ReplaceWithBase64Images(weatherDataSheetContent, moonPhase);
 				out.write(weatherDataSheetContent);
 				
 			} catch (Exception f) {
@@ -502,7 +500,6 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 				+ Utils.uTemperatureToString(settings.Unit);
 	}
 
-
 	/**
 	 * Because the image paths in the original HTML reference images in the Course
 	 * Generator jar (i.e: not accessible by any browser), we convert all the images
@@ -514,7 +511,43 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 	 * 			The value of the moon phase
 	 * @return The HTML page containing base64 representations of each image.
 	 */
-	private String ReplaceImages(String originalText, double moonPhase) {
+	private String ReplaceWithBase64Images(String originalText, double moonPhase) {
+		Document document = Jsoup.parse(originalText);
+
+		document.select("img[src]").forEach(e -> { //$NON-NLS-1$
+
+			String image = e.attr("src"); //$NON-NLS-1$
+			String base64 = ""; //$NON-NLS-1$
+			
+			if(image.endsWith("sunrise.png")){
+				base64 = Utils.imageToBase64(this, "sunrise.png", 128); //$NON-NLS-1$
+			} else if(image.endsWith("sunset.png")){
+				base64 = Utils.imageToBase64(this, "sunset.png", 128); //$NON-NLS-1$
+			}else if(image.endsWith("thermometer.png")){
+				base64 = Utils.imageToBase64(this, "thermometer.png", 128); //$NON-NLS-1$
+			} else if(image.contains("moon-")){
+				File filePath = new File(image);
+				String filename = filePath.getName();
+				base64 = Utils.imageToBase64(this, filename, 128); //$NON-NLS-1$
+			}
+
+			e.attr("src", "data:image/png;base64," + base64); //$NON-NLS-1$ //$NON-NLS-2$
+
+		});
+
+		return document.toString();
+	}
+	
+	/**
+	 * Insert the images file paths.
+	 * 
+	 * @param originalText
+	 *          The original HTML page
+	 * @param moonPhase
+	 * 			The value of the moon phase
+	 * @return The HTML page containing the path for each image.
+	 */
+	private String InsertImages(String originalText, double moonPhase) {
 		Document document = Jsoup.parse(originalText);
 
 		document.select("img[src]").forEach(e -> { //$NON-NLS-1$
@@ -523,21 +556,21 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 			String base64 = ""; //$NON-NLS-1$
 			switch (image) {
 			case "sunrise": //$NON-NLS-1$
-				base64 = Utils.imageToBase64(this, "sunrise.png", 128); //$NON-NLS-1$
+				base64 = getClass().getResource("/course_generator/images/128/sunrise.png").toString();
 				break;
 			case "sunset": //$NON-NLS-1$
-				base64 = Utils.imageToBase64(this, "sunset.png", 128); //$NON-NLS-1$
+				base64 = getClass().getResource("/course_generator/images/128/sunset.png").toString();//Utils.imageToBase64(this, ".png", 128); //$NON-NLS-1$
 				break;
 			case "thermometer": //$NON-NLS-1$
-				base64 = Utils.imageToBase64(this, "thermometer.png", 128); //$NON-NLS-1$
+				base64 = getClass().getResource("/course_generator/images/128/thermometer.png").toString();//Utils.imageToBase64(this, ".png", 128); //$NON-NLS-1$
 				break;
 			case "moonphase": //$NON-NLS-1$
 				String moonPhaseIcon = HistoricalWeather.getMoonPhaseIcon(moonPhase);
-				base64 = Utils.imageToBase64(this, moonPhaseIcon, 128);
+				base64 = getClass().getResource("/course_generator/images/128/"+moonPhaseIcon).toString();//Utils.imageToBase64(this, ".png", 128); //$NON-NLS-1$
 				break;
 			}
 
-			e.attr("src", "data:image/png;base64," + base64); //$NON-NLS-1$ //$NON-NLS-2$
+			e.attr("src",  base64); //$NON-NLS-1$ //$NON-NLS-2$
 
 		});
 
