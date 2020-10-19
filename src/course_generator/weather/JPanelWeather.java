@@ -297,20 +297,18 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@203", ""); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
-		if (previousWeatherData.getNormalsDaily() != null) {
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@204", //$NON-NLS-1$
-					bundle.getString("JPanelWeather.NormalsDaily.Text")); //$NON-NLS-1$
-		} else {
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@204", ""); //$NON-NLS-1$ //$NON-NLS-2$
-
-		}
-		if (previousWeatherData.getNormalsMonthly() != null) {
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@205", //$NON-NLS-1$
-					bundle.getString("JPanelWeather.NormalsMonthly.Text")); //$NON-NLS-1$
-		} else {
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@205", ""); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-
+		NoaaWeatherData normalsDaily = previousWeatherData.getNormalsDaily() != null
+				? previousWeatherData.getNormalsDaily()
+				: null;
+		String normalsDailyText = normalsDaily != null ? bundle.getString("JPanelWeather.NormalsDaily.Text") : "";
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@204", normalsDailyText); //$NON-NLS-1$ //$NON-NLS-2$
+		
+		NoaaWeatherData normalsMonthly = previousWeatherData.getNormalsMonthly() != null
+				? previousWeatherData.getNormalsMonthly()
+				: null;
+		String normalsMonthlyText = normalsMonthly != null ? bundle.getString("JPanelWeather.NormalsMonthly.Text") : "";
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@205", normalsMonthlyText); //$NON-NLS-1$ //$NON-NLS-2$
+		
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@206", //$NON-NLS-1$
 				bundle.getString("JPanelWeather.MaxTemperature.Text")); //$NON-NLS-1$
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@207", //$NON-NLS-1$
@@ -339,94 +337,68 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 				previousWeatherData.getMoonFraction() + "%");
 
 
-		if (previousWeatherData.getPastDailySummaries() != null
+		// Year -1
+		NoaaWeatherData pastDailySummaryYearMinus1 = previousWeatherData.getPastDailySummaries() != null
 				&& !previousWeatherData.getPastDailySummaries().isEmpty()
-				&& previousWeatherData.getPastDailySummaries().get(0) != null) {
-			// Year -1
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@220", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getPastDailySummaries().get(0).getTemperatureMax()));
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@225", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getPastDailySummaries().get(0).getTemperatureAverage()));
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@230", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getPastDailySummaries().get(0).getTemperatureMin()));
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@235", //$NON-NLS-1$
-					Utils.FormatPrecipitation(previousWeatherData.getPastDailySummaries().get(0).getPrecipitation(),
-							settings.Unit, true));
-		} else {
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@220", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@225", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@230", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@235", ""); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-		if (previousWeatherData.getPastDailySummaries() != null
-				&& !previousWeatherData.getPastDailySummaries().isEmpty()
-				&& previousWeatherData.getPastDailySummaries().get(1) != null) {
-			// Year -2
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@221", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getPastDailySummaries().get(1).getTemperatureMax()));
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@226", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getPastDailySummaries().get(1).getTemperatureAverage()));
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@231", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getPastDailySummaries().get(1).getTemperatureMin()));
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@236", //$NON-NLS-1$
-					Utils.FormatPrecipitation(previousWeatherData.getPastDailySummaries().get(1).getPrecipitation(),
-							settings.Unit, true));
-		} else {
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@221", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@226", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@231", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@236", ""); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-		if (previousWeatherData.getPastDailySummaries() != null
-				&& !previousWeatherData.getPastDailySummaries().isEmpty()
-				&& previousWeatherData.getPastDailySummaries().get(2) != null) {
-			// Year -3
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@222", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getPastDailySummaries().get(2).getTemperatureMax()));
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@227", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getPastDailySummaries().get(2).getTemperatureAverage()));
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@232", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getPastDailySummaries().get(2).getTemperatureMin()));
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@237", //$NON-NLS-1$
-					Utils.FormatPrecipitation(previousWeatherData.getPastDailySummaries().get(2).getPrecipitation(),
-							settings.Unit, true));
+				&& previousWeatherData.getPastDailySummaries().get(0) != null
+				? previousWeatherData.getPastDailySummaries().get(0)
+						: null;
+	    String temperatureMax = pastDailySummaryYearMinus1 !=null ? displayTemperature(pastDailySummaryYearMinus1.getTemperatureMax()) : "";
+		String temperatureAverage = pastDailySummaryYearMinus1 !=null ? displayTemperature(pastDailySummaryYearMinus1.getTemperatureAverage()) : "";
+		String temperatureMin = pastDailySummaryYearMinus1 !=null ? displayTemperature(pastDailySummaryYearMinus1.getTemperatureMin()) : "";
+		String precipitation = pastDailySummaryYearMinus1 !=null ? displayTemperature(pastDailySummaryYearMinus1.getPrecipitation()) : "";
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@220", temperatureMax); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@225", temperatureAverage); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@230", temperatureMin); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@235", precipitation); //$NON-NLS-1$
 
-		} else {
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@222", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@227", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@232", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@237", ""); //$NON-NLS-1$ //$NON-NLS-2$
-		}
-
+		// Year -2
+		NoaaWeatherData pastDailySummaryYearMinus2 = previousWeatherData.getPastDailySummaries() != null
+				&& !previousWeatherData.getPastDailySummaries().isEmpty()
+				&& previousWeatherData.getPastDailySummaries().get(1) != null
+				? previousWeatherData.getPastDailySummaries().get(1)
+						: null;
+		temperatureMax = pastDailySummaryYearMinus2 !=null ? displayTemperature(pastDailySummaryYearMinus2.getTemperatureMax()) : "";
+		temperatureAverage = pastDailySummaryYearMinus2 !=null ? displayTemperature(pastDailySummaryYearMinus2.getTemperatureAverage()) : "";
+		temperatureMin = pastDailySummaryYearMinus2 !=null ? displayTemperature(pastDailySummaryYearMinus2.getTemperatureMin()) : "";
+		precipitation = pastDailySummaryYearMinus2 !=null ? displayTemperature(pastDailySummaryYearMinus2.getPrecipitation()) : "";
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@221", temperatureMax); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@226", temperatureAverage); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@231", temperatureMin); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@236", precipitation); //$NON-NLS-1$
+		
+		// Year -3
+		NoaaWeatherData pastDailySummaryYearMinus3 = previousWeatherData.getPastDailySummaries() != null
+				&& !previousWeatherData.getPastDailySummaries().isEmpty()
+				&& previousWeatherData.getPastDailySummaries().get(2) != null
+				? previousWeatherData.getPastDailySummaries().get(2)
+						: null;
+		temperatureMax = pastDailySummaryYearMinus3 !=null ? displayTemperature(pastDailySummaryYearMinus3.getTemperatureMax()) : "";
+		temperatureAverage = pastDailySummaryYearMinus3 !=null ? displayTemperature(pastDailySummaryYearMinus3.getTemperatureAverage()) : "";
+		temperatureMin = pastDailySummaryYearMinus3 !=null ? displayTemperature(pastDailySummaryYearMinus3.getTemperatureMin()) : "";
+		precipitation = pastDailySummaryYearMinus3 !=null ? displayTemperature(pastDailySummaryYearMinus3.getPrecipitation()) : "";
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@222", temperatureMax); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@227", temperatureAverage); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@232", temperatureMin); //$NON-NLS-1$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@237", precipitation); //$NON-NLS-1$
+				
 		// Daily normals
-		if (previousWeatherData.getNormalsDaily() != null) {
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@223", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getNormalsDaily().getTemperatureMax()));
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@228", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getNormalsDaily().getTemperatureAverage()));
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@233", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getNormalsDaily().getTemperatureMin()));
-		} else {
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@223", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@228", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@233", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@238", ""); //$NON-NLS-1$ //$NON-NLS-2$
-		}
+		temperatureMax = normalsDaily !=null ? displayTemperature(normalsDaily.getTemperatureMax()) : "";
+		temperatureAverage = normalsDaily !=null ? displayTemperature(normalsDaily.getTemperatureAverage()) : "";
+		temperatureMin = normalsDaily !=null ? displayTemperature(normalsDaily.getTemperatureMin()) : "";
+
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@223", temperatureMax); //$NON-NLS-1$ //$NON-NLS-2$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@228", temperatureAverage); //$NON-NLS-1$ //$NON-NLS-2$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@233", temperatureMin); //$NON-NLS-1$ //$NON-NLS-2$
 
 		// Monthly normals
-		if (previousWeatherData.getNormalsMonthly() != null) {
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@224", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getNormalsMonthly().getTemperatureMax()));
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@229", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getNormalsMonthly().getTemperatureAverage()));
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@234", //$NON-NLS-1$
-					displayTemperature(previousWeatherData.getNormalsMonthly().getTemperatureMin()));
-		} else {
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@224", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@229", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@234", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@239", ""); //$NON-NLS-1$ //$NON-NLS-2$
-		}
+		temperatureMax = normalsMonthly !=null ? displayTemperature(normalsMonthly.getTemperatureMax()) : "";
+		temperatureAverage = normalsMonthly !=null ? displayTemperature(normalsMonthly.getTemperatureAverage()) : "";
+		temperatureMin = normalsMonthly !=null ? displayTemperature(normalsMonthly.getTemperatureMin()) : "";
+
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@224", temperatureMax); //$NON-NLS-1$ //$NON-NLS-2$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@229", temperatureAverage); //$NON-NLS-1$ //$NON-NLS-2$
+		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@234", temperatureMin); //$NON-NLS-1$ //$NON-NLS-2$
 
 		if (previousWeatherData.getNoaaSummariesWeatherStation() != null) {
 			weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@244", //$NON-NLS-1$

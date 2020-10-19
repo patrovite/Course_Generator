@@ -175,7 +175,7 @@ final public class NoaaHistoricalWeatherRetriever {
 		StringBuffer weatherHistory = new StringBuffer();
 		try {
 			HttpClientBuilder clientBuilder = HttpClientBuilder.create();
-
+			
 			// I don't understand exactly the parameters 'requestSentRetryEnabled' is used.
 			// From the official documentation :
 			// (https://jar-download.com/artifacts/org.apache.httpcomponents/httpclient/4.5.2/source-code/org/apache/http/impl/client/DefaultHttpRequestRetryHandler.java)
