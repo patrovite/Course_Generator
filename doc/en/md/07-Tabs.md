@@ -104,7 +104,7 @@ The event summary data contains:
 * The start date.
 * The sunrise and sunset times.
 * The total daylight time.
-* The moon phase description and image.
+* The moon phase description, illumination percentage and image.
 
 The button ![](./images/Tabs/save_html.png) saves this data in HTML format.  
 The button ![](./images/Tabs/retrieve_weather.png) retrieves the weather data from the NOAA servers.

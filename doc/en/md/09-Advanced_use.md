@@ -309,7 +309,6 @@ The possible settings are:
 
 Provides a field to enter a Thunderforest API key in order to show the Outdoors map layer. A free API key can be requested [here](https://thunderforest.com/docs/apikeys/).
 
-
 ## Import and export marked points
 
 In some cases it is necessary to save only the marked points of the current track in a file. This allows, if you have a new version of the course, to import these points on the new track.
