@@ -1,7 +1,6 @@
 
 package course_generator.weather;
 
-import java.awt.Component;
 import java.awt.Desktop;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -18,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
@@ -40,7 +40,7 @@ import course_generator.utils.Utils;
  * @author Frederic Bard
  */
 //TODO FB // Why does the weather retrieval take so long ???
-public class JPanelWeather extends JEditorPane implements PropertyChangeListener {
+public class JPanelWeather extends JPanel implements PropertyChangeListener {
 	private static final long serialVersionUID = -7168142806619093218L;
 	private ResourceBundle bundle;
 	private CgSettings settings = null;
@@ -108,7 +108,6 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 		toolBar.setOrientation(javax.swing.SwingConstants.HORIZONTAL);
 		toolBar.setFloatable(false);
 		toolBar.setRollover(true);
-		toolBar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		// -- Save
 		// --------------------------------------------------------------
@@ -219,7 +218,6 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 	private void updateDataSheet(String dataSheetContent) {
 		weatherDataSheetContent = dataSheetContent;
 		editorWeather.setText(dataSheetContent);
-		editorWeather.setCaretPosition(0);
 	}
 
 
@@ -254,19 +252,15 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 	private String PopulateWeatherDataSheet(HistoricalWeather previousWeatherData) {
 
 		StringBuilder weatherDataSheetBuilder = new StringBuilder();
-		InputStream is = getClass().getResourceAsStream("weatherdatasheet.html"); //$NON-NLS-1$
 
-		try {
-			InputStreamReader isr = new InputStreamReader(is, "UTF-8"); //$NON-NLS-1$
-			BufferedReader br = new BufferedReader(isr);
-
+		try (InputStream is = getClass().getResourceAsStream("weatherdatasheet.html");
+			InputStreamReader isr = new InputStreamReader(is, "UTF-8");
+			BufferedReader br = new BufferedReader(isr)){
+			
 			String line;
 			while ((line = br.readLine()) != null) {
 				weatherDataSheetBuilder.append(line);
 			}
-			br.close();
-			isr.close();
-			is.close();
 		} catch (IOException e) {
 			CgLog.error("RefreshStat : Impossible to read the template file from resource"); //$NON-NLS-1$
 			e.printStackTrace();
@@ -488,19 +482,22 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 		String s = Utils.SaveDialog(this, settings.getLastDirectory(), "", ".html", bundle.getString("frmMain.HTMLFile"), true, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				bundle.getString("frmMain.FileExist")); //$NON-NLS-1$
 
-		if (!s.isEmpty()) {
-			try (FileWriter out = new FileWriter(s)){
-				
-				weatherDataSheetContent = ReplaceWithBase64Images(weatherDataSheetContent, moonPhase);
-				out.write(weatherDataSheetContent);
-				
-			} catch (Exception f) {
-				CgLog.error("SaveStat : impossible to save the weather data file"); //$NON-NLS-1$
-				f.printStackTrace();
-			}
-			// -- Store the directory
-			settings.setLastDirectory(Utils.GetDirFromFilename(s));
+		if (s.isEmpty()) {
+			return;
 		}
+		
+		try (FileWriter out = new FileWriter(s)){
+				
+			weatherDataSheetContent = ReplaceWithBase64Images(weatherDataSheetContent, moonPhase);
+			out.write(weatherDataSheetContent);
+				
+		} catch (Exception f) {
+			CgLog.error("SaveStat : impossible to save the weather data file"); //$NON-NLS-1$
+			f.printStackTrace();
+		}
+		
+		// -- Store the directory
+		settings.setLastDirectory(Utils.GetDirFromFilename(s));
 	}
 
 
@@ -567,7 +564,10 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 	 * @return The HTML page containing the path for each image.
 	 */
 	private String InsertImages(String originalText, double moonPhase) {
+		
 		Document document = Jsoup.parse(originalText);
+		
+		String imagesPath = "/course_generator/images/128/";
 
 		document.select("img[src]").forEach(e -> { //$NON-NLS-1$
 
@@ -575,21 +575,21 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 			String base64 = ""; //$NON-NLS-1$
 			switch (image) {
 			case "sunrise": //$NON-NLS-1$
-				base64 = getClass().getResource("/course_generator/images/128/sunrise.png").toString();
+				base64 = getClass().getResource(imagesPath + "sunrise.png").toString();
 				break;
 			case "sunset": //$NON-NLS-1$
-				base64 = getClass().getResource("/course_generator/images/128/sunset.png").toString();//Utils.imageToBase64(this, ".png", 128); //$NON-NLS-1$
+				base64 = getClass().getResource(imagesPath + "sunset.png").toString();
 				break;
 			case "thermometer": //$NON-NLS-1$
-				base64 = getClass().getResource("/course_generator/images/128/thermometer.png").toString();//Utils.imageToBase64(this, ".png", 128); //$NON-NLS-1$
+				base64 = getClass().getResource(imagesPath + "thermometer.png").toString();
 				break;
 			case "moonphase": //$NON-NLS-1$
 				String moonPhaseIcon = HistoricalWeather.getMoonPhaseIcon(moonPhase);
-				base64 = getClass().getResource("/course_generator/images/128/"+moonPhaseIcon).toString();//Utils.imageToBase64(this, ".png", 128); //$NON-NLS-1$
+				base64 = getClass().getResource(imagesPath + moonPhaseIcon).toString();
 				break;
 			}
 
-			e.attr("src",  base64); //$NON-NLS-1$ //$NON-NLS-2$
+			e.attr("src", base64); //$NON-NLS-1$ //$NON-NLS-2$
 
 		});
 
@@ -606,6 +606,7 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 	 */
 	private String AddWeatherStationsHyperLinks(String originalSheet, NoaaWeatherStation noaaSummariesWeatherStation,
 			NoaaWeatherStation noaaNormalsWeatherStation) {
+		
 		Document document = Jsoup.parse(originalSheet);
 
 		document.select("a[href]").forEach(e -> { //$NON-NLS-1$
@@ -630,5 +631,4 @@ public class JPanelWeather extends JEditorPane implements PropertyChangeListener
 
 		return document.toString();
 	}
-
 }
