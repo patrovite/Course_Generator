@@ -13,7 +13,11 @@ All the course data (difficulty, fatigue coefficient, aid station time...) will 
 
 * **Open GPX** : Loads a GPX format file. Keyboard shortcut: [MAJ+CTRL+O].
 
+<<<<<<< HEAD
+* **Import a GPX file** : Imports a GPX file at the beginning or end of the current course.
+=======
 * **Recent GPX files...** : Displays a list of the last 5 GPX files that have been loaded. Clicking on one of those files will load them again.
+>>>>>>> upstream/master
 
 * **Import > Add a GPX file to the track** : Imports a GPX file at the beginning or end of the current course.
 
@@ -72,7 +76,11 @@ The saved file can be opened by a spreadsheet such as Excel or LibreOffice Calc.
 
 * **Estimate track time** : Compute the estimated time for each of the course's points. Keyboard shortcut: [F5].
 
+<<<<<<< HEAD
+* **Update standard curves** : The standard "Speed/Slope" will be updated with standard settings. It's necessary to use this menu if you modified a standard curve and you want to retrieve the standard settings. It's also necessary after a software update that introduce new standard curves. It doesn't affect the custom curves.
+=======
 * **Search 'Speed/Slope' curve from the final time** : Open a dialog box where, from the final expected time, the software will select the best 'Speed/Slope' curve.
+>>>>>>> upstream/master
 
 * **Open the "Speed/Slope" folder** : Opens the folder containing the speed curve files in File Explorer.
 
