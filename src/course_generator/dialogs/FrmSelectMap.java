@@ -88,7 +88,7 @@ public class FrmSelectMap extends javax.swing.JDialog {
 			break;
 		case 4:
 			rbStamenTonerMap.setSelected(true);
-			break;			
+			break;
 		default:
 			rbOpenStreetMap.setSelected(true);
 		}
@@ -187,7 +187,7 @@ public class FrmSelectMap extends javax.swing.JDialog {
 		rbOutdoors.setEnabled(settings.isThunderForestApiKeyValid());
 		Utils.addComponent(panelMain, rbOutdoors, 0, 2, 1, 1, 1, 0, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
-		
+
 		rbBingAerialMap = new JRadioButton(bundle.getString("FrmSelectMap.rbBingAerialMap.Text"));
 		Utils.addComponent(panelMain, rbBingAerialMap, 0, 3, 1, 1, 1, 1, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
@@ -195,7 +195,7 @@ public class FrmSelectMap extends javax.swing.JDialog {
 		rbStamenTonerMap = new JRadioButton(bundle.getString("FrmSelectMap.rbStamenToner.Text"));
 		Utils.addComponent(panelMain, rbStamenTonerMap, 0, 4, 1, 1, 1, 1, 0, 0, 0, 0, GridBagConstraints.WEST,
 				GridBagConstraints.HORIZONTAL);
-	
+
 		groupMap = new ButtonGroup();
 		groupMap.add(rbOpenStreetMap);
 		groupMap.add(rbOpenTopoMap);
