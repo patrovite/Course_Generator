@@ -31,7 +31,7 @@ import course_generator.utils.CgLog;
 /**
  * A class that retrieves, for a given track, the historical weather data.
  * 
- * @author Frederic Bard
+ * @author Frédéric Bard
  */
 final public class NoaaHistoricalWeatherRetriever {
 

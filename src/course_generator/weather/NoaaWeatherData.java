@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
  * https://www1.ncdc.noaa.gov/pub/data/cdo/documentation/NORMAL_DLY_documentation.pdf
  * https://www1.ncdc.noaa.gov/pub/data/cdo/documentation/NORMAL_MLY_documentation.pdf
  * 
- * @author Frederic Bard
+ * @author Frédéric Bard
  * 
  */
 public class NoaaWeatherData {

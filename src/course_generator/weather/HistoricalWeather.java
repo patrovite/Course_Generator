@@ -25,7 +25,7 @@ import course_generator.utils.Utils;
  * A class that generates and contains, for a given track, the historical
  * weather data.
  * 
- * @author Frederic Bard
+ * @author Frédéric Bard
  */
 public class HistoricalWeather implements ProgressDialogListener {
 

@@ -37,7 +37,7 @@ import course_generator.utils.Utils;
 /**
  * A class that generates a GUI panel for the weather data.
  * 
- * @author Frederic Bard
+ * @author Frédéric Bard
  */
 //TODO FB // Why does the weather retrieval take so long ???
 public class JPanelWeather extends JPanel implements PropertyChangeListener {

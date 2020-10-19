@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * 
  * Documentation : https://www.ncdc.noaa.gov/cdo-web/webservices/v2#stations
  * 
- * @author Frederic Bard
+ * @author Frédéric Bard
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NoaaWeatherStation implements Comparable<NoaaWeatherStation> {
