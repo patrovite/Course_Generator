@@ -27,56 +27,67 @@ mvn versions:display-dependency-updates -->
 		</plugins>
 	</build>
 	<dependencies>
+			<!-- https://mvnrepository.com/artifact/org.shredzone.commons/commons-suncalc -->
 		<dependency>
 			<groupId>org.shredzone.commons</groupId>
 			<artifactId>commons-suncalc</artifactId>
-			<version>2.3</version>
+			<version>2.11</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jfree/jfreechart -->
 		<dependency>
 			<groupId>org.jfree</groupId>
 			<artifactId>jfreechart</artifactId>
 			<version>1.5.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
-			<version>2.10.1</version>
+			<version>2.10.6</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.swinglabs.swingx/swingx-all -->
 		<dependency>
 			<groupId>org.swinglabs.swingx</groupId>
 			<artifactId>swingx-all</artifactId>
 			<version>1.6.5-1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jfree/jcommon -->
 		<dependency>
 			<groupId>org.jfree</groupId>
 			<artifactId>jcommon</artifactId>
 			<version>1.0.24</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.iakovlev/timeshape -->
 		<dependency>
 			<groupId>net.iakovlev</groupId>
 			<artifactId>timeshape</artifactId>
-			<version>2018d.4</version>
+			<version>2020a.10</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jxmapviewer/jxmapviewer2 -->
 		<dependency>
 			<groupId>org.jxmapviewer</groupId>
 			<artifactId>jxmapviewer2</artifactId>
-			<version>2.4</version>
+			<version>2.5</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.13</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.sun.xml.txw2/txwc2 -->
 		<dependency>
 			<groupId>com.sun.xml.txw2</groupId>
 			<artifactId>txwc2</artifactId>
 			<version>20110809</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
-			<version>1.11.3</version>
+			<version>1.13.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.javadocmd/simplelatlng -->
 		<dependency>
 			<groupId>com.javadocmd</groupId>
 			<artifactId>simplelatlng</artifactId>
@@ -86,37 +97,37 @@ mvn versions:display-dependency-updates -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.6</version>
+			<version>4.5.12</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.8.1</version>
+			<version>3.11</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.9.8</version>
+			<version>2.11.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.9.8</version>
+			<version>2.11.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.github.lgooddatepicker/LGoodDatePicker -->
 		<dependency>
 			<groupId>com.github.lgooddatepicker</groupId>
 			<artifactId>LGoodDatePicker</artifactId>
-			<version>10.3.1</version>
+			<version>11.0.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.xmlunit/xmlunit-core -->
 		<dependency>
 			<groupId>org.xmlunit</groupId>
 			<artifactId>xmlunit-core</artifactId>
-			<version>2.6.2</version>
+			<version>2.7.0</version>
 		</dependency>
 	</dependencies>
 </project>
