@@ -178,7 +178,7 @@ class Station {
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Location {
 	@JsonProperty
-	private ArrayList<String> coordinates = new ArrayList<String>();
+	private ArrayList<String> coordinates = new ArrayList<>();
 
 	// Getter Methods
 

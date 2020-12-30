@@ -313,7 +313,7 @@ public final  class NoaaHistoricalWeatherRetriever {
 
 		for (NoaaWeatherStation station : stations) {
 			List<NoaaWeatherData> data = retrieveDailySummaries(station.getId());
-			if (data == null)
+			if (data.isEmpty())
 				continue;
 
 			// if the current station has no valid data, we go to the next one,
@@ -349,7 +349,7 @@ public final  class NoaaHistoricalWeatherRetriever {
 			String dailyNormalsData = processNoaaRequest(queryParameters);
 			if (!dailyNormalsData.contains(TMax) && !dailyNormalsData.contains(TMin)
 					&& !dailyNormalsData.contains(Precipitation))
-				return null;
+				return new ArrayList<>();
 			else {
 				NoaaWeatherData dailyNormals = parseWeatherData(dailyNormalsData);
 				pastDailySummaries.add(dailyNormals);

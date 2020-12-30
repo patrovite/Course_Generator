@@ -97,19 +97,13 @@ public class NoaaWeatherData {
 
 
 	public boolean isDailySummaryValid() {
-		if ((maxTemperature != null && !maxTemperature.equals("")) || (minTemperature != null //$NON-NLS-1$
-				&& !minTemperature.equals(""))) //$NON-NLS-1$
-			return true;
-
-		return false;
+		return ((maxTemperature != null && !maxTemperature.equals("")) || (minTemperature != null //$NON-NLS-1$
+				&& !minTemperature.equals(""))); //$NON-NLS-1$
 	}
 
 
 	public boolean isNormalsDataValid() {
-		if (isDailySummaryValid() && AverageTemperature != null && !AverageTemperature.equals("")) //$NON-NLS-1$
-			return true;
-
-		return false;
+		return (isDailySummaryValid() && AverageTemperature != null && !AverageTemperature.equals("")); //$NON-NLS-1$
 	}
 
 }
