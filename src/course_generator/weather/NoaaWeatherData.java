@@ -10,7 +10,7 @@ import org.joda.time.DateTime;
  * https://www1.ncdc.noaa.gov/pub/data/cdo/documentation/NORMAL_DLY_documentation.pdf
  * https://www1.ncdc.noaa.gov/pub/data/cdo/documentation/NORMAL_MLY_documentation.pdf
  * 
- * @author Frédéric Bard
+ * @author Frï¿½dï¿½ric Bard
  * 
  */
 public class NoaaWeatherData {
@@ -97,8 +97,8 @@ public class NoaaWeatherData {
 
 
 	public boolean isDailySummaryValid() {
-		if (maxTemperature != null && !maxTemperature.equals("") && minTemperature != null //$NON-NLS-1$
-				&& !minTemperature.equals("")) //$NON-NLS-1$
+		if ((maxTemperature != null && !maxTemperature.equals("")) || (minTemperature != null //$NON-NLS-1$
+				&& !minTemperature.equals(""))) //$NON-NLS-1$
 			return true;
 
 		return false;

@@ -53,20 +53,20 @@ public final  class NoaaHistoricalWeatherRetriever {
 
 	private static final String NoaaBaseUrl = "https://www.ncdc.noaa.gov/cdo-web/api/v2/"; //$NON-NLS-1$
 	private static final String ghcndDatSetId = "&datasetid=GHCND"; //$NON-NLS-1$
-	private static final String TMax = "TMAX";
-	private static final String TMin = "TMIN";
-	private static final String Precipitation = "PRCP";
+	public static final String TMax = "TMAX";
+	public static final String TMin = "TMIN";
+	public static final String Precipitation = "PRCP";
 	private static final String ghcndDataTypeIds = "&datatypeid=" + TMax + "," + TMin + "," + Precipitation; //$NON-NLS-1$
 	private static final String normalDlyDataSet = "&datasetid=NORMAL_DLY"; //$NON-NLS-1$
-	private static final String TMaxNormalDaily = "DLY-TMAX-NORMAL";
-	private static final String TMinNormalDaily = "DLY-TMIN-NORMAL";
-	private static final String TAvgNormalDaily = "DLY-TAVG-NORMAL";
+	public static final String TMaxNormalDaily = "DLY-TMAX-NORMAL";
+	public static final String TMinNormalDaily = "DLY-TMIN-NORMAL";
+	public static final String TAvgNormalDaily = "DLY-TAVG-NORMAL";
 	private static final String normalDlyDataTypeIds = "&datatypeid=" + TMaxNormalDaily + "," + TMinNormalDaily + "," //$NON-NLS-1$
 			+ TAvgNormalDaily;
 	private static final String normalMlyDataSet = "&datasetid=NORMAL_MLY"; //$NON-NLS-1$
-	private static final String TMaxNormalMonthly = "MLY-TMAX-NORMAL";
-	private static final String TMinNormalMonthly = "MLY-TMIN-NORMAL";
-	private static final String TAvgNormalMonthly = "MLY-TAVG-NORMAL";
+	public static final String TMaxNormalMonthly = "MLY-TMAX-NORMAL";
+	public static final String TMinNormalMonthly = "MLY-TMIN-NORMAL";
+	public static final String TAvgNormalMonthly = "MLY-TAVG-NORMAL";
 	private static final String normalMlyDataTypeIds = "&datatypes=" + TMaxNormalMonthly + "," + TMinNormalMonthly + "," //$NON-NLS-1$
 			+ TAvgNormalMonthly;
 	private static final String startDate = "&startdate=";

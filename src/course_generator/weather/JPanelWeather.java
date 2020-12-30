@@ -37,7 +37,7 @@ import course_generator.utils.Utils;
 /**
  * A class that generates a GUI panel for the weather data.
  * 
- * @author Frédéric Bard
+ * @author Frï¿½dï¿½ric Bard
  */
 public class JPanelWeather extends JPanel implements PropertyChangeListener {
 	private static final long serialVersionUID = -7168142806619093218L;
@@ -345,7 +345,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 	    String temperatureMax = pastDailySummaryYearMinus1 !=null ? displayTemperature(pastDailySummaryYearMinus1.getTemperatureMax()) : "";
 		String temperatureAverage = pastDailySummaryYearMinus1 !=null ? displayTemperature(pastDailySummaryYearMinus1.getTemperatureAverage()) : "";
 		String temperatureMin = pastDailySummaryYearMinus1 !=null ? displayTemperature(pastDailySummaryYearMinus1.getTemperatureMin()) : "";
-		String precipitation = pastDailySummaryYearMinus1 !=null ? displayTemperature(pastDailySummaryYearMinus1.getPrecipitation()) : "";
+		String precipitation = pastDailySummaryYearMinus1 !=null ? displayPrecipitation(pastDailySummaryYearMinus1.getPrecipitation()) : "";
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@220", temperatureMax); //$NON-NLS-1$
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@225", temperatureAverage); //$NON-NLS-1$
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@230", temperatureMin); //$NON-NLS-1$
@@ -360,7 +360,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		temperatureMax = pastDailySummaryYearMinus2 !=null ? displayTemperature(pastDailySummaryYearMinus2.getTemperatureMax()) : "";
 		temperatureAverage = pastDailySummaryYearMinus2 !=null ? displayTemperature(pastDailySummaryYearMinus2.getTemperatureAverage()) : "";
 		temperatureMin = pastDailySummaryYearMinus2 !=null ? displayTemperature(pastDailySummaryYearMinus2.getTemperatureMin()) : "";
-		precipitation = pastDailySummaryYearMinus2 !=null ? displayTemperature(pastDailySummaryYearMinus2.getPrecipitation()) : "";
+		precipitation = pastDailySummaryYearMinus2 !=null ? displayPrecipitation(pastDailySummaryYearMinus2.getPrecipitation()) : "";
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@221", temperatureMax); //$NON-NLS-1$
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@226", temperatureAverage); //$NON-NLS-1$
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@231", temperatureMin); //$NON-NLS-1$
@@ -375,7 +375,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		temperatureMax = pastDailySummaryYearMinus3 !=null ? displayTemperature(pastDailySummaryYearMinus3.getTemperatureMax()) : "";
 		temperatureAverage = pastDailySummaryYearMinus3 !=null ? displayTemperature(pastDailySummaryYearMinus3.getTemperatureAverage()) : "";
 		temperatureMin = pastDailySummaryYearMinus3 !=null ? displayTemperature(pastDailySummaryYearMinus3.getTemperatureMin()) : "";
-		precipitation = pastDailySummaryYearMinus3 !=null ? displayTemperature(pastDailySummaryYearMinus3.getPrecipitation()) : "";
+		precipitation = pastDailySummaryYearMinus3 !=null ? displayPrecipitation(pastDailySummaryYearMinus3.getPrecipitation()) : "";
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@222", temperatureMax); //$NON-NLS-1$
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@227", temperatureAverage); //$NON-NLS-1$
 		weatherDataSheetBuilder = Utils.sbReplace(weatherDataSheetBuilder, "@232", temperatureMin); //$NON-NLS-1$
@@ -485,6 +485,13 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 
 		return Utils.FormatTemperature(Double.valueOf(temperatureValue), settings.Unit)
 				+ Utils.uTemperatureToString(settings.Unit);
+	}
+	
+	private String displayPrecipitation(String precipitationValue) {
+		if (precipitationValue == null || precipitationValue.equals("")) //$NON-NLS-1$
+			return ""; //$NON-NLS-1$
+
+		return Utils.FormatPrecipitation(precipitationValue, settings.Unit, true);
 	}
 
 	/**

@@ -39,7 +39,7 @@ public class NoaaResults {
 
 
 	public String getMinimumTemperature() {
-		return getResult("TMIN").getValue();
+		return getResult(NoaaHistoricalWeatherRetriever.TMin).getValue();
 	}
 
 
@@ -56,51 +56,51 @@ public class NoaaResults {
 
 
 	public String getMaximumTemperature() {
-		return getResult("TMAX").getValue();
+		return getResult(NoaaHistoricalWeatherRetriever.TMax).getValue();
 	}
 
 
 	public String getAverageTemperature() {
-		return getResult("TAVG").getValue();
+		return "";//return getResult(NoaaHistoricalWeatherRetriever.TMax).getValue();
 	}
 
 
 	public String getPrecipitation() {
-		return getResult("PRCP").getValue();
+		return getResult(NoaaHistoricalWeatherRetriever.Precipitation).getValue();
 	}
 
 
 	// Daily normals methods
 
 	public String getMinimumTemperatureDailyNormal() {
-		return getResults().get(0).getValue();
+		return getResult(NoaaHistoricalWeatherRetriever.TMinNormalDaily).getValue();
 	}
 
 
 	public String getMaximumTemperatureDailyNormal() {
-		return getResults().get(0).getValue();
+		return getResult(NoaaHistoricalWeatherRetriever.TMaxNormalDaily).getValue();
 	}
 
 
 	public String getAverageTemperatureDailyNormal() {
-		return getResults().get(0).getValue();
+		return getResult(NoaaHistoricalWeatherRetriever.TAvgNormalDaily).getValue();
 	}
 
 
 	// Monthly normals methods
 
 	public String getMinimumTemperatureMonthlyNormal() {
-		return getResults().get(0).getValue();
+		return getResult(NoaaHistoricalWeatherRetriever.TMinNormalMonthly).getValue();
 	}
 
 
 	public String getMaximumTemperatureMonthlyNormal() {
-		return getResults().get(0).getValue();
+		return getResult(NoaaHistoricalWeatherRetriever.TMaxNormalMonthly).getValue();
 	}
 
 
 	public String getAverageTemperatureMonthlyNormal() {
-		return getResults().get(0).getValue();
+		return getResult(NoaaHistoricalWeatherRetriever.TAvgNormalMonthly).getValue();
 	}
 
 
