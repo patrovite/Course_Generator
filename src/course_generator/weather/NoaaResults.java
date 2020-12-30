@@ -1,6 +1,7 @@
 package course_generator.weather;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,116 +9,98 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * A Java representation of a NOAA query "results" element.
  * 
- * @author Frédéric Bard
+ * @author Frï¿½dï¿½ric Bard
  * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NoaaResults {
 
-	// Daily summaries query result properties
-	@JsonProperty
-	private String date;
+	private List<Result> results;
 
-	@JsonProperty("TMAX")
-	private String MaximumTemperature;
-
-	@JsonProperty("TMIN")
-	private String MinimumTemperature;
-
-	@JsonProperty("TAVG")
-	private String AverageTemperature;
-
-	@JsonProperty("PRCP")
-	private String Precipitation;
-
-	// Daily normals query result properties
-
-	@JsonProperty("DLY-TMIN-NORMAL")
-	private String MinimumTemperatureDailyNormal;
-
-	@JsonProperty("DLY-TMAX-NORMAL")
-	private String MaximumTemperatureDailyNormal;
-
-	@JsonProperty("DLY-TAVG-NORMAL")
-	private String AverageTemperatureDailyNormal;
-
-	// Monthly normals query result properties
-
-	@JsonProperty("MLY-TMIN-NORMAL")
-	private String MinimumTemperatureMonthlyNormal;
-
-	@JsonProperty("MLY-TMAX-NORMAL")
-	private String MaximumTemperatureMonthlyNormal;
-
-	@JsonProperty("MLY-TAVG-NORMAL")
-	private String AverageTemperatureMonthlyNormal;
+    public List<Result> getResults() { return results; }
 
 	// Weather station query result properties
 
 	@JsonProperty
-	private ArrayList<Station> stations = new ArrayList<Station>();
+	private String id;
 	@JsonProperty
-	private Location location;
+	private String name;
+	@JsonProperty
+	private String latitude;
+	@JsonProperty
+	private String longitude;
 
 
 	// Daily summaries methods
 
 	public String getDate() {
-		return date;
+		return getResults().get(0).getDate();
 	}
 
 
 	public String getMinimumTemperature() {
-		return MinimumTemperature;
+		return getResult("TMIN").getValue();
+	}
+
+
+	private Result getResult(String string) {
+		
+		for(Result result: results)
+		{
+			if (result.getDatatype().equals(string)){
+			return result;
+			}
+		}
+		return new Result();
 	}
 
 
 	public String getMaximumTemperature() {
-		return MaximumTemperature;
+		return getResult("TMAX").getValue();
 	}
 
 
 	public String getAverageTemperature() {
-		return AverageTemperature;
+		return getResult("TAVG").getValue();
 	}
 
 
 	public String getPrecipitation() {
-		return Precipitation;
+		return getResult("PRCP").getValue();
 	}
 
 
 	// Daily normals methods
 
 	public String getMinimumTemperatureDailyNormal() {
-		return MinimumTemperatureDailyNormal;
+		return getResults().get(0).getValue();
 	}
 
 
 	public String getMaximumTemperatureDailyNormal() {
-		return MaximumTemperatureDailyNormal;
+		return getResults().get(0).getValue();
 	}
 
 
 	public String getAverageTemperatureDailyNormal() {
-		return AverageTemperatureDailyNormal;
+		return getResults().get(0).getValue();
 	}
 
 
 	// Monthly normals methods
 
 	public String getMinimumTemperatureMonthlyNormal() {
-		return MinimumTemperatureMonthlyNormal;
+		return getResults().get(0).getValue();
 	}
 
 
 	public String getMaximumTemperatureMonthlyNormal() {
-		return MaximumTemperatureMonthlyNormal;
+		return getResults().get(0).getValue();
 	}
 
 
 	public String getAverageTemperatureMonthlyNormal() {
-		return AverageTemperatureMonthlyNormal;
+		return getResults().get(0).getValue();
 	}
 
 
@@ -130,36 +113,47 @@ public class NoaaResults {
 
 
 	public String getStationId() {
-		if (this.stations != null && this.stations.size() > 0)
-			return stations.get(0).getId();
-
-		return null;
+		return id;
 	}
 
 
 	public String getStationName() {
-		if (this.stations != null && this.stations.size() > 0)
-			return stations.get(0).getName();
-
-		return null;
+		return name;
 	}
 
 
 	public String getStationLatitude() {
-		if (this.location != null)
-			return this.location.getLatitude();
-
-		return null;
+		return latitude;
 	}
 
 
 	public String getStationLongitude() {
-		if (this.location != null)
-			return this.location.getLongitude();
-
-		return null;
+		return longitude;
 	}
 
+}
+
+ class Result {
+    private String date;
+    private String datatype;
+    private String station;
+    private String attributes;
+    private String value;
+
+    public String getDate() { return date; }
+    public void setDate(String value) { this.date = value; }
+
+    public String getDatatype() { return datatype; }
+    public void setDatatype(String value) { this.datatype = value; }
+
+    public String getStation() { return station; }
+    public void setStation(String value) { this.station = value; }
+
+    public String getAttributes() { return attributes; }
+    public void setAttributes(String value) { this.attributes = value; }
+
+    public String getValue() { return value; }
+    public void setValue(String value) { this.value = value; }
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)

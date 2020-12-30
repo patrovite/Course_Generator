@@ -29,6 +29,7 @@ import course_generator.utils.CgLog;
 
 /**
  * A class that retrieves, for a given track, the historical weather data.
+ * https://www.ncdc.noaa.gov/cdo-web/webservices/v2
  * 
  * @author Fr�d�ric Bard
  */
@@ -50,28 +51,28 @@ public final  class NoaaHistoricalWeatherRetriever {
 	private NoaaWeatherData noaaNormalsDaily;
 	private NoaaWeatherData noaaNormalsMonthly;
 
-	private static final String NoaaBaseUrl = "https://www.ncei.noaa.gov/access/services/"; //$NON-NLS-1$
-	private static final String ghcndDatSetId = "&dataset=daily-summaries"; //$NON-NLS-1$
+	private static final String NoaaBaseUrl = "https://www.ncdc.noaa.gov/cdo-web/api/v2/"; //$NON-NLS-1$
+	private static final String ghcndDatSetId = "&datasetid=GHCND"; //$NON-NLS-1$
 	private static final String TMax = "TMAX";
 	private static final String TMin = "TMIN";
 	private static final String Precipitation = "PRCP";
-	private static final String ghcndDataTypeIds = "&dataTypes=" + TMax + "," + TMin + "," + Precipitation; //$NON-NLS-1$
-	private static final String normalDlyDataSet = "&dataset=normals-daily"; //$NON-NLS-1$
+	private static final String ghcndDataTypeIds = "&datatypeid=" + TMax + "," + TMin + "," + Precipitation; //$NON-NLS-1$
+	private static final String normalDlyDataSet = "&datasetid=NORMAL_DLY"; //$NON-NLS-1$
 	private static final String TMaxNormalDaily = "DLY-TMAX-NORMAL";
 	private static final String TMinNormalDaily = "DLY-TMIN-NORMAL";
 	private static final String TAvgNormalDaily = "DLY-TAVG-NORMAL";
-	private static final String normalDlyDataTypeIds = "&datatypes=" + TMaxNormalDaily + "," + TMinNormalDaily + "," //$NON-NLS-1$
+	private static final String normalDlyDataTypeIds = "&datatypeid=" + TMaxNormalDaily + "," + TMinNormalDaily + "," //$NON-NLS-1$
 			+ TAvgNormalDaily;
-	private static final String normalMlyDataSet = "&dataset=normals-monthly"; //$NON-NLS-1$
+	private static final String normalMlyDataSet = "&datasetid=NORMAL_MLY"; //$NON-NLS-1$
 	private static final String TMaxNormalMonthly = "MLY-TMAX-NORMAL";
 	private static final String TMinNormalMonthly = "MLY-TMIN-NORMAL";
 	private static final String TAvgNormalMonthly = "MLY-TAVG-NORMAL";
 	private static final String normalMlyDataTypeIds = "&datatypes=" + TMaxNormalMonthly + "," + TMinNormalMonthly + "," //$NON-NLS-1$
 			+ TAvgNormalMonthly;
-	private static final String startDate = "&startDate=";
-	private static final String endDate = "&endDate=";
-	private static final String searchWeatherStationQueryBase = "search/v1/data?boundingBox=";
-	private static final String dataAccessQueryBase = "data/v1?format=json&stations=";
+	private static final String startDate = "&startdate=";
+	private static final String endDate = "&enddate=";
+	private static final String searchWeatherStationQueryBase = "stations?extent=";
+	private static final String dataAccessQueryBase = "data?units=metric&stationid=";
 
 
 	private NoaaHistoricalWeatherRetriever(LatLng startPoint, LatLng searchAreaCenter, double searchAreaRadius) {
@@ -184,7 +185,8 @@ public final  class NoaaHistoricalWeatherRetriever {
 			clientBuilder.setRetryHandler(new DefaultHttpRequestRetryHandler(3, false));
 
 			HttpClient client = clientBuilder.build();
-			HttpGet request = new HttpGet(NoaaBaseUrl + parameters + "&units=metric&limit=1000"); //$NON-NLS-1$
+			HttpGet request = new HttpGet(NoaaBaseUrl + parameters ); //$NON-NLS-1$
+			request.setHeader("token", "eEfuOFssCmpPcpYqnfyCoFLDaQpDIwHU");
 
 			HttpResponse response = client.execute(request);
 			
@@ -447,40 +449,36 @@ public final  class NoaaHistoricalWeatherRetriever {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
-			List<NoaaResults> noaaObjects = mapper.readValue(weatherData, new TypeReference<List<NoaaResults>>() {
-			});
-
-			for (NoaaResults currentObject : noaaObjects) {
+			NoaaResults noaaObjects = mapper.readValue(weatherData, new TypeReference<NoaaResults>() {			});
 
 				// Daily summary data
-				if (!StringUtils.isBlank(currentObject.getMaximumTemperature()))
-					noaaWeatherData.setTemperatureMax(currentObject.getMaximumTemperature());
-				if (!StringUtils.isBlank(currentObject.getMinimumTemperature()))
-					noaaWeatherData.setTemperatureMin(currentObject.getMinimumTemperature());
-				if (!StringUtils.isBlank(currentObject.getAverageTemperature()))
-					noaaWeatherData.setTemperatureAverage(currentObject.getAverageTemperature());
-				if (!StringUtils.isBlank(currentObject.getPrecipitation()))
-					noaaWeatherData.setPrecipitation(currentObject.getPrecipitation());
+				if (!StringUtils.isBlank(noaaObjects.getMaximumTemperature()))
+					noaaWeatherData.setTemperatureMax(noaaObjects.getMaximumTemperature());
+				if (!StringUtils.isBlank(noaaObjects.getMinimumTemperature()))
+					noaaWeatherData.setTemperatureMin(noaaObjects.getMinimumTemperature());
+				if (!StringUtils.isBlank(noaaObjects.getAverageTemperature()))
+					noaaWeatherData.setTemperatureAverage(noaaObjects.getAverageTemperature());
+				if (!StringUtils.isBlank(noaaObjects.getPrecipitation()))
+					noaaWeatherData.setPrecipitation(noaaObjects.getPrecipitation());
 
 				// Daily normals data
-				if (!StringUtils.isBlank(currentObject.getMaximumTemperatureDailyNormal()))
-					noaaWeatherData.setTemperatureMax(currentObject.getMaximumTemperatureDailyNormal());
-				if (!StringUtils.isBlank(currentObject.getMinimumTemperatureDailyNormal()))
-					noaaWeatherData.setTemperatureMin(currentObject.getMinimumTemperatureDailyNormal());
-				if (!StringUtils.isBlank(currentObject.getAverageTemperatureDailyNormal()))
-					noaaWeatherData.setTemperatureAverage(currentObject.getAverageTemperatureDailyNormal());
+				if (!StringUtils.isBlank(noaaObjects.getMaximumTemperatureDailyNormal()))
+					noaaWeatherData.setTemperatureMax(noaaObjects.getMaximumTemperatureDailyNormal());
+				if (!StringUtils.isBlank(noaaObjects.getMinimumTemperatureDailyNormal()))
+					noaaWeatherData.setTemperatureMin(noaaObjects.getMinimumTemperatureDailyNormal());
+				if (!StringUtils.isBlank(noaaObjects.getAverageTemperatureDailyNormal()))
+					noaaWeatherData.setTemperatureAverage(noaaObjects.getAverageTemperatureDailyNormal());
 
 				// Monthly normals data
-				if (!StringUtils.isBlank(currentObject.getMaximumTemperatureMonthlyNormal()))
-					noaaWeatherData.setTemperatureMax(currentObject.getMaximumTemperatureMonthlyNormal());
-				if (!StringUtils.isBlank(currentObject.getMinimumTemperatureMonthlyNormal()))
-					noaaWeatherData.setTemperatureMin(currentObject.getMinimumTemperatureMonthlyNormal());
-				if (!StringUtils.isBlank(currentObject.getAverageTemperatureMonthlyNormal()))
-					noaaWeatherData.setTemperatureAverage(currentObject.getAverageTemperatureMonthlyNormal());
+				if (!StringUtils.isBlank(noaaObjects.getMaximumTemperatureMonthlyNormal()))
+					noaaWeatherData.setTemperatureMax(noaaObjects.getMaximumTemperatureMonthlyNormal());
+				if (!StringUtils.isBlank(noaaObjects.getMinimumTemperatureMonthlyNormal()))
+					noaaWeatherData.setTemperatureMin(noaaObjects.getMinimumTemperatureMonthlyNormal());
+				if (!StringUtils.isBlank(noaaObjects.getAverageTemperatureMonthlyNormal()))
+					noaaWeatherData.setTemperatureAverage(noaaObjects.getAverageTemperatureMonthlyNormal());
 
-				if (!StringUtils.isBlank(currentObject.getDate()) && currentObject.getDate().length() == 10)
-					noaaWeatherData.setDate(DateTime.parse(currentObject.getDate()));
-			}
+				if (!StringUtils.isBlank(noaaObjects.getDate()))
+					noaaWeatherData.setDate(DateTime.parse(noaaObjects.getDate()));
 
 		} catch (IOException e) {
 			CgLog.error(
