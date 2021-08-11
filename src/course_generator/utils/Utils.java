@@ -135,7 +135,7 @@ public class Utils {
 				selectedFile = selectedFile + Extension;
 			}
 			boolean ok = true;
-			if (Utils.FileExist(selectedFile) && (TestFileExist)) {
+			if (Utils.FileExist(selectedFile) && TestFileExist) {
 				if (JOptionPane.showConfirmDialog(Parent, FileExistText, "",
 						JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 					ok = false;
@@ -1156,6 +1156,13 @@ public class Utils {
 					// %D:Distance from the start
 					case 'D':
 						sr = sr + String.format("%.1f", r.getTotal(settings.Unit) / 1000.0)
+								+ Utils.uLDist2String(settings.Unit);
+						step = 0;
+						break;
+						
+						// %d:Distance from the previous marker
+					case 'd':
+						sr = sr + String.format("%.1f", r.getDeltaDist(settings.Unit) / 1000.0)
 								+ Utils.uLDist2String(settings.Unit);
 						step = 0;
 						break;

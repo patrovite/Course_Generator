@@ -38,6 +38,7 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 	private JTextField tfLabelFormat;
 	private JButton btName;
 	private JButton btTotalDist;
+	private JButton btPreviousDist;
 	private JButton btElevation;
 	private JButton btStation;
 	private JButton btStationLong;
@@ -218,13 +219,21 @@ public class FrmEditMrbFormat extends javax.swing.JDialog {
 		});
 		Utils.addComponent(paneGlobal, btTotalDist, 1, line, 1, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
+		
+		btPreviousDist = new JButton(bundle.getString("FrmEditMrbFormat.btPreviousDist.text"));
+		btPreviousDist.addActionListener(actionEvent -> {
+			tfLabelFormat.setText(tfLabelFormat.getText() + "%d");
+			Refresh();
+		});
+		Utils.addComponent(paneGlobal, btPreviousDist, 2, line, 1, 1, 0, 0, 0, 0, 0, 0,
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		btElevation = new JButton(bundle.getString("FrmEditMrbFormat.btElevation.text"));
 		btElevation.addActionListener(actionEvent -> {
 			tfLabelFormat.setText(tfLabelFormat.getText() + "%A");
 			Refresh();
 		});
-		Utils.addComponent(paneGlobal, btElevation, 2, line++, 1, 1, 0, 0, 0, 0, 0, 0,
+		Utils.addComponent(paneGlobal, btElevation, 3, line++, 1, 1, 0, 0, 0, 0, 0, 0,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		// -- Line 3
