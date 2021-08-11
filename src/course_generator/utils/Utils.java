@@ -1160,7 +1160,7 @@ public class Utils {
 						step = 0;
 						break;
 						
-						// %d:Distance from the previous marker
+					// %d:Distance from the previous marker
 					case 'd':
 						sr = sr + String.format("%.1f", r.getDeltaDist(settings.Unit) / 1000.0)
 								+ Utils.uLDist2String(settings.Unit);
