@@ -133,7 +133,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		calendar.setSelectedDate(newSelectedDate);
 
 		timePickerSettings.initialTime = LocalTime.of(this.track.StartTime.getHourOfDay(),
-				this.track.StartTime.getMinuteOfHour());
+				this.track.StartTime.getMinuteOfHour(),
+				this.track.StartTime.getSecondOfMinute());
 		timePickerSettings.setFormatForDisplayTime(PickerUtilities.createFormatterFromPatternString(
 	            "HH:mm:ss", timePickerSettings.getLocale()));
 		timePicker.setTime(timePickerSettings.initialTime);
@@ -310,6 +311,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		timePicker = new TimePicker(timePickerSettings);
 
 		//todo fb enlarge the width
+		//solution found here: https://github.com/LGoodDatePicker/LGoodDatePicker/issues/2#issuecomment-204536781
 		Utils.addComponent(panelDateTime, timePicker, 1, 0, 1, 1, 1, 0, 5, 10, 5, 5,
 				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.NONE);
 

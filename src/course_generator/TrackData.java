@@ -1366,7 +1366,7 @@ public class TrackData {
 	}
 
 	/**
-	 * Search the minmimum and maximum elevation of the track betwwen two points
+	 * Search the minimum and maximum elevation of the track between two points
 	 * 
 	 * @param start Starting point
 	 * @param end   Ending point
