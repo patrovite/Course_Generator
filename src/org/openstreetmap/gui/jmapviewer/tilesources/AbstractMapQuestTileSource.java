@@ -6,7 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.xml.bind.DatatypeConverter;
+//import javax.xml.bind.DatatypeConverter;
 
 public class AbstractMapQuestTileSource extends AbstractOsmTileSource {
 
@@ -47,12 +47,14 @@ public class AbstractMapQuestTileSource extends AbstractOsmTileSource {
 
 	@Override
 	public Image getAttributionImage() {
-		try {
-			return ImageIO.read(new ByteArrayInputStream(DatatypeConverter.parseBase64Binary(LOGO_BASE64)));
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
+//		try {
+//			return ImageIO.read(new ByteArrayInputStream(DatatypeConverter.parseBase64Binary(LOGO_BASE64)));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+		
+		return null;
 	}
 
 	@Override
