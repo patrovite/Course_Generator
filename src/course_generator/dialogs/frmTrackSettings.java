@@ -135,8 +135,12 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		timePickerSettings.initialTime = LocalTime.of(this.track.StartTime.getHourOfDay(),
 				this.track.StartTime.getMinuteOfHour(),
 				this.track.StartTime.getSecondOfMinute());
+		//Solution to use seconds found here:
+		//https://github.com/LGoodDatePicker/LGoodDatePicker/issues/2#issuecomment-204536781
 		timePickerSettings.setFormatForDisplayTime(PickerUtilities.createFormatterFromPatternString(
 	            "HH:mm:ss", timePickerSettings.getLocale()));
+		timePickerSettings.setFormatForMenuTimes(PickerUtilities.createFormatterFromPatternString(
+		            "HH:mm:ss", timePickerSettings.getLocale()));
 		timePicker.setTime(timePickerSettings.initialTime);
 		chkElevationEffect.setSelected(this.track.bElevEffect);
 		chkNightEffect.setSelected(this.track.bNightCoeff);
@@ -186,6 +190,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 	 *
 	 * @return
 	 */
+	@Override
 	protected JRootPane createRootPane() {
 		JRootPane rootPane = new JRootPane();
 		KeyStroke strokeEscape = KeyStroke.getKeyStroke("ESCAPE"); //$NON-NLS-1$
@@ -193,6 +198,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 
 		@SuppressWarnings("serial")
 		Action actionListener = new AbstractAction() {
+			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				setVisible(false);
 			}
@@ -200,6 +206,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 
 		@SuppressWarnings("serial")
 		Action actionListenerEnter = new AbstractAction() {
+			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				RequestToClose();
 			}
@@ -310,10 +317,8 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		timePickerSettings.generatePotentialMenuTimes(TimeIncrement.ThirtyMinutes, null, null);
 		timePicker = new TimePicker(timePickerSettings);
 
-		//todo fb enlarge the width
-		//solution found here: https://github.com/LGoodDatePicker/LGoodDatePicker/issues/2#issuecomment-204536781
-		Utils.addComponent(panelDateTime, timePicker, 1, 0, 1, 1, 1, 0, 5, 10, 5, 5,
-				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.NONE);
+		Utils.addComponent(panelDateTime, timePicker, 1, 0, 1, 1, 1, 0, 5, 10, 5, 75,
+				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
 
 		// -- Panel elevation effect
 		panelElevationEffect = new JPanel();
