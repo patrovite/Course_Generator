@@ -318,7 +318,7 @@ public class frmTrackSettings extends javax.swing.JDialog {
 		timePicker = new TimePicker(timePickerSettings);
 
 		Utils.addComponent(panelDateTime, timePicker, 1, 0, 1, 1, 1, 0, 5, 10, 5, 75,
-				GridBagConstraints.NORTHWEST, GridBagConstraints.HORIZONTAL);
+				GridBagConstraints.BASELINE_LEADING, GridBagConstraints.HORIZONTAL);
 
 		// -- Panel elevation effect
 		panelElevationEffect = new JPanel();
