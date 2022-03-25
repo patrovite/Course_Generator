@@ -1237,9 +1237,9 @@ public class TrackData {
 		int i = 0;
 		int oldTime = 0;
 		int dt = 0;
-		double oldElev = 0.0;
-		double de = 0.0;
-		double elev = 0.0;
+		double oldElev;
+		double de;
+		double elev;
 		int time = 0;
 
 		r.cp = 0;
@@ -1763,7 +1763,7 @@ public class TrackData {
 			int n = start;
 			int nb = 0;
 			while (nb < data.size()) {
-				datatmp.add(new CgData(nb + 1, data.get(n).getLatitude(), data.get(n).getLongitude(),
+				datatmp.add(new CgData(nb + 1.0, data.get(n).getLatitude(), data.get(n).getLongitude(),
 						data.get(n).getElevation(CgConst.UNIT_METER),
 						data.get(n).getElevationNotSmoothed(CgConst.UNIT_METER),
 						data.get(n).getElevationSmoothed(CgConst.UNIT_METER), data.get(n).getElevationMemo(),
