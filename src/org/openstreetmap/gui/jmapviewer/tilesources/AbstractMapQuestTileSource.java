@@ -53,8 +53,6 @@ public class AbstractMapQuestTileSource extends AbstractOsmTileSource {
 			e.printStackTrace();
 			return null;
 		}
-		
-		return null;
 	}
 
 	@Override
