@@ -34,6 +34,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import javax.swing.JOptionPane;
@@ -69,7 +70,7 @@ public class TrackData {
 	public String Paramfile = "";
 
 	/** Arraylist containing the main data **/
-	public ArrayList<CgData> data;
+	public List<CgData> data;
 
 	/** Historical weather data **/
 	public HistoricalWeather historicalWeatherData;
@@ -159,12 +160,12 @@ public class TrackData {
 	public DateTime StartNightTime;
 	/** End night time **/
 	public DateTime EndNightTime;
-	private final static DateTime defaultSunriseSunsetTime = new DateTime(2010, 1, 1, 0, 0, 0);
+	private static final  DateTime defaultSunriseSunsetTime = new DateTime(2010, 1, 1, 0, 0, 0);
 	/** If 'true' this indicate that the night coefficients are used ***/
 	public boolean bNightCoeff = false;
-	/** Ascent nigth coefficient (100%=normal) **/
+	/** Ascent night coefficient (100%=normal) **/
 	public double NightCoeffAsc = 100.0;
-	/** Descent nigth coefficient (100%=normal) **/
+	/** Descent night coefficient (100%=normal) **/
 	public double NightCoeffDesc = 100.0;
 
 	// -- Elevation coeff
@@ -2075,12 +2076,13 @@ public class TrackData {
 				}
 				writer.writeEndElement();// "WEATHER_STATION"
 
-				if (historicalWeatherData.getPastDailySummaries() != null) {
+				List<NoaaWeatherData> pastDailySummaries = historicalWeatherData.getPastDailySummaries();
+				if (pastDailySummaries != null) {
 					for (int i = 0; i < 3; i++) {
 						writer.writeStartElement("DAILY_SUMMARY");
 
-						if (historicalWeatherData.getPastDailySummaries().get(i) != null) {
-							NoaaWeatherData currentDailySummary = historicalWeatherData.getPastDailySummaries().get(i);
+						if (pastDailySummaries.get(i) != null) {
+							NoaaWeatherData currentDailySummary = pastDailySummaries.get(i);
 
 							Utils.WriteStringToXML(writer, NoaaWeatherData.DATE,
 									currentDailySummary.getDate().toString("yyyy-MM-dd"));
@@ -2103,17 +2105,18 @@ public class TrackData {
 
 				writer.writeStartElement(SaxCGXHandler.LEVEL_WEATHER_NORMALS);
 				writer.writeStartElement("WEATHER_STATION");
-				if (historicalWeatherData.getNoaaNormalsWeatherStation() != null) {
+				NoaaWeatherStation noaaNormalsWeatherStation = historicalWeatherData.getNoaaNormalsWeatherStation();
+				if (noaaNormalsWeatherStation != null) {
 					Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID,
-							historicalWeatherData.getNoaaNormalsWeatherStation().getId());
+							noaaNormalsWeatherStation.getId());
 					Utils.WriteStringToXML(writer, NoaaWeatherStation.NAME,
-							historicalWeatherData.getNoaaNormalsWeatherStation().getName());
+							noaaNormalsWeatherStation.getName());
 					Utils.WriteStringToXML(writer, NoaaWeatherStation.LATITUDE,
-							historicalWeatherData.getNoaaNormalsWeatherStation().getLatitude());
+							noaaNormalsWeatherStation.getLatitude());
 					Utils.WriteStringToXML(writer, NoaaWeatherStation.LONGITUDE,
-							historicalWeatherData.getNoaaNormalsWeatherStation().getLongitude());
+							noaaNormalsWeatherStation.getLongitude());
 					Utils.WriteDoubleToXML(writer, NoaaWeatherStation.DISTANCEFROMSTART,
-							historicalWeatherData.getNoaaNormalsWeatherStation().getDistanceFromStart());
+							noaaNormalsWeatherStation.getDistanceFromStart());
 				} else {
 					Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID, "");
 					Utils.WriteStringToXML(writer, NoaaWeatherStation.NAME, "");
@@ -2124,13 +2127,14 @@ public class TrackData {
 				writer.writeEndElement();// "WEATHER_STATION"
 
 				writer.writeStartElement("NORMALS_DAILY");
-				if (historicalWeatherData.getNormalsDaily() != null) {
+				NoaaWeatherData normalsDaily = historicalWeatherData.getNormalsDaily();
+				if (normalsDaily != null) {
 					Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE,
-							historicalWeatherData.getNormalsDaily().getTemperatureMax());
+							normalsDaily.getTemperatureMax());
 					Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE,
-							historicalWeatherData.getNormalsDaily().getTemperatureMin());
+							normalsDaily.getTemperatureMin());
 					Utils.WriteStringToXML(writer, NoaaWeatherData.AVERAGETEMPERATURE,
-							historicalWeatherData.getNormalsDaily().getTemperatureAverage());
+							normalsDaily.getTemperatureAverage());
 				} else {
 					Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE, "");
 					Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE, "");
