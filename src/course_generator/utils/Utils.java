@@ -40,7 +40,6 @@ import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -1585,7 +1584,7 @@ public class Utils {
 
 	public static boolean OpenHelp(String ProgDir, String language) {
 		boolean success = false;
-		Map<String, String> environmentVariables = System.getenv();
+		//Map<String, String> environmentVariables = System.getenv();
 		//String helpFolder = environmentVariables.get("CGInstallFolder");
 
 		// String helpFilePath = helpFolder + "/help/" + language + "/" + language + "_"
