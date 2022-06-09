@@ -993,7 +993,7 @@ public class Utils {
 	 * @param trim true=The text is trimmed -- false=no modification
 	 * @return The modified text
 	 */
-	public static String WordWrap(String s, int l, boolean trim) {
+	public static String WordWrap(String s, int l) {
 		String sr = "";
 		String st = "";
 
@@ -1372,7 +1372,7 @@ public class Utils {
 			}
 
 			if (cd != null) {
-				return Utils.WordWrap(sr, cd.WordWrapLength, true);
+				return Utils.WordWrap(sr, cd.WordWrapLength);
 			}
 			// else {
 			// return sr;
