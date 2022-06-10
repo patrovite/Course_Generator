@@ -1774,7 +1774,7 @@ public class TrackData {
 			int n = start;
 			int nb = 0;
 			while (nb < data.size()) {
-				datatmp.add(new CgData(nb + 1, data.get(n).getLatitude(), data.get(n).getLongitude(),
+				datatmp.add(new CgData(nb + 1.0, data.get(n).getLatitude(), data.get(n).getLongitude(),
 						data.get(n).getElevation(CgConst.UNIT_METER),
 						data.get(n).getElevationNotSmoothed(CgConst.UNIT_METER),
 						data.get(n).getElevationSmoothed(CgConst.UNIT_METER), data.get(n).getElevationMemo(),
@@ -2077,8 +2077,8 @@ public class TrackData {
 				writer.writeEndElement();// "WEATHER_STATION"
 
 				List<NoaaWeatherData> pastDailySummaries = historicalWeatherData.getPastDailySummaries();
-				if (pastDailySummaries != null) {
-					for (int i = 0; i < 3; i++) {
+				if (pastDailySummaries != null && pastDailySummaries.isEmpty()) {
+					for (int i = 0; i < 3 && i < pastDailySummaries.size(); i++) {
 						writer.writeStartElement("DAILY_SUMMARY");
 
 						if (pastDailySummaries.get(i) != null) {
