@@ -309,6 +309,7 @@ Les réglages possibles sont les suivants:
 ![](./images/CG40_Settings_Maps.png)
  Permet d'entrer une clef API Thunderforest pour pouvoir utiliser le fond de carte Outdoors. Une clef gratuite peut être obtenue [ici](https://thunderforest.com/docs/apikeys/).
  
+
 ## Importer et exporter les points marqués
 
 Il est nécessaire dans certain cas de devoir sauvegarder uniquement les points marqués du parcours actuel dans un fichier. Cela permet si vous avez une nouvelle version du parcours de pouvoir importer ces points sur ce parcours.
@@ -361,6 +362,7 @@ Sur la droite, une barre verticale de boutons permet de réaliser des actions su
 * ![](./images/Map/show_hide_markers.png) : Permet d'afficher ou de cacher les étiquettes.
 * ![](./images/Map/save_png.png) : Permet de sauver la carte affichée dans une image au format PNG.
 * ![](./images/Map/select_map.png) : Permet de sélectionner le type de carte à utiliser.
+* ![](./images/Map/show_weather_stations.png) : Affiche sur la carte les stations météorologiques les plus proches.
 
 Les commandes à la souris sont les suivantes:
 

@@ -33,6 +33,8 @@
  *  - jfreechart - LGPL - http://www.jfree.org/index.html
  *  - Joda-time - http://www.joda.org/joda-time/
  *  - JXMapViewer2 - LGPL - https://wiki.openstreetmap.org/wiki/JXMapViewer2
+  *  - SwingX - LGPL 2.1 - https://swingx.java.net/
+ *  - Timeshape - MIT - https://github.com/RomanIakovlev/timeshape
  *  - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf/ 
  *  
  * Copyrights:
@@ -159,7 +161,7 @@ import course_generator.utils.FileTypeFilter;
 import course_generator.utils.OsCheck;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
-
+import course_generator.weather.JPanelWeather;
 /**
  * This is the main class of the project.
  *
@@ -295,7 +297,7 @@ public class frmMain extends javax.swing.JFrame {
 	private JMenuItem mnuSearchCurveFromFinalTime;
 
 	private JMenuItem mnuSmoothElevation;
-
+	private JPanelWeather panelWeather;
 	private JMenuItem mnuReleaseNotes;
 
 	private JMenuItem mnuSearchDistance;
@@ -1766,6 +1768,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
+					panelWeather.refresh(Track, false);
 
 					Settings.previousCGXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
@@ -2847,6 +2850,12 @@ public class frmMain extends javax.swing.JFrame {
 		panelStatistics = new JPanelStatistics(Settings);
 		LbTabStatistics = addTab(TabbedPaneMain, panelStatistics, bundle.getString("frmMain.TabStatistic.tabTitle"),
 				Utils.getIcon(this, "stat.png", Settings.TabIconSize));
+		
+		// -- Tab - Weather
+				// ---------------------------------------------------
+				panelWeather = new JPanelWeather(Settings);
+				addTab(TabbedPaneMain, panelWeather, bundle.getString("frmMain.TabWeather.tabTitle"),
+						Utils.getIcon(this, "weather.png", Settings.TabIconSize));
 
 		// -- Tab - Analysis
 		// ----------------------------------------------------
@@ -3159,6 +3168,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
+					panelWeather.refresh(Track, false);
 					Settings.previousGPXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
 				} catch (Exception e) {
@@ -3235,35 +3245,44 @@ public class frmMain extends javax.swing.JFrame {
 			// -- Refresh the track information
 			RefreshStatusbar(Track);
 
-			// -- Force the update of the main table
-			panelTrackData.setSelectedRow(0);
-			panelTrackData.setTrack(Track);
-			panelTrackData.setSelectedRow(0);
+		// -- Update the viewer
+		panelMap.setTrack(Track);
+		// -- Refresh the track information
+		RefreshStatusbar(Track);
 
-			// -- Refresh resume grid
-			PanelResume.setTrack(Track);
-			// -- Refresh statistic
-			panelStatistics.setTrack(Track);
+		// -- Force the update of the main table
+		panelTrackData.setSelectedRow(0);
+		panelTrackData.setTrack(Track);
+		panelTrackData.setSelectedRow(0);
 
-			RefreshMruGPX();
-			// -- Refresh profil tab
-			panelProfil.setTrack(Track);
-			panelProfil.setSettings(Settings);
-			panelProfil.RefreshProfilChart();
-			// -- Refresh analysis tab
-			jPanelTimeDist.Refresh(Track, Settings);
-			jPanelSpeed.Refresh(Track, Settings);
-			jPanelSpeedSlope.Refresh(Track, Settings);
-			// -- Refresh the form title
-			RefreshTitle();
-			// Refresh the main toolbar
-			RefreshMainToolbar();
-			// Refresh the main menu
-			RefreshMainMenu();
-			// Refresh map
-			panelMap.RefreshTrack(Track, true);
+		// -- Refresh resume grid
+		PanelResume.setTrack(Track);
+		// -- Refresh statistic
+		panelStatistics.setTrack(Track);
 
-			bNoBackup = true;
+		RefreshMruGPX();
+		// -- Refresh profil tab
+		panelProfil.setTrack(Track);
+		panelProfil.setSettings(Settings);
+		panelProfil.RefreshProfilChart();
+		// -- Refresh analysis tab
+		jPanelTimeDist.Refresh(Track, Settings);
+		jPanelSpeed.Refresh(Track, Settings);
+		jPanelSpeedSlope.Refresh(Track, Settings);
+		// -- Refresh the form title
+		RefreshTitle();
+		// Refresh the main toolbar
+		RefreshMainToolbar();
+		// Refresh the main menu
+		RefreshMainMenu();
+		// Refresh map
+		panelMap.RefreshTrack(Track, true);
+		// Refresh weather
+				panelWeather.refresh(Track, false);
+		bNoBackup = true;
+
+		if (Track.data.size() > 0)
+			panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
 
 			if (Track.data.size() > 0)
 				panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
@@ -3359,36 +3378,42 @@ public class frmMain extends javax.swing.JFrame {
 			Track.OpenCGX(this, filename, CgConst.IMPORT_MODE_LOAD, false);
 			AddMruCGX(filename);
 
-			// -- Update the viewer
-			panelMap.setTrack(Track);
-			// -- Refresh the track information
-			RefreshStatusbar(Track);
-			// -- Refresh resume grid
-			PanelResume.setTrack(Track);
+		// -- Update the viewer
+		panelMap.setTrack(Track);
+		// -- Refresh the track information
+		RefreshStatusbar(Track);
+		// -- Refresh resume grid
+		PanelResume.setTrack(Track);
 
-			// -- Refresh profil tab
-			panelProfil.setTrack(Track);
-			panelProfil.setSettings(Settings);
-			panelProfil.RefreshProfilChart();
-			// -- Refresh analysis tab
-			jPanelTimeDist.Refresh(Track, Settings);
-			jPanelSpeed.Refresh(Track, Settings);
-			jPanelSpeedSlope.Refresh(Track, Settings);
-			// -- Refresh the form title
-			RefreshTitle();
-			// Refresh the main toolbar
-			RefreshMainToolbar();
-			// Refresh the main menu
-			RefreshMainMenu();
+		// -- Refresh profil tab
+		panelProfil.setTrack(Track);
+		panelProfil.setSettings(Settings);
+		panelProfil.RefreshProfilChart();
+		// -- Refresh analysis tab
+		jPanelTimeDist.Refresh(Track, Settings);
+		jPanelSpeed.Refresh(Track, Settings);
+		jPanelSpeedSlope.Refresh(Track, Settings);
+		// -- Refresh the form title
+		RefreshTitle();
+		// Refresh the main toolbar
+		RefreshMainToolbar();
+		// Refresh the main menu
+		RefreshMainMenu();
 
-			// -- Refresh statistic
-			panelStatistics.setTrack(Track);
+		// -- Refresh statistic
+		panelStatistics.setTrack(Track);
 
-			// -- Force the update of the main table
-			panelTrackData.setSelectedRow(0);
-			panelTrackData.setTrack(Track);
-			panelTrackData.setSelectedRow(0);
+		// -- Force the update of the main table
+		panelTrackData.setSelectedRow(0);
+		panelTrackData.setTrack(Track);
+		panelTrackData.setSelectedRow(0);
 
+		// Refresh map
+		panelMap.RefreshTrack(Track, true);
+		// Refresh weather
+				panelWeather.refresh(Track, false);
+		RefreshMruCGX();
+		bNoBackup = true;
 			// Refresh map
 			panelMap.RefreshTrack(Track, true);
 
@@ -3398,6 +3423,7 @@ public class frmMain extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"), "Course Generator",
 					JOptionPane.ERROR_MESSAGE);
 		}
+
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 

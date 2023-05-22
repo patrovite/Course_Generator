@@ -22,6 +22,8 @@ import static course_generator.utils.Utils.CalcDistance;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -51,6 +53,9 @@ import course_generator.utils.CgLog;
 import course_generator.utils.StatData;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
+import course_generator.weather.HistoricalWeather;
+import course_generator.weather.NoaaWeatherData;
+import course_generator.weather.NoaaWeatherStation;
 
 /**
  * @author pierre.delore
@@ -66,6 +71,11 @@ public class TrackData {
 
 	/** List containing the main data **/
 	public List<CgData> data;
+
+	/** Historical weather data **/
+	public HistoricalWeather historicalWeatherData;
+
+	private PropertyChangeSupport HistoricalWeatherDataChanged = new PropertyChangeSupport(this);
 
 	/** Statistics data for 'in night' **/
 	public StatData tInNight;
@@ -205,6 +215,7 @@ public class TrackData {
 		param = new ParamData();
 		Paramfile = "Default";
 		data = new ArrayList<>();
+		historicalWeatherData = new HistoricalWeather();
 		tInNight = new StatData();
 		tInDay = new StatData();
 		StatSlope = new StatData[13]; // : Array [0..12] of TStat;
@@ -1367,7 +1378,11 @@ public class TrackData {
 	}
 
 	/**
+<<<<<<< HEAD
+	 * Search the minmimum and maximum elevation of the track betwwen two points
+=======
 	 * Search the minimum and maximum elevation of the track between two points
+>>>>>>> refs/remotes/origin/fb-improvements-since-4.6
 	 *
 	 * @param start Starting point
 	 * @param end   Ending point
@@ -1516,7 +1531,7 @@ public class TrackData {
 			}
 
 			// --Elev effect --
-			if (bElevEffect && (r.getElevation(CgConst.UNIT_METER) > 1500.0)) {
+			if (bElevEffect &&  r.getElevation(CgConst.UNIT_METER) > 1500.0) {
 				ef = 1.0 + (Math.round((r.getElevation(CgConst.UNIT_METER) - 1500.0) / 100.0) / 100.0);
 			} else {
 				ef = 1.0;
@@ -1533,7 +1548,7 @@ public class TrackData {
 				diff = 100.0 / r.getDiff();
 			}
 
-			double station = (r.getStation());
+			double station = r.getStation();
 
 			if (y != 0.0) {
 				// Calculate the travel time in second in a part of the track
@@ -1865,6 +1880,8 @@ public class TrackData {
 		 * " positions after positions filter.");
 		 */
 
+		// String moon =
+		// historicWeatherData.get(0).getDailyWeatherData().getMoonPhase();
 		// -- Set the line number
 		int cmpt = 1;
 		for (CgData r : data) {
@@ -2027,6 +2044,128 @@ public class TrackData {
 			} // for
 				// TRACKPOINT
 			writer.writeEndElement();
+
+			// HISTORICAL WEATHER DATA
+
+			if (historicalWeatherData != null) {
+				writer.writeStartElement("HISTORICAL_WEATHER_DATA_POINTS");
+				writer.writeStartElement(SaxCGXHandler.LEVEL_WEATHER_NORMALS_EPHEMERIS);
+				Utils.WriteStringToXML(writer, HistoricalWeather.DAYLIGHTHOURS,
+						historicalWeatherData.getDaylightHours());
+				Utils.WriteIntToXML(writer, HistoricalWeather.MOONFRACTION,
+						historicalWeatherData.getMoonFraction());
+				Utils.WriteStringToXML(writer, HistoricalWeather.MOONPHASE,
+						String.format("%.3f", historicalWeatherData.getMoonPhase()));
+				writer.writeEndElement();// "EPHEMERIS"
+				writer.writeStartElement(SaxCGXHandler.LEVEL_WEATHER_DAILY_SUMMARIES);
+
+				writer.writeStartElement("WEATHER_STATION");
+				if (historicalWeatherData.getNoaaSummariesWeatherStation() != null) {
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID,
+							historicalWeatherData.getNoaaSummariesWeatherStation().getId());
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.NAME,
+							historicalWeatherData.getNoaaSummariesWeatherStation().getName());
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.LATITUDE,
+							historicalWeatherData.getNoaaSummariesWeatherStation().getLatitude());
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.LONGITUDE,
+							historicalWeatherData.getNoaaSummariesWeatherStation().getLongitude());
+					Utils.WriteDoubleToXML(writer, NoaaWeatherStation.DISTANCEFROMSTART,
+							historicalWeatherData.getNoaaSummariesWeatherStation().getDistanceFromStart());
+				} else {
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID, "");
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.NAME, "");
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.LATITUDE, "");
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.LONGITUDE, "");
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.DISTANCEFROMSTART, "");
+				}
+				writer.writeEndElement();// "WEATHER_STATION"
+
+				List<NoaaWeatherData> pastDailySummaries = historicalWeatherData.getPastDailySummaries();
+				if (pastDailySummaries != null && pastDailySummaries.isEmpty()) {
+					for (int i = 0; i < 3 && i < pastDailySummaries.size(); i++) {
+						writer.writeStartElement("DAILY_SUMMARY");
+
+						if (pastDailySummaries.get(i) != null) {
+							NoaaWeatherData currentDailySummary = pastDailySummaries.get(i);
+
+							Utils.WriteStringToXML(writer, NoaaWeatherData.DATE,
+									currentDailySummary.getDate().toString("yyyy-MM-dd"));
+							Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE,
+									currentDailySummary.getTemperatureMax());
+							Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE,
+									currentDailySummary.getTemperatureMin());
+							Utils.WriteStringToXML(writer, NoaaWeatherData.PRECIPITATION,
+									currentDailySummary.getPrecipitation());
+						} else {
+							Utils.WriteStringToXML(writer, NoaaWeatherData.DATE, "");
+							Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE, "");
+							Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE, "");
+							Utils.WriteStringToXML(writer, NoaaWeatherData.PRECIPITATION, "");
+						}
+						writer.writeEndElement();// "DAILY_SUMMARY"
+					}
+				}
+				writer.writeEndElement();// "DAILY_SUMMARIES"
+
+				writer.writeStartElement(SaxCGXHandler.LEVEL_WEATHER_NORMALS);
+				writer.writeStartElement("WEATHER_STATION");
+				NoaaWeatherStation noaaNormalsWeatherStation = historicalWeatherData.getNoaaNormalsWeatherStation();
+				if (noaaNormalsWeatherStation != null) {
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID,
+							noaaNormalsWeatherStation.getId());
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.NAME,
+							noaaNormalsWeatherStation.getName());
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.LATITUDE,
+							noaaNormalsWeatherStation.getLatitude());
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.LONGITUDE,
+							noaaNormalsWeatherStation.getLongitude());
+					Utils.WriteDoubleToXML(writer, NoaaWeatherStation.DISTANCEFROMSTART,
+							noaaNormalsWeatherStation.getDistanceFromStart());
+				} else {
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.STATIONID, "");
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.NAME, "");
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.LATITUDE, "");
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.LONGITUDE, "");
+					Utils.WriteStringToXML(writer, NoaaWeatherStation.DISTANCEFROMSTART, "");
+				}
+				writer.writeEndElement();// "WEATHER_STATION"
+
+				writer.writeStartElement("NORMALS_DAILY");
+				NoaaWeatherData normalsDaily = historicalWeatherData.getNormalsDaily();
+				if (normalsDaily != null) {
+					Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE,
+							normalsDaily.getTemperatureMax());
+					Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE,
+							normalsDaily.getTemperatureMin());
+					Utils.WriteStringToXML(writer, NoaaWeatherData.AVERAGETEMPERATURE,
+							normalsDaily.getTemperatureAverage());
+				} else {
+					Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE, "");
+					Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE, "");
+					Utils.WriteStringToXML(writer, NoaaWeatherData.AVERAGETEMPERATURE, "");
+				}
+				writer.writeEndElement();// "NORMALS_DAILY"
+
+				writer.writeStartElement("NORMALS_MONTHLY");
+				NoaaWeatherData normalsMonthly = historicalWeatherData.getNormalsMonthly();
+				if (normalsMonthly != null) {
+					Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE,
+							normalsMonthly.getTemperatureMax());
+					Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE,
+							normalsMonthly.getTemperatureMin());
+					Utils.WriteStringToXML(writer, NoaaWeatherData.AVERAGETEMPERATURE,
+							normalsMonthly.getTemperatureAverage());
+				} else {
+					Utils.WriteStringToXML(writer, NoaaWeatherData.MAXIMUMTEMPERATURE, "");
+					Utils.WriteStringToXML(writer, NoaaWeatherData.MINIMUMTEMPERATURE, "");
+					Utils.WriteStringToXML(writer, NoaaWeatherData.AVERAGETEMPERATURE, "");
+				}
+				writer.writeEndElement();// "NORMALS_MONTHLY"
+
+				writer.writeEndElement();// "NORMALS"
+
+				writer.writeEndElement();// "HISTORICAL_WEATHER_DATA_POINTS"
+			}
 
 			writer.writeEndElement();
 
@@ -2719,6 +2858,24 @@ public class TrackData {
 		d.ReadOnly = ReadOnly;
 		return d;
 	}
+
+	public HistoricalWeather getHistoricalWeather() {
+		return historicalWeatherData;
+	}
+
+
+	public void setHistoricalWeather(HistoricalWeather weatherHistory) {
+		HistoricalWeather previousWeatherHistory = historicalWeatherData;
+		historicalWeatherData = weatherHistory;
+		HistoricalWeatherDataChanged.firePropertyChange("HistoricalWeatherDataChanged", previousWeatherHistory,
+				weatherHistory);
+	}
+
+
+	public void addHistoricalWeatherListener(PropertyChangeListener listener) {
+		HistoricalWeatherDataChanged.addPropertyChangeListener(listener);
+	}
+
 
 	public void determineTrackTimeZone() {
 		if (this.data == null || this.data.isEmpty())
