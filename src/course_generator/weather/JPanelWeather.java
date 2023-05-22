@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
@@ -22,7 +23,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -78,19 +78,17 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		editorWeather = new JEditorPane();
 		editorWeather.setContentType("text/html");
 		editorWeather.setEditable(false);
-		editorWeather.addHyperlinkListener(new HyperlinkListener() {
-		    public void hyperlinkUpdate(HyperlinkEvent e) {
-		        if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-		        	if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-						try {
-							Desktop.getDesktop().browse(e.getURL().toURI());
-						} catch (IOException | URISyntaxException ex) {
-							ex.printStackTrace();
-						}
-					} else {
-						System.err.println("Opening link not supported on current platform ('"+ e.getURL()+"')");
+		editorWeather.addHyperlinkListener(hyperlinkEvent -> {
+		    if(hyperlinkEvent.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+		    	if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+					try {
+						Desktop.getDesktop().browse(hyperlinkEvent.getURL().toURI());
+					} catch (IOException | URISyntaxException ex) {
+						ex.printStackTrace();
 					}
-		        }
+				} else {
+					System.err.println("Opening link not supported on current platform ('"+ hyperlinkEvent.getURL()+"')");
+				}
 		    }
 		}
 		);
@@ -115,11 +113,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		btWeatherDataSave.setToolTipText(bundle.getString("JPanelWeather.btWeatherDataSave.toolTipText")); //$NON-NLS-1$
 		btWeatherDataSave.setEnabled(false);
 		btWeatherDataSave.setFocusable(false);
-		btWeatherDataSave.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SaveStat();
-			}
-		});
+		btWeatherDataSave.addActionListener(actionEvent -> SaveStat());
 		toolBar.add(btWeatherDataSave);
 
 		// -- Separator
@@ -133,11 +127,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		btWeatherRefresh.setToolTipText(bundle.getString("JPanelWeather.btWeatherRefresh.toolTipText")); //$NON-NLS-1$
 		btWeatherRefresh.setEnabled(false);
 		btWeatherRefresh.setFocusable(false);
-		btWeatherRefresh.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				refresh(track, true);
-			}
-		});
+		btWeatherRefresh.addActionListener(actionEvent -> refresh(track, true));
 		toolBar.add(btWeatherRefresh);
 
 		// -- Tab information
@@ -171,11 +161,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		previousWeatherData = null;
 		if (retrieveOnlineData) {
 			progressDialog = new ProgressDialog(parentFrame, bundle.getString("JPanelWeather.lbProgressBar.Text")); //$NON-NLS-1$
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					progressDialog.setVisible(true);
-				}
-			});
+			SwingUtilities.invokeLater(() -> progressDialog.setVisible(true));
 			progressDialog.setValue(0);
 
 			if (!Utils.isInternetReachable()) {
@@ -253,7 +239,7 @@ public class JPanelWeather extends JPanel implements PropertyChangeListener {
 		StringBuilder weatherDataSheetBuilder = new StringBuilder();
 
 		try (InputStream is = getClass().getResourceAsStream("weatherdatasheet.html");
-			InputStreamReader isr = new InputStreamReader(is, "UTF-8");
+			InputStreamReader isr = new InputStreamReader(is, StandardCharsets.UTF_8);
 			BufferedReader br = new BufferedReader(isr)){
 			
 			String line;

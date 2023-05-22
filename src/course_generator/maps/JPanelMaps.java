@@ -431,7 +431,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	}
 
 	private void MapViewerMouseClicked(java.awt.event.MouseEvent evt) {
-		if ((Track == null) || (Track.data == null) || (Track.data.size() <= 0))
+		if (Track == null || Track.data == null || Track.data.isEmpty())
 			return;
 
 		selectedPosition = MapViewer.getPosition(evt.getX(), evt.getY());
@@ -462,7 +462,7 @@ public class JPanelMaps extends JPanel implements PropertyChangeListener {
 	 *
 	 */
 	public void RefreshTrack(TrackData tdata, boolean zoom2fit) {
-		if ((tdata == null) || (tdata.data.size() <= 0))
+		if (tdata == null || tdata.data.isEmpty())
 			return;
 
 		// Enabling the map tools

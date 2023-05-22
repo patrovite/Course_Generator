@@ -2,7 +2,6 @@ package course_generator.weather;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -59,7 +58,7 @@ public class HistoricalWeather implements ProgressDialogListener {
 	}
 
 
-	public HistoricalWeather(ArrayList<NoaaWeatherData> pastDailySummaries, NoaaWeatherData normalsDaily,
+	public HistoricalWeather(List<NoaaWeatherData> pastDailySummaries, NoaaWeatherData normalsDaily,
 			NoaaWeatherData normalsMonthly, NoaaWeatherStation noaaSummariesWeatherStation,
 			NoaaWeatherStation noaaNormalsWeatherStation, String daylightHours, int moonFraction,
 			double moonPhase) {

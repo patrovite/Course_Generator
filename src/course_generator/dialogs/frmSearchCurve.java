@@ -39,7 +39,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
-import course_generator.CgData;
 import course_generator.TrackData;
 import course_generator.settings.CgSettings;
 import course_generator.utils.JTimeSetting;

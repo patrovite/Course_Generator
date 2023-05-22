@@ -80,7 +80,7 @@ public class Utils {
 	 * 
 	 * @param Parent     Parent windows
 	 * @param Directory  Directory to select when the dialog is displayed
-	 * @param Extension  File extention (ie: ".myp")
+	 * @param Extension  File extension (ie: ".myp")
 	 * @param FilterText Text filter
 	 * @return Filename with path. Empty if cancel
 	 */
@@ -138,7 +138,7 @@ public class Utils {
 				selectedFile = selectedFile + Extension;
 			}
 			boolean ok = true;
-			if (Utils.FileExist(selectedFile) && TestFileExist) {
+			if (Utils.FileExist(selectedFile) && Boolean.TRUE.equals(TestFileExist)) {
 				if (JOptionPane.showConfirmDialog(Parent, FileExistText, "",
 						JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)
 					ok = false;

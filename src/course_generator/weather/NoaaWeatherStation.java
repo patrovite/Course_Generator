@@ -23,12 +23,12 @@ public class NoaaWeatherStation implements Comparable<NoaaWeatherStation> {
 	private double distanceFromStart;
 	private double distanceFromSearchAreaCenter;
 
-	public final static String STATIONID = "STATIONID"; //$NON-NLS-1$
-	public final static String NAME = "NAME"; //$NON-NLS-1$
-	public final static String DISTANCEFROMSTART = "DISTANCEFROMSTART"; //$NON-NLS-1$
-	public final static String LATITUDE = "LATITUDE"; //$NON-NLS-1$
-	public final static String LONGITUDE = "LONGITUDE"; //$NON-NLS-1$
-	public final static String WebUrlBase = "https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:";
+	public static final String STATIONID = "STATIONID"; //$NON-NLS-1$
+	public static final String NAME = "NAME"; //$NON-NLS-1$
+	public static final String DISTANCEFROMSTART = "DISTANCEFROMSTART"; //$NON-NLS-1$
+	public static final String LATITUDE = "LATITUDE"; //$NON-NLS-1$
+	public static final String LONGITUDE = "LONGITUDE"; //$NON-NLS-1$
+	public static final String WebUrlBase = "https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:";
 
 
 	public NoaaWeatherStation(String id, String name, String latitude, String longitude, double distanceFromStart) {
