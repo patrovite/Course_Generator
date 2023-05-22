@@ -264,7 +264,7 @@ public class SaxGPXHandler extends DefaultHandler {
 				errline = locator.getLineNumber();
 				characters = "";
 			}
-		} else if (((level == LEVEL_TRKPT)) && qName.equalsIgnoreCase("TRKPT")) {
+		} else if ((level == LEVEL_TRKPT) && qName.equalsIgnoreCase("TRKPT")) {
 			level--;
 
 			if ((mLat != trkpt_lat) || (mLon != trkpt_lon) || (!trkdata.isTimeLoaded)) {
