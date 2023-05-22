@@ -33,6 +33,8 @@
  *  - jfreechart - LGPL - http://www.jfree.org/index.html
  *  - Joda-time - http://www.joda.org/joda-time/
  *  - JXMapViewer2 - LGPL - https://wiki.openstreetmap.org/wiki/JXMapViewer2
+  *  - SwingX - LGPL 2.1 - https://swingx.java.net/
+ *  - Timeshape - MIT - https://github.com/RomanIakovlev/timeshape
  *  - TinyLaF - LGPL - Hans Bickel - http://www.muntjak.de/hans/java/tinylaf/ 
  *  
  * Copyrights:
@@ -109,7 +111,6 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
@@ -134,7 +135,6 @@ import course_generator.dialogs.frmFillDiff.EditDiffResult;
 import course_generator.dialogs.frmSearchCurve;
 import course_generator.dialogs.frmSearchDistance;
 import course_generator.dialogs.frmSearchPoint;
-import course_generator.dialogs.frmSearchPointListener;
 import course_generator.dialogs.frmTrackSettings;
 import course_generator.import_points.frmImportPoints;
 import course_generator.maps.JPanelMaps;
@@ -142,7 +142,6 @@ import course_generator.maps.JPanelMapsListener;
 import course_generator.mrb.FrmMiniroadbook;
 import course_generator.param.frmEditCurve;
 import course_generator.profil.JPanelProfil;
-import course_generator.profil.JPanelProfilListener;
 import course_generator.releaseNote.frmReleaseNote;
 //import course_generator.resume.JPanelListener;
 import course_generator.resume.JPanelResume;
@@ -159,7 +158,7 @@ import course_generator.utils.FileTypeFilter;
 import course_generator.utils.OsCheck;
 import course_generator.utils.Utils;
 import course_generator.utils.Utils.CalcLineResult;
-
+import course_generator.weather.JPanelWeather;
 /**
  * This is the main class of the project.
  *
@@ -168,7 +167,7 @@ import course_generator.utils.Utils.CalcLineResult;
 public class frmMain extends javax.swing.JFrame {
 	private static final long serialVersionUID = 6484405417503538528L;
 
-	private final static String Version = "4.6.0";
+	private static final String Version = "4.6.0";
 
 	public static boolean inEclipse = false;
 	public static CgLog log = null;
@@ -295,7 +294,7 @@ public class frmMain extends javax.swing.JFrame {
 	private JMenuItem mnuSearchCurveFromFinalTime;
 
 	private JMenuItem mnuSmoothElevation;
-
+	private JPanelWeather panelWeather;
 	private JMenuItem mnuReleaseNotes;
 
 	private JMenuItem mnuSearchDistance;
@@ -331,7 +330,7 @@ public class frmMain extends javax.swing.JFrame {
 	/**
 	 * Creates new form frmMain !!!! Everything start here !!!!
 	 */
-	public frmMain(String args[]) {
+	public frmMain(String[] args) {
 		// -- Get the current time to measure the initialization time
 		long ts = System.currentTimeMillis();
 
@@ -848,11 +847,7 @@ public class frmMain extends javax.swing.JFrame {
 		mnuSavePartCSV = new javax.swing.JMenuItem();
 		mnuSavePartCSV.setIcon(Utils.getIcon(this, "save_csv.png", Settings.MenuIconSize));
 		mnuSavePartCSV.setEnabled(false);
-		mnuSavePartCSV.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SavePartCSV();
-			}
-		});
+		mnuSavePartCSV.addActionListener(actionEvent -> SavePartCSV());
 		mnuExport.add(mnuSavePartCSV);
 
 		mnuFile.add(mnuExport);
@@ -1766,6 +1761,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
+					panelWeather.refresh(Track, false);
 
 					Settings.previousCGXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
@@ -1791,7 +1787,7 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 	private void RestoreInCGX() {
-		if ((Track.data.size() <= 0) || (bNoBackup))
+		if (Track.data.isEmpty() || bNoBackup)
 			return;
 		// bAutorUpdatePos = false;
 
@@ -2426,7 +2422,7 @@ public class frmMain extends javax.swing.JFrame {
 		btFillCoeff.setEnabled(false);
 		btFillCoeff.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (Track.data.size() <= 0)
+				if (Track.data.isEmpty())
 					return;
 
 				int start = panelTrackData.getSelectedRow();
@@ -2493,11 +2489,7 @@ public class frmMain extends javax.swing.JFrame {
 		btCalculateTrackTime.setIcon(Utils.getIcon(this, "refresh.png", Settings.ToolbarIconSize));
 		btCalculateTrackTime.setFocusable(false);
 		btCalculateTrackTime.setEnabled(false);
-		btCalculateTrackTime.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				CalcTrackTime();
-			}
-		});
+		btCalculateTrackTime.addActionListener(actionEvent -> CalcTrackTime());
 		ToolBarMain.add(btCalculateTrackTime);
 
 		// -- Set texts
@@ -2532,7 +2524,7 @@ public class frmMain extends javax.swing.JFrame {
 	}
 
 	protected void TrackSettings() {
-		if (Track.data.size() <= 0)
+		if (Track.data.isEmpty())
 			return;
 
 		frmTrackSettings frm = new frmTrackSettings(Settings);
@@ -2766,13 +2758,11 @@ public class frmMain extends javax.swing.JFrame {
 		// ------------------------------------------------------
 		TabbedPaneMain = new javax.swing.JTabbedPane();
 		// -- Create the listener
-		ChangeListener changeListener = new ChangeListener() {
-			public void stateChanged(ChangeEvent changeEvent) {
-				JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
-				int index = sourceTabbedPane.getSelectedIndex();
-				if (index == 4) // Tab Resume
-					PanelResume.refresh();
-			}
+		ChangeListener changeListener = changeEvent -> {
+			JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
+			int index = sourceTabbedPane.getSelectedIndex();
+			if (index == 4) // Tab Resume
+				PanelResume.refresh();
 		};
 		TabbedPaneMain.addChangeListener(changeListener);
 
@@ -2828,15 +2818,12 @@ public class frmMain extends javax.swing.JFrame {
 		// -- Tab - Profil
 		// ------------------------------------------------------
 		panelProfil = new JPanelProfil(Settings);
-		panelProfil.addListener(new JPanelProfilListener() {
-			@Override
-			public void profilSelectionEvent() {
-				int i = panelProfil.getIndex();
-				// Refresh the position on the data grid
-				panelTrackData.setSelectedRow(i);
-				// Refresh the marker position on the map
-				panelMap.RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
-			}
+		panelProfil.addListener(() -> {
+			int i = panelProfil.getIndex();
+			// Refresh the position on the data grid
+			panelTrackData.setSelectedRow(i);
+			// Refresh the marker position on the map
+			panelMap.RefreshCurrentPosMarker(Track.data.get(i).getLatitude(), Track.data.get(i).getLongitude());
 		});
 
 		LbTabProfil = addTab(TabbedPaneMain, panelProfil, bundle.getString("frmMain.TabProfil.tabTitle"),
@@ -2847,6 +2834,12 @@ public class frmMain extends javax.swing.JFrame {
 		panelStatistics = new JPanelStatistics(Settings);
 		LbTabStatistics = addTab(TabbedPaneMain, panelStatistics, bundle.getString("frmMain.TabStatistic.tabTitle"),
 				Utils.getIcon(this, "stat.png", Settings.TabIconSize));
+		
+		// -- Tab - Weather
+				// ---------------------------------------------------
+				panelWeather = new JPanelWeather(Settings);
+				addTab(TabbedPaneMain, panelWeather, bundle.getString("frmMain.TabWeather.tabTitle"),
+						Utils.getIcon(this, "weather.png", Settings.TabIconSize));
 
 		// -- Tab - Analysis
 		// ----------------------------------------------------
@@ -3020,14 +3013,14 @@ public class frmMain extends javax.swing.JFrame {
 		// an infinite loop.
 		int originalPosition = currentPosition;
 
-		currentPosition = direction == "forward" ? currentPosition + 1 : currentPosition - 1;
+		currentPosition = direction.equals("forward") ? currentPosition + 1 : currentPosition - 1;
 
 		int trackDataSize = Track.data.size();
 
 		if (currentPosition >= trackDataSize)
 			currentPosition = 0;
 
-		if (currentPosition <= -1 && direction == "backward") {
+		if (currentPosition <= -1 && direction.equals("backward")) {
 			currentPosition = trackDataSize - 1;
 		} else if (currentPosition <= -1) {
 			currentPosition = 0;
@@ -3047,7 +3040,7 @@ public class frmMain extends javax.swing.JFrame {
 				return currentPosition;
 			}
 
-			currentPosition = direction == "forward" ? currentPosition + 1 : currentPosition - 1;
+			currentPosition = direction.equals("forward") ? currentPosition + 1 : currentPosition - 1;
 
 			if (currentPosition >= trackDataSize) {
 				currentPosition = 0;
@@ -3079,26 +3072,22 @@ public class frmMain extends javax.swing.JFrame {
 	 * Display the search point dialog
 	 */
 	private void SearchPointDialog() {
-		if (Track.data.size() <= 0)
+		if (Track.data.isEmpty())
 			return;
 
 		final frmSearchPoint frm = new frmSearchPoint(Settings);
-		frm.addListener(new frmSearchPointListener() {
+		frm.addListener(() -> {
+			// -- Refresh the position of the map marker
+			SearchPointResult result = frm.getResult();
+			panelMap.RefreshCurrentPosMarker(Track.data.get(result.Point).getLatitude(),
+					Track.data.get(result.Point).getLongitude());
 
-			@Override
-			public void UpdateUIEvent() {
-				// -- Refresh the position of the map marker
-				SearchPointResult result = frm.getResult();
-				panelMap.RefreshCurrentPosMarker(Track.data.get(result.Point).getLatitude(),
-						Track.data.get(result.Point).getLongitude());
+			panelTrackData.setSelectedRow(result.Point);
 
-				panelTrackData.setSelectedRow(result.Point);
-
-				// -- Refresh the profil cursor position
-				panelProfil.RefreshProfilInfo(result.Point);
-				panelProfil.setCrosshairPosition(Track.data.get(result.Point).getTotal(Settings.Unit) / 1000.0,
-						Track.data.get(result.Point).getElevation(Settings.Unit));
-			}
+			// -- Refresh the profile cursor position
+			panelProfil.RefreshProfilInfo(result.Point);
+			panelProfil.setCrosshairPosition(Track.data.get(result.Point).getTotal(Settings.Unit) / 1000.0,
+					Track.data.get(result.Point).getElevation(Settings.Unit));
 		});
 		frm.showDialog(Settings, Track);
 	}
@@ -3107,7 +3096,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * Display the search distance dialog
 	 */
 	private void SearchDistanceDialog() {
-		if (Track.data.size() <= 0)
+		if (Track.data.isEmpty())
 			return;
 
 		final frmSearchDistance frm = new frmSearchDistance(Settings);
@@ -3147,7 +3136,7 @@ public class frmMain extends javax.swing.JFrame {
 				BackupInCGX();
 				// bAutorUpdatePos = false;
 				try {
-					if (Track.OpenGPX(s, mode, (double) Settings.PosFilterAskThreshold))
+					if (Track.OpenGPX(s, mode, Settings.PosFilterAskThreshold))
 						JOptionPane.showMessageDialog(this, bundle.getString("frmMain.NoTimeData"));
 					panelTrackData.refresh();
 					RefreshStatusbar(Track);
@@ -3159,6 +3148,7 @@ public class frmMain extends javax.swing.JFrame {
 					panelMap.RefreshTrack(Track, true);
 					PanelResume.refresh();
 					panelStatistics.refresh();
+					panelWeather.refresh(Track, false);
 					Settings.previousGPXDirectory = Utils.GetDirFromFilename(s);
 					// bAutorUpdatePos = true;
 				} catch (Exception e) {
@@ -3227,7 +3217,7 @@ public class frmMain extends javax.swing.JFrame {
 		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
 		try {
-			Track.OpenGPX(filename, 0, (double) Settings.PosFilterAskThreshold);
+			Track.OpenGPX(filename, 0, Settings.PosFilterAskThreshold);
 			AddMruGPX(filename);
 
 			// -- Update the viewer
@@ -3235,35 +3225,44 @@ public class frmMain extends javax.swing.JFrame {
 			// -- Refresh the track information
 			RefreshStatusbar(Track);
 
-			// -- Force the update of the main table
-			panelTrackData.setSelectedRow(0);
-			panelTrackData.setTrack(Track);
-			panelTrackData.setSelectedRow(0);
+		// -- Update the viewer
+		panelMap.setTrack(Track);
+		// -- Refresh the track information
+		RefreshStatusbar(Track);
 
-			// -- Refresh resume grid
-			PanelResume.setTrack(Track);
-			// -- Refresh statistic
-			panelStatistics.setTrack(Track);
+		// -- Force the update of the main table
+		panelTrackData.setSelectedRow(0);
+		panelTrackData.setTrack(Track);
+		panelTrackData.setSelectedRow(0);
 
-			RefreshMruGPX();
-			// -- Refresh profil tab
-			panelProfil.setTrack(Track);
-			panelProfil.setSettings(Settings);
-			panelProfil.RefreshProfilChart();
-			// -- Refresh analysis tab
-			jPanelTimeDist.Refresh(Track, Settings);
-			jPanelSpeed.Refresh(Track, Settings);
-			jPanelSpeedSlope.Refresh(Track, Settings);
-			// -- Refresh the form title
-			RefreshTitle();
-			// Refresh the main toolbar
-			RefreshMainToolbar();
-			// Refresh the main menu
-			RefreshMainMenu();
-			// Refresh map
-			panelMap.RefreshTrack(Track, true);
+		// -- Refresh resume grid
+		PanelResume.setTrack(Track);
+		// -- Refresh statistic
+		panelStatistics.setTrack(Track);
 
-			bNoBackup = true;
+		RefreshMruGPX();
+		// -- Refresh profil tab
+		panelProfil.setTrack(Track);
+		panelProfil.setSettings(Settings);
+		panelProfil.RefreshProfilChart();
+		// -- Refresh analysis tab
+		jPanelTimeDist.Refresh(Track, Settings);
+		jPanelSpeed.Refresh(Track, Settings);
+		jPanelSpeedSlope.Refresh(Track, Settings);
+		// -- Refresh the form title
+		RefreshTitle();
+		// Refresh the main toolbar
+		RefreshMainToolbar();
+		// Refresh the main menu
+		RefreshMainMenu();
+		// Refresh map
+		panelMap.RefreshTrack(Track, true);
+		// Refresh weather
+				panelWeather.refresh(Track, false);
+		bNoBackup = true;
+
+		if (Track.data.size() > 0)
+			panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
 
 			if (Track.data.size() > 0)
 				panelMap.RefreshCurrentPosMarker(Track.data.get(0).getLatitude(), Track.data.get(0).getLongitude());
@@ -3359,36 +3358,42 @@ public class frmMain extends javax.swing.JFrame {
 			Track.OpenCGX(this, filename, CgConst.IMPORT_MODE_LOAD, false);
 			AddMruCGX(filename);
 
-			// -- Update the viewer
-			panelMap.setTrack(Track);
-			// -- Refresh the track information
-			RefreshStatusbar(Track);
-			// -- Refresh resume grid
-			PanelResume.setTrack(Track);
+		// -- Update the viewer
+		panelMap.setTrack(Track);
+		// -- Refresh the track information
+		RefreshStatusbar(Track);
+		// -- Refresh resume grid
+		PanelResume.setTrack(Track);
 
-			// -- Refresh profil tab
-			panelProfil.setTrack(Track);
-			panelProfil.setSettings(Settings);
-			panelProfil.RefreshProfilChart();
-			// -- Refresh analysis tab
-			jPanelTimeDist.Refresh(Track, Settings);
-			jPanelSpeed.Refresh(Track, Settings);
-			jPanelSpeedSlope.Refresh(Track, Settings);
-			// -- Refresh the form title
-			RefreshTitle();
-			// Refresh the main toolbar
-			RefreshMainToolbar();
-			// Refresh the main menu
-			RefreshMainMenu();
+		// -- Refresh profil tab
+		panelProfil.setTrack(Track);
+		panelProfil.setSettings(Settings);
+		panelProfil.RefreshProfilChart();
+		// -- Refresh analysis tab
+		jPanelTimeDist.Refresh(Track, Settings);
+		jPanelSpeed.Refresh(Track, Settings);
+		jPanelSpeedSlope.Refresh(Track, Settings);
+		// -- Refresh the form title
+		RefreshTitle();
+		// Refresh the main toolbar
+		RefreshMainToolbar();
+		// Refresh the main menu
+		RefreshMainMenu();
 
-			// -- Refresh statistic
-			panelStatistics.setTrack(Track);
+		// -- Refresh statistic
+		panelStatistics.setTrack(Track);
 
-			// -- Force the update of the main table
-			panelTrackData.setSelectedRow(0);
-			panelTrackData.setTrack(Track);
-			panelTrackData.setSelectedRow(0);
+		// -- Force the update of the main table
+		panelTrackData.setSelectedRow(0);
+		panelTrackData.setTrack(Track);
+		panelTrackData.setSelectedRow(0);
 
+		// Refresh map
+		panelMap.RefreshTrack(Track, true);
+		// Refresh weather
+				panelWeather.refresh(Track, false);
+		RefreshMruCGX();
+		bNoBackup = true;
 			// Refresh map
 			panelMap.RefreshTrack(Track, true);
 
@@ -3398,6 +3403,7 @@ public class frmMain extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, bundle.getString("frmMain.FileError"), "Course Generator",
 					JOptionPane.ERROR_MESSAGE);
 		}
+
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	}
 
@@ -3441,7 +3447,6 @@ public class frmMain extends javax.swing.JFrame {
 	 * Save the track in CGX format
 	 */
 	private void SaveCGX() {
-		String s;
 
 		// -- New?
 		if (Track.isNewTrack)
@@ -4053,7 +4058,7 @@ public class frmMain extends javax.swing.JFrame {
 	 * 
 	 * @param args the command line arguments
 	 */
-	public static void main(final String args[]) {
+	public static void main(final String[] args) {
 		// -- Get the VM parameters
 		String inEclipseStr = System.getProperty("runInEclipse");
 		inEclipse = "true".equalsIgnoreCase(inEclipseStr);
@@ -4111,15 +4116,9 @@ public class frmMain extends javax.swing.JFrame {
 				javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
 				break;
 			}
-		} catch (ClassNotFoundException ex) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
 			ex.printStackTrace();
-		} catch (InstantiationException ex) {
-			ex.printStackTrace();
-		} catch (IllegalAccessException ex) {
-			ex.printStackTrace();
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			ex.printStackTrace();
-		}
+		}   
 
 		// -- Set things according to the OS
 		OsCheck.OSType ostype = OsCheck.getOperatingSystemType();
@@ -4147,16 +4146,14 @@ public class frmMain extends javax.swing.JFrame {
 		 * java.awt.EventQueue.invokeLater(new Runnable() { public void run() { new
 		 * frmMain(args).setVisible(true); } });
 		 */
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					frmMain window = new frmMain(args);
-					window.setVisible(true);
-					// window.frame.setVisible(true);
-					// new frmMain(args).setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		java.awt.EventQueue.invokeLater(() -> {
+			try {
+				frmMain window = new frmMain(args);
+				window.setVisible(true);
+				// window.frame.setVisible(true);
+				// new frmMain(args).setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 

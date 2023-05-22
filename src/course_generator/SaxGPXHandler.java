@@ -142,6 +142,7 @@ public class SaxGPXHandler extends DefaultHandler {
 			// -- Clear the DataList? --
 			if (mode == 0) {
 				trkdata.data.clear();
+				trkdata.historicalWeatherData = null;
 			}
 			// -- Parse the file
 			parser.parse(f, this);
@@ -263,7 +264,7 @@ public class SaxGPXHandler extends DefaultHandler {
 				errline = locator.getLineNumber();
 				characters = "";
 			}
-		} else if (((level == LEVEL_TRKPT)) && qName.equalsIgnoreCase("TRKPT")) {
+		} else if ((level == LEVEL_TRKPT) && qName.equalsIgnoreCase("TRKPT")) {
 			level--;
 
 			if ((mLat != trkpt_lat) || (mLon != trkpt_lon) || (!trkdata.isTimeLoaded)) {
