@@ -69,7 +69,7 @@ public class TrackData {
 	/** Parameters file name **/
 	public String Paramfile = "";
 
-	/** Arraylist containing the main data **/
+	/** List containing the main data **/
 	public List<CgData> data;
 
 	/** Historical weather data **/
@@ -102,7 +102,7 @@ public class TrackData {
 	public String CourseName = "";
 	/** Total distance in meters **/
 	private double TotalDistance = 0.0;
-	/** Total time in seconde **/
+	/** Total time in seconds **/
 	public int TotalTime = 0;
 	/** Indicate if during the last loading the time field as been loaded **/
 	public boolean isTimeLoaded = false;
@@ -1248,9 +1248,9 @@ public class TrackData {
 		int i = 0;
 		int oldTime = 0;
 		int dt = 0;
-		double oldElev = 0.0;
-		double de = 0.0;
-		double elev = 0.0;
+		double oldElev;
+		double de;
+		double elev;
 		int time = 0;
 
 		r.cp = 0;
@@ -1378,7 +1378,11 @@ public class TrackData {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Search the minmimum and maximum elevation of the track betwwen two points
+=======
+	 * Search the minimum and maximum elevation of the track between two points
+>>>>>>> refs/remotes/origin/fb-improvements-since-4.6
 	 *
 	 * @param start Starting point
 	 * @param end   Ending point
