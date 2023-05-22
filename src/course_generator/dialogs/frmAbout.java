@@ -88,12 +88,12 @@ public class frmAbout extends javax.swing.JDialog {
 		if (withcopyrights) {
 			StringBuilder sb = new StringBuilder();
 			sb.append(" Thanks to the contributors :\n");
-			sb.append(" - Frederic Bard\n");
+			sb.append(" - Frédéric Bard\n");
 			sb.append(" - Trilomix (https://github.com/trilomix)\n\n");
 
 			sb.append(" Translators\n");
 			sb.append(" - Spanish: victorhck@opensuse.org\n");
-			sb.append(" - English: Frederic Bard\n\n");
+			sb.append(" - English: Frédéric Bard\n\n");
 
 			sb.append(" .oO Copyrights Oo.\n");
 			sb.append(" Used libraries:\n");

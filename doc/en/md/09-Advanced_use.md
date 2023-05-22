@@ -361,6 +361,7 @@ On the left, a vertical bar of buttons allows actions on this map.
 * ![](./images/Map/show_hide_markers.png) : Display or hide the marks.
 * ![](./images/Map/save_png.png) : Save the current map as a PNG image.
 * ![](./images/Map/select_map.png) : Allows you to select the map layer to be displayed.
+* ![](./images/Map/show_weather_stations.png) : Displays the closest weather station(s) on the map.
 
 The mouse commands are as follows:
 

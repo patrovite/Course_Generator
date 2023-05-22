@@ -86,6 +86,29 @@ Statistics contain among other things:
 * The distance traveled uphill, on the flat and downhill
 * The temperature difference between the low point of the course and the high point. This value is purely indicative and theoretical. It does not take into account the wind chill effect and local phenomena. The basis of calculation is 0.6°C per 100m of elevation gain.
 
+The button ![](./images/Tabs/save_html.png) saves this data in HTML format.  
+The button ![](./images/Tabs/refresh.png) refreshes the data.
+
+## "Weather" tab
+
+This tab displays the historical weather data and the event summary information for a given track.  
+![Statistics tab](./images/Tabs/CG40_Tab_Weather.png)
+
+The historical weather data contains the following information:
+
+* Maximum temperature, minimum temperature and precipitation for the last 3 years (if an appropriate weather station is found).
+* The daily and monthly normals (maximum temperature, average temperature and minimum temperature) for the same date period (if an appropriate weather station is found).
+* The weather station(s) name, URL and distance from start.
+
+The event summary data contains:
+* The start date.
+* The sunrise and sunset times.
+* The total daylight time.
+* The moon phase description, illumination percentage and image.
+
+The button ![](./images/Tabs/save_html.png) saves this data in HTML format.  
+The button ![](./images/Tabs/retrieve_weather.png) retrieves the weather data from the NOAA servers.
+
 ## "Analysis" tab
 This tab allows to obtain an analysis of your track. It contains 3 sub-tabs which are detailed below.
 
