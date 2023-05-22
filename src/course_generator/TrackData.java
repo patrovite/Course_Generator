@@ -341,12 +341,11 @@ public class TrackData {
 		CgLog.info("Point density calculation = " + p + "%");
 
 		// Question?
-		if (p >= PosFilterAskThreshold) {
-			if (JOptionPane.showConfirmDialog(null,
+		if (p >= PosFilterAskThreshold &&  (JOptionPane.showConfirmDialog(null,
 					String.format(bundle.getString("TrackData.PositionFilterQuestion"), p), "",
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
 				ok = true;
-			}
+			
 		}
 
 		return ok;
@@ -444,7 +443,7 @@ public class TrackData {
 		 * <time>2010-06-11T11:41:10.000Z</time> </trkpt> </trkseg> </trk> </gpx>
 		 */
 
-		if (data.size() <= 0) {
+		if (data.isEmpty()) {
 			return;
 		}
 
@@ -589,7 +588,7 @@ public class TrackData {
 
 	// -- Save tags as waypoint in a GPX file --
 	public void SaveWaypoint(String name, int mask) {
-		if (data.size() <= 0) {
+		if (data.isEmpty()) {
 			return;
 		}
 
@@ -671,7 +670,7 @@ public class TrackData {
 	}
 
 	public void ExportCGP(String name, int mask) {
-		if (data.size() <= 0) {
+		if (data.isEmpty()) {
 			return;
 		}
 
@@ -855,7 +854,7 @@ public class TrackData {
 	 * Position filter
 	 */
 	private void PositionFilter() {
-		if (data.size() <= 0) {
+		if (data.isEmpty()){
 			return;
 		}
 
@@ -2201,7 +2200,7 @@ public class TrackData {
 	 * @param separator 0=dot 1=comma
 	 */
 	public void SaveCSV(String name, int start, int end, int unit, int separator) {
-		if (data.size() <= 0)
+		if (data.isEmpty())
 			return;
 
 		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("course_generator/Bundle");
@@ -2292,7 +2291,7 @@ public class TrackData {
 	 * Calculate the night and day time, speed and distance
 	 */
 	public void CalcStatNight() {
-		if (data.size() <= 0) {
+		if (data.isEmpty()) {
 			return;
 		}
 
@@ -2324,7 +2323,7 @@ public class TrackData {
 	 * Calculate the slope statistic
 	 */
 	public void CalcStatSlope() {
-		if (data.size() <= 0) {
+		if (data.isEmpty()) {
 			return;
 		}
 
@@ -2424,7 +2423,7 @@ public class TrackData {
 	 * Calculate the elevation statistic
 	 */
 	public void CalcStatElev() {
-		if (data.size() <= 0) {
+		if (data.isEmpty()) {
 			return;
 		}
 
